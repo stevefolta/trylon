@@ -1,8 +1,8 @@
 -include makefile.local-settings
 
 ifeq "$(shell uname)" "Darwin"
-	CFLAGS += -DOSX_FINK
-	INCLUDE_PATHS += -I/sw/include
+	CFLAGS += -DOSX_FINK -framework Carbon
+	INCLUDE_PATHS += -I/sw/include 
 	LIB_PATHS += -L/sw/lib
 endif
 
