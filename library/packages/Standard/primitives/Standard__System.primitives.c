@@ -1,6 +1,7 @@
 /* Standard__System.primitives.c */
 
 #include "Trylon_.h"
+#include <sys/time.h>
 #ifdef OSX_FINK
 	// Fink doesn't use the gc directory for some reason.
 	#include <gc.h>
