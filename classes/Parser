@@ -235,8 +235,8 @@ parse-class-contents(the-class: CompiledClass)
 			}
 
 		else if (name == "class-fn" || name == "class-function" ||
-		         name == "class-primitive-fn" ||
-						 name == "class-primitive-function") {
+		         name == "primitive-class-fn" ||
+						 name == "primitive-class-function") {
 			function: CompiledFunction = parse-function(false);
 			the-class.add-function(function);
 			}

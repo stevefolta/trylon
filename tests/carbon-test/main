@@ -1,5 +1,8 @@
 trylon-package Main
 
 fn main: args
+	window-rect := Rectangle new: 100 top: 100 right: 200 bottom: 200
+	window := Carbon WindowManager Window new: window-rect
+	window show
 	Carbon EventManager run-application-event-loop
 

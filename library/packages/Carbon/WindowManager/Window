@@ -1,0 +1,5 @@
+trylon-class Window
+
+primitive-class-fn new: content-rect
+
+primitive-fn show

@@ -1,0 +1,10 @@
+trylon-class Point
+
+field x
+field y
+
+
+fn create: x y: y
+	this x = x
+	this y = y
+

@@ -1,0 +1,14 @@
+trylon-class Rectangle
+
+field left
+field top
+field right
+field bottom
+
+
+fn create: left top: top right: right bottom: bottom
+	this left = left
+	this top = top
+	this right = right
+	this bottom = bottom
+
