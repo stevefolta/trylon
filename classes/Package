@@ -242,26 +242,38 @@ find-primitives-file(file-name: String): File
 }
 
 
-copy-primitives-files()
+copy-primitives-files(compile-file-names: (List of String),
+                      link-file-names: (List of String))
 {
 	// Copy ours, if there is one
 	if (has-primitives) {
-		file-name: String = c-name + ".primitives.c";
-		primitives-file: File = find-primitives-file(file-name);
+		file-name: String = c-name + ".primitives";
+		c-file-name: String = file-name + ".c";
+		primitives-file: File = find-primitives-file(c-file-name);
 		if (primitives-file == nil && parent) {
 			// This might be a class, so check the parent's directories too.
-			primitives-file = parent.find-primitives-file(file-name);
+			primitives-file = parent.find-primitives-file(c-file-name);
 			}
-		if (primitives-file)
-			TrylonCompiler.the-compiler.copy-to-sources(primitives-file, file-name);
+		if (primitives-file) {
+			is-changed: Bool =
+				TrylonCompiler.the-compiler.copy-to-sources(primitives-file,
+				                                            c-file-name);
+			if (is-changed)
+				compile-file-names.append(file-name);
+			link-file-names.append(file-name);
+			}
 		}
 
 	// Have all children copy theirs
 	for (function: TrylonFunction in functions.values) {
-		if (function.is-a(PackageFunction))
-			function.as-a(PackageFunction).package.copy-primitives-files();
-		else if (function.is-a(ClassFunction))
-			function.as-a(ClassFunction).the-class.copy-primitives-files();
+		if (function.is-a(PackageFunction)) {
+			function.as-a(PackageFunction).package.copy-primitives-files(
+				compile-file-names, link-file-names);
+			}
+		else if (function.is-a(ClassFunction)) {
+			function.as-a(ClassFunction).the-class.copy-primitives-files(
+				compile-file-names, link-file-names);
+			}
 		}
 }
 
@@ -291,8 +303,8 @@ emit-code(): Bool
 
 emit-c-file(): Bool
 {
-	file: File = new File(".c-sources/" + c-name + ".c");
-	stream: ExistingFileStream = new ExistingFileStream(file);
+	file: File(".c-sources/" + c-name + ".c");
+	stream: ExistingFileStream(file);
 
 	// Header, includes
 	stream.write-line("/* " + c-name + ".c */");

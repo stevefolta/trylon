@@ -165,8 +165,15 @@ compile-program(compile-symbols: List of String)
 	// Emit the classes and packages.
 	status-reporter.report("Emitting code...");
 	status-reporter.indent();
-	for (package: Package in package-queue)
-		package.emit-code();
+	compile-file-names: List of String;
+	link-file-names: List of String;
+	for (package: Package in package-queue) {
+		is-changed: Bool = package.emit-code();
+		file-name: String = package.c-name;
+		if (is-changed)
+			compile-file-names.append(file-name);
+		link-file-names.append(file-name);
+		}
 	status-reporter.unindent();
 
 	// Another round of ensure-superclasses, to get classes loaded during
@@ -175,11 +182,17 @@ compile-program(compile-symbols: List of String)
 
 	// Emit the method specs.
 	status-reporter.report("Emitting method specs...");
-	emit-method-specs(main-package);
+	is-changed: Bool = emit-method-specs(main-package);
+	if (is-changed)
+		compile-file-names.append("methods_");
+	link-file-names.append("methods_");
 
 	// Emit the symbols.
 	status-reporter.report("Emitting symbols...");
-	emit-symbols();
+	is-changed = emit-symbols();
+	if (is-changed)
+		compile-file-names.append("symbols_");
+	link-file-names.append("symbols_");
 
 	// Copy Trylon_.h and Trylon_.c
 	if (!library-directory.entry-is-directory("runtime")) {
@@ -189,10 +202,44 @@ compile-program(compile-symbols: List of String)
 	runtime-directory: FileDirectory =
 		library-directory["runtime"].as-a(FileDirectory);
 	copy-to-sources(runtime-directory["Trylon_.h"].as-a(File), "Trylon_.h");
-	copy-to-sources(runtime-directory["Trylon_.c"].as-a(File), "Trylon_.c");
+	is-changed =
+		copy-to-sources(runtime-directory["Trylon_.c"].as-a(File), "Trylon_.c");
+	if (is-changed)
+		compile-file-names.append("Trylon_");
+	link-file-names.append("Trylon_");
 
 	// Copy primitives files
-	main-package.copy-primitives-files();
+	main-package.copy-primitives-files(compile-file-names, link-file-names);
+
+
+	// Compile C files.
+	status-reporter.report("Compiling C files...");
+	status-reporter.indent();
+	for (file-name: String in compile-file-names) {
+		status-reporter.report("Compiling " + file-name + ".c...");
+		args: List of String;
+		args.append("-c");
+		args.append(".c-sources/" + file-name + ".c");
+		args.append("-o");
+		args.append(".objects/" + file-name + ".o");
+		for (flag: String in c-flags)
+			args.append(flag);
+		status: Int = System.system.run-program(c-compiler, args);
+		if (status != 0)
+			throw MessageException("C compilation failed.");
+		}
+	status-reporter.unindent();
+
+	// Link.
+	status-reporter.report("Linking...");
+	args: List of String;
+	args.append("-o");
+	args.append(program-name);
+	for (flag: String in link-flags)
+		args.append(flag);
+	for (file-name: String in link-file-names)
+		args.append(".objects/" + file-name + ".o");
+	System.system.run-program(linker, args);
 }
 
 
@@ -216,9 +263,9 @@ get-symbol-literal(name: String): SymbolLiteral
 }
 
 
-emit-method-specs(main-package: Package)
+emit-method-specs(main-package: Package): Bool
 {
-	stream: OutputStream = new File(".c-sources/methods_.c").output-stream;
+	stream: ExistingFileStream(new File(".c-sources/methods_.c"));
 	stream.write-line("#include \"Trylon_.h\"");
 	stream.write-line();
 
@@ -268,12 +315,16 @@ emit-method-specs(main-package: Package)
 		stream.write-line(" };");
 		stream.write-line();
 		}
+
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
 }
 
 
-emit-symbols()
+emit-symbols(): Bool
 {
-	stream: OutputStream = new File(".c-sources/symbols_.c").output-stream;
+	stream: ExistingFileStream(new File(".c-sources/symbols_.c"));
 	stream.write-line("#include \"Trylon_.h\"");
 	stream.write-line();
 
@@ -286,6 +337,10 @@ emit-symbols()
 		stream.write(MethodBuilder.string-literal-length(symbol.name).string);
 		stream.write-line(")");
 		}
+
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
 }
 
 
@@ -304,12 +359,15 @@ root-class(main-package: Package): CompiledClass
 }
 
 
-copy-to-sources(file: File, dest-name: String)
+copy-to-sources(file: File, dest-name: String): Bool
 {
 	contents: String = file.contents;
-	stream: FileOutStream = new File(".c-sources/" + dest-name).output-stream;
+	dest-file: File(".c-sources/" + dest-name);
+	stream: ExistingFileStream(dest-file);
 	stream.write(contents);
+	is-changed: Bool = stream.is-changed;
 	stream.close();
+	return is-changed;
 }
 
 
