@@ -10,4 +10,9 @@ fn string -> String
 fn same-as: object [Object] -> Bool
 	return this object-ptr == object object-ptr
 
+fn iterator -> Iterator
+	# Default: use a SingleObjectIterator.  Collections will 
+	# override this.
+	return SingleObjectIterator new: this
+
 primitive-fn message-not-understood

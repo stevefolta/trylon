@@ -86,6 +86,10 @@ fn main: args
 	tuple := "Tuple item 1", "Tuple item 2", "Tuple item 3"
 	for item in tuple
 		print-line: item
+	print-line
+
+	for item in "Single item"
+		print-line: item
 
 	#
 	print-line

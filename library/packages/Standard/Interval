@@ -1,7 +1,5 @@
 trylon-class Interval
 
-superclass Collection
-
 fld start
 fld stop
 fld value
