@@ -17,4 +17,10 @@ access: String
 }
 
 
+is-constant: Bool
+{
+	return true;
+}
+
+
 

@@ -4,3 +4,11 @@ Class: ExpressionResult
 access: String
 [phantom]
 
+
+is-constant: Bool
+{
+	// Default: no.
+	return false;
+}
+
+
