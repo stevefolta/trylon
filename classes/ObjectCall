@@ -33,22 +33,8 @@ emit-code(builder: MethodBuilder): ExpressionResult
 		else
 			package = object-result.as-a(ClassResult).the-class;
 		function: TrylonFunction = package.lookup-function(name);
-		if (function) {
-			// Declare the function
-			line: String = "extern obj_ " + function.c-name + "(";
-			have-arg: Bool = false;
-			for (arg: ExpressionResult in arg-results) {
-				if (have-arg)
-					line += ", ";
-				else
-					have-arg = true;
-				line += "obj_";
-				}
-			line += ");";
-			builder.add-used-function-declaration(line);
-			// Emit the call
+		if (function)
 			return function.emit-call(arg-results, builder);
-			}
 		}
 
 	// Emit the call.
