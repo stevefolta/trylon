@@ -1226,7 +1226,7 @@ parse-primary-expression(): Expression
 
 parse-super-call(): Expression
 {
-	consume-token(); 	// "super"
+	// Note: the "super" token has already been consumed.
 
 	// Make sure this is in an object method.
 	method-context: MethodContext = context.enclosing-method-context;
@@ -1239,22 +1239,7 @@ parse-super-call(): Expression
 	name: String = nil;
 	arguments: List of Expression;
 
-	// We allow binops here.
-	if (current-token.text == nil || current-token.text.is-empty) {
-		//*** Actually, we're allowing too many things here, but we'd have to
-		//*** explicitly check every binop.
-		name = current-token.type;
-		consume-token();
-		arg: Expression = parse-unary-expression();
-		if (arg == nil) {
-			message: String =
-				"Missing unary expression argument in super call (\"" + name + "\").";
-			throw ParseException(message, current-token);
-			}
-		arguments.append(arg);
-		}
-
-	else if (current-token.type == 'name') {
+	if (current-token.type == 'name') {
 		name = current-token.text;
 		consume-token();
 		}
@@ -1272,6 +1257,21 @@ parse-super-call(): Expression
 				}
 			arguments.append(arg);
 			}
+		}
+
+	// We allow binops here.
+	else if (current-token.text == nil || current-token.text.is-empty) {
+		//*** Actually, we're allowing too many things here, but we'd have to
+		//*** explicitly check every binop.
+		name = current-token.type;
+		consume-token();
+		arg: Expression = parse-unary-expression();
+		if (arg == nil) {
+			message: String =
+				"Missing unary expression argument in super call (\"" + name + "\").";
+			throw ParseException(message, current-token);
+			}
+		arguments.append(arg);
 		}
 
 	else {

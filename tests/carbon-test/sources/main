@@ -1,0 +1,18 @@
+trylon-package Main
+
+class Window
+	superclass Carbon WindowManager Window
+
+	fn create
+		super create: (Rectangle new: (100, 100, 400, 400)) --
+			attributes: ('standard-document-attributes', 'standard-handler', 	--
+			             'in-window-menu')
+
+	fn handle-event
+		print-line: "Got window event."
+
+fn main: args
+	window := Window new
+	window show
+	Carbon EventManager run-application-event-loop
+

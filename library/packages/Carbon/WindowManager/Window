@@ -1,13 +1,20 @@
 trylon-class Window
 
-primitive-class-fn new: content-rect attributes: attributes
+field carbon-window 	# DON'T TOUCH THIS!
+
+primitive-fn create: content-rect attributes: attributes
 
 primitive-fn show
+
+fn handle-event
+	# *** Get the event passed.
 
 
 class-fn used-symbols
 	# These are the symbols used by the primitive functions.
 	# They're here so the compiler will generate them.
+
+	# Window attributes
 	'no-attributes'
 	'close-box'
 	'horizontal-zoom'

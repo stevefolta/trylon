@@ -64,10 +64,11 @@ emit-code(stream: OutputStream)
 			stream.write(", ");
 		else
 			have-arg = true;
+		mangled-arg-name: String = MethodBuilder.mangle-name(arg.name);
 		stream.write("obj_ ");
-		arg-name: String = MethodBuilder.mangle-name(arg.name);
+		arg-name: String = mangled-arg-name;
 		stream.write(arg-name);
-		args.append(new NameResult(arg.name));
+		args.append(new NameResult(mangled-arg-name));
 		}
 	stream.write-line(")");
 	stream.write-line("{");

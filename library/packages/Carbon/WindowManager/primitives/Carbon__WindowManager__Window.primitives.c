@@ -6,6 +6,8 @@
 
 #define CarbonWindow(obj) ((WindowRef) obj->fields[0])
 
+static EventHandlerUPP eventHandlerUPP = NULL;
+
 /* Window attributes */
 UsingSym_(no_attributes)
 UsingSym_(close_box)
@@ -63,9 +65,18 @@ static struct {
 };
 
 
-obj_ new_co_attributes_co___Carbon__WindowManager__Window(obj_ content_rect, obj_ attributes)
+static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler,
+                                          EventRef event, void* userData)
 {
-	obj_ windObj;
+	extern MethodSpec_ handle_event__methods[];
+
+	Call_(handle_event, ((obj_) userData));
+	return noErr; 	/***/
+}
+
+
+obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ content_rect, obj_ attributes)
+{
 	obj_ iterator, attribute;
 	int index;
 	Rect contentRect;
@@ -78,11 +89,9 @@ obj_ new_co_attributes_co___Carbon__WindowManager__Window(obj_ content_rect, obj
 		iterator__methods[], is_done__methods[], current_item__methods[], go_forward__methods[];
 	extern obj_ allocate_object_co_with_extra_slots_co___Standard__Implementation(obj_, obj_);
 	extern class_spec_ Carbon__WindowManager__Window;
-
-	/* Allocate the object */
-	windObj =
-		allocate_object_co_with_extra_slots_co___Standard__Implementation(
-			(obj_) &Carbon__WindowManager__Window, Int_(1));
+	EventTypeSpec typeList[] = {
+		{ kEventClassWindow, kEventWindowDrawContent }
+		};
 
 	/* Get the attributes */
 	windowAttrs = kWindowNoAttributes;
@@ -110,9 +119,15 @@ obj_ new_co_attributes_co___Carbon__WindowManager__Window(obj_ content_rect, obj
 	result =
 		CreateNewWindow(kDocumentWindowClass, windowAttrs, &contentRect,
 		                &carbonWindow);
-	windObj->fields[0] = (obj_) carbonWindow;
+	this_->fields[0] = (obj_) carbonWindow;
 
-	return windObj;
+	/* Install the event handler */
+	if (eventHandlerUPP == NULL)
+		eventHandlerUPP = NewEventHandlerUPP(WindowEventHandler);
+	result =
+	InstallWindowEventHandler(carbonWindow, eventHandlerUPP,
+	                          sizeof(typeList) / sizeof(EventTypeSpec), typeList,
+	                          this_, NULL);
 }
 
 

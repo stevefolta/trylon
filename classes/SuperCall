@@ -30,6 +30,14 @@ emit-code(builder: MethodBuilder): ExpressionResult
 			                 "\", but there is no superclass that has it.");
 		}
 
+	// Declare the function
+	super-c-name: String = builder.mangle-name(name) + "__" + fn-class.c-name;
+	declaration: String = "extern obj_ " + super-c-name + "(obj_";
+	for (arg: Expression in arguments)
+		declaration += ", obj_";
+	declaration += ");";
+	builder.add-extern-declaration(declaration);
+
 	// Emit the arguments.
 	arg-results: List of ExpressionResult;
 	for (arg: Expression in arguments) {
@@ -40,7 +48,7 @@ emit-code(builder: MethodBuilder): ExpressionResult
 	// Emit the call.
 	temporary: Temporary = builder.get-temporary();
 	line: String = temporary.name + " = ";
-	line += builder.mangle-name(name) + "__" + fn-class.c-name + "(this_";
+	line += super-c-name + "(this_";
 	for (arg: ExpressionResult in arg-results)
 		line += ", " + arg.access;
 	line += ");";
