@@ -1,0 +1,115 @@
+Class: BuildSettings
+
+program-name: String;
+c-flags: List of String;
+link-flags: List of String;
+c-compiler: String;
+linker: String;
+is-verbose: Bool;
+
+
+create()
+{
+	program-name = "program-binary";
+	c-flags = new List of String;
+	link-flags = new List of String;
+	c-compiler = "gcc";
+	linker = "gcc";
+	is-verbose = false;
+}
+
+
+load()
+{
+	load-from("build-settings.local");
+	load-from("build-settings");
+}
+
+
+load-from(file-name: String)
+{
+	file: File(file-name);
+	if (!file.exists)
+		return;
+
+	lexer: Lexer(file.contents);
+	loop {
+		token: Token = lexer.next-token;
+		type: Symbol = token.type;
+
+		if (type == 'eol')
+			continue;
+
+		else if (type == 'comment') {
+			token = lexer.next-token; 	// It *will* be an 'eol'.
+			continue;
+			}
+
+		else if (type == 'name' || type == 'keyword') {
+			name: String = token.text;
+			if (name == "program")
+				program-name = parse-name(lexer, name);
+			else if (name == "c-flags")
+				parse-flags(lexer, c-flags, name);
+			else if (name == "link-flags")
+				parse-flags(lexer, link-flags, name);
+			else if (name == "c-compiler")
+				c-compiler = parse-name(lexer, name);
+			else if (name == "linker")
+				linker = parse-name(lexer, name);
+			}
+
+		else if (type == 'eof')
+			break;
+		}
+}
+
+
+parse-name(lexer: Lexer, declaration: String): String
+{
+	token: Token = lexer.next-token;
+	if (token.type == 'eol' || token.type == 'comment')
+		throw MessageException("Empty \"" + declaration + "\" declaration.");
+	name: String = token.text;
+	token = lexer.next-token;
+	if (token.type == 'comment')
+		lexer.next-token; 	// It *will* be an 'eol'.
+	else if (token.type != 'eol') {
+		throw MessageException("Extra tokens in \"" + declaration +
+		                       "\" declaration.");
+		}
+
+	return name;
+}
+
+
+parse-flags(lexer: Lexer, flags: (List of String), declaration: String)
+{
+	flag: String = "";
+	loop {
+		token: Token = lexer.next-token;
+
+		if (token.type == 'eol') {
+			if (!flag.is-empty)
+				flags.append(flag);
+			break;
+			}
+
+		else if (token.type == 'comment') {
+			// Just go round again; 'eol' will be next.
+			}
+
+		else if (token.type == '-') {
+			// We want to allow flags starting with hyphens without quoting.
+			flag += "-";
+			}
+
+		else {
+			flag += token.text;
+			flags.append(flag);
+			flag = "";
+			}
+		}
+}
+
+

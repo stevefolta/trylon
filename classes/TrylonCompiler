@@ -4,18 +4,11 @@ Superclass: Program
 
 arguments: List of String;
 successful: Bool;
+build-settings: BuildSettings;
 object-function-names: Dictionary of String;
 symbols: Dictionary of SymbolLiteral;
 character-literals: Dictionary of CharacterLiteral;
 package-queue: List of Package;
-
-// Build settings
-program-name: String;
-c-flags: List of String;
-link-flags: List of String;
-c-compiler: String;
-linker: String;
-is-verbose: Bool;
 
 the-compiler: TrylonCompiler; 	[class]
 status-reporter: StatusReporter; 	[class]
@@ -28,16 +21,11 @@ create(arguments: List of String)
 {
 	this.arguments = arguments;
 	this.successful = true;
+	this.build-settings = new BuildSettings;
 	object-function-names = new Dictionary of String;
 	symbols = new Dictionary of SymbolLiteral;
 	character-literals = new Dictionary of CharacterLiteral;
 	package-queue = new List of Package;
-
-	program-name = "program-binary";
-	c-flags = new List of String;
-	link-flags = new List of String;
-	c-compiler = "gcc";
-	linker = "gcc";
 
 	the-compiler = this;
 }
@@ -47,8 +35,7 @@ run()
 {
 	try {
 		// read the settings
-		load-build-settings("build-settings.local");
-		load-build-settings("build-settings");
+		build-settings.load();
 
 		// parse the arguments
 		file-names: List of String;
@@ -61,7 +48,7 @@ run()
 					do-lex-test = true;
 				else if (arg == "--verbose") {
 					status-reporter = new StdoutStatusReporter();
-					is-verbose = true;
+					build-settings.is-verbose = true;
 					}
 				}
 			else
@@ -97,43 +84,6 @@ return-value: Int
 
 
 // Top-level compilation
-
-load-build-settings(file-name: String)
-{
-	file: File(file-name);
-	if (!file.exists)
-		return;
-
-	parser: QuickParser(file.contents);
-	while (!parser.is-done) {
-		token: String = parser.next-token;
-		if (token == "program")
-			program-name = parser.next-token;
-		else if (token == "c-flags") {
-			loop {
-				token = parser.next-token;
-				if (token.is-empty)
-					break;
-				c-flags.append(token);
-				}
-			}
-		else if (token == "link-flags") {
-			loop {
-				token = parser.next-token;
-				if (token.is-empty)
-					break;
-				link-flags.append(token);
-				}
-			}
-		else if (token == "c-compiler")
-			c-compiler = parser.next-token;
-		else if (token == "linker")
-			linker = parser.next-token;
-
-		parser.advance-line();
-		}
-}
-
 
 compile-program(compile-symbols: List of String)
 {
@@ -227,10 +177,10 @@ compile-program(compile-symbols: List of String)
 		args.append(".c-sources/" + file-name + ".c");
 		args.append("-o");
 		args.append(".objects/" + file-name + ".o");
-		for (flag: String in c-flags)
+		for (flag: String in build-settings.c-flags)
 			args.append(flag);
-		report-run-program(c-compiler, args);
-		status: Int = System.system.run-program(c-compiler, args);
+		report-run-program(build-settings.c-compiler, args);
+		status: Int = System.system.run-program(build-settings.c-compiler, args);
 		if (status != 0)
 			throw MessageException("C compilation failed.");
 		}
@@ -240,13 +190,13 @@ compile-program(compile-symbols: List of String)
 	status-reporter.report("Linking...");
 	args: List of String;
 	args.append("-o");
-	args.append(program-name);
+	args.append(build-settings.program-name);
 	for (file-name: String in link-file-names)
 		args.append(".objects/" + file-name + ".o");
-	for (flag: String in link-flags)
+	for (flag: String in build-settings.link-flags)
 		args.append(flag);
-	report-run-program(linker, args);
-	System.system.run-program(linker, args);
+	report-run-program(build-settings.linker, args);
+	System.system.run-program(build-settings.linker, args);
 }
 
 
@@ -429,7 +379,7 @@ copy-to-sources(file: File, dest-name: String): Bool
 
 report-run-program(program: String, args: List of String)
 {
-	if (is-verbose) {
+	if (build-settings.is-verbose) {
 		status-reporter.indent();
 
 		command: StringBuilder;
