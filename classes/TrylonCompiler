@@ -223,7 +223,7 @@ emit-symbols()
 		stream.write(", \"");
 		stream.write(symbol.name);
 		stream.write("\", ");
-		stream.write(symbol.name.length.string);
+		stream.write(MethodBuilder.string-literal-length(symbol.name).string);
 		stream.write-line(")");
 		}
 }

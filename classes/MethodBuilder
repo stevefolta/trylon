@@ -141,7 +141,7 @@ emit(stream: OutputStream)
 		stream.write(", \"");
 		stream.write(literal.value);
 		stream.write("\", ");
-		stream.write(literal.value.length.string);
+		stream.write(string-literal-length(literal.value).string);
 		stream.write(")");
 		stream.write-line();
 		}
@@ -328,6 +328,43 @@ mangle-name(name: String): String
 		}
 	result += new String(run-start, p);
 	return result;
+}
+
+
+string-literal-length(string: String): Int
+[class]
+{
+	// count the characters
+	p: StringIterator = string.iterator;
+	length: Int = 0;
+	while (!p.is-done) {
+		c: Int = p.current-item;
+		p.go-forward();
+
+		if (c == '\\') {
+			c = p.current-item;
+			if (c >= '0' && c <= '3') {
+				// octal: 3 characters after the "\"
+				p.go-forward();	// skip first digit
+				p.go-forward();	// skip second digit
+				p.go-forward();	// skip third digit
+				}
+			else if (c == 'x') {
+				// hex: 2 characters after the "\"
+				p.go-forward();	// skip 'x'
+				p.go-forward();	// skip first digit
+				p.go-forward();	// skip second digit
+				}
+			else {
+				// only the single character after the "\" is quoted
+				p.go-forward();
+				}
+			}
+
+		length += 1;
+		}
+
+	return length;
 }
 
 
