@@ -120,9 +120,14 @@ fn main: args
 	abcde := "abcde"
 	print-line: (abcde substr: 3) + " == de"
 	print-line: (abcde substr: 2 length: 2) + " == cd"
+	print-line
+	
+	subclass-instance := SubClass new
+	print-line: "Overriding a fn with a field " + subclass-instance message + "."
+	print-line: "Super call " + subclass-instance overridden-message + "."
+	print-line
 
 	#
-	print-line
 	return 0
 
 
@@ -157,3 +162,19 @@ class PrivateClass
 package PrivatePackage
 	fn go
 		print-line: "Private package worked."
+
+class SuperClass
+	fn message
+		return "didn't work"
+	fn overridden-message
+		return "did work"
+
+class SubClass
+	superclass SuperClass
+	field message
+	fn create
+		message = "did work"
+	fn overridden-message
+		return super overridden-message
+
+
