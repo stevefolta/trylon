@@ -144,23 +144,17 @@ fn substr: from length: length -> String
 	return String new: new-start to: new-start + dest-length
 
 fn index-of: char [Char] -> Int
-	search-char := char
-	if search-char is-a: String
-		search-char = search-char first-character
 	char-ptr := start
 	while char-ptr < stopper
-		if char-ptr deref-char == search-char
+		if char-ptr deref-char == char
 			return char-ptr - start
 		char-ptr += 1
 	return -1
 
 fn last-index-of: char [Char] -> Int
-	search-char := char
-	if search-char is-a: String
-		search-char = search-char first-character
 	char-ptr := stopper - 1
 	while char-ptr >= start
-		if char-ptr deref-char == search-char
+		if char-ptr deref-char == char
 			return char-ptr - start
 		char-ptr -= 1
 	return -1

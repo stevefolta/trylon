@@ -23,7 +23,7 @@ fn go-forward
 		all-done = true
 		return
 	
-	newline-index := remaining-string index-of: '\n'
+	newline-index := remaining-string index-of: `\n`
 	if newline-index == -1
 		current-line = remaining-string
 		remaining-string = ""
