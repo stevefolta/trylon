@@ -1,5 +1,5 @@
 precious ^\.c-sources$
 precious ^makefile.local-settings$
 precious ^.gdb_history$
-precious ^test-prog$
+precious ^hello-world$
 

@@ -2,19 +2,17 @@ Class: NewFunction
 Superclass: TrylonFunction
 
 
-creator-name: String;
 name: String;
-creator: TrylonFunction;
+creator: CompiledFunction;
 on-class: CompiledClass;
 
 
-create(creator-name: String, creator: TrylonFunction, on-class: CompiledClass)
+create(creator: CompiledFunction, on-class: CompiledClass)
 {
-	this.creator-name = creator-name;
 	this.creator = creator;
 	this.on-class = on-class;
 
-	name = "new" + creator-name.substr(6);
+	name = "new" + creator.name.substr(6);
 }
 
 
@@ -23,14 +21,14 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 {
 	// Declare the allocator
 	allocator-c-name: String =
-		MethodBuilder.mangle-name("allocate-object class") +
+		MethodBuilder.mangle-name("allocate-object:") +
 		"__Standard__Implementation";
 	builder.add-used-function-declaration(
 		"extern obj_ " + allocator-c-name + "(obj_);");
 
 	// Declare the creator
 	creator-c-name: String =
-		builder.mangle-name(creator-name) + "__" + on-class.c-name;
+		builder.mangle-name(creator.name) + "__" + on-class.c-name;
 	line: String = "extern obj_ " + creator-c-name + "(obj_";
 	for (arg: ExpressionResult in arguments)
 		line += ", obj_";
@@ -58,22 +56,19 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 
 emit-code(stream: OutputStream)
 {
-	// Get the argument names
+	// Write the header (building up the args at the same time)
 	args: List of ExpressionResult;
-	args-string: String = name.substr(4);
-	for (arg-name: String in new FieldsParser(args-string, 0 + ' '))
-		args.append(new NameResult(arg-name));
-
-	// Write the header
 	stream.write("obj_ " + c-name + "(");
 	have-arg: Bool = false;
-	for (arg: ExpressionResult in args) {
+	for (arg: CompiledField in creator.arguments) {
 		if (have-arg)
 			stream.write(", ");
 		else
 			have-arg = true;
 		stream.write("obj_ ");
-		stream.write(arg.access);
+		arg-name: String = MethodBuilder.mangle-name(arg.name);
+		stream.write(arg-name);
+		args.append(new NameResult(arg.name));
 		}
 	stream.write-line(")");
 	stream.write-line("{");
