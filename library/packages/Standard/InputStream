@@ -1,0 +1,6 @@
+trylon-class InputStream
+
+
+fn read-buffer: buffer [BytePtr] length: length [Int]
+	virtual
+

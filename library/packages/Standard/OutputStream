@@ -1,0 +1,17 @@
+trylon-class OutputStream
+
+
+fn write-buffer: buffer [BytePtr] length: length [Int]
+	virtual
+
+fn write: string
+	write-buffer: string start length: string length
+
+fn write-line: line
+	write: line
+	write: "\n"
+
+fn write-line
+	write: "\n"
+
+

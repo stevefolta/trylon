@@ -328,7 +328,7 @@ parse-fields(): List of CompiledField
 
 	// Get the fields
 	fields: List of CompiledField;
-	while (current-token.type != 'eol') {
+	while (current-token.type != 'eol' && current-token.type != 'comment') {
 		// Get the name.
 		if (current-token.type != 'name')
 			throw ParseException("Field name needed.", current-token);

@@ -16,13 +16,17 @@ fn append: object
 	if head == nil
 		head = cell
 
+fn prepend: object
+	cell := Cell new: object
+	cell next = head
+	head = cell
+
 fn iterator -> Standard Iterator
 	return Iterator new: head
 
 
 class Cell
-	field object
-	field next
+	fields object next
 	fn create: object
 		this object = object
 		next = nil
