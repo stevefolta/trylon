@@ -19,14 +19,31 @@ obj_ close__Carbon__ATSUI__Style(obj_ this_)
 
 obj_ font__Carbon__ATSUI__Style(obj_ this_)
 {
-	/***/
-	return NULL;
+	ATSUFontID fontID;
+	ByteCount actualParamSize;
+	extern obj_ invalid_font_id__Carbon__ATSUI();
+
+	if (this_->fields[0] == NULL)
+		return invalid_font_id__Carbon__ATSUI();
+
+	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUFontTag,
+	                 sizeof(ATSUFontID), &fontID, &actualParamSize);
+	return BuildInt_(fontID);
 }
 
 
-obj_ font_co___Carbon__ATSUI__Style(obj_ this, obj_ font)
+obj_ font_co___Carbon__ATSUI__Style(obj_ this_, obj_ font)
 {
-	/***/
+	ATSUFontID fontID = IntValue_(font);;
+	ATSUAttributeTag tag = kATSUFontTag;
+	ByteCount valueSize = sizeof(ATSUFontID);
+	ATSUAttributeValuePtr valuePtr = &fontID;
+
+	if (this_->fields[0] == NULL)
+		return NULL;
+
+	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
+	                  &valuePtr);
 	return NULL;
 }
 

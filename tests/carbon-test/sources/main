@@ -19,7 +19,11 @@ class Window
 		Carbon QuickDraw port = save-port
 
 	fn draw: context
+		font-id := Carbon ATSUI find-font: "Georgia"
+		if font-id == Carbon ATSUI invalid-font-id
+			print-line: "Couldn't find the font!"
 		style := Carbon ATSUI Style new
+		style font = font-id
 		style size = 31
 		layout := Carbon ATSUI TextLayout new
 		layout text = "Hello world!"
