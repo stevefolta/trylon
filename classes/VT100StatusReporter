@@ -32,7 +32,7 @@ report(message: String)
 	"                    ".substr(0, adjusted-indent-level).write();
 
 	// write the message
-	message.write();
+	message.substr(0, 80 - adjusted-indent-level).write();
 	"\n".write();
 
 	last-displayed-indent-level = indent-level;
