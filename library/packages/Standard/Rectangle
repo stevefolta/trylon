@@ -35,3 +35,21 @@ fn bottom-left
 fn bottom-right
 	return Point new: right y: bottom
 
+
+fn contains: what -> Bool
+	if what is-a: Rectangle
+		if what left < left || what right > right
+			return false
+		if what top < top || what bottom > bottom
+			return false
+		return true
+
+	else if what is-a: Point
+		if what x < left || what x > right
+			return false
+		if what y < left || what y > right
+			return false
+		return true
+	
+	return false
+
