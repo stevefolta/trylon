@@ -10,6 +10,10 @@ class Window
 
 	fn handle-event
 		print-line: "Got window event."
+		save-port := Carbon QuickDraw port
+		Carbon QuickDraw window-port: this
+		Carbon QuickDraw erase-rect: this port-bounds
+		Carbon QuickDraw port: save-port
 
 fn main: args
 	window := Window new

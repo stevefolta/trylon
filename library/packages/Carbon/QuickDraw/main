@@ -1,0 +1,13 @@
+trylon-package QuickDraw
+
+class Port
+	field primitive-port 	# Don't touch this!
+
+primitive-fn port
+primitive-fn port: new-port
+primitive-fn window-port: window [WindowManager Window]
+
+primitive-fn begin-cg-context: port -> Quartz Context
+primitive-fn end-cg-context: port context: cg-context [Quartz Context]
+
+primitive-fn erase-rect: rect

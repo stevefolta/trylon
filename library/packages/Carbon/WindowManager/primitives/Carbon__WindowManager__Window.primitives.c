@@ -3,6 +3,9 @@
 #include "Trylon_.h"
 #include <Carbon/Carbon.h>
 
+extern obj_ allocate_object_co___Standard__Implementation(obj_);
+extern class_spec_ Standard__Rectangle;
+
 
 #define CarbonWindow(obj) ((WindowRef) obj->fields[0])
 
@@ -134,6 +137,20 @@ obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ co
 obj_ show__Carbon__WindowManager__Window(obj_ this_)
 {
 	ShowWindow(CarbonWindow(this_));
+}
+
+
+obj_ port_bounds__Carbon__WindowManager__Window(obj_ this_)
+{
+	Rect rect;
+	obj_ rectObj =
+		allocate_object_co___Standard__Implementation((obj_) &Standard__Rectangle);
+	GetWindowPortBounds(CarbonWindow(this_), &rect);
+	rectObj->fields[0] = BuildInt_(rect.left);
+	rectObj->fields[1] = BuildInt_(rect.top);
+	rectObj->fields[2] = BuildInt_(rect.right);
+	rectObj->fields[3] = BuildInt_(rect.bottom);
+	return rectObj;
 }
 
 

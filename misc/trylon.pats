@@ -18,7 +18,7 @@ nedit.highlightPatterns: 	Trylon:1:0{\n\
 		Comment:"#.*$":::Comment::\n\
 		Statement:"^\\s*<(trylon-class|trylon-package|class-fn|class-field|class|package|superclass|function|fn|field|fld|primitive-fn|primitive-class-fn|primitive-field|primitive-fld|return|if|else|case|default|switch|break|continue|loop|while|do|for|try|catch|throw)>":::Keyword::\n\
 		Keyword:"<(:=|this|in|true|false|nil)>":::Keyword::\n\
-		Typespec:"\\[<\\w*>\\]":::Typespec::\n\
+		Typespec:"\\[(\\w|\\s)*\\]":::Typespec::\n\
 		Return Typespec:"-\\>(\\s*\\w+)+":::Typespec::\n\
 		Continuator:"--":::Continuator::\n\
 		Arg Name:"<(\\w|-)*:>":::Identifier::\n\
