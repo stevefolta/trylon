@@ -14,6 +14,7 @@ c-flags: List of String;
 link-flags: List of String;
 c-compiler: String;
 linker: String;
+is-verbose: Bool;
 
 the-compiler: TrylonCompiler; 	[class]
 status-reporter: StatusReporter; 	[class]
@@ -44,8 +45,8 @@ run()
 {
 	try {
 		// read the settings
-		load-build-settings("build-settings");
 		load-build-settings("build-settings.local");
+		load-build-settings("build-settings");
 
 		// parse the arguments
 		file-names: List of String;
@@ -56,8 +57,10 @@ run()
 				compile-symbols.append(arg.substr(2));
 				if (arg == "--lex-test")
 					do-lex-test = true;
-				else if (arg == "--verbose")
+				else if (arg == "--verbose") {
 					status-reporter = new StdoutStatusReporter();
+					is-verbose = true;
+					}
 				}
 			else
 				file-names.append(arg);
@@ -224,6 +227,7 @@ compile-program(compile-symbols: List of String)
 		args.append(".objects/" + file-name + ".o");
 		for (flag: String in c-flags)
 			args.append(flag);
+		report-run-program(c-compiler, args);
 		status: Int = System.system.run-program(c-compiler, args);
 		if (status != 0)
 			throw MessageException("C compilation failed.");
@@ -239,6 +243,7 @@ compile-program(compile-symbols: List of String)
 		args.append(flag);
 	for (file-name: String in link-file-names)
 		args.append(".objects/" + file-name + ".o");
+	report-run-program(linker, args);
 	System.system.run-program(linker, args);
 }
 
@@ -368,6 +373,25 @@ copy-to-sources(file: File, dest-name: String): Bool
 	is-changed: Bool = stream.is-changed;
 	stream.close();
 	return is-changed;
+}
+
+
+report-run-program(program: String, args: List of String)
+{
+	if (is-verbose) {
+		status-reporter.indent();
+
+		command: StringBuilder;
+		command += program;
+		command += " ";
+		for (arg: String in args) {
+			command += arg;
+			command += " ";
+			}
+		status-reporter.report(command.string);
+
+		status-reporter.unindent();
+		}
 }
 
 
