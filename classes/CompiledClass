@@ -26,10 +26,15 @@ make-subclass-of(superclass: CompiledClass)
 		// Already had a superclass (perhaps the default Standard Object);
 		// replace it.
 		this.superclass.subclasses.remove(this);
+		uses-packages.remove(this.superclass);
 		}
 
+	// Install the superclass.
 	this.superclass = superclass;
 	superclass.subclasses.append(this);
+
+	// Automatically "use" the superclass.
+	uses-packages.append(superclass);
 }
 
 
