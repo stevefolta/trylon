@@ -30,6 +30,9 @@ class Window
 		layout style = style
 		layout cg-context = context
 		layout draw-x: 20 y: 40
+		print-line: "Ascent: " + style ascent string
+		print-line: "Descent: " + style descent string
+		print-line: "Leading: " + style leading string
 
 fn main: args
 	menu := Carbon MenuManager Menu new: 1 title: "File"

@@ -230,4 +230,46 @@ obj_ is_extended_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_value)
 }
 
 
+obj_ ascent__Carbon__ATSUI__Style(obj_ this_)
+{
+	ATSUTextMeasurement value;
+	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
+
+	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUAscentTag,
+	                 sizeof(value), &value, &actualParamSize);
+	return BuildInt_(Fix2Long(value));
+}
+
+
+obj_ descent__Carbon__ATSUI__Style(obj_ this_)
+{
+	ATSUTextMeasurement value;
+	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
+
+	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUDescentTag,
+	                 sizeof(value), &value, &actualParamSize);
+	return BuildInt_(Fix2Long(value));
+}
+
+
+obj_ leading__Carbon__ATSUI__Style(obj_ this_)
+{
+	ATSUTextMeasurement value;
+	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
+
+	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSULeadingTag,
+	                 sizeof(value), &value, &actualParamSize);
+	return BuildInt_(Fix2Long(value));
+}
+
+
 

@@ -28,3 +28,7 @@ primitive-fn is-condensed: new-condensed [Bool]
 primitive-fn is-extended -> Bool
 primitive-fn is-extended: new-extended [Bool]
 
+primitive-fn ascent -> Int
+primitive-fn descent -> Int
+primitive-fn leading -> Int
+
