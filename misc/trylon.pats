@@ -24,3 +24,5 @@ nedit.highlightPatterns: 	Trylon:1:0{\n\
 		Arg Name:"<(\\w|-)*:>":::Identifier::\n\
 	}
 nedit.languageModes:	Trylon::"^(<trylon-class|trylon-package|class|package>)":::::".,/\\`'!|@#%^&*()=+{}[]"":;<>?~"
+nedit.styles: 		Typespec:LightGreen:Plain\n\
+	Continuator:DarkGray:Plain
