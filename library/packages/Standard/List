@@ -1,0 +1,41 @@
+trylon-class List
+
+field head [Cell]
+field tail [Cell]
+
+
+fn create
+	head = nil
+	tail = nil
+
+fn append: object
+	cell [Cell] := Cell new: object
+	if tail
+		tail next = cell
+	tail = cell
+	if head == nil
+		head = cell
+
+fn iterator -> Standard Iterator
+	return Iterator new: head
+
+
+class Cell
+	field object
+	field next
+	fn create: object
+		this object = object
+		next = nil
+
+
+class Iterator
+	superclass Standard Iterator
+	field cell
+	fn create: cell
+		this cell = cell
+	fn is-done -> Bool
+		return cell != nil
+	fn current-item
+		return cell object
+	fn go-forward
+		cell = cell next

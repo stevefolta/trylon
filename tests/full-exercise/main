@@ -73,6 +73,14 @@ fn main: args
 	test-obj := PrivateClass new
 	test-obj go
 	PrivatePackage go
+	print-line
+
+	list := List new
+	list append: "List item 1"
+	list append: "List item 2"
+	list append: "List item 3"
+	for item in list
+		print-line: item
 
 
 	#

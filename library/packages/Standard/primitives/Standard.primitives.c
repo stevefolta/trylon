@@ -9,6 +9,8 @@ obj_ false__Standard = &false__Standard__obj;
 struct object true__Standard__obj = { (obj_) &Standard__Bool, (obj_) 1 };
 obj_ true__Standard = &true__Standard__obj;
 
+obj_ nil__Standard = (0);
+
 
 obj_ print_co___Standard(obj_ strObj)
 {
