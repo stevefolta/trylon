@@ -108,3 +108,13 @@ obj_ draw_x_co_y_co___Carbon__ATSUI__TextLayout(obj_ this_, obj_ x, obj_ y)
 }
 
 
+obj_ text_width__Carbon__ATSUI__TextLayout(obj_ this_)
+{
+	ATSUTextMeasurement textBefore, textAfter, ascent, descent;
+
+	ATSUGetUnjustifiedBounds(textLayout, kATSUFromTextBeginning, kATSUToTextEnd,
+	                         &textBefore, &textAfter, &ascent, &descent);
+	return BuildInt_(Fix2Long(textAfter));
+}
+
+

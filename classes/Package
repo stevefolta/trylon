@@ -212,14 +212,19 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 	standard-package.lookup-function("Symbol");
 	standard-package.lookup-function("Tuple");
 	standard-package.lookup-function("List");
+
+	functions["Main"] = new PackageFunction(this);
 }
 
 
 ensure-superclasses(object-class: CompiledClass)
 {
 	for (function: TrylonFunction in functions.values) {
-		if (function.is-a(PackageFunction))
-			function.as-a(PackageFunction).package.ensure-superclasses(object-class);
+		if (function.is-a(PackageFunction)) {
+			package: Package = function.as-a(PackageFunction).package;
+			if (package != this)
+				package.ensure-superclasses(object-class);
+			}
 		else if (function.is-a(ClassFunction))
 			function.as-a(ClassFunction).the-class.ensure-superclasses(object-class);
 		}
@@ -268,8 +273,9 @@ copy-primitives-files(compile-file-names: (List of String),
 	// Have all children copy theirs
 	for (function: TrylonFunction in functions.values) {
 		if (function.is-a(PackageFunction)) {
-			function.as-a(PackageFunction).package.copy-primitives-files(
-				compile-file-names, link-file-names);
+			package: Package = function.as-a(PackageFunction).package;
+			if (package != this)
+				package.copy-primitives-files(compile-file-names, link-file-names);
 			}
 		else if (function.is-a(ClassFunction)) {
 			function.as-a(ClassFunction).the-class.copy-primitives-files(
