@@ -127,6 +127,7 @@ parse-package-contents(package: Package)
 		         name == "primitive-field" || name == "primitive-fld") {
 			field: CompiledField = parse-field();
 			package.add-field(field);
+			require-eol();
 			}
 
 		else if (name == "package")
@@ -244,12 +245,14 @@ parse-class-contents(the-class: CompiledClass)
 		else if (name == "field" || name == "fld") {
 			field: CompiledField = parse-field();
 			the-class.add-instance-field(field);
+			require-eol();
 			}
 
 		else if (name == "class-field" || name == "class-fld" ||
 		         name == "primitive-class-fld" || name == "primitive-class-field") {
 			field: CompiledField = parse-field;
 			the-class.add-field(field);
+			require-eol();
 			}
 
 		else if (name == "package") {
@@ -338,8 +341,6 @@ parse-field(): CompiledField
 			throw ParseException("Missing \"]\".", current-token);
 		consume-token();
 		}
-
-	require-eol();
 
 	return new CompiledField(name, type, is-primitive);
 }
