@@ -6,6 +6,7 @@ arguments: List of String;
 successful: Bool;
 object-function-names: Dictionary of String;
 symbols: Dictionary of SymbolLiteral;
+character-literals: Dictionary of CharacterLiteral;
 package-queue: List of Package;
 
 // Build settings
@@ -29,6 +30,7 @@ create(arguments: List of String)
 	this.successful = true;
 	object-function-names = new Dictionary of String;
 	symbols = new Dictionary of SymbolLiteral;
+	character-literals = new Dictionary of CharacterLiteral;
 	package-queue = new List of Package;
 
 	program-name = "program-binary";
@@ -268,6 +270,21 @@ get-symbol-literal(name: String): SymbolLiteral
 }
 
 
+get-character-literal(name: String): CharacterLiteral
+{
+	// Is it already there?
+	name = Lexer.character-constant-value(name).string;
+	literal: CharacterLiteral = character-literals[name];
+	if (literal)
+		return literal;
+
+	// If not, we need to add it.
+	literal = new CharacterLiteral(name);
+	character-literals[name] = literal;
+	return literal;
+}
+
+
 emit-method-specs(main-package: Package): Bool
 {
 	stream: ExistingFileStream(new File(".c-sources/methods_.c"));
@@ -329,10 +346,13 @@ emit-method-specs(main-package: Package): Bool
 
 emit-symbols(): Bool
 {
+	// Character literals are also emitted here.
+
 	stream: ExistingFileStream(new File(".c-sources/symbols_.c"));
 	stream.write-line("#include \"Trylon_.h\"");
 	stream.write-line();
 
+	// Symbols.
 	for (symbol: SymbolLiteral in symbols.values) {
 		stream.write("DefineSymbol_(");
 		stream.write(MethodBuilder.mangle-name(symbol.name));
@@ -342,6 +362,37 @@ emit-symbols(): Bool
 		stream.write(MethodBuilder.string-literal-length(symbol.name).string);
 		stream.write-line(")");
 		}
+	stream.write-line();
+
+	// Character literals.
+	for (literal: CharacterLiteral in character-literals.values) {
+		// The literal's name is a string of a decimal number which is the 
+		// character's ASCII value.
+		char: Int = literal.name.as-int;
+		escaped-char: String = char.char-string;
+		if (char < ' ' || char > '~' || char == '\'' || char == '\\') {
+			escaped-char = "\\x";
+			digit: Int = (char >> 4) & 0x0F;
+			if (digit >= 0x0A && digit <= 0x0F)
+				digit = digit - 0x0A + 'A';
+			else
+				digit = digit + '0';
+			escaped-char += digit.char-string;
+			digit = char & 0x0F;
+			if (digit >= 0x0A && digit <= 0x0F)
+				digit = digit - 0x0A + 'A';
+			else
+				digit = digit + '0';
+			escaped-char += digit.char-string;
+			}
+
+		stream.write("DefineChar_(");
+		stream.write(MethodBuilder.mangle-name(literal.name));
+		stream.write(", \'");
+		stream.write(escaped-char);
+		stream.write-line("\')");
+		}
+	stream.write-line();
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();

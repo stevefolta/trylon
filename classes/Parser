@@ -1226,6 +1226,12 @@ parse-primary-expression(): Expression
 		return TrylonCompiler.the-compiler.get-symbol-literal(value);
 		}
 
+	else if (token == 'character-literal') {
+		value: String = current-token.text;
+		consume-token();
+		return TrylonCompiler.the-compiler.get-character-literal(value);
+		}
+
 	else if (token == '(') {
 		consume-token();
 		expr: Expression = parse-expression();

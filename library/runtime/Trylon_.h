@@ -229,6 +229,11 @@ _FinishExternC_
 #define UsingSym_(name) 	extern struct Standard__String__internal name##__sym_;
 #define Sym_(name) 	((obj_) &name##__sym_)
 
+#define DefineChar_(name, value) 	\
+	struct object c##name##_ = { (obj_) &Standard__Char, (obj_) (value) };
+#define UsingChar_(name) 	extern struct object c##name##_;
+#define Char_(name) 	((obj_) &c##name##_)
+
 #define UsingMethod_(methodName)	extern MethodSpec_ methodName##__methods[];
 
 // Helpers for primitives

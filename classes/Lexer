@@ -185,7 +185,7 @@ next-token: Token
 				token-end = p.copy;
 				p.go-forward();
 				if (c == 0)
-					throw MessageException("Unterminated string constant");
+					throw MessageException("Unterminated string constant.");
 				else if (c == '\\')
 					p.go-forward();
 				else if (c == '"')
@@ -204,13 +204,32 @@ next-token: Token
 				token-end = p.copy;
 				p.go-forward();
 				if (c == 0)
-					throw MessageException("Unterminated symbol");
+					throw MessageException("Unterminated symbol.");
 				else if (c == '\\')
 					p.go-forward();
 				else if (c == '\'')
 					break;
 				}
 			return new Token('symbol-literal', new String(token-start, token-end));
+			}
+
+		// Character literal
+		else if (c == '`') {
+			token-start = p.copy;
+			token-end: StringIterator = p.copy;
+			string: String;
+			loop {
+				c = cur-char;
+				token-end = p.copy;
+				p.go-forward();
+				if (c == 0)
+					throw MessageException("Unterminated character constant.");
+				else if (c == '\\')
+					p.go-forward();
+				else if (c == '`')
+					break;
+				}
+			return new Token('character-literal', new String(token-start, token-end));
 			}
 
 		// Single-character tokens
