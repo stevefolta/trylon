@@ -731,7 +731,7 @@ parse-return-statement(): ReturnStatement
 	consume-token();	// "return"
 
 	return-value: Expression = nil;
-	if (current-token == 'eol')
+	if (current-token.type == 'eol' || current-token.type == 'comment')
 		return-value = new FunctionCall("nil", new (List of Expression), context);
 	else
 		return-value = parse-expression();

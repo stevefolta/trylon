@@ -15,6 +15,8 @@ fn print-line
 	print: "\n"
 
 
+# Pseudo-declarations
+
 fn virtual
 	###
 	#	This is a function you can call in "pure virtual" functions.  It
@@ -24,3 +26,4 @@ fn virtual
 	###
 	
 	throw MessageException new: "Attempt to call a virtual function!"
+

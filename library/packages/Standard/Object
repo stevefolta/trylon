@@ -16,3 +16,12 @@ fn iterator -> Iterator
 	return SingleObjectIterator new: this
 
 primitive-fn message-not-understood
+
+
+# Pseudo-declarations
+
+fn must-be-a: class
+	if this class != class
+		throw MessageException new: 	--
+			"Something is supposed to be a " + class name + ", but isn't."
+

@@ -1,0 +1,39 @@
+trylon-class LinesIterator
+
+
+fields current-line remaining-string all-done
+
+
+fn create: string
+	this remaining-string = string
+	this all-done = false
+	go-forward
+
+
+fn is-done
+	return all-done
+
+
+fn current-item
+	return current-line
+
+
+fn go-forward
+	if remaining-string is-empty
+		all-done = true
+		return
+	
+	newline-index := remaining-string index-of: '\n'
+	if newline-index == -1
+		current-line = remaining-string
+		remaining-string = ""
+		return
+	
+	current-line = remaining-string substr: 0 length: newline-index
+	remaining-string = remaining-string substr: newline-index + 1
+
+
+fn iterator
+	return this
+
+

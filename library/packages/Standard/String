@@ -14,6 +14,9 @@ fn create: length
 fn length -> Int
 	return stopper - start
 
+fn is-empty -> Bool
+	return stopper <= start
+
 fn == arg -> Bool
 	p [BytePtr] := start
 	other-p [BytePtr] := arg start
@@ -125,12 +128,12 @@ fn + arg [String] -> String
 	new-string stopper = new-string start + length + arg length
 	return new-string
 
-fn substr: from
+fn substr: from -> String
 	if from > this length
 		return ""
 	return String new: start + from to: stopper
 
-fn substr: from length: length
+fn substr: from length: length -> String
 	src-length := this length
 	if from > src-length
 		return ""
@@ -139,6 +142,79 @@ fn substr: from length: length
 		dest-length = src-length - from
 	new-start := start + from
 	return String new: new-start to: new-start + dest-length
+
+fn index-of: char [Char] -> Int
+	char-ptr := start
+	while char-ptr < stopper
+		if char-ptr deref-char == char
+			return char-ptr - start
+		char-ptr += 1
+	return -1
+
+fn last-index-of: char [Char] -> Int
+	char-ptr := stopper - 1
+	while char-ptr >= start
+		if char-ptr deref-char == char
+			return char-ptr - start
+		char-ptr -= 1
+	return -1
+
+fn index-of-string: search-string -> Int
+	# Could be more efficient...
+	remainder := this copy
+	while !remainder is-empty
+		if remainder starts-with: search-string
+			return length - remainder length
+		remainder = remainder substr: 1
+	return -1
+
+fn starts-with: other -> Bool
+	return (substr: 0 length: other length) == other
+
+fn ends-with: other -> Bool
+	return (substr: length - other length) == other
+
+fn at: index [Int] -> Char
+	return (start + index) deref-char
+
+fn first-character -> Char
+	return start deref-char
+
+fn last-character -> Char
+	len := length
+	if len == 0
+		return 0
+	return this at: len - 1
+
+fn copy -> String
+	return String new: start to: stopper
+
+fn iterator
+	return StringIterator new: this
+
+fn lines
+	return LinesIterator new: this
+
+
+fn trimmed -> String
+	trimmed-copy := this copy
+	
+	# Trim the front.
+	while !trimmed-copy is-empty
+		c := trimmed-copy first-character
+		if c != ' ' && c != '\t' && c != '\n' && c != '\r'
+			break
+		trimmed-copy start += 1
+	
+	# Trim the back.
+	while !trimmed-copy is-empty
+		c := trimmed-copy last-character
+		if c != ' ' && c != '\t' && c != '\n' && c != '\r'
+			break
+		trimmed-copy stopper -= 1
+	
+	return trimmed-copy
+
 
 primitive-fn int -> Int
 primitive-fn float -> Float

@@ -1,0 +1,54 @@
+trylon-class StringIterator
+
+
+fields start stopper string
+
+
+fn create: string
+	this string = string
+	this start = string start
+	this stopper = string stopper
+
+
+fn create: start to: stopper string: string
+	this start = start
+	this stopper = stopper
+	this string = string
+
+
+fn copy
+	return StringIterator new: start to: stopper string: string
+
+
+fn is-done -> Bool
+	return (start >= stopper)
+
+
+fn current-item -> Char
+	return start deref-char
+
+
+fn go-forward
+	start += 1
+
+
+fn back-up
+	if start > string start
+		start -= 1
+
+
+fn skip: num-chars [Int]
+	start += num-chars
+
+
+fn remainder
+	return String new: start to: stopper
+
+
+fn > other
+	return (this start > other start)
+
+
+fn iterator
+	return this
+
