@@ -1,7 +1,7 @@
 program carbon-test
 
-c-flags -DOSX_FINK -framework Carbon -I/sw/include
+c-flags -DOSX_FINK -I/sw/include
 c-flags -g
 
-link-flags -L/sw/lib
+link-flags -L/sw/lib -framework Carbon
 link-flags -lgc -ldl

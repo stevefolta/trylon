@@ -239,10 +239,10 @@ compile-program(compile-symbols: List of String)
 	args: List of String;
 	args.append("-o");
 	args.append(program-name);
-	for (flag: String in link-flags)
-		args.append(flag);
 	for (file-name: String in link-file-names)
 		args.append(".objects/" + file-name + ".o");
+	for (flag: String in link-flags)
+		args.append(flag);
 	report-run-program(linker, args);
 	System.system.run-program(linker, args);
 }
