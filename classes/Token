@@ -13,7 +13,7 @@ create(type: Symbol, text: String)
 
 string: String
 {
-	if (type == 'name')
+	if (type == 'name' || type == 'keyword')
 		return text;
 	return type;
 }

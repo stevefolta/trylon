@@ -10,11 +10,10 @@ CFLAGS += -g
 
 
 default:
-	../../vlange $(VLANGE_FLAGS) main
-
-c-test:
+	[ -d .c-sources ] || mkdir .c-sources
+	../../trylon $(TRYLON_FLAGS) main
 	$(CC) $(CFLAGS) $(INCLUDE_PATHS) \
 		.c-sources/*.c \
 		$(LIB_PATHS) -lgc -ldl 	\
-		-o test-prog
+		-o hello-world
 

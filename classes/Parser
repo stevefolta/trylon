@@ -319,46 +319,54 @@ parse-function(is-object-function: Bool): CompiledFunction
 	// literals as well as names.  Ideally we should reject other names, but
 	// currently we don't bother.
 	name: String = current-token.string;
+	fn-type: Symbol = current-token.type;
 	consume-token();
 
-	// Get the arguments and the return type.
+	// Get the arguments.
 	arguments: List of CompiledField;
-	return-type: CompiledClass = nil;
-	while (current-token.type != 'eol') {
-		// Argument
-		if (current-token.type == 'name' || current-token.type == 'keyword') {
-			// Get the name.
-			arg-name: String = current-token.text;
-			consume-token();
+	if (fn-type != 'name') {
+		// Get the first argument.
+		if (current-token.type != 'name') {
+			message: String = "Missing argument name in " + name + ".";
+			throw ParseException(message, current-token);
+			}
+		arg-name: String = current-token.text;
+		consume-token();
+		arg-type: CompiledClass = parse-arg-type();
+		arguments.append(new CompiledField(arg-name, arg-type));
 
-			// Get the type.
-			arg-type: CompiledClass = nil;
-			if (current-token.type == '[') {
-				// Type is specified.
+		// Get additional arguments.
+		while (current-token.type == 'name' || current-token.type == 'keyword') {
+			// Get the name.
+			if (current-token.type == 'keyword') {
+				// Standard argument declaration ("keyword: name").
+				name += current-token.text;
 				consume-token();
-				arg-type = parse-type-spec();
-				if (current-token.type != ']')
-					throw ParseException("Missing \"]\".", current-token);
+				if (current-token.type != 'name')
+					throw ParseException("Missing argument name.", current-token);
+				arg-name = current-token.text;
+				consume-token();
+				}
+			else {
+				// Special shortcut: just an argument name.  Equivalent to "name: name".
+				name += current-token.text + ":";
+				arg-name = current-token.text.substr(0, current-token.text.length - 1);
 				consume-token();
 				}
 
-			// Add the argument.
+			// Get the type and add the argument.
+			arg-type = parse-arg-type();
 			arguments.append(new CompiledField(arg-name, arg-type));
-			name += " " + arg-name;
 			}
-
-		// Return type
-		else if (current-token.type == '->') {
-			consume-token();
-			return-type = parse-type-spec();
-			if (current-token.type != 'eol')
-				throw ParseException("Illegal function declaration.", current-token);
-			}
-
-		// Anything else is an error
-		else
-			throw ParseException("Illegal function declaration.", current-token);
 		}
+
+	// Get the return type.
+	return-type: CompiledClass = nil;
+	if (current-token.type == '->') {
+		consume-token();
+		return-type = parse-type-spec();
+		}
+
 	require-eol();
 
 	TrylonCompiler.status-reporter.report("Parsing " + name + "...");
@@ -379,6 +387,21 @@ parse-function(is-object-function: Bool): CompiledFunction
 		                 context.as-a(Package),
 		                 body);
 	return new-function;
+}
+
+
+parse-arg-type(): CompiledClass
+{
+	arg-type: CompiledClass = nil;
+	if (current-token.type == '[') {
+		// Type is specified.
+		consume-token();
+		arg-type = parse-type-spec();
+		if (current-token.type != ']')
+			throw ParseException("Missing \"]\".", current-token);
+		consume-token();
+		}
+	return arg-type;
 }
 
 

@@ -15,11 +15,11 @@ class Int
 	primitive-fn * arg [Int] -> Int
 	primitive-fn / arg [Int] -> Int
 	primitive-fn % arg [Int] -> Int
-	primitive-fn - -> Int
+#	primitive-fn - -> Int
 
 	primitive-fn | arg [Int] -> Int
 	primitive-fn & arg [Int] -> Int
 	primitive-fn ^ arg [Int] -> Int
-	primitive-fn ~ -> Int
+#	primitive-fn ~ -> Int
 
 	primitive-fn string -> String

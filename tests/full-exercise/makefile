@@ -11,7 +11,7 @@ CFLAGS += -g
 
 default:
 	[ -d .c-sources ] || mkdir .c-sources
-	../../vlange $(VLANGE_FLAGS)
+	../../trylon $(TRYLON_FLAGS)
 	$(CC) $(CFLAGS) $(INCLUDE_PATHS) \
 		.c-sources/*.c \
 		$(LIB_PATHS) -lgc -ldl 	\

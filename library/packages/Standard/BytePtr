@@ -1,10 +1,9 @@
 class BytePtr
 
 	class-fn new
-		return --
-			Implementation allocate-object: BytePtr with-extra-slots: 1
+		return Implementation allocate-object: BytePtr with-extra-slots: 1
 
-	class-fn new size
+	class-fn new: size
 		return Implementation allocate-bytes: size
 
 	primitive-fn == arg [BytePtr] -> Bool
