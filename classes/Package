@@ -92,7 +92,7 @@ add-field(field: CompiledField)
 {
 	fields[field.name] = field;
 	functions[field.name] = new FieldGetter(field, this);
-	functions[field.name + " set-to"] = new FieldSetter(field, this);
+	functions[field.name + ":"] = new FieldSetter(field, this);
 	if (field.is-primitive)
 		has-primitives = true;
 }

@@ -799,7 +799,7 @@ parse-declaration(): Statement
 	arguments.append(initial-value);
 	return
 		new ExpressionStatement(
-			new FunctionCall(name + " set-to", arguments, context), comment);
+			new FunctionCall(name + ":", arguments, context), comment);
 }
 
 

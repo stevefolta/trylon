@@ -35,8 +35,8 @@ lookup-function(name: String): TrylonFunction
 	if (locals) {
 		local-name: String = name;
 		is-setter: Bool = false;
-		if (name.ends-with(" set-to")) {
-			local-name = name.substr(0, name.length - " set-to".length);
+		if (name.ends-with(":")) {
+			local-name = name.substr(0, name.length - 1);
 			is-setter = true;
 			}
 		local: CompiledField = locals[local-name];

@@ -54,7 +54,7 @@ add-instance-field(field: CompiledField)
 {
 	instance-fields.append(field);
 	add-instance-function(field.name, new InstanceFieldGetter(field, this));
-	add-instance-function(field.name + " set-to",
+	add-instance-function(field.name + ":",
 	                      new InstanceFieldSetter(field, this));
 }
 

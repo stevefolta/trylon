@@ -36,7 +36,10 @@ emit-code(builder: MethodBuilder): ExpressionResult
 
 convert-to-setter-call(value: Expression)
 {
-	name += " set-to";
+	if (name.ends-with(":"))
+		name += "set-to:";
+	else
+		name += ":";
 	arguments.append(value);
 }
 
