@@ -1,5 +1,35 @@
 trylon-class Window
 
-primitive-class-fn new: content-rect
+primitive-class-fn new: content-rect attributes: attributes
 
 primitive-fn show
+
+
+class-fn used-symbols
+	# These are the symbols used by the primitive functions.
+	# They're here so the compiler will generate them.
+	'no-attributes'
+	'close-box'
+	'horizontal-zoom'
+	'vertical-zoom'
+	'full-zoom'
+	'collapse-box'
+	'resizable'
+	'side-titlebar'
+	'toolbar-button'
+	'metal'
+	'no-updates'
+	'no-activates'
+	'opaque-for-events'
+	'compositing'
+	'no-shadow'
+	'hide-on-suspend'
+	'standard-handler'
+	'hide-on-full-screen'
+	'in-window-menu'
+	'live-resize'
+	'ignore-clicks'
+	'no-constrain'
+	'standard-document-attributes'
+	'standard-floating-attributes'
+
