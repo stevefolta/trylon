@@ -1,0 +1,51 @@
+Class: SuperCall
+Superclass: Expression
+
+
+name: String;
+arguments: List of Expression;
+on-class: CompiledClass;
+
+
+create(name: String, arguments: (List of Expression), on-class: CompiledClass)
+{
+	this.name = name;
+	this.arguments = arguments;
+	this.on-class = on-class;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	// Find the class with the super function.
+	fn-class: CompiledClass = on-class.superclass;
+	while (fn-class != nil) {
+		if (fn-class.has-instance-function(name))
+			break;
+		fn-class = fn-class.superclass;
+		}
+	if (fn-class == nil) {
+		throw 
+			MessageException("Attempt to make a super call on \"" + name +
+			                 "\", but there is no superclass that has it.");
+		}
+
+	// Emit the arguments.
+	arg-results: List of ExpressionResult;
+	for (arg: Expression in arguments) {
+		result: ExpressionResult = arg.emit-code(builder);
+		arg-results.append(result);
+		}
+
+	// Emit the call.
+	temporary: Temporary = builder.get-temporary();
+	line: String = temporary.name + " = ";
+	line += builder.mangle-name(name) + "__" + fn-class.c-name + "(this_";
+	for (arg: ExpressionResult in arg-results)
+		line += ", " + arg.access;
+	line += ");";
+	builder.add-line(line);
+	return temporary;
+}
+
+

@@ -1,0 +1,9 @@
+class Foo
+	fn threen name [String] -> Int
+		x := bar	# yeah
+		if x == 7
+			return 2.5
+		foo bar baz: 'Oops'
+
+	fn bar
+		return "Hello"

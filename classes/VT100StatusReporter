@@ -1,0 +1,73 @@
+Class: VT100StatusReporter
+Superclass: StatusReporter
+
+// Copyright 2003 Steve Folta
+// See the License file.
+
+
+indent-level: Int;
+last-displayed-indent-level: Int;
+
+
+create()
+{
+	indent-level = 0;
+	last-displayed-indent-level = -1;
+}
+
+
+report(message: String)
+{
+	// go back up in the display
+	num-lines-up: Int = last-displayed-indent-level - indent-level + 1;
+	while (num-lines-up > 0) {
+		back-up-one-line();
+		num-lines-up -= 1;
+		}
+
+	// indent
+	adjusted-indent-level: Int = indent-level;
+	if (adjusted-indent-level > 20)
+		adjusted-indent-level = 20;
+	"                    ".substr(0, adjusted-indent-level).write();
+
+	// write the message
+	message.write();
+	"\n".write();
+
+	last-displayed-indent-level = indent-level;
+}
+
+
+indent()
+{
+	indent-level += 1;
+}
+
+
+unindent()
+{
+	indent-level -= 1;
+
+	num-lines-up: Int = last-displayed-indent-level - indent-level;
+	while (num-lines-up > 0) {
+		back-up-one-line();
+		num-lines-up -= 1;
+		last-displayed-indent-level -= 1;
+		}
+}
+
+
+back-up-one-line()
+{
+	// go up a line
+	"\033[A".write();
+
+	// go to the beginning of the line
+	"\015".write();
+
+	// erase the line
+	"\033[2K".write();
+}
+
+

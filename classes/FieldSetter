@@ -1,0 +1,26 @@
+Class: FieldSetter
+Superclass: VlangeFunction
+
+
+field: CompiledField;
+on-package: Package;
+
+
+create(field: CompiledField, on-package: Package)
+{
+	this.field = field;
+	this.on-package = on-package;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	builder.using-field(field, on-package);
+	c-name: String =
+		MethodBuilder.mangle-name(field.name) + "__" + on-package.c-name;
+	builder.add-line(c-name + " = " + arguments.first-item.access + ";");
+	return new NameResult("NULL");
+}
+
+

@@ -1,0 +1,16 @@
+Class: Comment
+Superclass: Statement
+
+text: String;
+
+
+create(text: String)
+{
+	this.text = text;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	builder.add-line("/* " + text + " */");
+}

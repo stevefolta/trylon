@@ -1,0 +1,16 @@
+Class: ContinueStatement
+Superclass: Statement
+
+
+create(comment: String)
+{
+	this.comment = comment;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	builder.add-line(add-comment("_Continue_"));
+}
+
+

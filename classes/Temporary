@@ -1,0 +1,19 @@
+Class: Temporary
+Superclass: ExpressionResult
+
+
+name: String;
+
+
+create(name: String)
+{
+	this.name = name;
+}
+
+
+access: String
+{
+	return name;
+}
+
+

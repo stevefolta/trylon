@@ -1,0 +1,19 @@
+Class: FloatLiteralResult
+Superclass: ExpressionResult
+
+
+value: Float;
+
+
+create(value: Float)
+{
+	this.value = value;
+}
+
+
+access: String
+{
+	return value.string;
+}
+
+

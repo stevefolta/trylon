@@ -1,0 +1,15 @@
+Class: EmptyStatement
+Superclass: Statement
+
+
+create()
+{
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	// Nothing to do.
+}
+
+

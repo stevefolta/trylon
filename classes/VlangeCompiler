@@ -1,0 +1,262 @@
+Class: VlangeCompiler
+Superclass: Program
+
+
+arguments: List of String;
+successful: Bool;
+object-function-names: Dictionary of String;
+symbols: Dictionary of SymbolLiteral;
+package-queue: List of Package;
+
+the-compiler: VlangeCompiler; 	[class]
+status-reporter: StatusReporter; 	[class]
+
+
+
+// Program
+
+create(arguments: List of String)
+{
+	this.arguments = arguments;
+	this.successful = true;
+	object-function-names = new Dictionary of String;
+	symbols = new Dictionary of SymbolLiteral;
+	package-queue = new List of Package;
+
+	the-compiler = this;
+}
+
+
+run()
+{
+	try {
+		// parse the arguments
+		file-names: List of String;
+		compile-symbols: List of String;
+		do-lex-test: Bool = false;
+		for (arg: String in arguments.tail) {
+			if (arg.starts-with("--")) {
+				compile-symbols.append(arg.substr(2));
+				if (arg == "--lex-test")
+					do-lex-test = true;
+				else if (arg == "--verbose")
+					status-reporter = new StdoutStatusReporter();
+				}
+			else
+				file-names.append(arg);
+			}
+
+		if (status-reporter == nil)
+			status-reporter = new VT100StatusReporter();
+
+		if (do-lex-test) {
+			for (arg: String in arguments.tail.tail)
+				lex-test(arg);
+			}
+
+		else {
+			compile-program(compile-symbols);
+			}
+		}
+	catch (e: Exception) {
+		(e.message + "\n").write();
+		successful = false;
+		}
+}
+
+
+return-value: Int
+{
+	if (!successful)
+		return 1;
+	return 0;
+}
+
+
+
+// Top-level compilation
+
+
+compile-program(compile-symbols: List of String)
+{
+	// We need "destroy" to be a function name, even if there are no
+	// functions with that name.
+	add-object-function("destroy");
+
+	// Load
+	main-directory: FileDirectory(".");
+	if (main-directory.entry-is-directory("sources"))
+		main-directory = main-directory["sources"].as-a(FileDirectory);
+	vlange-base-path: String =
+		System.system.environment-variable("VLANGE_BASE");
+	if (vlange-base-path == nil || vlange-base-path.is-empty)
+		throw MessageException("VLANGE_BASE is not set!");
+	library-directory: FileDirectory(vlange-base-path + "/library");
+	status-reporter.report("Loading Main...");
+	status-reporter.indent();
+	main-package: Package("Main", nil);
+	main-package.setup-main(main-directory, library-directory, compile-symbols);
+	package-queue.append(main-package);
+	status-reporter.unindent();
+
+	// Make every class without a superclass be a subclass of Standard Object.
+	main-package.ensure-superclasses(root-class(main-package));
+
+	// Emit the classes and packages.
+	status-reporter.report("Emitting code...");
+	status-reporter.indent();
+	for (package: Package in package-queue)
+		package.emit-code();
+	status-reporter.unindent();
+
+	// Another round of ensure-superclasses, to get classes loaded during
+	// the emit.
+	main-package.ensure-superclasses(root-class(main-package));
+
+	// Emit the method specs.
+	status-reporter.report("Emitting method specs...");
+	emit-method-specs(main-package);
+
+	// Copy Vlange_.h and Vlange_.c
+	if (!library-directory.entry-is-directory("runtime")) {
+		message: String = "The \"runtime\" directory is missing from the library!";
+		throw MessageException(message);
+		}
+	runtime-directory: FileDirectory =
+		library-directory["runtime"].as-a(FileDirectory);
+	copy-to-sources(runtime-directory["Vlange_.h"].as-a(File), "Vlange_.h");
+	copy-to-sources(runtime-directory["Vlange_.c"].as-a(File), "Vlange_.c");
+
+	// Copy primitives files
+	main-package.copy-primitives-files();
+}
+
+
+add-object-function(name: String)
+{
+	object-function-names[name] = name;
+}
+
+
+get-symbol-literal(name: String): SymbolLiteral
+{
+	// Is it already there?
+	symbol: SymbolLiteral = symbols[name];
+	if (symbol)
+		return symbol;
+
+	// If not, we need to add it.
+	symbol = new SymbolLiteral(name);
+	symbols[name] = symbol;
+	return symbol;
+}
+
+
+emit-method-specs(main-package: Package)
+{
+	stream: OutputStream = new File(".c-sources/methods_.c").output-stream;
+	stream.write-line("#include \"Vlange_.h\"");
+	stream.write-line();
+
+	object-class: CompiledClass = root-class(main-package);
+
+	// Declare the classes
+	object-class.emit-all-class-declarations(stream);
+	stream.write-line();
+
+	// Write the dispatch tables
+	for (fn-name: String in object-function-names.keys) {
+		// Get the entries
+		entries: DispatchEntries;
+		object-class.get-Object-dispatch-entries(fn-name, entries);
+
+		// Emit the declarations
+		for (function: VlangeInstanceFunction in entries.functions) {
+			stream.write("extern ");
+			stream.write(function.c-signature);
+			stream.write-line(";");
+			}
+
+		// Emit the dispatch table
+		stream.write("MethodSpec_ ");
+		stream.write(MethodBuilder.mangle-name(fn-name));
+		stream.write-line("__methods[] = {");
+
+		// Non-object entries
+		for (entry: DispatchEntry in entries.entries) {
+			stream.write("\t{ (obj_) &");
+			stream.write(entry.for-class.c-name);
+			stream.write(", ");
+			stream.write(entry.function.c-name);
+			stream.write(" },");
+			stream.write-line();
+			}
+
+		// Object entry
+		stream.write("\t{ NULL, ");
+		if (entries.object-function)
+			stream.write(entries.object-function.c-name);
+		else
+			stream.write("NULL");
+		stream.write(" }");
+
+		// Finish the dispatch table
+		stream.write-line(" };");
+		stream.write-line();
+		}
+}
+
+
+root-class(main-package: Package): CompiledClass
+{
+	// Find "Standard Object"
+	standard-package: Package = main-package.get-subpackage("Standard");
+	if (standard-package == nil)
+		throw MessageException("Standard package is missing!");
+	object-function: VlangeFunction = standard-package.lookup-function("Object");
+	if (object-function == nil)
+		throw MessageException("Standard Object is missing!");
+	if (!object-function.is-a(ClassFunction))
+		throw MessageException("Standard Object is not a class!");
+	return object-function.as-a(ClassFunction).the-class;
+}
+
+
+copy-to-sources(file: File, dest-name: String)
+{
+	contents: String = file.contents;
+	stream: FileOutStream = new File(".c-sources/" + dest-name).output-stream;
+	stream.write(contents);
+	stream.close();
+}
+
+
+
+// Test
+
+
+lex-test(filename: String)
+{
+	try {
+		lexer: Lexer(new File(filename).contents);
+		loop {
+			token: Token = lexer.next-token();
+			token.type.write();
+			if (token.text && !token.text.is-empty) {
+				": ".write();
+				token.text.write();
+				}
+			"\n".write();
+			if (token.type == 'eof')
+				break;
+			}
+		}
+	catch (e: Exception) {
+		"Error: ".write();
+		e.message.write();
+		"\n".write();
+		}
+}
+
+
+

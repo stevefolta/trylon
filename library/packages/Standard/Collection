@@ -1,0 +1,2 @@
+class Collection
+	fn iterator -> Iterator

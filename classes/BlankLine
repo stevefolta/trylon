@@ -1,0 +1,13 @@
+Class: BlankLine
+Superclass: Statement
+
+
+create()
+{
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	builder.add-blank-line();
+}

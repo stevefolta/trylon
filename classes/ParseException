@@ -1,0 +1,21 @@
+Class: ParseException
+Superclass: Exception
+
+
+error-message: String;
+token: Token;
+
+
+create(error-message: String, token: Token)
+{
+	this.error-message = error-message;
+	this.token = token;
+}
+
+
+message: String
+{
+	return error-message + " (\"" + token.string + "\")";
+}
+
+

@@ -1,0 +1,29 @@
+Class: InstanceFieldResult
+Superclass: ExpressionResult
+
+
+object: ExpressionResult;
+field: CompiledField;
+on-class: CompiledClass;
+
+
+create(object: ExpressionResult, field: CompiledField, on-class: CompiledClass)
+{
+	this.object = object;
+	this.field = field;
+	this.on-class = on-class;
+}
+
+
+access: String
+{
+	return
+		object.access + "->fields[" +
+		MethodBuilder.mangle-name(field.name) + "__fld_]";
+}
+
+
+
+
+
+

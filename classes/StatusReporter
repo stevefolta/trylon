@@ -1,0 +1,30 @@
+Class: StatusReporter
+
+// Copyright 2003 Steve Folta
+// See the License file.
+
+
+reporter: StatusReporter
+[class]
+{
+	return the-reporter;
+}
+{
+	the-reporter = new-value;
+}
+the-reporter: StatusReporter;	[class]
+
+
+
+report(message: String)
+[phantom]
+
+
+indent()
+[phantom]
+
+
+unindent()
+[phantom]
+
+

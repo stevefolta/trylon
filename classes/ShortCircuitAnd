@@ -1,0 +1,37 @@
+Class: ShortCircuitAnd
+Superclass: Expression
+
+
+expr1: Expression;
+expr2: Expression;
+
+
+create(expr1: Expression, expr2: Expression)
+{
+	this.expr1 = expr1;
+	this.expr2 = expr2;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	result: ExpressionResult = expr1.emit-code(builder);
+	if (!result.is-a(Temporary)) {
+		// If it's already a temporary, we just reuse it for our final
+		// result; otherwise, we need a new temporary.
+		temporary: Temporary = builder.get-temporary();
+		builder.add-line(temporary.name + " = " + result.access + ";");
+		result = temporary;
+		}
+
+	builder.add-line("if (_Test_(" + result.access + ")) {");
+	builder.indent();
+	result2: ExpressionResult = expr2.emit-code(builder);
+	builder.add-line(result.access + " = " + result2.access + ";");
+	builder.add-line("}");
+	builder.unindent();
+
+	return result;
+}
+
+

@@ -1,0 +1,22 @@
+Class: ShortCircuitNot
+Superclass: Expression
+
+
+expr: Expression;
+
+
+create(expr: Expression)
+{
+	this.expr = expr;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	expr-result: ExpressionResult = expr.emit-code(builder);
+	temp: Temporary = builder.get-temporary();
+	builder.add-line(temp.name + " = _Not_(" + expr-result.access + ");");
+	return temp;
+}
+
+

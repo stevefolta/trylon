@@ -1,0 +1,504 @@
+Class: Lexer
+
+p: StringIterator;
+indent-stack: IntStack;
+at-line-start: Bool;
+unindents-pending: Bool;
+unindent-to: Int;
+
+
+create(text: String)
+{
+	p = text.iterator;
+	indent-stack = new IntStack;
+	indent-stack.push(0);
+	at-line-start = true;
+	unindents-pending = false;
+}
+
+
+next-token: Token
+{
+	c: Int;
+	next-char: Int;
+
+	if (unindents-pending) {
+		if (indent-stack.is-empty)
+			throw MessageException("Indentation error!");
+		if (unindent-to == indent-stack.top) {
+			// We're done unindenting.
+			unindents-pending = false;
+			}
+		else {
+			// Unindent one more level.
+			indent-stack.pop();
+			return new Token('unindent', "");
+			}
+		}
+
+	loop {
+		// If at line start, figure out the indentation
+		if (at-line-start) {
+			at-line-start = false;
+
+			// Get the indentation
+			indentation: Int = 0;
+			loop {
+				c = cur-char;
+				if (c == '\t')
+					indentation += 2;
+				else if (c == ' ')
+					indentation += 1;
+				else
+					break;
+				p.go-forward();
+				}
+
+			// If it's just an empty line, emit an EOL
+			if (c == '\n' || c == '\r') {
+				p.go-forward();
+				at-line-start = true;
+				return new Token('eol', "");
+				}
+
+			// Figure out the indentation change
+// ("Indentation: " + indentation.string + " (stack top: " + indent-stack.top.string + ")\n").write();
+			if (indentation > indent-stack.top) {
+				indent-stack.push(indentation);
+				return new Token('indent', "");
+				}
+			else if (indentation < indent-stack.top) {
+				unindents-pending = true;
+				unindent-to = indentation;
+				indent-stack.pop();
+				return new Token('unindent', "");
+				}
+			}
+
+		// Get the next character
+		token-start: StringIterator = p.copy;
+		c = cur-char;
+		p.go-forward();
+		if (c == 0)
+			return new Token('eof', "");
+
+		// Line break
+		else if (c == '\n' || c == '\r') {
+			at-line-start = true;
+			return new Token('eol', "");
+			}
+
+		// Whitespace
+		if (c == ' ' || c == '\t') {
+			// skip whitespace
+			token-start = p.copy;
+			continue;
+			}
+
+		// -, --, -=, ->
+		else if (c == '-') {
+			next-char = cur-char;
+			if (next-char == '-') {
+				// Line continuation
+				p.go-forward();
+				// Skip to next line
+				loop {
+					c = cur-char;
+					p.go-forward();
+					if (c == '\n' || c == '\r')
+						break;
+					}
+				// Skip whitespace
+				loop {
+					c = cur-char;
+					if (c == ' ' || c == '\t' || c == 0)
+						break;
+					p.go-forward();
+					}
+				}
+
+			else if (next-char == '=') {
+				p.go-forward();
+				return new Token('-=', "");
+				}
+
+			else if (next-char == '>') {
+				p.go-forward();
+				return new Token('->', "");
+				}
+
+			else if (next-char >= '0' && next-char <= '9') {
+				// Number
+				p.go-forward();
+				is-float: Bool = false;
+				loop {
+					c = cur-char;
+					if (c >= '0' && c <= '9')
+						p.go-forward();
+					else if (c == '.') {
+						is-float = true;
+						p.go-forward();
+						}
+					else {
+						type: Symbol;
+						if (is-float)
+							type = 'float-literal';
+						else
+							type = 'int-literal';
+						return new Token(type, new String(token-start, p));
+						}
+					}
+				}
+
+			else
+				return new Token('-', "");
+			}
+
+		// Comment
+		else if (c == '#') {
+			// Skip initial whitespace
+			loop {
+				c = cur-char;
+				if (c != '\t' && c != ' ')
+					break;
+				p.go-forward();
+				}
+
+			// Get the comment
+			token-start = p.copy;
+			loop {
+				c = cur-char;
+				if (c == '\n' || c == '\r' || c == 0)
+					break;
+				p.go-forward();
+				}
+			return new Token('comment', new String(token-start, p));
+			}
+
+		// String literal
+		else if (c == '"') {
+			token-start = p.copy;
+			token-end: StringIterator = p.copy;
+			string: String;
+			loop {
+				c = cur-char;
+				token-end = p.copy;
+				p.go-forward();
+				if (c == 0)
+					throw MessageException("Unterminated string constant");
+				else if (c == '\\')
+					p.go-forward();
+				else if (c == '"')
+					break;
+				}
+			return new Token('string-literal', new String(token-start, token-end));
+			}
+
+		// Symbol literal
+		else if (c == '\'') {
+			token-start = p.copy;
+			token-end: StringIterator = p.copy;
+			string: String;
+			loop {
+				c = cur-char;
+				token-end = p.copy;
+				p.go-forward();
+				if (c == 0)
+					throw MessageException("Unterminated symbol");
+				else if (c == '\\')
+					p.go-forward();
+				else if (c == '\'')
+					break;
+				}
+			return new Token('symbol-literal', new String(token-start, token-end));
+			}
+
+		// Single-character tokens
+		else if (c == '(')
+			return new Token('(', "");
+		else if (c == ')')
+			return new Token(')', "");
+		else if (c == '{')
+			return new Token('{', "");
+		else if (c == '}')
+			return new Token('}', "");
+		else if (c == '[')
+			return new Token('[', "");
+		else if (c == ']')
+			return new Token(']', "");
+		else if (c == '.')
+			return new Token('.', "");
+		else if (c == ',')
+			return new Token(',', "");
+		else if (c == ';')
+			return new Token(';', "");
+		else if (c == '~')
+			return new Token('~', "");
+
+		// Could be followed by =
+		else if (c == '+')
+			return possibly-equals-token('+', '+=');
+		else if (c == '=')
+			return possibly-equals-token('=', '==');
+		else if (c == '*')
+			return possibly-equals-token('*', '*=');
+		else if (c == '/')
+			return possibly-equals-token('/', '/=');
+		else if (c == '%')
+			return possibly-equals-token('%', '%=');
+		else if (c == '^')
+			return possibly-equals-token('^', '^=');
+		else if (c == '!')
+			return possibly-equals-token('!', '!=');
+		else if (c == ':')
+			return possibly-equals-token(':', ':=');
+
+		// Could be doubled, then followed by =
+		else if (c == '<') {
+			type: Symbol = '<';
+			next-char = cur-char;
+			if (next-char == c) {
+				// doubled
+				p.go-forward();
+				if (cur-char == '=') {
+					p.go-forward();
+					type = '<<=';
+					}
+				else
+					type = '<<';
+				}
+			else if (next-char == '=') {
+				p.go-forward();
+				type = '<=';
+				}
+			return new Token(type, "");
+			}
+		else if (c == '>') {
+			type: Symbol = '>';
+			next-char = cur-char;
+			if (next-char == c) {
+				// doubled
+				p.go-forward();
+				if (cur-char == '=') {
+					p.go-forward();
+					type = '>>=';
+					}
+				else
+					type = '>>';
+				}
+			else if (next-char == '=') {
+				p.go-forward();
+				type = '>=';
+				}
+			return new Token(type, "");
+			}
+
+		// Could be doubled, or followed by '='
+		else if (c == '&') {
+			type: Symbol = '&';
+			next-char = cur-char;
+			if (next-char == '&') {
+				p.go-forward();
+				type = '&&';
+				}
+			else if (next-char == '=') {
+				p.go-forward();
+				type = '&=';
+				}
+			return new Token(type, "");
+			}
+		else if (c == '|') {
+			type: Symbol = '|';
+			next-char = cur-char;
+			if (next-char == '|') {
+				p.go-forward();
+				type = '||';
+				}
+			else if (next-char == '=') {
+				p.go-forward();
+				type = '|=';
+				}
+			return new Token(type, "");
+			}
+
+		// Name
+		else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_') {
+			loop {
+				c = cur-char;
+				isIDChar: Bool =
+					(c == '_' || c == '-' || (c >= 'a' && c <= 'z') ||
+					 (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'));
+				if (!isIDChar)
+					break;
+				p.go-forward();
+				}
+			name: String(token-start, p);
+			type: Symbol = 'name';
+			// Could be an arg-name
+			if (cur-char == ':') {
+				p.go-forward();
+				type = 'arg-name';
+				}
+			return new Token(type, name);
+			}
+
+		// Number
+		else if (c >= '0' && c <= '9') {
+			// Is it hex?
+			is-hex: Bool = false;
+			if (c == '0') {
+				c = cur-char;
+				if (c == 'x' || c == 'X') {
+					p.go-forward();
+					is-hex = true;
+					}
+				}
+			// Read the rest of the number
+			type: Symbol = 'int-literal';
+			loop {
+				c = cur-char;
+				if (c >= '0' && c <= '9')
+					p.go-forward();
+				else if (is-hex && ((c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
+					p.go-forward();
+				else if (c == '.') {
+					p.go-forward();
+					type = 'float-literal';
+					}
+				else
+					break;
+				}
+			return new Token(type, new String(token-start, p));
+			}
+
+		// Unknown character
+		else {
+			throw MessageException("Unknown character: \"" + c.char-string + "\"");
+			}
+		}
+
+	// Never actually get here.
+	return new Token('eof', "");
+}
+
+
+cur-char: Int
+{
+	if (p.is-done)
+		return 0;
+	else
+		return p.current-item;
+}
+
+
+possibly-equals-token(without-equals: Symbol, with-equals: Symbol): Token
+{
+	if (cur-char == '=') {
+		p.go-forward();
+		return new Token(with-equals, "");
+		}
+	else
+		return new Token(without-equals, "");
+}
+
+
+
+// Class helpers
+
+parse-character-escape(p: StringIterator): Int
+[class]
+{
+	// The '\' will already be taken.
+
+	c: Int = p.current-item;
+	p.go-forward();
+	if (c == 'n')
+		return '\n';
+	else if (c == 'r')
+		return '\r';
+	else if (c == 't')
+		return '\t';
+	else if (c == 'b')
+		return '\b';
+	else if (c == 'v')
+		return '\v';
+	else if (c == 'f')
+		return '\f';
+	else if (c == 'a')
+		return '\a';
+	else if (c == 'e')
+		return 0x1B;	// ESC
+	else if (c == 'x') {
+		value: Int = 0;
+		num-digits: Int = 0;
+		while (!p.is-done && num-digits < 2) {
+			digit: Int = p.current-item;
+			if (digit >= '0' && digit <= '9')
+				digit -= '0';
+			else if (digit >= 'A' && digit <= 'F')
+				digit = 0x0A + (digit - 'A');
+			else if (digit >= 'a' && digit <= 'F')
+				digit = 0x0A + (digit - 'a');
+			else
+				break;
+			value *= 16;
+			value += digit;
+			p.go-forward();
+			num-digits += 1;
+			}
+		return value;
+		}
+
+	// Default: just use whatever was after the '\'
+	return c;
+}
+
+
+character-constant-value(text: String): Int
+[class]
+{
+	p: StringIterator = text.iterator;
+	if (p.current-item == '\\') {
+		p.go-forward();	// skip '\'
+		return parse-character-escape(p);
+		}
+	return p.current-item;
+}
+
+
+unescape-string(string: String): String
+[class]
+{
+	result: String = nil;
+	p: StringIterator = string.iterator;
+	section-start: StringIterator = string.iterator;
+	while (!p.is-done) {
+		if (p.current-item == '\\') {
+			// Finish the section preceding the '\'
+			section: String(section-start, p);
+			if (result)
+				result += section;
+			else
+				result = section;
+			p.go-forward();	// Skip '\'
+			// Add the escaped character
+			result += parse-character-escape(p).char-string;
+			// Start the next section
+			section-start = p.copy;
+			}
+		else
+			p.go-forward();
+		}
+	// Finish the last section
+	section: String(section-start, p);
+	if (result)
+		result += section;
+	else
+		result = section;
+	return result;
+}
+
+
+
+// Copyright 2004 Steve Folta
+// See the License file.

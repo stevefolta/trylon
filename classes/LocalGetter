@@ -1,0 +1,21 @@
+Class: LocalGetter
+Superclass: VlangeFunction
+
+
+local: CompiledField;
+
+
+create(local: CompiledField)
+{
+	this.local = local;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	return new NameResult(builder.mangle-name(local.name));
+}
+
+
+

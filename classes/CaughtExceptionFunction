@@ -1,0 +1,16 @@
+Class: CaughtExceptionFunction
+Superclass: VlangeFunction
+
+
+create()
+{
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	return new CaughtExceptionResult();
+}
+
+

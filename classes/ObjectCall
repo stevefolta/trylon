@@ -1,0 +1,82 @@
+Class: ObjectCall
+Superclass: Expression
+
+
+name: String;
+object: Expression;
+arguments: List of Expression;
+
+
+create(name: String, object: Expression, arguments: List of Expression)
+{
+	this.name = name;
+	this.object = object;
+	this.arguments = arguments;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	// Emit the object.
+	object-result: ExpressionResult = object.emit-code(builder);
+
+	// Emit the arguments.
+	arg-results: List of ExpressionResult;
+	for (arg: Expression in arguments)
+		arg-results.append(arg.emit-code(builder));
+
+	// Handle class functions and package functions
+	if (object-result.is-a(PackageResult) || object-result.is-a(ClassResult)) {
+		package: Package = nil;
+		if (object-result.is-a(PackageResult))
+			package = object-result.as-a(PackageResult).package;
+		else
+			package = object-result.as-a(ClassResult).the-class;
+		function: VlangeFunction = package.lookup-function(name);
+		if (function) {
+			// Declare the function
+			line: String = "extern obj_ " + function.c-name + "(";
+			have-arg: Bool = false;
+			for (arg: ExpressionResult in arg-results) {
+				if (have-arg)
+					line += ", ";
+				else
+					have-arg = true;
+				line += "obj_";
+				}
+			line += ");";
+			builder.add-used-function-declaration(line);
+			// Emit the call
+			return function.emit-call(arg-results, builder);
+			}
+		}
+
+	// Emit the call.
+	builder.using-object-function(name);
+	temporary: Temporary = builder.get-temporary();
+	line: String = temporary.name + " = ";
+	line += "Call_(" + builder.mangle-name(name) + ", " + object-result.access;
+	for (arg-result: ExpressionResult in arg-results)
+		line += ", " + arg-result.access;
+	line += ");";
+	builder.add-line(line);
+	return temporary;
+}
+
+
+convert-to-setter-call(value: Expression)
+{
+	name += " set-to";
+	arguments.append(value);
+}
+
+
+copy: ObjectCall
+{
+	copied-args: List of Expression;
+	for (arg: Expression in arguments)
+		copied-args.append(arg);
+	return new ObjectCall(name, object, copied-args);
+}
+
+

@@ -1,0 +1,15 @@
+package Standard
+
+	primitive-field true [Bool]
+	primitive-field false [Bool]
+
+	primitive-field nil
+
+	primitive-fn print string
+
+	fn print line
+		print string: line
+		print string: "\n"
+
+	fn print-line
+		print string: "\n"

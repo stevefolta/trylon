@@ -1,0 +1,27 @@
+Class: FunctionOnThis
+Superclass: VlangeFunction
+
+name: String;
+
+
+create(name: String)
+{
+	this.name = name;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	builder.using-object-function(name);
+	temporary: Temporary = builder.get-temporary();
+	line: String = temporary.name + " = ";
+	line += "Call_(" + builder.mangle-name(name) + ", this_";
+	for (arg: ExpressionResult in arguments)
+		line += ", " + arg.access;
+	line += ");";
+	builder.add-line(line);
+	return temporary;
+}
+
+

@@ -1,0 +1,19 @@
+Class: ClassResult
+Superclass: ExpressionResult
+
+
+the-class: CompiledClass;
+
+
+create(the-class: CompiledClass)
+{
+	this.the-class = the-class;
+}
+
+
+access: String
+{
+	return "((obj_) &" + the-class.c-name + ")";
+}
+
+

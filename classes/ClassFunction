@@ -1,0 +1,21 @@
+Class: ClassFunction
+Superclass: VlangeFunction
+
+
+the-class: CompiledClass;
+
+
+create(the-class: CompiledClass)
+{
+	this.the-class = the-class;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	builder.using-class(the-class);
+	return new ClassResult(the-class);
+}
+
+

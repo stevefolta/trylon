@@ -1,0 +1,16 @@
+Class: ThisFunction
+Superclass: VlangeFunction
+
+
+create()
+{
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	return new ThisResult();
+}
+
+

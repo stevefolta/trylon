@@ -1,0 +1,36 @@
+Class: IntStack
+
+top-cell: IntStackCell;
+
+
+create()
+{
+	top-cell = nil;
+}
+
+
+is-empty: Bool
+{
+	return (top-cell == nil);
+}
+
+
+push(value: Int)
+{
+	top-cell = new IntStackCell(value, top-cell);
+}
+
+
+pop(): Int
+{
+	value: Int = top-cell.value;
+	top-cell = top-cell.next;
+}
+
+
+top: Int
+{
+	return top-cell.value;
+}
+
+

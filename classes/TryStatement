@@ -1,0 +1,47 @@
+Class: TryStatement
+Superclass: Statement
+
+
+body: Block;
+catch-clauses: List of CatchClause;
+
+
+create(body: Block, catch-clauses: (List of CatchClause), comment: String)
+{
+	this.body = body;
+	this.catch-clauses = catch-clauses;
+	this.comment = comment;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	builder.using-object-function("is-a class");
+
+	// Body
+	builder.add-line(add-comment("_Try_"));
+	body.emit-code(builder);
+
+	// Catch clauses
+	have-a-catch: Bool = false;
+	for (clause: CatchClause in catch-clauses) {
+		builder.using-class(clause.type);
+
+		if (have-a-catch) {
+			builder.add-line(
+				add-comment("_AlsoCatch_(" + clause.type.c-name + ")", clause.comment));
+			}
+		else {
+			builder.add-line(
+				add-comment("_Catch_(" + clause.type.c-name + ")", clause.comment));
+			have-a-catch = true;
+			}
+
+		clause.body.emit-code(builder);
+		}
+
+	// Finish
+	builder.add-line("_EndCatch_");
+}
+
+

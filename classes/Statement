@@ -1,0 +1,28 @@
+Class: Statement
+
+comment: String;
+
+
+emit-code(builder: MethodBuilder)
+[phantom]
+
+
+
+// Helper
+
+add-comment(line: String): String
+{
+	if (comment)
+		line += " \t/* " + comment + " */";
+	return line;
+}
+
+
+add-comment(line: String, comment: String): String
+{
+	if (comment)
+		line += " \t/* " + comment + " */";
+	return line;
+}
+
+

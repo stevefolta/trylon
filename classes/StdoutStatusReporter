@@ -1,0 +1,41 @@
+Class: StdoutStatusReporter
+Superclass: StatusReporter
+
+// Copyright 2003 Steve Folta
+// See the License file.
+
+
+indent-level: Int;
+
+
+create()
+{
+	indent-level = 0;
+}
+
+
+report(message: String)
+{
+	// indent
+	adjusted-indent-level: Int = indent-level;
+	if (adjusted-indent-level > 20)
+		adjusted-indent-level = 20;
+	"                    ".substr(0, adjusted-indent-level).write();
+
+	message.write();
+	"\n".write();
+}
+
+
+indent()
+{
+	indent-level += 1;
+}
+
+
+unindent()
+{
+	indent-level -= 1;
+}
+
+

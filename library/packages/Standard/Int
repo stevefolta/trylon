@@ -1,0 +1,26 @@
+class Int
+
+	class-fn new
+		return --
+			Implementation allocate-object class: (Int) with-extra-slots: 1
+
+	primitive-fn == arg [Int] -> Bool
+	primitive-fn != arg [Int] -> Bool
+	primitive-fn < arg [Int] -> Bool
+	primitive-fn > arg [Int] -> Bool
+	primitive-fn <= arg [Int] -> Bool
+	primitive-fn >= arg [Int] -> Bool
+
+	primitive-fn + arg [Int] -> Int
+	primitive-fn - arg [Int] -> Int
+	primitive-fn * arg [Int] -> Int
+	primitive-fn / arg [Int] -> Int
+	primitive-fn % arg [Int] -> Int
+	primitive-fn - -> Int
+
+	primitive-fn | arg [Int] -> Int
+	primitive-fn & arg [Int] -> Int
+	primitive-fn ^ arg [Int] -> Int
+	primitive-fn ~ -> Int
+
+	primitive-fn string -> String

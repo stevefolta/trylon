@@ -1,0 +1,212 @@
+Class: CompiledClass
+Superclass: Package
+
+// Because this is really just like a Package, but with instance functions and
+// fields, we make it a subclass of Package.
+
+
+instance-functions: Dictionary of VlangeInstanceFunction;
+instance-fields: List of CompiledField;
+subclasses: List of CompiledClass;
+superclass: CompiledClass;
+
+
+create(name: String, parent: Package)
+{
+	super.create(name, parent);
+	instance-functions = new Dictionary of VlangeInstanceFunction;
+	instance-fields = new List of CompiledField;
+	subclasses = new List of CompiledClass;
+}
+
+
+make-subclass-of(superclass: CompiledClass)
+{
+	if (this.superclass) {
+		// Already had a superclass (perhaps the default Standard Object);
+		// replace it.
+		this.superclass.subclasses.remove(this);
+		}
+
+	this.superclass = superclass;
+	superclass.subclasses.append(this);
+}
+
+
+add-instance-function(name: String, function: VlangeInstanceFunction)
+{
+	instance-functions[name] = function;
+
+	VlangeCompiler.the-compiler.add-object-function(name);
+	if (function.is-primitive)
+		has-primitives = true;
+
+	if (name == "create" || name.starts-with("create ")) {
+		// Add the corresponding "new" function.
+		new-function: NewFunction(name, function, this);
+		functions[new-function.name] = new-function;
+		}
+}
+
+
+add-instance-field(field: CompiledField)
+{
+	instance-fields.append(field);
+	add-instance-function(field.name, new InstanceFieldGetter(field, this));
+	add-instance-function(field.name + " set-to",
+	                      new InstanceFieldSetter(field, this));
+}
+
+
+lookup-instance-function(name: String): VlangeFunction
+{
+	function: VlangeFunction = instance-functions[name];
+	if (function)
+		return function;
+
+	if (superclass)
+		return superclass.lookup-instance-function(name);
+
+	return nil;
+}
+
+
+has-instance-function(name: String): Bool
+{
+	return (instance-functions[name] != nil);
+}
+
+
+ensure-superclasses(object-class: CompiledClass)
+{
+	if (superclass == nil && this != object-class)
+		this.make-subclass-of(object-class);
+
+	super.ensure-superclasses(object-class);
+}
+
+
+emit-h-file()
+{
+	//***//
+}
+
+
+emit-c-file()
+{
+	stream: OutputStream = new File(".c-sources/" + c-name + ".c").output-stream;
+
+	// Header, includes
+	stream.write-line("/* " + c-name + ".c */");
+	stream.write-line();
+	stream.write-line("#include \"Vlange_.h\"");
+	stream.write-line();
+
+	// Class object
+	superclass-ref: String = nil;
+	if (superclass) {
+		stream.write-line("extern class_spec_ " + superclass.c-name + ";");
+		superclass-ref = "(obj_) &" + superclass.c-name;
+		}
+	else
+		superclass-ref = "NULL";
+	stream.write("DefineClassObj_(");
+	stream.write(c-name);
+	stream.write(", \"");
+	stream.write(name);
+	stream.write("\", ");
+	stream.write(name.length.string);
+	stream.write(", ");
+	stream.write(superclass-ref);
+	stream.write(", ");
+	stream.write(total-instance-fields.string);
+	stream.write-line(")");
+	stream.write("\n\n");
+
+	// Instance field indices
+	emit-instance-field-indices(stream);
+
+	//***//
+
+	// Functions
+	for (function: VlangeFunction in functions.values)
+		function.emit-code(stream);
+	for (function: VlangeFunction in instance-functions.values)
+		function.emit-code(stream);
+
+	//***//
+}
+
+
+emit-all-class-declarations(stream: OutputStream)
+{
+	stream.write("extern class_spec_ ");
+	stream.write(c-name);
+	stream.write-line(";");
+
+	for (subclass: CompiledClass in subclasses)
+		subclass.emit-all-class-declarations(stream);
+}
+
+
+get-dispatch-entries(name: String, inherited-function: VlangeInstanceFunction,
+                     dispatch-entries: DispatchEntries)
+{
+	function: VlangeInstanceFunction = instance-functions[name];
+	if (function)
+		dispatch-entries.functions.append(function);
+	else
+		function = inherited-function;
+	if (function)
+		dispatch-entries.entries.append(new DispatchEntry(this, function));
+
+	// Have the subclasses write their entries
+	for (subclass: CompiledClass in subclasses)
+		subclass.get-dispatch-entries(name, function, dispatch-entries);
+}
+
+
+get-Object-dispatch-entries(name: String, dispatch-entries: DispatchEntries)
+{
+	// Like get-dispatch-entries, but only used for Object.
+
+	// Have all subclasses go first.
+	for (subclass: CompiledClass in subclasses)
+		subclass.get-dispatch-entries(name, nil, dispatch-entries);
+
+	// Add the our entry
+	function: VlangeInstanceFunction = instance-functions[name];
+	if (function)
+		dispatch-entries.functions.append(function);
+	dispatch-entries.object-function = function;
+}
+
+
+emit-instance-field-indices(stream: OutputStream): Int
+{
+	index: Int = 0;
+	if (superclass)
+		index = superclass.emit-instance-field-indices(stream);
+
+	for (field: CompiledField in instance-fields) {
+		stream.write("#define ");
+		stream.write(MethodBuilder.mangle-name(field.name));
+		stream.write("__fld_\t(");
+		stream.write(index.string);
+		index += 1;
+		stream.write-line(")");
+		}
+
+	stream.write-line();
+
+	return index;
+}
+
+
+
+total-instance-fields: Int
+{
+	return super.total-instance-fields + instance-fields.count;
+}
+
+

@@ -1,0 +1,21 @@
+Class: FieldGetResult
+Superclass: ExpressionResult
+
+
+field: CompiledField;
+on-package: Package;
+
+
+create(field: CompiledField, on-package: Package)
+{
+	this.field = field;
+	this.on-package = on-package;
+}
+
+
+access: String
+{
+	return MethodBuilder.mangle-name(field.name) + "__" + on-package.c-name;
+}
+
+

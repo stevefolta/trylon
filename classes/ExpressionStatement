@@ -1,0 +1,22 @@
+Class: ExpressionStatement
+Superclass: Statement
+
+
+expression: Expression;
+
+
+create(expression: Expression, comment: String)
+{
+	this.expression = expression;
+	this.comment = comment;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	expression.emit-code(builder);
+	if (comment)
+		builder.add-line(add-comment(""));
+}
+
+

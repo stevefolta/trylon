@@ -1,0 +1,35 @@
+Class: CatchClause
+Superclass: Context
+
+
+type: CompiledClass;
+body: Block;
+parent: Context;
+comment: String;
+
+
+create(type: CompiledClass, parent: Context, comment: String)
+{
+	this.type = type;
+	this.parent = parent;
+	this.comment = comment;
+}
+
+
+lookup-function(name: String): VlangeFunction
+{
+	if (name == "exception")
+		return new CaughtExceptionFunction();
+
+	return parent.lookup-function(name);
+}
+
+
+enclosing-method-context: MethodContext
+{
+	return parent.enclosing-method-context;
+}
+
+
+
+

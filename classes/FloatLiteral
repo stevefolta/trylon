@@ -1,0 +1,19 @@
+Class: FloatLiteral
+Superclass: Expression
+
+
+value: Float;
+
+
+create(value: String)
+{
+	this.value = value.as-float;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	return new FloatLiteralResult(value);
+}
+
+

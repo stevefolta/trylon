@@ -1,0 +1,52 @@
+Class: Context
+
+
+lookup-function(name: String): VlangeFunction
+[phantom]
+
+
+enclosing-method-context: MethodContext
+{
+	// Default: not in one.
+	return nil;
+}
+
+
+// The following are valid on top-level contexts (classes and packages) only.
+
+add-function(function: CompiledFunction)
+{
+	// Default: not valid.
+	throw MessageException("Internal error: bad Context.add-function() call.");
+}
+
+
+add-field(field: CompiledField)
+{
+	// Default: not valid.
+	throw MessageException("Internal error: bad Context.add-field() call.");
+}
+
+
+add-class(name: String): CompiledClass
+{
+	// Default: not valid.
+	throw MessageException("Internal error: bad Context.add-class() call.");
+}
+
+
+add-package(name: String, directory: FileDirectory): PackageFunction
+{
+	// Default: not valid.
+	throw MessageException("Internal error: bad Context.add-package() call.");
+}
+
+
+get-subpackage(name: String): Package
+{
+	// Default: not valid.
+	throw MessageException("Internal error: bad Context.get-subpackage() call.");
+}
+
+
+

@@ -1,0 +1,13 @@
+class Bool
+	class-fn new
+		return --
+			Implementation allocate-object class: (Bool) with-extra-slots: 1
+
+	primitive-fn == arg [Bool] -> Bool
+	primitive-fn != arg [Bool] -> Bool
+
+	primitive-fn | arg [Bool] -> Bool
+	primitive-fn & arg [Bool] -> Bool
+	primitive-fn ^ arg [Bool] -> Bool
+
+	primitive-fn string -> String

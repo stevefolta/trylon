@@ -1,0 +1,26 @@
+class Interval
+	fld start
+	fld stop
+	fld value
+
+	fn create start stop
+		this start = start
+		this stop = stop
+		value = start
+
+	fn create stop
+		this start = 0
+		this stop = stop
+		value = start
+
+	fn is-done -> Bool
+		return value < stop
+
+	fn current-item -> Object
+		return value
+
+	fn go-forward
+		value += 1
+
+	fn iterator
+		return this

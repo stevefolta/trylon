@@ -1,0 +1,52 @@
+Class: FunctionCall
+Superclass: Expression
+
+name: String;
+arguments: List of Expression;
+context: Context;
+
+
+create(name: String, arguments: (List of Expression), context: Context)
+{
+	this.name = name;
+	this.arguments = arguments;
+	this.context = context;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	// Get the function.
+	function: VlangeFunction = context.lookup-function(name);
+	if (function == nil) {
+		//*** This should become an ObjectCall on "this" -- if there is a "this".
+		throw MessageException("There is no \"" + name + "\" function.");
+		}
+
+	// Generate the arguments.
+	arg-results: List of ExpressionResult;
+	for (arg: Expression in arguments) {
+		result: ExpressionResult = arg.emit-code(builder);
+		arg-results.append(result);
+		}
+
+	return function.emit-call(arg-results, builder);
+}
+
+
+convert-to-setter-call(value: Expression)
+{
+	name += " set-to";
+	arguments.append(value);
+}
+
+
+copy: FunctionCall
+{
+	copied-args: List of Expression;
+	for (arg: Expression in arguments)
+		copied-args.append(arg);
+	return new FunctionCall(name, copied-args, context);
+}
+
+

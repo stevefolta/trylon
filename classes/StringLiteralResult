@@ -1,0 +1,20 @@
+Class: StringLiteralResult
+Superclass: ExpressionResult
+
+
+index: Int;
+
+
+create(index: Int)
+{
+	this.index = index;
+}
+
+
+access: String
+{
+	return "Str_(" + index.string + ")";
+}
+
+
+

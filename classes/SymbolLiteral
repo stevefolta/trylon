@@ -1,0 +1,22 @@
+Class: SymbolLiteral
+Superclass: Expression
+
+
+name: String;
+c-name: String;
+
+
+create(name: String)
+{
+	this.name = name;
+	c-name = "_sym_" + MethodBuilder.mangle-name(name);
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	builder.add-line("extern Standard_Object* " + c-name + ";");
+	return new NameResult(c-name);
+}
+
+

@@ -1,0 +1,66 @@
+Class: InstanceFieldSetter
+Superclass: VlangeInstanceFunction
+
+
+field: CompiledField;
+on-class: CompiledClass;
+
+
+create(field: CompiledField, on-class: CompiledClass)
+{
+	this.field = field;
+	this.on-class = on-class;
+}
+
+
+emit-object-call(object: ExpressionResult,
+                 arguments: (List of ExpressionResult),
+                 builder: MethodBuilder)
+	: ExpressionResult
+{
+	line: String =
+		object.access + "->fields[" +
+		builder.mangle-name(field.name) + "__fld_ = " +
+		arguments.first-item.access + ";";
+	builder.add-line(line);
+	return arguments.first-item;
+}
+
+
+emit-declaration(stream: OutputStream)
+{
+	stream.write("extern ");
+	stream.write(c-signature);
+	stream.write-line(";");
+}
+
+
+emit-code(stream: OutputStream)
+{
+	stream.write-line(c-signature);
+	stream.write-line("{");
+
+	stream.write("\tthis_->fields[");
+	stream.write(MethodBuilder.mangle-name(field.name));
+	stream.write-line("__fld_] = set_to;");
+	stream.write-line("\treturn set_to;");
+
+	stream.write-line("}");
+	stream.write-line();
+	stream.write-line();
+}
+
+
+c-name: String
+{
+	return
+		MethodBuilder.mangle-name(field.name) + "_sp_set_to__" + on-class.c-name;
+}
+
+
+c-signature: String
+{
+	return "obj_ " + c-name + "(obj_ this_, obj_ set_to)";
+}
+
+

@@ -1,0 +1,21 @@
+Class: StringLiteral
+Superclass: Expression
+
+
+value: String;
+index: Int; 	// the MethodBuilder will set this
+
+
+create(value: String)
+{
+	this.value = value;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	builder.add-string-literal(this);	// the "index" gets set here
+	return new StringLiteralResult(index);
+}
+
+

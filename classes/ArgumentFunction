@@ -1,0 +1,21 @@
+Class: ArgumentFunction
+Superclass: VlangeFunction
+
+
+name: String;
+
+
+create(arg: CompiledField)
+{
+	this.name = arg.name;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	return new NameResult(builder.mangle-name(name));
+}
+
+
+

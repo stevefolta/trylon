@@ -1,0 +1,13 @@
+Class: IntStackCell
+
+value: Int;
+next: IntStackCell;
+
+
+create(value: Int, next: IntStackCell)
+{
+	this.value = value;
+	this.next = next;
+}
+
+

@@ -1,0 +1,21 @@
+Class: NameResult
+Superclass: ExpressionResult
+
+// Used for various very simple ExpressionResults, which only have to reference
+// a name.
+
+name: String;
+
+
+create(name: String)
+{
+	this.name = name;
+}
+
+
+access: String
+{
+	return name;
+}
+
+

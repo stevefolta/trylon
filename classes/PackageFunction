@@ -1,0 +1,20 @@
+Class: PackageFunction
+Superclass: VlangeFunction
+
+package: Package;
+
+
+create(package: Package)
+{
+	this.package = package;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	return new PackageResult(package);
+}
+
+
+

@@ -1,0 +1,23 @@
+Class: LocalSetter
+Superclass: VlangeFunction
+
+
+local: CompiledField;
+
+
+create(local: CompiledField)
+{
+	this.local = local;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	line: String =
+		builder.mangle-name(local.name) + " = " + arguments.first-item.access + ";";
+	builder.add-line(line);
+	return new NameResult("NULL");
+}
+
+

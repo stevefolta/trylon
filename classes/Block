@@ -1,0 +1,95 @@
+Class: Block
+Superclass: Context
+
+parent: Context;
+locals: Dictionary of CompiledField;
+statements: List of Statement;
+
+
+create(parent: Context)
+{
+	this.parent = parent;
+	locals = nil;	// Will be added if needed.
+	statements = new List of Statement;
+}
+
+
+add-local(local: CompiledField)
+{
+	if (locals == nil)
+		locals = new Dictionary of CompiledField;
+
+	locals[local.name] = local;
+}
+
+
+append(statement: Statement)
+{
+	statements.append(statement);
+}
+
+
+lookup-function(name: String): VlangeFunction
+{
+	// See if there's a local for it.
+	if (locals) {
+		local-name: String = name;
+		is-setter: Bool = false;
+		if (name.ends-with(" set-to")) {
+			local-name = name.substr(0, name.length - " set-to".length);
+			is-setter = true;
+			}
+		local: CompiledField = locals[local-name];
+		if (local) {
+			if (is-setter)
+				return new LocalSetter(local);
+			else
+				return new LocalGetter(local);
+			}
+		}
+
+	// Otherwise, go up the chain.
+	return parent.lookup-function(name);
+}
+
+
+enclosing-method-context: MethodContext
+{
+	return parent.enclosing-method-context;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	saved-temp-num: Int = builder.next-temporary-num;
+
+	builder.indent();
+	builder.add-line("{");
+
+	// Locals
+	if (locals) {
+		line: StringBuilder;
+		line += "obj_ ";
+		have-local: Bool = false;
+		for (local-name: String in locals.keys) {
+			if (have-local)
+				line += ", ";
+			else
+				have-local = true;
+			line += builder.mangle-name(local-name);
+			}
+		line += ";";
+		builder.add-line(line.string);
+		}
+
+	// Contents
+	for (statement: Statement in statements)
+		statement.emit-code(builder);
+
+	builder.add-line("}");
+	builder.unindent();
+
+	builder.next-temporary-num = saved-temp-num;
+}
+
+

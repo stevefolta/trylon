@@ -1,0 +1,31 @@
+Class: ForContext
+Superclass: Context
+
+
+local: CompiledField;
+parent: Context;
+
+
+create(local: CompiledField, parent: Context)
+{
+	this.local = local;
+	this.parent = parent;
+}
+
+
+lookup-function(name: String): VlangeFunction
+{
+	if (name == local.name)
+		return new LocalGetter(local);
+
+	return parent.lookup-function(name);
+}
+
+
+enclosing-method-context: MethodContext
+{
+	return parent.enclosing-method-context;
+}
+
+
+

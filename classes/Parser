@@ -1,0 +1,1219 @@
+Class: Parser
+
+
+context: Context;
+lexer: Lexer;
+current-token: Token;
+next-token: Token;
+
+
+create(source: String, context: Context)
+{
+	lexer = new Lexer(source);
+	this.context = context;
+
+	// Load up the first tokens.
+	current-token = lexer.next-token;
+	next-token = lexer.next-token;
+}
+
+
+
+// Lexing
+
+consume-token()
+{
+	current-token = next-token;
+	next-token = lexer.next-token();
+}
+
+
+at-name(name: String): Bool
+{
+	return (current-token.type == 'name' && current-token.text == name);
+}
+
+
+require-eol(): String
+	// Returns the comment, if there is one.
+{
+	comment: String = nil;
+	if (current-token.type == 'comment') {
+		comment = current-token.text;
+		consume-token();
+		//*** Someday, add the comment to the current statement.
+		}
+
+	if (current-token.type != 'eol')
+		throw ParseException("End-of-line required.", current-token);
+	consume-token();
+
+	return comment;
+}
+
+
+
+// Highest level (class or package) parsing
+
+parse-package()
+{
+	// "package"
+	if (!at-name("package"))
+		throw ParseException("Expecting \"package\".", current-token);
+	consume-token();
+
+	// Package name
+	if (current-token.type != 'name')
+		throw ParseException("Missing class name.", current-token);
+	package-name: String = current-token.text;
+	consume-token();
+	require-eol();
+
+	VlangeCompiler.status-reporter.report("Parsing " + package-name + "...");
+	VlangeCompiler.status-reporter.indent();
+
+	package: Package = nil;
+
+	// If it's the same name as the current package, assume this is the
+	// "main" file for a pre-existing package.
+	if (context.is-a(Package) && package-name == context.as-a(Package).name)
+		package = context.as-a(Package);
+
+	// Otherwise, we're creating a subpackage, or adding to an existing one.
+	else {
+		package = context.get-subpackage(package-name);
+		if (package == nil)
+			package = context.add-package(package-name, nil).package;
+		}
+
+	while (current-token.type == 'eol')
+		consume-token();
+	if (current-token.type == 'indent') {
+		consume-token();	// indent
+		parse-package-contents(package);
+		if (current-token.type != 'unindent')
+			throw ParseException("Illegal package entry.", current-token);
+		consume-token();	// unindent
+		}
+
+	VlangeCompiler.status-reporter.unindent();
+}
+
+
+parse-package-contents(package: Package)
+{
+	saved-context: Context = context;
+	context = package;
+
+	loop {
+		while (current-token.type == 'eol' || current-token.type == 'comment')
+			consume-token();
+		if (current-token.type != 'name')
+			break;
+
+		name: String = current-token.text;
+
+		if (name == "fn" || name == "function" ||
+		    name == "primitive-fn" || name == "primitive-function") {
+			function: CompiledFunction = parse-function(false);
+			package.add-function(function);
+			}
+
+		else if (name == "field" || name == "fld" ||
+		         name == "primitive-field" || name == "primitive-fld") {
+			field: CompiledField = parse-field();
+			package.add-field(field);
+			}
+
+		else if (name == "package")
+			parse-package();
+
+		else if (name == "iff") {
+			if (check-iff()) {
+				if (current-token.type == 'indent') {
+					consume-token();
+					parse-package-contents(package);
+					if (current-token.type != 'unindent') {
+						throw
+							ParseException("Unindent required at end of package.",
+							               current-token);
+						}
+					consume-token();
+					}
+				}
+			}
+		else
+			break;
+		}
+
+	context = saved-context;
+}
+
+
+parse-class()
+{
+	// "class"
+	if (!at-name("class"))
+		throw ParseException("Expecting \"class\".", current-token);
+	consume-token();
+
+	// Class name
+	if (current-token.type != 'name')
+		throw ParseException("Missing class name.", current-token);
+	class-name: String = current-token.text;
+	consume-token();
+	require-eol();
+
+	VlangeCompiler.status-reporter.report("Parsing " + class-name + "...");
+	VlangeCompiler.status-reporter.indent();
+
+	// Create (or get) the class.
+	the-class: CompiledClass = context.add-class(class-name);
+
+	// Read the contents (if any).
+	while (current-token.type == 'eol')
+		consume-token();
+	if (current-token.type == 'indent') {
+		consume-token();
+		parse-class-contents(the-class);
+		if (current-token.type != 'unindent')
+			throw ParseException("Unindent required at end of class.", current-token);
+		consume-token();
+		}
+
+	VlangeCompiler.status-reporter.unindent();
+}
+
+
+parse-class-contents(the-class: CompiledClass)
+{
+	saved-context: Context = context;
+	context = the-class;
+
+	loop {
+		while (current-token.type == 'eol' || current-token.type == 'comment')
+			consume-token();
+		if (current-token.type != 'name')
+			break;
+
+		name: String = current-token.text;
+
+		if (name == "fn" || name == "function" ||
+		    name == "primitive-fn" || name == "primitive-function") {
+			function: CompiledFunction = parse-function(true);
+			the-class.add-instance-function(function.name, function);
+			}
+
+		else if (name == "class-fn" || name == "class-function" ||
+		         name == "class-primitive-fn" ||
+						 name == "class-primitive-function") {
+			function: CompiledFunction = parse-function(false);
+			the-class.add-function(function);
+			}
+
+		else if (name == "field" || name == "fld") {
+			field: CompiledField = parse-field();
+			the-class.add-instance-field(field);
+			}
+
+		else if (name == "class-field" || name == "class-fld" ||
+		         name == "primitive-class-fld" || name == "primitive-class-field") {
+			field: CompiledField = parse-field;
+			the-class.add-field(field);
+			}
+
+		else if (name == "package") {
+			throw
+				ParseException("You can't have a package inside a class.",
+				               current-token);
+			}
+
+		else if (name == "class")
+			parse-class();
+
+		else if (name == "superclass") {
+			consume-token();
+			superclass: CompiledClass = parse-type-spec();
+			the-class.make-subclass-of(superclass);
+			}
+
+		else if (name == "iff") {
+			if (check-iff()) {
+				if (current-token.type == 'indent') {
+					consume-token();
+					parse-class-contents(the-class);
+					if (current-token.type != 'unindent')
+						throw ParseException("Unindent required at end of class.", current-token);
+					consume-token();
+					}
+				}
+			}
+
+		else
+			break;
+		}
+
+	context = saved-context;
+}
+
+
+check-iff(): Bool
+{
+	consume-token();	// "iff"
+
+	// Get the name.
+	if (current-token.type != 'name')
+		throw ParseException("Illegal \"iff\".", current-token);
+	name: String = current-token.text;
+	consume-token();
+	require-eol();
+
+	// If it doesn't exist, skip the block.
+	if (context.lookup-function(name) == nil) {
+		skip-block();
+		return false;
+		}
+
+	// If it does exist, the caller will parse the block.
+	return true;
+}
+
+
+parse-field(): CompiledField
+{
+	// "fld"/"field"/etc.
+	is-primitive: Bool = current-token.text.starts-with("primitive-");
+	consume-token();
+
+	// Get the name.
+	if (current-token.type != 'name')
+		throw ParseException("Field name needed.", current-token);
+	name: String = current-token.text;
+	consume-token();
+
+	// Get the type, if given.
+	type: CompiledClass = nil;
+	if (current-token.type == '[') {
+		consume-token();
+		type: CompiledClass = parse-type-spec();
+		if (current-token.type != ']')
+			throw ParseException("Missing \"]\".", current-token);
+		consume-token();
+		}
+
+	require-eol();
+
+	return new CompiledField(name, type, is-primitive);
+}
+
+
+parse-function(is-object-function: Bool): CompiledFunction
+{
+	// "fn" or "function" (etc.) has already been recognized; just check it
+	// for primitiveness.
+	is-primitive: Bool = current-token.text.starts-with("primitive-");
+	consume-token();
+
+	// Get the name.
+	// We're allowing any name; we want to allow unops and binops and string
+	// literals as well as names.  Ideally we should reject other names, but
+	// currently we don't bother.
+	name: String = current-token.string;
+	consume-token();
+
+	// Get the arguments and the return type.
+	arguments: List of CompiledField;
+	return-type: CompiledClass = nil;
+	while (current-token.type != 'eol') {
+		// Argument
+		if (current-token.type == 'name' || current-token.type == 'arg-name') {
+			// Get the name.
+			arg-name: String = current-token.text;
+			consume-token();
+
+			// Get the type.
+			arg-type: CompiledClass = nil;
+			if (current-token.type == '[') {
+				// Type is specified.
+				consume-token();
+				arg-type = parse-type-spec();
+				if (current-token.type != ']')
+					throw ParseException("Missing \"]\".", current-token);
+				consume-token();
+				}
+
+			// Add the argument.
+			arguments.append(new CompiledField(arg-name, arg-type));
+			name += " " + arg-name;
+			}
+
+		// Return type
+		else if (current-token.type == '->') {
+			consume-token();
+			return-type = parse-type-spec();
+			if (current-token.type != 'eol')
+				throw ParseException("Illegal function declaration.", current-token);
+			}
+
+		// Anything else is an error
+		else
+			throw ParseException("Illegal function declaration.", current-token);
+		}
+	require-eol();
+
+	VlangeCompiler.status-reporter.report("Parsing " + name + "...");
+
+	// Parse the body.
+	body: Block = nil;
+	if (!is-primitive) {
+		saved-context: Context = context;
+		context = new MethodContext(arguments, is-object-function, context);
+		body = parse-block();
+		context = saved-context;
+		}
+
+	// Build the function and return it.
+	new-function:
+		CompiledFunction(name, arguments, return-type,
+		                 is-object-function, is-primitive,
+		                 context.as-a(Package),
+		                 body);
+	return new-function;
+}
+
+
+parse-type-spec(): CompiledClass
+{
+	type: Context = nil;
+	cur-context: Context = context;
+	last-name: Token = nil;
+	while (current-token.type == 'name') {
+		// Find the package or class.
+		last-name = current-token;
+		type-function: VlangeFunction =
+			cur-context.lookup-function(current-token.text);
+		if (type-function == nil)
+			throw ParseException("Unknown class or package.", current-token);
+		consume-token();
+
+		if (type-function.is-a(PackageFunction))
+			type = type-function.as-a(PackageFunction).package;
+		else if (type-function.is-a(ClassFunction))
+			type = type-function.as-a(ClassFunction).the-class;
+		else {
+			throw
+				ParseException("Not a class or package in a type specifier.",
+				               last-name);
+			}
+		cur-context = type;
+		}
+
+	// Make sure we got a class.
+	if (type == nil) {
+		throw
+			ParseException("Missing the type in a type specifier.", current-token);
+		}
+	if (!type.is-a(CompiledClass)) {
+		throw
+			ParseException("A type specifier was given, but is not a class.",
+			               last-name);
+		}
+
+	return type.as-a(CompiledClass);
+}
+
+
+parse-block(): Block
+{
+	block: Block(context);
+
+	// Strip out leading blank lines
+	while (current-token.type == 'eol')
+		consume-token();
+
+	if (current-token.type != 'indent')
+		return block;
+	consume-token();
+
+	context = block;
+
+	while (current-token.type != 'unindent') {
+		statement: Statement = parse-statement();
+		if (statement == nil)
+			throw ParseException("Statement expected.", current-token);
+
+		block.append(statement);
+		}
+
+	consume-token();	// unindent
+
+	context = block.parent;
+
+	return block;
+}
+
+
+skip-block()
+{
+	if (current-token.type != 'indent')
+		return;
+	consume-token();
+
+	level: Int = 1;
+	loop {
+		type: Symbol = current-token.type;
+		consume-token();
+		if (type == 'indent')
+			level += 1;
+		else if (type == 'unindent') {
+			level -= 1;
+			if (level <= 0)
+				break;
+			}
+		}
+}
+
+
+parse-statement: Statement
+{
+	if (current-token.type == 'name') {
+		name: String = current-token.text;
+		if (name == "if")
+			return parse-if-statement();
+		if (name == "iff")
+			return parse-iff-statement();
+		else if (name == "loop")
+			return parse-loop-statement();
+		else if (name == "while")
+			return parse-while-statement();
+		else if (name == "for")
+			return parse-for-statement();
+		else if (name == "continue")
+			return parse-continue-statement();
+		else if (name == "break")
+			return parse-break-statement();
+		else if (name == "return")
+			return parse-return-statement();
+		else if (name == "try")
+			return parse-try-statement();
+		else if (name == "throw")
+			return parse-throw-statement();
+
+		// Is it a declaration?
+		if (next-token.type == ':=' || next-token.type == '[')
+			return parse-declaration();
+		}
+
+	else if (current-token.type == 'eol') {
+		consume-token();
+		return new BlankLine();
+		}
+
+	else if (current-token.type == 'comment') {
+		comment: String = current-token.text;
+		consume-token();
+		require-eol();
+		return new Comment(comment);
+		}
+
+	// If it wasn't anything else, it must be an expression statement.
+	return parse-expression-statement();
+}
+
+
+parse-if-statement(): IfStatement
+{
+	consume-token();	// "if"
+
+	// Condition
+	condition: Expression = parse-expression();
+	if (condition == nil) {
+		throw ParseException("Missing condition in an \"if\" statement.",
+		                     current-token);
+		}
+	comment: String = require-eol();
+
+	// Body
+	body: Block = parse-block();
+
+	// "else" block, if there is one.
+	else-block: Block = nil;
+	else-comment: String = nil;
+	if (current-token.type == 'name' && current-token.text == "else") {
+		consume-token();	// "else"
+		if (current-token.type == 'name' && current-token.text == "if") {
+			else-block = new Block(context);
+			else-block.append(parse-if-statement());
+			}
+		else {
+			else-comment = require-eol();
+			else-block = parse-block();
+			}
+		}
+
+	return new IfStatement(condition, body, else-block, comment, else-comment);
+}
+
+
+parse-iff-statement(): Statement
+{
+	if (check-iff())
+		return new BlockStatement(parse-block());
+	else
+		return new EmptyStatement();
+}
+
+
+parse-loop-statement(): LoopStatement
+{
+	consume-token();	// "loop"
+	comment: String = require-eol();
+
+	body: Block = parse-block();
+	return new LoopStatement(body, comment);
+}
+
+
+parse-while-statement(): WhileStatement
+{
+	consume-token();	// "while"
+
+	// Condition
+	condition: Expression = parse-expression();
+	if (condition == nil) {
+		throw ParseException("Missing condition in a \"while\" statement.",
+		                     current-token);
+		}
+
+	// Body
+	comment: String = require-eol();
+	body: Block = parse-block();
+
+	return new WhileStatement(condition, body, comment);
+}
+
+
+parse-for-statement(): ForStatement
+{
+	consume-token();	// "for"
+
+	// Variable
+	if (current-token.type != 'name')
+		throw ParseException("\"for\" loop variable name expected.", current-token);
+	name: String = current-token.text;
+	consume-token();
+	type: CompiledClass = nil;
+	if (current-token.type == '[') {
+		consume-token();
+		type = parse-type-spec();
+		if (current-token.type != ']')
+			throw ParseException("Missing \"]\".", current-token);
+		consume-token();
+		}
+	local: CompiledField(name, type);
+
+	// "in"
+	if (current-token.type != 'name' && current-token.text != "in")
+		throw ParseException("\"in\" expected.", current-token);
+	consume-token();
+
+	// Collection
+	collection: Expression = parse-expression();
+	if (collection == nil) {
+		throw
+			ParseException("Missing collection in \"for\" statement.",
+			                current-token);
+		}
+
+	// Add the name to the context and parse the body.
+	comment: String = require-eol();
+	saved-context: Context = context;
+	context = new ForContext(local, context);
+	body: Block = parse-block();
+	context = saved-context;
+
+	// Make the result.
+	return new ForStatement(local, collection, body, comment);
+}
+
+
+parse-continue-statement(): ContinueStatement
+{
+	consume-token();	// "continue"
+	comment: String = require-eol();
+
+	return new ContinueStatement(comment);
+}
+
+
+parse-break-statement(): BreakStatement
+{
+	consume-token();	// "break"
+	comment: String = require-eol();
+
+	return new BreakStatement(comment);
+}
+
+
+parse-return-statement(): ReturnStatement
+{
+	consume-token();	// "return"
+
+	return-value: Expression = nil;
+	if (current-token == 'eol')
+		return-value = new FunctionCall("nil", new (List of Expression), context);
+	else
+		return-value = parse-expression();
+	comment: String = require-eol();
+
+	return new ReturnStatement(return-value, comment);
+}
+
+
+parse-try-statement(): TryStatement
+{
+	consume-token();	// "try"
+	comment: String = require-eol();
+
+	body: Block = parse-block();
+
+	// Catch clauses
+	catch-clauses: List of CatchClause;
+	saved-context: Context = context;
+	while (current-token.type == 'name' && current-token.text == "catch") {
+		consume-token();	// "catch"
+		type: CompiledClass = parse-type-spec();
+		catch-comment: String = require-eol();
+		catch-clause: CatchClause(type, context, catch-comment);
+		context = catch-clause;
+		catch-clause.body = parse-block();
+		context = saved-context;
+		catch-clauses.append(catch-clause);
+		}
+
+	return new TryStatement(body, catch-clauses, comment);
+}
+
+
+parse-throw-statement(): ThrowStatement
+{
+	consume-token();	// "throw"
+
+	expr: Expression = parse-expression();
+	comment: String = require-eol();
+
+	return new ThrowStatement(expr, comment);
+}
+
+
+parse-declaration(): Statement
+{
+	name: String = current-token.text;
+	consume-token();
+
+	// Type
+	type: CompiledClass = nil;
+	if (current-token.type == '[') {
+		consume-token();	// '['
+		type = parse-type-spec();
+		if (current-token.type != ']')
+			throw ParseException("Missing \"]\".", current-token);
+		consume-token();
+		}
+
+	// ':="
+	if (current-token.type != ':=')
+		throw ParseException("\":=\" expected.", current-token);
+	consume-token();
+
+	// Initial value
+	initial-value: Expression = parse-expression();
+	comment: String = require-eol();
+
+	// Add the local to the block.
+	current-block.add-local(new CompiledField(name, type));
+
+	// Set to the initial value.
+	arguments: List of Expression;
+	arguments.append(initial-value);
+	return
+		new ExpressionStatement(
+			new FunctionCall(name + " set-to", arguments, context), comment);
+}
+
+
+parse-expression-statement(): ExpressionStatement
+{
+	expr: Expression = parse-expression();
+	comment: String = require-eol();
+	return new ExpressionStatement(expr, comment);
+}
+
+
+parse-expression(): Expression
+{
+	// At the top level are the '=' expressions.
+
+	expr: Expression = parse-logical-or-expression();
+	if (expr == nil)
+		return nil;
+
+	expr2: Expression = nil;
+
+	token: Symbol = current-token.type;
+	if (token == '=') {
+		consume-token();
+		if (!expr.is-a(FunctionCall) && !expr.is-a(ObjectCall))
+			throw ParseException("Illegal assignment.", current-token);
+		expr2 = parse-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		if (expr.is-a(FunctionCall))
+			expr.as-a(FunctionCall).convert-to-setter-call(expr2);
+		else if (expr.is-a(ObjectCall))
+			expr.as-a(ObjectCall).convert-to-setter-call(expr2);
+		}
+
+	else if (token == '*=' || token == '/=' || token == '%=' || token == '+=' ||
+	         token == '-=' || token == '>>=' || token == '<<=' ||
+	         token == '&=' || token == '|=' || token == '^=') {
+		consume-token();
+		if (!expr.is-a(FunctionCall) && !expr.is-a(ObjectCall))
+			throw ParseException("Illegal assignment.", current-token);
+		expr2 = parse-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		arguments: List of Expression;
+		arguments.append(expr2);
+		call:
+			ObjectCall(token.substr(0, token.length - 1) + " arg", expr, arguments);
+		if (expr.is-a(FunctionCall)) {
+			setter: FunctionCall = expr.as-a(FunctionCall).copy;
+			setter.convert-to-setter-call(call);
+			expr = setter;
+			}
+		else if (expr.is-a(ObjectCall)) {
+			setter: ObjectCall = expr.as-a(ObjectCall).copy;
+			setter.convert-to-setter-call(call);
+			expr = setter;
+			}
+		}
+
+	return expr;
+}
+
+
+parse-logical-or-expression(): Expression
+{
+	expr: Expression = parse-logical-and-expression();
+	if (expr == nil)
+		return nil;
+
+	while (current-token.type == '||') {
+		consume-token();
+		expr2: Expression = parse-logical-and-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = new ShortCircuitOr(expr, expr2);
+		}
+
+	return expr;
+}
+
+
+parse-logical-and-expression(): Expression
+{
+	expr: Expression = parse-inclusive-or-expression();
+	if (expr == nil)
+		return nil;
+
+	while (current-token.type == '&&') {
+		consume-token();
+		expr2: Expression = parse-inclusive-or-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = new ShortCircuitAnd(expr, expr2);
+		}
+
+	return expr;
+}
+
+
+parse-inclusive-or-expression(): Expression
+{
+	expr: Expression = parse-exclusive-or-expression();
+	if (expr == nil)
+		return nil;
+
+	while (current-token.type == '|') {
+		consume-token();
+		expr2: Expression = parse-exclusive-or-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call("|", expr, expr2);
+		}
+
+	return expr;
+}
+
+
+parse-exclusive-or-expression(): Expression
+{
+	expr: Expression = parse-and-expression();
+	if (expr == nil)
+		return nil;
+
+	while (current-token.type == '^') {
+		consume-token();
+		expr2: Expression = parse-and-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call("^", expr, expr2);
+		}
+
+	return expr;
+}
+
+
+parse-and-expression(): Expression
+{
+	expr: Expression = parse-equality-expression();
+	if (expr == nil)
+		return nil;
+
+	while (current-token.type == '&') {
+		consume-token();
+		expr2: Expression = parse-equality-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call("&", expr, expr2);
+		}
+
+	return expr;
+}
+
+
+parse-equality-expression(): Expression
+{
+	expr: Expression = parse-relational-expression();
+	if (expr == nil)
+		return nil;
+
+	token: Symbol = current-token.type;
+	while (token == '==' || token == '!=') {
+		consume-token();
+		expr2: Expression = parse-relational-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call(token, expr, expr2);
+
+		token = current-token.type;
+		}
+
+	return expr;
+}
+
+
+parse-relational-expression(): Expression
+{
+	expr: Expression = parse-shift-expression();
+	if (expr == nil)
+		return nil;
+
+	token: Symbol = current-token.type;
+	while (token == '<' || token == '>' || token == '<=' || token == '>=') {
+		consume-token();
+		expr2: Expression = parse-shift-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call(token, expr, expr2);
+
+		token = current-token.type;
+		}
+
+	return expr;
+}
+
+
+parse-shift-expression(): Expression
+{
+	expr: Expression = parse-additive-expression();
+	if (expr == nil)
+		return nil;
+
+	token: Symbol = current-token.type;
+	while (token == '<<' || token == '>>') {
+		consume-token();
+		expr2: Expression = parse-additive-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call(token, expr, expr2);
+
+		token = current-token.type;
+		}
+
+	return expr;
+}
+
+
+parse-additive-expression(): Expression
+{
+	expr: Expression = parse-multiplicative-expression();
+	if (expr == nil)
+		return nil;
+
+	token: Symbol = current-token.type;
+	while (token == '+' || token == '-') {
+		consume-token();
+		expr2: Expression = parse-multiplicative-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call(token, expr, expr2);
+
+		token = current-token.type;
+		}
+
+	return expr;
+}
+
+
+parse-multiplicative-expression(): Expression
+{
+	expr: Expression = parse-unary-expression();
+	if (expr == nil)
+		return nil;
+
+	token: Symbol = current-token.type;
+	while (token == '*' || token == '/' || token == '%') {
+		consume-token();
+		expr2: Expression = parse-unary-expression();
+		if (expr2 == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = make-binop-call(token, expr, expr2);
+
+		token = current-token.type;
+		}
+
+	return expr;
+}
+
+
+parse-unary-expression(): Expression
+{
+	expr: Expression = nil;
+	token: Symbol = current-token.type;
+
+	if (token == '!') {
+		consume-token();
+		expr = parse-unary-expression();
+		if (expr == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = new ShortCircuitNot(expr);
+		}
+
+	else if (token == '+' || token == '-' || token == '~') {
+		consume-token();
+		expr = parse-unary-expression();
+		if (expr == nil)
+			throw ParseException("Expression expected.", current-token);
+		expr = new ObjectCall(token, expr, new List of Expression);
+		}
+
+	else
+		expr = parse-postfix-expression();
+
+	return expr;
+}
+
+
+parse-postfix-expression(): Expression
+{
+	expr: Expression = parse-primary-expression();
+	if (expr == nil)
+		return nil;
+
+	while (current-token.type == 'name') {
+		// An object call.
+		name: String = current-token.text;
+		consume-token();
+
+		// Get the arguments.
+		arguments: List of Expression;
+		while (current-token.type == 'arg-name') {
+			name += " " + current-token.text;
+			consume-token();
+			arg: Expression = parse-expression();
+			if (arg == nil) {
+				message: String = "Missing argument (\"" + name + "\").";
+				throw ParseException(message, current-token);
+				}
+			arguments.append(arg);
+			}
+
+		expr = new ObjectCall(name, expr, arguments);
+		}
+
+	return expr;
+}
+
+
+parse-primary-expression(): Expression
+{
+	token: Symbol = current-token.type;
+
+	if (token == 'name') {
+		name: String = current-token.text;
+		consume-token();
+
+		if (name == "super")
+			return parse-super-call();
+
+		// Non-object function call.
+
+		// Get the arguments, if any.
+		arguments: List of Expression;
+		while (current-token.type == 'arg-name') {
+			name += " " + current-token.text;
+			consume-token();
+			arg: Expression = parse-expression();
+			if (arg == nil) {
+				message: String = "Missing argument (\"" + name + "\").";
+				throw ParseException(message, current-token);
+				}
+			arguments.append(arg);
+			}
+
+		// Make the function call.
+		return new FunctionCall(name, arguments, context);
+		}
+
+	else if (token == 'int-literal') {
+		value: String = current-token.text;
+		consume-token();
+		return new IntLiteral(value);
+		}
+
+	else if (token == 'float-literal') {
+		value: String = current-token.text;
+		consume-token();
+		return new FloatLiteral(value);
+		}
+
+	else if (token == 'string-literal') {
+		value: String = current-token.text;
+		consume-token();
+		return new StringLiteral(value);
+		}
+
+	else if (token == 'symbol-literal') {
+		value: String = current-token.text;
+		consume-token();
+		return VlangeCompiler.the-compiler.get-symbol-literal(value);
+		}
+
+	else if (token == '(') {
+		consume-token();
+		expr: Expression = parse-expression();
+		if (expr == nil)
+			throw ParseException("Expression expected.", current-token);
+		if (current-token.type != ')')
+			throw ParseException("')' expected.", current-token);
+		consume-token();
+		return expr;
+		}
+
+	return nil;
+}
+
+
+parse-super-call(): Expression
+{
+	consume-token(); 	// "super"
+
+	// Make sure this is in an object method.
+	method-context: MethodContext = context.enclosing-method-context;
+	if (method-context == nil || !method-context.is-object-function) {
+		throw
+			ParseException("\"super\" calls are only valid in object functions.",
+			               current-token);
+		}
+
+	// We allow any token here, not just a name; in this way, super calls
+	// of binops are easily done.
+	name: String = nil;
+	if (current-token.text == nil || current-token.text.is-empty)
+		name = current-token.type;
+	else
+		name = current-token.text;
+
+	// Get the arguments.
+	arguments: List of Expression;
+	while (current-token.type == 'arg-name') {
+		name += " " + current-token.text;
+		consume-token();
+		arg: Expression = parse-expression();
+		if (arg == nil) {
+			message: String = "Missing argument (\"" + name + "\").";
+			throw ParseException(message, current-token);
+			}
+		arguments.append(arg);
+		}
+
+	// Get the class that it's on.
+	on-class: CompiledClass = method-context.parent.as-a(CompiledClass);
+	if (!on-class.is-a(CompiledClass)) {
+		throw
+			ParseException("Internal error: no class for super call", current-token);
+		}
+
+	return new SuperCall(name, arguments, on-class);
+}
+
+
+
+// Helpers
+
+current-block: Block
+{
+	if (!context.is-a(Block))
+		throw MessageException("Internal error:  Current context isn't a block.");
+	return context.as-a(Block);
+}
+
+
+make-binop-call(name: String, object: Expression, argument: Expression)
+	: ObjectCall
+{
+	arguments: List of Expression;
+	arguments.append(argument);
+	return new ObjectCall(name + " arg", object, arguments);
+}
+
+
+reporter: StatusReporter
+{
+	return VlangeCompiler.status-reporter;
+}
+
+
+
+/***
+
+NOTES:
+
+Local variables are part of a Block.  A Block is a Context; we can use
+"context" for the current block, as we won't be trying to add fields
+and functions to it.
+
+There are two kinds of function calls: FunctionCall and ObjectCall. 
+FunctionCall is not on an object; it has a context.  ObjectCall is on
+an object.
+
+
+TO DO:
+
+Need to add comma operator.
+
+See "//***"s.
+
+***/

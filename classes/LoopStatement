@@ -1,0 +1,23 @@
+Class: LoopStatement
+Superclass: Statement
+
+
+body: Block;
+
+
+create(body: Block, comment: String)
+{
+	this.body = body;
+	this.comment = comment;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	builder.add-line("while (1)");
+	builder.add-line("_StartContinueCatcher_");
+	body.emit-code(builder);
+	builder.add-line("_EndContinueCatcher_");
+}
+
+

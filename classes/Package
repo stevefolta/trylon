@@ -1,0 +1,328 @@
+Class: Package
+Superclass: Context
+
+name: String;
+parent: Package;
+functions: Dictionary of VlangeFunction;
+fields: Dictionary of CompiledField;
+directories: List of FileDirectory;
+uses-packages: List of Package;
+has-primitives: Bool;
+is-main: Bool;
+
+
+create(name: String, parent: Package)
+{
+	this.name = name;
+	this.parent = parent;
+	functions = new Dictionary of VlangeFunction;
+	fields = new Dictionary of CompiledField;
+	directories = new List of FileDirectory;
+	uses-packages = new List of Package;
+	has-primitives = false;
+	is-main = false;
+}
+
+
+lookup-function(name: String): VlangeFunction
+{
+	lookup-function(name, new ObjectMap of Package);
+}
+
+
+lookup-function(name: String, visited-packages: ObjectMap of Package)
+	: VlangeFunction
+{
+	// Recursion control
+	if (visited-packages.contains(this))
+		return nil;
+	visited-packages.add(this, this);
+
+	// Do we know it already?
+	function: VlangeFunction = functions[name];
+	if (function)
+		return function;
+
+	// If not, see if it's in one of our directories.
+	for (directory: FileDirectory in directories) {
+		// A class?
+		if (directory.contains(name) && !directory.entry-is-directory(name)) {
+			class: CompiledClass = add-class(name);
+			parser: Parser(directory[name].as-a(File).contents, this);
+			parser.parse-class();
+			return functions[name];
+			}
+
+		// A package?
+		if (directory.entry-is-directory(name))
+			return add-package(name, directory[name].as-a(FileDirectory));
+		package-dir-name: String = "packages/" + name;
+		if (directory.entry-is-directory(package-dir-name))
+			return add-package(name, directory[package-dir-name].as-a(FileDirectory));
+		}
+
+	// Check the parent.
+	if (parent) {
+		function = parent.lookup-function(name, visited-packages);
+		if (function)
+			return function;
+		}
+
+	// Next, check the used packages.
+	for (used-package: Package in uses-packages) {
+		function: VlangeFunction =
+			used-package.lookup-function(name, visited-packages);
+		if (function)
+			return function;
+		}
+
+	return nil;
+}
+
+
+add-function(function: CompiledFunction)
+{
+	functions[function.name] = function;
+	if (function.is-primitive)
+		has-primitives = true;
+}
+
+
+add-field(field: CompiledField)
+{
+	fields[field.name] = field;
+	functions[field.name] = new FieldGetter(field, this);
+	functions[field.name + " set-to"] = new FieldSetter(field, this);
+	if (field.is-primitive)
+		has-primitives = true;
+}
+
+
+add-class(name: String): CompiledClass
+{
+	// If it already exists, return it.
+	existing-function: VlangeFunction = functions[name];
+	if (existing-function) {
+		if (!existing-function.is-a(ClassFunction)) {
+			throw
+				MessageException("Adding \"" + name + "\" as a class, when it's " +
+				                 "already a non-class.");
+			}
+		return existing-function.as-a(ClassFunction).the-class;
+		}
+
+	// Add the new one.
+	VlangeCompiler.status-reporter.report("Loading " + name + "...");
+	VlangeCompiler.status-reporter.indent();
+	class: CompiledClass(name, this);
+	class-function: ClassFunction(class);
+	functions[name] = class-function;
+	VlangeCompiler.the-compiler.package-queue.append(class);
+	VlangeCompiler.status-reporter.unindent();
+	return class;
+}
+
+
+add-package(name: String, directory: FileDirectory): PackageFunction
+{
+	package: Package(name, this);
+	if (directory)
+		package.add-directory(directory);
+	package-function: PackageFunction(package);
+	functions[name] = package-function;
+	VlangeCompiler.the-compiler.package-queue.append(package);
+	return package-function;
+}
+
+
+get-subpackage(name: String): Package
+{
+	// Has it been loaded already?
+	function: VlangeFunction = functions[name];
+	if (function && function.is-a(PackageFunction))
+		return function.as-a(PackageFunction).package;
+
+	// Look for it.
+	for (directory: FileDirectory in directories) {
+		if (!directory.entry-is-directory("packages"))
+			continue;
+		packages-dir: FileDirectory = directory["packages"].as-a(FileDirectory);
+		if (packages-dir.entry-is-directory(name))
+			return add-package(name, packages-dir[name].as-a(FileDirectory)).package;
+		}
+
+	return nil;
+}
+
+
+
+add-directory(directory: FileDirectory)
+{
+	directories.append(directory);
+
+	if (directory.contains("main")) {
+		if (directory.contains("main")) {
+			parser: Parser(directory["main"].as-a(File).contents, this);
+			parser.parse-package();
+			}
+		}
+}
+
+
+setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
+           compile-symbols: List of String)
+{
+	is-main = true;
+
+	// We want the main-directory to have precedence when looking up names,
+	// but we won't be able to compile its "main" until the library directory
+	// is in the "directories" and Standard is visible.  So add both, *then*
+	// compile the "main"s.
+	directories.append(main-directory);
+	directories.append(library-directory);
+
+	// Add the compile-symbols.
+	for (symbol: String in compile-symbols)
+		add-field(new CompiledField(symbol, nil));
+
+	// Load Standard.
+	standard-package: Package = get-subpackage("Standard");
+	if (standard-package == nil)
+		throw MessageException("The Standard package can't be found!");
+	uses-packages.append(standard-package);
+
+	for (directory: FileDirectory in directories) {
+		if (directory.contains("main")) {
+			parser: Parser(directory["main"].as-a(File).contents, this);
+			parser.parse-package();
+			}
+		}
+
+	// Load up standard classes.
+	standard-package.lookup-function("BytePtr");
+	standard-package.lookup-function("String");
+}
+
+
+ensure-superclasses(object-class: CompiledClass)
+{
+	for (function: VlangeFunction in functions.values) {
+		if (function.is-a(PackageFunction))
+			function.as-a(PackageFunction).package.ensure-superclasses(object-class);
+		else if (function.is-a(ClassFunction))
+			function.as-a(ClassFunction).the-class.ensure-superclasses(object-class);
+		}
+}
+
+
+find-primitives-file(file-name: String): File
+{
+	for (directory: FileDirectory in directories) {
+		if (directory.entry-is-directory("primitives")) {
+			primitives-dir: FileDirectory =
+				directory["primitives"].as-a(FileDirectory);
+			if (primitives-dir.contains(file-name) &&
+			    !primitives-dir.entry-is-directory(file-name)) {
+				return primitives-dir[file-name].as-a(File);
+				}
+			}
+		}
+
+	return nil;
+}
+
+
+copy-primitives-files()
+{
+	// Copy ours, if there is one
+	if (has-primitives) {
+		file-name: String = c-name + ".primitives.c";
+		primitives-file: File = find-primitives-file(file-name);
+		if (primitives-file == nil && parent) {
+			// This might be a class, so check the parent's directories too.
+			primitives-file = parent.find-primitives-file(file-name);
+			}
+		if (primitives-file)
+			VlangeCompiler.the-compiler.copy-to-sources(primitives-file, file-name);
+		}
+
+	// Have all children copy theirs
+	for (function: VlangeFunction in functions.values) {
+		if (function.is-a(PackageFunction))
+			function.as-a(PackageFunction).package.copy-primitives-files();
+		else if (function.is-a(ClassFunction))
+			function.as-a(ClassFunction).the-class.copy-primitives-files();
+		}
+}
+
+
+emit-code()
+{
+	reporter.report("Generating code for " + name + "...");
+	reporter.indent();
+
+//---
+reporter.report(name + " has these functions:");
+reporter.indent();
+for (name: String in functions.keys) {
+	reporter.report(name + " (" + functions[name].class.name + ")");
+}
+reporter.unindent();
+//---
+
+	emit-h-file();
+	emit-c-file();
+
+	reporter.unindent();
+}
+
+
+emit-h-file()
+{
+	//***//
+}
+
+
+emit-c-file()
+{
+	stream: OutputStream = new File(".c-sources/" + c-name + ".c").output-stream;
+
+	// Header, includes
+	stream.write-line("/* " + c-name + ".c */");
+	stream.write-line();
+	stream.write-line("#include \"Vlange_.h\"");
+	stream.write-line();
+
+	// Functions
+	for (function: VlangeFunction in functions.values)
+		function.emit-code(stream);
+}
+
+
+c-name: String
+{
+	name: String = MethodBuilder.mangle-name(name);
+	if (parent && !parent.is-main)
+		name = parent.c-name + "__" + name;
+	return name;
+}
+
+
+total-instance-fields: Int
+{
+	// Only CompiledClasses have instance fields.
+	return 0;
+}
+
+
+
+// Helpers
+
+reporter: StatusReporter
+[class]
+{
+	return VlangeCompiler.status-reporter;
+}
+
+
+

@@ -1,0 +1,23 @@
+Class: CompiledField
+
+name: String;
+type: CompiledClass;
+is-primitive: Bool;
+
+
+create(name: String, type: CompiledClass)
+{
+	this.name = name;
+	this.type = type;
+	this.is-primitive = false;
+}
+
+
+create(name: String, type: CompiledClass, is-primitive: Bool)
+{
+	this.name = name;
+	this.type = type;
+	this.is-primitive = is-primitive;
+}
+
+

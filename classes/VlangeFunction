@@ -1,0 +1,36 @@
+Class: VlangeFunction
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+[phantom]
+
+
+emit-declaration(stream: OutputStream)
+[phantom]
+
+emit-code(stream: OutputStream)
+{
+	// Default: nothing to do.
+}
+
+
+
+
+// Most VlangeFunctions are non-object functions, and object functions and
+// non-object functions are mostly disjoint sets, but the exception is
+// CompiledClass.  So a VlangeFunction can represent either type of function.
+
+// The rest of these must be defined for object functions.
+
+emit-object-call(object: ExpressionResult,
+                 arguments: (List of ExpressionResult),
+                 builder: MethodBuilder)
+	: ExpressionResult
+[phantom]
+
+
+c-name: String
+[phantom]
+
+

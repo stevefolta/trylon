@@ -1,0 +1,128 @@
+class String
+
+	field start [BytePtr]
+	field stopper [BytePtr]
+
+	fn create start stopper
+		this start = start
+		this stopper = stopper
+
+	fn create length
+		this start = BytePtr new size: length
+		this stopper = this start
+
+	fn length -> Int
+		return stopper - start
+
+	fn == arg -> Bool
+		p [BytePtr] := start
+		other-p [BytePtr] := arg start
+		loop
+			if p >= stopper
+				if other-p >= arg stopper
+					return true
+				else
+					return false
+			if other-p >= arg stopper
+				return false
+			if p deref-char != other-p deref-char
+				return false
+			p += 1
+			other-p += 1
+		return false
+
+	fn != arg -> Bool
+		p [BytePtr] := start
+		other-p [BytePtr] := arg start
+		loop
+			if p >= stopper
+				if other-p >= arg stopper
+					return false
+				else
+					return true
+			if other-p >= arg stopper
+				return true
+			if p deref-char != other-p deref-char
+				return true
+			p += 1
+			other-p += 1
+		return true
+
+	fn < arg -> Bool
+		p [BytePtr] := start
+		other-p [BytePtr] := arg start
+		loop
+			if p >= stopper
+				if other-p >= arg stopper
+					return false
+				else
+					return true
+			if other-p >= arg stopper
+				return false
+			if p deref-char > other-p deref-char
+				return false
+			else if p deref-char < other-p deref-char
+				return true
+			p += 1
+			other-p += 1
+		return false
+
+	fn <= arg -> Bool
+		p [BytePtr] := start
+		other-p [BytePtr] := arg start
+		loop
+			if p >= stopper
+				return true
+			if other-p >= arg stopper
+				return false
+			if p deref-char > other-p deref-char
+				return false
+			else if p deref-char < other-p deref-char
+				return true
+			p += 1
+			other-p += 1
+		return false
+
+	fn > arg -> Bool
+		p [BytePtr] := start
+		other-p [BytePtr] := arg start
+		loop
+			if p >= stopper
+				return false
+			if other-p >= arg stopper
+				return true
+			if p deref-char > other-p deref-char
+				return true
+			else if p deref-char < other-p deref-char
+				return false
+			p += 1
+			other-p += 1
+		return false
+
+	fn >= arg -> Bool
+		p [BytePtr] := start
+		other-p [BytePtr] := arg start
+		loop
+			if p >= stopper
+				if other-p >= arg stopper
+					return true
+				else
+					return false
+			if other-p >= arg stopper
+				return true
+			if p deref-char > other-p deref-char
+				return true
+			else if p deref-char < other-p deref-char
+				return false
+			p += 1
+			other-p += 1
+		return false
+
+	fn + arg [String] -> String
+		new-string [String] := String new length: (length + arg length)
+		new-string start copy source: (start) length: length
+		(new-string start + length) copy --
+			source: (arg start) length: arg length
+		new-string stopper = new-string start + length + arg length
+		return new-string
+

@@ -1,0 +1,16 @@
+Class: CaughtExceptionResult
+Superclass: ExpressionResult
+
+
+create()
+{
+}
+
+
+access: String
+{
+	return "__caught_object";
+}
+
+
+

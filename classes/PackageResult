@@ -1,0 +1,20 @@
+Class: PackageResult
+Superclass: ExpressionResult
+
+
+package: Package;
+
+
+create(package: Package)
+{
+	this.package = package;
+}
+
+
+access: String
+{
+	return "((obj_) &" + package.c-name + ")";
+}
+
+
+

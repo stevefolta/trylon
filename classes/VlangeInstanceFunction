@@ -1,0 +1,15 @@
+Class: VlangeInstanceFunction
+Superclass: VlangeFunction
+
+
+c-signature: String
+[phantom]
+
+
+is-primitive: Bool
+{
+	// Default: no.
+	return false;
+}
+
+

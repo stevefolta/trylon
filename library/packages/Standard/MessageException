@@ -1,0 +1,10 @@
+class MessageException
+	superclass Exception
+
+	fld the-message
+
+	fn create message
+		the-message = message
+
+	fn message
+		return the-message

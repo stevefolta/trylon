@@ -1,0 +1,6 @@
+package Implementation
+
+	primitive-fn allocate bytes [Int] -> BytePtr
+	primitive-fn allocate slots [Int] -> BytePtr
+
+	primitive-fn allocate-object class [Class] with-extra-slots [Int]

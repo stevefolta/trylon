@@ -1,0 +1,309 @@
+Class: MethodBuilder
+
+code: StringBuilder;
+next-temporary-num: Int;
+num-temporaries-used: Int;
+string-literals: List of StringLiteral;
+next-string-literal-num: Int;
+int-literals: List of IntLiteral;
+next-int-literal-num: Int;
+used-object-functions: Dictionary of String;
+used-function-declarations: List of String;
+used-fields: ObjectMap of Package;
+used-classes: ObjectMap of CompiledClass;
+indent-level: Int;
+
+
+create()
+{
+	code = new StringBuilder();
+	next-temporary-num = 0;
+	num-temporaries-used = 0;
+	next-string-literal-num = 0;
+	string-literals = new List of StringLiteral;
+	next-int-literal-num = 0;
+	int-literals = new List of IntLiteral;
+	used-object-functions = new Dictionary of String;
+	used-function-declarations = new List of String;
+	used-fields = new ObjectMap of Package;
+	used-classes = new ObjectMap of CompiledClass;
+	indent-level = 0;
+}
+
+
+get-temporary(): Temporary
+{
+	temp-num: Int = next-temporary-num;
+	next-temporary-num += 1;
+	if (next-temporary-num > num-temporaries-used)
+		num-temporaries-used = next-temporary-num;
+
+	return new Temporary("t" + temp-num.string + "_");
+}
+
+
+add-string-literal(string-literal: StringLiteral)
+{
+	string-literal.index = next-string-literal-num;
+	next-string-literal-num += 1;
+	string-literals.append(string-literal);
+}
+
+
+add-int-literal(int-literal: IntLiteral)
+{
+	int-literal.index = next-int-literal-num;
+	next-int-literal-num += 1;
+	int-literals.append(int-literal);
+}
+
+
+using-object-function(name: String)
+{
+	used-object-functions[name] = name;
+}
+
+
+add-used-function-declaration(declaration: String)
+{
+	used-function-declarations.append(declaration);
+}
+
+
+using-field(field: CompiledField, on-package: Package)
+{
+	// This is a little tricky.  We count on the fact that we'll be given
+	// the same "field" object anytime that field in "on-package" is
+	// referenced.  So we can use an ObjectMap to keep track of them.
+	used-fields[field] = on-package;
+}
+
+
+using-class(the-class: CompiledClass)
+{
+	used-classes[the-class] = the-class;
+}
+
+
+add-line(line: String)
+{
+	// add the indent
+	adjusted-indent-level: Int = indent-level;
+	if (adjusted-indent-level > 20)
+		adjusted-indent-level = 20;
+	code +=
+		"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t".substr(0, adjusted-indent-level);
+
+	code += line;
+	code += "\n";
+}
+
+
+add-blank-line()
+{
+	code += "\n";
+}
+
+
+indent()
+{
+	indent-level += 1;
+}
+
+
+unindent()
+{
+	indent-level -= 1;
+}
+
+
+emit(stream: OutputStream)
+{
+	stream.write-line("{");
+	stream.write-line("\tint _broken_;");
+
+	// Emit the string literals
+	for (literal: StringLiteral in string-literals) {
+		stream.write("\tDefineString_(");
+		stream.write(literal.index.string);
+		stream.write(", \"");
+		stream.write(literal.value);
+		stream.write("\", ");
+		stream.write(literal.value.length.string);
+		stream.write(")");
+		stream.write-line();
+		}
+
+	// Emit the int literals
+	for (literal: IntLiteral in int-literals) {
+		stream.write("\tDefineInt_(");
+		stream.write(literal.index.string);
+		stream.write(", ");
+		stream.write(literal.value.string);
+		stream.write(")");
+		stream.write-line();
+		}
+
+	// Emit the temporary declarations
+	if (num-temporaries-used > 0) {
+		stream.write("\tobj_ ");
+		temp-num: Int = 0;
+		while (temp-num < num-temporaries-used) {
+			if (temp-num != 0)
+				stream.write(", ");
+			stream.write("t");
+			stream.write(temp-num.string);
+			stream.write("_");
+			temp-num += 1;
+			}
+		stream.write-line(";");
+		}
+
+	// Emit the used object functions
+	if (!used-object-functions.is-empty) {
+		stream.write("\textern MethodSpec_ ");
+		done-one: Bool = false;
+		for (name: String in used-object-functions.keys) {
+			if (done-one)
+				stream.write(", ");
+			else
+				done-one = true;
+			stream.write(mangle-name(name));
+			stream.write("__methods[]");
+			}
+		stream.write-line(";");
+		}
+
+	// Emit the used (non-object) function declarations
+	if (!used-function-declarations.is-empty) {
+		for (declaration: String in used-function-declarations) {
+			stream.write("\t");
+			stream.write-line(declaration);
+			}
+		}
+
+	// Emit the used (non-object) fields
+	if (!used-fields.is-empty) {
+		stream.write("\textern obj_ ");
+		done-one: Bool = false;
+		for (field-obj: Object in used-fields.keys) {
+			field: CompiledField = field-obj.as-a(CompiledField);
+			on-package: Package = used-fields[field];
+
+			if (done-one)
+				stream.write(", ");
+			else
+				done-one = true;
+			stream.write(mangle-name(field.name));
+			stream.write("__");
+			stream.write(on-package.c-name);
+			}
+		stream.write-line(";");
+		}
+
+	// Emit the used classes
+	for (used-class: CompiledClass in used-classes.values) {
+		stream.write("\textern class_spec_ ");
+		stream.write(used-class.c-name);
+		stream.write-line(";");
+		}
+
+	stream.write-line();
+
+	// Emit the body of the code
+	stream.write(code.string);
+
+	stream.write-line("}");
+}
+
+
+mangle-name(name: String): String
+[class]
+{
+	// certain names are reserved in C++ but not in Cleen
+	if (name == "class")
+		return "class_";
+	else if (name == "char")
+		return "char_";
+	else if (name == "int")
+		return "int_";
+	else if (name == "short")
+		return "short_";
+	else if (name == "long")
+		return "long_";
+	else if (name == "float")
+		return "float_";
+	else if (name == "double")
+		return "double_";
+	else if (name == "inline")
+		return "inline_";
+	else if (name == "static")
+		return "static_";
+	else if (name == "namespace")
+		return "namespace_";
+
+	// mangle the name
+	result: String = "";
+	run-start: StringIterator = name.iterator;
+	p: StringIterator = run-start.copy;
+	while (!p.is-done) {
+		c: Int = p.current-item;
+		if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+		      (c >= '0' && c <= '9'))) {
+			// finish off the current run
+			result += new String(run-start, p);
+			p.go-forward();
+			run-start = p.copy;
+
+			// mangle the character
+			mangled-char: String;
+			if (c == '-')
+				mangled-char = "_";
+			else if (c == '<')
+				mangled-char = "_lt_";
+			else if (c == '>')
+				mangled-char = "_gt_";
+			else if (c == '=')
+				mangled-char = "_eq_";
+			else if (c == '+')
+				mangled-char = "_pl_";
+			else if (c == '*')
+				mangled-char = "_st_";
+			else if (c == '/')
+				mangled-char = "_dv_";
+			else if (c == '%')
+				mangled-char = "_pc_";
+			else if (c == ' ')
+				mangled-char = "_sp_";
+			else if (c == '[')
+				mangled-char = "_in_";
+			else if (c == ']')
+				mangled-char = "_dx_";
+			else if (c == '!')
+				mangled-char = "_nt_";
+			else if (c == '~')
+				mangled-char = "_tw_";
+			else if (c == '&')
+				mangled-char = "_an_";
+			else if (c == '|')
+				mangled-char = "_or_";
+			else if (c == '^')
+				mangled-char = "_xr_";
+			else if (c == '#')
+				mangled-char = "_lb_";
+			else if (c == '_')
+				mangled-char = "_ul_";
+			else
+				mangled-char = "_" + c.string + "_";
+
+			result += mangled-char;
+			}
+
+		else
+			p.go-forward();
+		}
+	result += new String(run-start, p);
+	return result;
+}
+
+

@@ -1,0 +1,2 @@
+class Exception
+	fn message

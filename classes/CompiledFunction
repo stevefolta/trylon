@@ -1,0 +1,132 @@
+Class: CompiledFunction
+Superclass: VlangeInstanceFunction 	// Not always an instance fn, but it can be.
+
+name: String;
+arguments: List of CompiledField;
+return-type: CompiledClass;
+is-object-function: Bool;
+is-a-primitive: Bool;
+on-package: Package;
+body: Block;
+
+
+create(name: String, arguments: (List of CompiledField),
+       return-type: CompiledClass,
+       is-object-function: Bool, is-a-primitive: Bool,
+       on-package: Package, body: Block)
+{
+	this.name = name;
+	this.arguments = arguments;
+	this.return-type = return-type;
+	this.is-object-function = is-object-function;
+	this.is-a-primitive = is-a-primitive;
+	this.on-package = on-package;
+	this.body = body;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	// Declare the function.
+	line: String = "extern obj_ " + c-name + "(";
+	have-arg: Bool = false;
+	for (arg: ExpressionResult in arguments) {
+		if (have-arg)
+			line += ", ";
+		else
+			have-arg = true;
+		line += "obj_";
+		}
+	line += ");";
+	builder.add-used-function-declaration(line);
+
+	// Generate the call.
+	temporary: Temporary = builder.get-temporary();
+	line = temporary.name + " = ";
+	line += c-name + "(";
+	have-arg = false;
+	for (arg: ExpressionResult in arguments) {
+		if (have-arg)
+			line += ", ";
+		else
+			have-arg = true;
+		line += arg.access;
+		}
+	line += ");";
+	builder.add-line(line);
+	return temporary;
+}
+
+
+emit-object-call(object: ExpressionResult,
+                 arguments: (List of ExpressionResult),
+                 builder: MethodBuilder)
+	: ExpressionResult
+{
+	temporary: Temporary = builder.get-temporary();
+	line: String = temporary.name + " = ";
+	line += c-name + "(" + object.access;
+	for (arg: ExpressionResult in arguments)
+		line += ", " + arg.access;
+	line += ");";
+	builder.add-line(line);
+	return temporary;
+}
+
+
+emit-code(stream: OutputStream)
+{
+	if (body == nil)
+		return;
+
+	// Emit the header
+	stream.write-line(c-signature);
+
+	// Emit the body
+	builder: MethodBuilder();
+	body.emit-code(builder);
+	builder.emit(stream);
+
+	stream.write-line();
+	stream.write-line();
+}
+
+
+c-name: String
+{
+	return MethodBuilder.mangle-name(name) + "__" + on-package.c-name;
+}
+
+
+c-signature: String
+{
+	signature: StringBuilder;
+	signature += "obj_ ";
+	signature += c-name;
+	signature += "(";
+	have-arg: Bool = false;
+	if (is-object-function) {
+		signature += "obj_ this_";
+		have-arg = true;
+		}
+	for (arg: CompiledField in arguments) {
+		if (have-arg)
+			signature += ", ";
+		else
+			have-arg = true;
+		signature += "obj_ ";
+		signature += MethodBuilder.mangle-name(arg.name);
+		}
+	signature += ")";
+
+	return signature.string;
+}
+
+
+is-primitive: Bool
+{
+	return is-a-primitive;
+}
+
+

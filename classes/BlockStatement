@@ -1,0 +1,19 @@
+Class: BlockStatement
+Superclass: Statement
+
+
+block: Block;
+
+
+create(block: Block)
+{
+	this.block = block;
+}
+
+
+emit-code(builder: MethodBuilder)
+{
+	block.emit-code(builder);
+}
+
+

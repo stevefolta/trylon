@@ -1,0 +1,101 @@
+Class: NewFunction
+Superclass: VlangeFunction
+
+
+creator-name: String;
+name: String;
+creator: VlangeFunction;
+on-class: CompiledClass;
+
+
+create(creator-name: String, creator: VlangeFunction, on-class: CompiledClass)
+{
+	this.creator-name = creator-name;
+	this.creator = creator;
+	this.on-class = on-class;
+
+	name = "new" + creator-name.substr(6);
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	// Declare the allocator
+	allocator-c-name: String =
+		MethodBuilder.mangle-name("allocate-object class") +
+		"__Standard__Implementation";
+	builder.add-used-function-declaration(
+		"extern obj_ " + allocator-c-name + "(obj_);");
+
+	// Declare the creator
+	creator-c-name: String =
+		builder.mangle-name(creator-name) + "__" + on-class.c-name;
+	line: String = "extern obj_ " + creator-c-name + "(obj_";
+	for (arg: ExpressionResult in arguments)
+		line += ", obj_";
+	line += ");";
+	builder.add-used-function-declaration(line);
+
+	// Allocate the object
+	temporary: Temporary = builder.get-temporary();
+	line = temporary.name + " = ";
+	line +=
+		allocator-c-name + "((obj_) &" + on-class.c-name + ");";
+	builder.add-line(line);
+
+	// Call the creator
+	line = creator-c-name;
+	line += "(" + temporary.name;
+	for (arg: ExpressionResult in arguments)
+		line += ", " + arg.access;
+	line += ");";
+	builder.add-line(line);
+
+	return temporary;
+}
+
+
+emit-code(stream: OutputStream)
+{
+	// Get the argument names
+	args: List of ExpressionResult;
+	args-string: String = name.substr(4);
+	for (arg-name: String in new FieldsParser(args-string, 0 + ' '))
+		args.append(new NameResult(arg-name));
+
+	// Write the header
+	stream.write("obj_ " + c-name + "(");
+	have-arg: Bool = false;
+	for (arg: ExpressionResult in args) {
+		if (have-arg)
+			stream.write(", ");
+		else
+			have-arg = true;
+		stream.write("obj_ ");
+		stream.write(arg.access);
+		}
+	stream.write-line(")");
+	stream.write-line("{");
+
+	// Write the body
+	builder: MethodBuilder();
+	builder.indent();
+	result: ExpressionResult = emit-call(args, builder);
+	builder.add-line("return " + result.access + ";");
+	builder.unindent();
+	builder.emit(stream);
+
+	// Finish up
+	stream.write-line("}");
+	stream.write-line();
+	stream.write-line();
+}
+
+
+c-name: String
+{
+	return MethodBuilder.mangle-name(name) + "__" + on-class.c-name;
+}
+
+

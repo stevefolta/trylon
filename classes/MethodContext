@@ -1,0 +1,48 @@
+Class: MethodContext
+Superclass: Context
+
+arguments: List of CompiledField;
+is-object-function: Bool;
+parent: Context;
+
+
+create(arguments: (List of CompiledField), is-object-function: Bool,
+       parent: Context)
+{
+	this.arguments = arguments;
+	this.is-object-function = is-object-function;
+	this.parent = parent;
+}
+
+
+lookup-function(name: String): VlangeFunction
+{
+	// "this"
+	if (is-object-function && name == "this")
+		return new ThisFunction();
+
+	// Arguments.
+	for (argument: CompiledField in arguments) {
+		if (argument.name == name)
+			return new ArgumentFunction(argument);
+		}
+
+	// Function calls on "this".
+	if (is-object-function) {
+		// The parent will be a CompiledClass.
+		function: VlangeFunction =
+			parent.as-a(CompiledClass).lookup-instance-function(name);
+		if (function)
+			return new FunctionOnThis(name);
+		}
+
+	return parent.lookup-function(name);
+}
+
+
+enclosing-method-context: MethodContext
+{
+	return this;
+}
+
+

@@ -1,0 +1,24 @@
+Class: Token
+
+type: Symbol;
+text: String;
+
+
+create(type: Symbol, text: String)
+{
+	this.type = type;
+	this.text = text;
+}
+
+
+string: String
+{
+	if (type == 'name')
+		return text;
+	return type;
+}
+
+
+
+// Copyright 2004 Steve Folta
+// See the License file.

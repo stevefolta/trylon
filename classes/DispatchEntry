@@ -1,0 +1,13 @@
+Class: DispatchEntry
+
+for-class: CompiledClass;
+function: VlangeInstanceFunction;
+
+
+create(for-class: CompiledClass, function: VlangeInstanceFunction)
+{
+	this.for-class = for-class;
+	this.function = function;
+}
+
+

@@ -1,0 +1,4 @@
+class Iterator
+	fn is-done -> Bool
+	fn current-item -> Object
+	fn go-forward

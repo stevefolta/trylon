@@ -1,0 +1,15 @@
+Class: DispatchEntries
+
+entries: List of DispatchEntry;
+functions: List of VlangeInstanceFunction;
+object-function: VlangeInstanceFunction;
+
+
+create()
+{
+	this.entries = new List of DispatchEntry;
+	this.functions = new List of VlangeInstanceFunction;
+	this.object-function = nil;
+}
+
+
