@@ -2,6 +2,7 @@
 
 #include "Trylon_.h"
 #include <string.h>
+#include <stdio.h>
 
 #define value_(bytePtrObj) 	\
 	(((struct Standard__BytePtr__internal*) bytePtrObj)->value)
@@ -140,6 +141,13 @@ obj_ copy_from_co_length_co___Standard__BytePtr(obj_ this_, obj_ source, obj_ le
 }
 
 
+obj_ string__Standard__BytePtr(obj_ this)
+{
+	char str[64];
+
+	sprintf(str, "0x%08X", BytePtrValue_(this));
+	return BuildString_(str);
+}
 
 
 

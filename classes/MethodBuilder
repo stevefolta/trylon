@@ -235,6 +235,7 @@ emit(stream: OutputStream)
 	// Emit the body of the code
 	stream.write(code.string);
 
+	stream.write-line("\treturn NULL;");
 	stream.write-line("}");
 }
 

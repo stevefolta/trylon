@@ -10,6 +10,12 @@ fn string -> String
 fn same-as: object [Object] -> Bool
 	return this object-ptr == object object-ptr
 
+fn == other -> Bool
+	return this same-as: other
+
+fn != other -> Bool
+	return !(this == other)
+
 fn iterator -> Iterator
 	# Default: use a SingleObjectIterator.  Collections will 
 	# override this.
@@ -24,4 +30,5 @@ fn must-be-a: class
 	if this class != class
 		throw MessageException new: 	--
 			"Something is supposed to be a " + class name + ", but isn't."
+
 

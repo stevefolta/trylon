@@ -32,3 +32,6 @@ primitive-fn char-at: index [Int] set-to: value [Char]
 primitive-fn int-at: index [Int] set-to: value [Int]
 
 primitive-fn copy-from: source [BytePtr] length: length [BytePtr]
+
+primitive-fn string
+

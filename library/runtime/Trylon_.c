@@ -240,6 +240,20 @@ int main(int argc, char* argv[])
 
 
 
+/* Debugging */
+
+char* className_(obj_ object)
+{
+	struct Standard__Class__internal* classObj;
+	struct Standard__String__internal* nameObj;
+
+	if (object == NULL)
+		return "NULL";
+
+	classObj = (struct Standard__Class__internal*) object->class_;
+	nameObj = (struct Standard__String__internal*) classObj->name;
+	return BytePtrValue_(nameObj->start);
+}
 
 
 _FinishExternC_
