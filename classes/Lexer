@@ -334,10 +334,10 @@ next-token: Token
 				}
 			name: String(token-start, p);
 			type: Symbol = 'name';
-			// Could be an arg-name
+			// Could be a keyword
 			if (cur-char == ':') {
 				p.go-forward();
-				type = 'arg-name';
+				type = 'keyword';
 				}
 			return new Token(type, name);
 			}

@@ -326,7 +326,7 @@ parse-function(is-object-function: Bool): CompiledFunction
 	return-type: CompiledClass = nil;
 	while (current-token.type != 'eol') {
 		// Argument
-		if (current-token.type == 'name' || current-token.type == 'arg-name') {
+		if (current-token.type == 'name' || current-token.type == 'keyword') {
 			// Get the name.
 			arg-name: String = current-token.text;
 			consume-token();
@@ -1039,7 +1039,7 @@ parse-postfix-expression(): Expression
 
 		// Get the arguments.
 		arguments: List of Expression;
-		while (current-token.type == 'arg-name') {
+		while (current-token.type == 'keyword') {
 			name += " " + current-token.text;
 			consume-token();
 			arg: Expression = parse-expression();
@@ -1072,7 +1072,7 @@ parse-primary-expression(): Expression
 
 		// Get the arguments, if any.
 		arguments: List of Expression;
-		while (current-token.type == 'arg-name') {
+		while (current-token.type == 'keyword') {
 			name += " " + current-token.text;
 			consume-token();
 			arg: Expression = parse-expression();
@@ -1148,7 +1148,7 @@ parse-super-call(): Expression
 
 	// Get the arguments.
 	arguments: List of Expression;
-	while (current-token.type == 'arg-name') {
+	while (current-token.type == 'keyword') {
 		name += " " + current-token.text;
 		consume-token();
 		arg: Expression = parse-expression();

@@ -5,11 +5,11 @@ package Standard
 
 	primitive-field nil
 
-	primitive-fn print string
+	primitive-fn print: string
 
-	fn print line
-		print string: line
-		print string: "\n"
+	fn print-line: line
+		print: line
+		print: "\n"
 
 	fn print-line
-		print string: "\n"
+		print: "\n"
