@@ -4,13 +4,16 @@ Superclass: Statement
 
 body: Block;
 catch-clauses: List of CatchClause;
+post-clauses-comments: List of Statement;
 
 
-create(body: Block, catch-clauses: (List of CatchClause), comment: String)
+create(body: Block, catch-clauses: (List of CatchClause), comment: String,
+       post-clauses-comments: List of Statement)
 {
 	this.body = body;
 	this.catch-clauses = catch-clauses;
 	this.comment = comment;
+	this.post-clauses-comments = post-clauses-comments;
 }
 
 
@@ -27,6 +30,11 @@ emit-code(builder: MethodBuilder)
 	for (clause: CatchClause in catch-clauses) {
 		builder.using-class(clause.type);
 
+		if (clause.pre-clause-comments) {
+			for (statement: Statement in clause.pre-clause-comments)
+				statement.emit-code(builder);
+			}
+
 		if (have-a-catch) {
 			builder.add-line(
 				add-comment("_AlsoCatch_(" + clause.type.c-name + ")", clause.comment));
@@ -42,6 +50,10 @@ emit-code(builder: MethodBuilder)
 
 	// Finish
 	builder.add-line("_EndCatch_");
+	if (post-clauses-comments) {
+		for (statement: Statement in post-clauses-comments)
+			statement.emit-code(builder);
+		}
 }
 
 

@@ -5,16 +5,19 @@ condition: Expression;
 body: Block;
 else-block: Block;
 else-comment: String;
+pre-else-comments: List of Statement;
 
 
 create(condition: Expression, body: Block, else-block: Block,
-       comment: String, else-comment: String)
+       comment: String, else-comment: String,
+       pre-else-comments: List of Statement)
 {
 	this.condition = condition;
 	this.body = body;
 	this.else-block = else-block;
 	this.comment = comment;
 	this.else-comment = else-comment;
+	this.pre-else-comments = pre-else-comments;
 }
 
 
@@ -23,6 +26,10 @@ emit-code(builder: MethodBuilder)
 	result: ExpressionResult = condition.emit-code(builder);
 	builder.add-line(add-comment("if (_Test_(" + result.access + "))"));
 	body.emit-code(builder);
+	if (pre-else-comments) {
+		for (statement: Statement in pre-else-comments)
+			statement.emit-code(builder);
+		}
 	if (else-block) {
 		builder.add-line(add-comment("else", else-comment));
 		else-block.emit-code(builder);

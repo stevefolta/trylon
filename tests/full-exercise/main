@@ -35,8 +35,10 @@ fn main: args
 	# throw/catch
 	try
 		throw-test
+	# pre-catch comment
 	catch Exception
 		print-line: exception message
+	# post-catch comment
 	iff test-uncaught-exception
 		try
 			throw-uncaught-test

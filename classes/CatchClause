@@ -6,13 +6,16 @@ type: CompiledClass;
 body: Block;
 parent: Context;
 comment: String;
+pre-clause-comments: List of Statement;
 
 
-create(type: CompiledClass, parent: Context, comment: String)
+create(type: CompiledClass, parent: Context, comment: String,
+       pre-clause-comments: List of Statement)
 {
 	this.type = type;
 	this.parent = parent;
 	this.comment = comment;
+	this.pre-clause-comments = pre-clause-comments;
 }
 
 

@@ -41,7 +41,6 @@ require-eol(): String
 	if (current-token.type == 'comment') {
 		comment = current-token.text;
 		consume-token();
-		//*** Someday, add the comment to the current statement.
 		}
 
 	if (current-token.type != 'eol')
@@ -607,6 +606,9 @@ parse-if-statement(): IfStatement
 	// Body
 	body: Block = parse-block();
 
+	// Any comments and blank lines preceding the "else".
+	pre-else-comments: List of Statement = parse-inter-prong-comments();
+
 	// "else" block, if there is one.
 	else-block: Block = nil;
 	else-comment: String = nil;
@@ -622,7 +624,32 @@ parse-if-statement(): IfStatement
 			}
 		}
 
-	return new IfStatement(condition, body, else-block, comment, else-comment);
+	return
+		new IfStatement(condition, body, else-block,
+		                comment, else-comment, pre-else-comments);
+}
+
+
+parse-inter-prong-comments(): List of Statement
+{
+	comments: List of Statement = nil;
+	loop {
+		if (current-token.type == 'eol') {
+			if (comments == nil)
+				comments = new List of Statement;
+			comments.append(new BlankLine());
+			consume-token();
+			}
+		else if (current-token.type == 'comment') {
+			if (comments == nil)
+				comments = new List of Statement;
+			comments.append(new Comment(require-eol()));
+			}
+		else
+			break;
+		}
+
+	return comments;
 }
 
 
@@ -751,18 +778,27 @@ parse-try-statement(): TryStatement
 	// Catch clauses
 	catch-clauses: List of CatchClause;
 	saved-context: Context = context;
-	while (current-token.type == 'name' && current-token.text == "catch") {
+	pre-clause-comments: List of Statement = nil;
+	loop {
+		pre-clause-comments = parse-inter-prong-comments();
+
+		if (current-token.type != 'name' || current-token.text != "catch")
+			break;
+
 		consume-token();	// "catch"
 		type: CompiledClass = parse-type-spec();
 		catch-comment: String = require-eol();
-		catch-clause: CatchClause(type, context, catch-comment);
+		catch-clause:
+			CatchClause(type, context, catch-comment, pre-clause-comments);
 		context = catch-clause;
 		catch-clause.body = parse-block();
 		context = saved-context;
 		catch-clauses.append(catch-clause);
+
+		pre-clause-comments = nil;
 		}
 
-	return new TryStatement(body, catch-clauses, comment);
+	return new TryStatement(body, catch-clauses, comment, pre-clause-comments);
 }
 
 
