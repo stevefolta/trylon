@@ -18,6 +18,10 @@ create()
 	linker = "gcc";
 	dictionary = new Dictionary of String;
 	is-verbose = false;
+
+	sysname: String = System.system.sysname;
+	if (!sysname.is-empty)
+		dictionary[sysname] = sysname;
 }
 
 
