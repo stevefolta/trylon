@@ -54,7 +54,7 @@ emit-code(stream: OutputStream)
 c-name: String
 {
 	return
-		MethodBuilder.mangle-name(field.name) + "_sp_set_to__" + on-class.c-name;
+		MethodBuilder.mangle-name(field.name) + "_co___" + on-class.c-name;
 }
 
 
