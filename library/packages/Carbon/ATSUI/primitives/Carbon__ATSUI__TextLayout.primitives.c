@@ -2,13 +2,13 @@
 #include <Carbon/Carbon.h>
 
 #define textLayout	((ATSUTextLayout) this_->fields[0])
-#define utc16Text 	((UniChar*) this_->fields[1])
+#define ucs16Text 	((UniChar*) this_->fields[1])
 
 
 obj_ create__Carbon__ATSUI__TextLayout(obj_ this_)
 {
 	ATSUCreateTextLayout((ATSUTextLayout*) &this_->fields[0]);
-	utc16Text = NULL;
+	ucs16Text = NULL;
 	return NULL;
 }
 
@@ -17,7 +17,7 @@ obj_ close__Carbon__ATSUI__TextLayout(obj_ this_)
 {
 	ATSUDisposeTextLayout(textLayout);
 	textLayout = NULL;
-	utc16Text = NULL;
+	ucs16Text = NULL;
 	return NULL;
 }
 
@@ -40,25 +40,40 @@ obj_ text_co___Carbon__ATSUI__TextLayout(obj_ this_, obj_ string)
 	char* p;
 	char* stopper;
 	UniChar* destPtr;
+	UniChar uniChar;
 	extern obj_ allocate_bytes_co___Standard__Implementation(obj_);
 	UsingMethod_(start)
 	UsingMethod_(stopper)
 
-	/* Copy the UTF8 text to UTC16 */
+	/* Copy the UTF8 text to UCS16 */
 	p = BytePtrValue_(Call_(start, string));
 	stopper = BytePtrValue_(Call_(stopper, string));
 	length = stopper - p;
-	utc16Text = Allocate_(length * 2);
-	destPtr = utc16Text;
+	ucs16Text = Allocate_(length * 2);
+	destPtr = ucs16Text;
 	length = 0;
 	for (; p < stopper; ++p) {
-		/***/
-		*destPtr++ = *p;
+		if ((*p & 0x80) == 0)
+			*destPtr++ = *p;
+		else if ((*p & 0xE0) == 0xC0) {
+			uniChar = (((UniChar) *p) & 0x1F) << 6;
+			++p;
+			uniChar |= ((UniChar) *p) & 0x3F;
+			*destPtr++ = uniChar;
+			}
+		else /* (*p & 0xF0) == 0xE0 */ {
+			uniChar = (((UniChar) *p) & 0x0F) << 12;
+			++p;
+			uniChar |= (((UniChar) *p) & 0x3F) << 6;
+			++p;
+			uniChar |= ((UniChar) *p) & 0x3F;
+			*destPtr++ = uniChar;
+			}
 		length += 1;
 		}
 
 	/* Set the layout's text */
-	ATSUSetTextPointerLocation(textLayout, utc16Text,
+	ATSUSetTextPointerLocation(textLayout, ucs16Text,
 	                           kATSUFromTextBeginning, kATSUToTextEnd, length);
 
 	return NULL;
