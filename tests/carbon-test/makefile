@@ -1,0 +1,19 @@
+-include makefile.local-settings
+
+ifeq "$(shell uname)" "Darwin"
+	CFLAGS += -DOSX_FINK
+	INCLUDE_PATHS += -I/sw/include
+	LIB_PATHS += -L/sw/lib
+endif
+
+CFLAGS += -g
+
+
+default:
+	[ -d .c-sources ] || mkdir .c-sources
+	../../trylon $(TRYLON_FLAGS)
+	$(CC) $(CFLAGS) $(INCLUDE_PATHS) \
+		.c-sources/*.c \
+		$(LIB_PATHS) -lgc -ldl 	\
+		-o carbon-test
+

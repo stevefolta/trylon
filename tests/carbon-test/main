@@ -1,0 +1,5 @@
+trylon-package Main
+
+fn main: args
+	Carbon EventManager run-application-event-loop
+
