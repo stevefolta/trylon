@@ -1,0 +1,13 @@
+Class: CFile
+
+name: String;
+is-changed: Bool;
+
+
+create(name: String, is-changed: Bool)
+{
+	this.name = name;
+	this.is-changed = is-changed;
+}
+
+

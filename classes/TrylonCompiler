@@ -120,14 +120,10 @@ compile-program(compile-symbols: List of String)
 	// Emit the classes and packages.
 	status-reporter.report("Emitting code...");
 	status-reporter.indent();
-	compile-file-names: List of String;
-	link-file-names: List of String;
+	c-files: CFiles();
 	for (package: Package in package-queue) {
 		is-changed: Bool = package.emit-code();
-		file-name: String = package.c-name;
-		if (is-changed)
-			compile-file-names.append(file-name);
-		link-file-names.append(file-name);
+		c-files.add(package.c-name, is-changed);
 		}
 	status-reporter.unindent();
 
@@ -138,16 +134,12 @@ compile-program(compile-symbols: List of String)
 	// Emit the method specs.
 	status-reporter.report("Emitting method specs...");
 	is-changed: Bool = emit-method-specs(main-package);
-	if (is-changed)
-		compile-file-names.append("methods_");
-	link-file-names.append("methods_");
+	c-files.add("methods_", is-changed);
 
 	// Emit the symbols.
 	status-reporter.report("Emitting symbols...");
 	is-changed = emit-symbols();
-	if (is-changed)
-		compile-file-names.append("symbols_");
-	link-file-names.append("symbols_");
+	c-files.add("symbols_", is-changed);
 
 	// Copy Trylon_.h and Trylon_.c
 	if (!library-directory.entry-is-directory("runtime")) {
@@ -159,18 +151,22 @@ compile-program(compile-symbols: List of String)
 	copy-to-sources(runtime-directory["Trylon_.h"].as-a(File), "Trylon_.h");
 	is-changed =
 		copy-to-sources(runtime-directory["Trylon_.c"].as-a(File), "Trylon_.c");
-	if (is-changed)
-		compile-file-names.append("Trylon_");
-	link-file-names.append("Trylon_");
+	c-files.add("Trylon_", is-changed);
 
 	// Copy primitives files
-	main-package.copy-primitives-files(compile-file-names, link-file-names);
+	main-package.copy-primitives-files(c-files);
 
 
 	// Compile C files.
 	status-reporter.report("Compiling C files...");
 	status-reporter.indent();
-	for (file-name: String in compile-file-names) {
+	for (c-file: CFile in c-files) {
+		if (!c-file.is-changed) {
+			if (new File(".objects/" + c-file.name + ".o").exists)
+				continue;
+			}
+
+		file-name: String = c-file.name;
 		status-reporter.report("Compiling " + file-name + ".c...");
 		args: List of String;
 		args.append("-c");
@@ -191,8 +187,8 @@ compile-program(compile-symbols: List of String)
 	args: List of String;
 	args.append("-o");
 	args.append(build-settings.program-name);
-	for (file-name: String in link-file-names)
-		args.append(".objects/" + file-name + ".o");
+	for (c-file: CFile in c-files)
+		args.append(".objects/" + c-file.name + ".o");
 	for (flag: String in build-settings.link-flags)
 		args.append(flag);
 	report-run-program(build-settings.linker, args);

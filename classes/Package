@@ -248,8 +248,7 @@ find-primitives-file(file-name: String): File
 }
 
 
-copy-primitives-files(compile-file-names: (List of String),
-                      link-file-names: (List of String))
+copy-primitives-files(c-files: CFiles)
 {
 	// Copy ours, if there is one
 	if (has-primitives) {
@@ -264,9 +263,7 @@ copy-primitives-files(compile-file-names: (List of String),
 			is-changed: Bool =
 				TrylonCompiler.the-compiler.copy-to-sources(primitives-file,
 				                                            c-file-name);
-			if (is-changed)
-				compile-file-names.append(file-name);
-			link-file-names.append(file-name);
+			c-files.add(file-name, is-changed);
 			}
 		}
 
@@ -275,12 +272,10 @@ copy-primitives-files(compile-file-names: (List of String),
 		if (function.is-a(PackageFunction)) {
 			package: Package = function.as-a(PackageFunction).package;
 			if (package != this)
-				package.copy-primitives-files(compile-file-names, link-file-names);
+				package.copy-primitives-files(c-files);
 			}
-		else if (function.is-a(ClassFunction)) {
-			function.as-a(ClassFunction).the-class.copy-primitives-files(
-				compile-file-names, link-file-names);
-			}
+		else if (function.is-a(ClassFunction))
+			function.as-a(ClassFunction).the-class.copy-primitives-files(c-files);
 		}
 }
 

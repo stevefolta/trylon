@@ -1,0 +1,23 @@
+Class: CFiles
+
+files: List of CFile;
+
+
+create()
+{
+	files = new List of CFile;
+}
+
+
+add(name: String, is-changed: Bool)
+{
+	files.append(new CFile(name, is-changed));
+}
+
+
+iterator: ListIterator of CFile
+{
+	return files.iterator;
+}
+
+
