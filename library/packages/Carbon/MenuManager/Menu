@@ -1,0 +1,11 @@
+trylon-class Menu
+
+field primitive-menu 	# Don't touch this.
+
+
+primitive-fn create: id title: title [String]
+primitive-fn close
+fn destroy
+	close
+
+primitive-fn append-item: title [String]

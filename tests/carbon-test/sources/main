@@ -32,6 +32,10 @@ class Window
 		layout draw-x: 20 y: 40
 
 fn main: args
+	menu := Carbon MenuManager Menu new: 1 title: "File"
+	menu append-item: "Quit"
+	Carbon MenuManager insert-menu: menu before: 0
+	Carbon MenuManager draw-menu-bar
 	window := Window new
 	window show
 	Carbon EventManager run-application-event-loop

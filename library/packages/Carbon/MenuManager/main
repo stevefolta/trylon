@@ -1,0 +1,5 @@
+trylon-package MenuManager
+
+primitive-fn insert-menu: menu before: id
+primitive-fn draw-menu-bar
+
