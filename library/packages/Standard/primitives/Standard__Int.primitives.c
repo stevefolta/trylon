@@ -110,6 +110,12 @@ obj_ string__Standard__Int(obj_ this_)
 }
 
 
+obj_ float___Standard__Int(obj_ this_)
+{
+	return BuildFloat_(IntValue_(this_));
+}
+
+
 
 /*
 	Copyright 2005 Steve Folta.

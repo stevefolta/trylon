@@ -186,6 +186,23 @@ obj_ BuildString_(const char* cString)
 }
 
 
+char* MakeCString_(obj_ str)
+{
+	struct Standard__String__internal* strObj =
+		(struct Standard__String__internal*) str;
+	char*       	start;
+	unsigned int	length;
+	char*       	cString;
+
+	start = BytePtrValue_(strObj->start);
+	length = BytePtrValue_(strObj->stopper) - start;
+	cString = GC_MALLOC(length + 1);
+	memcpy(cString, start, length);
+	cString[length] = 0;
+	return cString;
+}
+
+
 void* Allocate_(int numBytes)
 {
 	return GC_MALLOC(numBytes);

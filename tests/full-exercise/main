@@ -68,6 +68,7 @@ fn main: args
 	print-line: (~-2) string + " == 1"
 	foo = 7
 	print-line: foo string + " == 7"
+	print-line: "3" float string + " == 3"
 
 	print-line
 	print-line: "-- Float Tests --"
@@ -81,6 +82,9 @@ fn main: args
 	print-line: (x > 3.0) string + " == true"
 	print-line: (x == 3.2) string + " == true"
 	print-line: (x != 3.2) string + " == true"
+	print-line: (3 float + 0.2) string + " == 3.2"
+	print-line: 3.2 int string + " == 3"
+	print-line: "3.2" float string + " == 3.2"
 
 	print-line
 	print-line: "-- Other Tests --"
@@ -111,6 +115,11 @@ fn main: args
 		print-line: "Symbol equality worked."
 	if 'foo' != 'bar'
 		print-line: "Symbol inequality worked."
+	print-line
+
+	abcde := "abcde"
+	print-line: (abcde substr: 3) + " == de"
+	print-line: (abcde substr: 2 length: 2) + " == cd"
 
 	#
 	print-line

@@ -185,6 +185,7 @@ extern obj_ BuildFloat_(double value);
 extern obj_ BuildChar_(int value);
 extern obj_ BuildBytePtr_(byte_ptr_ value);
 extern obj_ BuildString_(const char* cString); 	// Will copy the string.
+extern char* MakeCString_(obj_ str);
 extern void* Allocate_(int numBytes);
 
 _FinishExternC_

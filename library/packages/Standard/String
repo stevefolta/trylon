@@ -125,3 +125,20 @@ fn + arg [String] -> String
 	new-string stopper = new-string start + length + arg length
 	return new-string
 
+fn substr: from
+	if from > this length
+		return ""
+	return String new: start + from to: stopper
+
+fn substr: from length: length
+	src-length := this length
+	if from > src-length
+		return ""
+	dest-length := length
+	if dest-length > src-length - from
+		dest-length = src-length - from
+	new-start := start + from
+	return String new: new-start to: new-start + dest-length
+
+primitive-fn int -> Int
+primitive-fn float -> Float

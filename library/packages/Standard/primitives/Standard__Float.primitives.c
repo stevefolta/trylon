@@ -84,6 +84,12 @@ obj_ string__Standard__Float(obj_ this_)
 }
 
 
+obj_ int___Standard__Float(obj_ this_)
+{
+	return BuildInt_(FloatValue_(this_));
+}
+
+
 
 /*
 	Copyright 2005 Steve Folta.
