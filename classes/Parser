@@ -123,11 +123,11 @@ parse-package-contents(package: Package)
 			package.add-function(function);
 			}
 
-		else if (name == "field" || name == "fld" ||
-		         name == "primitive-field" || name == "primitive-fld") {
-			field: CompiledField = parse-field();
-			package.add-field(field);
-			require-eol();
+		else if (name == "field" || name == "fields" || name == "fld" ||
+		         name == "primitive-field" || name == "primitive-fields" ||
+		         name == "primitive-fld") {
+			for (field: CompiledField in parse-fields())
+				package.add-field(field);
 			}
 
 		else if (name == "package")
@@ -242,17 +242,17 @@ parse-class-contents(the-class: CompiledClass)
 			the-class.add-function(function);
 			}
 
-		else if (name == "field" || name == "fld") {
-			field: CompiledField = parse-field();
-			the-class.add-instance-field(field);
-			require-eol();
+		else if (name == "field" || name == "fields" || name == "fld") {
+			for (field: CompiledField in parse-fields())
+				the-class.add-instance-field(field);
 			}
 
-		else if (name == "class-field" || name == "class-fld" ||
-		         name == "primitive-class-fld" || name == "primitive-class-field") {
-			field: CompiledField = parse-field;
-			the-class.add-field(field);
-			require-eol();
+		else if (name == "class-field" || name == "class-fields" ||
+		         name == "class-fld" ||
+		         name == "primitive-class-fld" || name == "primitive-class-field" ||
+		         name == "primitive-class-fields") {
+			for (field: CompiledField in parse-fields())
+				the-class.add-field(field);
 			}
 
 		else if (name == "package") {
@@ -320,29 +320,38 @@ check-iff(): Bool
 }
 
 
-parse-field(): CompiledField
+parse-fields(): List of CompiledField
 {
 	// "fld"/"field"/etc.
 	is-primitive: Bool = current-token.text.starts-with("primitive-");
 	consume-token();
 
-	// Get the name.
-	if (current-token.type != 'name')
-		throw ParseException("Field name needed.", current-token);
-	name: String = current-token.text;
-	consume-token();
+	// Get the fields
+	fields: List of CompiledField;
+	while (current-token.type != 'eol') {
+		// Get the name.
+		if (current-token.type != 'name')
+			throw ParseException("Field name needed.", current-token);
+		name: String = current-token.text;
+		consume-token();
 
-	// Get the type, if given.
-	type: CompiledClass = nil;
-	if (current-token.type == '[') {
-		consume-token();
-		type: CompiledClass = parse-type-spec();
-		if (current-token.type != ']')
-			throw ParseException("Missing \"]\".", current-token);
-		consume-token();
+		// Get the type, if given.
+		type: CompiledClass = nil;
+		if (current-token.type == '[') {
+			consume-token();
+			type: CompiledClass = parse-type-spec();
+			if (current-token.type != ']')
+				throw ParseException("Missing \"]\".", current-token);
+			consume-token();
+			}
+
+		// Add it.
+		fields.append(new CompiledField(name, type, is-primitive));
 		}
 
-	return new CompiledField(name, type, is-primitive);
+	require-eol();
+
+	return fields;
 }
 
 

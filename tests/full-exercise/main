@@ -141,7 +141,7 @@ fn throw-uncaught-test
 	throw 35
 
 
-field value
+fields bogue value
 fn foo
 	return value
 fn foo: new-value
