@@ -211,14 +211,14 @@ fn trimmed -> String
 	# Trim the front.
 	while !trimmed-copy is-empty
 		c := trimmed-copy first-character
-		if c != ' ' && c != '\t' && c != '\n' && c != '\r'
+		if c != ` ` && c != `\t` && c != `\n` && c != `\r`
 			break
 		trimmed-copy start += 1
 	
 	# Trim the back.
 	while !trimmed-copy is-empty
 		c := trimmed-copy last-character
-		if c != ' ' && c != '\t' && c != '\n' && c != '\r'
+		if c != ` ` && c != `\t` && c != `\n` && c != `\r`
 			break
 		trimmed-copy stopper -= 1
 	
