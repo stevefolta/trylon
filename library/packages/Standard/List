@@ -1,18 +1,17 @@
 trylon-class List
 
-field head
-field tail
+fields head last-cell
 
 
 fn create
 	head = nil
-	tail = nil
+	last-cell = nil
 
 fn append: object
 	cell := Cell new: object
-	if tail != nil
-		tail next = cell
-	tail = cell
+	if last-cell != nil
+		last-cell next = cell
+	last-cell = cell
 	if head == nil
 		head = cell
 
@@ -23,6 +22,108 @@ fn prepend: object
 
 fn iterator -> Standard Iterator
 	return Iterator new: head
+
+fn count
+	num-items := 0
+	cell := head
+	while cell
+		num-items += 1
+		cell = cell next
+	return num-items
+
+fn first-item
+	if head == nil
+		return nil
+	return head object
+
+fn last-item
+	if last-cell == nil
+		return nil
+	return last-cell object
+
+
+fn pop-front
+	if head == nil
+		return nil
+	
+	object := head object
+	
+	if head == last-cell
+		head = nil
+		last-cell = nil
+	else
+		head = head next
+	
+	return object
+
+
+fn remove: object
+	cell := head
+	prev-cell := nil
+	while cell
+		if cell object == object
+			# Unlink the cell.
+			if prev-cell
+				prev-cell next = cell next
+			else
+				head = cell next
+			# Is it the last cell?
+			if cell == last-cell
+				last-cell = prev-cell
+			break
+		
+		prev-cell = cell
+		cell = cell next
+
+
+fn contains: object
+	cell := head
+	while cell
+		if cell object same-as: object
+			return true
+		cell = cell next
+	return false
+
+
+fn insert: new-object before: before-object
+	cell := head
+	prev-cell := nil
+	while cell
+		if cell object same-as: before-object
+			new-cell := Cell new: new-object
+			new-cell next = cell
+			if prev-cell
+				prev-cell next = new-cell
+			else
+				head = new-cell
+			return
+		prev-cell = cell
+		cell = cell next
+
+
+fn replace: old-object with: new-object
+	cell := head
+	while cell
+		if cell object same-as: old-object
+			cell object = new-object
+			return
+		cell = cell next
+
+
+fn clear
+	head = nil
+	last-cell = nil
+
+
+fn tail
+	tail-list := List new
+	if head
+		tail-list head = head next
+	else
+		tail-list head = nil
+	tail-list last-cell = last-cell
+	return tail-list
+
 
 
 class Cell
