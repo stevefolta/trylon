@@ -1,0 +1,6 @@
+trylon-class Context
+
+field primitive-context 	# Don't touch this!
+
+primitive-fn translate-ctm-tx: tx ty: ty
+primitive-fn scale-ctm-sx: sx sy: xy

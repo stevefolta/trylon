@@ -12,7 +12,8 @@ class Window
 		print-line: "Got window event."
 		if event kind == 'draw-content'
 			print-line: "...it's a draw-content event."
-			Carbon QuickDraw erase-rect: this port-bounds
+			port-rect := this port-bounds
+			Carbon QuickDraw erase-rect: port-rect
 			context := Carbon QuickDraw begin-cg-context: Carbon QuickDraw port
 			draw: context
 			Carbon QuickDraw end-cg-context: Carbon QuickDraw port context: context
