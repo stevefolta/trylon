@@ -8,7 +8,7 @@
 #endif
 
 
-obj_ allocate_object_sp_class__Standard__Implementation(obj_ classObj)
+obj_ allocate_object_co___Standard__Implementation(obj_ classObj)
 {
 	struct Standard__Class__internal* class_ =
 		(struct Standard__Class__internal*) classObj;
@@ -19,7 +19,7 @@ obj_ allocate_object_sp_class__Standard__Implementation(obj_ classObj)
 }
 
 
-obj_ allocate_object_sp_class_sp_with_extra_slots__Standard__Implementation(obj_ classObj, obj_ extraSlotsObj)
+obj_ allocate_object_co_with_extra_slots_co___Standard__Implementation(obj_ classObj, obj_ extraSlotsObj)
 {
 	struct Standard__Class__internal* class_ =
 		(struct Standard__Class__internal*) classObj;
@@ -30,7 +30,7 @@ obj_ allocate_object_sp_class_sp_with_extra_slots__Standard__Implementation(obj_
 }
 
 
-obj_ allocate_sp_bytes__Standard__Implementation(obj_ size)
+obj_ allocate_bytes_co___Standard__Implementation(obj_ size)
 {
 	char* value = (char*) GC_MALLOC(IntValue_(size));
 	struct Standard__BytePtr__internal* ptr =

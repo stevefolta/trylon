@@ -10,7 +10,7 @@ struct object true__Standard__obj = { (obj_) &Standard__Bool, (obj_) 1 };
 obj_ true__Standard = &true__Standard__obj;
 
 
-obj_ print_sp_string__Standard(obj_ strObj)
+obj_ print_co___Standard(obj_ strObj)
 {
 	struct Standard__String__internal* str =
 		(struct Standard__String__internal*) strObj;

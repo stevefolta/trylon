@@ -5,49 +5,49 @@
 #define value_(charObj) 	(((struct Standard__Int__internal*) charObj)->value)
 
 
-obj_ _eq__eq__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _eq__eq___Standard__Char(obj_ this_, obj_ arg)
 {
 	return (value_(this_) == value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _nt__eq__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _nt__eq___Standard__Char(obj_ this_, obj_ arg)
 {
 	return (value_(this_) != value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _lt__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _lt___Standard__Char(obj_ this_, obj_ arg)
 {
 	return (value_(this_) < value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _lt__eq__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _lt__eq___Standard__Char(obj_ this_, obj_ arg)
 {
 	return (value_(this_) <= value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _gt__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _gt___Standard__Char(obj_ this_, obj_ arg)
 {
 	return (value_(this_) > value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _gt__eq__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _gt__eq___Standard__Char(obj_ this_, obj_ arg)
 {
 	return (value_(this_) >= value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _pl__sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ _pl___Standard__Char(obj_ this_, obj_ arg)
 {
 	return BuildChar_(value_(this_) + value_(arg));
 }
 
 
-obj_ __sp_arg__Standard__Char(obj_ this_, obj_ arg)
+obj_ ___Standard__Char(obj_ this_, obj_ arg)
 {
 	return BuildChar_(value_(this_) + value_(arg));
 }

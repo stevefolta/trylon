@@ -182,8 +182,8 @@ int main(int argc, char* argv[])
 	/***/
 
 	// Call the main function.
-	extern obj_ main_sp_args__Main(obj_ args);
-	obj_ result = main_sp_args__Main(NULL); 	//***
+	extern obj_ main_co___Main(obj_ args);
+	obj_ result = main_co___Main(NULL); 	// ***
 
 	// Return the result.
 	if (result && result->class_ == (obj_) &Standard__Int)

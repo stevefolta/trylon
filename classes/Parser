@@ -835,7 +835,7 @@ parse-binary-expression(): Expression
 		arguments: List of Expression;
 		arguments.append(expr2);
 		call:
-			ObjectCall(token.substr(0, token.length - 1) + " arg", expr, arguments);
+			ObjectCall(token.substr(0, token.length - 1), expr, arguments);
 		if (expr.is-a(FunctionCall)) {
 			setter: FunctionCall = expr.as-a(FunctionCall).copy;
 			setter.convert-to-setter-call(call);
@@ -1245,7 +1245,7 @@ make-binop-call(name: String, object: Expression, argument: Expression)
 {
 	arguments: List of Expression;
 	arguments.append(argument);
-	return new ObjectCall(name + " arg", object, arguments);
+	return new ObjectCall(name, object, arguments);
 }
 
 

@@ -119,10 +119,9 @@ class String
 		return false
 
 	fn + arg [String] -> String
-		new-string [String] := String new length: (length + arg length)
-		new-string start copy source: (start) length: length
-		(new-string start + length) copy --
-			source: (arg start) length: arg length
+		new-string [String] := String new: (length + arg length)
+		new-string start copy-from: start length: length
+		(new-string start + length) copy-from: arg start length: arg length
 		new-string stopper = new-string start + length + arg length
 		return new-string
 

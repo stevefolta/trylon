@@ -17,7 +17,7 @@ obj_ object_ptr__Standard__Object(obj_ this_)
 }
 
 
-obj_ is_a_sp_class__Standard__Object(obj_ this_, obj_ class_)
+obj_ is_a_co___Standard__Object(obj_ this_, obj_ class_)
 {
 	obj_ objClass = this_->class_;
 	while (objClass) {

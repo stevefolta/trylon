@@ -5,33 +5,33 @@
 #define value_(boolObj) 	(((struct Standard__Bool__internal*) boolObj)->value)
 
 
-obj_ _eq__eq__sp_arg__Standard__Bool(obj_ this_, obj_ arg)
+obj_ _eq__eq___Standard__Bool(obj_ this_, obj_ arg)
 {
 	return (value_(this_) == value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _nt__eq__sp_arg__Standard__Bool(obj_ this_, obj_ arg)
+obj_ _nt__eq___Standard__Bool(obj_ this_, obj_ arg)
 {
 	return (value_(this_) != value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _an__sp_arg__Standard__Bool(obj_ this_, obj_ arg)
+obj_ _an___Standard__Bool(obj_ this_, obj_ arg)
 {
 	return (value_(this_) && value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _xr__sp_arg__Standard__Bool(obj_ this_, obj_ arg)
+obj_ _or___Standard__Bool(obj_ this_, obj_ arg)
 {
-	return (value_(this_) != value_(arg) ? true__Standard : false__Standard);
+	return (value_(this_) || value_(arg) ? true__Standard : false__Standard);
 }
 
 
-obj_ _or__sp_arg__Standard__Bool(obj_ this_, obj_ arg)
+obj_ _xr___Standard__Bool(obj_ this_, obj_ arg)
 {
-	return (value_(this_) || value_(arg) ? true__Standard : false__Standard);
+	return (value_(this_) != value_(arg) ? true__Standard : false__Standard);
 }
 
 
