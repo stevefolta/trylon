@@ -1,0 +1,27 @@
+trylon-class Style
+
+field primitive-style 	# Don't touch this.
+
+primitive-fn create
+
+primitive-fn font
+primitive-fn font: new-font
+
+primitive-fn size -> Int
+primitive-fn size: new-size [Int]
+
+primitive-fn is-bold -> Bool
+primitive-fn is-bold: new-bold [Bool]
+
+primitive-fn is-italic -> Bool
+primitive-fn is-italic: new-italic [Bool]
+
+primitive-fn is-underlined -> Bool
+primitive-fn is-underlined: new-underlined [Bool]
+
+primitive-fn is-condensed -> Bool
+primitive-fn is-condensed: new-condensed [Bool]
+
+primitive-fn is-extended -> Bool
+primitive-fn is-extended: new-extended [Bool]
+

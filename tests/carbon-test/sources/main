@@ -13,6 +13,7 @@ class Window
 		save-port := Carbon QuickDraw port
 		Carbon QuickDraw window-port: this
 		Carbon QuickDraw erase-rect: this port-bounds
+		style := Carbon ATSUI Style new
 		Carbon QuickDraw port: save-port
 
 fn main: args
