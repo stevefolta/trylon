@@ -752,6 +752,32 @@ parse-expression-statement(): ExpressionStatement
 
 parse-expression(): Expression
 {
+	expr: Expression = parse-binary-expression();
+	if (expr == nil)
+		return nil;
+
+	if (current-token.type == 'keyword') {
+		name: String = "";
+		args: List of Expression;
+		while (current-token.type == 'keyword') {
+			name += current-token.text;
+			consume-token();
+			arg: Expression = parse-binary-expression();
+			if (arg == nil) {
+				message: String = "Missing argument (\"" + name + "\").";
+				throw ParseException(message, current-token);
+				}
+			args.append(arg);
+			}
+		expr = new ObjectCall(name, expr, args);
+		}
+
+	return expr;
+}
+
+
+parse-binary-expression(): Expression
+{
 	// At the top level are the '=' expressions.
 
 	expr: Expression = parse-logical-or-expression();
@@ -1033,24 +1059,10 @@ parse-postfix-expression(): Expression
 		return nil;
 
 	while (current-token.type == 'name') {
-		// An object call.
+		// A unary object call.
 		name: String = current-token.text;
 		consume-token();
-
-		// Get the arguments.
-		arguments: List of Expression;
-		while (current-token.type == 'keyword') {
-			name += " " + current-token.text;
-			consume-token();
-			arg: Expression = parse-expression();
-			if (arg == nil) {
-				message: String = "Missing argument (\"" + name + "\").";
-				throw ParseException(message, current-token);
-				}
-			arguments.append(arg);
-			}
-
-		expr = new ObjectCall(name, expr, arguments);
+		expr = new ObjectCall(name, expr, new List of Expression);
 		}
 
 	return expr;
@@ -1069,21 +1081,23 @@ parse-primary-expression(): Expression
 			return parse-super-call();
 
 		// Non-object function call.
+		return new FunctionCall(name, new (List of Expression), context);
+		}
 
-		// Get the arguments, if any.
+	else if (token == 'keyword') {
+		// Non-object function call.
+		name: String = "";
 		arguments: List of Expression;
 		while (current-token.type == 'keyword') {
-			name += " " + current-token.text;
+			name += current-token.text;
 			consume-token();
-			arg: Expression = parse-expression();
+			arg: Expression = parse-binary-expression();
 			if (arg == nil) {
 				message: String = "Missing argument (\"" + name + "\").";
 				throw ParseException(message, current-token);
 				}
 			arguments.append(arg);
 			}
-
-		// Make the function call.
 		return new FunctionCall(name, arguments, context);
 		}
 
@@ -1138,25 +1152,47 @@ parse-super-call(): Expression
 			               current-token);
 		}
 
-	// We allow any token here, not just a name; in this way, super calls
-	// of binops are easily done.
 	name: String = nil;
-	if (current-token.text == nil || current-token.text.is-empty)
-		name = current-token.type;
-	else
-		name = current-token.text;
-
-	// Get the arguments.
 	arguments: List of Expression;
-	while (current-token.type == 'keyword') {
-		name += " " + current-token.text;
+
+	// We allow binops here.
+	if (current-token.text == nil || current-token.text.is-empty) {
+		//*** Actually, we're allowing too many things here, but we'd have to
+		//*** explicitly check every binop.
+		name = current-token.type;
 		consume-token();
-		arg: Expression = parse-expression();
+		arg: Expression = parse-unary-expression();
 		if (arg == nil) {
-			message: String = "Missing argument (\"" + name + "\").";
+			message: String =
+				"Missing unary expression argument in super call (\"" + name + "\").";
 			throw ParseException(message, current-token);
 			}
 		arguments.append(arg);
+		}
+
+	else if (current-token.type == 'name') {
+		name = current-token.text;
+		consume-token();
+		}
+
+	else if (current-token.type == 'keyword') {
+		// Get the arguments.
+		name = "";
+		while (current-token.type == 'keyword') {
+			name += current-token.text;
+			consume-token();
+			arg: Expression = parse-binary-expression();
+			if (arg == nil) {
+				message: String = "Missing argument (\"" + name + "\").";
+				throw ParseException(message, current-token);
+				}
+			arguments.append(arg);
+			}
+		}
+
+	else {
+		// Does this ever happen?
+		throw ParseException("Illegal super call.", current-token);
 		}
 
 	// Get the class that it's on.

@@ -1,8 +1,7 @@
 class Char
 
 	class-fn new
-		return --
-			Implementation allocate-object class: (Char) with-extra-slots: 1
+		return Implementation allocate-object: Char with-extra-slots: 1
 
 	primitive-fn == arg [Char] -> Bool
 	primitive-fn != arg [Char] -> Bool

@@ -1,8 +1,7 @@
 class Int
 
 	class-fn new
-		return --
-			Implementation allocate-object class: (Int) with-extra-slots: 1
+		return Implementation allocate-object: Int with-extra-slots: 1
 
 	primitive-fn == arg [Int] -> Bool
 	primitive-fn != arg [Int] -> Bool

@@ -2,10 +2,10 @@ class BytePtr
 
 	class-fn new
 		return --
-			Implementation allocate-object class: (BytePtr) with-extra-slots: 1
+			Implementation allocate-object: BytePtr with-extra-slots: 1
 
 	class-fn new size
-		return Implementation allocate bytes: size
+		return Implementation allocate-bytes: size
 
 	primitive-fn == arg [BytePtr] -> Bool
 	primitive-fn != arg [BytePtr] -> Bool
@@ -20,16 +20,16 @@ class BytePtr
 	primitive-fn deref-ptr -> BytePtr
 	primitive-fn deref-int -> Int
 	primitive-fn deref-char -> Char
-	primitive-fn ptr at [Int] -> BytePtr
-	primitive-fn object at [Int] -> Object
-	primitive-fn char at[Int] -> Char
-	primitive-fn int at [Int] -> Int
+	primitive-fn ptr-at: index [Int] -> BytePtr
+	primitive-fn object-at: index [Int] -> Object
+	primitive-fn char-at: index [Int] -> Char
+	primitive-fn int-at: index [Int] -> Int
 
 	primitive-fn as-object -> Object
 
-	primitive-fn ptr at [Int] set-to [BytePtr]
-	primitive-fn object at [Int] set-to [Object]
-	primitive-fn char at [Int] set-to [Char]
-	primitive-fn int at [Int] set-to [Int]
+	primitive-fn ptr-at: index [Int] set-to: value [BytePtr]
+	primitive-fn object-at: index [Int] set-to: value [Object]
+	primitive-fn char-at: index [Int] set-to: value [Char]
+	primitive-fn int-at: index [Int] set-to: value [Int]
 
-	primitive-fn copy source [BytePtr] length [BytePtr]
+	primitive-fn copy-from: source [BytePtr] length: length [BytePtr]

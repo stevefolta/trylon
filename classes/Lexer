@@ -332,13 +332,13 @@ next-token: Token
 					break;
 				p.go-forward();
 				}
-			name: String(token-start, p);
 			type: Symbol = 'name';
 			// Could be a keyword
 			if (cur-char == ':') {
 				p.go-forward();
 				type = 'keyword';
 				}
+			name: String(token-start, p);
 			return new Token(type, name);
 			}
 

@@ -1,14 +1,16 @@
 class Interval
+	superclass Collection
+
 	fld start
 	fld stop
 	fld value
 
-	fn create start stop
+	fn create: start to: stop
 		this start = start
 		this stop = stop
 		value = start
 
-	fn create stop
+	fn create: stop
 		this start = 0
 		this stop = stop
 		value = start

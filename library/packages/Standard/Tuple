@@ -2,15 +2,14 @@ class Tuple
 
 	field num-items
 
-	class-fn new num-items
+	class-fn new: num-items
 		tuple [Tuple] := --
-			Implementation allocate-object class: Tuple --
-				with-extra-slots: num-items
+			Implementation allocate-object: Tuple with-extra-slots: num-items
 		tuple num-items = num-items
 		return tuple
 
-	fn item at
-		return this object-ptr object at: at + 1
+	fn at: index
+		return this object-ptr object-at: index + 1
 
-	fn item at set-to
-		this object-ptr object at: at + 1 set-to: set-to
+	fn at: index set-to: value
+		this object-ptr object-at: index + 1 set-to: value

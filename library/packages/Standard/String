@@ -3,12 +3,12 @@ class String
 	field start [BytePtr]
 	field stopper [BytePtr]
 
-	fn create start stopper 	# ***
+	fn create: start to: stopper
 		this start = start
 		this stopper = stopper
 
 	fn create: length
-		this start = BytePtr new size: length
+		this start = BytePtr new: length
 		this stopper = this start
 
 	fn length -> Int

@@ -3,7 +3,7 @@ class MessageException
 
 	fld the-message
 
-	fn create message
+	fn create: message
 		the-message = message
 
 	fn message
