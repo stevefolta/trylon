@@ -1,0 +1,19 @@
+trylon-class Event
+
+field primitive-event 	# Don't touch this.
+
+primitive-fn event-class -> Int
+primitive-fn kind -> Int
+
+primitive-fn uint-parameter: parameter [Int] -> Int
+primitive-fn point-parameter: parameter [Int] -> Point
+primitive-fn rect-parameter: parameter [Int] -> Rectangle
+
+
+class-fn used-symbols
+	# These are the symbols used by the primitive functions.
+	# They're here so the compiler will generate them.
+
+	# Event kinds
+	'draw-content'
+	'mouse-down'

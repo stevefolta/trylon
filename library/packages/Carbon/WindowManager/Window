@@ -7,8 +7,8 @@ primitive-fn create: content-rect attributes: attributes
 primitive-fn show
 primitive-fn port-bounds -> Rectangle
 
-fn handle-event
-	# *** Get the event passed.
+fn handle-event: event [EventManager Event]
+	# *** Handle calling next event handler, and return value.
 
 
 class-fn used-symbols

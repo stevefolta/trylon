@@ -8,15 +8,14 @@ class Window
 			attributes: ('standard-document-attributes', 'standard-handler', 	--
 			             'in-window-menu')
 
-	fn handle-event
+	fn handle-event: event
 		print-line: "Got window event."
-		save-port := Carbon QuickDraw port
-		Carbon QuickDraw window-port = this
-		Carbon QuickDraw erase-rect: this port-bounds
-		context := Carbon QuickDraw begin-cg-context: Carbon QuickDraw port
-		draw: context
-		Carbon QuickDraw end-cg-context: Carbon QuickDraw port context: context
-		Carbon QuickDraw port = save-port
+		if event kind == 'draw-content'
+			print-line: "...it's a draw-content event."
+			Carbon QuickDraw erase-rect: this port-bounds
+			context := Carbon QuickDraw begin-cg-context: Carbon QuickDraw port
+			draw: context
+			Carbon QuickDraw end-cg-context: Carbon QuickDraw port context: context
 
 	fn draw: context
 		font-id := Carbon ATSUI find-font: "Georgia"

@@ -71,9 +71,15 @@ static struct {
 static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler,
                                           EventRef event, void* userData)
 {
-	extern MethodSpec_ handle_event__methods[];
+	extern obj_ allocate_object_co___Standard__Implementation(obj_);
+	extern class_spec_ Carbon__EventManager__Event;
+	extern MethodSpec_ handle_event_co___methods[];
 
-	Call_(handle_event, ((obj_) userData));
+	obj_ eventObj =
+		allocate_object_co___Standard__Implementation(
+			(obj_) &Carbon__EventManager__Event);
+	eventObj->fields[0] = (obj_) event;
+	Call_(handle_event_co_, (obj_) userData, eventObj);
 	return noErr; 	/***/
 }
 
