@@ -13,7 +13,7 @@ create(local: CompiledField, parent: Context)
 }
 
 
-lookup-function(name: String): VlangeFunction
+lookup-function(name: String): TrylonFunction
 {
 	if (name == local.name)
 		return new LocalGetter(local);

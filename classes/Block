@@ -29,7 +29,7 @@ append(statement: Statement)
 }
 
 
-lookup-function(name: String): VlangeFunction
+lookup-function(name: String): TrylonFunction
 {
 	// See if there's a local for it.
 	if (locals) {

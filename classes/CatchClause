@@ -16,7 +16,7 @@ create(type: CompiledClass, parent: Context, comment: String)
 }
 
 
-lookup-function(name: String): VlangeFunction
+lookup-function(name: String): TrylonFunction
 {
 	if (name == "exception")
 		return new CaughtExceptionFunction();

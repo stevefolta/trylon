@@ -1,6 +1,6 @@
 /* Standard__Char.primitives.c */
 
-#include "Vlange_.h"
+#include "Trylon_.h"
 
 #define value_(charObj) 	(((struct Standard__Int__internal*) charObj)->value)
 

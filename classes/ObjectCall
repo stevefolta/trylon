@@ -32,7 +32,7 @@ emit-code(builder: MethodBuilder): ExpressionResult
 			package = object-result.as-a(PackageResult).package;
 		else
 			package = object-result.as-a(ClassResult).the-class;
-		function: VlangeFunction = package.lookup-function(name);
+		function: TrylonFunction = package.lookup-function(name);
 		if (function) {
 			// Declare the function
 			line: String = "extern obj_ " + function.c-name + "(";

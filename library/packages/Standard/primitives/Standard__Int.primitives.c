@@ -1,6 +1,6 @@
 /* Standard__Int.primitives.c */
 
-#include "Vlange_.h"
+#include "Trylon_.h"
 #include <stdio.h>
 
 #define value_(intObj) 	(((struct Standard__Int__internal*) intObj)->value)

@@ -14,10 +14,10 @@
 ##### Specific to this program #####
 
 # The name of the program binary:
-NAME = vlange
+NAME = trylon
 
 # The name of the program class:
-APP_CLASS := VlangeCompiler
+APP_CLASS := TrylonCompiler
 
 # Additional libraries can be added using LIBS and LIBPATHS.
 
@@ -46,9 +46,3 @@ include $(CLEET_BASE)/makefiles/make-engine
 
 ##### Extra targets #####
 
-basic-runtime-test:
-	$(CC) tests/BasicRuntimeTest.c library/runtime/Vlange_.c \
-		-Ilibrary/runtime \
-		-DBASIC_RUNTIME_TEST \
-		-lgc -ldl \
-		-o basic-runtime-test

@@ -1,5 +1,5 @@
 Class: ClassFunction
-Superclass: VlangeFunction
+Superclass: TrylonFunction
 
 
 the-class: CompiledClass;

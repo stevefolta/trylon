@@ -1,5 +1,5 @@
 Class: FieldGetter
-Superclass: VlangeFunction
+Superclass: TrylonFunction
 
 
 field: CompiledField;

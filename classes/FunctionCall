@@ -17,7 +17,7 @@ create(name: String, arguments: (List of Expression), context: Context)
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	// Get the function.
-	function: VlangeFunction = context.lookup-function(name);
+	function: TrylonFunction = context.lookup-function(name);
 	if (function == nil) {
 		//*** This should become an ObjectCall on "this" -- if there is a "this".
 		throw MessageException("There is no \"" + name + "\" function.");

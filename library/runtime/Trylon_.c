@@ -1,6 +1,6 @@
-/* Vlange_.c */
+/* Trylon_.c */
 
-#include "Vlange_.h"
+#include "Trylon_.h"
 #include <stdio.h>
 #include <string.h>
 #ifdef OSX_FINK

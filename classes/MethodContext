@@ -15,7 +15,7 @@ create(arguments: (List of CompiledField), is-object-function: Bool,
 }
 
 
-lookup-function(name: String): VlangeFunction
+lookup-function(name: String): TrylonFunction
 {
 	// "this"
 	if (is-object-function && name == "this")
@@ -30,7 +30,7 @@ lookup-function(name: String): VlangeFunction
 	// Function calls on "this".
 	if (is-object-function) {
 		// The parent will be a CompiledClass.
-		function: VlangeFunction =
+		function: TrylonFunction =
 			parent.as-a(CompiledClass).lookup-instance-function(name);
 		if (function)
 			return new FunctionOnThis(name);

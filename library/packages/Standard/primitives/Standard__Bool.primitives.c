@@ -1,6 +1,6 @@
 /* Standard__Bool.primitives.c */
 
-#include "Vlange_.h"
+#include "Trylon_.h"
 
 #define value_(boolObj) 	(((struct Standard__Bool__internal*) boolObj)->value)
 

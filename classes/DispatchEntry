@@ -1,10 +1,10 @@
 Class: DispatchEntry
 
 for-class: CompiledClass;
-function: VlangeInstanceFunction;
+function: TrylonInstanceFunction;
 
 
-create(for-class: CompiledClass, function: VlangeInstanceFunction)
+create(for-class: CompiledClass, function: TrylonInstanceFunction)
 {
 	this.for-class = for-class;
 	this.function = function;

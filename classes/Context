@@ -1,7 +1,7 @@
 Class: Context
 
 
-lookup-function(name: String): VlangeFunction
+lookup-function(name: String): TrylonFunction
 [phantom]
 
 

@@ -1,14 +1,14 @@
 Class: NewFunction
-Superclass: VlangeFunction
+Superclass: TrylonFunction
 
 
 creator-name: String;
 name: String;
-creator: VlangeFunction;
+creator: TrylonFunction;
 on-class: CompiledClass;
 
 
-create(creator-name: String, creator: VlangeFunction, on-class: CompiledClass)
+create(creator-name: String, creator: TrylonFunction, on-class: CompiledClass)
 {
 	this.creator-name = creator-name;
 	this.creator = creator;

@@ -1,14 +1,14 @@
 Class: DispatchEntries
 
 entries: List of DispatchEntry;
-functions: List of VlangeInstanceFunction;
-object-function: VlangeInstanceFunction;
+functions: List of TrylonInstanceFunction;
+object-function: TrylonInstanceFunction;
 
 
 create()
 {
 	this.entries = new List of DispatchEntry;
-	this.functions = new List of VlangeInstanceFunction;
+	this.functions = new List of TrylonInstanceFunction;
 	this.object-function = nil;
 }
 

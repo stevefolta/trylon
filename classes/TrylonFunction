@@ -1,4 +1,4 @@
-Class: VlangeFunction
+Class: TrylonFunction
 
 
 emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
@@ -17,9 +17,9 @@ emit-code(stream: OutputStream)
 
 
 
-// Most VlangeFunctions are non-object functions, and object functions and
+// Most TrylonFunctions are non-object functions, and object functions and
 // non-object functions are mostly disjoint sets, but the exception is
-// CompiledClass.  So a VlangeFunction can represent either type of function.
+// CompiledClass.  So a TrylonFunction can represent either type of function.
 
 // The rest of these must be defined for object functions.
 

@@ -69,8 +69,8 @@ parse-package()
 	consume-token();
 	require-eol();
 
-	VlangeCompiler.status-reporter.report("Parsing " + package-name + "...");
-	VlangeCompiler.status-reporter.indent();
+	TrylonCompiler.status-reporter.report("Parsing " + package-name + "...");
+	TrylonCompiler.status-reporter.indent();
 
 	package: Package = nil;
 
@@ -96,7 +96,7 @@ parse-package()
 		consume-token();	// unindent
 		}
 
-	VlangeCompiler.status-reporter.unindent();
+	TrylonCompiler.status-reporter.unindent();
 }
 
 
@@ -164,8 +164,8 @@ parse-class()
 	consume-token();
 	require-eol();
 
-	VlangeCompiler.status-reporter.report("Parsing " + class-name + "...");
-	VlangeCompiler.status-reporter.indent();
+	TrylonCompiler.status-reporter.report("Parsing " + class-name + "...");
+	TrylonCompiler.status-reporter.indent();
 
 	// Create (or get) the class.
 	the-class: CompiledClass = context.add-class(class-name);
@@ -181,7 +181,7 @@ parse-class()
 		consume-token();
 		}
 
-	VlangeCompiler.status-reporter.unindent();
+	TrylonCompiler.status-reporter.unindent();
 }
 
 
@@ -361,7 +361,7 @@ parse-function(is-object-function: Bool): CompiledFunction
 		}
 	require-eol();
 
-	VlangeCompiler.status-reporter.report("Parsing " + name + "...");
+	TrylonCompiler.status-reporter.report("Parsing " + name + "...");
 
 	// Parse the body.
 	body: Block = nil;
@@ -390,7 +390,7 @@ parse-type-spec(): CompiledClass
 	while (current-token.type == 'name') {
 		// Find the package or class.
 		last-name = current-token;
-		type-function: VlangeFunction =
+		type-function: TrylonFunction =
 			cur-context.lookup-function(current-token.text);
 		if (type-function == nil)
 			throw ParseException("Unknown class or package.", current-token);
@@ -1108,7 +1108,7 @@ parse-primary-expression(): Expression
 	else if (token == 'symbol-literal') {
 		value: String = current-token.text;
 		consume-token();
-		return VlangeCompiler.the-compiler.get-symbol-literal(value);
+		return TrylonCompiler.the-compiler.get-symbol-literal(value);
 		}
 
 	else if (token == '(') {
@@ -1192,7 +1192,7 @@ make-binop-call(name: String, object: Expression, argument: Expression)
 
 reporter: StatusReporter
 {
-	return VlangeCompiler.status-reporter;
+	return TrylonCompiler.status-reporter;
 }
 
 

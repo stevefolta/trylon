@@ -1,5 +1,5 @@
-Class: VlangeInstanceFunction
-Superclass: VlangeFunction
+Class: TrylonInstanceFunction
+Superclass: TrylonFunction
 
 
 c-signature: String

@@ -1,5 +1,5 @@
 Class: ThisFunction
-Superclass: VlangeFunction
+Superclass: TrylonFunction
 
 
 create()

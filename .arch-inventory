@@ -1,6 +1,5 @@
 precious ^(\.objects|\.cp-sources|\.classes\.make|\.dependencies)$
-precious ^vlange$
-precious ^vlange\..*$
-precious ^basic-runtime-test$
+precious ^trylon$
+precious ^trylon\..*$
 precious ^(gdb-commands|gdbit)$
 precious ^makefile.local-settings$

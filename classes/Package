@@ -3,7 +3,7 @@ Superclass: Context
 
 name: String;
 parent: Package;
-functions: Dictionary of VlangeFunction;
+functions: Dictionary of TrylonFunction;
 fields: Dictionary of CompiledField;
 directories: List of FileDirectory;
 uses-packages: List of Package;
@@ -15,7 +15,7 @@ create(name: String, parent: Package)
 {
 	this.name = name;
 	this.parent = parent;
-	functions = new Dictionary of VlangeFunction;
+	functions = new Dictionary of TrylonFunction;
 	fields = new Dictionary of CompiledField;
 	directories = new List of FileDirectory;
 	uses-packages = new List of Package;
@@ -24,14 +24,14 @@ create(name: String, parent: Package)
 }
 
 
-lookup-function(name: String): VlangeFunction
+lookup-function(name: String): TrylonFunction
 {
 	lookup-function(name, new ObjectMap of Package);
 }
 
 
 lookup-function(name: String, visited-packages: ObjectMap of Package)
-	: VlangeFunction
+	: TrylonFunction
 {
 	// Recursion control
 	if (visited-packages.contains(this))
@@ -39,7 +39,7 @@ lookup-function(name: String, visited-packages: ObjectMap of Package)
 	visited-packages.add(this, this);
 
 	// Do we know it already?
-	function: VlangeFunction = functions[name];
+	function: TrylonFunction = functions[name];
 	if (function)
 		return function;
 
@@ -70,7 +70,7 @@ lookup-function(name: String, visited-packages: ObjectMap of Package)
 
 	// Next, check the used packages.
 	for (used-package: Package in uses-packages) {
-		function: VlangeFunction =
+		function: TrylonFunction =
 			used-package.lookup-function(name, visited-packages);
 		if (function)
 			return function;
@@ -101,7 +101,7 @@ add-field(field: CompiledField)
 add-class(name: String): CompiledClass
 {
 	// If it already exists, return it.
-	existing-function: VlangeFunction = functions[name];
+	existing-function: TrylonFunction = functions[name];
 	if (existing-function) {
 		if (!existing-function.is-a(ClassFunction)) {
 			throw
@@ -112,13 +112,13 @@ add-class(name: String): CompiledClass
 		}
 
 	// Add the new one.
-	VlangeCompiler.status-reporter.report("Loading " + name + "...");
-	VlangeCompiler.status-reporter.indent();
+	TrylonCompiler.status-reporter.report("Loading " + name + "...");
+	TrylonCompiler.status-reporter.indent();
 	class: CompiledClass(name, this);
 	class-function: ClassFunction(class);
 	functions[name] = class-function;
-	VlangeCompiler.the-compiler.package-queue.append(class);
-	VlangeCompiler.status-reporter.unindent();
+	TrylonCompiler.the-compiler.package-queue.append(class);
+	TrylonCompiler.status-reporter.unindent();
 	return class;
 }
 
@@ -130,7 +130,7 @@ add-package(name: String, directory: FileDirectory): PackageFunction
 		package.add-directory(directory);
 	package-function: PackageFunction(package);
 	functions[name] = package-function;
-	VlangeCompiler.the-compiler.package-queue.append(package);
+	TrylonCompiler.the-compiler.package-queue.append(package);
 	return package-function;
 }
 
@@ -138,7 +138,7 @@ add-package(name: String, directory: FileDirectory): PackageFunction
 get-subpackage(name: String): Package
 {
 	// Has it been loaded already?
-	function: VlangeFunction = functions[name];
+	function: TrylonFunction = functions[name];
 	if (function && function.is-a(PackageFunction))
 		return function.as-a(PackageFunction).package;
 
@@ -206,7 +206,7 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 
 ensure-superclasses(object-class: CompiledClass)
 {
-	for (function: VlangeFunction in functions.values) {
+	for (function: TrylonFunction in functions.values) {
 		if (function.is-a(PackageFunction))
 			function.as-a(PackageFunction).package.ensure-superclasses(object-class);
 		else if (function.is-a(ClassFunction))
@@ -243,11 +243,11 @@ copy-primitives-files()
 			primitives-file = parent.find-primitives-file(file-name);
 			}
 		if (primitives-file)
-			VlangeCompiler.the-compiler.copy-to-sources(primitives-file, file-name);
+			TrylonCompiler.the-compiler.copy-to-sources(primitives-file, file-name);
 		}
 
 	// Have all children copy theirs
-	for (function: VlangeFunction in functions.values) {
+	for (function: TrylonFunction in functions.values) {
 		if (function.is-a(PackageFunction))
 			function.as-a(PackageFunction).package.copy-primitives-files();
 		else if (function.is-a(ClassFunction))
@@ -290,11 +290,11 @@ emit-c-file()
 	// Header, includes
 	stream.write-line("/* " + c-name + ".c */");
 	stream.write-line();
-	stream.write-line("#include \"Vlange_.h\"");
+	stream.write-line("#include \"Trylon_.h\"");
 	stream.write-line();
 
 	// Functions
-	for (function: VlangeFunction in functions.values)
+	for (function: TrylonFunction in functions.values)
 		function.emit-code(stream);
 }
 
@@ -321,7 +321,7 @@ total-instance-fields: Int
 reporter: StatusReporter
 [class]
 {
-	return VlangeCompiler.status-reporter;
+	return TrylonCompiler.status-reporter;
 }
 
 

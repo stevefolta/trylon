@@ -1,4 +1,4 @@
-Class: VlangeCompiler
+Class: TrylonCompiler
 Superclass: Program
 
 
@@ -8,7 +8,7 @@ object-function-names: Dictionary of String;
 symbols: Dictionary of SymbolLiteral;
 package-queue: List of Package;
 
-the-compiler: VlangeCompiler; 	[class]
+the-compiler: TrylonCompiler; 	[class]
 status-reporter: StatusReporter; 	[class]
 
 
@@ -87,11 +87,11 @@ compile-program(compile-symbols: List of String)
 	main-directory: FileDirectory(".");
 	if (main-directory.entry-is-directory("sources"))
 		main-directory = main-directory["sources"].as-a(FileDirectory);
-	vlange-base-path: String =
-		System.system.environment-variable("VLANGE_BASE");
-	if (vlange-base-path == nil || vlange-base-path.is-empty)
-		throw MessageException("VLANGE_BASE is not set!");
-	library-directory: FileDirectory(vlange-base-path + "/library");
+	trylon-base-path: String =
+		System.system.environment-variable("TRYLON_BASE");
+	if (trylon-base-path == nil || trylon-base-path.is-empty)
+		throw MessageException("TRYLON_BASE is not set!");
+	library-directory: FileDirectory(trylon-base-path + "/library");
 	status-reporter.report("Loading Main...");
 	status-reporter.indent();
 	main-package: Package("Main", nil);
@@ -117,15 +117,15 @@ compile-program(compile-symbols: List of String)
 	status-reporter.report("Emitting method specs...");
 	emit-method-specs(main-package);
 
-	// Copy Vlange_.h and Vlange_.c
+	// Copy Trylon_.h and Trylon_.c
 	if (!library-directory.entry-is-directory("runtime")) {
 		message: String = "The \"runtime\" directory is missing from the library!";
 		throw MessageException(message);
 		}
 	runtime-directory: FileDirectory =
 		library-directory["runtime"].as-a(FileDirectory);
-	copy-to-sources(runtime-directory["Vlange_.h"].as-a(File), "Vlange_.h");
-	copy-to-sources(runtime-directory["Vlange_.c"].as-a(File), "Vlange_.c");
+	copy-to-sources(runtime-directory["Trylon_.h"].as-a(File), "Trylon_.h");
+	copy-to-sources(runtime-directory["Trylon_.c"].as-a(File), "Trylon_.c");
 
 	// Copy primitives files
 	main-package.copy-primitives-files();
@@ -155,7 +155,7 @@ get-symbol-literal(name: String): SymbolLiteral
 emit-method-specs(main-package: Package)
 {
 	stream: OutputStream = new File(".c-sources/methods_.c").output-stream;
-	stream.write-line("#include \"Vlange_.h\"");
+	stream.write-line("#include \"Trylon_.h\"");
 	stream.write-line();
 
 	object-class: CompiledClass = root-class(main-package);
@@ -171,7 +171,7 @@ emit-method-specs(main-package: Package)
 		object-class.get-Object-dispatch-entries(fn-name, entries);
 
 		// Emit the declarations
-		for (function: VlangeInstanceFunction in entries.functions) {
+		for (function: TrylonInstanceFunction in entries.functions) {
 			stream.write("extern ");
 			stream.write(function.c-signature);
 			stream.write-line(";");
@@ -213,7 +213,7 @@ root-class(main-package: Package): CompiledClass
 	standard-package: Package = main-package.get-subpackage("Standard");
 	if (standard-package == nil)
 		throw MessageException("Standard package is missing!");
-	object-function: VlangeFunction = standard-package.lookup-function("Object");
+	object-function: TrylonFunction = standard-package.lookup-function("Object");
 	if (object-function == nil)
 		throw MessageException("Standard Object is missing!");
 	if (!object-function.is-a(ClassFunction))

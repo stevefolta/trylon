@@ -5,7 +5,7 @@ Superclass: Package
 // fields, we make it a subclass of Package.
 
 
-instance-functions: Dictionary of VlangeInstanceFunction;
+instance-functions: Dictionary of TrylonInstanceFunction;
 instance-fields: List of CompiledField;
 subclasses: List of CompiledClass;
 superclass: CompiledClass;
@@ -14,7 +14,7 @@ superclass: CompiledClass;
 create(name: String, parent: Package)
 {
 	super.create(name, parent);
-	instance-functions = new Dictionary of VlangeInstanceFunction;
+	instance-functions = new Dictionary of TrylonInstanceFunction;
 	instance-fields = new List of CompiledField;
 	subclasses = new List of CompiledClass;
 }
@@ -33,11 +33,11 @@ make-subclass-of(superclass: CompiledClass)
 }
 
 
-add-instance-function(name: String, function: VlangeInstanceFunction)
+add-instance-function(name: String, function: TrylonInstanceFunction)
 {
 	instance-functions[name] = function;
 
-	VlangeCompiler.the-compiler.add-object-function(name);
+	TrylonCompiler.the-compiler.add-object-function(name);
 	if (function.is-primitive)
 		has-primitives = true;
 
@@ -58,9 +58,9 @@ add-instance-field(field: CompiledField)
 }
 
 
-lookup-instance-function(name: String): VlangeFunction
+lookup-instance-function(name: String): TrylonFunction
 {
-	function: VlangeFunction = instance-functions[name];
+	function: TrylonFunction = instance-functions[name];
 	if (function)
 		return function;
 
@@ -99,7 +99,7 @@ emit-c-file()
 	// Header, includes
 	stream.write-line("/* " + c-name + ".c */");
 	stream.write-line();
-	stream.write-line("#include \"Vlange_.h\"");
+	stream.write-line("#include \"Trylon_.h\"");
 	stream.write-line();
 
 	// Class object
@@ -129,9 +129,9 @@ emit-c-file()
 	//***//
 
 	// Functions
-	for (function: VlangeFunction in functions.values)
+	for (function: TrylonFunction in functions.values)
 		function.emit-code(stream);
-	for (function: VlangeFunction in instance-functions.values)
+	for (function: TrylonFunction in instance-functions.values)
 		function.emit-code(stream);
 
 	//***//
@@ -149,10 +149,10 @@ emit-all-class-declarations(stream: OutputStream)
 }
 
 
-get-dispatch-entries(name: String, inherited-function: VlangeInstanceFunction,
+get-dispatch-entries(name: String, inherited-function: TrylonInstanceFunction,
                      dispatch-entries: DispatchEntries)
 {
-	function: VlangeInstanceFunction = instance-functions[name];
+	function: TrylonInstanceFunction = instance-functions[name];
 	if (function)
 		dispatch-entries.functions.append(function);
 	else
@@ -175,7 +175,7 @@ get-Object-dispatch-entries(name: String, dispatch-entries: DispatchEntries)
 		subclass.get-dispatch-entries(name, nil, dispatch-entries);
 
 	// Add the our entry
-	function: VlangeInstanceFunction = instance-functions[name];
+	function: TrylonInstanceFunction = instance-functions[name];
 	if (function)
 		dispatch-entries.functions.append(function);
 	dispatch-entries.object-function = function;

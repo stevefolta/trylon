@@ -1,5 +1,5 @@
 Class: InstanceFieldGetter
-Superclass: VlangeInstanceFunction
+Superclass: TrylonInstanceFunction
 
 
 field: CompiledField;

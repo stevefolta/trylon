@@ -1,5 +1,5 @@
 Class: ArgumentFunction
-Superclass: VlangeFunction
+Superclass: TrylonFunction
 
 
 name: String;

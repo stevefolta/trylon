@@ -1,5 +1,5 @@
 Class: CompiledFunction
-Superclass: VlangeInstanceFunction 	// Not always an instance fn, but it can be.
+Superclass: TrylonInstanceFunction 	// Not always an instance fn, but it can be.
 
 name: String;
 arguments: List of CompiledField;

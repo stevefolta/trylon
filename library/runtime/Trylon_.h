@@ -1,7 +1,7 @@
-/* NewLang_.h */
+/* Trylon_.h */
 
-#ifndef _NewLang__h_
-#define _NewLang__h_
+#ifndef _Trylon__h_
+#define _Trylon__h_
 
 
 #if defined(__cplusplus) && !defined(NOT_EXTERN_C)
@@ -211,4 +211,4 @@ _FinishExternC_
 
 
 
-#endif	// NewLang_.h
+#endif	// Trylon_.h
