@@ -992,7 +992,7 @@ parse-equality-expression(): Expression
 		expr2: Expression = parse-relational-expression();
 		if (expr2 == nil)
 			throw ParseException("Expression expected.", current-token);
-		expr = make-binop-call(token, expr, expr2);
+		expr = new EqualityCall(token, expr, expr2);
 
 		token = current-token.type;
 		}

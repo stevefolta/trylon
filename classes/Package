@@ -144,6 +144,8 @@ get-subpackage(name: String): Package
 
 	// Look for it.
 	for (directory: FileDirectory in directories) {
+		if (directory.entry-is-directory(name))
+			return add-package(name, directory[name].as-a(FileDirectory)).package;
 		if (!directory.entry-is-directory("packages"))
 			continue;
 		packages-dir: FileDirectory = directory["packages"].as-a(FileDirectory);
@@ -191,6 +193,11 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 		throw MessageException("The Standard package can't be found!");
 	uses-packages.append(standard-package);
 
+	// Add "nil" to Standard.
+	// This will override the definition in Standard's "main".
+	standard-package.functions["nil"] = new NilFunction;
+
+	// Load our "main"s.
 	for (directory: FileDirectory in directories) {
 		if (directory.contains("main")) {
 			parser: Parser(directory["main"].as-a(File).contents, this);

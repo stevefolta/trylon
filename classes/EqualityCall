@@ -1,0 +1,41 @@
+Class: EqualityCall
+Superclass: Expression
+
+name: String;
+object: Expression;
+argument: Expression;
+
+
+create(name: String, object: Expression, argument: Expression)
+{
+	this.name = name;
+	this.object = object;
+	this.argument = argument;
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	// Special-case "== nil" and "!= nil".
+	// This is the whole purpose of this class.
+	if (argument.is-a(FunctionCall)) {
+		arg-function: TrylonFunction = argument.as-a(FunctionCall).function;
+		if (arg-function && arg-function.is-a(NilFunction)) {
+			object-result: ExpressionResult = object.emit-code(builder);
+			temporary: Temporary = builder.get-temporary();
+			line: String = temporary.name + " = (" + object-result.access;
+			line += " " + name + " NULL) ? true__Standard : false__Standard;";
+			builder.add-line(line);
+			return temporary;
+			}
+		}
+
+	// Otherwise, it's just a normal object call, so make an ObjectCall
+	// handle it.
+	arguments: List of Expression;
+	arguments.append(argument);
+	object-call: ObjectCall(name, object, arguments);
+	return object-call.emit-code(builder);
+}
+
+

@@ -1,0 +1,16 @@
+Class: NilFunction
+Superclass: TrylonFunction
+
+
+create()
+{
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	return new NameResult("NULL");
+}
+
+

@@ -50,3 +50,9 @@ copy: FunctionCall
 }
 
 
+function: TrylonFunction
+{
+	return context.lookup-function(name);
+}
+
+

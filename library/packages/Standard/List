@@ -1,7 +1,7 @@
 trylon-class List
 
-field head [Cell]
-field tail [Cell]
+field head
+field tail
 
 
 fn create
@@ -9,8 +9,8 @@ fn create
 	tail = nil
 
 fn append: object
-	cell [Cell] := Cell new: object
-	if tail
+	cell := Cell new: object
+	if tail != nil
 		tail next = cell
 	tail = cell
 	if head == nil
