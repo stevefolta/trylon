@@ -217,7 +217,10 @@ emit-instance-field-indices(stream: OutputStream): Int
 
 total-instance-fields: Int
 {
-	return super.total-instance-fields + instance-fields.count;
+	total: Int = instance-fields.count;
+	if (superclass)
+		total += superclass.total-instance-fields;
+	return total;
 }
 
 
