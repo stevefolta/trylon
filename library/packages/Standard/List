@@ -1,10 +1,10 @@
 trylon-class List
 
-fields head last-cell
+fields first-cell last-cell
 
 
 fn create
-	head = nil
+	first-cell = nil
 	last-cell = nil
 
 fn append: object
@@ -12,56 +12,68 @@ fn append: object
 	if last-cell != nil
 		last-cell next = cell
 	last-cell = cell
-	if head == nil
-		head = cell
+	if first-cell == nil
+		first-cell = cell
 
 fn prepend: object
 	cell := Cell new: object
-	cell next = head
-	head = cell
+	cell next = first-cell
+	first-cell = cell
 
 fn iterator -> Standard Iterator
-	return Iterator new: head
+	return Iterator new: first-cell
 
 fn is-empty
-	return (head == nil)
+	return (first-cell == nil)
 
 fn count
 	num-items := 0
-	cell := head
+	cell := first-cell
 	while cell
 		num-items += 1
 		cell = cell next
 	return num-items
 
 fn first-item
-	if head == nil
+	if first-cell == nil
 		return nil
-	return head object
+	return first-cell object
 
 fn last-item
 	if last-cell == nil
 		return nil
 	return last-cell object
 
+fn head
+	return first-item
+
+fn tail
+	tail-list := List new
+	if first-cell
+		tail-list first-cell = first-cell next
+	else
+		tail-list first-cell = nil
+	tail-list last-cell = last-cell
+	return tail-list
+
 
 fn pop-front
-	if head == nil
+	if first-cell == nil
 		return nil
 	
-	object := head object
+	object := first-cell object
 	
-	if head == last-cell
-		head = nil
+	if first-cell == last-cell
+		first-cell = nil
 		last-cell = nil
 	else
-		head = head next
+		first-cell = first-cell next
 	
 	return object
 
 
 fn remove: object
-	cell := head
+	cell := first-cell
 	prev-cell := nil
 	while cell
 		if cell object == object
@@ -69,7 +81,7 @@ fn remove: object
 			if prev-cell
 				prev-cell next = cell next
 			else
-				head = cell next
+				first-cell = cell next
 			# Is it the last cell?
 			if cell == last-cell
 				last-cell = prev-cell
@@ -80,7 +92,7 @@ fn remove: object
 
 
 fn contains: object
-	cell := head
+	cell := first-cell
 	while cell
 		if cell object same-as: object
 			return true
@@ -89,7 +101,7 @@ fn contains: object
 
 
 fn insert: new-object before: before-object
-	cell := head
+	cell := first-cell
 	prev-cell := nil
 	while cell
 		if cell object same-as: before-object
@@ -98,14 +110,14 @@ fn insert: new-object before: before-object
 			if prev-cell
 				prev-cell next = new-cell
 			else
-				head = new-cell
+				first-cell = new-cell
 			return
 		prev-cell = cell
 		cell = cell next
 
 
 fn replace: old-object with: new-object
-	cell := head
+	cell := first-cell
 	while cell
 		if cell object same-as: old-object
 			cell object = new-object
@@ -114,18 +126,9 @@ fn replace: old-object with: new-object
 
 
 fn clear
-	head = nil
+	first-cell = nil
 	last-cell = nil
 
-
-fn tail
-	tail-list := List new
-	if head
-		tail-list head = head next
-	else
-		tail-list head = nil
-	tail-list last-cell = last-cell
-	return tail-list
 
 
 
