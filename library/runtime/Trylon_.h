@@ -218,16 +218,17 @@ _FinishExternC_
 		{ (obj_) &Standard__String, &s##index##__start_, &s##index##__stopper_ };
 
 #define DefineSymbol_(name, value, length) 	\
-	static const char name##__symstr_[] = value; 	\
-	DefineBytePtr_(name##__symstart_, name##__symstr_) 	\
-	DefineBytePtr_(name##__symstopper_, name##__symstr_ + length) 	\
-	struct Standard__String__internal name##__sym_ = 	\
-		{ (obj_) &Standard__Symbol, &name##__symstart_, &name##__symstopper_ };
+	static const char y##name##__str_[] = value; 	\
+	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
+	DefineBytePtr_(y##name##__stopper_, y##name##__str_ + length) 	\
+	struct Standard__String__internal y##name##__sym_ = 	\
+		{ (obj_) &Standard__Symbol, &y##name##__start_, &y##name##__stopper_ };
 
 #define Str_(index)	((obj_) &s##index##_)
 
-#define UsingSym_(name) 	extern struct Standard__String__internal name##__sym_;
-#define Sym_(name) 	((obj_) &name##__sym_)
+#define UsingSym_(name) 	\
+	extern struct Standard__String__internal y##name##__sym_;
+#define Sym_(name) 	((obj_) &y##name##__sym_)
 
 #define DefineChar_(name, value) 	\
 	struct object c##name##_ = { (obj_) &Standard__Char, (obj_) (value) };
