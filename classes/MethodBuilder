@@ -259,6 +259,10 @@ mangle-name(name: String): String
 			mangled-char: String;
 			if (c == '-')
 				mangled-char = "_";
+			else if (c == ':')
+				mangled-char = "_co_";
+			else if (c == ' ')
+				mangled-char = "__";
 			else if (c == '<')
 				mangled-char = "_lt_";
 			else if (c == '>')
@@ -273,8 +277,6 @@ mangle-name(name: String): String
 				mangled-char = "_dv_";
 			else if (c == '%')
 				mangled-char = "_pc_";
-			else if (c == ' ')
-				mangled-char = "_sp_";
 			else if (c == '[')
 				mangled-char = "_in_";
 			else if (c == ']')
