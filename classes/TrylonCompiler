@@ -91,7 +91,7 @@ compile-program(compile-symbols: List of String)
 		System.system.environment-variable("TRYLON_BASE");
 	if (trylon-base-path == nil || trylon-base-path.is-empty)
 		throw MessageException("TRYLON_BASE is not set!");
-	library-directory: FileDirectory(trylon-base-path + "/library");
+	library-directory: FileDirectory(trylon-base-path);
 	status-reporter.report("Loading Main...");
 	status-reporter.indent();
 	main-package: Package("Main", nil);
