@@ -8,6 +8,13 @@ object-function-names: Dictionary of String;
 symbols: Dictionary of SymbolLiteral;
 package-queue: List of Package;
 
+// Build settings
+program-name: String;
+c-flags: List of String;
+link-flags: List of String;
+c-compiler: String;
+linker: String;
+
 the-compiler: TrylonCompiler; 	[class]
 status-reporter: StatusReporter; 	[class]
 
@@ -23,6 +30,12 @@ create(arguments: List of String)
 	symbols = new Dictionary of SymbolLiteral;
 	package-queue = new List of Package;
 
+	program-name = "program-binary";
+	c-flags = new List of String;
+	link-flags = new List of String;
+	c-compiler = "gcc";
+	linker = "gcc";
+
 	the-compiler = this;
 }
 
@@ -30,6 +43,10 @@ create(arguments: List of String)
 run()
 {
 	try {
+		// read the settings
+		load-build-settings("build-settings");
+		load-build-settings("build-settings.local");
+
 		// parse the arguments
 		file-names: List of String;
 		compile-symbols: List of String;
@@ -76,9 +93,52 @@ return-value: Int
 
 // Top-level compilation
 
+load-build-settings(file-name: String)
+{
+	file: File(file-name);
+	if (!file.exists)
+		return;
+
+	parser: QuickParser(file.contents);
+	while (!parser.is-done) {
+		token: String = parser.next-token;
+		if (token == "program")
+			program-name = parser.next-token;
+		else if (token == "c-flags") {
+			loop {
+				token = parser.next-token;
+				if (token.is-empty)
+					break;
+				c-flags.append(token);
+				}
+			}
+		else if (token == "link-flags") {
+			loop {
+				token = parser.next-token;
+				if (token.is-empty)
+					break;
+				link-flags.append(token);
+				}
+			}
+		else if (token == "c-compiler")
+			c-compiler = parser.next-token;
+		else if (token == "linker")
+			linker = parser.next-token;
+
+		parser.advance-line();
+		}
+}
+
 
 compile-program(compile-symbols: List of String)
 {
+	// Create the .c-sources and .objects directories.
+	directory: FileDirectory(".");
+	if (!directory.entry-is-directory(".c-sources"))
+		directory.create-subdirectory(".c-sources");
+	if (!directory.entry-is-directory(".objects"))
+		directory.create-subdirectory(".objects");
+
 	// We need "destroy" to be a function name, even if there are no
 	// functions with that name.
 	add-object-function("destroy");

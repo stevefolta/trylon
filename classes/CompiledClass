@@ -87,15 +87,10 @@ ensure-superclasses(object-class: CompiledClass)
 }
 
 
-emit-h-file()
+emit-c-file(): Bool
 {
-	//***//
-}
-
-
-emit-c-file()
-{
-	stream: OutputStream = new File(".c-sources/" + c-name + ".c").output-stream;
+	file: File = new File(".c-sources/" + c-name + ".c");
+	stream: ExistingFileStream = new ExistingFileStream(file);
 
 	//---
 	if (lookup-function("verbose")) {
@@ -137,15 +132,15 @@ emit-c-file()
 	// Instance field indices
 	emit-instance-field-indices(stream);
 
-	//***//
-
 	// Functions
 	for (function: TrylonFunction in functions.values)
 		function.emit-code(stream);
 	for (function: TrylonFunction in instance-functions.values)
 		function.emit-code(stream);
 
-	//***//
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
 }
 
 

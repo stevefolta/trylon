@@ -266,7 +266,7 @@ copy-primitives-files()
 }
 
 
-emit-code()
+emit-code(): Bool
 {
 	reporter.report("Generating code for " + name + "...");
 	reporter.indent();
@@ -281,22 +281,18 @@ emit-code()
 		}
 	//---
 
-	emit-h-file();
-	emit-c-file();
+	is-changed: Bool = emit-c-file();
 
 	reporter.unindent();
+
+	return is-changed;
 }
 
 
-emit-h-file()
+emit-c-file(): Bool
 {
-	//***//
-}
-
-
-emit-c-file()
-{
-	stream: OutputStream = new File(".c-sources/" + c-name + ".c").output-stream;
+	file: File = new File(".c-sources/" + c-name + ".c");
+	stream: ExistingFileStream = new ExistingFileStream(file);
 
 	// Header, includes
 	stream.write-line("/* " + c-name + ".c */");
@@ -307,6 +303,10 @@ emit-c-file()
 	// Functions
 	for (function: TrylonFunction in functions.values)
 		function.emit-code(stream);
+
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
 }
 
 
