@@ -5,6 +5,7 @@ c-flags: List of String;
 link-flags: List of String;
 c-compiler: String;
 linker: String;
+dictionary: Dictionary of String;
 is-verbose: Bool;
 
 
@@ -15,6 +16,7 @@ create()
 	link-flags = new List of String;
 	c-compiler = "gcc";
 	linker = "gcc";
+	dictionary = new Dictionary of String;
 	is-verbose = false;
 }
 
@@ -32,7 +34,18 @@ load-from(file-name: String)
 	if (!file.exists)
 		return;
 
-	lexer: Lexer(file.contents);
+	try {
+		lexer: Lexer(file.contents);
+		parse-block(lexer);
+		}
+	catch (e: Exception) {
+		throw MessageException("Error in \"" + file-name + "\": " + e.message);
+		}
+}
+
+
+parse-block(lexer: Lexer)
+{
 	loop {
 		token: Token = lexer.next-token;
 		type: Symbol = token.type;
@@ -57,9 +70,16 @@ load-from(file-name: String)
 				c-compiler = parse-name(lexer, name);
 			else if (name == "linker")
 				linker = parse-name(lexer, name);
+
+			else if (name == "if" || name == "iff")
+				parse-if(lexer);
 			}
 
-		else if (type == 'eof')
+		else if (type == 'indent') {
+			parse-block(lexer);
+			}
+		
+		else if (type == 'eof' || type == 'unindent')
 			break;
 		}
 }
@@ -108,6 +128,48 @@ parse-flags(lexer: Lexer, flags: (List of String), declaration: String)
 			flag += token.text;
 			flags.append(flag);
 			flag = "";
+			}
+		}
+}
+
+
+parse-if(lexer: Lexer)
+{
+	// Get the value.
+	token: Token = lexer.next-token;
+	if (token.type == 'comment' || token.type == 'eol')
+		throw MessageException("Invalid \"if\" statement.");
+	value: String = dictionary[token.text];
+	if (value == nil)
+		value = "";
+
+	// Get the end of line.
+	token = lexer.next-token;
+	if (token.type == 'comment')
+		token = lexer.next-token;
+	if (token.type != 'eol')
+		throw MessageException("Extra tokens in \"if\" statement.");
+
+	// Handle the block.
+	token = lexer.next-token;
+	if (token.type != 'indent')
+		throw MessageException("Missing block in \"if\" statement.");
+	if (!value.is-empty) {
+		// "true".  Parse the block.
+		parse-block(lexer);
+		}
+	else {
+		// "false".  Skip the block.
+		indent-count: Int = 1;
+		loop {
+			token = lexer.next-token;
+			if (token.type == 'indent')
+				indent-count += 1;
+			else if (token.type == 'unindent') {
+				indent-count -= 1;
+				if (indent-count <= 0)
+					break;
+				}
 			}
 		}
 }
