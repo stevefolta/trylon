@@ -99,12 +99,12 @@ _FinishExternC_
 #define _Catch_(class)	\
 		PopException_();	\
 		}	\
-	else if (_Test_(Call_(is_a_sp_class, __caught_object, &class))) {	\
+	else if (_Test_(Call_(is_a_co_, __caught_object, &class))) {	\
 		PopException_();
 
 #define _AlsoCatch_(class)	\
 		}	\
-	else if (_Test_(Call_(is_a_sp_class, __caught_object, &class))) {	\
+	else if (_Test_(Call_(is_a_co_, __caught_object, &class))) {	\
 		PopException_();
 
 #define _EndCatch_	\

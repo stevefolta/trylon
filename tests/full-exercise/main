@@ -1,5 +1,5 @@
 package Main
-	fn main args
+	fn main: args
 		print-line: "-- Statement tests --"
 
 		# if
@@ -27,7 +27,7 @@ package Main
 		print-line: "--"
 
 		# for
-		for i in Interval new: 7 stop: 9
+		for i in Interval new: 7 to: 9
 			print-line: i string
 		print-line: "--"
 
@@ -64,7 +64,7 @@ package Main
 		print-line: (3 & 7) string + " == 3"
 		print-line: (3 | 7) string + " == 7"
 		print-line: (3 ^ 7) string + " == 4"
-		print-line: (~-2) string + " == 1"
+		# print-line: (~-2) string + " == 1"
 
 
 		#

@@ -16,7 +16,7 @@ create(body: Block, catch-clauses: (List of CatchClause), comment: String)
 
 emit-code(builder: MethodBuilder)
 {
-	builder.using-object-function("is-a class");
+	builder.using-object-function("is-a:");
 
 	// Body
 	builder.add-line(add-comment("_Try_"));
