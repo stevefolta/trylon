@@ -172,6 +172,7 @@ extern class_spec_ Standard__Char;
 extern class_spec_ Standard__Bool;
 extern class_spec_ Standard__BytePtr;
 extern class_spec_ Standard__String;
+extern class_spec_ Standard__Symbol;
 
 extern obj_ BuildInt_(int value);
 extern obj_ BuildChar_(int value);
@@ -201,7 +202,17 @@ _FinishExternC_
 	static struct Standard__String__internal s##index##_ =  	\
 		{ (obj_) &Standard__String, &s##index##__start_, &s##index##__stopper_ };
 
+#define DefineSymbol_(name, value, length) 	\
+	static const char name##__symstr_[] = value; 	\
+	DefineBytePtr_(name##__symstart_, name##__symstr_) 	\
+	DefineBytePtr_(name##__symstopper_, name##__symstr_ + length) 	\
+	struct Standard__String__internal name##__sym_ = 	\
+		{ (obj_) &Standard__Symbol, &name##__symstart_, &name##__symstopper_ };
+
 #define Str_(index)	((obj_) &s##index##_)
+
+#define UsingSym_(name) 	extern struct Standard__String__internal name##__sym_;
+#define Sym_(name) 	((obj_) &name##__sym_)
 
 
 // Helpers for primitives

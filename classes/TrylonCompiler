@@ -117,6 +117,10 @@ compile-program(compile-symbols: List of String)
 	status-reporter.report("Emitting method specs...");
 	emit-method-specs(main-package);
 
+	// Emit the symbols.
+	status-reporter.report("Emitting symbols...");
+	emit-symbols();
+
 	// Copy Trylon_.h and Trylon_.c
 	if (!library-directory.entry-is-directory("runtime")) {
 		message: String = "The \"runtime\" directory is missing from the library!";
@@ -203,6 +207,24 @@ emit-method-specs(main-package: Package)
 		// Finish the dispatch table
 		stream.write-line(" };");
 		stream.write-line();
+		}
+}
+
+
+emit-symbols()
+{
+	stream: OutputStream = new File(".c-sources/symbols_.c").output-stream;
+	stream.write-line("#include \"Trylon_.h\"");
+	stream.write-line();
+
+	for (symbol: SymbolLiteral in symbols.values) {
+		stream.write("DefineSymbol_(");
+		stream.write(MethodBuilder.mangle-name(symbol.name));
+		stream.write(", \"");
+		stream.write(symbol.name);
+		stream.write("\", ");
+		stream.write(symbol.name.length.string);
+		stream.write-line(")");
 		}
 }
 

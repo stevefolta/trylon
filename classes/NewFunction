@@ -23,8 +23,7 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 	allocator-c-name: String =
 		MethodBuilder.mangle-name("allocate-object:") +
 		"__Standard__Implementation";
-	builder.add-used-function-declaration(
-		"extern obj_ " + allocator-c-name + "(obj_);");
+	builder.add-extern-declaration("extern obj_ " + allocator-c-name + "(obj_);");
 
 	// Declare the creator
 	creator-c-name: String =
@@ -33,7 +32,7 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 	for (arg: ExpressionResult in arguments)
 		line += ", obj_";
 	line += ");";
-	builder.add-used-function-declaration(line);
+	builder.add-extern-declaration(line);
 
 	// Allocate the object
 	temporary: Temporary = builder.get-temporary();

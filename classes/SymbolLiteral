@@ -3,20 +3,19 @@ Superclass: Expression
 
 
 name: String;
-c-name: String;
 
 
 create(name: String)
 {
 	this.name = name;
-	c-name = "_sym_" + MethodBuilder.mangle-name(name);
 }
 
 
 emit-code(builder: MethodBuilder): ExpressionResult
 {
-	builder.add-line("extern Standard_Object* " + c-name + ";");
-	return new NameResult(c-name);
+	mangled-name: String = MethodBuilder.mangle-name(name);
+	builder.add-extern-declaration("UsingSym_(" + mangled-name + ")");
+	return new NameResult("Sym_(" + mangled-name + ")");
 }
 
 

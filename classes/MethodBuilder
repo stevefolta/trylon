@@ -8,7 +8,7 @@ next-string-literal-num: Int;
 int-literals: List of IntLiteral;
 next-int-literal-num: Int;
 used-object-functions: Dictionary of String;
-used-function-declarations: List of String;
+extern-declarations: List of String;
 used-fields: ObjectMap of Package;
 used-classes: ObjectMap of CompiledClass;
 indent-level: Int;
@@ -24,7 +24,7 @@ create()
 	next-int-literal-num = 0;
 	int-literals = new List of IntLiteral;
 	used-object-functions = new Dictionary of String;
-	used-function-declarations = new List of String;
+	extern-declarations = new List of String;
 	used-fields = new ObjectMap of Package;
 	used-classes = new ObjectMap of CompiledClass;
 	indent-level = 0;
@@ -64,9 +64,9 @@ using-object-function(name: String)
 }
 
 
-add-used-function-declaration(declaration: String)
+add-extern-declaration(declaration: String)
 {
-	used-function-declarations.append(declaration);
+	extern-declarations.append(declaration);
 }
 
 
@@ -174,9 +174,9 @@ emit(stream: OutputStream)
 		stream.write-line(";");
 		}
 
-	// Emit the used (non-object) function declarations
-	if (!used-function-declarations.is-empty) {
-		for (declaration: String in used-function-declarations) {
+	// Emit the extern declarations
+	if (!extern-declarations.is-empty) {
+		for (declaration: String in extern-declarations) {
 			stream.write("\t");
 			stream.write-line(declaration);
 			}

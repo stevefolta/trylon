@@ -90,6 +90,12 @@ fn main: args
 
 	for item in "Single item"
 		print-line: item
+	print-line
+
+	if 'foo' == 'foo'
+		print-line: "Symbol equality worked."
+	if 'foo' != 'bar'
+		print-line: "Symbol inequality worked."
 
 	#
 	print-line

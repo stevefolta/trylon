@@ -18,8 +18,7 @@ add-member(member: Expression)
 
 emit-code(builder: MethodBuilder): ExpressionResult
 {
-	builder.add-used-function-declaration(
-		"extern obj_ new_co___Standard__Tuple(obj_);");
+	builder.add-extern-declaration("extern obj_ new_co___Standard__Tuple(obj_);");
 
 	// Make the tuple object.
 	tuple: Temporary = builder.get-temporary();

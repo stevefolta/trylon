@@ -39,7 +39,7 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 		line += "obj_";
 		}
 	line += ");";
-	builder.add-used-function-declaration(line);
+	builder.add-extern-declaration(line);
 
 	// Generate the call.
 	temporary: Temporary = builder.get-temporary();

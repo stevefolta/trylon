@@ -1,0 +1,10 @@
+trylon-class Symbol
+superclass String
+
+
+fn == arg -> Bool
+	return object-ptr == arg object-ptr
+
+fn != arg -> Bool
+	return object-ptr != arg object-ptr
+
