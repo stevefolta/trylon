@@ -1,0 +1,24 @@
+Class: SetArgumentFunction
+Superclass: TrylonFunction
+
+
+name: String;
+
+
+create(arg: CompiledField)
+{
+	this.name = arg.name;
+}
+
+
+emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
+	: ExpressionResult
+{
+	line: String =
+		builder.mangle-name(name) + " = " + arguments.first-item.access + ";";
+	builder.add-line(line);
+	return new NameResult("NULL");
+}
+
+
+

@@ -22,9 +22,15 @@ lookup-function(name: String): TrylonFunction
 		return new ThisFunction();
 
 	// Arguments.
+	is-setter: Bool = name.ends-with(":");
+	set-name: String = nil;
+	if (is-setter)
+		set-name = name.substr(0, name.length - 1);
 	for (argument: CompiledField in arguments) {
 		if (argument.name == name)
 			return new ArgumentFunction(argument);
+		else if (is-setter && argument.name == set-name)
+			return new SetArgumentFunction(argument);
 		}
 
 	// Function calls on "this".
