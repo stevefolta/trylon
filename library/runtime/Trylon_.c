@@ -113,12 +113,17 @@ void RegisterFinalizer_(obj_ object)
 
 int _Test_(obj_ object)
 {
+	/* "nil" and "false" are false; everything else is true. */
+	return (object != NULL && object != false__Standard);
+
+/*** Old-style: only "true" is true.
 	extern class_spec_ Standard__Bool;
 	if (object != NULL && object->class_ == (obj_) &Standard__Bool) {
 		if (((struct Standard__Bool__internal*) object)->value)
 			return 1;
 		}
 	return 0;
+***/
 }
 
 
@@ -212,12 +217,19 @@ void* Allocate_(int numBytes)
 
 int main(int argc, char* argv[])
 {
+	obj_ args, result;
+	int whichArg;
+	extern obj_ main_co___Main(obj_ args);
+	extern obj_ new__Standard__List();
+	UsingMethod_(append_co_)
+
 	// Build the list of args.
-	/***/
+	args = new__Standard__List();
+	for (whichArg = 0; whichArg < argc; ++whichArg)
+		Call_(append_co_, args, BuildString_(argv[whichArg]));
 
 	// Call the main function.
-	extern obj_ main_co___Main(obj_ args);
-	obj_ result = main_co___Main(NULL); 	// ***
+	result = main_co___Main(args);
 
 	// Return the result.
 	if (result && result->class_ == (obj_) &Standard__Int)

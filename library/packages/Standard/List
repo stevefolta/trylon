@@ -23,6 +23,9 @@ fn prepend: object
 fn iterator -> Standard Iterator
 	return Iterator new: head
 
+fn is-empty
+	return (head == nil)
+
 fn count
 	num-items := 0
 	cell := head
