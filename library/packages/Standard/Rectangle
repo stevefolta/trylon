@@ -12,3 +12,8 @@ fn create: left top: top right: right bottom: bottom
 	this right = right
 	this bottom = bottom
 
+fn create: tuple
+	this left = tuple at: 0
+	this top = tuple at: 1
+	this right = tuple at: 2
+	this bottom = tuple at: 3
