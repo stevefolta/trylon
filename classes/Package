@@ -211,6 +211,7 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 	standard-package.lookup-function("String");
 	standard-package.lookup-function("Symbol");
 	standard-package.lookup-function("Tuple");
+	standard-package.lookup-function("List");
 }
 
 

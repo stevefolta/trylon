@@ -1,0 +1,5 @@
+program hello-world
+
+c-flags -g
+
+link-flags -lgc -ldl

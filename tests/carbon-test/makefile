@@ -1,3 +1,13 @@
+default:
+	trylon
+
+clean:
+	rm -r .c-sources .objects
+
+
+
+#### OLD...
+
 -include makefile.local-settings
 
 ifeq "$(shell uname)" "Darwin"
@@ -9,11 +19,12 @@ endif
 CFLAGS += -g
 
 
-default:
-	[ -d .c-sources ] || mkdir .c-sources
-	../../trylon $(TRYLON_FLAGS)
-	$(CC) $(CFLAGS) $(INCLUDE_PATHS) \
-		.c-sources/*.c \
-		$(LIB_PATHS) -lgc -ldl 	\
-		-o carbon-test
+#	default:
+#		[ -d .c-sources ] || mkdir .c-sources
+#		../../trylon $(TRYLON_FLAGS)
+#		$(CC) $(CFLAGS) $(INCLUDE_PATHS) \
+#			.c-sources/*.c \
+#			$(LIB_PATHS) -lgc -ldl 	\
+#			-o carbon-test
+
 

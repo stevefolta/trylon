@@ -1,0 +1,5 @@
+program full-exercise
+
+c-flags -g
+
+link-flags -lgc -ldl

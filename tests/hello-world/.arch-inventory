@@ -1,4 +1,6 @@
 precious ^\.c-sources$
+precious ^\.objects$
+precious ^build-settings.local$
 precious ^makefile.local-settings$
 precious ^.gdb_history$
 precious ^hello-world$
