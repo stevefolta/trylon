@@ -29,7 +29,7 @@ class Iterator
 		this tuple = tuple
 		index = 0
 	fn is-done -> Bool
-		return index < tuple num-items
+		return index >= tuple num-items
 	fn current-item -> Object
 		return tuple at: index
 	fn go-forward

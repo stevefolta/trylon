@@ -14,10 +14,13 @@ obj_ nil__Standard = (0);
 
 obj_ print_co___Standard(obj_ strObj)
 {
-	struct Standard__String__internal* str =
-		(struct Standard__String__internal*) strObj;
-	byte_ptr_ start = BytePtrValue_(str->start);
-	byte_ptr_ stopper = BytePtrValue_(str->stopper);
+	struct Standard__String__internal* str;
+	byte_ptr_ start, stopper;
+	UsingMethod_(string)
+	strObj = Call_(string, strObj);
+	str = (struct Standard__String__internal*) strObj;
+	start = BytePtrValue_(str->start);
+	stopper = BytePtrValue_(str->stopper);
 	fwrite(start, stopper - start, 1, stdout);
 }
 

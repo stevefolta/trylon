@@ -15,7 +15,7 @@ fn create: stop
 	value = start
 
 fn is-done -> Bool
-	return value < stop
+	return value >= stop
 
 fn current-item -> Object
 	return value

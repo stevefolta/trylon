@@ -142,7 +142,7 @@ class Iterator
 	fn create: cell
 		this cell = cell
 	fn is-done -> Bool
-		return cell != nil
+		return cell == nil
 	fn current-item
 		return cell object
 	fn go-forward

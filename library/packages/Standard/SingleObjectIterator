@@ -13,7 +13,7 @@ fn create: object
 	this object = object
 
 fn is-done -> Bool
-	return object != nil
+	return object == nil
 
 fn current-item
 	return object

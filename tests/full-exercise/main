@@ -107,8 +107,8 @@ fn main: args
 		print-line: item
 	print-line
 
-	for item in "Single item"
-		print-line: item
+	for item in MessageException new: "Single item"
+		print-line: item message
 	print-line
 
 	if 'foo' == 'foo'
