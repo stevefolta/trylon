@@ -1,3 +1,1 @@
-Subclasses don't have access to their superclasses' class fields.
-
 Any failed compilation (including in the Trylon compilation stage, it looks like) necessitates a "make clean".  Unify the list of files, using an object with the file name and whether it changed.  Do a date check on "unchanged" files.  Or something.
