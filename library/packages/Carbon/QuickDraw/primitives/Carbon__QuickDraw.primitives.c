@@ -29,7 +29,7 @@ obj_ window_port_co___Carbon__QuickDraw(obj_ windObj)
 }
 
 
-obj_ begin_cg_context__Carbon__QuickDraw(obj_ portObj)
+obj_ begin_cg_context_co___Carbon__QuickDraw(obj_ portObj)
 {
 	obj_ contextObj =
 		allocate_object_co___Standard__Implementation((obj_) &Carbon__Quartz__Context);
@@ -39,7 +39,7 @@ obj_ begin_cg_context__Carbon__QuickDraw(obj_ portObj)
 }
 
 
-obj_ end_cg_context__Carbon__QuickDraw(obj_ portObj, obj_ contextObj)
+obj_ end_cg_context_co_context_co___Carbon__QuickDraw(obj_ portObj, obj_ contextObj)
 {
 	QDEndCGContext((CGrafPtr) portObj, (CGContextRef*) &contextObj->fields[0]);
 	return NULL;

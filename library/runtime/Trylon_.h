@@ -178,6 +178,7 @@ extern obj_ BuildInt_(int value);
 extern obj_ BuildChar_(int value);
 extern obj_ BuildBytePtr_(byte_ptr_ value);
 extern obj_ BuildString_(const char* cString); 	// Will copy the string.
+extern void* Allocate_(int numBytes);
 
 _FinishExternC_
 
@@ -214,6 +215,7 @@ _FinishExternC_
 #define UsingSym_(name) 	extern struct Standard__String__internal name##__sym_;
 #define Sym_(name) 	((obj_) &name##__sym_)
 
+#define UsingMethod_(methodName)	extern MethodSpec_ methodName##__methods[];
 
 // Helpers for primitives
 

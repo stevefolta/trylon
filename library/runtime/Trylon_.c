@@ -56,8 +56,8 @@ fn_ptr_ Dispatch_(MethodSpec_* methods, obj_ object)
 		return methods->method;
 
 	// Send message-not-understood:instead.
-	//*** Eventually, we want to actually specify *which* message wasn't
-	//*** understood, and also pass the arguments.
+	// *** Eventually, we want to actually specify *which* message wasn't
+	// *** understood, and also pass the arguments.
 	return (fn_ptr_) &SendMessageNotUnderstood_;
 }
 
@@ -172,6 +172,12 @@ obj_ BuildString_(const char* cString)
 	strObj->start = start;
 	strObj->stopper = stopper;
 	return (obj_) strObj;
+}
+
+
+void* Allocate_(int numBytes)
+{
+	return GC_MALLOC(numBytes);
 }
 
 

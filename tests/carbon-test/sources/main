@@ -13,8 +13,19 @@ class Window
 		save-port := Carbon QuickDraw port
 		Carbon QuickDraw window-port: this
 		Carbon QuickDraw erase-rect: this port-bounds
-		style := Carbon ATSUI Style new
+		context := Carbon QuickDraw begin-cg-context: Carbon QuickDraw port
+		draw: context
+		Carbon QuickDraw end-cg-context: Carbon QuickDraw port context: context
 		Carbon QuickDraw port: save-port
+
+	fn draw: context
+		style := Carbon ATSUI Style new
+		style size: 24
+		layout := Carbon ATSUI TextLayout new
+		layout text: "Hello world!"
+		layout style: style
+		layout cg-context: context
+		layout draw-x: 20 y: 40
 
 fn main: args
 	window := Window new

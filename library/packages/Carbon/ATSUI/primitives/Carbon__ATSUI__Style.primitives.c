@@ -9,6 +9,14 @@ obj_ create__Carbon__ATSUI__Style(obj_ this_)
 }
 
 
+obj_ close__Carbon__ATSUI__Style(obj_ this_)
+{
+	ATSUDisposeStyle((ATSUStyle) this_->fields[0]);
+	this_->fields[0] = NULL;
+	return NULL;
+}
+
+
 obj_ font__Carbon__ATSUI__Style(obj_ this_)
 {
 	/***/
@@ -28,6 +36,9 @@ obj_ size__Carbon__ATSUI__Style(obj_ this_)
 	Fixed size;
 	ByteCount actualParamSize;
 
+	if (this_->fields[0] == NULL)
+		return BuildInt_(0);
+
 	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUSizeTag, sizeof(Fixed),
 	                 &size, &actualParamSize);
 
@@ -42,6 +53,9 @@ obj_ size_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_size)
 	ByteCount valueSize = sizeof(Fixed);
 	ATSUAttributeValuePtr valuePtr = &size;
 
+	if (this_->fields[0] == NULL)
+		return NULL;
+
 	size = Long2Fix(IntValue_(new_size));
 	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
 	                  &valuePtr);
@@ -53,6 +67,9 @@ obj_ is_bold__Carbon__ATSUI__Style(obj_ this_)
 {
 	Boolean value;
 	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
 
 	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUQDBoldfaceTag,
 	                 sizeof(Boolean), &value, &actualParamSize);
@@ -67,6 +84,9 @@ obj_ is_bold_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_value)
 	ByteCount valueSize = sizeof(Boolean);
 	ATSUAttributeValuePtr valuePtr = &value;
 
+	if (this_->fields[0] == NULL)
+		return NULL;
+
 	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
 	                  &valuePtr);
 	return NULL;
@@ -77,6 +97,9 @@ obj_ is_italic__Carbon__ATSUI__Style(obj_ this_)
 {
 	Boolean value;
 	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
 
 	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUQDItalicTag,
 	                 sizeof(Boolean), &value, &actualParamSize);
@@ -91,6 +114,9 @@ obj_ is_italic_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_value)
 	ByteCount valueSize = sizeof(Boolean);
 	ATSUAttributeValuePtr valuePtr = &value;
 
+	if (this_->fields[0] == NULL)
+		return NULL;
+
 	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
 	                  &valuePtr);
 	return NULL;
@@ -101,6 +127,9 @@ obj_ is_underlined__Carbon__ATSUI__Style(obj_ this_)
 {
 	Boolean value;
 	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
 
 	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUQDUnderlineTag,
 	                 sizeof(Boolean), &value, &actualParamSize);
@@ -115,6 +144,9 @@ obj_ is_underlined_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_value)
 	ByteCount valueSize = sizeof(Boolean);
 	ATSUAttributeValuePtr valuePtr = &value;
 
+	if (this_->fields[0] == NULL)
+		return NULL;
+
 	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
 	                  &valuePtr);
 	return NULL;
@@ -125,6 +157,9 @@ obj_ is_condensed__Carbon__ATSUI__Style(obj_ this_)
 {
 	Boolean value;
 	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
 
 	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUQDCondensedTag,
 	                 sizeof(Boolean), &value, &actualParamSize);
@@ -139,6 +174,9 @@ obj_ is_condensed_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_value)
 	ByteCount valueSize = sizeof(Boolean);
 	ATSUAttributeValuePtr valuePtr = &value;
 
+	if (this_->fields[0] == NULL)
+		return NULL;
+
 	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
 	                  &valuePtr);
 	return NULL;
@@ -149,6 +187,9 @@ obj_ is_extended__Carbon__ATSUI__Style(obj_ this_)
 {
 	Boolean value;
 	ByteCount actualParamSize;
+
+	if (this_->fields[0] == NULL)
+		return false__Standard;
 
 	ATSUGetAttribute((ATSUStyle) this_->fields[0], kATSUQDExtendedTag,
 	                 sizeof(Boolean), &value, &actualParamSize);
@@ -162,6 +203,9 @@ obj_ is_extended_co___Carbon__ATSUI__Style(obj_ this_, obj_ new_value)
 	Boolean value = (new_value == true__Standard);
 	ByteCount valueSize = sizeof(Boolean);
 	ATSUAttributeValuePtr valuePtr = &value;
+
+	if (this_->fields[0] == NULL)
+		return NULL;
 
 	ATSUSetAttributes((ATSUStyle) this_->fields[0], 1, &tag, &valueSize,
 	                  &valuePtr);

@@ -3,6 +3,9 @@ trylon-class Style
 field primitive-style 	# Don't touch this.
 
 primitive-fn create
+primitive-fn close
+fn destroy
+	close
 
 primitive-fn font
 primitive-fn font: new-font

@@ -1,0 +1,19 @@
+trylon-class TextLayout
+
+field primitive-layout 	# Don't touch this!
+field utc16-text 	# Don't touch this!
+
+primitive-fn create
+primitive-fn close
+fn destroy
+	close
+
+primitive-fn cg-context: context
+
+# These don't exactly correspond to ATSUI calls, but are convenient for how 
+# we tend to use them.
+
+primitive-fn text: utf8String
+primitive-fn style: style
+primitive-fn draw-x: x y: y
+
