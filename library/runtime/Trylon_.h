@@ -148,6 +148,11 @@ struct Standard__Int__internal {
 	int 	value;
 };
 
+struct Standard__Float__internal {
+	obj_  	class_;
+	double	value;
+};
+
 struct Standard__Bool__internal {
 	obj_	class_;
 	int 	value;
@@ -168,6 +173,7 @@ typedef struct Standard__Class__internal class_spec_;
 
 extern class_spec_ Standard__Class;
 extern class_spec_ Standard__Int;
+extern class_spec_ Standard__Float;
 extern class_spec_ Standard__Char;
 extern class_spec_ Standard__Bool;
 extern class_spec_ Standard__BytePtr;
@@ -175,6 +181,7 @@ extern class_spec_ Standard__String;
 extern class_spec_ Standard__Symbol;
 
 extern obj_ BuildInt_(int value);
+extern obj_ BuildFloat_(double value);
 extern obj_ BuildChar_(int value);
 extern obj_ BuildBytePtr_(byte_ptr_ value);
 extern obj_ BuildString_(const char* cString); 	// Will copy the string.
@@ -192,6 +199,12 @@ _FinishExternC_
 	static struct object i##index##_ = { (obj_) &Standard__Int, (obj_) (value) };
 
 #define Int_(index)	(&i##index##_)
+
+#define DefineFloat_(index, value) 	\
+	static struct Standard__Float__internal f##index##_ = 	\
+		{ (obj_) &Standard__Float, value };
+
+#define Float_(index)	((obj_) &f##index##_)
 
 #define DefineBytePtr_(name, value) \
 	static struct object name = { (obj_) &Standard__BytePtr, (obj_) (value) };
@@ -220,6 +233,7 @@ _FinishExternC_
 // Helpers for primitives
 
 #define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
+#define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 
 

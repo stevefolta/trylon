@@ -2,18 +2,18 @@ Class: FloatLiteralResult
 Superclass: ExpressionResult
 
 
-value: Float;
+index: Int;
 
 
-create(value: Float)
+create(index: Int)
 {
-	this.value = value;
+	this.index = index;
 }
 
 
 access: String
 {
-	return value.string;
+	return "Float_(" + index.string + ")";
 }
 
 

@@ -6,7 +6,9 @@ num-temporaries-used: Int;
 string-literals: List of StringLiteral;
 next-string-literal-num: Int;
 int-literals: List of IntLiteral;
+float-literals: List of FloatLiteral;
 next-int-literal-num: Int;
+next-float-literal-num: Int;
 used-object-functions: Dictionary of String;
 extern-declarations: List of String;
 used-fields: ObjectMap of Package;
@@ -23,6 +25,8 @@ create()
 	string-literals = new List of StringLiteral;
 	next-int-literal-num = 0;
 	int-literals = new List of IntLiteral;
+	next-float-literal-num = 0;
+	float-literals = new List of FloatLiteral;
 	used-object-functions = new Dictionary of String;
 	extern-declarations = new List of String;
 	used-fields = new ObjectMap of Package;
@@ -55,6 +59,14 @@ add-int-literal(int-literal: IntLiteral)
 	int-literal.index = next-int-literal-num;
 	next-int-literal-num += 1;
 	int-literals.append(int-literal);
+}
+
+
+add-float-literal(float-literal: FloatLiteral)
+{
+	float-literal.index = next-float-literal-num;
+	next-float-literal-num += 1;
+	float-literals.append(float-literal);
 }
 
 
@@ -137,6 +149,16 @@ emit(stream: OutputStream)
 	// Emit the int literals
 	for (literal: IntLiteral in int-literals) {
 		stream.write("\tDefineInt_(");
+		stream.write(literal.index.string);
+		stream.write(", ");
+		stream.write(literal.value.string);
+		stream.write(")");
+		stream.write-line();
+		}
+
+	// Emit the float literals
+	for (literal: FloatLiteral in float-literals) {
+		stream.write("\tDefineFloat_(");
 		stream.write(literal.index.string);
 		stream.write(", ");
 		stream.write(literal.value.string);

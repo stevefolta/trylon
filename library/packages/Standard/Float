@@ -1,0 +1,16 @@
+trylon-class Float
+
+primitive-fn == arg [Int] -> Bool
+primitive-fn != arg [Int] -> Bool
+primitive-fn < arg [Int] -> Bool
+primitive-fn > arg [Int] -> Bool
+primitive-fn <= arg [Int] -> Bool
+primitive-fn >= arg [Int] -> Bool
+
+primitive-fn + arg [Int] -> Int
+primitive-fn - arg [Int] -> Int
+primitive-fn * arg [Int] -> Int
+primitive-fn / arg [Int] -> Int
+primitive-fn unary-minus -> Int
+
+primitive-fn string -> String

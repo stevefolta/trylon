@@ -131,6 +131,17 @@ obj_ BuildInt_(int value)
 }
 
 
+obj_ BuildFloat_(double value)
+{
+	struct Standard__Float__internal* result =
+		(struct Standard__Float__internal*)
+			GC_MALLOC(sizeof(struct Standard__Float__internal));
+	result->class_ = (obj_) &Standard__Float;
+	result->value = value;
+	return (obj_) result;
+}
+
+
 obj_ BuildChar_(int value)
 {
 	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));

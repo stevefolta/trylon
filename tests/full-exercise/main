@@ -70,6 +70,19 @@ fn main: args
 	print-line: foo string + " == 7"
 
 	print-line
+	print-line: "-- Float Tests --"
+
+	x := 3.2
+	print-line: (x + 2.1) string + " == 5.3"
+	print-line: (x - 2.1) string + " == 1.1"
+	print-line: (x * 2.0) string + " == 6.4"
+	print-line: (x / 2.0) string + " == 1.6"
+	print-line: (x < 3.0) string + " == false"
+	print-line: (x > 3.0) string + " == true"
+	print-line: (x == 3.2) string + " == true"
+	print-line: (x != 3.2) string + " == true"
+
+	print-line
 	print-line: "-- Other Tests --"
 
 	test-obj := PrivateClass new

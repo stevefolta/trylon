@@ -3,6 +3,7 @@ Superclass: Expression
 
 
 value: Float;
+index: Int; 	// The MethodBuilder will set this.
 
 
 create(value: String)
@@ -13,7 +14,8 @@ create(value: String)
 
 emit-code(builder: MethodBuilder): ExpressionResult
 {
-	return new FloatLiteralResult(value);
+	builder.add-float-literal(this); 	// the "index" gets set here
+	return new FloatLiteralResult(index);
 }
 
 
