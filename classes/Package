@@ -208,6 +208,7 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 	// Load up standard classes.
 	standard-package.lookup-function("BytePtr");
 	standard-package.lookup-function("String");
+	standard-package.lookup-function("Tuple");
 }
 
 

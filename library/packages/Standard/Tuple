@@ -9,7 +9,23 @@ class-fn new: num-items
 	return tuple
 
 fn at: index
-	return this object-ptr object-at: index + 1
+	return this object-ptr object-at: index + 2
 
 fn at: index set-to: value
-	this object-ptr object-at: index + 1 set-to: value
+	this object-ptr object-at: index + 2 set-to: value
+
+fn iterator
+	return Iterator new: this
+
+class Iterator
+	field tuple
+	field index
+	fn create: tuple
+		this tuple = tuple
+		index = 0
+	fn is-done -> Bool
+		return index < tuple num-items
+	fn current-item -> Object
+		return tuple at: index
+	fn go-forward
+		index += 1

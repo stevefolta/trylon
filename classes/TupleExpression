@@ -1,0 +1,44 @@
+Class: TupleExpression
+Superclass: Expression
+
+members: List of Expression;
+
+
+create()
+{
+	members = new List of Expression;
+}
+
+
+add-member(member: Expression)
+{
+	members.append(member);
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	builder.add-used-function-declaration(
+		"extern obj_ new_co___Standard__Tuple(obj_);");
+
+	// Make the tuple object.
+	tuple: Temporary = builder.get-temporary();
+	size-result: ExpressionResult =
+		new IntLiteral(members.count.string).emit-code(builder);
+	builder.add-line(
+		tuple.access + " = new_co___Standard__Tuple(" + size-result.access + ");");
+
+	// Set its fields.
+	index: Int = 1; 	// Starts after the size.
+	for (member: Expression in members) {
+		member-result: ExpressionResult = member.emit-code(builder);
+		builder.add-line(
+			tuple.access + "->fields[" + index.string + "] = " +
+			member-result.access + ";");
+		index += 1;
+		}
+
+	return tuple;
+}
+
+

@@ -813,6 +813,29 @@ parse-expression-statement(): ExpressionStatement
 
 parse-expression(): Expression
 {
+	expr: Expression = parse-keyword-expression();
+	if (expr == nil)
+		return nil;
+
+	if (current-token.type == ',') {
+		tuple: TupleExpression();
+		tuple.add-member(expr);
+		while (current-token.type == ',') {
+			consume-token();
+			member: Expression = parse-keyword-expression();
+			if (member == nil)
+				throw ParseException("Missing expression in tuple.", current-token);
+			tuple.add-member(member);
+			}
+		expr = tuple;
+		}
+
+	return expr;
+}
+
+
+parse-keyword-expression(): Expression
+{
 	expr: Expression = parse-binary-expression();
 	if (expr == nil)
 		return nil;

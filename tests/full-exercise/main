@@ -81,7 +81,11 @@ fn main: args
 	list append: "List item 3"
 	for item in list
 		print-line: item
+	print-line
 
+	tuple := "Tuple item 1", "Tuple item 2", "Tuple item 3"
+	for item in tuple
+		print-line: item
 
 	#
 	print-line
