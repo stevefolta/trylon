@@ -1,6 +1,7 @@
 /* Standard__Float.primitives.c */
 
 #include "Trylon_.h"
+#include <math.h>
 #include <stdio.h>
 
 
@@ -73,6 +74,18 @@ obj_ _gt__eq___Standard__Float(obj_ this_, obj_ arg)
 {
 	return
 		(FloatValue_(this_) >= FloatValue_(arg) ? true__Standard : false__Standard);
+}
+
+
+obj_ pow_co___Standard__Float(obj_ this_, obj_ power)
+{
+	return BuildFloat_(pow(FloatValue_(this_), FloatValue_(power)));
+}
+
+
+obj_ sqrt__Standard__Float(obj_ this_)
+{
+	return BuildFloat_(sqrt(FloatValue_(this_)));
 }
 
 

@@ -21,6 +21,8 @@ primitive-fn | arg [Int] -> Int
 primitive-fn & arg [Int] -> Int
 primitive-fn ^ arg [Int] -> Int
 primitive-fn ~ -> Int
+primitive-fn << arg [Int] -> Int
+primitive-fn >> arg [Int] -> Int
 
 primitive-fn string -> String
 primitive-fn float -> Float

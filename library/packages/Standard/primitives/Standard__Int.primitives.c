@@ -66,6 +66,18 @@ obj_ _tw___Standard__Int(obj_ this_)
 }
 
 
+obj_ _lt__lt___Standard__Int(obj_ this_, obj_ arg)
+{
+	return BuildInt_(IntValue_(this_) << IntValue_(arg));
+}
+
+
+obj_ _gt__gt___Standard__Int(obj_ this_, obj_ arg)
+{
+	return BuildInt_(IntValue_(this_) >> IntValue_(arg));
+}
+
+
 obj_ _eq__eq___Standard__Int(obj_ this_, obj_ arg)
 {
 	return (value_(this_) == value_(arg) ? true__Standard : false__Standard);

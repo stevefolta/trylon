@@ -1,7 +1,7 @@
 program hello-world
 
 c-flags -g
-link-flags -lgc -ldl
+link-flags -lgc -ldl -lm
 
 
 if Darwin

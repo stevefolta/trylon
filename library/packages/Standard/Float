@@ -13,5 +13,8 @@ primitive-fn * arg [Float] -> Float
 primitive-fn / arg [Float] -> Float
 primitive-fn unary-minus -> Float
 
+primitive-fn pow: power [Float] -> Float
+primitive-fn sqrt -> Float
+
 primitive-fn string -> String
 primitive-fn int -> Int

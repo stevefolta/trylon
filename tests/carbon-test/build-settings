@@ -4,4 +4,4 @@ c-flags -DOSX_FINK "-I/sw/include"
 c-flags -g
 
 link-flags "-L/sw/lib" -framework Carbon
-link-flags -lgc -ldl
+link-flags -lgc -ldl -lm
