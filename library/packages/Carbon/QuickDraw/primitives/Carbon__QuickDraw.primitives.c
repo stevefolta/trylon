@@ -55,3 +55,12 @@ obj_ erase_rect_co___Carbon__QuickDraw(obj_ rectObj)
 }
 
 
+obj_ paint_rect_co___Carbon__QuickDraw(obj_ rectObj)
+{
+	Rect rect;
+	SetRect(&rect, IntValue_(rectObj->fields[1]), IntValue_(rectObj->fields[0]),
+	        IntValue_(rectObj->fields[3]), IntValue_(rectObj->fields[2]));
+	PaintRect(&rect);
+}
+
+

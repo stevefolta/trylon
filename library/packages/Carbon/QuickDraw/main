@@ -11,3 +11,4 @@ primitive-fn begin-cg-context: port -> Quartz Context
 primitive-fn end-cg-context: port context: cg-context [Quartz Context]
 
 primitive-fn erase-rect: rect
+primitive-fn paint-rect: rect
