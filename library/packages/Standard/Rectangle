@@ -17,3 +17,21 @@ fn create: tuple
 	this top = tuple at: 1
 	this right = tuple at: 2
 	this bottom = tuple at: 3
+
+
+fn inset-by-h: h v: v
+	left += h
+	right -= h
+	top += v
+	bottom -= v
+
+
+fn top-left
+	return Point new: left y: top
+fn top-right
+	return Point new: right y: top
+fn bottom-left
+	return Point new: left y: bottom
+fn bottom-right
+	return Point new: right y: bottom
+
