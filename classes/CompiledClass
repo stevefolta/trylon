@@ -97,6 +97,16 @@ emit-c-file()
 {
 	stream: OutputStream = new File(".c-sources/" + c-name + ".c").output-stream;
 
+	//---
+	if (lookup-function("verbose")) {
+		reporter.report(name + " has these instance functions:");
+		reporter.indent();
+		for (name: String in instance-functions.keys)
+			reporter.report(name + " (" + instance-functions[name].class.name + ")");
+		reporter.unindent();
+		}
+	//---
+
 	// Header, includes
 	stream.write-line("/* " + c-name + ".c */");
 	stream.write-line();

@@ -1,10 +1,11 @@
-class MessageException
-	superclass Exception
+trylon-class MessageException
 
-	fld the-message
+superclass Exception
 
-	fn create: message
-		the-message = message
+fld the-message
 
-	fn message
-		return the-message
+fn create: message
+	the-message = message
+
+fn message
+	return the-message

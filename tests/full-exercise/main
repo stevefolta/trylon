@@ -1,88 +1,106 @@
-package Main
-	fn main: args
-		print-line: "-- Statement tests --"
+trylon-package Main
 
-		# if
-		if-test: 2
-		if-test: 3
-		if-test: 4
-		print-line: "--"
+fn main: args
+	print-line: "-- Statement tests --"
 
-		# loop
-		i [Int] := 0
-		loop
-			i += 1
-			if i == 4
-				continue
-			print-line: i string
-			if i == 10
-				break
-		print-line: "--"
+	# if
+	if-test: 2
+	if-test: 3
+	if-test: 4
+	print-line: "--"
 
-		# while
-		i = 1
-		while i <= 10
-			print-line: i string
-			i += 1
-		print-line: "--"
+	# loop
+	i [Int] := 0
+	loop
+		i += 1
+		if i == 4
+			continue
+		print-line: i string
+		if i == 10
+			break
+	print-line: "--"
 
-		# for
-		for i in Interval new: 7 to: 9
-			print-line: i string
-		print-line: "--"
+	# while
+	i = 1
+	while i <= 10
+		print-line: i string
+		i += 1
+	print-line: "--"
 
-		# throw/catch
+	# for
+	for i in Interval new: 7 to: 9
+		print-line: i string
+	print-line: "--"
+
+	# throw/catch
+	try
+		throw-test
+	catch Exception
+		print-line: exception message
+	iff test-uncaught-exception
 		try
-			throw-test
+			throw-uncaught-test
 		catch Exception
 			print-line: exception message
-		iff test-uncaught-exception
-			try
-				throw-uncaught-test
-			catch Exception
-				print-line: exception message
-		print-line: "--"
+	print-line: "--"
 
 
-		print-line
-		print-line: "-- Expression Tests --"
+	print-line
+	print-line: "-- Expression Tests --"
 
-		print-line: (3 + 4) string + " == 7"
-		print-line: (3 + 4 * 5) string + " == 23"
-		print-line: (3 == 3) string + " == true"
-		print-line: (3 == 4) string + " == false"
-		x := 3
-		print-line: (9 / x) string + " == 3"
-		print-line: (10 % x) string + " == 1"
-		print-line: "--"
-		print-line: (true || 3) string + " == true"
-		print-line: (false || 3) string + " == 3"
-		print-line: (true && 3) string + " == 3"
-		print-line: (false && 3) string + " == false"
-		print-line: (!false) string + " == true"
-		print-line: "--"
-		print-line: (3 & 7) string + " == 3"
-		print-line: (3 | 7) string + " == 7"
-		print-line: (3 ^ 7) string + " == 4"
-		# print-line: (~-2) string + " == 1"
+	print-line: (3 + 4) string + " == 7"
+	print-line: (3 + 4 * 5) string + " == 23"
+	print-line: (3 == 3) string + " == true"
+	print-line: (3 == 4) string + " == false"
+	x := 3
+	print-line: (9 / x) string + " == 3"
+	print-line: (10 % x) string + " == 1"
+	print-line: "--"
+	print-line: (true || 3) string + " == true"
+	print-line: (false || 3) string + " == 3"
+	print-line: (true && 3) string + " == 3"
+	print-line: (false && 3) string + " == false"
+	print-line: (!false) string + " == true"
+	print-line: "--"
+	print-line: (3 & 7) string + " == 3"
+	print-line: (3 | 7) string + " == 7"
+	print-line: (3 ^ 7) string + " == 4"
+	# print-line: (~-2) string + " == 1"
+
+	print-line
+	print-line: "-- Other Tests --"
+
+	test-obj := PrivateClass new
+	test-obj go
+	PrivatePackage go
 
 
-		#
-		print-line
-		return 0
+	#
+	print-line
+	return 0
 
 
-	fn if-test: arg
-		if arg == 2
-			print-line: "It's two."
-		else if arg == 3
-			print-line: "It's three."
-		else
-			print-line: "It's not two or three."
+fn if-test: arg
+	if arg == 2
+		print-line: "It's two."
+	else if arg == 3
+		print-line: "It's three."
+	else
+		print-line: "It's not two or three."
 
-	fn throw-test
-		throw MessageException new: "Boo!"
+fn throw-test
+	throw MessageException new: "Boo!"
 
-	fn throw-uncaught-test
-		throw 35
+fn throw-uncaught-test
+	throw 35
 
+
+class PrivateClass
+	fn create
+		#...
+	fn go
+		print-line: "Private class worked."
+
+package PrivatePackage
+	fn go
+		print-line: "Private package worked."

@@ -49,7 +49,7 @@ lookup-function(name: String, visited-packages: ObjectMap of Package)
 		if (directory.contains(name) && !directory.entry-is-directory(name)) {
 			class: CompiledClass = add-class(name);
 			parser: Parser(directory[name].as-a(File).contents, this);
-			parser.parse-class();
+			parser.parse-class-file(class);
 			return functions[name];
 			}
 
@@ -163,7 +163,7 @@ add-directory(directory: FileDirectory)
 	if (directory.contains("main")) {
 		if (directory.contains("main")) {
 			parser: Parser(directory["main"].as-a(File).contents, this);
-			parser.parse-package();
+			parser.parse-package-file(this);
 			}
 		}
 }
@@ -194,7 +194,7 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 	for (directory: FileDirectory in directories) {
 		if (directory.contains("main")) {
 			parser: Parser(directory["main"].as-a(File).contents, this);
-			parser.parse-package();
+			parser.parse-package-file(this);
 			}
 		}
 
@@ -261,14 +261,15 @@ emit-code()
 	reporter.report("Generating code for " + name + "...");
 	reporter.indent();
 
-//---
-reporter.report(name + " has these functions:");
-reporter.indent();
-for (name: String in functions.keys) {
-	reporter.report(name + " (" + functions[name].class.name + ")");
-}
-reporter.unindent();
-//---
+	//---
+	if (lookup-function("verbose")) {
+		reporter.report(name + " has these functions:");
+		reporter.indent();
+		for (name: String in functions.keys)
+			reporter.report(name + " (" + functions[name].class.name + ")");
+		reporter.unindent();
+		}
+	//---
 
 	emit-h-file();
 	emit-c-file();

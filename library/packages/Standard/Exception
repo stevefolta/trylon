@@ -1,2 +1,3 @@
-class Exception
-	fn message
+trylon-class Exception
+
+fn message

@@ -1,25 +1,25 @@
-class Int
+trylon-class Int
 
-	class-fn new
-		return Implementation allocate-object: Int with-extra-slots: 1
+class-fn new
+	return Implementation allocate-object: Int with-extra-slots: 1
 
-	primitive-fn == arg [Int] -> Bool
-	primitive-fn != arg [Int] -> Bool
-	primitive-fn < arg [Int] -> Bool
-	primitive-fn > arg [Int] -> Bool
-	primitive-fn <= arg [Int] -> Bool
-	primitive-fn >= arg [Int] -> Bool
+primitive-fn == arg [Int] -> Bool
+primitive-fn != arg [Int] -> Bool
+primitive-fn < arg [Int] -> Bool
+primitive-fn > arg [Int] -> Bool
+primitive-fn <= arg [Int] -> Bool
+primitive-fn >= arg [Int] -> Bool
 
-	primitive-fn + arg [Int] -> Int
-	primitive-fn - arg [Int] -> Int
-	primitive-fn * arg [Int] -> Int
-	primitive-fn / arg [Int] -> Int
-	primitive-fn % arg [Int] -> Int
-	# primitive-fn - -> Int
+primitive-fn + arg [Int] -> Int
+primitive-fn - arg [Int] -> Int
+primitive-fn * arg [Int] -> Int
+primitive-fn / arg [Int] -> Int
+primitive-fn % arg [Int] -> Int
+# primitive-fn - -> Int
 
-	primitive-fn | arg [Int] -> Int
-	primitive-fn & arg [Int] -> Int
-	primitive-fn ^ arg [Int] -> Int
-	# primitive-fn ~ -> Int
+primitive-fn | arg [Int] -> Int
+primitive-fn & arg [Int] -> Int
+primitive-fn ^ arg [Int] -> Int
+# primitive-fn ~ -> Int
 
-	primitive-fn string -> String
+primitive-fn string -> String

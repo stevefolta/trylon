@@ -1,28 +1,29 @@
-class Interval
-	superclass Collection
+trylon-class Interval
 
-	fld start
-	fld stop
-	fld value
+superclass Collection
 
-	fn create: start to: stop
-		this start = start
-		this stop = stop
-		value = start
+fld start
+fld stop
+fld value
 
-	fn create: stop
-		this start = 0
-		this stop = stop
-		value = start
+fn create: start to: stop
+	this start = start
+	this stop = stop
+	value = start
 
-	fn is-done -> Bool
-		return value < stop
+fn create: stop
+	this start = 0
+	this stop = stop
+	value = start
 
-	fn current-item -> Object
-		return value
+fn is-done -> Bool
+	return value < stop
 
-	fn go-forward
-		value += 1
+fn current-item -> Object
+	return value
 
-	fn iterator
-		return this
+fn go-forward
+	value += 1
+
+fn iterator
+	return this

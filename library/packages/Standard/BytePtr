@@ -1,34 +1,34 @@
-class BytePtr
+trylon-class BytePtr
 
-	class-fn new
-		return Implementation allocate-object: BytePtr with-extra-slots: 1
+class-fn new
+	return Implementation allocate-object: BytePtr with-extra-slots: 1
 
-	class-fn new: size
-		return Implementation allocate-bytes: size
+class-fn new: size
+	return Implementation allocate-bytes: size
 
-	primitive-fn == arg [BytePtr] -> Bool
-	primitive-fn != arg [BytePtr] -> Bool
-	primitive-fn < arg [BytePtr] -> Bool
-	primitive-fn > arg [BytePtr] -> Bool
-	primitive-fn <= arg [BytePtr] -> Bool
-	primitive-fn >= arg [BytePtr] -> Bool
+primitive-fn == arg [BytePtr] -> Bool
+primitive-fn != arg [BytePtr] -> Bool
+primitive-fn < arg [BytePtr] -> Bool
+primitive-fn > arg [BytePtr] -> Bool
+primitive-fn <= arg [BytePtr] -> Bool
+primitive-fn >= arg [BytePtr] -> Bool
 
-	primitive-fn + arg [BytePtr] -> BytePtr
-	primitive-fn - arg [BytePtr] -> BytePtr
+primitive-fn + arg [BytePtr] -> BytePtr
+primitive-fn - arg [BytePtr] -> BytePtr
 
-	primitive-fn deref-ptr -> BytePtr
-	primitive-fn deref-int -> Int
-	primitive-fn deref-char -> Char
-	primitive-fn ptr-at: index [Int] -> BytePtr
-	primitive-fn object-at: index [Int] -> Object
-	primitive-fn char-at: index [Int] -> Char
-	primitive-fn int-at: index [Int] -> Int
+primitive-fn deref-ptr -> BytePtr
+primitive-fn deref-int -> Int
+primitive-fn deref-char -> Char
+primitive-fn ptr-at: index [Int] -> BytePtr
+primitive-fn object-at: index [Int] -> Object
+primitive-fn char-at: index [Int] -> Char
+primitive-fn int-at: index [Int] -> Int
 
-	primitive-fn as-object -> Object
+primitive-fn as-object -> Object
 
-	primitive-fn ptr-at: index [Int] set-to: value [BytePtr]
-	primitive-fn object-at: index [Int] set-to: value [Object]
-	primitive-fn char-at: index [Int] set-to: value [Char]
-	primitive-fn int-at: index [Int] set-to: value [Int]
+primitive-fn ptr-at: index [Int] set-to: value [BytePtr]
+primitive-fn object-at: index [Int] set-to: value [Object]
+primitive-fn char-at: index [Int] set-to: value [Char]
+primitive-fn int-at: index [Int] set-to: value [Int]
 
-	primitive-fn copy-from: source [BytePtr] length: length [BytePtr]
+primitive-fn copy-from: source [BytePtr] length: length [BytePtr]

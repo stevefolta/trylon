@@ -1,12 +1,13 @@
-class Bool
-	class-fn new
-		return Implementation allocate-object: Bool with-extra-slots: 1
+trylon-class Bool
 
-	primitive-fn == arg [Bool] -> Bool
-	primitive-fn != arg [Bool] -> Bool
+class-fn new
+	return Implementation allocate-object: Bool with-extra-slots: 1
 
-	primitive-fn | arg [Bool] -> Bool
-	primitive-fn & arg [Bool] -> Bool
-	primitive-fn ^ arg [Bool] -> Bool
+primitive-fn == arg [Bool] -> Bool
+primitive-fn != arg [Bool] -> Bool
 
-	primitive-fn string -> String
+primitive-fn | arg [Bool] -> Bool
+primitive-fn & arg [Bool] -> Bool
+primitive-fn ^ arg [Bool] -> Bool
+
+primitive-fn string -> String

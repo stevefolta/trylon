@@ -55,7 +55,21 @@ require-eol(): String
 
 // Highest level (class or package) parsing
 
-parse-package()
+
+parse-package-file(package: Package)
+{
+	TrylonCompiler.status-reporter.report("Parsing " + package.name + "...");
+	TrylonCompiler.status-reporter.indent();
+
+	parse-package-contents(package);
+	if (current-token.type != 'eof')
+		throw ParseException("Extra stuff in package!", current-token);
+
+	TrylonCompiler.status-reporter.unindent();
+}
+
+
+parse-member-package()
 {
 	// "package"
 	if (!at-name("package"))
@@ -72,19 +86,9 @@ parse-package()
 	TrylonCompiler.status-reporter.report("Parsing " + package-name + "...");
 	TrylonCompiler.status-reporter.indent();
 
-	package: Package = nil;
-
-	// If it's the same name as the current package, assume this is the
-	// "main" file for a pre-existing package.
-	if (context.is-a(Package) && package-name == context.as-a(Package).name)
-		package = context.as-a(Package);
-
-	// Otherwise, we're creating a subpackage, or adding to an existing one.
-	else {
-		package = context.get-subpackage(package-name);
-		if (package == nil)
-			package = context.add-package(package-name, nil).package;
-		}
+	package: Package = context.get-subpackage(package-name);
+	if (package == nil)
+		package = context.add-package(package-name, nil).package;
 
 	while (current-token.type == 'eol')
 		consume-token();
@@ -126,7 +130,10 @@ parse-package-contents(package: Package)
 			}
 
 		else if (name == "package")
-			parse-package();
+			parse-member-package();
+
+		else if (name == "class")
+			parse-member-class();
 
 		else if (name == "iff") {
 			if (check-iff()) {
@@ -142,6 +149,15 @@ parse-package-contents(package: Package)
 					}
 				}
 			}
+
+		else if (name == "trylon-package") {
+			// Should be followed by the name; maybe we should check that, but
+			// for now we're just ignoring the rest of the line.
+			while (current-token.type != 'eol')
+				consume-token();
+			consume-token();
+			}
+
 		else
 			break;
 		}
@@ -150,7 +166,20 @@ parse-package-contents(package: Package)
 }
 
 
-parse-class()
+parse-class-file(class: CompiledClass)
+{
+	TrylonCompiler.status-reporter.report("Parsing " + class.name + "...");
+	TrylonCompiler.status-reporter.indent();
+
+	parse-class-contents(class);
+	if (current-token.type != 'eof')
+		throw ParseException("Extra stuff in class!", current-token);
+
+	TrylonCompiler.status-reporter.unindent();
+}
+
+
+parse-member-class()
 {
 	// "class"
 	if (!at-name("class"))
@@ -199,6 +228,7 @@ parse-class-contents(the-class: CompiledClass)
 		name: String = current-token.text;
 
 		if (name == "fn" || name == "function" ||
+		    name == "method" || name == "primitive-method" ||
 		    name == "primitive-fn" || name == "primitive-function") {
 			function: CompiledFunction = parse-function(true);
 			the-class.add-instance-function(function.name, function);
@@ -229,7 +259,7 @@ parse-class-contents(the-class: CompiledClass)
 			}
 
 		else if (name == "class")
-			parse-class();
+			parse-member-class();
 
 		else if (name == "superclass") {
 			consume-token();
@@ -247,6 +277,14 @@ parse-class-contents(the-class: CompiledClass)
 					consume-token();
 					}
 				}
+			}
+
+		else if (name == "trylon-class") {
+			// Should be followed by the name; maybe we should check that, but
+			// for now we're just ignoring the rest of the line.
+			while (current-token.type != 'eol')
+				consume-token();
+			consume-token();
 			}
 
 		else

@@ -1,15 +1,15 @@
-package Standard
+trylon-package Standard
 
-	primitive-field true [Bool]
-	primitive-field false [Bool]
+primitive-field true [Bool]
+primitive-field false [Bool]
 
-	primitive-field nil
+primitive-field nil
 
-	primitive-fn print: string
+primitive-fn print: string
 
-	fn print-line: line
-		print: line
-		print: "\n"
+fn print-line: line
+	print: line
+	print: "\n"
 
-	fn print-line
-		print: "\n"
+fn print-line
+	print: "\n"

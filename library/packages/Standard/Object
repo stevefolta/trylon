@@ -1,13 +1,13 @@
-class Object
+trylon-class Object
 
-	primitive-fn class -> Class
-	primitive-fn object-ptr -> BytePtr
-	primitive-fn is-a: class -> Bool
+primitive-fn class -> Class
+primitive-fn object-ptr -> BytePtr
+primitive-fn is-a: class -> Bool
 
-	fn string -> String
-		return "a " + class name
+fn string -> String
+	return "a " + class name
 
-	fn same-as: object [Object] -> Bool
-		return this object-ptr == object object-ptr
+fn same-as: object [Object] -> Bool
+	return this object-ptr == object object-ptr
 
-	primitive-fn message-not-understood
+primitive-fn message-not-understood
