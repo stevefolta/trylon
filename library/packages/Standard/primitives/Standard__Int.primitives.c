@@ -36,12 +36,10 @@ obj_ _pc___Standard__Int(obj_ this_, obj_ arg)
 }
 
 
-/***
-obj_ ___Standard__Int(obj_ this_)
+obj_ unary_minus__Standard__Int(obj_ this_)
 {
 	return BuildInt_(-IntValue_(this_));
 }
-***/
 
 
 obj_ _an___Standard__Int(obj_ this_, obj_ arg)

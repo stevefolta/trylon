@@ -362,7 +362,7 @@ parse-function(is-object-function: Bool): CompiledFunction
 
 	// Get the arguments.
 	arguments: List of CompiledField;
-	if (fn-type != 'name') {
+	if (fn-type != 'name' && fn-type != '~') {
 		// Get the first argument.
 		if (current-token.type != 'name') {
 			message: String = "Missing argument name in " + name + ".";
@@ -1126,7 +1126,14 @@ parse-unary-expression(): Expression
 		expr = parse-unary-expression();
 		if (expr == nil)
 			throw ParseException("Expression expected.", current-token);
-		expr = new ObjectCall(token, expr, new List of Expression);
+		name: String;
+		if (token == '+')
+			name = "unary-plus";
+		else if (token == '-')
+			name = "unary-minus";
+		else
+			name = "~";
+		expr = new ObjectCall(name, expr, new List of Expression);
 		}
 
 	else
