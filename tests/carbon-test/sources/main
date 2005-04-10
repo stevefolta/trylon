@@ -10,7 +10,7 @@ class Window
 
 	fn handle-event: event
 		print-line: "Got window event."
-		if event kind == 'draw-content'
+		if event type == 'draw-content'
 			print-line: "...it's a draw-content event."
 			port-rect := this port-bounds
 			Carbon QuickDraw erase-rect: port-rect
@@ -42,7 +42,7 @@ fn main: args
 	Carbon MenuManager insert-menu: menu before: 0
 	Carbon MenuManager draw-menu-bar
 	window := Window new
-	window add-event-class: 'mouse' kind: 'mouse-down'
+	window add-event-class: 'window' kind: 'content-click'
 	window show
 	Carbon EventManager run-application-event-loop
 

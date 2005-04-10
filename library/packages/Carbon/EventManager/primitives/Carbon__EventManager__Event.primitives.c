@@ -8,13 +8,124 @@ typedef struct {
 	UInt32	value;
 } UInt32Spec;
 
-UsingSym_(draw_content)
-UsingSym_(mouse_down)
-static UInt32Spec eventKindSpecs[] = {
-	{ Sym_(draw_content), kEventWindowDrawContent },
+typedef struct {
+	UInt32     	eventClass;
+	UInt32Spec*	kindSpecs;
+} ClassSpec;
+
+UsingSym_(mouse_down)    UsingSym_(mouse_up)  UsingSym_(mouse_moved)
+UsingSym_(mouse_dragged) UsingSym_(mouse_entered)  UsingSym_(mouse_exited)
+UsingSym_(mouse_wheel_moved)
+static UInt32Spec mouseEventSpecs[] = {
 	{ Sym_(mouse_down), kEventMouseDown },
+	{ Sym_(mouse_up), kEventMouseUp },
+	{ Sym_(mouse_moved), kEventMouseMoved },
+	{ Sym_(mouse_dragged), kEventMouseDragged },
+	{ Sym_(mouse_entered), kEventMouseEntered },
+	{ Sym_(mouse_exited), kEventMouseExited },
+	{ Sym_(mouse_wheel_moved), kEventMouseWheelMoved },
 	{ NULL, 0 }
 };
+
+static UInt32Spec keyboardEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec textInputEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec applicationEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec appleEventEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec menuEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+UsingSym_(update)  UsingSym_(draw_content)  UsingSym_(content_click)
+static UInt32Spec windowEventSpecs[] = {
+	{ Sym_(update), kEventWindowUpdate },
+	{ Sym_(draw_content), kEventWindowDrawContent },
+	{ Sym_(content_click), kEventWindowHandleContentClick },
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec controlEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec commandEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec tabletEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec volumeEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec appearanceEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec serviceEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec toolbarEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec toolbarItemEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static UInt32Spec accessibilityEventSpecs[] = {
+	/***/
+	{ NULL, 0 }
+};
+
+static ClassSpec classSpecs[] = {
+	{ kEventClassMouse, mouseEventSpecs },
+	{ kEventClassKeyboard, keyboardEventSpecs },
+	{ kEventClassTextInput, textInputEventSpecs },
+	{ kEventClassApplication, applicationEventSpecs },
+	{ kEventClassAppleEvent, appleEventEventSpecs },
+	{ kEventClassMenu, menuEventSpecs },
+	{ kEventClassWindow, windowEventSpecs },
+	{ kEventClassControl, controlEventSpecs },
+	{ kEventClassCommand, commandEventSpecs },
+	{ kEventClassTablet, tabletEventSpecs },
+	{ kEventClassVolume, volumeEventSpecs },
+	{ kEventClassAppearance, appearanceEventSpecs },
+	{ kEventClassService, serviceEventSpecs },
+	{ kEventClassToolbar, toolbarEventSpecs },
+	{ kEventClassToolbarItem, toolbarItemEventSpecs },
+	{ kEventClassAccessibility, accessibilityEventSpecs },
+	{ NULL, 0 }
+};
+
 
 
 static obj_ SymForValue(UInt32 value, UInt32Spec* specs)
@@ -28,6 +139,23 @@ static obj_ SymForValue(UInt32 value, UInt32Spec* specs)
 }
 
 
+obj_ type__Carbon__EventManager__Event(obj_ this_)
+{
+	/* Find the specs. */
+	ClassSpec* classSpec = classSpecs;
+	UInt32 eventClass = GetEventClass(carbonEvent);
+	UInt32 kind = GetEventKind(carbonEvent);
+	for (; classSpec->kindSpecs; ++classSpec) {
+		if (classSpec->eventClass == eventClass)
+			break;
+		}
+	if (classSpec == NULL)
+		return NULL;
+
+	return SymForValue(kind, classSpec->kindSpecs);
+}
+
+
 obj_ event_class__Carbon__EventManager__Event(obj_ this_)
 {
 	return BuildInt_(GetEventClass(carbonEvent));
@@ -36,7 +164,7 @@ obj_ event_class__Carbon__EventManager__Event(obj_ this_)
 
 obj_ kind__Carbon__EventManager__Event(obj_ this_)
 {
-	return SymForValue(GetEventKind(carbonEvent), eventKindSpecs);
+	return BuildInt_(GetEventKind(carbonEvent));
 }
 
 
