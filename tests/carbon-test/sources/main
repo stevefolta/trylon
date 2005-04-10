@@ -42,6 +42,7 @@ fn main: args
 	Carbon MenuManager insert-menu: menu before: 0
 	Carbon MenuManager draw-menu-bar
 	window := Window new
+	window title = "Test"
 	window add-event-class: 'window' kind: 'content-click'
 	window show
 	Carbon EventManager run-application-event-loop

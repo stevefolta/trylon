@@ -170,6 +170,23 @@ obj_ port_bounds__Carbon__WindowManager__Window(obj_ this_)
 }
 
 
+obj_ title_co___Carbon__WindowManager__Window(obj_ this_, obj_ new_title)
+{
+	CFStringRef titleStr;
+	int numBytes;
+	OSStatus result;
+	UsingMethod_(length)
+
+	numBytes = IntValue_(Call_(length, new_title));
+	titleStr =
+		CFStringCreateWithBytes(NULL, BytePtrValue_(new_title->fields[0]), numBytes,
+		                        kCFStringEncodingUTF8, false);
+	SetWindowTitleWithCFString(CarbonWindow(this_), titleStr);
+	CFRelease(titleStr);
+	return BuildInt_(result);
+}
+
+
 obj_ add_event_class_co_kind_co___Carbon__WindowManager__Window(
 	obj_ this_, obj_ classObj, obj_ kindObj)
 {
