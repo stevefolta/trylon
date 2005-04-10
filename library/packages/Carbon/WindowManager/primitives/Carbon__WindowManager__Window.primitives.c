@@ -74,13 +74,21 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler,
 	extern obj_ allocate_object_co___Standard__Implementation(obj_);
 	extern class_spec_ Carbon__EventManager__Event;
 	extern MethodSpec_ handle_event_co___methods[];
+	obj_ resultObj;
+	OSStatus result;
 
 	obj_ eventObj =
 		allocate_object_co___Standard__Implementation(
 			(obj_) &Carbon__EventManager__Event);
 	eventObj->fields[0] = (obj_) event;
-	Call_(handle_event_co_, (obj_) userData, eventObj);
-	return noErr; 	/***/
+	resultObj = Call_(handle_event_co_, (obj_) userData, eventObj);
+
+	/* Return the result. */
+	if (resultObj && resultObj->class_ == (obj_) &Standard__Int)
+		result = IntValue_(resultObj);
+	else
+		result = noErr;
+	return result;
 }
 
 
@@ -106,7 +114,7 @@ obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ co
 	windowAttrs = kWindowNoAttributes;
 	iterator = Call_(iterator, attributes);
 	while (1) {
-		if (!_Test_(Call_(is_done, iterator)))
+		if (_Test_(Call_(is_done, iterator)))
 			break;
 		attribute = Call_(current_item, iterator);
 		for (index = 0; ; ++index) {
@@ -136,7 +144,9 @@ obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ co
 	result =
 	InstallWindowEventHandler(carbonWindow, eventHandlerUPP,
 	                          sizeof(typeList) / sizeof(EventTypeSpec), typeList,
-	                          this_, NULL);
+	                          this_, (EventHandlerRef*) &this_->fields[1]);
+
+	return NULL;
 }
 
 
@@ -157,6 +167,24 @@ obj_ port_bounds__Carbon__WindowManager__Window(obj_ this_)
 	rectObj->fields[2] = BuildInt_(rect.right);
 	rectObj->fields[3] = BuildInt_(rect.bottom);
 	return rectObj;
+}
+
+
+obj_ add_event_class_co_kind_co___Carbon__WindowManager__Window(
+	obj_ this_, obj_ classObj, obj_ kindObj)
+{
+	extern obj_ value_for_symbol__Carbon__EventManager(obj_);
+	EventTypeSpec typeSpec;
+	OSStatus result;
+
+	typeSpec.eventClass =
+		(UInt32) IntValue_(value_for_symbol__Carbon__EventManager(classObj));
+	typeSpec.eventKind =
+		(UInt32) IntValue_(value_for_symbol__Carbon__EventManager(kindObj));
+
+	result =
+		AddEventTypesToHandler((EventHandlerRef) this_->fields[1], 1, &typeSpec);
+	return BuildInt_(result);
 }
 
 
