@@ -5,8 +5,11 @@ field carbon-window event-handler 	# Don't touch these!
 primitive-fn create: content-rect attributes: attributes
 
 primitive-fn show
+primitive-fn activate: be-active
+primitive-fn select
 primitive-fn port-bounds -> Rectangle
 primitive-fn title: new-title
+primitive-fn modified: new-state
 
 primitive-fn add-event-class: event-class kind: kind
 

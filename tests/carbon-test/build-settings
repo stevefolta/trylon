@@ -1,4 +1,4 @@
-program carbon-test
+program "CarbonTest.app/Contents/MacOS/carbon-test"
 
 c-flags -DOSX_FINK "-I/sw/include"
 c-flags -g -Werror

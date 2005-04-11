@@ -153,6 +153,20 @@ obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ co
 obj_ show__Carbon__WindowManager__Window(obj_ this_)
 {
 	ShowWindow(CarbonWindow(this_));
+	return NULL;
+}
+
+
+obj_ activate_co___Carbon__WindowManager__Window(obj_ this_, obj_ be_active)
+{
+	return BuildInt_( ActivateWindow(CarbonWindow(this_), _Test_(be_active)) );
+}
+
+
+obj_ select__Carbon__WindowManager__Window(obj_ this_)
+{
+	SelectWindow(CarbonWindow(this_));
+	return NULL;
 }
 
 
@@ -184,6 +198,12 @@ obj_ title_co___Carbon__WindowManager__Window(obj_ this_, obj_ new_title)
 	SetWindowTitleWithCFString(CarbonWindow(this_), titleStr);
 	CFRelease(titleStr);
 	return BuildInt_(result);
+}
+
+
+obj_ modified_co___Carbon__WindowManager__Window(obj_ this_, obj_ new_state)
+{
+	return BuildInt_( SetWindowModified(CarbonWindow(this_), _Test_(new_state)) );
 }
 
 

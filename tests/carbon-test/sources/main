@@ -45,5 +45,6 @@ fn main: args
 	window title = "Test"
 	window add-event-class: 'window' kind: 'content-click'
 	window show
+	window select
 	Carbon EventManager run-application-event-loop
 

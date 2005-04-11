@@ -1,0 +1,4 @@
+#!/bin/bash
+
+CarbonTest.app/Contents/MacOS/carbon-test
+
