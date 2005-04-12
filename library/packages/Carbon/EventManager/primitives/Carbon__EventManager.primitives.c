@@ -21,6 +21,8 @@ UsingSym_(draw_content)  UsingSym_(update)  UsingSym_(content_click)
 UsingSym_(mouse_down)  UsingSym_(mouse_up)  UsingSym_(mouse_moved)
 UsingSym_(mouse_dragged)  UsingSym_(mouse_entered)  UsingSym_(mouse_exited)
 UsingSym_(mouse_wheel_moved)
+UsingSym_(mouse_location)  UsingSym_(mouse_button)  UsingSym_(key_modifiers)
+UsingSym_(click_count)
 struct Carbon__EventManager__ValueSpec {
 	obj_  	symbol;
 	UInt32	value;
@@ -31,17 +33,21 @@ static struct Carbon__EventManager__ValueSpec valueSpecs[] = {
 	{ Sym_(appearance), kEventClassAppearance },
 	{ Sym_(apple_event), kEventClassAppleEvent },
 	{ Sym_(application), kEventClassApplication },
+	{ Sym_(click_count), kEventParamClickCount },
 	{ Sym_(command), kEventClassCommand },
 	{ Sym_(content_click), kEventWindowHandleContentClick },
 	{ Sym_(control), kEventClassControl },
 	{ Sym_(draw_content), kEventWindowDrawContent },
+	{ Sym_(key_modifiers), kEventParamKeyModifiers },
 	{ Sym_(keyboard), kEventClassKeyboard },
 	{ Sym_(menu), kEventClassMenu },
 	{ Sym_(mouse), kEventClassMouse },
+	{ Sym_(mouse_button), kEventParamMouseButton },
 	{ Sym_(mouse_down), kEventMouseDown },
 	{ Sym_(mouse_dragged), kEventMouseDragged },
 	{ Sym_(mouse_entered), kEventMouseEntered },
 	{ Sym_(mouse_exited), kEventMouseExited },
+	{ Sym_(mouse_location), kEventParamMouseLocation },
 	{ Sym_(mouse_moved), kEventMouseMoved },
 	{ Sym_(mouse_up), kEventMouseUp },
 	{ Sym_(mouse_wheel_moved), kEventMouseWheelMoved },

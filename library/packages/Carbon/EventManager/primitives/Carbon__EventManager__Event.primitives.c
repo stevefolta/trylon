@@ -1,6 +1,8 @@
 #include "Trylon_.h"
 #include <Carbon/Carbon.h>
 
+extern obj_ value_for_symbol__Carbon__EventManager(obj_ symbol);
+
 #define carbonEvent	((EventRef) this_->fields[0])
 
 typedef struct {
@@ -173,6 +175,10 @@ obj_ uint_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter)
 	UInt32 value;
 	OSStatus result;
 
+	/* Allow symbols for the parameter */
+	if (parameter->class_ == (obj_) &Standard__Symbol)
+		parameter = value_for_symbol__Carbon__EventManager(parameter);
+
 	result =
 		GetEventParameter(carbonEvent, IntValue_(parameter), typeUInt32, NULL,
 		                  sizeof(UInt32), NULL, &value);
@@ -189,6 +195,10 @@ obj_ point_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter
 	OSStatus result;
 	extern obj_ new_co_y_co___Standard__Point(obj_, obj_);
 
+	/* Allow symbols for the parameter */
+	if (parameter->class_ == (obj_) &Standard__Symbol)
+		parameter = value_for_symbol__Carbon__EventManager(parameter);
+
 	result =
 		GetEventParameter(carbonEvent, IntValue_(parameter), typeQDPoint, NULL,
 		                  sizeof(Point), NULL, &value);
@@ -204,6 +214,10 @@ obj_ rect_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter)
 	obj_ rectObj;
 	OSStatus result;
 	extern obj_ new_co_top_co_right_co_bottom_co___Standard__Rectangle(obj_, obj_, obj_, obj_);
+
+	/* Allow symbols for the parameter */
+	if (parameter->class_ == (obj_) &Standard__Symbol)
+		parameter = value_for_symbol__Carbon__EventManager(parameter);
 
 	result =
 		GetEventParameter(carbonEvent, IntValue_(parameter), typeQDRectangle, NULL,

@@ -42,4 +42,10 @@ fn used-symbols
 	'update'
 	'draw-content'
 	'content-click'
+	
+	# Parameter types
+	'mouse-location'
+	'mouse-button'
+	'key-modifiers'
+	'click-count'
 
