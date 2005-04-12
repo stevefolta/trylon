@@ -22,7 +22,7 @@ UsingSym_(mouse_down)  UsingSym_(mouse_up)  UsingSym_(mouse_moved)
 UsingSym_(mouse_dragged)  UsingSym_(mouse_entered)  UsingSym_(mouse_exited)
 UsingSym_(mouse_wheel_moved)
 UsingSym_(mouse_location)  UsingSym_(mouse_button)  UsingSym_(key_modifiers)
-UsingSym_(click_count)
+UsingSym_(click_count)  UsingSym_(window_mouse_location)
 struct Carbon__EventManager__ValueSpec {
 	obj_  	symbol;
 	UInt32	value;
@@ -58,7 +58,8 @@ static struct Carbon__EventManager__ValueSpec valueSpecs[] = {
 	{ Sym_(toolbar_item), kEventClassToolbarItem },
 	{ Sym_(update), kEventWindowUpdate },
 	{ Sym_(volume), kEventClassVolume },
-	{ Sym_(window), kEventClassWindow }
+	{ Sym_(window), kEventClassWindow },
+	{ Sym_(window_mouse_location), kEventParamWindowMouseLocation }
 };
 #define numValueSpecs 	\
 	(sizeof(valueSpecs) / sizeof(struct Carbon__EventManager__ValueSpec))

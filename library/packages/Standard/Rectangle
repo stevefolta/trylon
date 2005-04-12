@@ -47,9 +47,14 @@ fn contains: what -> Bool
 	else if what is-a: Point
 		if what x < left || what x > right
 			return false
-		if what y < left || what y > right
+		if what y < top || what y > bottom
 			return false
 		return true
 	
 	return false
 
+
+fn string
+	return 	--
+		"(" + left string + ", " + top string + ", " + 	--
+		right string + ", " + bottom string + ")"

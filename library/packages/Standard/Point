@@ -8,3 +8,7 @@ fn create: x y: y
 	this x = x
 	this y = y
 
+
+fn string
+	return "(" + x string + ", " + y string + ")"
+

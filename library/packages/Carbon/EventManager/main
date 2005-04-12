@@ -45,6 +45,7 @@ fn used-symbols
 	
 	# Parameter types
 	'mouse-location'
+	'window-mouse-location'
 	'mouse-button'
 	'key-modifiers'
 	'click-count'
