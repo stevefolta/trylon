@@ -47,4 +47,5 @@ fn main: args
 	window show
 	window select
 	Carbon EventManager run-application-event-loop
+	return 0
 
