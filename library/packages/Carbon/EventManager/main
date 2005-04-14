@@ -8,10 +8,12 @@ class MouseTrackingResult
 	fields track-result point
 primitive-fn track-mouse-location: port
 
+primitive-fn post-event-to-current-queue: event
 
 # Helpers for primitives
 
 primitive-fn value-for-symbol: symbol -> Int
+primitive-fn four-char-value: value -> Int
 
 fn used-symbols
 	# These are the symbols used by the primitive functions.

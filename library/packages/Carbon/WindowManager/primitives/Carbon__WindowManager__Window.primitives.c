@@ -224,14 +224,14 @@ obj_ end_update__Carbon__WindowManager__Window(obj_ this_)
 obj_ add_event_class_co_kind_co___Carbon__WindowManager__Window(
 	obj_ this_, obj_ classObj, obj_ kindObj)
 {
-	extern obj_ value_for_symbol__Carbon__EventManager(obj_);
+	extern obj_ four_char_value__Carbon__EventManager(obj_);
 	EventTypeSpec typeSpec;
 	OSStatus result;
 
 	typeSpec.eventClass =
-		(UInt32) IntValue_(value_for_symbol__Carbon__EventManager(classObj));
+		(UInt32) IntValue_(four_char_value__Carbon__EventManager(classObj));
 	typeSpec.eventKind =
-		(UInt32) IntValue_(value_for_symbol__Carbon__EventManager(kindObj));
+		(UInt32) IntValue_(four_char_value__Carbon__EventManager(kindObj));
 
 	result =
 		AddEventTypesToHandler((EventHandlerRef) this_->fields[1], 1, &typeSpec);

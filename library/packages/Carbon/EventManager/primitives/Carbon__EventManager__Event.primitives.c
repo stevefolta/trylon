@@ -160,6 +160,34 @@ static obj_ SymForValue(UInt32 value, UInt32Spec* specs)
 }
 
 
+static int ParamValue(obj_ parameter)
+{
+	extern obj_ four_char_value__Carbon__EventManager(obj_);
+
+	return IntValue_(four_char_value__Carbon__EventManager(parameter));
+}
+
+
+
+obj_ create_co_kind_co___Carbon__EventManager__Event(
+	obj_ this_, obj_ event_class, obj_ kind)
+{
+	OSStatus result;
+
+	result =
+		CreateEvent(NULL, ParamValue(event_class), ParamValue(kind), 0,
+	            	kEventAttributeNone, (EventRef*) &this_->fields[0]);
+	return NULL;
+}
+
+
+obj_ release__Carbon__EventManager__Event(obj_ this_)
+{
+	ReleaseEvent(carbonEvent);
+	return NULL;
+}
+
+
 obj_ type__Carbon__EventManager__Event(obj_ this_)
 {
 	/* Find the specs. */
@@ -186,30 +214,6 @@ obj_ event_class__Carbon__EventManager__Event(obj_ this_)
 obj_ kind__Carbon__EventManager__Event(obj_ this_)
 {
 	return BuildInt_(GetEventKind(carbonEvent));
-}
-
-
-static int ParamValue(obj_ parameter)
-{
-	UsingMethod_(length)  UsingMethod_(start)
-
-	if (parameter->class_ == (obj_) &Standard__Symbol)
-		parameter = value_for_symbol__Carbon__EventManager(parameter);
-
-	else if (parameter->class_ == (obj_) &Standard__String) {
-		int length = IntValue_(Call_(length, parameter));
-		if (length == 4) {
-			int value;
-			char* p = BytePtrValue_(Call_(start, parameter));
-			for (; length > 0; --length) {
-				value <<= 8;
-				value |= *p++;
-				}
-			return value;
-			}
-		}
-
-	return IntValue_(parameter);
 }
 
 

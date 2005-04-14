@@ -144,6 +144,18 @@ obj_ track_mouse_location_co___Carbon__EventManager(obj_ port)
 }
 
 
+obj_ post_event_to_current_queue_co___Carbon__EventManager(obj_ event)
+{
+	OSStatus result;
+
+	result =
+		PostEventToQueue(GetCurrentEventQueue(), (EventRef) event->fields[0],
+	                	 kEventPriorityStandard);
+	return BuildInt_(result);
+}
+
+
+
 obj_ value_for_symbol__Carbon__EventManager(obj_ symbol)
 {
 	/* Use a binary search */
@@ -163,6 +175,33 @@ obj_ value_for_symbol__Carbon__EventManager(obj_ symbol)
 		}
 
 	return NULL;
+}
+
+
+obj_ four_char_value__Carbon__EventManager(obj_ value)
+{
+	UsingMethod_(length)  UsingMethod_(start)
+
+	if (value->class_ == (obj_) &Standard__Symbol)
+		value = value_for_symbol__Carbon__EventManager(value);
+
+	else if (value->class_ == (obj_) &Standard__String) {
+		int length = IntValue_(Call_(length, value));
+		if (length == 4) {
+			int intValue = 0;
+			char* p = BytePtrValue_(Call_(start, value));
+			for (; length > 0; --length) {
+				intValue <<= 8;
+				intValue |= *p++;
+				}
+			value = BuildInt_(intValue);
+			}
+		}
+
+	else if (value->class_ != (obj_) &Standard__Int)
+		return NULL;
+
+	return value;
 }
 
 

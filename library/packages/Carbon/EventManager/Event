@@ -2,6 +2,10 @@ trylon-class Event
 
 field primitive-event 	# Don't touch this.
 
+
+primitive-fn create: event-class kind: kind
+primitive-fn release
+
 primitive-fn type -> Symbol 	--
 	# Our special combo of class & kind as a handy Symbol
 
