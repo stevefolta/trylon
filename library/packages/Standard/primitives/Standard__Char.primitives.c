@@ -68,6 +68,11 @@ obj_ string__Standard__Char(obj_ this_)
 }
 
 
+obj_ int___Standard__Char(obj_ this_)
+{
+	return BuildInt_(value_(this_));
+}
+
 
 
 /*
