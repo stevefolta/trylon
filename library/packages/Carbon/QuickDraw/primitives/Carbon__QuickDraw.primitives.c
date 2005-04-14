@@ -2,8 +2,36 @@
 #include <Carbon/Carbon.h>
 
 extern obj_ allocate_object_co___Standard__Implementation(obj_);
+extern obj_ new_co_y_co___Standard__Point(obj_, obj_);
 extern class_spec_ Carbon__QuickDraw__Port;
 extern class_spec_ Carbon__Quartz__Context;
+UsingMethod_(x)  UsingMethod_(y)
+
+
+obj_ global_to_local_co___Carbon__QuickDraw__Port(obj_ this_, obj_ point)
+{
+	Point carbonPoint;
+
+	carbonPoint.h = IntValue_(Call_(x, point));
+	carbonPoint.v = IntValue_(Call_(y, point));
+	QDGlobalToLocalPoint((CGrafPtr) this_->fields[0], &carbonPoint);
+	return
+		new_co_y_co___Standard__Point(
+			BuildInt_(carbonPoint.h), BuildInt_(carbonPoint.v));
+}
+
+
+obj_ local_to_global_co___Carbon__QuickDraw__Port(obj_ this_, obj_ point)
+{
+	Point carbonPoint;
+
+	carbonPoint.h = IntValue_(Call_(x, point));
+	carbonPoint.v = IntValue_(Call_(y, point));
+	QDGlobalToLocalPoint((CGrafPtr) this_->fields[0], &carbonPoint);
+	return
+		new_co_y_co___Standard__Point(
+			BuildInt_(carbonPoint.h), BuildInt_(carbonPoint.v));
+}
 
 
 obj_ port__Carbon__QuickDraw()

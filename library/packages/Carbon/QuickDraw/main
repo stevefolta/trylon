@@ -2,6 +2,9 @@ trylon-package QuickDraw
 
 class Port
 	field primitive-port 	# Don't touch this!
+	
+	primitive-fn global-to-local: point -> Point
+	primitive-fn local-to-global: point -> Point
 
 primitive-fn port
 primitive-fn port: new-port
