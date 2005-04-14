@@ -1,28 +1,18 @@
 #include "Trylon_.h"
 #include <Carbon/Carbon.h>
 
-UsingSym_(mouse)
-UsingSym_(keyboard)
-UsingSym_(text_input)
-UsingSym_(application)
-UsingSym_(apple_event)
-UsingSym_(menu)
-UsingSym_(window)
-UsingSym_(control)
-UsingSym_(command)
-UsingSym_(tablet)
-UsingSym_(volume)
-UsingSym_(appearance)
-UsingSym_(service)
-UsingSym_(toolbar)
-UsingSym_(toolbar_item)
-UsingSym_(accessibility)
+UsingSym_(mouse)  UsingSym_(keyboard)  UsingSym_(text_input)
+UsingSym_(application)  UsingSym_(apple_event)  UsingSym_(menu)
+UsingSym_(window)  UsingSym_(control)  UsingSym_(command)  UsingSym_(tablet)
+UsingSym_(volume)  UsingSym_(appearance)  UsingSym_(service)
+UsingSym_(toolbar)  UsingSym_(toolbar_item)  UsingSym_(accessibility)
 UsingSym_(draw_content)  UsingSym_(update)  UsingSym_(content_click)
 UsingSym_(mouse_down)  UsingSym_(mouse_up)  UsingSym_(mouse_moved)
 UsingSym_(mouse_dragged)  UsingSym_(mouse_entered)  UsingSym_(mouse_exited)
 UsingSym_(mouse_wheel_moved)
 UsingSym_(mouse_location)  UsingSym_(mouse_button)  UsingSym_(key_modifiers)
 UsingSym_(click_count)  UsingSym_(window_mouse_location)
+UsingSym_(primary)  UsingSym_(secondary)  UsingSym_(tertiary)
 struct Carbon__EventManager__ValueSpec {
 	obj_  	symbol;
 	UInt32	value;
@@ -65,6 +55,22 @@ static struct Carbon__EventManager__ValueSpec valueSpecs[] = {
 	(sizeof(valueSpecs) / sizeof(struct Carbon__EventManager__ValueSpec))
 
 
+typedef struct {
+	obj_  	symbol;
+	UInt32	value;
+} UInt32Spec;
+
+static obj_ SymForValue(UInt32 value, UInt32Spec* specs)
+{
+	UInt32Spec* spec = specs;
+	for (; spec->symbol; ++spec) {
+		if (spec->value == value)
+			return spec->symbol;
+		}
+	return NULL;
+}
+
+
 obj_ event_not_handled__Carbon__EventManager(void)
 {
 	return BuildInt_(eventNotHandledErr);
@@ -75,6 +81,54 @@ obj_ run_application_event_loop__Carbon__EventManager(void)
 {
 	RunApplicationEventLoop();
 	return NULL;
+}
+
+
+obj_ track_mouse_location_co___Carbon__EventManager(obj_ port)
+{
+	GrafPtr qdPort;
+	Point mousePoint;
+	MouseTrackingResult result;
+	obj_ pointObj, resultObj;
+	OSStatus status;
+	UsingMethod_(track_result_co_)
+	UsingMethod_(point_co_)
+	extern obj_ new_co_y_co___Standard__Point(obj_, obj_);
+	extern obj_ allocate_object_co___Standard__Implementation(obj_);
+	extern class_spec_ Carbon__EventManager__MouseTrackingResult;
+
+	UsingSym_(key_modifiers_changed)  UsingSym_(user_cancelled)
+	UsingSym_(timed_out)
+	static UInt32Spec trackingResultSpecs[] = {
+		{ Sym_(mouse_down), kMouseTrackingMouseDown },
+		{ Sym_(mouse_up), kMouseTrackingMouseUp },
+		{ Sym_(mouse_exited), kMouseTrackingMouseExited },
+		{ Sym_(mouse_entered), kMouseTrackingMouseEntered },
+		{ Sym_(mouse_dragged), kMouseTrackingMouseDragged },
+		{ Sym_(key_modifiers_changed), kMouseTrackingKeyModifiersChanged },
+		{ Sym_(user_cancelled), kMouseTrackingUserCancelled },
+		{ Sym_(timed_out), kMouseTrackingTimedOut },
+		{ Sym_(mouse_moved), kMouseTrackingMouseMoved },
+		{ NULL, 0 }
+	};
+
+	if (port == NULL)
+		qdPort = NULL;
+	else
+		qdPort = (GrafPtr) port->fields[0];
+
+	status = TrackMouseLocation(qdPort, &mousePoint, &result);
+	if (status != noErr)
+		return NULL;
+	pointObj =
+		new_co_y_co___Standard__Point(
+			BuildInt_(mousePoint.h), BuildInt_(mousePoint.v));
+	resultObj =
+		allocate_object_co___Standard__Implementation(
+			(obj_) &Carbon__EventManager__MouseTrackingResult);
+	Call_(track_result_co_, resultObj, SymForValue(result, trackingResultSpecs));
+	Call_(point_co_, resultObj, pointObj);
+	return resultObj;
 }
 
 

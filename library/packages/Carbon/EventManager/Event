@@ -11,5 +11,6 @@ primitive-fn kind -> Int
 primitive-fn uint-parameter: parameter [Int] -> Int
 primitive-fn point-parameter: parameter [Int] -> Point
 primitive-fn rect-parameter: parameter [Int] -> Rectangle
+primitive-fn mouse-button-parameter: parameter -> Symbol
 
 

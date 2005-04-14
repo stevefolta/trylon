@@ -129,6 +129,15 @@ static ClassSpec classSpecs[] = {
 };
 
 
+UsingSym_(primary)  UsingSym_(secondary)  UsingSym_(tertiary)
+static UInt32Spec mouseButtonSpecs[] = {
+	{ Sym_(primary), kEventMouseButtonPrimary },
+	{ Sym_(secondary), kEventMouseButtonSecondary },
+	{ Sym_(tertiary), kEventMouseButtonTertiary },
+	{ NULL, 0 }
+};
+
+
 
 static obj_ SymForValue(UInt32 value, UInt32Spec* specs)
 {
@@ -228,6 +237,25 @@ obj_ rect_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter)
 		new_co_top_co_right_co_bottom_co___Standard__Rectangle(
 			BuildInt_(value.left), BuildInt_(value.top),
 			BuildInt_(value.right), BuildInt_(value.bottom));
+}
+
+
+obj_ mouse_button_parameter_co___Carbon__EventManager__Event(
+	obj_ this_, obj_ parameter)
+{
+	EventMouseButton button;
+	OSStatus result;
+
+	/* Allow symbols for the parameter */
+	if (parameter->class_ == (obj_) &Standard__Symbol)
+		parameter = value_for_symbol__Carbon__EventManager(parameter);
+
+	result =
+		GetEventParameter(carbonEvent, IntValue_(parameter), typeMouseButton, NULL,
+		                  sizeof(EventMouseButton), NULL, &button);
+	if (result != noErr)
+		return NULL;
+	return SymForValue(button, mouseButtonSpecs);
 }
 
 

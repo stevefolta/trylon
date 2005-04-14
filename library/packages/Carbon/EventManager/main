@@ -4,6 +4,10 @@ primitive-fn event-not-handled -> Int
 
 primitive-fn run-application-event-loop
 
+class MouseTrackingResult
+	fields track-result point
+primitive-fn track-mouse-location: port
+
 
 # Helpers for primitives
 
@@ -49,4 +53,15 @@ fn used-symbols
 	'mouse-button'
 	'key-modifiers'
 	'click-count'
+	
+	# Parameter values
+	'primary'
+	'secondary'
+	'tertiary'
+	
+	# Mouse tracking results
+	# Many are already event kinds above.
+	'key-modifiers-changed'
+	'user-cancelled'
+	'timed-out'
 
