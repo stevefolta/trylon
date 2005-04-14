@@ -207,6 +207,20 @@ obj_ modified_co___Carbon__WindowManager__Window(obj_ this_, obj_ new_state)
 }
 
 
+obj_ begin_update__Carbon__WindowManager__Window(obj_ this_)
+{
+	BeginUpdate(CarbonWindow(this_));
+	return NULL;
+}
+
+
+obj_ end_update__Carbon__WindowManager__Window(obj_ this_)
+{
+	EndUpdate(CarbonWindow(this_));
+	return NULL;
+}
+
+
 obj_ add_event_class_co_kind_co___Carbon__WindowManager__Window(
 	obj_ this_, obj_ classObj, obj_ kindObj)
 {

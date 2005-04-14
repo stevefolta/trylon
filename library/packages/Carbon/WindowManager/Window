@@ -11,6 +11,9 @@ primitive-fn port-bounds -> Rectangle
 primitive-fn title: new-title
 primitive-fn modified: new-state
 
+primitive-fn begin-update
+primitive-fn end-update
+
 primitive-fn add-event-class: event-class kind: kind
 
 fn handle-event: event [EventManager Event]

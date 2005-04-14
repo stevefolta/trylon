@@ -41,8 +41,10 @@ obj_ begin_cg_context_co___Carbon__QuickDraw(obj_ portObj)
 
 obj_ end_cg_context_co_context_co___Carbon__QuickDraw(obj_ portObj, obj_ contextObj)
 {
-	QDEndCGContext((CGrafPtr) portObj, (CGContextRef*) &contextObj->fields[0]);
-	return NULL;
+	OSStatus result =
+		QDEndCGContext((CGrafPtr) portObj->fields[0],
+		               (CGContextRef*) &contextObj->fields[0]);
+	return BuildInt_(result);
 }
 
 
