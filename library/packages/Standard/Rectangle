@@ -18,6 +18,14 @@ fn create: tuple
 	this right = tuple at: 2
 	this bottom = tuple at: 3
 
+fn copy
+	return Rectangle new: left top: top right: right bottom: bottom
+
+
+fn width
+	return right - left
+fn height
+	return bottom - top
 
 fn inset-by-h: h v: v
 	left += h
