@@ -189,17 +189,37 @@ obj_ kind__Carbon__EventManager__Event(obj_ this_)
 }
 
 
+static int ParamValue(obj_ parameter)
+{
+	UsingMethod_(length)  UsingMethod_(start)
+
+	if (parameter->class_ == (obj_) &Standard__Symbol)
+		parameter = value_for_symbol__Carbon__EventManager(parameter);
+
+	else if (parameter->class_ == (obj_) &Standard__String) {
+		int length = IntValue_(Call_(length, parameter));
+		if (length == 4) {
+			int value;
+			char* p = BytePtrValue_(Call_(start, parameter));
+			for (; length > 0; --length) {
+				value <<= 8;
+				value |= *p++;
+				}
+			return value;
+			}
+		}
+
+	return IntValue_(parameter);
+}
+
+
 obj_ uint_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter)
 {
 	UInt32 value;
 	OSStatus result;
 
-	/* Allow symbols for the parameter */
-	if (parameter->class_ == (obj_) &Standard__Symbol)
-		parameter = value_for_symbol__Carbon__EventManager(parameter);
-
 	result =
-		GetEventParameter(carbonEvent, IntValue_(parameter), typeUInt32, NULL,
+		GetEventParameter(carbonEvent, ParamValue(parameter), typeUInt32, NULL,
 		                  sizeof(UInt32), NULL, &value);
 	if (result != noErr)
 		return NULL;
@@ -214,12 +234,8 @@ obj_ point_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter
 	OSStatus result;
 	extern obj_ new_co_y_co___Standard__Point(obj_, obj_);
 
-	/* Allow symbols for the parameter */
-	if (parameter->class_ == (obj_) &Standard__Symbol)
-		parameter = value_for_symbol__Carbon__EventManager(parameter);
-
 	result =
-		GetEventParameter(carbonEvent, IntValue_(parameter), typeQDPoint, NULL,
+		GetEventParameter(carbonEvent, ParamValue(parameter), typeQDPoint, NULL,
 		                  sizeof(Point), NULL, &value);
 	if (result != noErr)
 		return NULL;
@@ -234,12 +250,8 @@ obj_ rect_parameter_co___Carbon__EventManager__Event(obj_ this_, obj_ parameter)
 	OSStatus result;
 	extern obj_ new_co_top_co_right_co_bottom_co___Standard__Rectangle(obj_, obj_, obj_, obj_);
 
-	/* Allow symbols for the parameter */
-	if (parameter->class_ == (obj_) &Standard__Symbol)
-		parameter = value_for_symbol__Carbon__EventManager(parameter);
-
 	result =
-		GetEventParameter(carbonEvent, IntValue_(parameter), typeQDRectangle, NULL,
+		GetEventParameter(carbonEvent, ParamValue(parameter), typeQDRectangle, NULL,
 		                  sizeof(Rect), NULL, &value);
 	if (result != noErr)
 		return NULL;
@@ -256,12 +268,8 @@ obj_ mouse_button_parameter_co___Carbon__EventManager__Event(
 	EventMouseButton button;
 	OSStatus result;
 
-	/* Allow symbols for the parameter */
-	if (parameter->class_ == (obj_) &Standard__Symbol)
-		parameter = value_for_symbol__Carbon__EventManager(parameter);
-
 	result =
-		GetEventParameter(carbonEvent, IntValue_(parameter), typeMouseButton, NULL,
+		GetEventParameter(carbonEvent, ParamValue(parameter), typeMouseButton, NULL,
 		                  sizeof(EventMouseButton), NULL, &button);
 	if (result != noErr)
 		return NULL;
@@ -281,13 +289,9 @@ obj_ unicode_text_parameter_co___Carbon__EventManager__Event(
 	OSStatus result;
 	extern obj_ new_co_to_co___Standard__String(obj_, obj_);
 
-	/* Allow symbols for the parameter */
-	if (parameter->class_ == (obj_) &Standard__Symbol)
-		parameter = value_for_symbol__Carbon__EventManager(parameter);
-
 	/* Get the text */
 	result =
-		GetEventParameter(carbonEvent, IntValue_(parameter), typeUnicodeText, NULL,
+		GetEventParameter(carbonEvent, ParamValue(parameter), typeUnicodeText, NULL,
 		                  maxUnicodeTextSize, &size, unichars);
 	if (result != noErr)
 		return NULL;
