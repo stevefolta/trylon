@@ -46,6 +46,13 @@ fn used-symbols
 	'update'
 	'draw-content'
 	'content-click'
+	'update-active-input-area'
+	'unicode-for-key-event'
+	'offset-to-pos'
+	'pos-to-offset'
+	'show-hide-bottom-window'
+	'get-selected-text'
+	'unicode-text'
 	
 	# Parameter types
 	'mouse-location'
@@ -53,6 +60,7 @@ fn used-symbols
 	'mouse-button'
 	'key-modifiers'
 	'click-count'
+	'send-text'
 	
 	# Parameter values
 	'primary'

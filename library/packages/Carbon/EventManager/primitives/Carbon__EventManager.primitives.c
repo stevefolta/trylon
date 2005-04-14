@@ -12,11 +12,15 @@ UsingSym_(mouse_dragged)  UsingSym_(mouse_entered)  UsingSym_(mouse_exited)
 UsingSym_(mouse_wheel_moved)
 UsingSym_(mouse_location)  UsingSym_(mouse_button)  UsingSym_(key_modifiers)
 UsingSym_(click_count)  UsingSym_(window_mouse_location)
-UsingSym_(primary)  UsingSym_(secondary)  UsingSym_(tertiary)
+UsingSym_(update_active_input_area)  UsingSym_(unicode_for_key_event)
+UsingSym_(offset_to_pos)  UsingSym_(pos_to_offset)
+UsingSym_(show_hide_bottom_window)  UsingSym_(get_selected_text)
+UsingSym_(unicode_text)  UsingSym_(send_text)
 struct Carbon__EventManager__ValueSpec {
 	obj_  	symbol;
 	UInt32	value;
 };
+
 /* KEEP THIS SORTED! */
 static struct Carbon__EventManager__ValueSpec valueSpecs[] = {
 	{ Sym_(accessibility), kEventClassAccessibility },
@@ -28,6 +32,7 @@ static struct Carbon__EventManager__ValueSpec valueSpecs[] = {
 	{ Sym_(content_click), kEventWindowHandleContentClick },
 	{ Sym_(control), kEventClassControl },
 	{ Sym_(draw_content), kEventWindowDrawContent },
+	{ Sym_(get_selected_text), kEventTextInputGetSelectedText },
 	{ Sym_(key_modifiers), kEventParamKeyModifiers },
 	{ Sym_(keyboard), kEventClassKeyboard },
 	{ Sym_(menu), kEventClassMenu },
@@ -41,12 +46,19 @@ static struct Carbon__EventManager__ValueSpec valueSpecs[] = {
 	{ Sym_(mouse_moved), kEventMouseMoved },
 	{ Sym_(mouse_up), kEventMouseUp },
 	{ Sym_(mouse_wheel_moved), kEventMouseWheelMoved },
+	{ Sym_(offset_to_pos), kEventTextInputOffsetToPos },
+	{ Sym_(pos_to_offset), kEventTextInputPosToOffset },
+	{ Sym_(send_text), kEventParamTextInputSendText },
 	{ Sym_(service), kEventClassService },
+	{ Sym_(show_hide_bottom_window), kEventTextInputShowHideBottomWindow },
 	{ Sym_(tablet), kEventClassTablet },
 	{ Sym_(text_input), kEventClassTextInput },
 	{ Sym_(toolbar), kEventClassToolbar },
 	{ Sym_(toolbar_item), kEventClassToolbarItem },
+	{ Sym_(unicode_for_key_event), kEventTextInputUnicodeForKeyEvent },
+	{ Sym_(unicode_text), kEventTextInputUnicodeText },
 	{ Sym_(update), kEventWindowUpdate },
+	{ Sym_(update_active_input_area), kEventTextInputUpdateActiveInputArea },
 	{ Sym_(volume), kEventClassVolume },
 	{ Sym_(window), kEventClassWindow },
 	{ Sym_(window_mouse_location), kEventParamWindowMouseLocation }

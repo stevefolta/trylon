@@ -34,8 +34,18 @@ static UInt32Spec keyboardEventSpecs[] = {
 	{ NULL, 0 }
 };
 
+UsingSym_(update_active_input_area)  UsingSym_(unicode_for_key_event)
+UsingSym_(offset_to_pos)  UsingSym_(pos_to_offset)
+UsingSym_(show_hide_bottom_window)  UsingSym_(get_selected_text)
+UsingSym_(unicode_text)
 static UInt32Spec textInputEventSpecs[] = {
-	/***/
+	{ Sym_(get_selected_text), kEventTextInputGetSelectedText },
+	{ Sym_(offset_to_pos), kEventTextInputOffsetToPos },
+	{ Sym_(pos_to_offset), kEventTextInputPosToOffset },
+	{ Sym_(show_hide_bottom_window), kEventTextInputShowHideBottomWindow },
+	{ Sym_(unicode_for_key_event), kEventTextInputUnicodeForKeyEvent },
+	{ Sym_(unicode_text), kEventTextInputUnicodeText },
+	{ Sym_(update_active_input_area), kEventTextInputUpdateActiveInputArea },
 	{ NULL, 0 }
 };
 
@@ -259,3 +269,40 @@ obj_ mouse_button_parameter_co___Carbon__EventManager__Event(
 }
 
 
+obj_ unicode_text_parameter_co___Carbon__EventManager__Event(
+	obj_ this_, obj_ parameter)
+{
+	#define maxUnicodeTextSize 64
+	UniChar unichars[maxUnicodeTextSize];
+	UInt32 size, numUnichars;
+	CFStringRef cfString;
+	char* buffer;
+	obj_ resultStr;
+	OSStatus result;
+	extern obj_ new_co_to_co___Standard__String(obj_, obj_);
+
+	/* Allow symbols for the parameter */
+	if (parameter->class_ == (obj_) &Standard__Symbol)
+		parameter = value_for_symbol__Carbon__EventManager(parameter);
+
+	/* Get the text */
+	result =
+		GetEventParameter(carbonEvent, IntValue_(parameter), typeUnicodeText, NULL,
+		                  maxUnicodeTextSize, &size, unichars);
+	if (result != noErr)
+		return NULL;
+
+	/* Convert to UTF8 */
+	numUnichars = size / sizeof(UniChar);
+	cfString =
+		CFStringCreateWithCharacters(NULL, unichars, numUnichars);
+	buffer = Allocate_(maxUnicodeTextSize);
+	CFStringGetBytes(cfString, CFRangeMake(0, numUnichars), kCFStringEncodingUTF8,
+	                 0, false, buffer, maxUnicodeTextSize, &size);
+
+	/* Build the result string */
+	resultStr =
+		new_co_to_co___Standard__String(
+			BuildBytePtr_(buffer), BuildBytePtr_(buffer + size));
+	return resultStr;
+}
