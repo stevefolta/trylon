@@ -15,6 +15,7 @@ primitive-fn begin-update
 primitive-fn end-update
 
 primitive-fn add-event-class: event-class kind: kind
+primitive-fn event-target -> BytePtr
 
 fn handle-event: event [EventManager Event]
 	# *** Handle calling next event handler, and return value.

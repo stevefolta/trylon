@@ -19,3 +19,5 @@ primitive-fn mouse-button-parameter: parameter -> Symbol
 primitive-fn unicode-text-parameter: parameter -> String
 
 
+primitive-fn target: target
+

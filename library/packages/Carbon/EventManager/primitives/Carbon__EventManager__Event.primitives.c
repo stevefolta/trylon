@@ -135,7 +135,7 @@ static ClassSpec classSpecs[] = {
 	{ kEventClassToolbar, toolbarEventSpecs },
 	{ kEventClassToolbarItem, toolbarItemEventSpecs },
 	{ kEventClassAccessibility, accessibilityEventSpecs },
-	{ NULL, 0 }
+	{ 0, NULL }
 };
 
 
@@ -190,6 +190,10 @@ obj_ release__Carbon__EventManager__Event(obj_ this_)
 
 obj_ type__Carbon__EventManager__Event(obj_ this_)
 {
+	obj_ sym, start, stopper;
+	byte_ptr_ stringText;
+	extern obj_ new_co_to_co___Standard__String(obj_, obj_);
+
 	/* Find the specs. */
 	ClassSpec* classSpec = classSpecs;
 	UInt32 eventClass = GetEventClass(carbonEvent);
@@ -198,10 +202,20 @@ obj_ type__Carbon__EventManager__Event(obj_ this_)
 		if (classSpec->eventClass == eventClass)
 			break;
 		}
-	if (classSpec == NULL)
-		return NULL;
 
-	return SymForValue(kind, classSpec->kindSpecs);
+	/* See if there's a symbol */
+	if (classSpec->kindSpecs) {
+		sym = SymForValue(kind, classSpec->kindSpecs);
+		if (sym)
+			return sym;
+		}
+
+	/* If we don't know it, just return the kind as a String. */
+	stringText = Allocate_(4);
+	memcpy(stringText, &kind, 4);
+	start = BuildBytePtr_(stringText);
+	stopper = BuildBytePtr_(stringText + 4);
+	return new_co_to_co___Standard__String(start, stopper);
 }
 
 
@@ -314,3 +328,19 @@ obj_ unicode_text_parameter_co___Carbon__EventManager__Event(
 			BuildBytePtr_(buffer), BuildBytePtr_(buffer + size));
 	return resultStr;
 }
+
+
+obj_ target_co___Carbon__EventManager__Event(obj_ this_, obj_ target)
+{
+	EventTargetRef targetRef;
+	OSStatus result;
+	UsingMethod_(event_target)
+
+	targetRef = (EventTargetRef) BytePtrValue_(Call_(event_target, target));
+	result =
+		SetEventParameter(carbonEvent, kEventParamPostTarget, typeEventTargetRef,
+		                  sizeof(EventTargetRef), &targetRef);
+	return BuildInt_(result);
+}
+
+
