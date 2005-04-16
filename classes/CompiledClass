@@ -9,6 +9,7 @@ instance-functions: Dictionary of TrylonInstanceFunction;
 instance-fields: List of CompiledField;
 subclasses: List of CompiledClass;
 superclass: CompiledClass;
+class-num: Int;
 
 
 create(name: String, parent: Package)
@@ -131,6 +132,8 @@ emit-c-file(): Bool
 	stream.write(superclass-ref);
 	stream.write(", ");
 	stream.write(total-instance-fields.string);
+	stream.write(", ");
+	stream.write(class-num.string);
 	stream.write-line(")");
 	stream.write("\n\n");
 

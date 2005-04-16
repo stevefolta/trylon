@@ -239,6 +239,27 @@ int main(int argc, char* argv[])
 }
 
 
+#ifdef ROW_DISPLACEMENT_DISPATCH
+
+fn_ptr_ Dispatch_(selector_ selector, obj_ object)
+{
+	struct Standard__Class__internal* objClass =
+		((struct Standard__Class__internal*) object->class_);
+	struct RDTableEntry_* entry =
+		dispatchTable_[selector + objClass->class_number];
+
+	if (entry->selector == selector)
+		return entry->method;
+
+	// Send message-not-understood:instead.
+	// *** Eventually, we want to actually specify *which* message wasn't
+	// *** understood, and also pass the arguments.
+	return (fn_ptr_) &SendMessageNotUnderstood_;
+}
+
+#endif 	// ROW_DISPLACEMENT_DISPATCH
+
+
 
 /* Debugging */
 

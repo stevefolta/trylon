@@ -73,7 +73,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler,
 {
 	extern obj_ allocate_object_co___Standard__Implementation(obj_);
 	extern class_spec_ Carbon__EventManager__Event;
-	extern MethodSpec_ handle_event_co___methods[];
+	UsingMethod_(handle_event_co_)
 	obj_ resultObj;
 	OSStatus result;
 
@@ -101,9 +101,9 @@ obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ co
 	WindowAttributes windowAttrs;
 	OSStatus result;
 	DefineInt_(1, 1)
-	extern MethodSpec_
-		left__methods[], top__methods[], right__methods[], bottom__methods[],
-		iterator__methods[], is_done__methods[], current_item__methods[], go_forward__methods[];
+	UsingMethod_(left) UsingMethod_(top) UsingMethod_(right) UsingMethod_(bottom)
+	UsingMethod_(iterator)  UsingMethod_(is_done)
+	UsingMethod_(current_item)  UsingMethod_(go_forward)
 	extern obj_ allocate_object_co_with_extra_slots_co___Standard__Implementation(obj_, obj_);
 	extern class_spec_ Carbon__WindowManager__Window;
 	EventTypeSpec typeList[] = {

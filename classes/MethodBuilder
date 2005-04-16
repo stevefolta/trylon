@@ -183,17 +183,18 @@ emit(stream: OutputStream)
 
 	// Emit the used object functions
 	if (!used-object-functions.is-empty) {
-		stream.write("\textern MethodSpec_ ");
+		stream.write("\t");
 		done-one: Bool = false;
 		for (name: String in used-object-functions.keys) {
 			if (done-one)
-				stream.write(", ");
+				stream.write(" ");
 			else
 				done-one = true;
+			stream.write("UsingMethod_(");
 			stream.write(mangle-name(name));
-			stream.write("__methods[]");
+			stream.write(")");
 			}
-		stream.write-line(";");
+		stream.write-line();
 		}
 
 	// Emit the extern declarations

@@ -141,6 +141,7 @@ struct Standard__Class__internal {
 	obj_	name;
 	obj_	superclass;
 	int 	instance_size;
+	int 	class_number;
 };
 
 struct Standard__Int__internal {
@@ -191,10 +192,11 @@ extern void* Allocate_(int numBytes);
 _FinishExternC_
 
 
-#define DefineClassObj_(cName, name, nameLen, superclass, numFields) 	\
+#define DefineClassObj_(cName, name, nameLen, superclass, numFields, classNum) \
 	DefineString_(classname, name, nameLen) 	\
 	struct Standard__Class__internal cName = 	\
-		{ (obj_) &Standard__Class, Str_(classname), superclass, numFields };
+		{ (obj_) &Standard__Class, Str_(classname), superclass, 	\
+		  numFields, classNum };
 
 #define DefineInt_(index, value) \
 	static struct object i##index##_ = { (obj_) &Standard__Int, (obj_) (value) };
@@ -243,6 +245,29 @@ _FinishExternC_
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 
+
+
+#ifdef ROW_DISPLACEMENT_DISPATCH
+
+typedef int selector_;
+
+struct RDTableEntry_ {
+	fn_ptr_  	method;
+	selector_	selector;
+};
+
+extern struct RDTableEntry_ dispatchTable_[];
+
+#define UsingMethod_(methodName) 	\
+	extern selector_ methodName##__selector_;
+#define DefineSelector_(methodName) 	\
+	selector_ methodName##__selector_;
+
+#define Call_(fnName, object, args...) \
+	((*Dispatch_(fnName##__selector_, (obj_) (object))) \
+	 ((obj_) object, ##args))
+
+#endif 	// ROW_DISPLACEMENT_DISPATCH
 
 
 #endif	// Trylon_.h
