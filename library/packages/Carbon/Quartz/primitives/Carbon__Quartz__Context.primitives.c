@@ -54,3 +54,15 @@ obj_ scale_ctm_sx_co_sy_co___Carbon__Quartz__Context(
 }
 
 
+obj_ clear_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
+{
+	UsingMethod_(left)  UsingMethod_(top)
+	UsingMethod_(width)  UsingMethod_(height)
+
+	CGRect quartzRect =
+		CGRectMake(IntValue_(Call_(left, rect)), IntValue_(Call_(top, rect)),
+		           IntValue_(Call_(width, rect)), IntValue_(Call_(height, rect)));
+	CGContextClearRect(context, quartzRect);
+}
+
+
