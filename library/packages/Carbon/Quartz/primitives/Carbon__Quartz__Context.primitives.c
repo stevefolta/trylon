@@ -57,23 +57,24 @@ obj_ scale_ctm_sx_co_sy_co___Carbon__Quartz__Context(
 obj_ save_state__Carbon__Quartz__Context(obj_ this_)
 {
 	CGSaveGState(context);
+	return NULL;
 }
 
 
 obj_ restore_state__Carbon__Quartz__Context(obj_ this_)
 {
 	CGRestoreGState(context);
+	return NULL;
 }
 
 
-obj_ fill_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
+#define maxColorComponents 10
+static void SetupColorComponents(obj_ components, float* floatComponents)
 {
-	#define maxColorComponents 10
 	int numComponents, i;
-	float floatComponents[maxColorComponents];
-	UsingMethod_(num_items)  UsingMethod_(at_co_)
-	DefineString_(1, "Too many color components in fill-color: call.", 46)
+	DefineString_(1, "Too many color components.", 26)
 	extern obj_ new_co___Standard__MessageException(obj_);
+	UsingMethod_(num_items)  UsingMethod_(at_co_)
 
 	/* Get the components, as floats. */
 	numComponents = IntValue_(Call_(num_items, components));
@@ -81,9 +82,29 @@ obj_ fill_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
 		Throw_(new_co___Standard__MessageException(Str_(1)));
 	for (i = 0; i < numComponents; ++i)
 		floatComponents[i] = IntValue_(Call_(at_co_, components, BuildInt_(i)));
+}
+
+obj_ fill_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
+{
+	float floatComponents[maxColorComponents];
 
 	/* Set the fill color. */
+	SetupColorComponents(components, floatComponents);
 	CGContextSetFillColor(context, floatComponents);
+
+	return NULL;
+}
+
+
+obj_ stroke_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
+{
+	float floatComponents[maxColorComponents];
+
+	/* Set the fill color. */
+	SetupColorComponents(components, floatComponents);
+	CGContextSetStrokeColor(context, floatComponents);
+
+	return NULL;
 }
 
 
@@ -96,6 +117,8 @@ obj_ fill_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
 		CGRectMake(IntValue_(Call_(left, rect)), IntValue_(Call_(top, rect)),
 		           IntValue_(Call_(width, rect)), IntValue_(Call_(height, rect)));
 	CGContextFillRect(context, quartzRect);
+
+	return NULL;
 }
 
 
@@ -108,6 +131,22 @@ obj_ clear_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
 		CGRectMake(IntValue_(Call_(left, rect)), IntValue_(Call_(top, rect)),
 		           IntValue_(Call_(width, rect)), IntValue_(Call_(height, rect)));
 	CGContextClearRect(context, quartzRect);
+
+	return NULL;
+}
+
+
+obj_ flush__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextFlush(context);
+	return NULL;
+}
+
+
+obj_ synchronize__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextSynchronize(context);
+	return NULL;
 }
 
 

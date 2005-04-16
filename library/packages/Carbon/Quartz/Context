@@ -9,7 +9,11 @@ primitive-fn save-state
 primitive-fn restore-state
 
 primitive-fn fill-color: components [Tuple]
+primitive-fn stroke-color: components [Tuple]
 
 primitive-fn fill-rect: rect
 primitive-fn clear-rect: rect
 # Note: doesn't erase the pixels!  Just makes them transparent.
+
+primitive-fn flush
+primitive-fn synchronize
