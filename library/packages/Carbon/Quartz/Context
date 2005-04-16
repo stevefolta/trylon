@@ -5,5 +5,11 @@ field primitive-context 	# Don't touch this!
 primitive-fn translate-ctm-tx: tx ty: ty
 primitive-fn scale-ctm-sx: sx sy: xy
 
+primitive-fn save-state
+primitive-fn restore-state
+
+primitive-fn fill-color: components [Tuple]
+
+primitive-fn fill-rect: rect
 primitive-fn clear-rect: rect
 # Note: doesn't erase the pixels!  Just makes them transparent.

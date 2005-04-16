@@ -54,6 +54,51 @@ obj_ scale_ctm_sx_co_sy_co___Carbon__Quartz__Context(
 }
 
 
+obj_ save_state__Carbon__Quartz__Context(obj_ this_)
+{
+	CGSaveGState(context);
+}
+
+
+obj_ restore_state__Carbon__Quartz__Context(obj_ this_)
+{
+	CGRestoreGState(context);
+}
+
+
+obj_ fill_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
+{
+	#define maxColorComponents 10
+	int numComponents, i;
+	float floatComponents[maxColorComponents];
+	UsingMethod_(num_items)  UsingMethod_(at_co_)
+	DefineString_(1, "Too many color components in fill-color: call.", 46)
+	extern obj_ new_co___Standard__MessageException(obj_);
+
+	/* Get the components, as floats. */
+	numComponents = IntValue_(Call_(num_items, components));
+	if (numComponents > maxColorComponents)
+		Throw_(new_co___Standard__MessageException(Str_(1)));
+	for (i = 0; i < numComponents; ++i)
+		floatComponents[i] = IntValue_(Call_(at_co_, components, BuildInt_(i)));
+
+	/* Set the fill color. */
+	CGContextSetFillColor(context, floatComponents);
+}
+
+
+obj_ fill_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
+{
+	UsingMethod_(left)  UsingMethod_(top)
+	UsingMethod_(width)  UsingMethod_(height)
+
+	CGRect quartzRect =
+		CGRectMake(IntValue_(Call_(left, rect)), IntValue_(Call_(top, rect)),
+		           IntValue_(Call_(width, rect)), IntValue_(Call_(height, rect)));
+	CGContextFillRect(context, quartzRect);
+}
+
+
 obj_ clear_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
 {
 	UsingMethod_(left)  UsingMethod_(top)
