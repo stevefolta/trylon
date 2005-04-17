@@ -1,0 +1,19 @@
+Class: ClassNumberer
+
+cur-num: Int;
+
+
+create()
+{
+	cur-num = 0;
+}
+
+
+next-number: Int
+{
+	result: Int = cur-num;
+	cur-num += 1;
+	return result;
+}
+
+

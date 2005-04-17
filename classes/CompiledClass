@@ -196,6 +196,35 @@ get-Object-dispatch-entries(name: String, dispatch-entries: DispatchEntries)
 }
 
 
+number-classes(numberer: ClassNumberer)
+{
+	// Depth-first.
+	for (subclass: CompiledClass in subclasses)
+		subclass.number-classes(numberer);
+
+	class-num = numberer.next-number();
+}
+
+
+setup-dispatch-row(row: DispatchRow, inherited-function: TrylonInstanceFunction)
+{
+	// Find the function.
+	function: TrylonInstanceFunction = instance-functions[row.name];
+	if (function == nil)
+		function = inherited-function;
+
+	// Do this is depth-first order, which is the same order as the class
+	// numbers.  By doing that, we don't need a separate step for sorting
+	// by class number.
+
+	for (subclass: CompiledClass in subclasses)
+		subclass.setup-dispatch-row(row, function);
+
+	if (function)
+		row.append(class-num, function);
+}
+
+
 emit-instance-field-indices(stream: OutputStream): Int
 {
 	index: Int = 0;

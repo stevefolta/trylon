@@ -1,0 +1,48 @@
+Class: DispatchRowSetIterator
+
+stack: List of DispatchRowSetNode;
+
+
+create(root: DispatchRowSetNode)
+{
+	stack = new List of DispatchRowSetNode;
+	push-tree(root);
+}
+
+
+is-done: Bool
+{
+	return stack.is-empty;
+}
+
+
+go-forward()
+{
+	if (stack.is-empty)
+		return;
+
+	right: DispatchRowSetNode = stack.first-item.right;
+	stack.pop-front();
+	push-tree(right);
+}
+
+
+current-item: DispatchRow
+{
+	if (stack.is-empty)
+		return nil;
+
+	return stack.first-item.row;
+}
+
+
+push-tree(node: DispatchRowSetNode)
+{
+	cur-node: DispatchRowSetNode = node;
+	while (cur-node) {
+		stack.push-front(cur-node);
+		cur-node = cur-node.left;
+		}
+}
+
+

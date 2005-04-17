@@ -1,0 +1,74 @@
+Class: DispatchRowSetNode
+
+
+row: DispatchRow;
+left: DispatchRowSetNode;
+right: DispatchRowSetNode;
+level: Int;
+
+
+create(row: DispatchRow)
+{
+	this.row = row;
+	left = nil;
+	right = nil;
+	level = 1;
+}
+
+
+insert(new-row: DispatchRow): DispatchRowSetNode
+	// returns the new top of this subtree
+{
+	// Insert the new row.
+	if (new-row.num-entries < row.num-entries) {
+		if (left)
+			left = left.insert(new-row);
+		else
+			left = new DispatchRowSetNode(new-row);
+		}
+	else {
+		if (right)
+			right = right.insert(new-row);
+		else
+			right = new DispatchRowSetNode(new-row);
+		}
+
+	// Rebalance the tree.
+	new-tree-top: DispatchRowSetNode = skew();
+	new-tree-top = new-tree-top.split();
+	return new-tree-top;
+}
+
+
+skew(): DispatchRowSetNode
+{
+	new-tree-top: DispatchRowSetNode = this;
+
+	if (left && left.level == level) {
+		// Rotate with left.
+		new-tree-top = left;
+		left = new-tree-top.right;
+		new-tree-top.right = this;
+		}
+
+	return new-tree-top;
+}
+
+
+split(): DispatchRowSetNode
+{
+	new-tree-top: DispatchRowSetNode = this;
+
+	if (right && right.right && right.right.level == level) {
+		// rotate with right
+		new-tree-top = right;
+		right = new-tree-top.left;
+		new-tree-top.left = this;
+		// boost the level
+		new-tree-top.level += 1;
+		}
+
+	return new-tree-top;
+}
+
+

@@ -1,0 +1,26 @@
+Class: DispatchRowSet
+
+root: DispatchRowSetNode;
+
+
+create()
+{
+	root = nil;
+}
+
+
+add(row: DispatchRow)
+{
+	if (root)
+		root = root.insert(row);
+	else
+		root = new DispatchRowSetNode(row);
+}
+
+
+iterator: DispatchRowSetIterator
+{
+	return new DispatchRowSetIterator(root);
+}
+
+

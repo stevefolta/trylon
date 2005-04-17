@@ -294,6 +294,33 @@ emit-method-specs(main-package: Package): Bool
 }
 
 
+build-dispatch-table(main-package: Package)
+{
+	// First, number the classes.
+	object-class: CompiledClass = root-class(main-package);
+	object-class.number-classes(new ClassNumberer());
+
+	// Gather up the rows.
+	rows: DispatchRowSet;
+	for (fn-name: String in object-function-names.keys) {
+		// Create the row and fill it in.
+		row: DispatchRow(fn-name);
+		object-class.setup-dispatch-row(row, nil);
+
+		// Add the row.
+		rows.add(row);
+		}
+
+	// Fit the rows.
+	// "rows" has the rows sorted by number of entries.
+	for (row: DispatchRow in rows) {
+		/***/
+		}
+
+	/***/
+}
+
+
 emit-symbols(): Bool
 {
 	// Character literals are also emitted here.

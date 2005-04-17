@@ -1,0 +1,13 @@
+Class: DispatchRowEntry
+
+class-num: Int;
+function: TrylonInstanceFunction;
+
+
+create(class-num: Int, function: TrylonInstanceFunction)
+{
+	this.class-num = class-num;
+	this.function = function;
+}
+
+

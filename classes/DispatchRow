@@ -1,0 +1,22 @@
+Class: DispatchRow
+
+name: String;
+entries: List of DispatchRowEntry;
+num-entries: Int;
+
+
+create(name: String)
+{
+	this.name = name;
+	this.entries = new List of DispatchRowEntry;
+	this.num-entries = 0;
+}
+
+
+append(class-num: Int, function: TrylonInstanceFunction)
+{
+	entries.append(new DispatchRowEntry(class-num, function));
+	num-entries += 1;
+}
+
+
