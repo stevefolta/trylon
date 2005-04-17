@@ -141,6 +141,10 @@ compile-program(compile-symbols: List of String)
 	is-changed = emit-symbols();
 	c-files.add("symbols_", is-changed);
 
+	// Emit settings_.h.
+	is-changed = emit-settings();
+	recompile-all: Bool = is-changed;
+
 	// Copy Trylon_.h and Trylon_.c
 	if (!library-directory.entry-is-directory("runtime")) {
 		message: String = "The \"runtime\" directory is missing from the library!";
@@ -161,7 +165,7 @@ compile-program(compile-symbols: List of String)
 	status-reporter.report("Compiling C files...");
 	status-reporter.indent();
 	for (c-file: CFile in c-files) {
-		if (!c-file.is-changed) {
+		if (!c-file.is-changed && !recompile-all) {
 			if (new File(".objects/" + c-file.name + ".o").exists)
 				continue;
 			}
@@ -339,6 +343,18 @@ emit-symbols(): Bool
 		stream.write-line("\')");
 		}
 	stream.write-line();
+
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
+}
+
+
+emit-settings(): Bool
+{
+	stream: ExistingFileStream(new File(".c-sources/settings_.h"));
+
+	stream.write-line("#define SLOW_DISPATCH_");
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();

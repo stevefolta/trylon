@@ -3,6 +3,8 @@
 #ifndef _Trylon__h_
 #define _Trylon__h_
 
+#include "settings_.h"
+
 
 #if defined(__cplusplus) && !defined(NOT_EXTERN_C)
 	#define _StartExternC_	extern "C" {
