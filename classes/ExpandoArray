@@ -60,8 +60,10 @@ expand(new-num-blocks: Int)
 
 	// Add new blocks.
 	which-block: Int = num-blocks;
-	while (which-block < new-num-blocks)
+	while (which-block < new-num-blocks) {
 		new-blocks.ptr-at(which-block) = new BytePtr(4 * block-size);
+		which-block += 1;
+		}
 
 	// Install the new "blocks".
 	blocks = new-blocks;

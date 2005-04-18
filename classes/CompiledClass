@@ -163,6 +163,19 @@ emit-all-class-declarations(stream: OutputStream)
 }
 
 
+emit-all-instance-function-declarations(stream: OutputStream)
+{
+	for (function: TrylonInstanceFunction in instance-functions.values) {
+		stream.write("extern ");
+		stream.write(function.c-signature);
+		stream.write-line(";");
+		}
+
+	for (subclass: CompiledClass in subclasses)
+		subclass.emit-all-instance-function-declarations(stream);
+}
+
+
 get-dispatch-entries(name: String, inherited-function: TrylonInstanceFunction,
                      dispatch-entries: DispatchEntries)
 {

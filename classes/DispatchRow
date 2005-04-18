@@ -3,6 +3,7 @@ Class: DispatchRow
 name: String;
 entries: List of DispatchRowEntry;
 num-entries: Int;
+selector: Int;	// Only valid after fit-into() has been called.
 
 
 create(name: String)
@@ -17,6 +18,34 @@ append(class-num: Int, function: TrylonInstanceFunction)
 {
 	entries.append(new DispatchRowEntry(class-num, function));
 	num-entries += 1;
+}
+
+
+fit-into(dispatch-table: ExpandoArray of DispatchTableEntry)
+{
+	// Find the offset.
+	// Very slow method.
+	offset: Int = 0;
+	loop {
+		fits-here: Bool = true;
+		for (entry: DispatchRowEntry in entries) {
+			if (dispatch-table[offset + entry.class-num] != nil) {
+				fits-here = false;
+				break;
+				}
+			}
+		if (fits-here)
+			break;
+
+		offset += 1;
+		}
+
+	// Install the entries.
+	selector = offset;
+	for (entry: DispatchRowEntry in entries) {
+		dispatch-table[offset + entry.class-num] =
+			new DispatchTableEntry(entry.function, offset);
+		}
 }
 
 

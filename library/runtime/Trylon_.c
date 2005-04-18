@@ -37,7 +37,7 @@ struct MethodSpec_ destroy__methods[] = {
 
 static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 {
-	extern MethodSpec_ message_not_understood__methods[];
+	UsingMethod_(message_not_understood);
 	return Call_(message_not_understood, object);
 }
 
@@ -48,7 +48,7 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 	struct Standard__Class__internal* objClass =
 		((struct Standard__Class__internal*) object->class_);
 	struct RDTableEntry_* entry =
-		dispatchTable_[selector + objClass->class_number];
+		&dispatchTable_[selector + objClass->class_number];
 
 	if (entry->selector == selector)
 		return entry->method;
@@ -118,7 +118,7 @@ void PopException_()
 
 static void FinalizeObject_(GC_PTR obj, GC_PTR clientData)
 {
-	extern MethodSpec_ destroy__methods[];
+	UsingMethod_(destroy);
 	Call_(destroy, (obj_) obj);
 }
 

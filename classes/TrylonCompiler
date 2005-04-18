@@ -132,8 +132,14 @@ compile-program(compile-symbols: List of String)
 	main-package.ensure-superclasses(root-class(main-package));
 
 	// Emit the method specs.
-	status-reporter.report("Emitting method specs...");
-	is-changed: Bool = emit-method-specs(main-package);
+	is-changed: Bool;
+	if (build-settings.slow-dispatch) {
+		status-reporter.report("Emitting method specs...");
+		is-changed = emit-method-specs(main-package);
+		}
+	else {
+		is-changed = emit-dispatch-table(main-package);
+		}
 	c-files.add("methods_", is-changed);
 
 	// Emit the symbols.
@@ -297,8 +303,12 @@ emit-method-specs(main-package: Package): Bool
 }
 
 
-build-dispatch-table(main-package: Package)
+emit-dispatch-table(main-package: Package): Bool
 {
+	status-reporter.report("Building dispatch table...");
+	if (build-settings.is-verbose)
+		status-reporter.indent();
+
 	// First, number the classes.
 	object-class: CompiledClass = root-class(main-package);
 	object-class.number-classes(new ClassNumberer());
@@ -318,12 +328,40 @@ build-dispatch-table(main-package: Package)
 	// "rows" has the rows sorted by number of entries.
 	dispatch-table: ExpandoArray of DispatchTableEntry;
 	for (row: DispatchRow in rows) {
-		/***/
-		//*** row.fit-into(dispatch-table);
+		if (build-settings.is-verbose)
+			status-reporter.report("Fitting " + row.name + "...");
+		row.fit-into(dispatch-table);
 		}
 
+	if (build-settings.is-verbose)
+		status-reporter.unindent();
+
+	// Now, emit the "methods_.c" file.
+	status-reporter.report("Emitting dispatch table...");
+
+	// Create the file.
+	stream: ExistingFileStream(new File(".c-sources/methods_.c"));
+	stream.write-line("#include \"Trylon_.h\"");
+	stream.write-line();
+
+	// Define all selectors.
+	for (row: DispatchRow in rows) {
+		stream.write("DefineSelector_(");
+		stream.write(MethodBuilder.mangle-name(row.name));
+		stream.write(", ");
+		stream.write(row.selector.string);
+		stream.write(")");
+		stream.write-line();
+		}
+	stream.write-line();
+
+	// Declare all functions.
+	object-class.emit-all-instance-function-declarations(stream);
+	stream.write-line();
+
+	// Emit the dispatch table.
+	stream.write-line("struct RDTableEntry_ dispatchTable_[] = {");
 	for (entry: DispatchTableEntry in dispatch-table) {
-/***
 		if (entry == nil) {
 			stream.write-line("\t{ NULL, NULL },");
 			continue;
@@ -335,10 +373,13 @@ build-dispatch-table(main-package: Package)
 		stream.write(entry.selector.string);
 		stream.write("},");
 		stream.write-line();
-***/
 		}
+	stream.write-line("};");
+	stream.write-line();
 
-	/***/
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
 }
 
 
