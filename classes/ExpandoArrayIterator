@@ -1,0 +1,37 @@
+Class: ExpandoArrayIterator
+Stand-In-Types:	Type
+
+
+/*
+	We'd like to have array be an "ExpandoArray of Type", but the stand-in type
+	system isn't strong enough to handle that.
+*/
+
+array: ExpandoArray;
+index: Int;
+
+
+create(array: ExpandoArray)
+{
+	this.array = array;
+	index = 0;
+}
+
+
+is-done: Bool
+{
+	return (index >= array.num-items);
+}
+
+
+current-item: Type
+{
+	return array[index].as-a(Type);
+}
+
+
+go-forward()
+{
+	index += 1;
+}
+

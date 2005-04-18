@@ -316,14 +316,14 @@ build-dispatch-table(main-package: Package)
 
 	// Fit the rows.
 	// "rows" has the rows sorted by number of entries.
-	//*** dispatch-table: ExpandoArray of DispatchRowEntry;
+	dispatch-table: ExpandoArray of DispatchTableEntry;
 	for (row: DispatchRow in rows) {
 		/***/
 		//*** row.fit-into(dispatch-table);
 		}
 
+	for (entry: DispatchTableEntry in dispatch-table) {
 /***
-	for (entry: DispatchRowEntry in dispatch-table) {
 		if (entry == nil) {
 			stream.write-line("\t{ NULL, NULL },");
 			continue;
@@ -335,8 +335,8 @@ build-dispatch-table(main-package: Package)
 		stream.write(entry.selector.string);
 		stream.write("},");
 		stream.write-line();
-		}
 ***/
+		}
 
 	/***/
 }

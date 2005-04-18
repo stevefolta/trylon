@@ -1,0 +1,14 @@
+Class: DispatchTableEntry
+
+
+function: TrylonInstanceFunction;
+selector: Int;
+
+
+create(function: TrylonInstanceFunction, selector: Int)
+{
+	this.function = function;
+	this.selector = selector;
+}
+
+
