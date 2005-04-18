@@ -152,7 +152,10 @@ compile-program(compile-symbols: List of String)
 		}
 	runtime-directory: FileDirectory =
 		library-directory["runtime"].as-a(FileDirectory);
-	copy-to-sources(runtime-directory["Trylon_.h"].as-a(File), "Trylon_.h");
+	is-changed =
+		copy-to-sources(runtime-directory["Trylon_.h"].as-a(File), "Trylon_.h");
+	if (is-changed)
+		recompile-all = true;
 	is-changed =
 		copy-to-sources(runtime-directory["Trylon_.c"].as-a(File), "Trylon_.c");
 	c-files.add("Trylon_", is-changed);
