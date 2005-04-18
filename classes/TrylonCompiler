@@ -313,9 +313,27 @@ build-dispatch-table(main-package: Package)
 
 	// Fit the rows.
 	// "rows" has the rows sorted by number of entries.
+	//*** dispatch-table: ExpandoArray of DispatchRowEntry;
 	for (row: DispatchRow in rows) {
 		/***/
+		//*** row.fit-into(dispatch-table);
 		}
+
+/***
+	for (entry: DispatchRowEntry in dispatch-table) {
+		if (entry == nil) {
+			stream.write-line("\t{ NULL, NULL },");
+			continue;
+			}
+
+		stream.write("\t{ ");
+		stream.write(entry.function.c-name);
+		stream.write(", ");
+		stream.write(entry.selector.string);
+		stream.write("},");
+		stream.write-line();
+		}
+***/
 
 	/***/
 }
