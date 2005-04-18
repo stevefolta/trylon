@@ -7,6 +7,7 @@ c-compiler: String;
 linker: String;
 dictionary: Dictionary of String;
 is-verbose: Bool;
+slow-dispatch: Bool;
 
 
 create()
@@ -18,6 +19,7 @@ create()
 	linker = "gcc";
 	dictionary = new Dictionary of String;
 	is-verbose = false;
+	slow-dispatch = true;
 
 	sysname: String = System.system.sysname;
 	if (!sysname.is-empty)
@@ -76,6 +78,8 @@ parse-block(lexer: Lexer)
 				c-compiler = parse-name(lexer, name);
 			else if (name == "linker")
 				linker = parse-name(lexer, name);
+			else if (name == "slow-dispatch")
+				slow-dispatch = parse-boolean(lexer, name);
 
 			else if (name == "if" || name == "iff")
 				parse-if(lexer);
@@ -136,6 +140,24 @@ parse-flags(lexer: Lexer, flags: (List of String), declaration: String)
 			flag = "";
 			}
 		}
+}
+
+
+parse-boolean(lexer: Lexer, declaration: String): Bool
+{
+	token: Token = lexer.next-token;
+	if (token.type == 'eol' || token.type == 'comment')
+		throw MessageException("Empty \"" + declaration + "\" declaration.");
+	name: String = token.text;
+	token = lexer.next-token;
+	if (token.type == 'comment')
+		lexer.next-token; 	// It *will* be an 'eol'.
+	else if (token.type != 'eol') {
+		throw MessageException("Extra tokens in \"" + declaration +
+		                       "\" declaration.");
+		}
+
+	return (name == "true" || name == "on");
 }
 
 

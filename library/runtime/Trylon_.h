@@ -249,7 +249,7 @@ _FinishExternC_
 
 
 
-#ifdef ROW_DISPLACEMENT_DISPATCH
+#ifdef ROW_DISPLACEMENT_DISPATCH_
 
 typedef int selector_;
 
@@ -269,7 +269,7 @@ extern struct RDTableEntry_ dispatchTable_[];
 	((*Dispatch_(fnName##__selector_, (obj_) (object))) \
 	 ((obj_) object, ##args))
 
-#endif 	// ROW_DISPLACEMENT_DISPATCH
+#endif 	// ROW_DISPLACEMENT_DISPATCH_
 
 
 #endif	// Trylon_.h
