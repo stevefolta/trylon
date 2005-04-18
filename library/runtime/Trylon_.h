@@ -32,6 +32,35 @@ typedef char* byte_ptr_;
 #define NULL	(0L)
 
 
+#ifdef ROW_DISPLACEMENT_DISPATCH_
+
+typedef int selector_;
+
+struct RDTableEntry_ {
+	fn_ptr_  	method;
+	selector_	selector;
+};
+
+extern struct RDTableEntry_ dispatchTable_[];
+
+_StartExternC_
+extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
+_FinishExternC_
+
+#define UsingMethod_(methodName) 	\
+	extern selector_ methodName##__selector_;
+#define DefineSelector_(methodName, value) 	\
+	selector_ methodName##__selector_ = value;
+
+#define Call_(fnName, object, args...) \
+	((*Dispatch_(fnName##__selector_, (obj_) (object))) \
+	 ((obj_) object, ##args))
+
+#endif 	// ROW_DISPLACEMENT_DISPATCH_
+
+
+#ifdef SLOW_DISPATCH_
+
 typedef struct MethodSpec_ {
 	obj_    	class_;
 	fn_ptr_ 	method;
@@ -39,15 +68,17 @@ typedef struct MethodSpec_ {
 
 typedef struct MethodSpec_* MethodSpecPtr_;
 
-
 _StartExternC_
 extern fn_ptr_ Dispatch_(MethodSpecPtr_ methods, obj_ object);
 _FinishExternC_
 
+#define UsingMethod_(methodName)	extern MethodSpec_ methodName##__methods[];
 
 #define Call_(fnName, object, args...) \
 	((*Dispatch_(fnName##__methods, (obj_) (object))) \
 	 ((obj_) object, ##args))
+
+#endif 	// SLOW_DISPATCH_
 
 
 
@@ -239,7 +270,6 @@ _FinishExternC_
 #define UsingChar_(name) 	extern struct object c##name##_;
 #define Char_(name) 	((obj_) &c##name##_)
 
-#define UsingMethod_(methodName)	extern MethodSpec_ methodName##__methods[];
 
 // Helpers for primitives
 
@@ -247,29 +277,6 @@ _FinishExternC_
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 
-
-
-#ifdef ROW_DISPLACEMENT_DISPATCH_
-
-typedef int selector_;
-
-struct RDTableEntry_ {
-	fn_ptr_  	method;
-	selector_	selector;
-};
-
-extern struct RDTableEntry_ dispatchTable_[];
-
-#define UsingMethod_(methodName) 	\
-	extern selector_ methodName##__selector_;
-#define DefineSelector_(methodName) 	\
-	selector_ methodName##__selector_;
-
-#define Call_(fnName, object, args...) \
-	((*Dispatch_(fnName##__selector_, (obj_) (object))) \
-	 ((obj_) object, ##args))
-
-#endif 	// ROW_DISPLACEMENT_DISPATCH_
 
 
 #endif	// Trylon_.h

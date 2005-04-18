@@ -42,6 +42,26 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 }
 
 
+#ifdef ROW_DISPLACEMENT_DISPATCH_
+fn_ptr_ Dispatch_(selector_ selector, obj_ object)
+{
+	struct Standard__Class__internal* objClass =
+		((struct Standard__Class__internal*) object->class_);
+	struct RDTableEntry_* entry =
+		dispatchTable_[selector + objClass->class_number];
+
+	if (entry->selector == selector)
+		return entry->method;
+
+	// Send message-not-understood:instead.
+	// *** Eventually, we want to actually specify *which* message wasn't
+	// *** understood, and also pass the arguments.
+	return (fn_ptr_) &SendMessageNotUnderstood_;
+}
+#endif 	// ROW_DISPLACEMENT_DISPATCH_
+
+
+#ifdef SLOW_DISPATCH_
 fn_ptr_ Dispatch_(MethodSpec_* methods, obj_ object)
 {
 	obj_ theClass = object->class_;
@@ -60,7 +80,7 @@ fn_ptr_ Dispatch_(MethodSpec_* methods, obj_ object)
 	// *** understood, and also pass the arguments.
 	return (fn_ptr_) &SendMessageNotUnderstood_;
 }
-
+#endif 	// SLOW_DISPATCH_
 
 
 static ExceptionCatcher_* currentExceptionCatcher = NULL;
@@ -237,27 +257,6 @@ int main(int argc, char* argv[])
 	else
 		return 1;
 }
-
-
-#ifdef ROW_DISPLACEMENT_DISPATCH
-
-fn_ptr_ Dispatch_(selector_ selector, obj_ object)
-{
-	struct Standard__Class__internal* objClass =
-		((struct Standard__Class__internal*) object->class_);
-	struct RDTableEntry_* entry =
-		dispatchTable_[selector + objClass->class_number];
-
-	if (entry->selector == selector)
-		return entry->method;
-
-	// Send message-not-understood:instead.
-	// *** Eventually, we want to actually specify *which* message wasn't
-	// *** understood, and also pass the arguments.
-	return (fn_ptr_) &SendMessageNotUnderstood_;
-}
-
-#endif 	// ROW_DISPLACEMENT_DISPATCH
 
 
 
