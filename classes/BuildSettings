@@ -64,6 +64,8 @@ parse-block(lexer: Lexer)
 
 		else if (type == 'name' || type == 'keyword') {
 			name: String = token.text;
+			if (type == 'keyword')
+				name = name.substr(0, name.length - 1);
 			if (name == "program")
 				program-name = parse-name(lexer, name);
 			else if (name == "c-flags")
