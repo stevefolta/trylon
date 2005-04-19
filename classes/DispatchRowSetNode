@@ -20,7 +20,7 @@ insert(new-row: DispatchRow): DispatchRowSetNode
 	// returns the new top of this subtree
 {
 	// Insert the new row.
-	if (new-row.num-entries < row.num-entries) {
+	if (new-row.num-entries > row.num-entries) {
 		if (left)
 			left = left.insert(new-row);
 		else
