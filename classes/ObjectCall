@@ -6,6 +6,9 @@ name: String;
 object: Expression;
 arguments: List of Expression;
 
+// Very special for prepare-to-emit() handling of class and package functions.
+package-result-function: TrylonFunction;
+
 
 create(name: String, object: Expression, arguments: List of Expression)
 {
@@ -21,6 +24,23 @@ prepare-to-emit()
 
 	for (arg: Expression in arguments)
 		arg.prepare-to-emit();
+
+	// Handle class functions and package functions.
+	function: TrylonFunction = nil;
+	if (object.is-a(FunctionCall))
+		function = object.as-a(FunctionCall).function;
+	else if (object.is-a(ObjectCall))
+		function = object.as-a(ObjectCall).package-result-function;
+	if (function) {
+		if (function.is-a(PackageFunction) || function.is-a(ClassFunction)) {
+			package: Package = nil;
+			if (function.is-a(PackageFunction))
+				package = function.as-a(PackageFunction).package;
+			else
+				package = function.as-a(ClassFunction).the-class;
+			package-result-function = package.lookup-function(name);
+			}
+		}
 }
 
 

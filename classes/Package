@@ -112,7 +112,8 @@ add-class(name: String): CompiledClass
 		}
 
 	// Add the new one.
-	TrylonCompiler.status-reporter.report("Loading " + name + "...");
+	TrylonCompiler.status-reporter.report(
+		"Loading " + name + " into " + full-name + "...");
 	TrylonCompiler.status-reporter.indent();
 	class: CompiledClass(name, this);
 	class-function: ClassFunction(class);
@@ -354,6 +355,18 @@ reporter: StatusReporter
 [class]
 {
 	return TrylonCompiler.status-reporter;
+}
+
+
+full-name: String
+{
+	result: String = this.name;
+	package: Package = parent;
+	while (package) {
+		result = package.name + " " + result;
+		package = package.parent;
+		}
+	return result;
 }
 
 

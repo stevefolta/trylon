@@ -4,6 +4,7 @@ Superclass: Expression
 name: String;
 arguments: List of Expression;
 context: Context;
+function: TrylonFunction; 	// Only valid after prepare-to-emit().
 
 
 create(name: String, arguments: (List of Expression), context: Context)
@@ -16,7 +17,7 @@ create(name: String, arguments: (List of Expression), context: Context)
 
 prepare-to-emit()
 {
-	context.lookup-function(name);
+	function = context.lookup-function(name);
 
 	for (arg: Expression in arguments)
 		arg.prepare-to-emit();
@@ -25,8 +26,7 @@ prepare-to-emit()
 
 emit-code(builder: MethodBuilder): ExpressionResult
 {
-	// Get the function.
-	function: TrylonFunction = context.lookup-function(name);
+	// We already got the function in prepare-to-emit().
 	if (function == nil) {
 		//*** This should become an ObjectCall on "this" -- if there is a "this".
 		throw MessageException("There is no \"" + name + "\" function.");
