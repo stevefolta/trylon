@@ -17,6 +17,13 @@ create(local: CompiledField, collection: Expression, body: Block,
 }
 
 
+prepare-to-emit()
+{
+	collection.prepare-to-emit();
+	body.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	builder.using-object-function("iterator");

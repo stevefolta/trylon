@@ -59,6 +59,13 @@ enclosing-method-context: MethodContext
 }
 
 
+prepare-to-emit()
+{
+	for (statement: Statement in statements)
+		statement.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	saved-temp-num: Int = builder.next-temporary-num;

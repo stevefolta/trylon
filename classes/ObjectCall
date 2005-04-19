@@ -15,6 +15,15 @@ create(name: String, object: Expression, arguments: List of Expression)
 }
 
 
+prepare-to-emit()
+{
+	object.prepare-to-emit();
+
+	for (arg: Expression in arguments)
+		arg.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	// Emit the object.

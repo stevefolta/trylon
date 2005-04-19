@@ -12,6 +12,12 @@ create(expression: Expression, comment: String)
 }
 
 
+prepare-to-emit()
+{
+	expression.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	expression.emit-code(builder);

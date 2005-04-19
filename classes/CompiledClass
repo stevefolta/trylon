@@ -93,13 +93,23 @@ ensure-superclasses(object-class: CompiledClass)
 }
 
 
+prepare-to-emit()
+{
+	for (function: TrylonFunction in functions.values)
+		function.prepare-to-emit();
+	for (function: TrylonFunction in instance-functions.values)
+		function.prepare-to-emit();
+}
+
+
 emit-c-file(): Bool
 {
 	file: File = new File(".c-sources/" + c-name + ".c");
 	stream: ExistingFileStream = new ExistingFileStream(file);
 
 	//---
-	if (lookup-function("verbose")) {
+	is-verbose: Bool = lookup-function("verbose") != nil;
+	if (is-verbose) {
 		reporter.report(name + " has these instance functions:");
 		reporter.indent();
 		for (name: String in instance-functions.keys)
@@ -141,10 +151,17 @@ emit-c-file(): Bool
 	emit-instance-field-indices(stream);
 
 	// Functions
+	if (is-verbose)
+		reporter.indent();
 	for (function: TrylonFunction in functions.values)
 		function.emit-code(stream);
-	for (function: TrylonFunction in instance-functions.values)
+	for (function: TrylonFunction in instance-functions.values) {
+		if (is-verbose)
+			reporter.report("Emitting " + function.c-name + ".");
 		function.emit-code(stream);
+		}
+	if (is-verbose)
+		reporter.unindent();
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();

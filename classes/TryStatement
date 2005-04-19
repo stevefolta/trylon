@@ -17,6 +17,14 @@ create(body: Block, catch-clauses: (List of CatchClause), comment: String,
 }
 
 
+prepare-to-emit()
+{
+	body.prepare-to-emit();
+	for (clause: CatchClause in catch-clauses)
+		clause.body.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	builder.using-object-function("is-a:");

@@ -10,6 +10,12 @@ create(name: String)
 }
 
 
+prepare-to-emit()
+{
+	// Nothing to do.
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	mangled-name: String = MethodBuilder.mangle-name(name);

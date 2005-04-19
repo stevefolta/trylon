@@ -14,6 +14,15 @@ create(name: String, arguments: (List of Expression), context: Context)
 }
 
 
+prepare-to-emit()
+{
+	context.lookup-function(name);
+
+	for (arg: Expression in arguments)
+		arg.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	// Get the function.

@@ -1,6 +1,9 @@
 Class: Expression
 
 
+prepare-to-emit()
+[phantom]
+
 emit-code(builder: MethodBuilder): ExpressionResult
 [phantom]
 

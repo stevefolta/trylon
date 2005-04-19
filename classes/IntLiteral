@@ -12,6 +12,12 @@ create(value: String)
 }
 
 
+prepare-to-emit()
+{
+	// Nothing to do.
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	builder.add-int-literal(this);	// the "index" gets set here

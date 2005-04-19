@@ -13,6 +13,13 @@ create(condition: Expression, body: Block, comment: String)
 }
 
 
+prepare-to-emit()
+{
+	condition.prepare-to-emit();
+	body.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	builder.add-line(add-comment("while (1) {"));

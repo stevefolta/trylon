@@ -75,6 +75,13 @@ emit-object-call(object: ExpressionResult,
 }
 
 
+prepare-to-emit()
+{
+	if (body)
+		body.prepare-to-emit();
+}
+
+
 emit-code(stream: OutputStream)
 {
 	if (body == nil)

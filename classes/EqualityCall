@@ -14,6 +14,13 @@ create(name: String, object: Expression, argument: Expression)
 }
 
 
+prepare-to-emit()
+{
+	object.prepare-to-emit();
+	argument.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	// Special-case "== nil" and "!= nil".

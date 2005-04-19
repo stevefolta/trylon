@@ -13,6 +13,13 @@ create(expr1: Expression, expr2: Expression)
 }
 
 
+prepare-to-emit()
+{
+	expr1.prepare-to-emit();
+	expr2.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	result: ExpressionResult = expr1.emit-code(builder);

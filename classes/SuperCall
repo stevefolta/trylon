@@ -15,6 +15,13 @@ create(name: String, arguments: (List of Expression), on-class: CompiledClass)
 }
 
 
+prepare-to-emit()
+{
+	for (arg: Expression in arguments)
+		arg.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	// Find the class with the super function.

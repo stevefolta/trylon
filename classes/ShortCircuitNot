@@ -11,6 +11,12 @@ create(expr: Expression)
 }
 
 
+prepare-to-emit()
+{
+	expr.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	expr-result: ExpressionResult = expr.emit-code(builder);

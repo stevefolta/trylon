@@ -11,6 +11,12 @@ create(block: Block)
 }
 
 
+prepare-to-emit()
+{
+	block.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	block.emit-code(builder);

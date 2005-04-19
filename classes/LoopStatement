@@ -12,6 +12,12 @@ create(body: Block, comment: String)
 }
 
 
+prepare-to-emit()
+{
+	body.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	builder.add-line("while (1)");

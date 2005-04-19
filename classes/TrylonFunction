@@ -9,6 +9,13 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 emit-declaration(stream: OutputStream)
 [phantom]
 
+
+prepare-to-emit()
+{
+	// Default: nothing to do.
+}
+
+
 emit-code(stream: OutputStream)
 {
 	// Default: nothing to do.

@@ -280,6 +280,13 @@ copy-primitives-files(c-files: CFiles)
 }
 
 
+prepare-to-emit()
+{
+	for (function: TrylonFunction in functions.values)
+		function.prepare-to-emit();
+}
+
+
 emit-code(): Bool
 {
 	reporter.report("Generating code for " + name + "...");

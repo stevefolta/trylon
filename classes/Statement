@@ -3,6 +3,12 @@ Class: Statement
 comment: String;
 
 
+prepare-to-emit()
+{
+	// Default: nothing to do.
+}
+
+
 emit-code(builder: MethodBuilder)
 [phantom]
 

@@ -12,6 +12,12 @@ create(value: Expression, comment: String)
 }
 
 
+prepare-to-emit()
+{
+	value.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder)
 {
 	result: ExpressionResult = value.emit-code(builder);

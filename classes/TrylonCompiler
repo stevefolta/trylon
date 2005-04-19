@@ -114,8 +114,20 @@ compile-program(compile-symbols: List of String)
 	package-queue.append(main-package);
 	status-reporter.unindent();
 
+	// Get ready to emit (mainly this makes sure all used classes are loaded).
+	status-reporter.report("Preparing to emit...");
+	status-reporter.indent();
+	for (package: Package in package-queue)
+		package.prepare-to-emit();
+	status-reporter.unindent();
+
 	// Make every class without a superclass be a subclass of Standard Object.
-	main-package.ensure-superclasses(root-class(main-package));
+	object-class: CompiledClass = root-class(main-package);
+	main-package.ensure-superclasses(object-class);
+
+	// If we need to number the classes, now is the time to do it.
+	if (!build-settings.slow-dispatch)
+		object-class.number-classes(new ClassNumberer());
 
 	// Emit the classes and packages.
 	status-reporter.report("Emitting code...");
@@ -129,7 +141,7 @@ compile-program(compile-symbols: List of String)
 
 	// Another round of ensure-superclasses, to get classes loaded during
 	// the emit.
-	main-package.ensure-superclasses(root-class(main-package));
+	main-package.ensure-superclasses(object-class);
 
 	// Emit the method specs.
 	is-changed: Bool;
@@ -309,9 +321,7 @@ emit-dispatch-table(main-package: Package): Bool
 	if (build-settings.is-verbose)
 		status-reporter.indent();
 
-	// First, number the classes.
 	object-class: CompiledClass = root-class(main-package);
-	object-class.number-classes(new ClassNumberer());
 
 	// Gather up the rows.
 	rows: DispatchRowSet;

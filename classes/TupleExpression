@@ -16,6 +16,13 @@ add-member(member: Expression)
 }
 
 
+prepare-to-emit()
+{
+	for (member: Expression in members)
+		member.prepare-to-emit();
+}
+
+
 emit-code(builder: MethodBuilder): ExpressionResult
 {
 	builder.add-extern-declaration("extern obj_ new_co___Standard__Tuple(obj_);");
