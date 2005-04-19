@@ -1,0 +1,53 @@
+Class: ExpandoBitmap
+
+bitmap: BytePtr;
+num-bytes: Int;
+growth-increment: Int;
+
+
+create()
+{
+	growth-increment = 64;
+	num-bytes = growth-increment;
+	bitmap = new BytePtr(num-bytes);
+}
+
+
+"[]"(index: Int): Bool
+{
+	which-byte: Int = index / 8;
+	if (which-byte > num-bytes)
+		return false;
+
+	return (bitmap.byte-at(which-byte) & (1 << (index % 8))) != 0;
+}
+
+
+"[]-set"(index: Int, value: Bool)
+{
+	which-byte: Int = index / 8;
+	if (which-byte > num-bytes)
+		expand(which-byte + 1);
+
+	mask: Int = 1 << (index % 8);
+	if (value)
+		bitmap.byte-at(which-byte) |= mask;
+	else
+		bitmap.byte-at(which-byte) &= ~mask;
+}
+
+
+expand(needed-num-bytes: Int)
+{
+	new-num-bytes: Int = num-bytes + growth-increment;
+	while (new-num-bytes < needed-num-bytes)
+		new-num-bytes += growth-increment;
+
+	new-bitmap: BytePtr(new-num-bytes);
+	new-bitmap.copy-from(bitmap, num-bytes);
+
+	bitmap = new-bitmap;
+	num-bytes = new-num-bytes;
+}
+
+

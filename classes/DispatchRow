@@ -21,12 +21,18 @@ append(class-num: Int, function: TrylonInstanceFunction)
 }
 
 
-fit-into(dispatch-table: ExpandoArray of DispatchTableEntry)
+fit-into(dispatch-table: (ExpandoArray of DispatchTableEntry),
+         used-offsets: ExpandoBitmap)
 {
 	// Find the offset.
 	// Very slow method.
 	offset: Int = 0;
 	loop {
+		if (used-offsets[offset]) {
+			offset += 1;
+			continue;
+			}
+
 		fits-here: Bool = true;
 		for (entry: DispatchRowEntry in entries) {
 			if (dispatch-table[offset + entry.class-num] != nil) {
@@ -46,6 +52,7 @@ fit-into(dispatch-table: ExpandoArray of DispatchTableEntry)
 		dispatch-table[offset + entry.class-num] =
 			new DispatchTableEntry(entry.function, offset);
 		}
+	used-offsets[offset] = true;
 }
 
 

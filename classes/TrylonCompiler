@@ -327,10 +327,11 @@ emit-dispatch-table(main-package: Package): Bool
 	// Fit the rows.
 	// "rows" has the rows sorted by number of entries.
 	dispatch-table: ExpandoArray of DispatchTableEntry;
+	used-offsets: ExpandoBitmap;
 	for (row: DispatchRow in rows) {
 		if (build-settings.is-verbose)
 			status-reporter.report("Fitting " + row.name + "...");
-		row.fit-into(dispatch-table);
+		row.fit-into(dispatch-table, used-offsets);
 		}
 
 	if (build-settings.is-verbose)
@@ -371,7 +372,7 @@ emit-dispatch-table(main-package: Package): Bool
 		stream.write(entry.function.c-name);
 		stream.write(", ");
 		stream.write(entry.selector.string);
-		stream.write("},");
+		stream.write(" },");
 		stream.write-line();
 		}
 	stream.write-line("};");
