@@ -371,6 +371,7 @@ emit-dispatch-table(main-package: Package): Bool
 	stream.write-line();
 
 	// Emit the dispatch table.
+	num-filled: Int = 0;
 	stream.write-line("struct RDTableEntry_ dispatchTable_[] = {");
 	for (entry: DispatchTableEntry in dispatch-table) {
 		if (entry == nil) {
@@ -384,8 +385,20 @@ emit-dispatch-table(main-package: Package): Bool
 		stream.write(entry.selector.string);
 		stream.write(" },");
 		stream.write-line();
+		num-filled += 1;
 		}
 	stream.write-line("};");
+	stream.write-line();
+
+	stream.write("/* Fill rate: ");
+	fill-rate: Float =
+		new Float(num-filled) / new Float(dispatch-table.num-items);
+	stream.write(fill-rate.string);
+	stream.write(" (");
+	stream.write(num-filled.string);
+	stream.write("/");
+	stream.write(dispatch-table.num-items.string);
+	stream.write(") */");
 	stream.write-line();
 
 	is-changed: Bool = stream.is-changed;
