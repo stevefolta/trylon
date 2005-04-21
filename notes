@@ -1,0 +1,23 @@
+New Dispatch Timings
+	[2005.4.18]
+
+FPS in Perisphere.
+
+slow: 32-33 fps
+fast: 30.303/31.25 fps
+
+-O2
+slow: 32.2581
+fast: 32.2581
+
+
+later:
+slow: 30.303/31.25
+fast: 31.25
+
+-O3
+slow: 33.3333
+fast: 33.3333
+
+=====
+
