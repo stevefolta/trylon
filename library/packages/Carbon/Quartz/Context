@@ -14,8 +14,19 @@ primitive-fn rgb-fill-color: components [Tuple]
 primitive-fn rgb-stroke-color: components [Tuple]
 
 primitive-fn fill-rect: rect
+primitive-fn stroke-rect: rect
 primitive-fn clear-rect: rect
 # Note: doesn't erase the pixels!  Just makes them transparent.
+
+primitive-fn begin-path
+primitive-fn close-path
+primitive-fn move-to-x: x y: y
+primitive-fn add-line-to-x: x y: y
+primitive-fn add-curve-through: control-point-1 and: control-point-2 to: point
+primitive-fn add-quad-curve-through: control-point to: point
+primitive-fn stroke-path
+primitive-fn fill-path
+primitive-fn eo-fill-path
 
 primitive-fn flush
 primitive-fn synchronize

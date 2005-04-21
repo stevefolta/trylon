@@ -1,7 +1,23 @@
 #include "Trylon_.h"
 #include <Carbon/Carbon.h>
 
+UsingMethod_(x)  UsingMethod_(y)
+UsingMethod_(left)  UsingMethod_(top) UsingMethod_(width)  UsingMethod_(height)
+
 #define context	((CGContextRef) this_->fields[0])
+
+float FloatValue(obj_ value)
+{
+	DefineString_(1, "Bad parameter to a Carbon Quartz Context.", 41);
+	extern obj_ new_co___Standard__MessageException(obj_);
+
+	if (value->class_ == (obj_) &Standard__Float)
+		return FloatValue_(value);
+	else if (value->class_ == (obj_) &Standard__Int)
+		return IntValue_(value);
+	else
+		Throw_(new_co___Standard__MessageException(Str_(1)));
+}
 
 
 obj_ translate_ctm_tx_co_ty_co___Carbon__Quartz__Context(
@@ -136,13 +152,21 @@ obj_ rgb_stroke_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
 
 obj_ fill_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
 {
-	UsingMethod_(left)  UsingMethod_(top)
-	UsingMethod_(width)  UsingMethod_(height)
-
 	CGRect quartzRect =
-		CGRectMake(IntValue_(Call_(left, rect)), IntValue_(Call_(top, rect)),
-		           IntValue_(Call_(width, rect)), IntValue_(Call_(height, rect)));
+		CGRectMake(FloatValue(Call_(left, rect)), FloatValue(Call_(top, rect)),
+		           FloatValue(Call_(width, rect)), FloatValue(Call_(height, rect)));
 	CGContextFillRect(context, quartzRect);
+
+	return NULL;
+}
+
+
+obj_ stroke_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
+{
+	CGRect quartzRect =
+		CGRectMake(FloatValue(Call_(left, rect)), FloatValue(Call_(top, rect)),
+		           FloatValue(Call_(width, rect)), FloatValue(Call_(height, rect)));
+	CGContextStrokeRect(context, quartzRect);
 
 	return NULL;
 }
@@ -150,16 +174,85 @@ obj_ fill_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
 
 obj_ clear_rect_co___Carbon__Quartz__Context(obj_ this_, obj_ rect)
 {
-	UsingMethod_(left)  UsingMethod_(top)
-	UsingMethod_(width)  UsingMethod_(height)
-
 	CGRect quartzRect =
-		CGRectMake(IntValue_(Call_(left, rect)), IntValue_(Call_(top, rect)),
-		           IntValue_(Call_(width, rect)), IntValue_(Call_(height, rect)));
+		CGRectMake(FloatValue(Call_(left, rect)), FloatValue(Call_(top, rect)),
+		           FloatValue(Call_(width, rect)), FloatValue(Call_(height, rect)));
 	CGContextClearRect(context, quartzRect);
 
 	return NULL;
 }
+
+
+
+obj_ begin_path__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextBeginPath(context);
+	return NULL;
+}
+
+
+obj_ close_path__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextClosePath(context);
+	return NULL;
+}
+
+
+obj_ move_to_x_co_y_co___Carbon__Quartz__Context(obj_ this_, obj_ x, obj_ y)
+{
+	CGContextMoveToPoint(context, FloatValue(x), FloatValue(y));
+	return NULL;
+}
+
+
+obj_ add_line_to_x_co_y_co___Carbon__Quartz__Context(obj_ this_, obj_ x, obj_ y)
+{
+	CGContextAddLineToPoint(context, FloatValue(x), FloatValue(y));
+	return NULL;
+}
+
+
+obj_ add_curve_through_co_and_co_to_co___Carbon__Quartz__Context(
+	obj_ this_, obj_ controlPt1, obj_ controlPt2, obj_ point)
+{
+	CGContextAddCurveToPoint(context,
+		FloatValue(Call_(x, controlPt1)), FloatValue(Call_(y, controlPt1)),
+		FloatValue(Call_(x, controlPt2)), FloatValue(Call_(y, controlPt2)),
+		FloatValue(Call_(x, point)), FloatValue(Call_(y, point)));
+	return NULL;
+}
+
+
+obj_ add_quad_curve_through_co_to_co___Carbon__Quartz__Context(
+	obj_ this_, obj_ controlPt, obj_ point)
+{
+	CGContextAddQuadCurveToPoint(context,
+		FloatValue(Call_(x, controlPt)), FloatValue(Call_(y, controlPt)),
+		FloatValue(Call_(x, point)), FloatValue(Call_(y, point)));
+	return NULL;
+}
+
+
+obj_ stroke_path__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextStrokePath(context);
+	return NULL;
+}
+
+
+obj_ fill_path__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextFillPath(context);
+	return NULL;
+}
+
+
+obj_ eo_fill_path__Carbon__Quartz__Context(obj_ this_)
+{
+	CGContextEOFillPath(context);
+	return NULL;
+}
+
 
 
 obj_ flush__Carbon__Quartz__Context(obj_ this_)
