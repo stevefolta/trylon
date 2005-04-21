@@ -21,6 +21,18 @@ fn at: index set-to: value
 fn iterator
 	return Iterator new: this
 
+fn string
+	result := "("
+	have-item := false
+	for item in this
+		if have-item
+			result += ", "
+		else
+			have-item = true
+		result += item string
+	result += ")"
+	return result
+
 class Iterator
 	superclass Standard Iterator
 	field tuple
@@ -34,3 +46,4 @@ class Iterator
 		return tuple at: index
 	fn go-forward
 		index += 1
+

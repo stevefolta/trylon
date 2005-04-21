@@ -10,6 +10,8 @@ primitive-fn restore-state
 
 primitive-fn fill-color: components [Tuple]
 primitive-fn stroke-color: components [Tuple]
+primitive-fn rgb-fill-color: components [Tuple]
+primitive-fn rgb-stroke-color: components [Tuple]
 
 primitive-fn fill-rect: rect
 primitive-fn clear-rect: rect

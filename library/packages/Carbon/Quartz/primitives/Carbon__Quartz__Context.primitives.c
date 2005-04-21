@@ -81,7 +81,7 @@ static void SetupColorComponents(obj_ components, float* floatComponents)
 	if (numComponents > maxColorComponents)
 		Throw_(new_co___Standard__MessageException(Str_(1)));
 	for (i = 0; i < numComponents; ++i)
-		floatComponents[i] = IntValue_(Call_(at_co_, components, BuildInt_(i)));
+		floatComponents[i] = FloatValue_(Call_(at_co_, components, BuildInt_(i)));
 }
 
 obj_ fill_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
@@ -103,6 +103,32 @@ obj_ stroke_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
 	/* Set the fill color. */
 	SetupColorComponents(components, floatComponents);
 	CGContextSetStrokeColor(context, floatComponents);
+
+	return NULL;
+}
+
+
+obj_ rgb_fill_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
+{
+	float floatComponents[maxColorComponents];
+
+	/* Set the fill color. */
+	SetupColorComponents(components, floatComponents);
+	CGContextSetRGBFillColor(context, floatComponents[0], floatComponents[1],
+	                         floatComponents[2], floatComponents[3]);
+
+	return NULL;
+}
+
+
+obj_ rgb_stroke_color_co___Carbon__Quartz__Context(obj_ this_, obj_ components)
+{
+	float floatComponents[maxColorComponents];
+
+	/* Set the fill color. */
+	SetupColorComponents(components, floatComponents);
+	CGContextSetRGBStrokeColor(context, floatComponents[0], floatComponents[1],
+	                           floatComponents[2], floatComponents[3]);
 
 	return NULL;
 }
