@@ -20,7 +20,7 @@ create()
 	linker = "gcc";
 	dictionary = new Dictionary of String;
 	is-verbose = false;
-	slow-dispatch = true;
+	slow-dispatch = false;
 	optimize-field-accesses = true;
 
 	sysname: String = System.system.sysname;
