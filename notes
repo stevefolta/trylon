@@ -21,3 +21,18 @@ fast: 33.3333
 
 =====
 
+Optimizing Field Accesses
+	[2005.4.20]
+
+FPS in Perisphere.
+
+Before: 32.2581
+After:  32.2581
+
+Better FPS:
+before: 31.5
+after:  31.5
+and while I'm at it, slow dispatch: 31.5
+
+=====
+
