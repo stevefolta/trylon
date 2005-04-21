@@ -42,7 +42,7 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 }
 
 
-#ifdef ROW_DISPLACEMENT_DISPATCH_
+#if defined(ROW_DISPLACEMENT_DISPATCH_) && !defined(UNSAFE_DISPATCH_)
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
 	struct Standard__Class__internal* objClass =
@@ -58,7 +58,7 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 	// *** understood, and also pass the arguments.
 	return (fn_ptr_) &SendMessageNotUnderstood_;
 }
-#endif 	// ROW_DISPLACEMENT_DISPATCH_
+#endif 	// ROW_DISPLACEMENT_DISPATCH_ && !UNSAFE_DISPATCH_
 
 
 #ifdef SLOW_DISPATCH_

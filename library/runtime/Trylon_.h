@@ -43,9 +43,17 @@ struct RDTableEntry_ {
 
 extern struct RDTableEntry_ dispatchTable_[];
 
+#ifndef UNSAFE_DISPATCH_
 _StartExternC_
 extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 _FinishExternC_
+#endif
+
+#ifdef UNSAFE_DISPATCH_
+#define Dispatch_(selector, object) 	\
+	(dispatchTable_[selector + 	\
+		((struct Standard__Class__internal*) object->class_)->class_number].entry)
+#endif
 
 #define UsingMethod_(methodName) 	\
 	extern selector_ methodName##__selector_;

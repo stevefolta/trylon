@@ -469,8 +469,11 @@ emit-settings(): Bool
 
 	if (build-settings.slow-dispatch)
 		stream.write-line("#define SLOW_DISPATCH_");
-	else
+	else {
 		stream.write-line("#define ROW_DISPLACEMENT_DISPATCH_");
+		if (build-settings.unsafe-dispatch)
+			stream.write-line("#define UNSAFE_DISPATCH_");
+		}
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();
