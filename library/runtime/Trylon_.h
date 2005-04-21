@@ -52,7 +52,7 @@ _FinishExternC_
 #ifdef UNSAFE_DISPATCH_
 #define Dispatch_(selector, object) 	\
 	(dispatchTable_[selector + 	\
-		((struct Standard__Class__internal*) object->class_)->class_number].entry)
+		((struct Standard__Class__internal*) object->class_)->class_number].method)
 #endif
 
 #define UsingMethod_(methodName) 	\
