@@ -8,6 +8,7 @@ linker: String;
 dictionary: Dictionary of String;
 is-verbose: Bool;
 slow-dispatch: Bool;
+optimize-field-accesses: Bool;
 
 
 create()
@@ -20,6 +21,7 @@ create()
 	dictionary = new Dictionary of String;
 	is-verbose = false;
 	slow-dispatch = true;
+	optimize-field-accesses = true;
 
 	sysname: String = System.system.sysname;
 	if (!sysname.is-empty)
@@ -80,6 +82,8 @@ parse-block(lexer: Lexer)
 				linker = parse-name(lexer, name);
 			else if (name == "slow-dispatch")
 				slow-dispatch = parse-boolean(lexer, name);
+			else if (name == "optimize-field-accesses")
+				optimize-field-accesses = parse-boolean(lexer, name);
 
 			else if (name == "if" || name == "iff")
 				parse-if(lexer);

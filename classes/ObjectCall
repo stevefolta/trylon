@@ -54,7 +54,7 @@ emit-code(builder: MethodBuilder): ExpressionResult
 	for (arg: Expression in arguments)
 		arg-results.append(arg.emit-code(builder));
 
-	// Handle class functions and package functions
+	// Handle class functions and package functions.
 	if (object-result.is-a(PackageResult) || object-result.is-a(ClassResult)) {
 		package: Package = nil;
 		if (object-result.is-a(PackageResult))

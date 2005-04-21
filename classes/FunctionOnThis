@@ -2,17 +2,45 @@ Class: FunctionOnThis
 Superclass: TrylonFunction
 
 name: String;
+on-class: CompiledClass;
 
 
-create(name: String)
+create(name: String, on-class: CompiledClass)
 {
 	this.name = name;
+	this.on-class = on-class;
 }
 
 
 emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 	: ExpressionResult
 {
+	// Special-case instance functions.
+	if (TrylonCompiler.the-compiler.build-settings.optimize-field-accesses) {
+		function: TrylonFunction = on-class.lookup-instance-function(name);
+		if (function == nil) {
+			// This would be a good place for a warning... or would we never
+			// get here?
+			}
+		if (function.is-a(InstanceFieldGetter)) {
+			temporary: Temporary = builder.get-temporary();
+			line: String = temporary.name + " = this_->fields[";
+			line += builder.mangle-name(name) + "__fld_];";
+			builder.add-line(line);
+			return temporary;
+			}
+		else if (function.is-a(InstanceFieldSetter)) {
+			setter: InstanceFieldSetter = function.as-a(InstanceFieldSetter);
+			line: String =
+				"this_->fields[" +
+				builder.mangle-name(setter.field.name) + "__fld_] = " +
+				arguments.first-item.access + ";";
+			builder.add-line(line);
+			return arguments.first-item;
+			}
+		}
+
+	// Emit the call.
 	builder.using-object-function(name);
 	temporary: Temporary = builder.get-temporary();
 	line: String = temporary.name + " = ";
