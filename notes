@@ -36,3 +36,11 @@ and while I'm at it, slow dispatch: 31.5
 
 =====
 
+Unsafe Dispatch
+	[2005.4.21]
+
+Before: 34.1
+After: 34.0 (after a *long* time)
+
+=====
+
