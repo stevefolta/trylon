@@ -96,19 +96,6 @@ obj_ run_application_event_loop__Carbon__EventManager(void)
 }
 
 
-obj_ track_mouse_location_co___Carbon__EventManager(obj_ port)
-{
-	GrafPtr qdPort;
-	Point mousePoint;
-	MouseTrackingResult result;
-	obj_ pointObj, resultObj;
-	OSStatus status;
-	UsingMethod_(track_result_co_)
-	UsingMethod_(point_co_)
-	extern obj_ new_co_y_co___Standard__Point(obj_, obj_);
-	extern obj_ allocate_object_co___Standard__Implementation(obj_);
-	extern class_spec_ Carbon__EventManager__MouseTrackingResult;
-
 	UsingSym_(key_modifiers_changed)  UsingSym_(user_cancelled)
 	UsingSym_(timed_out)
 	static UInt32Spec trackingResultSpecs[] = {
@@ -123,6 +110,19 @@ obj_ track_mouse_location_co___Carbon__EventManager(obj_ port)
 		{ Sym_(mouse_moved), kMouseTrackingMouseMoved },
 		{ NULL, 0 }
 	};
+	UsingMethod_(track_result_co_) UsingMethod_(point_co_)
+	UsingMethod_(modifiers_co_)
+	extern obj_ new_co_y_co___Standard__Point(obj_, obj_);
+	extern obj_ allocate_object_co___Standard__Implementation(obj_);
+	extern class_spec_ Carbon__EventManager__MouseTrackingResult;
+
+obj_ track_mouse_location_co___Carbon__EventManager(obj_ port)
+{
+	GrafPtr qdPort;
+	Point mousePoint;
+	MouseTrackingResult result;
+	obj_ pointObj, resultObj;
+	OSStatus status;
 
 	if (port == NULL)
 		qdPort = NULL;
@@ -140,6 +140,41 @@ obj_ track_mouse_location_co___Carbon__EventManager(obj_ port)
 			(obj_) &Carbon__EventManager__MouseTrackingResult);
 	Call_(track_result_co_, resultObj, SymForValue(result, trackingResultSpecs));
 	Call_(point_co_, resultObj, pointObj);
+	return resultObj;
+}
+
+
+obj_ track_mouse_location_co_options_co_timeout_co___Carbon__EventManager(
+	obj_ port, obj_ options, obj_ timeout)
+{
+	GrafPtr qdPort;
+	Point mousePoint;
+	UInt32 modifiers;
+	MouseTrackingResult result;
+	obj_ pointObj, resultObj;
+	OSStatus status;
+
+	if (port == NULL)
+		qdPort = NULL;
+	else
+		qdPort = (GrafPtr) port->fields[0];
+
+	status =
+		TrackMouseLocationWithOptions(
+			qdPort, IntValue_(options), IntValue_(timeout),
+			&mousePoint, &modifiers,
+			&result);
+	if (status != noErr)
+		return NULL;
+	pointObj =
+		new_co_y_co___Standard__Point(
+			BuildInt_(mousePoint.h), BuildInt_(mousePoint.v));
+	resultObj =
+		allocate_object_co___Standard__Implementation(
+			(obj_) &Carbon__EventManager__MouseTrackingResult);
+	Call_(track_result_co_, resultObj, SymForValue(result, trackingResultSpecs));
+	Call_(point_co_, resultObj, pointObj);
+	Call_(modifiers_co_, resultObj, BuildInt_(modifiers));
 	return resultObj;
 }
 

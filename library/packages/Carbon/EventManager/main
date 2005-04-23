@@ -6,7 +6,9 @@ primitive-fn run-application-event-loop
 
 class MouseTrackingResult
 	fields track-result point
+	field modifiers 	# Only track-mouse-location:options:timeout: returns this.
 primitive-fn track-mouse-location: port
+primitive-fn track-mouse-location: port options: options timeout: timeout
 
 primitive-fn post-event-to-current-queue: event
 
