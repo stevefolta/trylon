@@ -35,3 +35,6 @@ fn string
 	
 	return string
 
+
+fn is-empty
+	return substrings is-empty
