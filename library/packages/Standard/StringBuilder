@@ -15,7 +15,7 @@ fn + string
 
 
 fn prepend: string
-	substrings push-front: string
+	substrings prepend: string
 	length += string length
 
 
