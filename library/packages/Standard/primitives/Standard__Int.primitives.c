@@ -128,6 +128,12 @@ obj_ float___Standard__Int(obj_ this_)
 }
 
 
+obj_ char___Standard__Int(obj_ this_)
+{
+	return BuildChar_(IntValue_(this_));
+}
+
+
 
 /*
 	Copyright 2005 Steve Folta.

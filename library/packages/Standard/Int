@@ -26,3 +26,4 @@ primitive-fn >> arg [Int] -> Int
 
 primitive-fn string -> String
 primitive-fn float -> Float
+primitive-fn char -> Char

@@ -195,6 +195,9 @@ fn copy -> String
 fn iterator
 	return StringIterator new: this
 
+fn characters
+	return StringIterator new: this
+
 fn lines
 	return LinesIterator new: this
 
