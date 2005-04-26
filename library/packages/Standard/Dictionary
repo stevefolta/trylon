@@ -62,9 +62,10 @@ fn contains: key
 
 fn keys
 	return KeysIterator new: root
-
 fn values
 	return ValuesIterator new: root
+fn pairs
+	return KeyValuePairsIterator new: root
 
 
 fn count
