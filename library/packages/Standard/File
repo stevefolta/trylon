@@ -17,6 +17,8 @@ fn contents
 
 fn stream
 	return InStream new: path
+fn output-stream
+	return OutStream new: path
 
 
 primitive-fn size
