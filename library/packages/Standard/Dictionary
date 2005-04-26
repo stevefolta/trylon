@@ -292,7 +292,7 @@ class KeyValuePairsIterator
 		if stack-top == nil
 			return nil
 		node := stack-top node
-		return Pair new: new
+		return Pair new: node
 	
 	class Pair
 		fields key value
