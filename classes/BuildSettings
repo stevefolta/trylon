@@ -31,6 +31,12 @@ create()
 }
 
 
+has-symbol(name: String): Bool
+{
+	return (dictionary[name] != nil);
+}
+
+
 load()
 {
 	load-from("build-settings.local");

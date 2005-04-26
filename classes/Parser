@@ -309,7 +309,10 @@ check-iff(): Bool
 	require-eol();
 
 	// If it doesn't exist, skip the block.
-	if (context.lookup-function(name) == nil) {
+	has-symbol: Bool =
+		(context.lookup-function(name) != nil) ||
+		(TrylonCompiler.the-compiler.build-settings.has-symbol(name));
+	if (!has-symbol) {
 		skip-block();
 		return false;
 		}
