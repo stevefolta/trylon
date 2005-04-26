@@ -5,6 +5,7 @@ fields root num-items
 
 fn create
 	root = nil
+	num-items = 0
 
 
 fn insert: value at: key
