@@ -1,0 +1,302 @@
+trylon-class Dictionary
+
+fields root num-items
+
+
+fn create
+	root = nil
+
+
+fn insert: value at: key
+	if root
+		insert-result := root insert: value at: key
+		if insert-result
+			root = insert-result
+			num-items += 1
+		else
+			# The key was already present.
+	else
+		# Empty so far.
+		root = Node new: key value: value
+		num-items += 1
+
+fn at: key set-to: value
+	insert: value at: key
+
+
+fn at: key
+	node := root
+	while node
+		if key < node key
+			node = node left
+		else if key > node key
+			node = node right
+		else
+			return node value
+	return nil
+
+
+fn remove: key 	# Returns the old value, if there was one.
+	if root == nil
+		return nil
+	
+	context := RemoveContext new: key
+	root = root remove: context
+	
+	if context item-found
+		num-items -= 1
+	return context deleted-value
+
+
+fn contains: key
+	node := root
+	while node
+		if key < node key
+			node = node left
+		else if key > node key
+			node = node right
+		else
+			return true
+	return false
+
+
+fn keys
+	return KeysIterator new: root
+
+fn values
+	return ValuesIterator new: root
+
+
+fn count
+	return num-items
+fn is-empty
+	return (num-items == 0)
+
+
+iff debug-dictionaries
+	fn dump
+		if root
+			root dump: 0
+
+
+#####
+
+class Node
+	fields key value left right level
+	
+
+	fn create: key value: value
+		this key = key
+		this value = value
+		left = nil
+		right = nil
+		level = 1
+	
+
+	fn insert: new-value at: new-key
+		if new-key < key
+			if left
+				insert-result := left insert: new-value at: new-key
+				if insert-result
+					left = insert-result
+				else
+					return nil 	# Key already exists; propagate that up.
+			else
+				left = Node new: new-key value: new-value
+		
+		else if key < new-key
+			if right
+				insert-result := right insert: new-value at: new-key
+				if insert-result
+					right = insert-result
+				else
+					return nil 	# Key already exists; propagate that up.
+			else
+				right = Node new: new-key value: new-value
+		
+		else
+			# This node *is* the new key.  Signal that by returning nil.
+			value = new-value
+			return nil
+		
+		new-top := skew
+		new-top = new-top split
+		return new-top
+	
+	
+	fn remove: context 	# Returns the new top of this subtree.
+		# Search down the tree, setting delete-node and last-node.
+		context last-node = this
+		if context key < key
+			if left
+				left = left remove: context
+		else
+			context delete-node = this
+			if right
+				right = right remove: context
+		
+		# If we're at the bottom, and the key is present, remove it.
+		if context last-node == this
+			if context delete-node != nil && 	--
+			   context key == context delete-node key
+				# Found it!  (At delete-node, not here.)
+				context item-found = true
+				context deleted-value = context delete-node value
+				# Move this key/value into the place of the deleted key/value.
+				context delete-node key = key
+				context delete-node value = value
+				return right
+		
+		# Otherwise, we are not at the bottom; rebalance.
+		else if (left && left level < level - 1) || 	--
+		        (right && right level < level - 1)
+			level -= 1
+			if right && right level > level
+				right level = level
+			new-top := skew
+			if new-top right
+				new-top = new-top right skew
+			if new-top right && new-top right right
+				new-top = new-top right right skew
+			new-top = new-top split
+			if new-top right
+				new-top = new-top split
+			return new-top
+		
+		return this
+	
+	
+	fn skew
+		new-top := this
+		
+		if left && level level == level
+			# Rotate with left.
+			new-top = left
+			left = new-top right
+			new-top right = this
+		
+		return new-top
+	
+	
+	fn split
+		new-top := this
+		
+		if right && right right && right right level == level
+			# Rotate with right.
+			new-top = right
+			right = new-top left
+			new-top left = this
+			# Boost the level.
+			new-top level += 1
+		
+		return new-top
+	
+	
+	iff debug-dictionaries
+		fn dump: level
+			write: "                 " substr: 0 length: level
+			write: "\"" + key + "\"  level:" + this level string + "\n"
+			if left
+				left dump: level + 1
+			if right
+				right dump: level + 1
+
+
+#####
+
+class RemoveContext
+	fields name item-found delete-node last-node deleted-value
+	
+	fn create: key
+		this key = key
+		item-found = false
+
+
+#####
+
+class Iterator
+	fields stack-top
+	
+	fn create: root
+		push-tree: root
+	
+	fn is-done
+		return (stack-top == nil)
+	
+	fn go-forward
+		if stack-top == nil
+			return
+		
+		right := stack-top node right
+		pop
+		push-tree: right
+	
+	fn iterator
+		return this
+	
+	fn push-tree: node
+		while node
+			push: node
+			node = node left
+	
+	fn push: node
+		stack-element := StackElement new: node
+		stack-element next = stack-top
+		stack-top = stack-element
+	
+	fn pop
+		if stack-top
+			stack-top = stack-top next
+	
+	class StackElement
+		fields node next
+		
+		fn create: node
+			this node = node
+
+
+#####
+
+class KeysIterator
+	superclass Iterator
+	
+	fn create: root
+		super create: root
+	
+	fn current-item
+		if stack-top == nil
+			return nil
+		return stack-top node key
+
+
+class ValuesIterator
+	superclass Iterator
+	
+	fn create: root
+		super create: root
+	
+	fn current-item
+		if stack-top == nil
+			return nil
+		return stack-top node value
+
+
+class KeyValuePairsIterator
+	superclass Iterator
+	
+	fn create: root
+		super create: root
+	
+	fn current-item
+		if stack-top == nil
+			return nil
+		node := stack-top node
+		return Pair new: new
+	
+	class Pair
+		fields key value
+		
+		fn create: node
+			key = node key
+			value = node value
+
