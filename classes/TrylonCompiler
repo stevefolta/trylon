@@ -475,6 +475,9 @@ emit-settings(): Bool
 			stream.write-line("#define UNSAFE_DISPATCH_");
 		}
 
+	if (build-settings.debugger)
+		stream.write-line("#define DEBUGGER");
+
 	is-changed: Bool = stream.is-changed;
 	stream.close();
 	return is-changed;

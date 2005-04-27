@@ -10,6 +10,7 @@ is-verbose: Bool;
 slow-dispatch: Bool;
 unsafe-dispatch: Bool;
 optimize-field-accesses: Bool;
+debugger: Bool;
 
 
 create()
@@ -94,6 +95,11 @@ parse-block(lexer: Lexer)
 				unsafe-dispatch = parse-boolean(lexer, name);
 			else if (name == "optimize-field-accesses")
 				optimize-field-accesses = parse-boolean(lexer, name);
+			else if (name == "debugger") {
+				debugger = parse-boolean(lexer, name);
+				if (debugger)
+					dictionary[name] = name;
+				}
 
 			else if (name == "if" || name == "iff")
 				parse-if(lexer);

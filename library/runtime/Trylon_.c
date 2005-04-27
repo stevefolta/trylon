@@ -276,4 +276,20 @@ char* className_(obj_ object)
 }
 
 
+#ifdef DEBUGGER
+obj_ showObj_(obj_ object)
+{
+	obj_ str;
+	UsingMethod_(debug_write_co_)
+	DefineInt_(0, 0)
+
+	if (object == NULL)
+		return NULL;
+
+	str = Call_(debug_write_co_, object, Int_(0));
+	return object;
+}
+#endif
+
+
 _FinishExternC_

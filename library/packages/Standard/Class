@@ -5,3 +5,4 @@ field superclass
 field raw-instance-size 	# Don't access this directly.
 field raw-class-number  	# Don't access this directly.
 
+primitive-fn num-fields

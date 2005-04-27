@@ -35,3 +35,9 @@ primitive-fn copy-from: source [BytePtr] length: length [BytePtr]
 
 primitive-fn string
 
+
+iff debugger
+	fn debug-write: level
+		indent := debug-spaces substr: 0 length: level
+		print-line: indent + this string
+
