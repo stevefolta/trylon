@@ -2,6 +2,7 @@
 
 #include "Trylon_.h"
 #include <sys/time.h>
+#include <signal.h>
 #ifdef OSX_FINK
 	// Fink doesn't use the gc directory for some reason.
 	#include <gc.h>
@@ -25,6 +26,12 @@ obj_ milliseconds__Standard__System()
 obj_ num_garbage_collections__Standard__System()
 {
 	return BuildInt_(GC_gc_no);
+}
+
+
+obj_ debugger__Standard__System()
+{
+	kill(getpid(), SIGTRAP);
 }
 
 

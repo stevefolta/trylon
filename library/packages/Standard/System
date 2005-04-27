@@ -5,3 +5,4 @@ primitive-class-fn milliseconds
 
 primitive-class-fn num-garbage-collections
 
+primitive-class-fn debugger
