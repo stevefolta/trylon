@@ -5,3 +5,5 @@ Precedence needs reordering.  Some examples:
 
 Make a pointer-free allocator and make String use it.
 
+`\0` doesn't work (it's the same as `0`).
+

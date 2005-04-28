@@ -171,7 +171,7 @@ class Node
 	fn skew
 		new-top := this
 		
-		if left && level level == level
+		if left && left level == level
 			# Rotate with left.
 			new-top = left
 			left = new-top right
