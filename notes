@@ -51,6 +51,17 @@ Linux on SS40G:
 Before: ~440ms
 After:  ~440ms
 
+Mac OSX on PowerBook 12" 1GHz:
+Before: ~670ms
+After:  ~690ms
+Before, -O3: ~690ms
+After, -O3:  ~345ms
+After, -O1:  ~345ms
+
+Perisphere:
+Before, -O1: 42fps
+After, -O1:  42fps
+
 
 =====
 
