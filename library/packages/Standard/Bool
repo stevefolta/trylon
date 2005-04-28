@@ -11,3 +11,8 @@ primitive-fn & arg [Bool] -> Bool
 primitive-fn ^ arg [Bool] -> Bool
 
 primitive-fn string -> String
+
+
+iff debugger
+	fn debug-write
+		print-line: debug-string

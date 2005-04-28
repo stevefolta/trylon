@@ -280,13 +280,12 @@ char* className_(obj_ object)
 obj_ showObj_(obj_ object)
 {
 	obj_ str;
-	UsingMethod_(debug_write_co_)
-	DefineInt_(0, 0)
+	UsingMethod_(debug_write)
 
 	if (object == NULL)
 		return NULL;
 
-	str = Call_(debug_write_co_, object, Int_(0));
+	str = Call_(debug_write, object);
 	return object;
 }
 #endif

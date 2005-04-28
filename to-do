@@ -2,3 +2,6 @@ Precedence needs reordering.  Some examples:
 	foo || bar: baz  =>  (foo) || (bar: baz)
 	foo = bar || baz  =>  foo = (bar || baz)
 	foo = bar, baz  =>  foo = (bar, baz)
+
+Make a pointer-free allocator and make String use it.
+
