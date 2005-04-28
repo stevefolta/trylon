@@ -181,6 +181,8 @@ compile-program(compile-symbols: List of String)
 	// Copy primitives files
 	main-package.copy-primitives-files(c-files);
 
+	if (build-settings.constant-selectors)
+		recompile-all = true;
 
 	// Compile C files.
 	status-reporter.report("Compiling C files...");
@@ -356,15 +358,17 @@ emit-dispatch-table(main-package: Package): Bool
 	stream.write-line();
 
 	// Define all selectors.
-	for (row: DispatchRow in rows) {
-		stream.write("DefineSelector_(");
-		stream.write(MethodBuilder.mangle-name(row.name));
-		stream.write(", ");
-		stream.write(row.selector.string);
-		stream.write(")");
+	if (!build-settings.constant-selectors) {
+		for (row: DispatchRow in rows) {
+			stream.write("DefineSelector_(");
+			stream.write(MethodBuilder.mangle-name(row.name));
+			stream.write(", ");
+			stream.write(row.selector.string);
+			stream.write(")");
+			stream.write-line();
+			}
 		stream.write-line();
 		}
-	stream.write-line();
 
 	// Declare all functions.
 	object-class.emit-all-instance-function-declarations(stream);
@@ -401,8 +405,24 @@ emit-dispatch-table(main-package: Package): Bool
 	stream.write(") */");
 	stream.write-line();
 
+	// Finish up "methods_.c".
 	is-changed: Bool = stream.is-changed;
 	stream.close();
+
+	// If constant-settings is on, generate "selectors_.h".
+	if (build-settings.constant-selectors) {
+		stream: ExistingFileStream(new File(".c-sources/selectors_.h"));
+		for (row: DispatchRow in rows) {
+			stream.write("#define ");
+			stream.write(MethodBuilder.mangle-name(row.name));
+			stream.write("__selector_ ");
+			stream.write(row.selector.string);
+			stream.write-line();
+			}
+		stream.write-line();
+		stream.close();
+		}
+
 	return is-changed;
 }
 
@@ -477,6 +497,9 @@ emit-settings(): Bool
 
 	if (build-settings.debugger)
 		stream.write-line("#define DEBUGGER");
+
+	if (build-settings.constant-selectors)
+		stream.write-line("#define CONSTANT_SELECTORS");
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();

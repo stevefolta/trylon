@@ -1,0 +1,11 @@
+trylon-package Main
+
+
+fn main: args
+	start-time := System milliseconds
+	iterations := 1000000
+	while iterations > 0
+		iterations -= 1
+	time := System milliseconds - start-time
+	print-line: time string + " milliseconds"
+

@@ -44,3 +44,13 @@ After: 34.0 (after a *long* time)
 
 =====
 
+Constant Selectors
+	[2005.4.28]
+
+Linux on SS40G:
+Before: ~440ms
+After:  ~440ms
+
+
+=====
+

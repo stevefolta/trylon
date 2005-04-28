@@ -55,10 +55,17 @@ _FinishExternC_
 		((struct Standard__Class__internal*) object->class_)->class_number].method)
 #endif
 
+#ifndef CONSTANT_SELECTORS
 #define UsingMethod_(methodName) 	\
 	extern selector_ methodName##__selector_;
 #define DefineSelector_(methodName, value) 	\
 	selector_ methodName##__selector_ = value;
+#endif
+
+#ifdef CONSTANT_SELECTORS
+#define UsingMethod_(methodName)
+#endif
+
 
 #define Call_(fnName, object, args...) \
 	((*Dispatch_(fnName##__selector_, (obj_) (object))) \
@@ -286,5 +293,8 @@ _FinishExternC_
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 
 
+#ifdef CONSTANT_SELECTORS
+#include "selectors_.h"
+#endif
 
 #endif	// Trylon_.h
