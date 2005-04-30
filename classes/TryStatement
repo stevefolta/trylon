@@ -30,7 +30,7 @@ emit-code(builder: MethodBuilder)
 	builder.using-object-function("is-a:");
 
 	// Body
-	builder.add-line(add-comment("_Try_"));
+	builder.add-line(add-comment("Try_"));
 	body.emit-code(builder);
 
 	// Catch clauses
@@ -45,11 +45,11 @@ emit-code(builder: MethodBuilder)
 
 		if (have-a-catch) {
 			builder.add-line(
-				add-comment("_AlsoCatch_(" + clause.type.c-name + ")", clause.comment));
+				add-comment("AlsoCatch_(" + clause.type.c-name + ")", clause.comment));
 			}
 		else {
 			builder.add-line(
-				add-comment("_Catch_(" + clause.type.c-name + ")", clause.comment));
+				add-comment("Catch_(" + clause.type.c-name + ")", clause.comment));
 			have-a-catch = true;
 			}
 
@@ -57,7 +57,7 @@ emit-code(builder: MethodBuilder)
 		}
 
 	// Finish
-	builder.add-line("_EndCatch_");
+	builder.add-line("EndCatch_");
 	if (post-clauses-comments) {
 		for (statement: Statement in post-clauses-comments)
 			statement.emit-code(builder);

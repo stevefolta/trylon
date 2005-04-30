@@ -136,7 +136,7 @@ extern void Throw_(obj_ object);
 extern void PopException_();
 _FinishExternC_
 
-#define _Try_	\
+#define Try_	\
 	{	\
 	ExceptionCatcher_ __catcher;	\
 	obj_ __caught_object; 	\
@@ -144,18 +144,18 @@ _FinishExternC_
 	__caught_object = (obj_) setjmp(__catcher.jumpBuf); 	\
 	if (__caught_object == NULL)	{ 	\
 
-#define _Catch_(class)	\
+#define Catch_(class)	\
 		PopException_();	\
 		}	\
 	else if (Test_(Call_(is_a_co_, __caught_object, &class))) {	\
 		PopException_();
 
-#define _AlsoCatch_(class)	\
+#define AlsoCatch_(class)	\
 		}	\
 	else if (Test_(Call_(is_a_co_, __caught_object, &class))) {	\
 		PopException_();
 
-#define _EndCatch_	\
+#define EndCatch_	\
 		}	\
 	else {	\
 		PopException_();	\
