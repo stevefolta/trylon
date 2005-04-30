@@ -42,6 +42,18 @@ obj_ allocate_bytes_co___Standard__Implementation(obj_ size)
 }
 
 
+obj_ allocate_bytes_non_pointer_co___Standard__Implementation(obj_ size)
+{
+	char* value = (char*) GC_MALLOC(IntValue_(size));
+	struct Standard__BytePtr__internal* ptr =
+		(struct Standard__BytePtr__internal*)
+			GC_MALLOC_ATOMIC(sizeof(struct Standard__BytePtr__internal));
+	ptr->class_ = (obj_) &Standard__BytePtr;
+	ptr->value = value;
+	return (obj_) ptr;
+}
+
+
 
 /*
 	Copyright 2005 Steve Folta.

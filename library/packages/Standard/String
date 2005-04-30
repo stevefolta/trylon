@@ -15,7 +15,7 @@ fn create: start to: stopper
 	this stopper = stopper
 
 fn create: length
-	this start = BytePtr new: length
+	this start = BytePtr new-non-pointer: length
 	this stopper = this start
 
 iff !semi-primitive-strings

@@ -6,6 +6,9 @@ class-fn new
 class-fn new: size
 	return Implementation allocate-bytes: size
 
+class-fn new-non-pointer: size
+	return Implementation allocate-bytes-non-pointer: size
+
 primitive-fn == arg [BytePtr] -> Bool
 primitive-fn != arg [BytePtr] -> Bool
 primitive-fn < arg [BytePtr] -> Bool

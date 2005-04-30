@@ -1,6 +1,7 @@
 trylon-package Implementation
 
 primitive-fn allocate-bytes: bytes [Int] -> BytePtr
+primitive-fn allocate-bytes-non-pointer: bytes [Int] -> BytePtr
 primitive-fn allocate-slots: slots [Int] -> BytePtr
 
 primitive-fn allocate-object: class [Class]
