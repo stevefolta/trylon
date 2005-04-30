@@ -1,6 +1,16 @@
 trylon-package Main
 
+fields true-test
+
+
 fn main: args
+	try
+		tests
+	catch Exception
+		print-line
+		print-line: exception message
+
+fn tests
 	print-line: "-- Statement tests --"
 
 	# if
@@ -45,6 +55,16 @@ fn main: args
 		catch Exception
 			print-line: exception message
 	print-line: "--"
+	
+	# iff
+	succeeded := false
+	iff true-test
+		succeeded = true
+	test: succeeded title: "iff statement (uninverted)"
+	iff !true-test
+		succeeded = false
+	test: succeeded title: "iff statement (inverted)"
+	print-line: "--"
 
 
 	print-line
@@ -64,10 +84,10 @@ fn main: args
 	print-line: (false && 3) string + " == false"
 	print-line: (!false) string + " == true"
 	print-line: "--"
-	print-line: (3 & 7) string + " == 3"
-	print-line: (3 | 7) string + " == 7"
-	print-line: (3 ^ 7) string + " == 4"
-	print-line: (~-2) string + " == 1"
+	check: 3 & 7 against: 3 title: "&"
+	check: 3 | 7 against: 7 title: "|"
+	check: 3 ^ 7 against: 4 title: "^"
+	check: (~-2) against: 1 title: "~-2"
 	foo = 7
 	print-line: foo string + " == 7"
 	print-line: "3" float string + " == 3"
@@ -146,6 +166,18 @@ fn throw-test
 
 fn throw-uncaught-test
 	throw 35
+
+fn test: succeeded title: title
+	if succeeded
+		print-line: title + " test succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
+fn check: value against: expected-value title: title
+	if value == expected-value
+		print-line: title + " test succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
 
 
 fields bogue value

@@ -274,8 +274,11 @@ parse-class-contents(the-class: CompiledClass)
 				if (current-token.type == 'indent') {
 					consume-token();
 					parse-class-contents(the-class);
-					if (current-token.type != 'unindent')
-						throw ParseException("Unindent required at end of class.", current-token);
+					if (current-token.type != 'unindent') {
+						throw
+							ParseException("Unindent required at end of class.",
+							               current-token);
+						}
 					consume-token();
 					}
 				}
@@ -301,6 +304,13 @@ check-iff(): Bool
 {
 	consume-token();	// "iff"
 
+	// Check for "!".
+	invert-sense: Bool = false;
+	if (current-token.type == '!') {
+		consume-token();
+		invert-sense = true;
+		}
+
 	// Get the name.
 	if (current-token.type != 'name')
 		throw ParseException("Illegal \"iff\".", current-token);
@@ -309,10 +319,12 @@ check-iff(): Bool
 	require-eol();
 
 	// If it doesn't exist, skip the block.
-	has-symbol: Bool =
+	test-succeeded: Bool =
 		(context.lookup-function(name) != nil) ||
 		(TrylonCompiler.the-compiler.build-settings.has-symbol(name));
-	if (!has-symbol) {
+	if (invert-sense)
+		test-succeeded = !test-succeeded;
+	if (!test-succeeded) {
 		skip-block();
 		return false;
 		}
