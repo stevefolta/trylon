@@ -222,13 +222,8 @@ char* MakeCString_(obj_ str)
 	unsigned int	length;
 	char*       	cString;
 
-#ifndef SEMI_PRIMITIVE_STRINGS_
-	start = BytePtrValue_(strObj->start);
-	length = BytePtrValue_(strObj->stopper) - start;
-#else 	// SEMI_PRIMITIVE_STRINGS_
-	start = strObj->start;
-	length = strObj->stopper - start;
-#endif 	// SEMI_PRIMITIVE_STRINGS_
+	start = StringStart_(strObj);
+	length = StringStopper_(strObj) - start;
 	cString = GC_MALLOC(length + 1);
 	memcpy(cString, start, length);
 	cString[length] = 0;

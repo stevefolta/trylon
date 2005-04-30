@@ -14,18 +14,11 @@ obj_ nil__Standard = (0);
 
 obj_ print_co___Standard(obj_ strObj)
 {
-	struct Standard__String__internal* str;
 	byte_ptr_ start, stopper;
 	UsingMethod_(string)
 	strObj = Call_(string, strObj);
-	str = (struct Standard__String__internal*) strObj;
-#ifndef SEMI_PRIMITIVE_STRINGS_
-	start = BytePtrValue_(str->start);
-	stopper = BytePtrValue_(str->stopper);
-#else 	// SEMI_PRIMITIVE_STRINGS_
-	start = str->start;
-	stopper = str->stopper;
-#endif 	// SEMI_PRIMITIVE_STRINGS_
+	start = StringStart_(strObj);
+	stopper = StringStopper_(strObj);
 	fwrite(start, stopper - start, 1, stdout);
 }
 

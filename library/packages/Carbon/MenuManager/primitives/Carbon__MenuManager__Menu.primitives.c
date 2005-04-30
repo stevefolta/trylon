@@ -7,13 +7,11 @@
 
 static void GetPString(obj_ strObj, Str255 pstr)
 {
-	struct Standard__String__internal* str =
-		(struct Standard__String__internal*) strObj;
-	int length = BytePtrValue_(str->stopper) - BytePtrValue_(str->start);
+	int length = StringStopper_(strObj) - StringStart_(strObj);
 	if (length > 255)
 		length = 255;
 	pstr[0] = length;
-	memcpy(pstr, BytePtrValue_(str->start), length);
+	memcpy(pstr, StringStart_(strObj), length);
 }
 
 

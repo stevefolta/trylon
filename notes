@@ -65,3 +65,14 @@ After, -O1:  42fps
 
 =====
 
+Semi-Primitive Strings
+	[2005.4.30]
+
+With just start, stopper, length, is-empty.
+('constant-selectors' was on, -O1.)
+Before: 40fps
+After:  
+
+
+=====
+

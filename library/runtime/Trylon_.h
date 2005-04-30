@@ -320,6 +320,24 @@ _FinishExternC_
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 
+#ifndef SEMI_PRIMITIVE_STRINGS_
+
+#define StringStart_(obj) 	\
+	(BytePtrValue_(((struct Standard__String__internal*) obj)->start))
+#define StringStopper_(obj) 	\
+	(BytePtrValue_(((struct Standard__String__internal*) obj)->stopper))
+
+#else 	// SEMI_PRIMITIVE_STRINGS_
+
+#define StringStart_(obj) 	\
+	(((struct Standard__String__internal*) obj)->start)
+#define StringStopper_(obj) 	\
+	(((struct Standard__String__internal*) obj)->stopper)
+
+#endif 	// SEMI_PRIMITIVE_STRINGS_
+
+
+// Selectors.
 
 #ifdef CONSTANT_SELECTORS
 #include "selectors_.h"
