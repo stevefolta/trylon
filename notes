@@ -80,3 +80,13 @@ After:  26 fps (from the low side)
 
 =====
 
+Test_() As A Macro
+	[2005.4.30]
+
+SS40G:
+Before: 440 ms
+After:  410 ms
+
+
+=====
+

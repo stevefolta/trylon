@@ -165,13 +165,14 @@ _FinishExternC_
 
 _StartExternC_
 extern void RegisterFinalizer_(obj_ object);
-extern int Test_(obj_ object);
+//*** extern int Test_(obj_ object);
 
 extern obj_ false__Standard;
 extern obj_ true__Standard;
 
 _FinishExternC_
 
+#define Test_(object)	(object != NULL && object != false__Standard)
 #define Not_(object)	(Test_(object) ? false__Standard : true__Standard)
 
 

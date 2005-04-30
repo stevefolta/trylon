@@ -131,6 +131,7 @@ void RegisterFinalizer_(obj_ object)
 }
 
 
+#ifdef NOT_NOW
 int Test_(obj_ object)
 {
 	/* "nil" and "false" are false; everything else is true. */
@@ -145,6 +146,7 @@ int Test_(obj_ object)
 	return 0;
 ***/
 }
+#endif 	// NOT_NOW
 
 
 obj_ BuildInt_(int value)
