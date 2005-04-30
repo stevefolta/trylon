@@ -21,7 +21,7 @@ emit-code(builder: MethodBuilder): ExpressionResult
 {
 	expr-result: ExpressionResult = expr.emit-code(builder);
 	temp: Temporary = builder.get-temporary();
-	builder.add-line(temp.name + " = _Not_(" + expr-result.access + ");");
+	builder.add-line(temp.name + " = Not_(" + expr-result.access + ");");
 	return temp;
 }
 

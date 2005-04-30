@@ -172,7 +172,7 @@ extern obj_ true__Standard;
 
 _FinishExternC_
 
-#define _Not_(object)	(Test_(object) ? false__Standard : true__Standard)
+#define Not_(object)	(Test_(object) ? false__Standard : true__Standard)
 
 
 // everybody needs these:
