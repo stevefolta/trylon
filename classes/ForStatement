@@ -44,7 +44,7 @@ emit-code(builder: MethodBuilder)
 
 	// Do the test
 	builder.add-line("obj_ is_done_ = Call_(is_done, iterator_);");
-	builder.add-line("if (_Test_(is_done_))");
+	builder.add-line("if (Test_(is_done_))");
 	builder.add-line("\t_Break_");
 
 	// Emit the local

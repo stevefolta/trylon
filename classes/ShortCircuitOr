@@ -31,7 +31,7 @@ emit-code(builder: MethodBuilder): ExpressionResult
 		result = temporary;
 		}
 
-	builder.add-line("if (!_Test_(" + result.access + ")) {");
+	builder.add-line("if (!Test_(" + result.access + ")) {");
 	builder.indent();
 	result2: ExpressionResult = expr2.emit-code(builder);
 	builder.add-line(result.access + " = " + result2.access + ";");

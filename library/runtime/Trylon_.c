@@ -131,7 +131,7 @@ void RegisterFinalizer_(obj_ object)
 }
 
 
-int _Test_(obj_ object)
+int Test_(obj_ object)
 {
 	/* "nil" and "false" are false; everything else is true. */
 	return (object != NULL && object != false__Standard);

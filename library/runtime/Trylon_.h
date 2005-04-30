@@ -147,12 +147,12 @@ _FinishExternC_
 #define _Catch_(class)	\
 		PopException_();	\
 		}	\
-	else if (_Test_(Call_(is_a_co_, __caught_object, &class))) {	\
+	else if (Test_(Call_(is_a_co_, __caught_object, &class))) {	\
 		PopException_();
 
 #define _AlsoCatch_(class)	\
 		}	\
-	else if (_Test_(Call_(is_a_co_, __caught_object, &class))) {	\
+	else if (Test_(Call_(is_a_co_, __caught_object, &class))) {	\
 		PopException_();
 
 #define _EndCatch_	\
@@ -165,14 +165,14 @@ _FinishExternC_
 
 _StartExternC_
 extern void RegisterFinalizer_(obj_ object);
-extern int _Test_(obj_ object);
+extern int Test_(obj_ object);
 
 extern obj_ false__Standard;
 extern obj_ true__Standard;
 
 _FinishExternC_
 
-#define _Not_(object)	(_Test_(object) ? false__Standard : true__Standard)
+#define _Not_(object)	(Test_(object) ? false__Standard : true__Standard)
 
 
 // everybody needs these:

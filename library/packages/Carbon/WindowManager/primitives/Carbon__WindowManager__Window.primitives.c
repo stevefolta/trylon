@@ -114,7 +114,7 @@ obj_ create_co_attributes_co___Carbon__WindowManager__Window(obj_ this_, obj_ co
 	windowAttrs = kWindowNoAttributes;
 	iterator = Call_(iterator, attributes);
 	while (1) {
-		if (_Test_(Call_(is_done, iterator)))
+		if (Test_(Call_(is_done, iterator)))
 			break;
 		attribute = Call_(current_item, iterator);
 		for (index = 0; ; ++index) {
@@ -159,7 +159,7 @@ obj_ show__Carbon__WindowManager__Window(obj_ this_)
 
 obj_ activate_co___Carbon__WindowManager__Window(obj_ this_, obj_ be_active)
 {
-	return BuildInt_( ActivateWindow(CarbonWindow(this_), _Test_(be_active)) );
+	return BuildInt_( ActivateWindow(CarbonWindow(this_), Test_(be_active)) );
 }
 
 
@@ -203,7 +203,7 @@ obj_ title_co___Carbon__WindowManager__Window(obj_ this_, obj_ new_title)
 
 obj_ modified_co___Carbon__WindowManager__Window(obj_ this_, obj_ new_state)
 {
-	return BuildInt_( SetWindowModified(CarbonWindow(this_), _Test_(new_state)) );
+	return BuildInt_( SetWindowModified(CarbonWindow(this_), Test_(new_state)) );
 }
 
 

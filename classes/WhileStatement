@@ -25,7 +25,7 @@ emit-code(builder: MethodBuilder)
 	builder.add-line(add-comment("while (1) {"));
 	builder.add-line("_StartContinueCatcher_");
 	result: ExpressionResult = condition.emit-code(builder);
-	builder.add-line("if (!_Test_(" + result.access + "))");
+	builder.add-line("if (!Test_(" + result.access + "))");
 	builder.add-line("\t_Break_");
 	body.emit-code(builder);
 	builder.add-line("_EndContinueCatcher_");
