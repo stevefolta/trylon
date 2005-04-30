@@ -6,3 +6,6 @@ primitive-fn allocate-slots: slots [Int] -> BytePtr
 
 primitive-fn allocate-object: class [Class]
 primitive-fn allocate-object: class [Class] with-extra-slots: slots [Int]
+
+primitive-fn incremental-gc -> Bool
+primitive-fn incremental-gc: enable [Bool]

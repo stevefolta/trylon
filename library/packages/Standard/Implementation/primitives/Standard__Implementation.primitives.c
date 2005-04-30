@@ -54,6 +54,25 @@ obj_ allocate_bytes_non_pointer_co___Standard__Implementation(obj_ size)
 }
 
 
+static int incrementalGCIsOn = 0;
+
+obj_ incremental_gc__Standard__Implementation()
+{
+	return (incrementalGCIsOn ? true__Standard : false__Standard);
+}
+
+obj_ incremental_gc_co___Standard__Implementation(obj_ enable)
+{
+	if (Test_(enable)) {
+		GC_enable_incremental();
+		incrementalGCIsOn = 1;
+		}
+	/* The Boehm collector can't disable incremental GC. */
+
+	return NULL;
+}
+
+
 
 /*
 	Copyright 2005 Steve Folta.
