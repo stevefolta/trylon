@@ -73,6 +73,13 @@ obj_ incremental_gc_co___Standard__Implementation(obj_ enable)
 }
 
 
+obj_ gc_a_little__Standard__Implementation()
+{
+	int result = GC_collect_a_little();
+	return (result ? true__Standard : false__Standard);
+}
+
+
 
 /*
 	Copyright 2005 Steve Folta.

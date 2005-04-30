@@ -9,3 +9,5 @@ primitive-fn allocate-object: class [Class] with-extra-slots: slots [Int]
 
 primitive-fn incremental-gc -> Bool
 primitive-fn incremental-gc: enable [Bool]
+primitive-fn gc-a-little -> Bool
+
