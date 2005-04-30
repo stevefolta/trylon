@@ -199,14 +199,17 @@ obj_ BuildString_(const char* cString)
 	memcpy(heapString, cString, length + 1);
 
 	// Build the string object.
-	start = BuildBytePtr_((byte_ptr_) heapString);
-	stopper = BuildBytePtr_((byte_ptr_) heapString + length);
 	strObj =
 		(struct Standard__String__internal*)
 			GC_MALLOC(sizeof(struct Standard__String__internal));
 	strObj->class_ = (obj_) &Standard__String;
-	strObj->start = start;
-	strObj->stopper = stopper;
+#ifndef SEMI_PRIMITIVE_STRINGS_
+	strObj->start = BuildBytePtr_((byte_ptr_) heapString);
+	strObj->stopper = BuildBytePtr_((byte_ptr_) heapString + length);
+#else 	// SEMI_PRIMITIVE_STRINGS_
+	strObj->start = (byte_ptr_) heapString;
+	strObj->stopper = (byte_ptr_) heapString + length;
+#endif 	// SEMI_PRIMITIVE_STRINGS_
 	return (obj_) strObj;
 }
 
@@ -219,8 +222,13 @@ char* MakeCString_(obj_ str)
 	unsigned int	length;
 	char*       	cString;
 
+#ifndef SEMI_PRIMITIVE_STRINGS_
 	start = BytePtrValue_(strObj->start);
 	length = BytePtrValue_(strObj->stopper) - start;
+#else 	// SEMI_PRIMITIVE_STRINGS_
+	start = strObj->start;
+	length = strObj->stopper - start;
+#endif 	// SEMI_PRIMITIVE_STRINGS_
 	cString = GC_MALLOC(length + 1);
 	memcpy(cString, start, length);
 	cString[length] = 0;
@@ -272,7 +280,11 @@ char* className_(obj_ object)
 
 	classObj = (struct Standard__Class__internal*) object->class_;
 	nameObj = (struct Standard__String__internal*) classObj->name;
+#ifndef SEMI_PRIMITIVE_STRINGS_
 	return BytePtrValue_(nameObj->start);
+#else 	// SEMI_PRIMITIVE_STRINGS_
+	return nameObj->start;
+#endif 	// SEMI_PRIMITIVE_STRINGS_
 }
 
 

@@ -212,11 +212,20 @@ struct Standard__BytePtr__internal {
 	char*	value;
 };
 
+
+#ifndef SEMI_PRIMITIVE_STRINGS_
 struct Standard__String__internal {
 	obj_	class_;
 	obj_	start;
 	obj_	stopper;
 };
+#else 	// SEMI_PRIMITIVE_STRINGS_
+struct Standard__String__internal {
+	obj_     	class_;
+	byte_ptr_	start;
+	byte_ptr_	stopper;
+};
+#endif 	// SEMI_PRIMITIVE_STRINGS_
 
 typedef struct Standard__Class__internal class_spec_;
 
@@ -260,6 +269,9 @@ _FinishExternC_
 #define DefineBytePtr_(name, value) \
 	static struct object name = { (obj_) &Standard__BytePtr, (obj_) (value) };
 
+
+#ifndef SEMI_PRIMITIVE_STRINGS_
+
 #define DefineString_(index, value, length) 	\
 	static const char s##index##__str_[] = value; 	\
 	DefineBytePtr_(s##index##__start_, s##index##__str_) 	\
@@ -273,6 +285,22 @@ _FinishExternC_
 	DefineBytePtr_(y##name##__stopper_, y##name##__str_ + length) 	\
 	struct Standard__String__internal y##name##__sym_ = 	\
 		{ (obj_) &Standard__Symbol, &y##name##__start_, &y##name##__stopper_ };
+
+#else 	// SEMI_PRIMITIVE_STRINGS_
+
+#define DefineString_(index, value, length) 	\
+	static const char s##index##__str_[] = value; 	\
+	static struct Standard__String__internal s##index##_ =  	\
+		{ (obj_) &Standard__String, (byte_ptr_) s##index##__str_, 	\
+		  (byte_ptr_) s##index##__str_ + length };
+
+#define DefineSymbol_(name, value, length) 	\
+	static const char y##name##__str_[] = value; 	\
+	struct Standard__String__internal y##name##__sym_ = 	\
+		{ (obj_) &Standard__Symbol, (byte_ptr_) y##name##__str_, 	\
+		  (byte_ptr_) y##name##__str_ + length };
+
+#endif 	// SEMI_PRIMITIVE_STRINGS_
 
 #define Str_(index)	((obj_) &s##index##_)
 

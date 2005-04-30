@@ -58,6 +58,9 @@ run()
 		if (status-reporter == nil)
 			status-reporter = new VT100StatusReporter();
 
+		if (build-settings.is-verbose)
+			build-settings.report();
+
 		if (do-lex-test) {
 			for (arg: String in arguments.tail.tail)
 				lex-test(arg);
@@ -341,7 +344,7 @@ emit-dispatch-table(main-package: Package): Bool
 	dispatch-table: ExpandoArray of DispatchTableEntry;
 	used-offsets: ExpandoBitmap;
 	for (row: DispatchRow in rows) {
-		if (build-settings.is-verbose)
+		if (build-settings.is-verbose && false)
 			status-reporter.report("Fitting " + row.name + "...");
 		row.fit-into(dispatch-table, used-offsets);
 		}
@@ -500,6 +503,9 @@ emit-settings(): Bool
 
 	if (build-settings.constant-selectors)
 		stream.write-line("#define CONSTANT_SELECTORS");
+
+	if (build-settings.semi-primitive-strings)
+		stream.write-line("#define SEMI_PRIMITIVE_STRINGS_");
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();

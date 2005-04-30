@@ -19,8 +19,13 @@ obj_ print_co___Standard(obj_ strObj)
 	UsingMethod_(string)
 	strObj = Call_(string, strObj);
 	str = (struct Standard__String__internal*) strObj;
+#ifndef SEMI_PRIMITIVE_STRINGS_
 	start = BytePtrValue_(str->start);
 	stopper = BytePtrValue_(str->stopper);
+#else 	// SEMI_PRIMITIVE_STRINGS_
+	start = str->start;
+	stopper = str->stopper;
+#endif 	// SEMI_PRIMITIVE_STRINGS_
 	fwrite(start, stopper - start, 1, stdout);
 }
 

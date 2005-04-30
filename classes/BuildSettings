@@ -11,6 +11,7 @@ slow-dispatch: Bool;
 unsafe-dispatch: Bool;
 optimize-field-accesses: Bool;
 constant-selectors: Bool;
+semi-primitive-strings: Bool;
 debugger: Bool;
 
 
@@ -26,6 +27,8 @@ create()
 	slow-dispatch = false;
 	unsafe-dispatch = false;
 	optimize-field-accesses = true;
+	semi-primitive-strings = false;
+	constant-selectors = false;
 
 	sysname: String = System.system.sysname;
 	if (!sysname.is-empty)
@@ -99,11 +102,10 @@ parse-block(lexer: Lexer)
 				optimize-field-accesses = parse-boolean(lexer, name);
 			else if (name == "constant-selectors")
 				constant-selectors = parse-boolean(lexer, name);
-			else if (name == "debugger") {
+			else if (name == "semi-primitive-strings")
+				semi-primitive-strings = parse-boolean(lexer, name);
+			else if (name == "debugger")
 				debugger = parse-boolean(lexer, name);
-				if (debugger)
-					dictionary[name] = name;
-				}
 
 			else if (name == "if" || name == "iff")
 				parse-if(lexer);
@@ -181,7 +183,10 @@ parse-boolean(lexer: Lexer, declaration: String): Bool
 		                       "\" declaration.");
 		}
 
-	return (name == "true" || name == "on");
+	on: Bool = (name == "true" || name == "on");
+	if (on)
+		dictionary[declaration] = declaration;
+	return on;
 }
 
 
@@ -224,6 +229,17 @@ parse-if(lexer: Lexer)
 				}
 			}
 		}
+}
+
+
+report()
+{
+	reporter: StatusReporter = TrylonCompiler.status-reporter;
+	reporter.report("Defined symbols:");
+	reporter.indent();
+	for (name: String in dictionary.keys)
+		reporter.report(name);
+	reporter.unindent();
 }
 
 

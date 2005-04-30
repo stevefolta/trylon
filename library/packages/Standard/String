@@ -1,7 +1,14 @@
 trylon-class String
 
-field start [BytePtr]
-field stopper [BytePtr]
+iff !semi-primitive-strings
+	fields start [BytePtr] stopper [BytePtr]
+iff semi-primitive-strings
+	fields primitive-start primitive-stopper 	# Do not touch these.
+	primitive-fn start
+	primitive-fn start: value
+	primitive-fn stopper
+	primitive-fn stopper: value
+
 
 fn create: start to: stopper
 	this start = start
@@ -11,11 +18,15 @@ fn create: length
 	this start = BytePtr new: length
 	this stopper = this start
 
-fn length -> Int
-	return stopper - start
+iff !semi-primitive-strings
+	fn length -> Int
+		return stopper - start
+	fn is-empty -> Bool
+		return stopper <= start
+iff semi-primitive-strings
+	primitive-fn length -> Int
+	primitive-fn is-empty -> Bool
 
-fn is-empty -> Bool
-	return stopper <= start
 
 fn == arg -> Bool
 	p [BytePtr] := start
