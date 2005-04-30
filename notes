@@ -70,8 +70,12 @@ Semi-Primitive Strings
 
 With just start, stopper, length, is-empty.
 ('constant-selectors' was on, -O1.)
-Before: 40fps
-After:  
+Before: 40.0 fps
+After:  40.7 fps
+
+Same, XML doc:
+Before: 26 fps
+After:  26 fps (from the low side)
 
 
 =====
