@@ -1,7 +1,6 @@
 trylon-class Point
 
-field x
-field y
+fields x y
 
 
 fn create: x y: y

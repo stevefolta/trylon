@@ -1,9 +1,6 @@
 trylon-class Rectangle
 
-field left
-field top
-field right
-field bottom
+fields left top right bottom
 
 
 fn create: left top: top right: right bottom: bottom
@@ -32,6 +29,12 @@ fn inset-by-h: h v: v
 	right -= h
 	top += v
 	bottom -= v
+
+fn offset-by-h: h v: v
+	left += h
+	right += h
+	top += v
+	bottom += v
 
 
 fn top-left
