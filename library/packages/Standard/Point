@@ -8,6 +8,10 @@ fn create: x y: y
 	this y = y
 
 
+fn copy
+	return new: x y: y
+
+
 fn string
 	return "(" + x string + ", " + y string + ")"
 
