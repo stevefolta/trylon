@@ -149,10 +149,11 @@ int Test_(obj_ object)
 
 obj_ BuildInt_(int value)
 {
-	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));
-	((struct Standard__Int__internal*) result)->class_ = &Standard__Int;
-	((struct Standard__Int__internal*) result)->value = value;
-	return result;
+	struct Standard__Int__internal* result =
+		(struct Standard__Int__internal*) GC_MALLOC(sizeof(struct object));
+	result->class_ = StdClassRef_(Int);
+	result->value = value;
+	return (obj_) result;
 }
 
 
@@ -161,7 +162,7 @@ obj_ BuildFloat_(double value)
 	struct Standard__Float__internal* result =
 		(struct Standard__Float__internal*)
 			GC_MALLOC(sizeof(struct Standard__Float__internal));
-	result->class_ = &Standard__Float;
+	result->class_ = StdClassRef_(Float);
 	result->value = value;
 	return (obj_) result;
 }
@@ -169,20 +170,21 @@ obj_ BuildFloat_(double value)
 
 obj_ BuildChar_(int value)
 {
-	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));
-	((struct Standard__Int__internal*) result)->class_ = &Standard__Char;
-	((struct Standard__Int__internal*) result)->value = value;
-	return result;
+	struct Standard__Int__internal* result =
+		(struct Standard__Int__internal*) GC_MALLOC(sizeof(struct object));
+	result->class_ = StdClassRef_(Char);
+	result->value = value;
+	return (obj_) result;
 }
 
 
 obj_ BuildBytePtr_(byte_ptr_ value)
 {
-	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));
-	((struct Standard__BytePtr__internal*) result)->class_ =
-		&Standard__BytePtr;
-	((struct Standard__BytePtr__internal*) result)->value = value;
-	return result;
+	struct Standard__BytePtr__internal* result =
+		(struct Standard__BytePtr__internal*) GC_MALLOC(sizeof(struct object));
+	result->class_ = StdClassRef_(BytePtr);
+	result->value = value;
+	return (obj_) result;
 }
 
 
@@ -202,7 +204,7 @@ obj_ BuildString_(const char* cString)
 	strObj =
 		(struct Standard__String__internal*)
 			GC_MALLOC(sizeof(struct Standard__String__internal));
-	strObj->class_ = &Standard__String;
+	strObj->class_ = StdClassRef_(String);
 #ifndef SEMI_PRIMITIVE_STRINGS_
 	strObj->start = BuildBytePtr_((byte_ptr_) heapString);
 	strObj->stopper = BuildBytePtr_((byte_ptr_) heapString + length);
@@ -273,7 +275,11 @@ char* className_(obj_ object)
 	if (object == NULL)
 		return "NULL";
 
+#ifdef CLASSES_BY_NUM_
+	classObj = (struct Standard__Class__internal*) Call_(class_, object);
+#else
 	classObj = (struct Standard__Class__internal*) object->class_;
+#endif
 	nameObj = (struct Standard__String__internal*) classObj->name;
 #ifndef SEMI_PRIMITIVE_STRINGS_
 	return BytePtrValue_(nameObj->start);

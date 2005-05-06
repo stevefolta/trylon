@@ -17,9 +17,22 @@
 typedef struct Standard__Class__internal class_spec_;
 typedef struct object* obj_;
 
+#ifdef CLASSES_BY_NUM_
+
+typedef int classref_;
+#define ClassNumFor_(obj) 	(obj->class_)
+#define StdClassRef_(className) 	(Standard__##className##__classNum_)
+#define ObjClassIs_(obj, className) 	(obj->class_ == className.class_number)
+
+#else 	// !CLASSES_BY_NUM_
+
 typedef class_spec_* classref_;
 #define ClassNumFor_(obj) 	(obj->class_->class_number)
+#define StdClassRef_(className) 	(&Standard__##className)
 #define ObjClassIs_(obj, className)	 (obj->class_ == &className)
+
+#endif 	// !CLASSES_BY_NUM_
+
 
 struct object {
 	classref_	class_;
@@ -348,5 +361,12 @@ _FinishExternC_
 #ifdef CONSTANT_SELECTORS
 #include "selectors_.h"
 #endif
+
+// Class numbers of standard classes.
+
+#ifdef CLASSES_BY_NUM_
+#include "classnums_.h"
+#endif
+
 
 #endif	// Trylon_.h
