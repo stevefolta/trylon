@@ -166,6 +166,13 @@ compile-program(compile-symbols: List of String)
 	is-changed = emit-settings();
 	recompile-all: Bool = is-changed;
 
+	// Emit classnums_.h.
+	if (build-settings.classes-by-num) {
+		is-changed = emit-classnums(main-package);
+		if (is-changed)
+			recompile-all = true;
+		}
+
 	// Copy Trylon_.h and Trylon_.c
 	if (!library-directory.entry-is-directory("runtime")) {
 		message: String = "The \"runtime\" directory is missing from the library!";
@@ -504,12 +511,57 @@ emit-settings(): Bool
 	if (build-settings.constant-selectors)
 		stream.write-line("#define CONSTANT_SELECTORS");
 
+	if (build-settings.classes-by-num)
+		stream.write-line("#define CLASSES_BY_NUM_");
+
 	if (build-settings.semi-primitive-strings)
 		stream.write-line("#define SEMI_PRIMITIVE_STRINGS_");
 
 	is-changed: Bool = stream.is-changed;
 	stream.close();
 	return is-changed;
+}
+
+
+emit-classnums(main-package: Package): Bool
+{
+	standard-package: Package = main-package.get-subpackage("Standard");
+	if (standard-package == nil)
+		throw MessageException("Standard package is missing!");
+
+	stream: ExistingFileStream(new File(".c-sources/classnums_.h"));
+
+	emit-classnum("Class", stream, standard-package);
+	emit-classnum("Int", stream, standard-package);
+	emit-classnum("Float", stream, standard-package);
+	emit-classnum("Char", stream, standard-package);
+	emit-classnum("Bool", stream, standard-package);
+	emit-classnum("BytePtr", stream, standard-package);
+	emit-classnum("String", stream, standard-package);
+	emit-classnum("Symbol", stream, standard-package);
+
+	is-changed: Bool = stream.is-changed;
+	stream.close();
+	return is-changed;
+}
+
+
+emit-classnum(name: String, stream: OutputStream, standard-package: Package)
+{
+	// Find the class.
+	class-function: TrylonFunction = standard-package.lookup-function(name);
+	if (class-function == nil)
+		throw MessageException("Standard " + name + " is missing!");
+	if (!class-function.is-a(ClassFunction))
+		throw MessageException("Standard " + name + " is not a class!");
+	the-class: CompiledClass = class-function.as-a(ClassFunction).the-class;
+
+	// Emit.
+	stream.write("#define ");
+	stream.write(the-class.c-name);
+	stream.write("__classNum_ ");
+	stream.write(the-class.class-num.string);
+	stream.write-line();
 }
 
 

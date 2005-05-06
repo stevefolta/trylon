@@ -15,7 +15,7 @@ obj_ allocate_object_co___Standard__Implementation(obj_ classObj)
 	int numSlots = class_->instance_size + 1;
 	obj_ obj = (obj_) GC_MALLOC(numSlots * sizeof(obj_));
 #ifdef CLASSES_BY_NUM_
-	obj->class_ = ((class_spec_*) classObj)->class_num;
+	obj->class_ = ((class_spec_*) classObj)->class_number;
 #else
 	obj->class_ = (class_spec_*) classObj;
 #endif
@@ -30,7 +30,7 @@ obj_ allocate_object_co_with_extra_slots_co___Standard__Implementation(obj_ clas
 	int numSlots = class_->instance_size + IntValue_(extraSlotsObj) + 1;
 	obj_ obj = (obj_) GC_MALLOC(numSlots * sizeof(obj_));
 #ifdef CLASSES_BY_NUM_
-	obj->class_ = ((class_spec_*) classObj)->class_num;
+	obj->class_ = ((class_spec_*) classObj)->class_number;
 #else
 	obj->class_ = (class_spec_*) classObj;
 #endif

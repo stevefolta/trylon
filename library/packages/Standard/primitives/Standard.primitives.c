@@ -4,9 +4,9 @@
 #include <stdio.h>
 
 
-struct object false__Standard__obj = { &Standard__Bool, (obj_) 0 };
+struct object false__Standard__obj = { StdClassRef_(Bool), (obj_) 0 };
 obj_ false__Standard = &false__Standard__obj;
-struct object true__Standard__obj = { &Standard__Bool, (obj_) 1 };
+struct object true__Standard__obj = { StdClassRef_(Bool), (obj_) 1 };
 obj_ true__Standard = &true__Standard__obj;
 
 obj_ nil__Standard = (0);

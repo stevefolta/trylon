@@ -18,6 +18,9 @@ create(name: String, parent: Package)
 	instance-functions = new Dictionary of TrylonInstanceFunction;
 	instance-fields = new List of CompiledField;
 	subclasses = new List of CompiledClass;
+
+	if (TrylonCompiler.the-compiler.build-settings.classes-by-num)
+		add-instance-function("class", new InstanceClassFunction(this));
 }
 
 

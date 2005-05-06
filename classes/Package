@@ -215,6 +215,15 @@ setup-main(main-directory: FileDirectory, library-directory: FileDirectory,
 	standard-package.lookup-function("List");
 
 	functions["Main"] = new PackageFunction(this);
+
+	// If using classes-by-num, replace "Object class" (the primitive version).
+	if (TrylonCompiler.the-compiler.build-settings.classes-by-num) {
+		object-function: TrylonFunction =
+			standard-package.lookup-function("Object");
+		object-class: CompiledClass = object-function.as-a(ClassFunction).the-class;
+		object-class.add-instance-function(
+			"class", new InstanceClassFunction(object-class));
+		}
 }
 
 

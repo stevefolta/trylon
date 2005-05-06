@@ -11,6 +11,7 @@ slow-dispatch: Bool;
 unsafe-dispatch: Bool;
 optimize-field-accesses: Bool;
 constant-selectors: Bool;
+classes-by-num: Bool;
 semi-primitive-strings: Bool;
 debugger: Bool;
 
@@ -29,6 +30,7 @@ create()
 	optimize-field-accesses = true;
 	semi-primitive-strings = false;
 	constant-selectors = false;
+	classes-by-num = false;
 
 	sysname: String = System.system.sysname;
 	if (!sysname.is-empty)
@@ -102,6 +104,8 @@ parse-block(lexer: Lexer)
 				optimize-field-accesses = parse-boolean(lexer, name);
 			else if (name == "constant-selectors")
 				constant-selectors = parse-boolean(lexer, name);
+			else if (name == "classes-by-num")
+				classes-by-num = parse-boolean(lexer, name);
 			else if (name == "semi-primitive-strings")
 				semi-primitive-strings = parse-boolean(lexer, name);
 			else if (name == "debugger")

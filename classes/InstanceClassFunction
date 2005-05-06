@@ -1,0 +1,52 @@
+Class: InstanceClassFunction
+Superclass: TrylonInstanceFunction
+
+on-class: CompiledClass;
+
+
+create(on-class: CompiledClass)
+{
+	this.on-class = on-class;
+}
+
+
+emit-object-call(object: ExpressionResult,
+                 arguments: (List of ExpressionResult),
+                 builder: MethodBuilder)
+	: ExpressionResult
+{
+	temporary: Temporary = builder.get-temporary();
+	line: String = temporary.name + " = ";
+	line += c-name + "(" + object.access + ");";
+	builder.add-line(line);
+	return temporary;
+}
+
+
+emit-code(stream: OutputStream)
+{
+	stream.write-line(c-signature);
+	stream.write-line("{");
+
+	stream.write("\treturn (obj_) &");
+	stream.write(on-class.c-name);
+	stream.write-line(";");
+
+	stream.write-line("}");
+	stream.write-line();
+	stream.write-line();
+}
+
+
+c-name: String
+{
+	return "class___" + on-class.c-name;
+}
+
+
+c-signature: String
+{
+	return "obj_ " + c-name + "(obj_ this_)";
+}
+
+

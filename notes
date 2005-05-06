@@ -90,3 +90,21 @@ After:  410 ms
 
 =====
 
+classes-by-num
+	[2005.5.6]
+
+SS40G, constant-selectors:
+Before: 415 ms
+After:  410 ms
+
+SS40G, no constant-selectors:
+Before: 410 ms
+After:  410 ms
+
+SS40G, no constant-selectors, -O1:
+Before: 365 ms
+After:  365 ms
+
+
+=====
+

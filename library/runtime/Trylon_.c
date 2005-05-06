@@ -257,7 +257,7 @@ int main(int argc, char* argv[])
 	result = main_co___Main(args);
 
 	// Return the result.
-	if (result && result->class_ == &Standard__Int)
+	if (result && ObjClassIs_(result, Standard__Int))
 		return IntValue_(result);
 	else
 		return 1;
@@ -271,6 +271,9 @@ char* className_(obj_ object)
 {
 	struct Standard__Class__internal* classObj;
 	struct Standard__String__internal* nameObj;
+#ifdef CLASSES_BY_NUM_
+	UsingMethod_(class_)
+#endif
 
 	if (object == NULL)
 		return "NULL";
