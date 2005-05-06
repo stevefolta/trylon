@@ -84,7 +84,7 @@ static pascal OSStatus WindowEventHandler(EventHandlerCallRef nextHandler,
 	resultObj = Call_(handle_event_co_, (obj_) userData, eventObj);
 
 	/* Return the result. */
-	if (resultObj && resultObj->class_ == (obj_) &Standard__Int)
+	if (resultObj && ObjClassIs_(resultObj, Standard__Int))
 		result = IntValue_(resultObj);
 	else
 		result = noErr;
