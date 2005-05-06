@@ -14,7 +14,7 @@ obj_ allocate_object_co___Standard__Implementation(obj_ classObj)
 		(struct Standard__Class__internal*) classObj;
 	int numSlots = class_->instance_size + 1;
 	obj_ obj = (obj_) GC_MALLOC(numSlots * sizeof(obj_));
-	obj->class_ = classObj;
+	obj->class_ = (class_spec_*) classObj;
 	return obj;
 }
 
@@ -25,7 +25,7 @@ obj_ allocate_object_co_with_extra_slots_co___Standard__Implementation(obj_ clas
 		(struct Standard__Class__internal*) classObj;
 	int numSlots = class_->instance_size + IntValue_(extraSlotsObj) + 1;
 	obj_ obj = (obj_) GC_MALLOC(numSlots * sizeof(obj_));
-	obj->class_ = classObj;
+	obj->class_ = (class_spec_*) classObj;
 	return obj;
 }
 
@@ -36,7 +36,7 @@ obj_ allocate_bytes_co___Standard__Implementation(obj_ size)
 	struct Standard__BytePtr__internal* ptr =
 		(struct Standard__BytePtr__internal*)
 			GC_MALLOC(sizeof(struct Standard__BytePtr__internal));
-	ptr->class_ = (obj_) &Standard__BytePtr;
+	ptr->class_ = &Standard__BytePtr;
 	ptr->value = value;
 	return (obj_) ptr;
 }
@@ -48,7 +48,7 @@ obj_ allocate_bytes_non_pointer_co___Standard__Implementation(obj_ size)
 	struct Standard__BytePtr__internal* ptr =
 		(struct Standard__BytePtr__internal*)
 			GC_MALLOC_ATOMIC(sizeof(struct Standard__BytePtr__internal));
-	ptr->class_ = (obj_) &Standard__BytePtr;
+	ptr->class_ = &Standard__BytePtr;
 	ptr->value = value;
 	return (obj_) ptr;
 }

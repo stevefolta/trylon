@@ -7,7 +7,7 @@
 
 obj_ class___Standard__Object(obj_ this_)
 {
-	return this_->class_;
+	return (obj_) this_->class_;
 }
 
 
@@ -19,7 +19,7 @@ obj_ object_ptr__Standard__Object(obj_ this_)
 
 obj_ is_a_co___Standard__Object(obj_ this_, obj_ class_)
 {
-	obj_ objClass = this_->class_;
+	obj_ objClass = (obj_) this_->class_;
 	while (objClass) {
 		if (objClass == class_)
 			return true__Standard;

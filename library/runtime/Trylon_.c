@@ -45,10 +45,8 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 #if defined(ROW_DISPLACEMENT_DISPATCH_) && !defined(UNSAFE_DISPATCH_)
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
-	struct Standard__Class__internal* objClass =
-		((struct Standard__Class__internal*) object->class_);
 	struct RDTableEntry_* entry =
-		&dispatchTable_[selector + objClass->class_number];
+		&dispatchTable_[selector + ClassNumFor_(object)];
 
 	if (entry->selector == selector)
 		return entry->method;
@@ -152,7 +150,7 @@ int Test_(obj_ object)
 obj_ BuildInt_(int value)
 {
 	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));
-	((struct Standard__Int__internal*) result)->class_ = (obj_) &Standard__Int;
+	((struct Standard__Int__internal*) result)->class_ = &Standard__Int;
 	((struct Standard__Int__internal*) result)->value = value;
 	return result;
 }
@@ -163,7 +161,7 @@ obj_ BuildFloat_(double value)
 	struct Standard__Float__internal* result =
 		(struct Standard__Float__internal*)
 			GC_MALLOC(sizeof(struct Standard__Float__internal));
-	result->class_ = (obj_) &Standard__Float;
+	result->class_ = &Standard__Float;
 	result->value = value;
 	return (obj_) result;
 }
@@ -172,7 +170,7 @@ obj_ BuildFloat_(double value)
 obj_ BuildChar_(int value)
 {
 	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));
-	((struct Standard__Int__internal*) result)->class_ = (obj_) &Standard__Char;
+	((struct Standard__Int__internal*) result)->class_ = &Standard__Char;
 	((struct Standard__Int__internal*) result)->value = value;
 	return result;
 }
@@ -182,7 +180,7 @@ obj_ BuildBytePtr_(byte_ptr_ value)
 {
 	obj_ result = (obj_) GC_MALLOC(sizeof(struct object));
 	((struct Standard__BytePtr__internal*) result)->class_ =
-		(obj_) &Standard__BytePtr;
+		&Standard__BytePtr;
 	((struct Standard__BytePtr__internal*) result)->value = value;
 	return result;
 }
@@ -204,7 +202,7 @@ obj_ BuildString_(const char* cString)
 	strObj =
 		(struct Standard__String__internal*)
 			GC_MALLOC(sizeof(struct Standard__String__internal));
-	strObj->class_ = (obj_) &Standard__String;
+	strObj->class_ = &Standard__String;
 #ifndef SEMI_PRIMITIVE_STRINGS_
 	strObj->start = BuildBytePtr_((byte_ptr_) heapString);
 	strObj->stopper = BuildBytePtr_((byte_ptr_) heapString + length);
@@ -257,7 +255,7 @@ int main(int argc, char* argv[])
 	result = main_co___Main(args);
 
 	// Return the result.
-	if (result && result->class_ == (obj_) &Standard__Int)
+	if (result && result->class_ == &Standard__Int)
 		return IntValue_(result);
 	else
 		return 1;

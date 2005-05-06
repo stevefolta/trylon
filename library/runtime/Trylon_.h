@@ -14,12 +14,17 @@
 	#define _FinishExternC_
 #endif
 
+typedef struct Standard__Class__internal class_spec_;
+typedef struct object* obj_;
+
+typedef class_spec_* classref_;
+#define ClassNumFor_(obj) 	(obj->class_->class_number)
+
 struct object {
-	struct object*	class_;
-	struct object*	fields[1];
+	classref_	class_;
+	obj_     	fields[1];
 };
 
-typedef struct object* obj_;
 
 #ifdef __cplusplus
 	typedef obj_ (*fn_ptr_)(...);
@@ -186,49 +191,48 @@ _FinishExternC_
 _StartExternC_
 
 struct Standard__Class__internal {
-	obj_	class_;
-	obj_	name;
-	obj_	superclass;
-	int 	instance_size;
-	int 	class_number;
+	classref_	class_;
+	obj_     	name;
+	obj_     	superclass;
+	int      	instance_size;
+	int      	class_number;
 };
 
 struct Standard__Int__internal {
-	obj_	class_;
-	int 	value;
+	classref_	class_;
+	int      	value;
 };
 
 struct Standard__Float__internal {
-	obj_  	class_;
-	double	value;
+	classref_	class_;
+	double   	value;
 };
 
 struct Standard__Bool__internal {
-	obj_	class_;
-	int 	value;
+	classref_	class_;
+	int      	value;
 };
 
 struct Standard__BytePtr__internal {
-	obj_ 	class_;
-	char*	value;
+	classref_	class_;
+	char*    	value;
 };
 
 
 #ifndef SEMI_PRIMITIVE_STRINGS_
 struct Standard__String__internal {
-	obj_	class_;
-	obj_	start;
+	classref_	class_;
+	obj_     	start;
 	obj_	stopper;
 };
 #else 	// SEMI_PRIMITIVE_STRINGS_
 struct Standard__String__internal {
-	obj_     	class_;
+	classref_	class_;
 	byte_ptr_	start;
 	byte_ptr_	stopper;
 };
 #endif 	// SEMI_PRIMITIVE_STRINGS_
 
-typedef struct Standard__Class__internal class_spec_;
 
 extern class_spec_ Standard__Class;
 extern class_spec_ Standard__Int;
@@ -253,22 +257,22 @@ _FinishExternC_
 #define DefineClassObj_(cName, name, nameLen, superclass, numFields, classNum) \
 	DefineString_(classname, name, nameLen) 	\
 	struct Standard__Class__internal cName = 	\
-		{ (obj_) &Standard__Class, Str_(classname), superclass, 	\
+		{ &Standard__Class, Str_(classname), superclass, 	\
 		  numFields, classNum };
 
 #define DefineInt_(index, value) \
-	static struct object i##index##_ = { (obj_) &Standard__Int, (obj_) (value) };
+	static struct object i##index##_ = { &Standard__Int, (obj_) (value) };
 
 #define Int_(index)	(&i##index##_)
 
 #define DefineFloat_(index, value) 	\
 	static struct Standard__Float__internal f##index##_ = 	\
-		{ (obj_) &Standard__Float, value };
+		{ &Standard__Float, value };
 
 #define Float_(index)	((obj_) &f##index##_)
 
 #define DefineBytePtr_(name, value) \
-	static struct object name = { (obj_) &Standard__BytePtr, (obj_) (value) };
+	static struct object name = { &Standard__BytePtr, (obj_) (value) };
 
 
 #ifndef SEMI_PRIMITIVE_STRINGS_
@@ -278,27 +282,27 @@ _FinishExternC_
 	DefineBytePtr_(s##index##__start_, s##index##__str_) 	\
 	DefineBytePtr_(s##index##__stopper_, s##index##__str_ + length) 	\
 	static struct Standard__String__internal s##index##_ =  	\
-		{ (obj_) &Standard__String, &s##index##__start_, &s##index##__stopper_ };
+		{ &Standard__String, &s##index##__start_, &s##index##__stopper_ };
 
 #define DefineSymbol_(name, value, length) 	\
 	static const char y##name##__str_[] = value; 	\
 	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
 	DefineBytePtr_(y##name##__stopper_, y##name##__str_ + length) 	\
 	struct Standard__String__internal y##name##__sym_ = 	\
-		{ (obj_) &Standard__Symbol, &y##name##__start_, &y##name##__stopper_ };
+		{ &Standard__Symbol, &y##name##__start_, &y##name##__stopper_ };
 
 #else 	// SEMI_PRIMITIVE_STRINGS_
 
 #define DefineString_(index, value, length) 	\
 	static const char s##index##__str_[] = value; 	\
 	static struct Standard__String__internal s##index##_ =  	\
-		{ (obj_) &Standard__String, (byte_ptr_) s##index##__str_, 	\
+		{ &Standard__String, (byte_ptr_) s##index##__str_, 	\
 		  (byte_ptr_) s##index##__str_ + length };
 
 #define DefineSymbol_(name, value, length) 	\
 	static const char y##name##__str_[] = value; 	\
 	struct Standard__String__internal y##name##__sym_ = 	\
-		{ (obj_) &Standard__Symbol, (byte_ptr_) y##name##__str_, 	\
+		{ &Standard__Symbol, (byte_ptr_) y##name##__str_, 	\
 		  (byte_ptr_) y##name##__str_ + length };
 
 #endif 	// SEMI_PRIMITIVE_STRINGS_
@@ -310,7 +314,7 @@ _FinishExternC_
 #define Sym_(name) 	((obj_) &y##name##__sym_)
 
 #define DefineChar_(name, value) 	\
-	struct object c##name##_ = { (obj_) &Standard__Char, (obj_) (value) };
+	struct object c##name##_ = { &Standard__Char, (obj_) (value) };
 #define UsingChar_(name) 	extern struct object c##name##_;
 #define Char_(name) 	((obj_) &c##name##_)
 
