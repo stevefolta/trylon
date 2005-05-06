@@ -19,6 +19,7 @@ typedef struct object* obj_;
 
 typedef class_spec_* classref_;
 #define ClassNumFor_(obj) 	(obj->class_->class_number)
+#define ObjClassIs_(obj, className)	 (obj->class_ == &className)
 
 struct object {
 	classref_	class_;

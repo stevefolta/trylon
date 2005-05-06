@@ -11,9 +11,9 @@ float FloatValue(obj_ value)
 	DefineString_(1, "Bad parameter to a Carbon Quartz Context.", 41);
 	extern obj_ new_co___Standard__MessageException(obj_);
 
-	if (value->class_ == (obj_) &Standard__Float)
+	if (ObjClassIs_(value, Standard__Float))
 		return FloatValue_(value);
-	else if (value->class_ == (obj_) &Standard__Int)
+	else if (ObjClassIs_(value, Standard__Int))
 		return IntValue_(value);
 	else
 		Throw_(new_co___Standard__MessageException(Str_(1)));
@@ -27,15 +27,15 @@ obj_ translate_ctm_tx_co_ty_co___Carbon__Quartz__Context(
 	DefineString_(1, "Bad parameter to translate-ctm-tx:ty:.", 38);
 	extern obj_ new_co___Standard__MessageException(obj_);
 
-	if (tx->class_ == (obj_) &Standard__Float)
+	if (ObjClassIs_(tx, Standard__Float))
 		ftx = FloatValue_(tx);
-	else if (tx->class_ == (obj_) &Standard__Int)
+	else if (ObjClassIs_(tx, Standard__Int))
 		ftx = IntValue_(tx);
 	else
 		Throw_(new_co___Standard__MessageException(Str_(1)));
-	if (ty->class_ == (obj_) &Standard__Float)
+	if (ObjClassIs_(ty, Standard__Float))
 		fty = FloatValue_(ty);
-	else if (ty->class_ == (obj_) &Standard__Int)
+	else if (ObjClassIs_(ty, Standard__Int))
 		fty = IntValue_(ty);
 	else
 		Throw_(new_co___Standard__MessageException(Str_(1)));
@@ -52,15 +52,15 @@ obj_ scale_ctm_sx_co_sy_co___Carbon__Quartz__Context(
 	DefineString_(1, "Bad parameter to scale-ctm-sx:sy:.", 34);
 	extern obj_ new_co___Standard__MessageException(obj_);
 
-	if (sx->class_ == (obj_) &Standard__Float)
+	if (ObjClassIs_(sx, Standard__Float))
 		fsx = FloatValue_(sx);
-	else if (sx->class_ == (obj_) &Standard__Int)
+	else if (ObjClassIs_(sx, Standard__Int))
 		fsx = IntValue_(sx);
 	else
 		Throw_(new_co___Standard__MessageException(Str_(1)));
-	if (sy->class_ == (obj_) &Standard__Float)
+	if (ObjClassIs_(sy, Standard__Float))
 		fsy = FloatValue_(sy);
-	else if (sy->class_ == (obj_) &Standard__Int)
+	else if (ObjClassIs_(sy, Standard__Int))
 		fsy = IntValue_(sy);
 	else
 		Throw_(new_co___Standard__MessageException(Str_(1)));
