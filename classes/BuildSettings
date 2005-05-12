@@ -113,6 +113,11 @@ parse-block(lexer: Lexer)
 
 			else if (name == "if" || name == "iff")
 				parse-if(lexer);
+
+			else {
+				// Anything else is just a boolean for the dictionary.
+				parse-boolean(lexer, name);
+				}
 			}
 
 		else if (type == 'indent') {

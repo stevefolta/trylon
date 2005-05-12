@@ -1,0 +1,37 @@
+trylon-class Screen
+
+fields is-open
+class-fields the-screen
+
+class-fields black red green yellow blue magenta cyan white default-color
+class-fields bold dim reverse underline standout
+class-fields horizontal-line vertical-line
+
+class-fields page-up page-down home end
+class-fields left-arrow right-arrow up-arrow down-arrow
+
+
+class-fn screen
+	if the-screen == nil
+		the-screen = Screen new
+	return the-screen
+
+
+primitive-fn create
+primitive-fn close
+
+fn destroy
+	if !is-open
+		close
+	
+	if the-screen == this
+		the-screen = nil
+
+
+primitive-fn get-char -> Char
+primitive-fn width -> Int
+primitive-fn height -> Int
+primitive-fn noecho
+primitive-fn escape-delay -> Int
+primitive-fn escape-delay: delay [Int]
+
