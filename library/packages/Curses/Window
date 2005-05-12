@@ -1,0 +1,40 @@
+trylon-class Window
+
+
+fields primitive-window last-written-character
+
+
+primitive-fn create: start-y x: start-x width: width height: height
+primitive-fn close
+fn destroy
+	close
+
+
+primitive-fn refresh
+primitive-fn erase
+primitive-fn write: string
+primitive-fn write-at: start-y x: start-x string: string
+primitive-fn move-cursor-to: y x: x
+primitive-fn start-standout
+primitive-fn end-standout
+primitive-fn start-dim
+primitive-fn end-dim
+primitive-fn start-bold
+primitive-fn end-bold
+primitive-fn attribute-on: attribute
+primitive-fn attribute-off: attribute
+primitive-fn attributes
+primitive-fn attributes: new-attributes
+
+
+primitive-fn get-char
+primitive-fn keypad: enable
+primitive-fn notimeout: enable
+
+
+primitive-fn width
+primitive-fn height
+primitive-fn cursor-y
+primitive-fn cursor-x
+
+
