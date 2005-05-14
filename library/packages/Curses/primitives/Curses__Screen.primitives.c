@@ -28,7 +28,8 @@ extern obj_
 	left_arrow__Curses__Screen,
 	right_arrow__Curses__Screen,
 	up_arrow__Curses__Screen,
-	down_arrow__Curses__Screen;
+	down_arrow__Curses__Screen,
+	err_char__Curses__Screen;
 
 
 obj_ create__Curses__Screen(obj_ this_)
@@ -73,14 +74,15 @@ obj_ create__Curses__Screen(obj_ this_)
 	vertical_line__Curses__Screen = BuildInt_(ACS_VLINE);
 
 	/* Keys setup */
-	page_up__Curses__Screen = BuildInt_(KEY_PPAGE);
-	page_down__Curses__Screen = BuildInt_(KEY_NPAGE);
-	home__Curses__Screen = BuildInt_(KEY_HOME);
-	end__Curses__Screen = BuildInt_(KEY_END);
-	left_arrow__Curses__Screen = BuildInt_(KEY_LEFT);
-	right_arrow__Curses__Screen = BuildInt_(KEY_RIGHT);
-	up_arrow__Curses__Screen = BuildInt_(KEY_UP);
-	down_arrow__Curses__Screen = BuildInt_(KEY_DOWN);
+	page_up__Curses__Screen = BuildChar_(KEY_PPAGE);
+	page_down__Curses__Screen = BuildChar_(KEY_NPAGE);
+	home__Curses__Screen = BuildChar_(KEY_HOME);
+	end__Curses__Screen = BuildChar_(KEY_END);
+	left_arrow__Curses__Screen = BuildChar_(KEY_LEFT);
+	right_arrow__Curses__Screen = BuildChar_(KEY_RIGHT);
+	up_arrow__Curses__Screen = BuildChar_(KEY_UP);
+	down_arrow__Curses__Screen = BuildChar_(KEY_DOWN);
+	err_char__Curses__Screen = BuildChar_(ERR);
 
 	this_->fields[0] = true__Standard;
 }

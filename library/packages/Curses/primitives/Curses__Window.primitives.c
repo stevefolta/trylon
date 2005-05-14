@@ -133,6 +133,13 @@ obj_ notimeout_co___Curses__Window(obj_ this_, obj_ enable)
 }
 
 
+obj_ nodelay_co___Curses__Window(obj_ this_, obj_ enable)
+{
+	nodelay(wind, Test_(enable));
+	return NULL;
+}
+
+
 obj_ refresh__Curses__Window(obj_ this_)
 {
 	wrefresh(wind);

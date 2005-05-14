@@ -30,6 +30,7 @@ primitive-fn attributes: new-attributes
 primitive-fn get-char
 primitive-fn keypad: enable
 primitive-fn notimeout: enable
+primitive-fn nodelay: enable
 
 
 primitive-fn width

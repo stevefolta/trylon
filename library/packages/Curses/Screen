@@ -9,6 +9,7 @@ class-fields horizontal-line vertical-line
 
 class-fields page-up page-down home end
 class-fields left-arrow right-arrow up-arrow down-arrow
+class-fields err-char
 
 
 class-fn screen
