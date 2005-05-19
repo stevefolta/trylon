@@ -133,8 +133,11 @@ parse-block(lexer: Lexer)
 parse-name(lexer: Lexer, declaration: String): String
 {
 	token: Token = lexer.next-token;
+	if (token.type == '=')
+		token = lexer.next-token;
 	if (token.type == 'eol' || token.type == 'comment')
 		throw MessageException("Empty \"" + declaration + "\" declaration.");
+
 	name: String = token.text;
 	token = lexer.next-token;
 	if (token.type == 'comment')
@@ -151,10 +154,15 @@ parse-name(lexer: Lexer, declaration: String): String
 parse-flags(lexer: Lexer, flags: (List of String), declaration: String)
 {
 	flag: String = "";
+	have-started: Bool = false;
 	loop {
 		token: Token = lexer.next-token;
 
-		if (token.type == 'eol') {
+		if (!have-started && token.type == '+=') {
+			// Just go around again.
+			}
+
+		else if (token.type == 'eol') {
 			if (!flag.is-empty)
 				flags.append(flag);
 			break;
@@ -174,6 +182,8 @@ parse-flags(lexer: Lexer, flags: (List of String), declaration: String)
 			flags.append(flag);
 			flag = "";
 			}
+
+		have-started = true;
 		}
 }
 
@@ -181,8 +191,11 @@ parse-flags(lexer: Lexer, flags: (List of String), declaration: String)
 parse-boolean(lexer: Lexer, declaration: String): Bool
 {
 	token: Token = lexer.next-token;
+	if (token.type == '=')
+		token = lexer.next-token;
 	if (token.type == 'eol' || token.type == 'comment')
 		throw MessageException("Empty \"" + declaration + "\" declaration.");
+
 	name: String = token.text;
 	token = lexer.next-token;
 	if (token.type == 'comment')
