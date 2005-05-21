@@ -5,6 +5,13 @@ lookup-function(name: String): TrylonFunction
 [phantom]
 
 
+lookup-function-autodeclaring(name: String): TrylonFunction
+{
+	// Default: just lookup.
+	return lookup-function(name);
+}
+
+
 enclosing-method-context: MethodContext
 {
 	// Default: not in one.

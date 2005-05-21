@@ -1,0 +1,33 @@
+trylon-package Main
+
+pre-declared = nil
+
+
+main: args
+	try
+		tests
+	catch Exception
+		print-line
+		print-line: exception message
+
+
+test: succeeded title: title
+	if succeeded
+		print-line: title + ":  succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
+check: value against: expected-value title: title
+	if value == expected-value
+		print-line: title + ":  succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
+
+tests
+	x = 3
+	check: x against: 3 title: "Autodeclaration of local"
+	if true
+		pre-declared = true
+	test: pre-declared title: "Autodeclaration doesn't hide global"
+

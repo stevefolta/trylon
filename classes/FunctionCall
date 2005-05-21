@@ -17,7 +17,7 @@ create(name: String, arguments: (List of Expression), context: Context)
 
 prepare-to-emit()
 {
-	function = context.lookup-function(name);
+	function = context.lookup-function-autodeclaring(name);
 
 	for (arg: Expression in arguments)
 		arg.prepare-to-emit();

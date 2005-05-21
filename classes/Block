@@ -53,6 +53,23 @@ lookup-function(name: String): TrylonFunction
 }
 
 
+lookup-function-autodeclaring(name: String): TrylonFunction
+{
+	function: TrylonFunction = lookup-function(name);
+	if (function)
+		return function;
+
+	// If it wasn't found, and it's a setter, autodeclare a local.
+	if (name.find-index-of(':') == name.length - 1) {
+		local: CompiledField(name.substr(0, name.length - 1), nil);
+		add-local(local);
+		return new LocalSetter(local);
+		}
+	
+	return nil;
+}
+
+
 enclosing-method-context: MethodContext
 {
 	return parent.enclosing-method-context;

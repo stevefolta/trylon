@@ -111,14 +111,18 @@ parse-package-contents(package: Package)
 	loop {
 		while (current-token.type == 'eol' || current-token.type == 'comment')
 			consume-token();
-		if (current-token.type != 'name')
-			break;
 
 		name: String = current-token.text;
+		if (current-token.type == 'keyword') {
+			// Null-out the name so it doesn't match any special names.
+			name = "";
+			}
+		else if (current-token.type != 'name')
+			break;
 
 		if (name == "fn" || name == "function" ||
 		    name == "primitive-fn" || name == "primitive-function") {
-			function: CompiledFunction = parse-function(false);
+			function: CompiledFunction = parse-function(true, false);
 			package.add-function(function);
 			}
 
@@ -159,10 +163,47 @@ parse-package-contents(package: Package)
 			}
 
 		else
-			break;
+			parse-package-member(package);
 		}
 
 	context = saved-context;
+}
+
+
+parse-package-member(package: Package) 
+{
+	// We're at the name.
+
+	// Handle declaring a field.
+	if (next-token.type == '=' || next-token.type == ':=') {
+		// Make sure it *is* a field.
+		if (current-token.type == 'keyword') {
+			throw
+				ParseException("Bad declaration of a package member.",
+						        	 current-token);
+			}
+		name: String = current-token.text;
+		consume-token(); 	// Name.
+		consume-token(); 	// '=' or ':='.
+
+		// Get the initial value.
+		if (current-token.type != 'name' || current-token.text != "nil") {
+			message: String =
+				"Class/package fields can only be initialized to nil (for now).";
+			throw ParseException(message, current-token);
+			}
+		consume-token(); 	// "nil".
+
+		// Add the field.
+		field: CompiledField(name, nil);
+		package.add-field(field);
+		}
+
+	// Declaring a function.
+	else {
+		function: CompiledFunction = parse-function(false, false);
+		package.add-function(function);
+		}
 }
 
 
@@ -222,22 +263,27 @@ parse-class-contents(the-class: CompiledClass)
 	loop {
 		while (current-token.type == 'eol' || current-token.type == 'comment')
 			consume-token();
-		if (current-token.type != 'name')
-			break;
 
 		name: String = current-token.text;
+		if (current-token.type == 'keyword') {
+			// Null-out the name so it doesn't match any special names.
+			name = "";
+			}
+		else if (current-token.type != 'name')
+			break;
+
 
 		if (name == "fn" || name == "function" ||
 		    name == "method" || name == "primitive-method" ||
 		    name == "primitive-fn" || name == "primitive-function") {
-			function: CompiledFunction = parse-function(true);
+			function: CompiledFunction = parse-function(true, true);
 			the-class.add-instance-function(function.name, function);
 			}
 
 		else if (name == "class-fn" || name == "class-function" ||
 		         name == "primitive-class-fn" ||
 						 name == "primitive-class-function") {
-			function: CompiledFunction = parse-function(false);
+			function: CompiledFunction = parse-function(true, false);
 			the-class.add-function(function);
 			}
 
@@ -293,7 +339,7 @@ parse-class-contents(the-class: CompiledClass)
 			}
 
 		else
-			break;
+			parse-package-member(the-class);
 		}
 
 	context = saved-context;
@@ -369,12 +415,15 @@ parse-fields(): List of CompiledField
 }
 
 
-parse-function(is-object-function: Bool): CompiledFunction
+parse-function(at-declarator: Bool, is-object-function: Bool): CompiledFunction
 {
 	// "fn" or "function" (etc.) has already been recognized; just check it
 	// for primitiveness.
-	is-primitive: Bool = current-token.text.starts-with("primitive-");
-	consume-token();
+	is-primitive: Bool = false;
+	if (at-declarator) {
+		is-primitive = current-token.text.starts-with("primitive-");
+		consume-token();
+		}
 
 	// Get the name.
 	// We're allowing any name; we want to allow unops and binops and string
