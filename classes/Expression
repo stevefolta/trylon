@@ -8,3 +8,9 @@ emit-code(builder: MethodBuilder): ExpressionResult
 [phantom]
 
 
+emit-package-literal(stream: OutputStream): ExpressionResult
+{
+	// Most Expressions don't support this.
+	throw MessageException("Internal error: invalid emit-package-literal().");
+}
+

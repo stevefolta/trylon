@@ -1,6 +1,14 @@
 trylon-package Main
 
 pre-declared = nil
+string-field = "Hello"
+symbol-field = 'checkity-test'
+int-field = 7
+float-field = 3.14
+character-field = `x`
+true-field = true
+false-field = false
+nil-field = nil
 
 
 main: args
@@ -30,4 +38,12 @@ tests
 	if true
 		pre-declared = true
 	test: pre-declared title: "Autodeclaration doesn't hide global"
+	check: string-field against: "Hello" title: "String field value"
+	check: symbol-field against: 'checkity-test' title: "Symbol field value"
+	check: int-field against: 7 title: "Int field value"
+	check: float-field against: 3.14 title: "Float field value"
+	check: character-field against: `x` title: "Character field value"
+	check: true-field against: true title: "True field value"
+	check: false-field against: false title: "False field value"
+	test: nil-field == nil title: "Nil field value"
 

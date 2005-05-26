@@ -25,3 +25,16 @@ emit-code(builder: MethodBuilder): ExpressionResult
 }
 
 
+emit-package-literal(stream: OutputStream): ExpressionResult
+{
+	mangled-name: String = MethodBuilder.mangle-name(name);
+
+	stream.write("UsingSym_(");
+	stream.write(mangled-name);
+	stream.write(")");
+	stream.write-line();
+
+	return new NameResult("Sym_(" + mangled-name + ")");
+}
+
+

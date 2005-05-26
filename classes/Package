@@ -9,6 +9,7 @@ directories: List of FileDirectory;
 uses-packages: List of Package;
 has-primitives: Bool;
 is-main: Bool;
+next-literal-index: Int;
 
 
 create(name: String, parent: Package)
@@ -21,6 +22,7 @@ create(name: String, parent: Package)
 	uses-packages = new List of Package;
 	has-primitives = false;
 	is-main = false;
+	next-literal-index = 0;
 }
 
 
@@ -354,6 +356,14 @@ total-instance-fields: Int
 {
 	// Only CompiledClasses have instance fields.
 	return 0;
+}
+
+
+new-literal-index: Int
+{
+	result: Int = next-literal-index;
+	next-literal-index += 1;
+	return result;
 }
 
 

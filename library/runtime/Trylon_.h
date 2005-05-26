@@ -189,6 +189,9 @@ extern void RegisterFinalizer_(obj_ object);
 extern obj_ false__Standard;
 extern obj_ true__Standard;
 
+extern struct object false__Standard__obj;
+extern struct object true__Standard__obj;
+
 _FinishExternC_
 
 #define Test_(object)	(object != NULL && object != false__Standard)

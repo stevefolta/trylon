@@ -187,15 +187,52 @@ parse-package-member(package: Package)
 		consume-token(); 	// '=' or ':='.
 
 		// Get the initial value.
-		if (current-token.type != 'name' || current-token.text != "nil") {
-			message: String =
-				"Class/package fields can only be initialized to nil (for now).";
+		initial-value: Expression = nil;
+		if (current-token.type == 'string-literal') {
+			string-literal: StringLiteral(current-token.text);
+			string-literal.index = package.new-literal-index();
+			initial-value = string-literal;
+			}
+		else if (current-token.type == 'symbol-literal') {
+			initial-value =
+				TrylonCompiler.the-compiler.get-symbol-literal(current-token.text);
+			}
+		else if (current-token.type == 'int-literal') {
+			int-literal: IntLiteral(current-token.text);
+			int-literal.index = package.new-literal-index();
+			initial-value = int-literal;
+			}
+		else if (current-token.type == 'float-literal') {
+			float-literal: FloatLiteral(current-token.text);
+			float-literal.index = package.new-literal-index();
+			initial-value = float-literal;
+			}
+		else if (current-token.type == 'character-literal') {
+			initial-value = 
+				 TrylonCompiler.the-compiler.get-character-literal(current-token.text);
+			}
+		else if (current-token.type == 'name') {
+			name: String = current-token.text;
+			if (name == "true")
+				initial-value = new BoolLiteral(true);
+			else if (name == "false")
+				initial-value = new BoolLiteral(false);
+			else if (name == "nil")
+				initial-value = nil;
+			else {
+				message: String = "Illegal initial value for a class/package field.";
+				throw ParseException(message, current-token);
+				}
+			}
+		else {
+			message: String = "Syntax error in class/package field initial value.";
 			throw ParseException(message, current-token);
 			}
-		consume-token(); 	// "nil".
+		consume-token(); 	// value.
 
 		// Add the field.
 		field: CompiledField(name, nil);
+		field.initial-value = initial-value;
 		package.add-field(field);
 		}
 

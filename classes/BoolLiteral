@@ -1,0 +1,37 @@
+Class: BoolLiteral
+Superclass: Expression
+
+// Only used as a class/package field initial value.
+
+value: Bool;
+
+
+create(value: Bool)
+{
+	this.value = value;
+}
+
+
+prepare-to-emit()
+{
+	// Nothing to do.
+}
+
+
+emit-code(builder: MethodBuilder): ExpressionResult
+{
+	throw MessageException("Internal error: BoolLiteral used.");
+}
+
+
+emit-package-literal(stream: OutputStream): ExpressionResult
+{
+	name: String = nil;
+	if (value)
+		name = "((obj_) &true__Standard__obj)";
+	else
+		name = "((obj_) &false__Standard__obj)";
+	return new NameResult(name);
+}
+
+

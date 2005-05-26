@@ -26,9 +26,19 @@ emit-code(stream: OutputStream)
 	if (field.is-primitive)
 		return;
 
+	// If it has an initial value, emit the literal.
+	initial-value: ExpressionResult = nil;
+	if (field.initial-value)
+		initial-value = field.initial-value.emit-package-literal(stream);
+
 	// Just emit the declaration.
 	stream.write("obj_ ");
 	stream.write(c-name);
+	stream.write(" = ");
+	if (initial-value == nil)
+		stream.write("NULL");
+	else
+		stream.write(initial-value.access);
 	stream.write-line(";");
 	stream.write-line();
 }

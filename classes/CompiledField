@@ -3,6 +3,7 @@ Class: CompiledField
 name: String;
 type: CompiledClass;
 is-primitive: Bool;
+initial-value: Expression; 	// Only used for class/package fields.
 
 
 create(name: String, type: CompiledClass)
