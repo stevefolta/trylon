@@ -163,14 +163,14 @@ parse-package-contents(package: Package)
 			}
 
 		else
-			parse-package-member(package);
+			parse-package-member(package, false);
 		}
 
 	context = saved-context;
 }
 
 
-parse-package-member(package: Package) 
+parse-package-member(package: Package, in-class: Bool) 
 {
 	// We're at the name.
 
@@ -238,8 +238,13 @@ parse-package-member(package: Package)
 
 	// Declaring a function.
 	else {
-		function: CompiledFunction = parse-function(false, false);
-		package.add-function(function);
+		function: CompiledFunction = parse-function(false, in-class);
+		if (in-class) {
+			package.as-a(CompiledClass).
+				add-instance-function(function.name, function);
+			}
+		else
+			package.add-function(function);
 		}
 }
 
@@ -376,7 +381,7 @@ parse-class-contents(the-class: CompiledClass)
 			}
 
 		else
-			parse-package-member(the-class);
+			parse-package-member(the-class, true);
 		}
 
 	context = saved-context;
