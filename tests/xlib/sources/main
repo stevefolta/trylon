@@ -1,0 +1,6 @@
+trylon-package Main
+
+
+main: args
+	display = Xlib XDisplay new
+

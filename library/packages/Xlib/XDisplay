@@ -1,0 +1,70 @@
+trylon-class XDisplay
+
+fields primitive-display windows
+
+class-fields expose-event button-press-event button-release-event 
+class-fields key-press-event key-release-event
+class-fields motion-notify-event configure-notify-event client-message-event
+
+class-fields expose-event-mask button-press-event-mask button-release-event-mask
+class-fields key-press-event-mask key-release-event-mask 
+class-fields configure-notify-event-mask pointer-motion-event-mask
+class-fields button-1-motion-event-mask button-2-motion-event-mask 
+class-fields button-3-motion-event-mask button-4-motion-event-mask 
+class-fields button-5-motion-event-mask
+class-fields button-motion-event-mask pointer-motion-hint-mask
+
+class-fields page-up-key page-down-key home-key end-key
+class-fields up-arrow-key down-arrow-key left-arrow-key right-arrow-key
+
+class-fields primary-mouse-button secondary-mouse-button tertiary-mouse-button
+class-fields shift-key lock-key control-key
+class-fields mod-1-key mod-2-key mod-3-key mod-4-key mod-5-key
+
+class-initialized = false
+
+
+primitive-fn create
+
+destroy
+	close
+
+primitive-fn close
+
+primitive-fn default-screen
+primitive-fn width
+primitive-fn height
+primitive-fn white-pixel
+primitive-fn black-pixel
+primitive-fn depth
+primitive-fn flush
+primitive-fn sync
+primitive-fn next-event -> XEvent
+primitive-fn send-event-to: window propagate: propagate --
+	event-mask: event-mask event: event
+primitive-fn alloc-named-color: color-name
+primitive-fn alloc-color-red: red green: green blue: blue
+primitive-fn mouse-buttons
+primitive-fn intern-atom: name only-if-exists: only-if-exists
+
+
+# Helper
+
+primitive-fn is-modifier-key: key
+
+
+# Private
+
+register-window: window
+	windows append: window
+
+unregister-window: window
+	windows remove: window
+
+window-for-id: id
+	for window in windows
+		if window id == id
+			return window
+	return nil
+
+
