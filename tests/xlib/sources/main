@@ -10,10 +10,14 @@ main: args
 	gc foreground = display black-pixel
 	font = Xlib Font new: display name: "Helvetica"
 	pixmap = Xlib Pixmap new: display width: 400 height: 400 depth: display depth
+	xft-draw = Xft Draw new: display drawable: window
+	xft-color = Xft Color new: 0 green: 255 blue: 0 alpha: 255 display: display
+	xft-font = Xft Font new: "Helvetica" display: display
 	
 	# Event loop
 	loop
 		event = display next-event
 		if event type == Xlib Display expose-event
 			window draw-string: "Hello!" gc: gc x: 40 y: 40
+			xft-draw draw-string: "Hello!" color: xft-color font: xft-font x: 40 y: 60
 

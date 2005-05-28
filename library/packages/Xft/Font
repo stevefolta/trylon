@@ -1,0 +1,16 @@
+trylon-class Font
+
+fields primitive-font display ascent descent line-height
+
+
+primitive-fn create: name display: display [Xlib Display]
+
+destroy
+	close
+
+primitive-fn close
+primitive-fn width-of: string -> Int
+primitive-fn width-of-utf8: string -> Int
+
+
+

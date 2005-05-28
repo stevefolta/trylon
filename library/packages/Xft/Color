@@ -1,0 +1,13 @@
+trylon-class Color
+
+fields primitive-color display
+
+
+primitive-fn create: name display: display
+primitive-fn create: red green: green blue: blue alpha: alpha display: display
+
+destroy
+	close
+
+primitive-fn close
+

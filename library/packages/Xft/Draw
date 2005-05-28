@@ -1,0 +1,14 @@
+trylon-class Draw
+
+fields primitive-draw display
+
+
+primitive-fn create: display [Xlib Display] drawable: drawable [Xlib Drawable]
+
+destroy
+	close
+
+primitive-fn close
+primitive-fn draw-string: string color: color font: font x: x y: y
+primitive-fn draw-string-utf8: string color: color font: font x: x y: y
+

@@ -1,3 +1,5 @@
+Multiple cflags in the build-settings often cause the compiler to crash.
+
 Precedence needs reordering.  Some examples:
 	foo || bar: baz  =>  (foo) || (bar: baz)
 	foo = bar || baz  =>  foo = (bar || baz)
