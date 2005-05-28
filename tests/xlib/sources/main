@@ -3,13 +3,16 @@ trylon-package Main
 
 main: args
 	display = Xlib Display new
-	window = Xlib Window new: display x: 20 y: 20 width: 600 height: 800
+	window = Xlib Window new: display x: 20 y: 20 width: 400 height: 400
+	window select-input: Xlib Display expose-event-mask
 	window map
-	# gc = Xlib GC new: window
+	gc = Xlib GC new: window
+	gc foreground = display black-pixel
+	font = Xlib Font new: display name: "Helvetica"
 	
 	# Event loop
 	loop
 		event = display next-event
 		if event type == Xlib Display expose-event
-			# window draw-string: "Hello!" gc: gc x: 40 y: 40
+			window draw-string: "Hello!" gc: gc x: 40 y: 40
 

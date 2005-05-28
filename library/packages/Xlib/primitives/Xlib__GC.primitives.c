@@ -12,7 +12,7 @@ obj_ create_co___Xlib__GC(obj_ this_, obj_ drawableObj)
 	Drawable drawable;
 	UsingMethod_(display) UsingMethod_(display_co_) UsingMethod_(id)
 
-	displayObj = Call_(display, drawable);
+	displayObj = Call_(display, drawableObj);
 	Call_(display_co_, this_, displayObj);
 	xdisplay = (Display*) displayObj->fields[0];
 	drawable = (Drawable) IntValue_(Call_(id, drawableObj));
@@ -43,7 +43,7 @@ obj_ font_co___Xlib__GC(obj_ this_, obj_ font)
 	Display* xdisplay = (Display*) displayObj->fields[0];
 	GC gc = (GC) this_->fields[0];
 
-	// XSetFont(xdisplay, gc, ((XFontStruct*) font->font_struct)->fid);
+	XSetFont(xdisplay, gc, ((XFontStruct*) font->fields[0])->fid);
 	return NULL;
 }
 
@@ -119,7 +119,7 @@ obj_ region_co___Xlib__GC(obj_ this_, obj_ region)
 	Display* xdisplay = (Display*) displayObj->fields[0];
 	GC gc = (GC) this_->fields[0];
 
-	// XSetRegion(xdisplay, gc, ((Region) region->region_ptr));
+	XSetRegion(xdisplay, gc, ((Region) region->fields[0]));
 	return NULL;
 }
 

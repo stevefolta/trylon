@@ -1,0 +1,31 @@
+trylon-class Region
+
+fields primitive-region
+
+
+primitive-fn create
+
+destroy
+	close
+
+primitive-fn close
+primitive-fn offset-by-x: dx y: dy
+primitive-fn shrink-by-x: dx y: dy
+primitive-fn set-to-intersection-of: first-region and: second-region
+primitive-fn set-to-union-of: first-region and: second-region
+primitive-fn set-to-union-of-rect-x: x y: y width: width height: height 	--
+	and: region
+primitive-fn set-to-subtraction-of: first-region and: second-region
+primitive-fn set-to-xor-of: first-region and: second-region
+primitive-fn is-empty
+primitive-fn equals: other
+primitive-fn contains-point-x: x y: y
+primitive-fn contains-rect-x: x y: y width: width height: height
+
+
+contains-point: point
+	return contains-point-x: point x y: point y
+
+fn == other
+	return this equals: other
+

@@ -15,5 +15,5 @@ primitive-fn background: background
 primitive-fn copy-from: other
 primitive-fn line-width
 primitive-fn line-width: new-line-width
-primitive-fn region: region
+primitive-fn region: region [Region]
 

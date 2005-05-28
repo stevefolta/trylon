@@ -1,0 +1,17 @@
+trylon-class Font
+
+
+fields primitive-font display
+
+
+create: display name: name
+
+destroy
+	close
+
+is-valid
+close
+ascent
+descent
+width-of: string
+
