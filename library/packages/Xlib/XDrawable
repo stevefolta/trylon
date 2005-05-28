@@ -1,0 +1,19 @@
+trylon-class XDrawable
+
+fields display id
+
+
+primitive-fn draw-string: string gc: gc x: x y: y
+primitive-fn fill-rectangle: gc x: x y: y width: width height: height
+primitive-fn draw-rectangle: gc x: x y: y width: width height: height
+primitive-fn draw-line: gc x1: x1 y1: y1 x2: x2 y2: y2
+primitive-fn draw-arc: gc x: x y: y width: width height: height 	--
+	angle-1: angle-1 angle-2: angle-2
+primitive-fn fill-arc: gc x: x y: y width: width height: height 	--
+	angle-1: angle-1 angle-2: angle-2
+primitive-fn copy-from: source gc: gc source-x: source-x source-y: source-y 	--
+	width: width height: height dest-x: dest-x dest-y: dest-y
+primitive-fn width
+primitive-fn height
+
+

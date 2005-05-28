@@ -1,4 +1,4 @@
-/* Xlib__XDisplay.c */
+/* Xlib__XDisplay.primitives.c */
 
 #include "Trylon_.h"
 #include <X11/Xutil.h>

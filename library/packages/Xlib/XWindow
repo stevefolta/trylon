@@ -1,0 +1,19 @@
+trylon-class XWindow
+superclass XDrawable
+
+
+primitive-fn create: display x: x y: y width: width height: height
+
+destroy
+	close
+
+primitive-fn close
+primitive-fn map
+primitive-fn select-input: mask
+primitive-fn dont-flash-on-resize
+primitive-fn mouse-point -> Point
+primitive-fn check-window-event: event-mask -> XEvent
+primitive-fn title: new-title
+
+
+
