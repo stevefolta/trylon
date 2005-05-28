@@ -1,4 +1,4 @@
-trylon-class XDisplay
+trylon-class Display
 
 fields primitive-display windows
 
@@ -39,7 +39,7 @@ primitive-fn black-pixel
 primitive-fn depth
 primitive-fn flush
 primitive-fn sync
-primitive-fn next-event -> XEvent
+primitive-fn next-event -> Event
 primitive-fn send-event-to: window propagate: propagate --
 	event-mask: event-mask event: event
 primitive-fn alloc-named-color: color-name

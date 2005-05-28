@@ -1,11 +1,11 @@
-/* Xlib__XWindow.primitives.c */
+/* Xlib__Window.primitives.c */
 
 #include "Trylon_.h"
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
 
-obj_ create_co_x_co_y_co_width_co_height_co___Xlib__XWindow(
+obj_ create_co_x_co_y_co_width_co_height_co___Xlib__Window(
 	obj_ this_, obj_ displayObj, obj_ x, obj_ y, obj_ width, obj_ height)
 {
 	Display* xdisplay = (Display*) displayObj->fields[0];
@@ -28,7 +28,7 @@ obj_ create_co_x_co_y_co_width_co_height_co___Xlib__XWindow(
 }
 
 
-obj_ close__Xlib__XWindow(obj_ this_)
+obj_ close__Xlib__Window(obj_ this_)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
@@ -45,7 +45,7 @@ obj_ close__Xlib__XWindow(obj_ this_)
 }
 
 
-obj_ map__Xlib__XWindow(obj_ this_)
+obj_ map__Xlib__Window(obj_ this_)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
@@ -56,7 +56,7 @@ obj_ map__Xlib__XWindow(obj_ this_)
 }
 
 
-obj_ select_input_co___Xlib__XWindow(obj_ this_, obj_ mask)
+obj_ select_input_co___Xlib__Window(obj_ this_, obj_ mask)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
@@ -67,7 +67,7 @@ obj_ select_input_co___Xlib__XWindow(obj_ this_, obj_ mask)
 }
 
 
-obj_ dont_flash_on_resize__Xlib__XWindow(obj_ this_)
+obj_ dont_flash_on_resize__Xlib__Window(obj_ this_)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
@@ -80,7 +80,7 @@ obj_ dont_flash_on_resize__Xlib__XWindow(obj_ this_)
 }
 
 
-obj_ mouse_point__Xlib__XWindow(obj_ this_)
+obj_ mouse_point__Xlib__Window(obj_ this_)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
@@ -100,7 +100,7 @@ obj_ mouse_point__Xlib__XWindow(obj_ this_)
 }
 
 
-obj_ check_window_event_co___Xlib__XWindow(obj_ this_, obj_ event_mask)
+obj_ check_window_event_co___Xlib__Window(obj_ this_, obj_ event_mask)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
@@ -116,7 +116,7 @@ obj_ check_window_event_co___Xlib__XWindow(obj_ this_, obj_ event_mask)
 }
 
 
-obj_ title_co___Xlib__XWindow(obj_ this_, obj_ new_title)
+obj_ title_co___Xlib__Window(obj_ this_, obj_ new_title)
 {
 	UsingMethod_(id)
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];

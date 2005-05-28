@@ -1,4 +1,4 @@
-trylon-class XEvent
+trylon-class Event
 
 fields type window x y width height button key key-symbol state
 fields data-0 data-1 data-2 data-3 data-4

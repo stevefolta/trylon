@@ -1,5 +1,5 @@
-trylon-class XWindow
-superclass XDrawable
+trylon-class Window
+superclass Drawable
 
 
 primitive-fn create: display x: x y: y width: width height: height
@@ -12,7 +12,7 @@ primitive-fn map
 primitive-fn select-input: mask
 primitive-fn dont-flash-on-resize
 primitive-fn mouse-point -> Point
-primitive-fn check-window-event: event-mask -> XEvent
+primitive-fn check-window-event: event-mask -> Event
 primitive-fn title: new-title
 
 

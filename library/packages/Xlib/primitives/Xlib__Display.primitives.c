@@ -1,4 +1,4 @@
-/* Xlib__XDisplay.primitives.c */
+/* Xlib__Display.primitives.c */
 
 #include "Trylon_.h"
 #include <X11/Xutil.h>
@@ -10,112 +10,111 @@
 extern obj_ XEventObjectFor(XEvent* rawEvent, obj_ display);
 
 extern obj_
-	class_initialized__Xlib__XDisplay,
-	button_1_motion_event_mask__Xlib__XDisplay,
-	button_2_motion_event_mask__Xlib__XDisplay,
-	button_3_motion_event_mask__Xlib__XDisplay,
-	button_4_motion_event_mask__Xlib__XDisplay,
-	button_5_motion_event_mask__Xlib__XDisplay,
-	button_motion_event_mask__Xlib__XDisplay,
-	button_press_event__Xlib__XDisplay,
-	button_press_event_mask__Xlib__XDisplay,
-	button_release_event__Xlib__XDisplay,
-	button_release_event_mask__Xlib__XDisplay,
-	client_message_event__Xlib__XDisplay,
-	configure_notify_event__Xlib__XDisplay,
-	configure_notify_event_mask__Xlib__XDisplay,
-	control_key__Xlib__XDisplay,
-	down_arrow_key__Xlib__XDisplay,
-	end_key__Xlib__XDisplay,
-	expose_event__Xlib__XDisplay,
-	expose_event_mask__Xlib__XDisplay,
-	home_key__Xlib__XDisplay,
-	key_press_event__Xlib__XDisplay,
-	key_press_event_mask__Xlib__XDisplay,
-	key_release_event__Xlib__XDisplay,
-	key_release_event_mask__Xlib__XDisplay,
-	left_arrow_key__Xlib__XDisplay,
-	lock_key__Xlib__XDisplay,
-	mod_1_key__Xlib__XDisplay,
-	mod_2_key__Xlib__XDisplay,
-	mod_3_key__Xlib__XDisplay,
-	mod_4_key__Xlib__XDisplay,
-	mod_5_key__Xlib__XDisplay,
-	motion_notify_event__Xlib__XDisplay,
-	page_down_key__Xlib__XDisplay,
-	page_up_key__Xlib__XDisplay,
-	pointer_motion_event_mask__Xlib__XDisplay,
-	pointer_motion_hint_mask__Xlib__XDisplay,
-	primary_mouse_button__Xlib__XDisplay,
-	right_arrow_key__Xlib__XDisplay,
-	secondary_mouse_button__Xlib__XDisplay,
-	shift_key__Xlib__XDisplay,
-	tertiary_mouse_button__Xlib__XDisplay,
-	up_arrow_key__Xlib__XDisplay;
+	class_initialized__Xlib__Display,
+	button_1_motion_event_mask__Xlib__Display,
+	button_2_motion_event_mask__Xlib__Display,
+	button_3_motion_event_mask__Xlib__Display,
+	button_4_motion_event_mask__Xlib__Display,
+	button_5_motion_event_mask__Xlib__Display,
+	button_motion_event_mask__Xlib__Display,
+	button_press_event__Xlib__Display,
+	button_press_event_mask__Xlib__Display,
+	button_release_event__Xlib__Display,
+	button_release_event_mask__Xlib__Display,
+	client_message_event__Xlib__Display,
+	configure_notify_event__Xlib__Display,
+	configure_notify_event_mask__Xlib__Display,
+	control_key__Xlib__Display,
+	down_arrow_key__Xlib__Display,
+	end_key__Xlib__Display,
+	expose_event__Xlib__Display,
+	expose_event_mask__Xlib__Display,
+	home_key__Xlib__Display,
+	key_press_event__Xlib__Display,
+	key_press_event_mask__Xlib__Display,
+	key_release_event__Xlib__Display,
+	key_release_event_mask__Xlib__Display,
+	left_arrow_key__Xlib__Display,
+	lock_key__Xlib__Display,
+	mod_1_key__Xlib__Display,
+	mod_2_key__Xlib__Display,
+	mod_3_key__Xlib__Display,
+	mod_4_key__Xlib__Display,
+	mod_5_key__Xlib__Display,
+	motion_notify_event__Xlib__Display,
+	page_down_key__Xlib__Display,
+	page_up_key__Xlib__Display,
+	pointer_motion_event_mask__Xlib__Display,
+	pointer_motion_hint_mask__Xlib__Display,
+	primary_mouse_button__Xlib__Display,
+	right_arrow_key__Xlib__Display,
+	secondary_mouse_button__Xlib__Display,
+	shift_key__Xlib__Display,
+	tertiary_mouse_button__Xlib__Display,
+	up_arrow_key__Xlib__Display;
 
 
-obj_ create__Xlib__XDisplay(obj_ this_)
+obj_ create__Xlib__Display(obj_ this_)
 {
 	extern obj_ new__Standard__List();
 
 	this_->fields[0] = (obj_) XOpenDisplay(NULL);
 	this_->fields[1] = new__Standard__List();
 
-	if (!Test_(class_initialized__Xlib__XDisplay)) {
-		expose_event__Xlib__XDisplay = BuildInt_(Expose);
-		button_press_event__Xlib__XDisplay = BuildInt_(ButtonPress);
-		button_release_event__Xlib__XDisplay = BuildInt_(ButtonRelease);
-		key_press_event__Xlib__XDisplay = BuildInt_(KeyPress);
-		key_release_event__Xlib__XDisplay = BuildInt_(KeyRelease);
-		motion_notify_event__Xlib__XDisplay = BuildInt_(MotionNotify);
-		configure_notify_event__Xlib__XDisplay = BuildInt_(ConfigureNotify);
-		client_message_event__Xlib__XDisplay = BuildInt_(ClientMessage);
+	if (!Test_(class_initialized__Xlib__Display)) {
+		expose_event__Xlib__Display = BuildInt_(Expose);
+		button_press_event__Xlib__Display = BuildInt_(ButtonPress);
+		button_release_event__Xlib__Display = BuildInt_(ButtonRelease);
+		key_press_event__Xlib__Display = BuildInt_(KeyPress);
+		key_release_event__Xlib__Display = BuildInt_(KeyRelease);
+		motion_notify_event__Xlib__Display = BuildInt_(MotionNotify);
+		configure_notify_event__Xlib__Display = BuildInt_(ConfigureNotify);
+		client_message_event__Xlib__Display = BuildInt_(ClientMessage);
 
-		expose_event_mask__Xlib__XDisplay = BuildInt_(ExposureMask);
-		button_press_event_mask__Xlib__XDisplay = BuildInt_(ButtonPressMask);
-		button_release_event_mask__Xlib__XDisplay = BuildInt_(ButtonReleaseMask);
-		key_press_event_mask__Xlib__XDisplay = BuildInt_(KeyPressMask);
-		key_release_event_mask__Xlib__XDisplay = BuildInt_(KeyReleaseMask);
-		configure_notify_event_mask__Xlib__XDisplay =
-			BuildInt_(StructureNotifyMask);
-		pointer_motion_event_mask__Xlib__XDisplay = BuildInt_(PointerMotionMask);
-		button_1_motion_event_mask__Xlib__XDisplay = BuildInt_(Button1MotionMask);
-		button_2_motion_event_mask__Xlib__XDisplay = BuildInt_(Button2MotionMask);
-		button_3_motion_event_mask__Xlib__XDisplay = BuildInt_(Button3MotionMask);
-		button_4_motion_event_mask__Xlib__XDisplay = BuildInt_(Button4MotionMask);
-		button_5_motion_event_mask__Xlib__XDisplay = BuildInt_(Button5MotionMask);
-		button_motion_event_mask__Xlib__XDisplay = BuildInt_(ButtonMotionMask);
-		pointer_motion_hint_mask__Xlib__XDisplay = BuildInt_(PointerMotionHintMask);
+		expose_event_mask__Xlib__Display = BuildInt_(ExposureMask);
+		button_press_event_mask__Xlib__Display = BuildInt_(ButtonPressMask);
+		button_release_event_mask__Xlib__Display = BuildInt_(ButtonReleaseMask);
+		key_press_event_mask__Xlib__Display = BuildInt_(KeyPressMask);
+		key_release_event_mask__Xlib__Display = BuildInt_(KeyReleaseMask);
+		configure_notify_event_mask__Xlib__Display = BuildInt_(StructureNotifyMask);
+		pointer_motion_event_mask__Xlib__Display = BuildInt_(PointerMotionMask);
+		button_1_motion_event_mask__Xlib__Display = BuildInt_(Button1MotionMask);
+		button_2_motion_event_mask__Xlib__Display = BuildInt_(Button2MotionMask);
+		button_3_motion_event_mask__Xlib__Display = BuildInt_(Button3MotionMask);
+		button_4_motion_event_mask__Xlib__Display = BuildInt_(Button4MotionMask);
+		button_5_motion_event_mask__Xlib__Display = BuildInt_(Button5MotionMask);
+		button_motion_event_mask__Xlib__Display = BuildInt_(ButtonMotionMask);
+		pointer_motion_hint_mask__Xlib__Display = BuildInt_(PointerMotionHintMask);
 
-		page_up_key__Xlib__XDisplay = BuildInt_(XK_Page_Up);
-		page_down_key__Xlib__XDisplay = BuildInt_(XK_Page_Down);
-		home_key__Xlib__XDisplay = BuildInt_(XK_Home);
-		end_key__Xlib__XDisplay = BuildInt_(XK_End);
-		up_arrow_key__Xlib__XDisplay = BuildInt_(XK_Up);
-		down_arrow_key__Xlib__XDisplay = BuildInt_(XK_Down);
-		left_arrow_key__Xlib__XDisplay = BuildInt_(XK_Left);
-		right_arrow_key__Xlib__XDisplay = BuildInt_(XK_Right);
+		page_up_key__Xlib__Display = BuildInt_(XK_Page_Up);
+		page_down_key__Xlib__Display = BuildInt_(XK_Page_Down);
+		home_key__Xlib__Display = BuildInt_(XK_Home);
+		end_key__Xlib__Display = BuildInt_(XK_End);
+		up_arrow_key__Xlib__Display = BuildInt_(XK_Up);
+		down_arrow_key__Xlib__Display = BuildInt_(XK_Down);
+		left_arrow_key__Xlib__Display = BuildInt_(XK_Left);
+		right_arrow_key__Xlib__Display = BuildInt_(XK_Right);
 
-		primary_mouse_button__Xlib__XDisplay = BuildInt_(Button1Mask);
-		secondary_mouse_button__Xlib__XDisplay = BuildInt_(Button2Mask);
-		tertiary_mouse_button__Xlib__XDisplay = BuildInt_(Button3Mask);
-		shift_key__Xlib__XDisplay = BuildInt_(ShiftMask);
-		lock_key__Xlib__XDisplay = BuildInt_(LockMask);
-		control_key__Xlib__XDisplay = BuildInt_(ControlMask);
-		mod_1_key__Xlib__XDisplay = BuildInt_(Mod1Mask);
-		mod_2_key__Xlib__XDisplay = BuildInt_(Mod2Mask);
-		mod_3_key__Xlib__XDisplay = BuildInt_(Mod3Mask);
-		mod_4_key__Xlib__XDisplay = BuildInt_(Mod4Mask);
-		mod_5_key__Xlib__XDisplay = BuildInt_(Mod5Mask);
+		primary_mouse_button__Xlib__Display = BuildInt_(Button1Mask);
+		secondary_mouse_button__Xlib__Display = BuildInt_(Button2Mask);
+		tertiary_mouse_button__Xlib__Display = BuildInt_(Button3Mask);
+		shift_key__Xlib__Display = BuildInt_(ShiftMask);
+		lock_key__Xlib__Display = BuildInt_(LockMask);
+		control_key__Xlib__Display = BuildInt_(ControlMask);
+		mod_1_key__Xlib__Display = BuildInt_(Mod1Mask);
+		mod_2_key__Xlib__Display = BuildInt_(Mod2Mask);
+		mod_3_key__Xlib__Display = BuildInt_(Mod3Mask);
+		mod_4_key__Xlib__Display = BuildInt_(Mod4Mask);
+		mod_5_key__Xlib__Display = BuildInt_(Mod5Mask);
 
-		class_initialized__Xlib__XDisplay = true__Standard;
+		class_initialized__Xlib__Display = true__Standard;
 		}
 
 	return NULL;
 }
 
 
-obj_ close__Xlib__XDisplay(obj_ this_)
+obj_ close__Xlib__Display(obj_ this_)
 {
 	if (xdisplay)
 		XCloseDisplay(xdisplay);
@@ -125,57 +124,57 @@ obj_ close__Xlib__XDisplay(obj_ this_)
 }
 
 
-obj_ default_screen__Xlib__XDisplay(obj_ this_)
+obj_ default_screen__Xlib__Display(obj_ this_)
 {
 	return BuildInt_(DefaultScreen(xdisplay));
 }
 
 
-obj_ width__Xlib__XDisplay(obj_ this_)
+obj_ width__Xlib__Display(obj_ this_)
 {
 	return BuildInt_(DisplayWidth(xdisplay, DefaultScreen(xdisplay)));
 }
 
 
-obj_ height__Xlib__XDisplay(obj_ this_)
+obj_ height__Xlib__Display(obj_ this_)
 {
 	return BuildInt_(DisplayHeight(xdisplay, DefaultScreen(xdisplay)));
 }
 
 
-obj_ white_pixel__Xlib__XDisplay(obj_ this_)
+obj_ white_pixel__Xlib__Display(obj_ this_)
 {
 	return BuildInt_(WhitePixel(xdisplay, DefaultScreen(xdisplay)));
 }
 
 
-obj_ black_pixel__Xlib__XDisplay(obj_ this_)
+obj_ black_pixel__Xlib__Display(obj_ this_)
 {
 	return BuildInt_(BlackPixel(xdisplay, DefaultScreen(xdisplay)));
 }
 
 
-obj_ depth__Xlib__XDisplay(obj_ this_)
+obj_ depth__Xlib__Display(obj_ this_)
 {
 	return BuildInt_(DefaultDepth(xdisplay, DefaultScreen(xdisplay)));
 }
 
 
-obj_ flush__Xlib__XDisplay(obj_ this_)
+obj_ flush__Xlib__Display(obj_ this_)
 {
 	XFlush(xdisplay);
 	return NULL;
 }
 
 
-obj_ sync__Xlib__XDisplay(obj_ this_)
+obj_ sync__Xlib__Display(obj_ this_)
 {
 	XSync(xdisplay, False);
 	return NULL;
 }
 
 
-obj_ next_event__Xlib__XDisplay(obj_ this_)
+obj_ next_event__Xlib__Display(obj_ this_)
 {
 	XEvent rawEvent;
 	XNextEvent(xdisplay, &rawEvent);
@@ -183,7 +182,7 @@ obj_ next_event__Xlib__XDisplay(obj_ this_)
 }
 
 
-obj_ send_event_to_co_propagate_co_event_mask_co_event_co___Xlib__XDisplay(
+obj_ send_event_to_co_propagate_co_event_mask_co_event_co___Xlib__Display(
 	obj_ this_, obj_ window, obj_ propagate, obj_ event_mask, obj_ event)
 {
 	XEvent xEvent;
@@ -205,7 +204,7 @@ obj_ send_event_to_co_propagate_co_event_mask_co_event_co___Xlib__XDisplay(
 }
 
 
-obj_ alloc_named_color_co___Xlib__XDisplay(obj_ this_, obj_ color_name)
+obj_ alloc_named_color_co___Xlib__Display(obj_ this_, obj_ color_name)
 {
 	char* colorName = MakeCString_(color_name);
 	Colormap colormap = DefaultColormap(xdisplay, DefaultScreen(xdisplay));
@@ -215,7 +214,7 @@ obj_ alloc_named_color_co___Xlib__XDisplay(obj_ this_, obj_ color_name)
 }
 
 
-obj_ alloc_color_red_co_green_co_blue_co___Xlib__XDisplay(obj_ this_, obj_ red, obj_ green, obj_ blue)
+obj_ alloc_color_red_co_green_co_blue_co___Xlib__Display(obj_ this_, obj_ red, obj_ green, obj_ blue)
 {
 	XColor color;
 	Colormap colormap;
@@ -230,7 +229,7 @@ obj_ alloc_color_red_co_green_co_blue_co___Xlib__XDisplay(obj_ this_, obj_ red, 
 }
 
 
-obj_ mouse_buttons__Xlib__XDisplay(obj_ this_)
+obj_ mouse_buttons__Xlib__Display(obj_ this_)
 {
 	Window rootWindow, childWindow;
 	int rootX, rootY, winX, winY;
@@ -243,7 +242,7 @@ obj_ mouse_buttons__Xlib__XDisplay(obj_ this_)
 }
 
 
-obj_ intern_atom_co_only_if_exists_co___Xlib__XDisplay(
+obj_ intern_atom_co_only_if_exists_co___Xlib__Display(
 	obj_ this_, obj_ name, obj_ only_if_exists)
 {
 	return
@@ -251,7 +250,7 @@ obj_ intern_atom_co_only_if_exists_co___Xlib__XDisplay(
 }
 
 
-obj_ is_modifier_key_co___Xlib__XDisplay(obj_ this_, obj_ keyObj)
+obj_ is_modifier_key_co___Xlib__Display(obj_ this_, obj_ keyObj)
 {
 	int key = IntValue_(keyObj);
 	return
@@ -265,7 +264,7 @@ obj_ is_modifier_key_co___Xlib__XDisplay(obj_ this_, obj_ keyObj)
 obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 {
 	obj_ window;
-	extern obj_ new_co___Xlib__XEvent(obj_);
+	extern obj_ new_co___Xlib__Event(obj_);
 	UsingMethod_(window_for_id_co_)
 	UsingMethod_(type_co_) UsingMethod_(window_co_)
 	UsingMethod_(x_co_) UsingMethod_(y_co_)
@@ -275,7 +274,7 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 	UsingMethod_(data_0_co_) UsingMethod_(data_1_co_) UsingMethod_(data_2_co_)
 	UsingMethod_(data_3_co_) UsingMethod_(data_4_co_) 
 
-	obj_ event = new_co___Xlib__XEvent(BuildInt_(rawEvent->type));
+	obj_ event = new_co___Xlib__Event(BuildInt_(rawEvent->type));
 	window = Call_(window_for_id_co_, display, BuildInt_(rawEvent->xany.window));
 	Call_(window_co_, event, window);
 	switch (rawEvent->type) {

@@ -1,4 +1,4 @@
-trylon-class XDrawable
+trylon-class Drawable
 
 fields display id
 

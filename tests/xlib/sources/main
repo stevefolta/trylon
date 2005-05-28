@@ -2,13 +2,14 @@ trylon-package Main
 
 
 main: args
-	display = Xlib XDisplay new
-	window = Xlib XWindow new: display x: 20 y: 20 width: 600 height: 800
+	display = Xlib Display new
+	window = Xlib Window new: display x: 20 y: 20 width: 600 height: 800
 	window map
+	# gc = Xlib GC new: window
 	
 	# Event loop
 	loop
 		event = display next-event
-		if event type == Xlib XDisplay expose-event
+		if event type == Xlib Display expose-event
 			# window draw-string: "Hello!" gc: gc x: 40 y: 40
 
