@@ -9,6 +9,7 @@ main: args
 	gc = Xlib GC new: window
 	gc foreground = display black-pixel
 	font = Xlib Font new: display name: "Helvetica"
+	pixmap = Xlib Pixmap new: display width: 400 height: 400 depth: display depth
 	
 	# Event loop
 	loop

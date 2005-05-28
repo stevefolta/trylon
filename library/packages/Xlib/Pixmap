@@ -1,0 +1,12 @@
+trylon-class Pixmap
+superclass Drawable
+
+
+primitive-fn create: window-or-display width: width height: height depth: depth
+primitive-fn close
+
+
+destroy
+	close
+
+
