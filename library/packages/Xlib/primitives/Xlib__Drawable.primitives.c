@@ -90,7 +90,7 @@ obj_ copy_from_co_gc_co_source_x_co_source_y_co_width_co_height_co_dest_x_co_des
 {
 	Display* xdisplay = (Display*) this_->fields[0]->fields[0];
 	Drawable drawable = (Drawable) IntValue_(this_->fields[1]);
-	Drawable srcDrawable = (Drawable) source->fields[1];
+	Drawable srcDrawable = (Drawable) IntValue_(source->fields[1]);
 	GC xgc = (GC) gc->fields[0];
 
 	XCopyArea(xdisplay, srcDrawable, drawable, xgc,
