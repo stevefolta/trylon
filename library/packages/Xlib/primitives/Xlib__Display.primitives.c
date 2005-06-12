@@ -86,14 +86,14 @@ obj_ create__Xlib__Display(obj_ this_)
 		button_motion_event_mask__Xlib__Display = BuildInt_(ButtonMotionMask);
 		pointer_motion_hint_mask__Xlib__Display = BuildInt_(PointerMotionHintMask);
 
-		page_up_key__Xlib__Display = BuildInt_(XK_Page_Up);
-		page_down_key__Xlib__Display = BuildInt_(XK_Page_Down);
-		home_key__Xlib__Display = BuildInt_(XK_Home);
-		end_key__Xlib__Display = BuildInt_(XK_End);
-		up_arrow_key__Xlib__Display = BuildInt_(XK_Up);
-		down_arrow_key__Xlib__Display = BuildInt_(XK_Down);
-		left_arrow_key__Xlib__Display = BuildInt_(XK_Left);
-		right_arrow_key__Xlib__Display = BuildInt_(XK_Right);
+		page_up_key__Xlib__Display = BuildChar_(XK_Page_Up);
+		page_down_key__Xlib__Display = BuildChar_(XK_Page_Down);
+		home_key__Xlib__Display = BuildChar_(XK_Home);
+		end_key__Xlib__Display = BuildChar_(XK_End);
+		up_arrow_key__Xlib__Display = BuildChar_(XK_Up);
+		down_arrow_key__Xlib__Display = BuildChar_(XK_Down);
+		left_arrow_key__Xlib__Display = BuildChar_(XK_Left);
+		right_arrow_key__Xlib__Display = BuildChar_(XK_Right);
 
 		primary_mouse_button__Xlib__Display = BuildInt_(Button1Mask);
 		secondary_mouse_button__Xlib__Display = BuildInt_(Button2Mask);
@@ -186,20 +186,26 @@ obj_ send_event_to_co_propagate_co_event_mask_co_event_co___Xlib__Display(
 	obj_ this_, obj_ window, obj_ propagate, obj_ event_mask, obj_ event)
 {
 	XEvent xEvent;
+	Window xwind = IntValue_(window->fields[1]);
+	obj_ data;
 	UsingMethod_(type)
 	UsingMethod_(data_0) UsingMethod_(data_1) UsingMethod_(data_2)
 	UsingMethod_(data_3) UsingMethod_(data_4)
 
 	xEvent.xclient.type = IntValue_(Call_(type, event));
-	xEvent.xclient.window = ((Window) window->fields[0]);
+	xEvent.xclient.window = xwind;
 	xEvent.xclient.format = 32;
-	xEvent.xclient.data.l[0] = (long) BytePtrValue_(Call_(data_0, event));
-	xEvent.xclient.data.l[1] = (long) BytePtrValue_(Call_(data_1, event));
-	xEvent.xclient.data.l[2] = (long) BytePtrValue_(Call_(data_2, event));
-	xEvent.xclient.data.l[3] = IntValue_(Call_(data_3, event));
-	xEvent.xclient.data.l[4] = IntValue_(Call_(data_4, event));
-	XSendEvent(xdisplay, ((Window) window->fields[0]), Test_(propagate),
-	           IntValue_(event_mask), &xEvent);
+	data = Call_(data_0, event);
+	xEvent.xclient.data.l[0] = (data ? (long) BytePtrValue_(data) : 0);
+	data = Call_(data_1, event);
+	xEvent.xclient.data.l[1] = (data ? (long) BytePtrValue_(data) : 0);
+	data = Call_(data_2, event);
+	xEvent.xclient.data.l[2] = (data ? (long) BytePtrValue_(data) : 0);
+	data = Call_(data_3, event);
+	xEvent.xclient.data.l[3] = (data ? IntValue_(data) : 0);
+	data = Call_(data_4, event);
+	xEvent.xclient.data.l[4] = (data ? IntValue_(data) : 0);
+	XSendEvent(xdisplay, xwind, Test_(propagate), IntValue_(event_mask), &xEvent);
 	return NULL;
 }
 
@@ -326,8 +332,8 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 			      BuildBytePtr_((byte_ptr_) rawEvent->xclient.data.l[1]));
 			Call_(data_2_co_, event,
 			      BuildBytePtr_((byte_ptr_) rawEvent->xclient.data.l[2]));
-			Call_(data_3_co_, BuildInt_(rawEvent->xclient.data.l[3]));
-			Call_(data_4_co_, BuildInt_(rawEvent->xclient.data.l[4]));
+			Call_(data_3_co_, event, BuildInt_(rawEvent->xclient.data.l[3]));
+			Call_(data_4_co_, event, BuildInt_(rawEvent->xclient.data.l[4]));
 			break;
 		}
 
