@@ -1,0 +1,95 @@
+ifndef OBJ_DIR
+	OBJ_DIR := .objects
+endif
+CPP_SRCS_DIR := .cp-sources
+
+ifdef OSX_FINK
+	CFLAGS += -DOSX_FINK -DMAC_OSX
+	LOCAL_INCLUDE_PATHS += /sw/include
+	LIBPATHS += /sw/lib
+endif
+
+# Force "g++" for the linker if using GCC.
+ifeq "$(CC)" "gcc"
+	USES_GCC := TRUE
+endif
+ifeq "$(CC)" "cc"
+	USES_GCC := TRUE
+endif
+ifdef USES_GCC
+	LD := g++
+endif
+
+include .classes.make
+
+RUNTIME_SRCS_DIR := .cleet-primitives
+RUNTIME_SRC_FILES += \
+	Cleet.cpp \
+	Object.primitives.cpp \
+	Class.primitives.cpp \
+	Int.primitives.cpp \
+	Bool.primitives.cpp \
+	BytePtr.primitives.cpp \
+	Float.primitives.cpp \
+	String.primitives.cpp \
+	String.primitive-helpers.cpp	\
+	RuntimeSupport.primitives.cpp 	\
+	FileDirectory.primitives.cpp 	\
+	FileDirectoryIterator.primitives.cpp 	\
+	File.primitives.cpp 	\
+	FileInStream.primitives.cpp 	\
+	FileOutStream.primitives.cpp 	\
+	System.primitives.cpp
+
+LIBS += gc dl
+
+# Sources.
+RUNTIME_SRCS = $(addprefix $(RUNTIME_SRCS_DIR)/, $(RUNTIME_SRC_FILES))
+SRCS = $(addprefix $(CPP_SRCS_DIR)/, $(addsuffix .cpp, $(CLASSES)))
+SRCS += $(CPP_SRCS_DIR)/main.cpp $(RUNTIME_SRCS)
+
+# Objects.
+OBJS := \
+	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(notdir $(SRCS)))))
+
+# Create a unique list of paths to our sourcefiles
+SRC_PATHS += $(sort $(foreach file, $(SRCS), $(dir $(file))))
+
+# Add source paths to VPATH if not already present
+VPATH :=
+VPATH += $(addprefix :, $(subst  ,:, $(filter-out $($(subst, :, ,$(VPATH))), $(SRC_PATHS))))
+
+# Includes
+LOC_INCLUDES = $(foreach path, $(SRC_PATHS) $(LOCAL_INCLUDE_PATHS), $(addprefix -I, $(path)))
+INCLUDES = $(LOC_INCLUDES)
+
+# Link paths
+LINK_PATHS = $(foreach path, $(LIBPATHS), $(addprefix -L, $(path)))
+
+#	Specify the additional libraries to link against
+#	If the libraries have a .so or .a prefix, simply add them to the list
+LINK_LIBS += $(filter %.so %.a, $(LIBS))
+#	If the libraries do not have suffixes prepend -l to each name: gc becomes -lgc
+LINK_LIBS += $(foreach lib, $(filter-out %.so %.a, $(LIBS)), $(addprefix -l, $(lib)))
+
+# Add to the linker flags 
+LDFLAGS += $(LINK_PATHS) $(LINK_LIBS)
+
+# default
+all:: FORCE
+	[ -d $(OBJ_DIR) ] || mkdir $(OBJ_DIR)
+	$(MAKE) DEBUGGER=$(DEBUGGER) PROFILE=$(PROFILE) OPTIMIZE=$(OPTIMIZE) $(NAME)
+
+#	define the actual work to be done	
+default: $(NAME)
+
+$(NAME): $(OBJ_DIR) $(OBJS) $(RSRCS)
+	$(LD) -o $@ $(OBJS) $(LDFLAGS)
+	$(POST_BUILD_LINE)
+
+$(OBJ_DIR)/%.o : %.cpp
+	$(CC) -c $< $(INCLUDES) $(CFLAGS) -o $@
+
+#	empty rule. Things that depend on this rule will always get triggered
+FORCE:
+

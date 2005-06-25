@@ -41,8 +41,21 @@ ifndef CLEET_BASE
 	CLEET_BASE := /usr/lib/cleet
 endif
 
+ifdef NO_CLEET
+	CLEET_BASE := 
+endif
+
+ifneq "$(wildcard $(CLEET_BASE))" ""
+
+# Cleet is installed, build from the Cleet source.
 include $(CLEET_BASE)/makefiles/make-engine
 
+else
 
-##### Extra targets #####
+# Cleet isn't installed (or NO_CLEET is on); build from the C source.
+include makefile.cleetless
+
+endif
+
+
 
