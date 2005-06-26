@@ -1,8 +1,6 @@
 trylon-package Main
 
-fn main: args
 
-	# Test object calls while we're at it, by adding two strings.
-	print-line: "Hello " + "world!" 	# Test...
-
-	return 0 	# Gotta return something...
+main: args
+	print-line: "Hello " + "world!"
+	return 0
