@@ -2,5 +2,5 @@ trylon-package Main
 
 
 main: args
-	print-line: "Hello " + "world!"
+	print-line: "Hello world!"
 	return 0
