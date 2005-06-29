@@ -1,0 +1,82 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+
+<title> 
+<?title?>
+</title>
+
+<style type="text/css">
+body {
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+	margin-left: auto;
+	margin-right: auto;
+	width: 7in;
+	font-family: Bitstream Charter, Lucida Grande, Georgia, Times, serif;
+}
+
+h2 {
+	margin-top: 1.25em;
+	margin-bottom: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	font-size: 1.4em;
+}
+
+p {
+}
+
+div.entry {
+	border-bottom: solid 1px #cccccc;
+	margin-bottom: 1.75em;
+	padding-bottom: 1em;
+}
+
+div.entry-title {
+	margin-top: 1.25em;
+	font-family: Arial, Helvetical, sans-serif;
+	font-weight: bolder;
+	font-size: 1.025em;
+}
+
+div.entry-date {
+	margin-bottom: 1.05em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.titleless-entry-date {
+	margin-bottom: 0.5em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.code {
+	margin-bottom: 1em;
+	font-family: Courier, monospace;
+	font-size: smaller;
+	margin-left: 2em;
+	margin-right: 2em;
+	white-space: pre;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h2>
+<?title?>
+</h2>
+
+<?contents?>
+
+
+</body>
+</html>

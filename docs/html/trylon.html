@@ -1,0 +1,148 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+
+<title> 
+Trylon
+</title>
+
+<style type="text/css">
+body {
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+	margin-left: auto;
+	margin-right: auto;
+	width: 7in;
+	font-family: Bitstream Charter, Lucida Grande, Georgia, Times, serif;
+}
+
+h2 {
+	margin-top: 1.25em;
+	margin-bottom: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	font-size: 1.4em;
+}
+
+p {
+}
+
+div.entry {
+	border-bottom: solid 1px #cccccc;
+	margin-bottom: 1.75em;
+	padding-bottom: 1em;
+}
+
+div.entry-title {
+	margin-top: 1.25em;
+	font-family: Arial, Helvetical, sans-serif;
+	font-weight: bolder;
+	font-size: 1.025em;
+}
+
+div.entry-date {
+	margin-bottom: 1.05em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.titleless-entry-date {
+	margin-bottom: 0.5em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.code {
+	margin-bottom: 1em;
+	font-family: Courier, monospace;
+	font-size: smaller;
+	margin-left: 2em;
+	margin-right: 2em;
+	white-space: pre;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h2>
+Trylon
+</h2>
+
+<div class="entry">
+<div class="entry-title"> Introduction </div>
+<p>
+Trylon is basically a cross between Python and Smalltalk.  Unlike those languages, it is not a dynamic (or "scripting") language; instead, Trylon programs compile into native binary programs (via an intermediate C step).
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Hello World </div>
+<p>
+Here is the "hello world" program in Trylon.  It can also be found in the "tests" directory of the distribution.
+</p>
+
+<div class="code">trylon-package Main
+
+main: args
+  print-line: "Hello world!"
+  return 0</div>
+
+<p>
+The "trylon-package" line is not necessary, but it may help your editor highlight syntax.
+</p>
+
+<p>
+The rest of the file declares a function named "main:".  The "main:" function is, as one might expect, the main function of the program.  Every Trylon program has one.
+</p>
+
+<p>
+To build the program, the above source is put into a file called "main", in a directory set up like this:
+</p>
+
+<div class="code">hello-world/
+  main
+  build-settings</div>
+
+<p>
+or like this:
+</p>
+
+<div class="code">hello-world/
+  sources/
+    main
+  build-settings</div>
+
+<p>
+"build-settings" is a file in a Trylon-like syntax that describes the name of the binary program and other things.  Currently, the "build-settings" file for this project looks like this:
+</p>
+
+<div class="code">program = "hello-world"
+
+link-flags += "-lgc" "-ldl" "-lm"
+
+if Darwin
+  c-flags += "-DOSX_FINK" "-I/sw/include"
+  link-flags += "-L/sw/lib"</div>
+
+<p>
+Most of this is "boilerplate", and in the future you probably won't need to include it in the build-settings file.  In this case the "boilerplate" is everything except the "program" line.
+</p>
+
+<p>
+To build it, enter the directory in the command line and type "trylon".  The Trylon compiler will compile the Trylon source (just the "main" file in this example) into C, and invoke the C compiler and linker to create the binary.
+</p>
+
+</div>
+
+
+
+</body>
+</html>

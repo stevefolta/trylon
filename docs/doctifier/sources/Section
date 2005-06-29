@@ -1,0 +1,23 @@
+trylon-class Section
+
+fields title paragraphs
+
+
+create
+	title = nil
+	paragraphs = List new
+
+
+add-paragraph: paragraph
+	paragraphs append: paragraph
+
+
+emit
+	print-line: "<div class=\"entry\">"
+	print-line: "<div class=\"entry-title\"> " + title + " </div>"
+	for paragraph in paragraphs
+		paragraph emit
+	print-line: "</div>"
+	print-line
+
+
