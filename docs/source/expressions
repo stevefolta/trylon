@@ -49,7 +49,7 @@ Note that names can contain hyphens (although they can't start or end with a hyp
 
 Operators
 
-Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual rules of precedence apply.  The || and && short-circuit operators are also available.
+Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
 
 There is a comma operator, but it's not used as it is in C.  Instead, it is used to create "Tuples", which are essentially a form of array:
 
