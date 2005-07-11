@@ -214,8 +214,13 @@ compile-program(compile-symbols: List of String)
 			args.append(flag);
 		report-run-program(build-settings.c-compiler, args);
 		status: Int = System.system.run-program(build-settings.c-compiler, args);
-		if (status != 0)
+		if (status != 0) {
+			// Remove .o files for uncompiled .c files.
+			for (file: CFile in c-files.remainder-after(c-file))
+				(new File(".objects/" + file.name + ".o")).remove();
+			// Throw.
 			throw MessageException("C compilation failed.");
+			}
 		}
 	status-reporter.unindent();
 

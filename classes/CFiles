@@ -21,3 +21,15 @@ iterator: ListIterator of CFile
 }
 
 
+remainder-after(after-file: CFile): CFiles
+{
+	remainder: List of CFile = files;
+	while (!remainder.is-empty && remainder.first-item != after-file)
+		remainder = remainder.tail;
+
+	result: CFiles;
+	result.files = remainder.tail;
+	return result;
+}
+
+
