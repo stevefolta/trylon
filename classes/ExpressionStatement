@@ -20,7 +20,9 @@ prepare-to-emit()
 
 emit-code(builder: MethodBuilder)
 {
+	saved-temp-num: Int = builder.next-temporary-num;
 	expression.emit-code(builder);
+	builder.next-temporary-num = saved-temp-num;
 	if (comment)
 		builder.add-line(add-comment(""));
 }

@@ -32,11 +32,13 @@ emit-code(builder: MethodBuilder)
 	builder.using-object-function("go-forward");
 
 	// Get the iterator
+	saved-temp-num: Int = builder.next-temporary-num;
 	collection-result: ExpressionResult = collection.emit-code(builder);
 	builder.add-line("{");
 	line: String =
 		"obj_ iterator_ = Call_(iterator, " + collection-result.access + ");";
 	builder.add-line(line);
+	builder.next-temporary-num = saved-temp-num;
 
 	// Start the loop
 	builder.add-line(add-comment("while (1) {"));
@@ -50,7 +52,8 @@ emit-code(builder: MethodBuilder)
 	// Emit the local
 	builder.add-line("{");
 	local-name: String = MethodBuilder.mangle-name(local.name);
-	builder.add-line("obj_ " + local-name + " = Call_(current_item, iterator_);");
+	builder.add-line("\tobj_ " + local-name +
+	                 " = Call_(current_item, iterator_);");
 
 	// Body
 	body.emit-code(builder);

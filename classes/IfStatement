@@ -32,8 +32,10 @@ prepare-to-emit()
 
 emit-code(builder: MethodBuilder)
 {
+	saved-temp-num: Int = builder.next-temporary-num;
 	result: ExpressionResult = condition.emit-code(builder);
 	builder.add-line(add-comment("if (Test_(" + result.access + "))"));
+	builder.next-temporary-num = saved-temp-num;
 	body.emit-code(builder);
 	if (pre-else-comments) {
 		for (statement: Statement in pre-else-comments)
