@@ -51,7 +51,8 @@ add-instance-function(name: String, function: TrylonInstanceFunction)
 		has-primitives = true;
 
 	if (function.is-a(CompiledFunction) &&
-	    (name == "create" || name.starts-with("create:"))) {
+	    (name == "create" || name.starts-with("create:") ||
+			 name.starts-with("create-"))) {
 		// Add the corresponding "new" function.
 		new-function: NewFunction(function.as-a(CompiledFunction), this);
 		functions[new-function.name] = new-function;
