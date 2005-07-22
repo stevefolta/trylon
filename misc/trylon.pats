@@ -16,13 +16,13 @@
 !
 nedit.highlightPatterns: 	Trylon:1:0{\n\
 		Comment:"#.*$":::Comment::\n\
-		Statement:"^\\s*<(trylon-class|trylon-package|class-fn|class-field|class-fields|class|package|superclass|function|fn|field|fields|fld|primitive-fn|primitive-class-fn|primitive-field|primitive-fld|primitive-fields|return|if|else if|else|iff|case|default|switch|break|continue|loop|while|do|for|try|catch|throw)>":::Keyword::\n\
+		Statement:"^\\s*<(trylon-class|trylon-package|trylon|class-fn|class-field|class-fields|class|package|superclass|function|fn|field|fields|fld|primitive-fn|primitive-class-fn|primitive-field|primitive-fld|primitive-fields|return|if|else if|else|iff|case|default|switch|break|continue|loop|while|do|for|try|catch|throw)>":::Keyword::\n\
 		Keyword:"<(:=|this|in|true|false|nil)>":::Keyword::\n\
 		Typespec:"\\[(\\w|\\s)*\\]":::Typespec::\n\
 		Return Typespec:"-\\>(\\s*\\w+)+":::Typespec::\n\
 		Continuator:"--":::Continuator::\n\
 		Arg Name:"<(\\w|-)*:>":::Identifier::\n\
 	}
-nedit.languageModes:	Trylon::"^(<trylon-class|trylon-package|class|package>)":::::".,/\\`'!|@#%^&*()=+{}[]"":;<>?~"
+nedit.languageModes:	Trylon::"^(<trylon-class|trylon-package|trylon|class|package>)":::::".,/\\`'!|@#%^&*()=+{}[]"":;<>?~"
 nedit.styles: 		Typespec:LightGreen:Plain\n\
 	Continuator:DarkGray:Plain

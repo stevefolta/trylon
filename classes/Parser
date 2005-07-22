@@ -154,7 +154,7 @@ parse-package-contents(package: Package)
 				}
 			}
 
-		else if (name == "trylon-package") {
+		else if (name == "trylon-package" || name == "trylon") {
 			// Should be followed by the name; maybe we should check that, but
 			// for now we're just ignoring the rest of the line.
 			while (current-token.type != 'eol')
@@ -372,7 +372,7 @@ parse-class-contents(the-class: CompiledClass)
 				}
 			}
 
-		else if (name == "trylon-class") {
+		else if (name == "trylon-class" || name == "trylon") {
 			// Should be followed by the name; maybe we should check that, but
 			// for now we're just ignoring the rest of the line.
 			while (current-token.type != 'eol')
