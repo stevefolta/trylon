@@ -130,6 +130,13 @@ fn clear
 	last-cell = nil
 
 
+iff lambdas-implemented
+	fn for-each: block
+		cell = first-cell
+		while cell
+			block do-with: cell object
+			cell = cell next
+
 
 
 class Cell

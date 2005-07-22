@@ -83,7 +83,7 @@ iff lambdas-implemented
 	fn for-each-key-in: node do: block
 		if node left
 			for-each-key-in: node left do: block
-		block do: node key
+		block do-with: node key
 		if node right
 			for-each-key-in: node right do: block
 	
@@ -94,7 +94,7 @@ iff lambdas-implemented
 	fn for-each-value-in: node do: block
 		if node left
 			for-each-value-in: node left do: block
-		block do: node value
+		block do-with: node value
 		if node right
 			for-each-value-in: node right do: block
 
