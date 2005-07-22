@@ -4,6 +4,7 @@ name: String;
 type: CompiledClass;
 is-primitive: Bool;
 initial-value: Expression; 	// Only used for class/package fields.
+used-by-lambda: Bool;
 
 
 create(name: String, type: CompiledClass)

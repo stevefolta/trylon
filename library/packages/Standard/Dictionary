@@ -75,6 +75,30 @@ fn is-empty
 	return (num-items == 0)
 
 
+iff lambdas-implemented
+	fn for-each-key: block
+		if root
+			for-each-key-in: root do: block
+	
+	fn for-each-key-in: node do: block
+		if node left
+			for-each-key-in: node left do: block
+		block do: node key
+		if node right
+			for-each-key-in: node right do: block
+	
+	fn for-each-value: block
+		if root
+			for-each-value-in: root do: block
+	
+	fn for-each-value-in: node do: block
+		if node left
+			for-each-value-in: node left do: block
+		block do: node value
+		if node right
+			for-each-value-in: node right do: block
+
+
 iff debug-dictionaries
 	fn dump
 		if root

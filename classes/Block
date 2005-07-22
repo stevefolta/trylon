@@ -4,6 +4,7 @@ Superclass: Context
 parent: Context;
 locals: Dictionary of CompiledField;
 statements: List of Statement;
+is-lambda: Bool;
 
 
 create(parent: Context)
@@ -49,7 +50,10 @@ lookup-function(name: String): TrylonFunction
 		}
 
 	// Otherwise, go up the chain.
-	return parent.lookup-function(name);
+	function: TrylonFunction = parent.lookup-function(name);
+	if (function && is-lambda)
+		function.used-by-lambda();
+	return function;
 }
 
 

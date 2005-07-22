@@ -21,4 +21,10 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 }
 
 
+used-by-lambda()
+{
+	//***
+}
+
+
 

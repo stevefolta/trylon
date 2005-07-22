@@ -21,3 +21,9 @@ emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 }
 
 
+used-by-lambda()
+{
+	local.used-by-lambda = true;
+}
+
+

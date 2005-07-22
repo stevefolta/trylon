@@ -22,6 +22,12 @@ emit-code(stream: OutputStream)
 }
 
 
+used-by-lambda()
+{
+	// Default: most TrylonFunctions don't care.
+}
+
+
 
 
 // Most TrylonFunctions are non-object functions, and object functions and
