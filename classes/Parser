@@ -616,9 +616,9 @@ parse-type-spec(): CompiledClass
 }
 
 
-parse-block(): Block
+parse-block(is-lambda: Bool): Block
 {
-	block: Block(context);
+	block: Block(context, is-lambda);
 
 	// Strip out leading blank lines
 	while (current-token.type == 'eol')
@@ -629,6 +629,25 @@ parse-block(): Block
 	consume-token();
 
 	context = block;
+
+/***
+	// Arguments for lambdas.
+	if (current-token.type == '|') {
+		consume-token();
+		while (current-token.type != 'eol') {
+			if (current-token.type == '|') {
+				consume-token();
+				continue;
+				}
+			if (current-token.type != 'name')
+				throw ParseException("Illegal lambda argument name.", current-token);
+			name: String = current-token.text;
+			consume-token();
+			//*** Add the argument to the block.
+			}
+		consume-token(); 	// 'eol'
+		}
+***/
 
 	while (current-token.type != 'unindent') {
 		statement: Statement = parse-statement();
@@ -643,6 +662,12 @@ parse-block(): Block
 	context = block.parent;
 
 	return block;
+}
+
+
+parse-block(): Block
+{
+	return parse-block(false);
 }
 
 
@@ -1016,11 +1041,24 @@ parse-keyword-expression(): Expression
 			name += current-token.text;
 			consume-token();
 			arg: Expression = parse-binary-expression();
-			if (arg == nil) {
+			if (arg)
+				args.append(arg);
+/***
+			else if (current-token.type == 'eol' || current-token.type == 'comment') {
+				// Lambda.
+				require-eol();
+				block: Block = parse-block(true);
+				lambda: LambdaExpression(block);
+				//*** Add the lambda to the CompiledFunction's list (how?).
+				args.append(lambda);
+				// We'll need an EOL to finish off the current statement, so fake one.
+				return-token(new Token('eol', ""));
+				}
+***/
+			else {
 				message: String = "Missing argument (\"" + name + "\").";
 				throw ParseException(message, current-token);
 				}
-			args.append(arg);
 			}
 		expr = new ObjectCall(name, expr, args);
 		}

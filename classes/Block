@@ -7,11 +7,18 @@ statements: List of Statement;
 is-lambda: Bool;
 
 
-create(parent: Context)
+create(parent: Context, is-lambda: Bool)
 {
 	this.parent = parent;
 	locals = nil;	// Will be added if needed.
 	statements = new List of Statement;
+	this.is-lambda = is-lambda;
+}
+
+
+create(parent: Context)
+{
+	create(parent, false);
 }
 
 
