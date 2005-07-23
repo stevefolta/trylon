@@ -5,6 +5,7 @@ context: Context;
 lexer: Lexer;
 current-token: Token;
 next-token: Token;
+third-token: Token;
 
 
 create(source: String, context: Context)
@@ -24,7 +25,23 @@ create(source: String, context: Context)
 consume-token()
 {
 	current-token = next-token;
-	next-token = lexer.next-token();
+	if (third-token) {
+		next-token = third-token;
+		third-token = nil;
+		}
+	else
+		next-token = lexer.next-token();
+}
+
+
+return-token(token: Token)
+{
+	if (third-token)
+		throw MessageException("Tried to return too many tokens!");
+
+	third-token = next-token;
+	next-token = current-token;
+	current-token = token;
 }
 
 
