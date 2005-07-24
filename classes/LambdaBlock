@@ -1,0 +1,46 @@
+Class: LambdaBlock
+Superclass: Block
+
+arguments: List of CompiledField;
+
+
+create(parent: Context)
+{
+	super.create(parent);
+	arguments = new List of CompiledField;
+}
+
+
+add-argument(name: String)
+{
+	arguments.append(new CompiledField(name, nil));
+}
+
+
+is-lambda(): Bool
+{
+	return true;
+}
+
+
+lookup-function(name: String): TrylonFunction
+{
+	// See if there's an argument for it.
+	arg-name: String = name;
+	is-setter: Bool = false;
+	if (name.ends-with(":")) {
+		arg-name = name.substr(0, name.length - 1);
+		is-setter = true;
+		}
+	arg: CompiledField = arguments[arg-name];
+	if (arg) {
+		if (is-setter)
+			return new SetArgumentFunction(arg);
+		else
+			return new ArgumentFunction(arg);
+		}
+
+	return super.lookup-function(name);
+}
+
+

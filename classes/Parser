@@ -618,7 +618,11 @@ parse-type-spec(): CompiledClass
 
 parse-block(is-lambda: Bool): Block
 {
-	block: Block(context, is-lambda);
+	block: Block = nil;
+	if (is-lambda)
+		block = new LambdaBlock(context);
+	else
+		block = new Block(context);
 
 	// Strip out leading blank lines
 	while (current-token.type == 'eol')
@@ -633,6 +637,10 @@ parse-block(is-lambda: Bool): Block
 /***
 	// Arguments for lambdas.
 	if (current-token.type == '|') {
+		if (!is-lambda) {
+			throw ParseException("Attempt to add arguments to a non-lambda block.",
+			                     current-token);
+			}
 		consume-token();
 		while (current-token.type != 'eol') {
 			if (current-token.type == '|') {
@@ -643,7 +651,7 @@ parse-block(is-lambda: Bool): Block
 				throw ParseException("Illegal lambda argument name.", current-token);
 			name: String = current-token.text;
 			consume-token();
-			//*** Add the argument to the block.
+			block.as-a(LambdaBlock).add-argument(name);
 			}
 		consume-token(); 	// 'eol'
 		}

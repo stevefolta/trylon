@@ -4,21 +4,13 @@ Superclass: Context
 parent: Context;
 locals: Dictionary of CompiledField;
 statements: List of Statement;
-is-lambda: Bool;
-
-
-create(parent: Context, is-lambda: Bool)
-{
-	this.parent = parent;
-	locals = nil;	// Will be added if needed.
-	statements = new List of Statement;
-	this.is-lambda = is-lambda;
-}
 
 
 create(parent: Context)
 {
-	create(parent, false);
+	this.parent = parent;
+	locals = nil;	// Will be added if needed.
+	statements = new List of Statement;
 }
 
 
@@ -84,6 +76,12 @@ lookup-function-autodeclaring(name: String): TrylonFunction
 enclosing-method-context: MethodContext
 {
 	return parent.enclosing-method-context;
+}
+
+
+is-lambda(): Bool
+{
+	return false;
 }
 
 
