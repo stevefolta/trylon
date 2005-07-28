@@ -17,6 +17,8 @@ lookup-function(name: String): TrylonFunction
 {
 	if (name == local.name)
 		return new LocalGetter(local);
+	else if (name == local.name + ":")
+		return new LocalSetter(local);
 
 	return parent.lookup-function(name);
 }
