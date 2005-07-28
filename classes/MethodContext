@@ -4,6 +4,8 @@ Superclass: Context
 arguments: List of CompiledField;
 is-object-function: Bool;
 parent: Context;
+captured-variables: Dictionary of (List of CompiledField);
+lambdas: List of LambdaBlock;
 
 
 create(arguments: (List of CompiledField), is-object-function: Bool,
@@ -49,6 +51,55 @@ lookup-function(name: String): TrylonFunction
 enclosing-method-context: MethodContext
 {
 	return this;
+}
+
+
+emit-lambda-code(stream: OutputStream)
+{
+	if (captured-variables == nil)
+		return;
+
+	// Define the structure containing the captured variables.
+	//*** function-name: String = function.c-name;
+	function-name: String = nil;
+	vars-name: String = function-name + "__locals_";
+	stream.write-line("struct " + vars-name + "{");
+	if (/*** function.is-object-function ***/ true)
+		stream.write-line("\tobj_ this_;");
+	for (list: (List of CompiledField) in captured-variables.values) {
+		for (var: CompiledField in list) {
+			var-index: Int = 0; 	//***
+			var-name: String =
+				MethodBuilder.mangle-name(var.name) + "__" + var-index.string + "_";
+			stream.write("\tobj_ ");
+			stream.write(var-name);
+			stream.write-line(";");
+			}
+		}
+	stream.write-line("};");
+	stream.write-line();
+
+	// Emit the lambdas.
+	for (lambda: LambdaBlock in lambdas) {
+		// Emit the signature.
+		stream.write("obj_ ");
+		//*** stream.write(lambda.c-name);
+		stream.write("(struct ");
+		stream.write(vars-name);
+		stream.write(" vars_");
+		for (arg: CompiledField in lambda.arguments.values) {
+			stream.write(", obj_ ");
+			stream.write(MethodBuilder.mangle-name(arg.name));
+			}
+		stream.write(")");
+		stream.write-line();
+
+		// Emit the body.
+		method-builder: MethodBuilder;
+		lambda.emit-code(method-builder);
+		method-builder.emit(stream);
+		stream.write-line();
+		}
 }
 
 

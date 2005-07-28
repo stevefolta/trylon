@@ -1,19 +1,19 @@
 Class: LambdaBlock
 Superclass: Block
 
-arguments: List of CompiledField;
+arguments: Dictionary of CompiledField;
 
 
 create(parent: Context)
 {
 	super.create(parent);
-	arguments = new List of CompiledField;
+	arguments = new Dictionary of CompiledField;
 }
 
 
 add-argument(name: String)
 {
-	arguments.append(new CompiledField(name, nil));
+	arguments[name] = new CompiledField(name, nil);
 }
 
 
