@@ -8,6 +8,7 @@ is-object-function: Bool;
 is-a-primitive: Bool;
 on-package: Package;
 body: Block;
+method-context: MethodContext;
 
 
 create(name: String, arguments: (List of CompiledField),
@@ -86,6 +87,9 @@ emit-code(stream: OutputStream)
 {
 	if (body == nil)
 		return;
+
+	if (method-context && method-context.has-lambdas)
+		method-context.emit-lambda-code(stream);
 
 	// Emit the header
 	stream.write-line(c-signature);

@@ -22,7 +22,7 @@ emit-code(stream: OutputStream)
 }
 
 
-used-by-lambda()
+used-by-lambda(block: Block)
 {
 	// Default: most TrylonFunctions don't care.
 }

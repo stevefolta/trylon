@@ -543,9 +543,11 @@ parse-function(at-declarator: Bool, is-object-function: Bool): CompiledFunction
 
 	// Parse the body.
 	body: Block = nil;
+	method-context: MethodContext = nil;
 	if (!is-primitive) {
 		saved-context: Context = context;
-		context = new MethodContext(arguments, is-object-function, context);
+		method-context: MethodContext(arguments, is-object-function, context);
+		context = method-context;
 		body = parse-block();
 		context = saved-context;
 		}
@@ -556,6 +558,9 @@ parse-function(at-declarator: Bool, is-object-function: Bool): CompiledFunction
 		                 is-object-function, is-primitive,
 		                 context.as-a(Package),
 		                 body);
+	new-function.method-context = method-context;
+	if (method-context)
+		method-context.function = new-function;
 	return new-function;
 }
 

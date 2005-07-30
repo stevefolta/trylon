@@ -14,16 +14,19 @@ create(local: CompiledField)
 emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 	: ExpressionResult
 {
-	line: String =
-		builder.mangle-name(local.name) + " = " + arguments.first-item.access + ";";
+	access: String = builder.mangle-name(local.name);
+	if (local.captured-index > 0)
+		access = "vars_->" + access;
+	line: String = access + " = " + arguments.first-item.access + ";";
 	builder.add-line(line);
 	return new NameResult("NULL");
 }
 
 
-used-by-lambda()
+used-by-lambda(block: Block)
 {
-	local.used-by-lambda = true;
+	method-context: MethodContext = block.enclosing-method-context;
+	method-context.capture-variable(local);
 }
 
 

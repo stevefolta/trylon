@@ -51,7 +51,7 @@ lookup-function(name: String): TrylonFunction
 	// Otherwise, go up the chain.
 	function: TrylonFunction = parent.lookup-function(name);
 	if (function && is-lambda)
-		function.used-by-lambda();
+		function.used-by-lambda(this);
 	return function;
 }
 

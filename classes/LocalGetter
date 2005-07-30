@@ -14,13 +14,17 @@ create(local: CompiledField)
 emit-call(arguments: (List of ExpressionResult), builder: MethodBuilder)
 	: ExpressionResult
 {
-	return new NameResult(builder.mangle-name(local.name));
+	access: String = builder.mangle-name(local.name);
+	if (local.captured-index > 0)
+		access = "vars_->" + access;
+	return new NameResult(access);
 }
 
 
-used-by-lambda()
+used-by-lambda(block: Block)
 {
-	local.used-by-lambda = true;
+	method-context: MethodContext = block.enclosing-method-context;
+	method-context.capture-variable(local);
 }
 
 
