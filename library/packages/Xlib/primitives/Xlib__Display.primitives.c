@@ -182,6 +182,16 @@ obj_ next_event__Xlib__Display(obj_ this_)
 }
 
 
+obj_ check_mask_event_co___Xlib__Display(obj_ this_, obj_ event_mask)
+{
+	XEvent rawEvent;
+	Bool found = XCheckMaskEvent(xdisplay, IntValue_(event_mask), &rawEvent);
+	if (!found)
+		return NULL;
+	return XEventObjectFor(&rawEvent, this_);
+}
+
+
 obj_ send_event_to_co_propagate_co_event_mask_co_event_co___Xlib__Display(
 	obj_ this_, obj_ window, obj_ propagate, obj_ event_mask, obj_ event)
 {

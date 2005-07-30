@@ -40,6 +40,7 @@ primitive-fn depth
 primitive-fn flush
 primitive-fn sync
 primitive-fn next-event -> Event
+primitive-fn check-mask-event: event-mask -> Event
 primitive-fn send-event-to: window propagate: propagate --
 	event-mask: event-mask event: event
 primitive-fn alloc-named-color: color-name
