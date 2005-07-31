@@ -1,0 +1,22 @@
+trylon-class IntArray
+
+fields ptr size
+
+
+create: size
+	ptr = BytePtr new-non-pointer: (size * 4)
+	this size = size
+
+
+at: index
+	if (index < 0 || index >= size)
+		throw MessageException new: "Index out of range for Array."
+	return ptr int-at: index
+
+
+at: index set-to: value
+	if (index < 0 || index >= size)
+		throw MessageException new: "Index out of range for Array."
+	return ptr int-at: index set-to: value
+
+
