@@ -46,6 +46,8 @@ primitive-fn send-event-to: window propagate: propagate --
 primitive-fn alloc-named-color: color-name
 primitive-fn alloc-color-red: red green: green blue: blue
 primitive-fn mouse-buttons
+primitive-fn auto-repeat
+primitive-fn auto-repeat: enable
 primitive-fn intern-atom: name only-if-exists: only-if-exists
 
 

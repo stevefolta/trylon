@@ -258,6 +258,27 @@ obj_ mouse_buttons__Xlib__Display(obj_ this_)
 }
 
 
+obj_ auto_repeat__Xlib__Display(obj_ this_)
+{
+	XKeyboardState keyboardState;
+	XGetKeyboardControl(xdisplay, &keyboardState);
+	if (keyboardState.global_auto_repeat == AutoRepeatModeOn)
+		return true__Standard;
+	else
+		return false__Standard;
+}
+
+
+obj_ auto_repeat_co___Xlib__Display(obj_ this_, obj_ enable)
+{
+	if (Test_(enable))
+		XAutoRepeatOn(xdisplay);
+	else
+		XAutoRepeatOff(xdisplay);
+	return NULL;
+}
+
+
 obj_ intern_atom_co_only_if_exists_co___Xlib__Display(
 	obj_ this_, obj_ name, obj_ only_if_exists)
 {
