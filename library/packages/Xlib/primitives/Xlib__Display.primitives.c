@@ -285,7 +285,7 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 	UsingMethod_(type_co_) UsingMethod_(window_co_)
 	UsingMethod_(x_co_) UsingMethod_(y_co_)
 	UsingMethod_(width_co_) UsingMethod_(height_co_)
-	UsingMethod_(button_co_) UsingMethod_(state_co_)
+	UsingMethod_(button_co_) UsingMethod_(state_co_) UsingMethod_(time_co_)
 	UsingMethod_(key_co_) UsingMethod_(key_symbol_co_)
 	UsingMethod_(data_0_co_) UsingMethod_(data_1_co_) UsingMethod_(data_2_co_)
 	UsingMethod_(data_3_co_) UsingMethod_(data_4_co_) 
@@ -306,6 +306,7 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 			Call_(y_co_, event, BuildInt_(rawEvent->xbutton.y));
 			Call_(button_co_, event, BuildInt_(rawEvent->xbutton.button));
 			Call_(state_co_, event, BuildInt_(rawEvent->xbutton.state));
+			Call_(time_co_, event, BuildInt_(rawEvent->xbutton.time));
 			break;
 		case KeyPress:
 		case KeyRelease:
@@ -320,6 +321,7 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 				Call_(key_co_, event, BuildChar_(sym));
 			Call_(key_symbol_co_, event, BuildInt_(sym));
 			Call_(state_co_, event, BuildInt_(rawEvent->xkey.state));
+			Call_(time_co_, event, BuildInt_(rawEvent->xkey.time));
 			Call_(x_co_, event, BuildInt_(rawEvent->xkey.x));
 			Call_(y_co_, event, BuildInt_(rawEvent->xkey.y));
 			}
@@ -328,6 +330,7 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 			Call_(x_co_, event, BuildInt_(rawEvent->xmotion.x));
 			Call_(y_co_, event, BuildInt_(rawEvent->xmotion.y));
 			Call_(state_co_, event, BuildInt_(rawEvent->xmotion.state));
+			Call_(time_co_, event, BuildInt_(rawEvent->xmotion.time));
 			break;
 		case ConfigureNotify:
 			Call_(x_co_, event, BuildInt_(rawEvent->xconfigure.x));
