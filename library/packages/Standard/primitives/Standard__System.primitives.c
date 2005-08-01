@@ -40,6 +40,17 @@ obj_ num_garbage_collections__Standard__System()
 }
 
 
+obj_ dump_gc_stats__Standard__System()
+{
+	printf("-- %d collections.\n", GC_gc_no);
+	printf("  heap size:                %d.\n", GC_get_heap_size());
+	printf("  free bytes:               %d.\n", GC_get_free_bytes());
+	printf("  allocated since last GC:  %d.\n", GC_get_bytes_since_gc());
+	printf("  total bytes:              %d.\n", GC_get_total_bytes());
+	return NULL;
+}
+
+
 obj_ debugger__Standard__System()
 {
 	kill(getpid(), SIGTRAP);
