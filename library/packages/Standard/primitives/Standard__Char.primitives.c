@@ -55,7 +55,7 @@ obj_ _pl___Standard__Char(obj_ this_, obj_ arg)
 
 obj_ ___Standard__Char(obj_ this_, obj_ arg)
 {
-	return BuildChar_(value_(this_) + value_(arg));
+	return BuildChar_(value_(this_) - value_(arg));
 }
 
 

@@ -174,20 +174,26 @@ class Node
 				return right
 		
 		# Otherwise, we are not at the bottom; rebalance.
-		else if (left && left level < level - 1) || 	--
-		        (right && right level < level - 1)
-			level -= 1
-			if right && right level > level
-				right level = level
-			new-top := skew
-			if new-top right
-				new-top = new-top right skew
-			if new-top right && new-top right right
-				new-top = new-top right right skew
-			new-top = new-top split
-			if new-top right
+		else
+			left-level = 0
+			if left
+				left-level = left level
+			right-level = 0
+			if right
+				right-level = right level
+			if left-level < level - 1 || right-level < level - 1
+				level -= 1
+				if right && right level > level
+					right level = level
+				new-top := skew
+				if new-top right
+					new-top right = new-top right skew
+				if new-top right && new-top right right
+					new-top right right = new-top right right skew
 				new-top = new-top split
-			return new-top
+				if new-top right
+					new-top right = new-top right split
+				return new-top
 		
 		return this
 	

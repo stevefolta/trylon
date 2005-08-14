@@ -15,3 +15,12 @@ primitive-fn - arg [Char] -> Char
 
 primitive-fn string -> String
 primitive-fn int -> Int
+
+
+iff debugger
+	fn debug-write
+		print-line: debug-string
+	
+	fn debug-string
+		return "`" + this string + "`"
+
