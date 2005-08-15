@@ -8,7 +8,7 @@ fn string -> String
 	return "a " + class name
 
 fn same-as: object [Object] -> Bool
-	return this object-ptr == object object-ptr
+	return object != nil && this object-ptr == object object-ptr
 
 fn == other -> Bool
 	return this same-as: other
