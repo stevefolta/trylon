@@ -12,15 +12,20 @@ Hello World
 
 Here is the "hello world" program in Trylon.  It can also be found in the "tests" directory of the distribution.
 
-	trylon-package Main
+	trylon Main
 	
 	main: args
 		print-line: "Hello world!"
 		return 0
 
-The "trylon-package" line is not necessary, but it may help your editor highlight syntax.
+The "trylon" line is not necessary, but it may help your editor highlight syntax.
 
 The rest of the file declares a function named "main:".  The "main:" function is, as one might expect, the main function of the program.  Every Trylon program has one.
+
+
+=====
+
+Building "Hello World"
 
 To build the program, the above source is put into a file called "main", in a directory set up like this:
 
@@ -45,7 +50,7 @@ or like this:
 		c-flags += "-DOSX_FINK" "-I/sw/include"
 		link-flags += "-L/sw/lib"
 
-Most of this is "boilerplate", and in the future you probably won't need to include it in the build-settings file.  In this case the "boilerplate" is everything except the "program" line.
+Most of this is "boilerplate", and in the future you probably won't need to include it in your build-settings file.  In this case the "boilerplate" is everything except the "program" line.
 
 To build it, enter the directory in the command line and type "trylon".  The Trylon compiler will compile the Trylon source (just the "main" file in this example) into C, and invoke the C compiler and linker to create the binary.
 

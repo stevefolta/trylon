@@ -89,20 +89,24 @@ Trylon is basically a cross between Python and Smalltalk.  Unlike those language
 Here is the "hello world" program in Trylon.  It can also be found in the "tests" directory of the distribution.
 </p>
 
-<div class="code">trylon-package Main
+<div class="code">trylon Main
 
 main: args
   print-line: "Hello world!"
   return 0</div>
 
 <p>
-The "trylon-package" line is not necessary, but it may help your editor highlight syntax.
+The "trylon" line is not necessary, but it may help your editor highlight syntax.
 </p>
 
 <p>
 The rest of the file declares a function named "main:".  The "main:" function is, as one might expect, the main function of the program.  Every Trylon program has one.
 </p>
 
+</div>
+
+<div class="entry">
+<div class="entry-title"> Building "Hello World" </div>
 <p>
 To build the program, the above source is put into a file called "main", in a directory set up like this:
 </p>
@@ -133,7 +137,7 @@ if Darwin
   link-flags += "-L/sw/lib"</div>
 
 <p>
-Most of this is "boilerplate", and in the future you probably won't need to include it in the build-settings file.  In this case the "boilerplate" is everything except the "program" line.
+Most of this is "boilerplate", and in the future you probably won't need to include it in your build-settings file.  In this case the "boilerplate" is everything except the "program" line.
 </p>
 
 <p>
