@@ -25,6 +25,7 @@ pop(): Int
 {
 	value: Int = top-cell.value;
 	top-cell = top-cell.next;
+	return value;
 }
 
 

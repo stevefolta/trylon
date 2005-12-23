@@ -1,0 +1,26 @@
+trylon Token
+
+fields type text
+
+create: type text: text
+	this type = type
+	this text = text
+
+create: type
+	this type = type
+
+create: type from: start to: end
+	this type = type
+	this text = String new: start to: end
+
+
+string
+	if type == 'name' || type == 'keyword'
+		return text
+	return type
+
+
+
+# Copyright 2005 Steve Folta
+# See the License file.
+
