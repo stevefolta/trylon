@@ -14,6 +14,12 @@ create: type from: start to: end
 	this text = String new: start to: end
 
 
+== symbol
+	return type == symbol
+!= symbol
+	return type != symbol
+
+
 string
 	if type == 'name' || type == 'keyword'
 		return text

@@ -1,0 +1,367 @@
+trylon Parser
+
+fields context lexer curent-token next-token third-token
+fields compiler reporter
+
+
+create: source context: context compiler: compiler
+	lexer = Lexer new: source
+	this compiler = compiler
+	this context = context
+
+	# Load up the first tokens.
+	current-token = lexer next-token
+	next-token = lexer next-token
+
+
+
+# Lexing
+
+consume-token
+	current-token = next-token
+	if third-token
+		next-token = third-token
+		third-token = nil
+	else
+		next-token = lexer next-token
+
+
+return-token: token
+	if third-token
+		throw MessageException new: "Tried to return too many tokens."
+	
+	third-token = next-token
+	next-token = current-token
+	current-token = token
+
+
+at-name: name
+	return current-token == 'name' && current-token text == name
+
+
+require-eol
+	# Returns a comment, if there is one.
+	comment = nil
+	if current-token == 'comment'
+		comment = current-token text
+		consume-token
+	
+	if current-token != 'eol'
+		parse-error: "End-of-line required."
+	consume-token
+
+	return comment
+
+
+
+# Highest level (class or package) parsing
+
+
+parse-package-file: package
+	report: "Parsing " + package name + "..."
+	indent
+
+	parse-package-contents: package
+	if current-token != 'eof'
+		parse-error: "Extra stuff in package."
+	
+	unindent
+
+
+parse-member-package
+	# "package"
+	if !at-name: "package"
+		parse-error: "Expecting \"package\"."
+	consume-token
+
+	# Package name
+	if current-token != 'name'
+		parse-error: "Missing class name."
+	package-name = current-token text
+	consume-token
+	require-eol
+
+	report: "Parsing " + package-name + "..."
+	indent
+
+	package = context package-named: package-name
+	if package == nil
+		package = (context add-package: package-name) package
+	
+	while current-token == 'eol'
+		consume-token
+	if current-token == 'indent'
+		consume-token 	# indent
+		parse-package-contents: package
+		if current-token != 'unindent'
+			parse-error: "Illegal package entry."
+		consume-token 	# unindent
+
+	unindent
+
+
+parse-package-contents: package
+	saved-context = context
+	context = package
+
+	loop
+		while current-token == 'eol' || current-token == 'comment'
+			consume-token
+
+		name = current-token text
+		if current-token == 'keyword'
+			# Null-out the name so it doesn't match any special names.
+			name = ""
+		else if current-token type != 'name'
+			break
+
+		if name == "fn" || name == "function" || name == "primitive-fn" || name == "primitive-function"
+			package add-function: (parse-function: true is-object-function: false)
+		
+		else if name == "field" || name == "fields" || name == "fld" || 	--
+		        name == "primitive-field" || name == "primitive-fields" || name == "primitive-fld"
+			for field in parse-fields
+				package add-field: field
+
+		else if name == "package"
+			parse-member-package
+		else if name == "class"
+			parse-member-class
+
+		else if name == "iff"
+			if check-iff
+				if current-token == 'indent'
+					consume-token
+					parse-package-contents: package
+					if current-token type != 'unindent'
+						parse-error: "Unindent required at end of package."
+					consume-token
+
+		else if name == "trylon-package" || name == "trylon"
+			# Should be followed by the name; maybe we should check that, but for 
+			# now we're just ignoring the rest of the line.
+			while current-token type != 'eol'
+				consume-token
+			consume-token
+
+		else
+			parse-package-member: package in-class: false
+	
+	context = saved-context
+
+
+parse-package-member: package in-class: in-class
+	# We're at the name.
+
+	# Handle declaring a field.
+	if next-token == '=' || next-token == ':='
+		# Make sure it *is* a field.
+		if current-token == 'keyword'
+			parse-error: "Bad declaration of a package member."
+		name = current-token text
+		consume-token 	# Name.
+		consume-token 	# '=' or ':='.
+
+		# Get the initial value.
+		initial-value = nil
+		if current-token == 'string-literal'
+			string-literal = StringLiteral new: current-token text
+			string-literal index = package new-literal-index
+			initial-value = string-literal
+		else if current-token == 'symbol-literal'
+			initial-value = compiler get-symbol-literal: current-token text
+		else if current-token == 'int-literal'
+			int-literal = IntLiteral new: current-token text
+			int-literal index = package new-literal-index
+			initial-value = int-literal
+		else if current-token == 'float-literal'
+			float-literal = FloatLiteral new: current-token text
+			float-literal index = package new-literal-index
+			initial-value = float-literal
+		else if current-token == 'character-literal'
+			initial-value = compiler get-character-literal: current-token text
+		else if current-token type == 'name'
+			name = current-token text
+			if name == "true"
+				initial-value = BoolLiteral new: true
+			else if name == "false"
+				initial-value = BoolLiteral new: false
+			else if name == "nil"
+				initial-value = nil
+			else
+				parse-error: "Illegal initial value for a class/package field."
+		else
+			parse-error: "Syntax error in class/package field initial value."
+		consume-token 	# Value.
+
+		# Add the field.
+		field = CompiledField new: name type: nil
+		field initial-value = initial-value
+		package add-field: field
+	
+	# Declaring a function.
+	else
+		function = parse-function: false in-object-function: in-class
+		if in-class
+			package add-instance-function: function-name function: function
+		else
+			package add-function: function
+
+
+parse-class-file: class
+	report: "Parsing " + class name + "..."
+	indent
+
+	parse-class-contents: class
+	if current-token != 'eof'
+		parse-error: "Extra stuff in class."
+	
+	unindent
+
+
+parse-member-class
+	# "class"
+	if !at-name: "class"
+		parse-error: "Expecting \"class\"."
+	consume-token
+
+	# Class name.
+	if current-token != 'name'
+		parse-error: "Missing class name."
+	class-name = current-token text
+	consume-token
+	require-eol
+
+	report: "Parsing " + class-name + "..."
+	indent
+
+	# Create (or get) the class.
+	the-class = context add-class: class-name
+
+	# Read the contents (if any).
+	while current-token == 'eol'
+		consume-token
+	if current-token == 'indent'
+		consume-token
+		parse-class-contents: the-class
+		if current-token != 'unindent'
+			parse-error: "Unindent required at end of class."
+		consume-token
+	
+	unindent
+
+
+parse-class-conents: the-class
+	saved-context = context
+	context = the-class
+
+	loop
+		while current-token == 'eol' || current-token == 'comment'
+			consume-token
+
+		name = current-token text
+		if current-token == 'keyword'
+			# Null-out the name so it doesn't match any special names.
+			name = ""
+		else if current-token type != 'name'
+			break
+
+		if name == "fn" || name == "function" || 	--
+		   name == "primitive-fn" || name == "primitive-function"
+			function = parse-function: true in-object-function: true
+			the-class add-instance-function: function name function: function
+		else if name == "class-fn" || name == "class-function" || 	--
+		        name == "primitive-class-fn" || name == "primitive-class-function"
+			the-class add-function: (parse-function: true in-object-function: true)
+
+		else if name == "field" || name == "fields" || name == "fld"
+			for field in parse-fields
+				the-class add-instance-field: field
+
+		else if name == "class-field" || name == "class-fields" || 	--
+		        name == "class-fld" 	--
+		        name == "primitive-class-fld" || 	--
+		        name == "primitive-class-field" 	--
+		        name == "primitive-class-fields"
+			for field in parse-fields
+				the-class add-field: field
+
+		else if name == "package"
+			parse-error: "You can't have a package inside a class."
+
+		else if name == "class"
+			parse-member-class
+
+		else if name == "superclass"
+			consume-token
+			superclass = parse-type-spec
+			the-class make-subclass-of: superclass
+
+		else if name == "iff"
+			if check-iff
+				if current-token == 'indent'
+					consume-token
+					parse-class-contents: the-class
+					if current-token != 'unindent'
+						parse-error: "Unindent required at end of class."
+					consume-token
+
+		else if name == "trylon-class" || name == "trylon"
+			# Should be followed by the name; maybe we should check that, but
+			# for now we're just ignoring the rest of the line.
+			while current-token != 'eol'
+				consume-token
+			consume-token
+
+		else
+			parse-package-member: the-class in-class: true
+	
+	context = saved-context
+
+
+check-iff
+	consume-token 	# "iff"
+
+	# Check for "!".
+	invert-sense = false
+	if current-token == '!'
+		consume-token
+		invert-sense = true
+	
+	# Get the name.
+	if current-token != 'name'
+		parse-error: "Illegal \"iff\"."
+	name = current-token text
+	consume-token
+	require-eol
+
+	# If it doesn't exist, skip the block.
+	test-succeeded = 	--
+		(context lookup-function: name != nil) || 	--
+		(compiler build-settings has-symbol: name)
+	if invert-sense
+		test-succeeded = !test-succeeded
+	if !test-succeeded
+		skip-block
+		return false
+	
+	# If it does exist, the caller will parse the block.
+	return true
+
+
+
+# Helpers
+
+parse-error: message
+	throw ParseException new: "End-of-line required." token: current-token
+
+indent
+	if reporter
+		reporter indent
+unindent
+	if reporter
+		reporter unindent
+
+
+
+
