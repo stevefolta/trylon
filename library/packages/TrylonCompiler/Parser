@@ -349,6 +349,486 @@ check-iff
 	return true
 
 
+parse-fields
+	# "fld"/"field"/etc.
+	is-primitive = current-token text starts-with: "primitive-"
+	consume-token
+
+	# Get the fields.
+	fields = List new
+	while current-token != 'eol' && current-token != 'comment'
+		# Get the name.
+		if current-token != 'name'
+			parse-error: "Field name needed."
+		name = current-token text
+
+		# Get the type, if given.
+		type = nil
+		if current-token == '['
+			consume-token
+			type = parse-type-spec
+			if current-token != ']'
+				parse-error: "Missing \"]\"."
+			consume-token
+
+		# Add it.
+		fields append: (CompiledField new: name type: type is-primitive: is-primitive)
+	
+	require-eol
+
+	return fields
+
+
+parse-function: at-declarator is-object-function: is-object-function
+	# "fn" or "function" (etc.) has already been recognized; just check it for 
+	# primitiveness.
+	is-primitive = false
+	if at-declarator
+		is-primitive = current-token text starts-with: "primitive-"
+		consume-token
+	
+	# Get the name.
+	# We're allowing any name; we want to allow unops and binops and string 
+	# literals as well as names.  Ideally we should reject other names, but 
+	# currently we don't bother.
+	name = current-token string
+	fn-type = current-token type
+	consume-token
+
+	# Get the arguments.
+	arguments = List new
+	if fn-type != 'name' && fn-type != '~'
+		# Get the first argument.
+		if current-token type != 'name'
+			parse-error: "Missing argument name in " + name "."
+		arg-name = current-token text
+		consume-token
+		arg-type = parse-arg-type
+		arguments append: (CompiledField new: arg-name type: arg-type)
+
+		# Get additional arguments.
+		while current-token == 'name' || current-token == 'keyword'
+			# Get the name.
+			if current-token == 'keyword'
+				# Standard argument declaration ("keyword: name").
+				name += current-token text
+				consume-token
+				if current-token != 'name'
+					parse-error: "Missing argument name."
+				arg-name = current-token text
+				consume-token
+			else
+				# Special shortcut: just an argument name.  Equivalent to "name: name".
+				name += current-token text + ":"
+				arg-name = current-token text substr: 0 length: current-token text length - 1
+				consume-token
+
+			# Get the type and add the argument.
+			arg-type = parse-arg-type
+			arguments append: (CompiledField new: arg-name type: arg-type)
+	
+	# Get the return type.
+	return-type = nil
+	if current-token == '->'
+		consume-token
+		return-type = parse-type-spec
+	
+	require-eol
+
+	report: "Parsing " + name + "..."
+
+	# Parse the body.
+	body = nil
+	method-context = nil
+	if !is-primitive
+		saved-context = context
+		method-context = 	--
+			MethodContext new: arguments is-object-function: is-object-function 	--
+				context: context
+		context = method-context
+		body = parse-block
+		context = saved-context
+	
+	# Build the function and return it.
+	new-function = 	--
+		CompiledFunction new: name arguments: arguments 	--
+			return-type: return-type is-object-function: is-object-function 	--
+			is-primitive: is-primitive on-package: context body: body
+	new-function method-context = method-context
+	if method-context
+		method-context function = new-function
+	return new-function
+
+
+parse-arg-type
+	arg-type = nil
+	if current-token == '['
+		# Type is specified.
+		consume-token
+		arg-type = parse-type-spec
+		if current-token != ']'
+			parse-error: "Missing \"]\"."
+		consume-token
+	return arg-type
+
+
+parse-type-spec
+	type = nil
+	cur-context = context
+	last-name = nil
+	while current-token == 'name'
+		# Find the package or class.
+		last-name = current-token
+		type-function = cur-context lookup-function: current-token text
+		if type-function == nil
+			parse-error: "Unknown class or package."
+		consume-token
+
+		if type-function is-a: PackageFunction
+			type = type-function package
+		else if type-function is-a: ClassFunction
+			type = type-function the-class
+		else
+			throw 	--
+				ParseException new: "Not a class or package in a type specifier." 	--
+					token: last-name
+		cur-context = type
+	
+	# Make sure we got a class.
+	if type == nil
+		parse-error: "Missing the type in a type specifier."
+	if !type is-a: CompiledClass
+		throw 	--
+			ParseException new: "A type specifier was given, but is not a class." 	--
+				token: last-name
+	
+	return type
+
+
+parse-block: is-lambda
+	block = nil
+	if is-lambda
+		block = LambdaBlock new: context
+	else
+		block = Block new: context
+	
+	# Strip out leading blank lines.
+	while current-token == 'eol'
+		consume-token
+	
+	if current-token != 'indent'
+		return block
+	consume-token
+
+	context = block
+
+	while current-token != 'unindent'
+		statement = parse-statement
+		if statement == nil
+			parse-error: "Statement expected."
+
+		block append: statement
+	
+	consume-token 	# Unindent.
+
+	context = block parent
+
+	return block
+
+
+parse-block
+	return parse-block: false
+
+
+skip-block
+	if current-token != 'indent'
+		return
+	consume-token
+
+	level = 1
+	loop
+		type = current-token type
+		consume-token
+		if type == 'indent'
+			level += 1
+		else if type == 'unindent'
+			level -= 1
+			if level <= 0
+				break
+
+
+parse-statement
+	if current-token == 'name'
+		name = current-token text
+		if name == "if"
+			return parse-if-statement
+		else if name == "iff"
+			return parse-iff-statement
+		else if name == "loop"
+			return parse-loop-statement
+		else if name == "while"
+			return parse-while-statement
+		else if name == "for"
+			return parse-for-statement
+		else if name == "continue"
+			return parse-continue-statement
+		else if name == "break"
+			return parse-break-statement
+		else if name == "return"
+			return parse-return-statement
+		else if name == "try"
+			return parse-try-statement
+		else if name == "throw"
+			return parse-throw-statement
+
+		# Is it a declaration?
+		if next-token == ':=' || next-token == '['
+			return parse-declaration
+	
+	else if current-token == 'eol'
+		consume-token
+		return BlankLine new
+	
+	else if current-token == 'comment'
+		comment = current-token text
+		consume-token
+		require-eol
+		return Comment new: comment
+	
+	# If it wasn't anything else, it must be an expression statement.
+	return parse-expression-statement
+
+
+parse-if-statement
+	consume-token
+
+	# Condition.
+	condition = parse-expression
+	if condition == nil
+		parse-error: "Missing condition in an \"if\" statement."
+	comment = require-eol
+
+	# Body.
+	body = parse-block
+
+	# Any comments and blank lines preceding the "else".
+	pre-else-comments = parse-inter-prong-comments
+
+	# "else" block, if there is one.
+	else-block = nil
+	else-comment = nil
+	if current-token == 'name' && current-token text == "else"
+		consume-token 	# "else"
+		if current-token == 'name' && current-token text == "if"
+			else-block = Block new: context
+			else-block append: parse-if-statement
+		else
+			else-comment = require-eol
+			else-block = parse-block
+	
+	return 	--
+		IfStatement new: condition body: body else-block: else-block 	--
+			comment: comment else-comment: else-comment 	--
+			pre-else-comments: pre-else-comments
+
+
+parse-inter-prong-comments
+	comments = nil
+	loop
+		if current-token == 'eol'
+			if comments == nil
+				comments = List new
+			comments append: BlankLine new
+			consume-token
+		else if current-token == 'comment'
+			if comments == nil
+				comments = List new
+			comments append: (Comment new: require-eol)
+		else
+			break
+	
+	return comments
+
+
+parse-iff-statement
+	if check-iff
+		return BlockStatement new: parse-block
+	else
+		return EmptyStatement new
+
+
+parse-loop-statement
+	consume-token 	# "loop"
+	comment = require-eol
+
+	body = parse-block
+	return LoopStatement new: body comment: comment
+
+
+parse-while-statement
+	consume-token 	# "while"
+
+	# Condition.
+	condition = parse-expression
+	if condition == nil
+		parse-error: "Missing condition in a \"while\" statement."
+	
+	# Body.
+	comment = require-eol
+	body = parse-block
+
+	return WhileStatement new: condition body: body comment: comment
+
+
+parse-for-statement
+	consume-token 	# "for"
+
+	# Variable.
+	if current-token != 'name'
+		parse-error: "\"for\" loop variable name expected."
+	name = current-token text
+	consume-token
+	type = nil
+	if current-token == '['
+		consume-token
+		type = parse-type-spec
+		if current-token != ']'
+			parse-error: "Missing \"]\"."
+		consume-token
+	local = CompiledField new: name type: type
+
+	# "in"
+	if current-token != 'name' || current-token text != "in"
+		parse-error: "\"in\" expected."
+	consume-token
+
+	# Collection.
+	collection = parse-expression
+	if collection == nil
+		parse-error: "Missing collection in \"for\" statement."
+	
+	# Add the name to the context and parse the body.
+	comment = require-eol
+	saved-context = context
+	context = ForContext new: local parent: context
+	body = parse-block
+	context = saved-context
+
+	# Make the result.
+	return 	--
+		ForStatement new: local collection: collection body: body comment: comment
+
+
+parse-continue-statement
+	consume-token 	# "continue"
+	comment = require-eol
+
+	return ContinueStatement new: comment
+
+
+parse-break-statement
+	consume-token 	# "break"
+	comment = require-eol
+
+	return BreakStatement new: comment
+
+
+parse-return-statement
+	consume-token 	# "return"
+
+	return-value = nil
+	if current-token == 'eol' || current-token == 'comment'
+		return-value = FunctionCall new: "nil" args: List new context: context
+	else
+		return-value = parse-expression
+	comment = require-eol
+
+	return ReturnStatement new: return-value comment: comment
+
+
+parse-try-statement
+	consume-token 	# "try"
+	comment = require-eol
+
+	body = parse-block
+
+	# Catch clauses.
+	catch-clauses = List new
+	saved-context = context
+	pre-clause-comments = nil
+	loop
+		pre-clause-comments = parse-inter-prong-comments
+
+		if current-token != 'name' || current-token text != "catch"
+			break
+
+		consume-token 	# "catch"
+		type = parse-type-spec
+		catch-comment = require-eol
+		catch-clause = 	--
+			CatchClause new: type context: context comment: catch-comment 	--
+				pre-clause-comments: pre-clause-comments
+		context = catch-clause
+		catch-clause body = parse-block
+		context = saved-context
+		catch-clauses append: catch-clause
+
+		pre-clause-comments = nil
+	
+	return 	--
+		TryStatement new: body catch-clauses: catch-clauses comment: comment 	--
+			pre-clause-comments: pre-clause-comments
+
+
+parse-throw-statement
+	consume-token 	# "throw"
+
+	expr = parse-expression
+	comment = require-eol
+
+	return ThrowStatement new: expr comment: comment
+
+
+parse-declaration
+	name = current-token text
+	consume-token
+
+	# Type.
+	type = nil
+	if current-token == '['
+		consume-token 	# '['
+		type = parse-type-spec
+		if current-token != ']'
+			parse-error: "Missing \"]\"."
+		consume-token
+	
+	# ':='
+	if current-token != ':='
+		parse-error: "\":=\" expected."
+	consume-token
+
+	# Initial value.
+	initial-value = parse-expression
+	comment = require-eol
+
+	# Add the local to the block.
+	current-block add-local: (CompiledField new: name type: type)
+
+	# Set to the initial value.
+	arguments = List new
+	arguments append: initial-value
+	return 	--
+		ExpressionStatement new: 	--
+			(FunctionCall new: name + ":" arguments: arguments context: context) 	--
+			comment: comment
+
+
+parse-expression-statement
+	expr = parse-expression
+	comment = require-eol
+	return ExpressionStatement new: expr comment: comment
+
+
 
 # Helpers
 
