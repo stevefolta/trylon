@@ -1195,8 +1195,70 @@ parse-primary-expression
 	return nil
 
 
+parse-super-call
+	# Note: the 'super' token has already been consumed.
+
+	# Make sure this is in an object method.
+	method-context = context enclosing-method-context
+	if method-context == nil || !method-context is-object-function
+		parse-error: "\"super\" calls are only valid in object functions."
+
+	name = nil
+	arguments = List new
+
+	if current-token == 'name'
+		name = current-token text
+		consume-token
+
+	else if current-token == 'keyword'
+		# Get the arguments.
+		name == ""
+		while current-token == 'keyword'
+			name += current-token text
+			consume-token
+			arg = parse-binary-expression
+			if arg == nil
+				parse-error: "Missing argument (\"" + name + "\")."
+			arguments append: arg
+	
+	# We allow binops here.
+	else if current-token text == nil || current-token text is-empty
+		# *** Actually, we're allowing too many things here, but we'd have to
+		# *** explicitly check every binop.
+		name = current-token type
+		consume-token
+		arg = parse-unary-expression
+		if arg == nil
+			parse-error: 	--
+				"Missing unary expression argument in super call (\"" + name + "\")."
+		arguments append: arg
+	
+	else
+		# Does this ever happen?
+		parse-error: "Illegal super call."
+	
+	# Get the class that it's on.
+	on-class = method-context parent
+	if !(on-class is-a: CompiledClass)
+		parse-error: "Internal error: no class for super call."
+	
+	return SuperCall new: name arguments: arguments on-class: on-class
+
+
 
 # Helpers
+
+current-block
+	if !(context is-a: Block)
+		throw MessageException new: "Internal error: Current context isn't a block."
+	return context
+
+
+make-binop-call: name with: object and: argument
+	arguments: List new
+	arguments append: argument
+	return Object new: name object: object arguments: arguments
+
 
 parse-error: message
 	throw ParseException new: message token: current-token
@@ -1213,4 +1275,11 @@ unindent
 
 
 
-
+# NOTES:
+# Local variables are part of a Block.  A Block is a Context; we can use
+# "context" for the current block, as we won't be trying to add fields and
+# functions to it.
+#
+# There are two kinds of function calls: FunctionCall and ObjectCall.
+# FunctionCall is not on an object; it has a context.  ObjectCall is on
+# an object.
