@@ -894,7 +894,7 @@ parse-binary-expression
 			parse-error: "Illegal assignment."
 		expr2 = parse-expression
 		if expr2 == nil
-			parse-error: "Expresion expected after \"=\"."
+			expression-expected-after: token
 		if (expr is-a: FunctionCall) || (expr is-a: ObjectCall)
 			expr convert-to-setter-call: expr2
 	
@@ -907,7 +907,7 @@ parse-binary-expression
 			parse-error: "Illegal assignment."
 		expr2 = parse-expression
 		if expr2 == nil
-			parse-error: "Expression expected."
+			expression-expected-after: token
 		arguments = List new
 		arguments append: expr2
 		call = 	--
@@ -930,7 +930,7 @@ parse-logical-or-expression
 		consume-token
 		expr2 = parse-logical-and-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"||\"."
+			expression-expected-after: '||'
 		expr = ShortCircuitOr new: expr with: expr2
 	
 	return expr
@@ -945,7 +945,7 @@ parse-logical-and-expression
 		consume-token
 		expr2 = parse-inclusive-or-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"&&\"."
+			expression-expected-after: '&&'
 		expr = ShortCircuitOr new: expr with: expr2
 	
 	return expr
@@ -960,8 +960,8 @@ parse-inclusive-or-expression
 		consume-token
 		expr2 = parse-exclusive-or-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"|\"."
-		expr = make-binop-call: "|" with: expr and: expr2
+			expression-expected-after: '|'
+		expr = make-binop-call: '|' with: expr and: expr2
 	
 	return expr
 
@@ -975,7 +975,7 @@ parse-exclusive-or-expression
 		consume-token
 		expr2 = parse-and-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"^\"."
+			expression-expected-after: '^'
 		expr = make-binop-call: "^" with: expr and: expr2
 	
 	return expr
@@ -990,8 +990,8 @@ parse-and-expression
 		consume-token
 		expr2 = parse-equality-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"&\"."
-		expr = make-binop-call: "&" with: expr and: expr2
+			expression-expected-after: '&'
+		expr = make-binop-call: '&' with: expr and: expr2
 	
 	return expr
 
@@ -1006,7 +1006,7 @@ parse-equality-expression
 		consume-token
 		expr2 = parse-relational-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"" + token string + "\"."
+			expression-expected-after: token
 		expr = EqualityCall new: token with: expr and: expr2
 
 		token = current-token type
@@ -1024,7 +1024,7 @@ parse-relational-expression
 		consume-token
 		expr2 = parse-shift-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"" + token string + "\"."
+			expression-expected-after: token
 		expr = make-binop-call: token with: expr and: expr2
 
 		token = current-token type
@@ -1042,7 +1042,7 @@ parse-shift-expression
 		consume-token
 		expr2 = parse-additive-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"" + token string + "\"."
+			expression-expected-after: token
 		expr = make-binop-call: token with: expr and: expr2
 
 		token = current-token type
@@ -1060,7 +1060,7 @@ parse-additive-expression
 		consume-token
 		expr2 = parse-multiplicative-expression
 		if expr2 == nil
-			parse-error: "Expression expected after \"" + token string + "\"."
+			expression-expected-after: token
 		expr = make-binop-call: token with: expr and: expr2
 	
 		token = current-token type
@@ -1068,11 +1068,141 @@ parse-additive-expression
 	return expr
 
 
+parse-multiplicative-expression
+	expr = parse-unary-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '*' || token == '/' || token == '%'
+		consume-token
+		expr2 = parse-unary-expression
+		if expr2 == nil
+			expression-expected-after: token
+		expr = make-binop-call: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-unary-expression
+	expr = nil
+	token = current-token type
+
+	if token == '!'
+		consume-token
+		expr = parse-unary-expression
+		if expr == nil
+			expression-expected-after: '!'
+		expr = ShortCircuitNot new: expr
+	
+	else if token == '+' || token == '-' || token == '~'
+		consume-token
+		expr = parse-unary-expression
+		if expr == nil
+			expression-expected-after: token
+		name = nil
+		if token == '+'
+			name = "unary-plus"
+		else if token == '-'
+			name = "unary-minus"
+		else
+			name = "~"
+		expr = ObjectCall new: name object: expr arguments: List new
+	
+	else
+		expr = parse-postfix-expression
+	
+	return expr
+
+
+parse-postfix-expression
+	expr = parse-primary-expression
+	if expr == nil
+		return nil
+	
+	while current-token == 'name'
+		# A unary object call.
+		name = current-token text
+		consume-token
+		expr = ObjectCall new: name object: expr arguments: List new
+	
+	return expr
+
+
+parse-primary-expression
+	token = current-token type
+
+	if token == 'name'
+		name = current-token text
+		consume-token
+
+		if name == "super"
+			return parse-super-call
+
+		# Non-object function call.
+		return FunctionCall new: name arguments: List new context: context
+	
+	else if token == 'keyword'
+		# Non-object function call.
+		name = ""
+		arguments = List new
+		while current-token == 'keyword'
+			name += current-token text
+			consume-token
+			arg = parse-binary-expression
+			if arg == nil
+				parse-error: "Missing argument (\"" + name + "\")."
+			arguments append: arg
+		return FunctionCall new: name arguments: arguments context: context
+	
+	else if token == 'int-literal'
+		value = current-token text
+		consume-token
+		return IntLiteral new: value
+	
+	else if token == 'float-literal'
+		value = current-token text
+		consume-token
+		return FloatLiteral new: value
+	
+	else if token == 'string-literal'
+		value = current-token text
+		consume-token
+		return StringLiteral new: value
+	
+	else if token == 'symbol-literal'
+		value = current-token text
+		consume-token
+		return compiler get-symbol-literal: value
+
+	else if token == 'symbol-literal'
+		value = current-token text
+		consume-token
+		return compiler get-character-literal: value
+	
+	else if token == '('
+		consume-token
+		expr = parse-expression
+		if expr == nil
+			expression-expected-after: '('
+		if current-token != ')'
+			parse-error: "')' expected."
+		consume-token
+		return expr
+	
+	return nil
+
+
 
 # Helpers
 
 parse-error: message
-	throw ParseException new: "End-of-line required." token: current-token
+	throw ParseException new: message token: current-token
+
+expression-expected: after
+	parse-error: "Expression expected after \"" + after string + "\"."
 
 indent
 	if reporter
