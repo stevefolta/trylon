@@ -829,6 +829,245 @@ parse-expression-statement
 	return ExpressionStatement new: expr comment: comment
 
 
+parse-expression
+	expr = parse-keyword-expression
+	if expr == nil
+		return nil
+	
+	if current-token == ','
+		tuple = TupleExpression new
+		tuple add-member: expr
+		while current-token == ','
+			consume-token
+			member = parse-keyword-expression
+			if member == nil
+				parse-error: "Missing expression in tuple."
+			tuple add-member: member
+		expr = tuple
+	
+	return expr
+
+
+parse-keyword-expression
+	expr = parse-binary-expression
+	if expr == nil
+		return nil
+	
+	if current-token == 'keyword'
+		name = ""
+		args = List new
+		while current-token == 'keyword'
+			name += current-token text
+			consume-token
+			arg = parse-binary-expression
+			if arg
+				args append: arg
+			# else if current-token == 'eol' || current-token == 'comment'
+			# 	# Lambda.
+			# 	require-eol
+			# 	block = parse-block: true
+			# 	lambda = LambdaExpression new: block
+			# 	# *** Add the lambda to the CompiledFunction's list (how?).
+			# 	args append: lambda
+			# 	# We'll need an EOL to finish off the current statement, so fake one.
+			# 	return-token: (Token new: 'eol' text: "")
+			else
+				parse-error: "Missing argument (\"" + name + "\")."
+		expr = ObjectCall new: name object: expr args: args
+	
+	return expr
+
+
+parse-binary-expression
+	# At the top level are the '=' expressions.
+
+	expr = parse-logical-or-expression
+	if expr == nil
+		return nil
+	
+	expr2 = nil
+
+	token = current-token type
+	if token == '='
+		consume-token
+		if !(expr is-a: FunctionCall) && !(expr is-a: ObjectCall)
+			parse-error: "Illegal assignment."
+		expr2 = parse-expression
+		if expr2 == nil
+			parse-error: "Expresion expected after \"=\"."
+		if (expr is-a: FunctionCall) || (expr is-a: ObjectCall)
+			expr convert-to-setter-call: expr2
+	
+	else if token == '+=' || token == '-=' || token == '*=' || 	--
+	        token == '/=' || token == '%=' || 	--
+	        token == '>>=' || token == '<<=' || 	--
+	        token == '&=' || token == '|=' || token == '^='
+		consume-token
+		if !(expr is-a: FunctionCall) && !(expr is-a: ObjectCall)
+			parse-error: "Illegal assignment."
+		expr2 = parse-expression
+		if expr2 == nil
+			parse-error: "Expression expected."
+		arguments = List new
+		arguments append: expr2
+		call = 	--
+			ObjectCall new: (token substr: 0 length: token length - 1) 	--
+			object: expr arguments: arguments
+		if (expr is-a: FunctionCall) || (expr is-a: ObjectCall)
+			setter = expr copy
+			setter convert-to-setter-call: call
+			expr = setter
+	
+	return expr
+
+
+parse-logical-or-expression
+	expr = parse-logical-and-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '||'
+		consume-token
+		expr2 = parse-logical-and-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"||\"."
+		expr = ShortCircuitOr new: expr with: expr2
+	
+	return expr
+
+
+parse-logical-and-expression
+	expr = parse-inclusive-or-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '&&'
+		consume-token
+		expr2 = parse-inclusive-or-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"&&\"."
+		expr = ShortCircuitOr new: expr with: expr2
+	
+	return expr
+
+
+parse-inclusive-or-expression
+	expr = parse-exclusive-or-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '|'
+		consume-token
+		expr2 = parse-exclusive-or-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"|\"."
+		expr = make-binop-call: "|" with: expr and: expr2
+	
+	return expr
+
+
+parse-exclusive-or-expression
+	expr = parse-and-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '^'
+		consume-token
+		expr2 = parse-and-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"^\"."
+		expr = make-binop-call: "^" with: expr and: expr2
+	
+	return expr
+
+
+parse-and-expression
+	expr = parse-equality-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '&'
+		consume-token
+		expr2 = parse-equality-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"&\"."
+		expr = make-binop-call: "&" with: expr and: expr2
+	
+	return expr
+
+
+parse-equality-expression
+	expr = parse-relational-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '==' || token == '!='
+		consume-token
+		expr2 = parse-relational-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"" + token string + "\"."
+		expr = EqualityCall new: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-relational-expression
+	expr = parse-shift-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '<' || token == '>' || token == '<=' || token == '>='
+		consume-token
+		expr2 = parse-shift-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"" + token string + "\"."
+		expr = make-binop-call: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-shift-expression
+	expr = parse-additive-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '<<' || token == '>>'
+		consume-token
+		expr2 = parse-additive-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"" + token string + "\"."
+		expr = make-binop-call: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-additive-expression
+	expr = parse-multiplicative-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '+' || token == '-'
+		consume-token
+		expr2 = parse-multiplicative-expression
+		if expr2 == nil
+			parse-error: "Expression expected after \"" + token string + "\"."
+		expr = make-binop-call: token with: expr and: expr2
+	
+		token = current-token type
+	
+	return expr
+
+
 
 # Helpers
 
