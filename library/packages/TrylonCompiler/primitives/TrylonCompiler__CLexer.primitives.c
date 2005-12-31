@@ -34,7 +34,7 @@ static char curChar(CLexer* self)
 }
 
 
-static void token(obj_ symbol)
+static obj_ token(obj_ symbol)
 {
   extern obj_ allocate_object_co___Standard__Implementation(obj_);
   extern obj_ create_co___TrylonCompiler__Token(obj_, obj_);
@@ -75,6 +75,17 @@ static void textToken(obj_ symbol, char* start, char* stopper)
 }
 
 
+static obj_ possiblyEqualsToken(CLexer* self, obj_ without, obj_ with)
+{
+	if (curChar(self) == '=') {
+		self->p += 1;
+		return token(with);
+		}
+	else
+		return token(without);
+}
+
+
 static void throwError(obj_ message)
 {
 	extern obj_ create_co___Standard__MessageException(obj_, obj_);
@@ -110,6 +121,7 @@ obj_ next_token__TrylonCompiler__Lexer(obj_ this_)
 	int indentation;
 	char c, nextChar;
 	char* tokenStart, tokenEnd;
+	obj_ type;
 	UsingSym_(indent) UsingSym_(unindent)
 	UsingSym_(name) UsingSym_(keyword)
 	UsingSym_(eol) UsingSym_(eof)
@@ -118,6 +130,21 @@ obj_ next_token__TrylonCompiler__Lexer(obj_ this_)
 	UsingSym_(string_literal) UsingSym(symbol_literal)
 	UsingSym_(character_literal)
 	UsingSym_(comment)
+	UsingSym_(_40_) UsingSym_(_41_) UsingSym_(_123_) UsingSym_(_125_)
+	UsingSym_(_91_) UsingSym_(_93_) UsingSym_(_46_) UsingSym_(_44_)
+	UsingSym_(_59_) UsingSym_(_tw_)
+	UsingSym_(_pl_) UsingSym_(_pl__eq_)
+	UsingSym_(_eq_) UsingSym_(_eq__eq_)
+	UsingSym_(_st_) UsingSym_(_st__eq_)
+	UsingSym_(_dv_) UsingSym_(_dv__eq_)
+	UsingSym_(_pc_) UsingSym_(_pc__eq_)
+	UsingSym_(_xr_) UsingSym_(_xr__eq_)
+	UsingSym_(_nt_) UsingSym_(_nt__eq_)
+	UsingSym_(_co_) UsingSym_(_co__eq_)
+	UsingSym_(_lt_) UsingSym_(_lt__eq_) UsingSym_(_lt__lt_) UsingSym(_lt__lt__eq_)
+	UsingSym_(_gt_) UsingSym_(_gt__eq_) UsingSym_(_gt__gt_) UsingSym(_gt__gt__eq_)
+	UsingSym_(_or_) UsingSym_(_or__eq_) UsingSym_(_or__or_)
+	UsingSym_(_an_) UsingSym_(_an__eq_) UsingSym_(_an__an_)
 	DefineString_(0, "Indentation error!", 18)
 	DefineString_(1, "Unterminated string constant.", 29)
 	DefineString_(2, "Unterminated symbol.", 20)
@@ -231,7 +258,7 @@ obj_ next_token__TrylonCompiler__Lexer(obj_ this_)
 							self->p += 1;
 							}
 						else {
-							obj_ type = (isFloat ? Sym_(float_literal) : Sym_(int_literal));
+							type = (isFloat ? Sym_(float_literal) : Sym_(int_literal));
 							return textToken(type, tokenStart, self->p);
 							}
 						}
@@ -325,7 +352,105 @@ obj_ next_token__TrylonCompiler__Lexer(obj_ this_)
 				return token(Sym_(_91_));
 			case ']':
 				return token(Sym_(_93_));
-			/***/
+			case '.':
+				return token(Sym_(_46_));
+			case ',':
+				return token(Sym_(_44_));
+			case ';':
+				return token(Sym_(_59_));
+			case '~':
+				return token(Sym_(_tw_));
+
+			/* Could be followed by =. */
+			case '+':
+				return possiblyEqualsToken(self, Sym_(_pl_), Sym_(_pl__eq_));
+			case '=':
+				return possiblyEqualsToken(self, Sym(_eq_), Sym_(_eq__eq_));
+			case '*':
+				return possiblyEqualsToken(self, Sym_(_st_), Sym_(_st__eq_));
+			case '/':
+				return possiblyEqualsToken(self, Sym_(_dv_), Sym_(_dv__eq_));
+			case '%':
+				return possiblyEqualsToken(self, Sym_(_pc_), Sym_(_pc__eq_));
+			case '^':
+				return possiblyEqualsToken(self, Sym_(_xr_), Sym_(_xr__eq_));
+			case '!':
+				return possiblyEqualsToken(self, Sym_(_nt_), Sym_(_nt__eq_));
+			case ':':
+				return possiblyEqualsToken(self, Sym_(_co_), Sym_(_co__eq_));
+
+			/* Could be doubled, then followed by =. */
+			case '<':
+				type = Sym_(_lt_);
+				nextChar = curChar(self);
+				if (nextChar == c) {
+					/* Doubled. */
+					self->p += 1;
+					if (curChar(self) == '=') {
+						self->p += 1;
+						type = Sym_(_lt__lt__eq_);
+						}
+					else
+						type = Sym_(_lt__lt_);
+					}
+				else if (nextChar == '=') {
+					self->p += 1;
+					type = Sym_(_lt__eq_);
+					}
+				return token(type);
+				break;
+
+			case '>':
+				type = Sym_(_gt_);
+				nextChar = curChar(self);
+				if (nextChar == c) {
+					/* Doubled. */
+					self->p += 1;
+					if (curChar(self) == '=') {
+						self->p += 1;
+						type = Sym_(_gt__gt__eq_);
+						}
+					else
+						type = Sym_(_gt__gt_);
+					}
+				else if (nextChar == '=') {
+					self->p += 1;
+					type = Sym_(_gt__eq_);
+					}
+				return token(type);
+				break;
+
+			/* Could be doubled, or followed by '='. */
+			case '&':
+				type = Sym_(_an_);
+				nextChar = curChar(self);
+				if (nextChar == '&') {
+					self->p += 1;
+					type = Sym_(_an_an_);
+					}
+				else if (nextChar == '=') {
+					self->p += 1;
+					type = Sym_(_an__eq_);
+					}
+				return token(type);
+				break;
+
+			case '|':
+				type = Sym_(_or_);
+				nextChar = curChar(self);
+				if (nextChar == '|') {
+					self->p += 1;
+					type = Sym_(_or__or_);
+					}
+				else if (nextChar == '=') {
+					self->p += 1;
+					type = Sym_(_or__eq_);
+					}
+				return token(type);
+				break;
+
+			/* Name. */
+			case /***/
 			}
 		}
 }
