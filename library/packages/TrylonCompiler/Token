@@ -14,9 +14,9 @@ create: type from: start to: end
 	this text = String new: start to: end
 
 
-== symbol
+fn == symbol
 	return type == symbol
-!= symbol
+fn != symbol
 	return type != symbol
 
 
