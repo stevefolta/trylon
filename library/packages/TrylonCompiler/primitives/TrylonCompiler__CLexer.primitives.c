@@ -122,13 +122,13 @@ obj_ next_token__TrylonCompiler__Lexer(obj_ this_)
 	char c, nextChar;
 	char* tokenStart, tokenEnd;
 	obj_ type;
+	bool isIDChar, isHex;
 	UsingSym_(indent) UsingSym_(unindent)
 	UsingSym_(name) UsingSym_(keyword)
 	UsingSym_(eol) UsingSym_(eof)
 	UsingSym_(_) UsingSym(__eq_)
-	UsingSym_(int_literal) UsingSym_(float_literal)
+	UsingSym_(int_literal) UsingSym_(float_literal) UsingSym_(character_literal)
 	UsingSym_(string_literal) UsingSym(symbol_literal)
-	UsingSym_(character_literal)
 	UsingSym_(comment)
 	UsingSym_(_40_) UsingSym_(_41_) UsingSym_(_123_) UsingSym_(_125_)
 	UsingSym_(_91_) UsingSym_(_93_) UsingSym_(_46_) UsingSym_(_44_)
@@ -450,8 +450,71 @@ obj_ next_token__TrylonCompiler__Lexer(obj_ this_)
 				break;
 
 			/* Name. */
-			case /***/
+			case 'a' ... 'z':
+			case 'A' ... 'Z':
+			case '_':
+				while (1) {
+					c = curChar(self);
+					isIDChar = 
+						(c == '_' || c == '-' || (c >= 'a' && c <= 'z') ||
+						 (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'));
+					if (!isIDChar)
+						break;
+					self->p += 1;
+					}
+				type = Sym_(name);
+				/* Could be a keyword. */
+				if (curChar(self) == ':') {
+					self->p += 1;
+					type = Sym_(keyword);
+					}
+				return textToken(type, tokenStart, self->p);
+				break;
+
+			/* Number. */
+			case '0' ... '9':
+				/* Is it hex? */
+				isHex = false;
+				if (c == '0') {
+					c = curChar(self);
+					if (c == 'x' || c == 'X') {
+						self->p += 1;
+						isHex = true;
+						}
+					}
+				/* Read the rest of the number. */
+				type = Sym_(int_literal);
+				while (1) {
+					c = curChar(self);
+					if (c >= '0' && c <= '9')
+						self->p += 1;
+					else if (isHex && ((c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
+						self->p += 1;
+					else if (c == '.') {
+						self->p += 1;
+						type = Sym_(float_literal);
+						}
+					else
+						break;
+					}
+				return textToken(type, tokenStart, self->p);
+				break;
+
+			/* Unknown character. */
+			default:
+				{
+				UsingMethod_(_pl_) UsingMethod_(string_)
+				obj_ message = Call_(string_, BuildChar_(c));
+				message = Call_(_pl_, Str_(4), message);
+				message = Call_(_pl_, message, Str_(5));
+				throwError(message);
+				}
 			}
 		}
+
+	/* Never actually get here. */
+	return token(Sym_(eof));
 }
+
+
 
