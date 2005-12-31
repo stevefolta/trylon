@@ -1,0 +1,80 @@
+trylon NewFunction
+superclass TrylonFunction
+
+fields name creator on-class
+
+
+create: creator on-class: on-class
+	this creator = creator
+	this on-class = on-class
+
+	name = "new" + (creator name substr: 6)
+
+
+emit-call: arguments builder: builder
+	# Declare the allocator.
+	allocator-c-name = 	--
+		(builder mangle-name: "allocate-object:") + "__Standard__Implementation"
+	builder add-extern-declaration: "extern obj_ " + allocator-c-name + "(obj_);"
+
+	# Declare the creator.
+	creator-c-name = (builder mangle-name: creator name) + "__" + on-class c-name
+	line = "extern obj_ " + creator-c-name + "(obj_"
+	for arg in arguments
+		line += ", obj_"
+	line += ");"
+	builder add-extern-declaration: line
+
+	# Allocate the object.
+	temporary = builder get-temporary
+	line = temporary name + " = "
+	line += allocator-c-name + "((obj_) &" + on-class c-name + ");"
+	builder add-line: line
+
+	# Call the creator.
+	line = creator-c-name
+	line += "(" + temporary name
+	for arg in arguments
+		line += ", " + arg access
+	line += ");"
+	builder add-line: line
+
+	return temporary
+
+
+emit-code: stream
+	# Write the header (building up the args at the same time).
+	args = List new
+	stream write: "obj_ " + c-name + "("
+	have-arg = false
+	for arg in creator arguments
+		if have-arg
+			stream write: ", "
+		else
+			have-arg = true
+		mangled-arg-name = MethodBuilder mangle-name: arg name
+		stream write: "obj_ "
+		stream write: mangled-arg-name
+		args append: (NameResult new: mangled-arg-name)
+	stream write-line: ")"
+	stream write-line: "{"
+
+	# Write the body.
+	builder = MethodBuilder new
+	builder indent
+	result = emit-call: args builder: builder
+	builder add-line: "return " + result access + ";"
+	builder unindent
+	builder emit: stream
+
+	# Finish up.
+	stream write-line: "}"
+	stream write-line
+	stream write-line
+
+
+c-name
+	return (MethodBuilder mangle-name: name) + "__" + on-class c-name
+
+
+
