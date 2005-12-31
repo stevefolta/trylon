@@ -1,0 +1,10 @@
+trylon CLexer
+
+# Most fields are really primitive types -- do not access.
+fields p stopper at-line-start unindents-pending unindent-to
+fields indent-stack
+
+
+primitive-fn create: text
+primitive-fn next-token
+
