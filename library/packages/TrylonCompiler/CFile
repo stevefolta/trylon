@@ -1,0 +1,9 @@
+trylon CFile
+
+fields name is-changed
+
+create: name is-changed: is-changed
+	this name = name
+	this is-changed = is-changed
+
+

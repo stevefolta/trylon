@@ -1,0 +1,12 @@
+trylon BlankLine
+superclass Statement
+
+
+create
+
+
+emit-code: builder
+	builder add-blank-line
+
+
+

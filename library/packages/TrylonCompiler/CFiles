@@ -1,0 +1,26 @@
+trylon CFiles
+
+fields files
+
+
+create
+	files = List new
+
+
+add: name is-changed: is-changed
+	files append: (CFile new: name is-changed: is-changed)
+
+
+iterator
+	return files iterator
+
+
+remainder-after: after-file
+	remainder = files
+	while !remainder is-empty && remainder first-item != after-file
+		remainder = remainder tail
+	
+	result = CFiles new
+	result files = remainder tail
+	return result
+

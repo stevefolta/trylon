@@ -1,0 +1,30 @@
+trylon BoolLiteral
+superclass Expression
+
+# Only used as a class/package field initial value.
+
+fields value
+
+
+create: value
+	this value = value
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+emit-code: builder
+	throw MessageException new: "Internal error: BoolLiteral used."
+
+
+emit-package-literal: stream
+	name = nil
+	if value
+		name = "((obj_) &true__Standard__obj)"
+	else
+		name = "((obj_) &false__Standard__obj)"
+	return NameResult new: name
+
+
+

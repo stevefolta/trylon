@@ -1,0 +1,103 @@
+trylon Block
+superclass Context
+
+fields parent locals statements
+
+
+create: parent
+	this parent = parent
+	locals = nil 	# Will be created if needed.
+	statements = List new
+
+
+add-local: local
+	if locals == nil
+		locals = Dictionary new
+	
+	(locals at: local name) = local
+
+
+append: statement
+	statements append: statement
+
+
+lookup-function: name
+	# See if there's a local for it.
+	if locals
+		local-name = name
+		is-setter = false
+		if name ends-with: ":"
+			local-name = name substr: 0 length: name length - 1
+			is-setter = true
+		local = locals at: local-name
+		if local
+			if is-setter
+				return LocalSetter new: local
+			else
+				return LocalGetter new: local
+	
+	# Otherwise, go up the chain.
+	function = parent lookup-function: name
+	if function && is-lambda
+		function used-by-lambda: this
+	return function
+
+
+lookup-function-autodeclaring: name
+	function  = lookup-function: name
+	if function
+		return function
+	
+	# If it wasn't found, and it's a setter, autodeclare a local.
+	if (name index-of: ':') == name length - 1
+		local = CompiledField new: (name substr: 0 length: name length - 1) type: nil
+		add-local: local
+		return LocalSetter new: local
+	
+	return nil
+
+
+enclosing-method-context
+	return parent enclosing-method-context
+
+
+is-lambda
+	return false
+
+
+prepare-to-emit
+	for statement in statements
+		statement prepare-to-emit
+
+
+emit-code: builder
+	saved-temp-num = builder next-temporary-num
+
+	builder indent
+	builder add-line: "{"
+
+	# Locals.
+	if locals
+		line = StringBuilder new
+		line += "obj_ "
+		have-local = false
+		for local-name in locals keys
+			if have-local
+				line += ", "
+			else
+				have-local = true
+			line += builder mangle-name: local-name
+		line += ";"
+		builder add-line: line string
+	
+	# Contents.
+	for statement in statements
+		statement emit-code: builder
+	
+	builder add-line: "}"
+	builder unindent
+
+	builder next-temporary-num = saved-temp-num
+
+
+

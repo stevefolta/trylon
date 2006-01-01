@@ -1,0 +1,13 @@
+trylon BreakStatement
+superclass Statement
+
+
+create: comment
+	this comment = comment
+
+
+emit-code: builder
+	builder add-line: (add-comment: "_Break_")
+
+
+
