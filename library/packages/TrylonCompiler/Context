@@ -1,0 +1,46 @@
+trylon Context
+
+
+lookup-function: name
+	virtual
+
+lookup-function-autodeclaring: name
+	# Default: just lookup.
+	return lookup-function: name
+
+enclosing-method-context
+	# Default: not in one.
+	return nil
+
+
+# The following are valid on top-level contexts (classes and packages) only.
+
+add-function: function
+	# Default: not valid.
+	throw 	--
+		MessageException new: "Internal error: bad \"Context add-function\" call."
+
+
+add-field: field
+	# Default: not valid.
+	throw 	--
+		MessageException new: "Internal error: bad \"Context add-field\" call."
+
+
+add-class: name
+	# Default: not valid.
+	throw 	--
+		MessageException new: "Internal error: bad \"Context add-class\" call."
+
+
+add-package: name directory: FileDirectory
+	throw 	--
+		MessageException new: "Interanl error: bad \"Context add-package\" call."
+
+
+get-subpackage: name
+	# Default: not valid.
+	throw 	--
+		MessageException new: "Internal error: bad \"Context get-subpackage\" call."
+
+

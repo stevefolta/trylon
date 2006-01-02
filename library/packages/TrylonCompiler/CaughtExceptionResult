@@ -1,0 +1,10 @@
+trylon CaughtExceptionResult
+superclass ExpressionResult
+
+
+create
+
+
+access
+	return "__caught_object"
+

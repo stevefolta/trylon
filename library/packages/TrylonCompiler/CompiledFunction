@@ -1,0 +1,112 @@
+trylon CompiledFunction
+superclass TrylonInstanceFunction 	# Not always an instance fn, but it can be.
+
+fields name arguments return-type is-object-function is-a-primitive on-package
+fields body method-context
+
+
+create: name arguments: arguments return-type: return-type 	--
+		is-object-function: is-object-function is-a-primitive: is-a-primtive 	--
+		on-package: on-package body: body
+	this name = name
+	this arguments = arguments
+	this return-type = return-type
+	this is-object-function = is-object-function
+	this is-a-primitive = is-a-primitive
+	this on-package = on-package
+	this body = body
+
+
+emit-call: arguments builder: builder
+	# Declare the function.
+	line = "extern obj_ " + c-name + "("
+	have-arg = false
+	for arg in arguments
+		if have-arg
+			line += ", "
+		else
+			have-arg = true
+		line = "obj_"
+	line += ");"
+	builder add-extern-declaration: line
+
+	# Generate the call.
+	temporary = builder get-temporary
+	line = temporary name + " = "
+	line += c-name + "("
+	have-arg = false
+	for arg in arguments
+		if have-arg
+			line += ", "
+		else
+			have-arg = true
+		line += arg access
+	line += ");"
+	builder add-line: line
+	return temporary
+
+
+emit-object-call: object arguments: arguments builder: builder
+	temporary = builder get-temporary
+	line = temporary name + " = "
+	line += c-name + "(" + object access
+	for arg in arguments
+		line += ", " + arg access
+	line += ");"
+	builder add-line: line
+	return temporary
+
+
+prepare-to-emit
+	if body
+		body prepare-to-emit
+
+
+emit-code: stream
+	if body == nil
+		return
+	
+	if method-context && method-context has-lambdas
+		method-context emit-lambda-code: stream
+	
+	# Emit the header.
+	stream write-line: c-signature
+
+	# Emit the body.
+	builder = MethodBuilder new
+	body emit-code: builder
+	builder emit: stream
+
+	stream write-line
+	stream write-line
+
+
+c-name
+	return MethodBuilder mangle-name: name + "__" + on-package c-name
+
+
+c-signature
+	signature = StringBuilder new
+	signature += "obj_ "
+	signature += c-name
+	signature += "("
+	have-arg = false
+	if is-object-function
+		signature += "obj_ this_"
+		have-arg = true
+	for arg in arguments
+		if have-arg
+			signature += ", "
+		else
+			have-arg = true
+		signature += "obj_ "
+		signature += MethodBuilder mangle-name: arg-name
+	signature += ")"
+
+	return signature string
+
+
+is-primitive
+	return is-a-primitive
+
+

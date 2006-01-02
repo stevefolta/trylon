@@ -1,0 +1,19 @@
+trylon ClassResult
+superclass ExpressionResult
+
+fields the-class
+
+
+create: the-class
+	this the-class = the-class
+
+
+access
+	return "((obj_) &)" + the-class c-name + ")"
+
+
+is-constant
+	return true
+
+
+

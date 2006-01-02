@@ -1,0 +1,253 @@
+trylon CompiledClass
+superclass Package
+
+# Because this is really just like a Package, but with instance functions and
+# fields, we make it a subclass of Package.
+
+fields instance-functions instance-fields subclasses superclass class-num
+
+
+create: name parent: parent
+	super create: name parent: parent
+	instance-functions = Dictionary new
+	instance-fields = List new
+	subclasses = List new
+
+	# *** How shall we access "compiler"?
+	if compiler build-settings classes-by-num
+		add-instance-function: class function: InstanceClassFunction new
+
+
+make-subclass-of: superclass
+	if this superclass
+		# Already had a superclass (perhapsthe default Standard Object); 
+		# replace it.
+		this superclass subclasses remove: this
+		uses-packages remove: this superclass
+	
+	# Install the superclass.
+	this superclass = superclass
+	superclass subclasses append: this
+
+	# Automatically "use" the superclass.
+	uses-packages append: superclass
+
+
+add-instance-function: name function: function
+	(instance-functions at: name) = function
+
+	compiler add-object-function: name
+	if function is-primitive
+		has-primitives = true
+	
+	if (function is-a: CompiledFunction) && 	--
+	    ((name == "create") || (name starts-with: "create:") || 	--
+	     (name starts-with: "create-"))
+		# Add the corresponding "new" function.
+		new-function = NewFunction new: function on-class: this
+		(functions at: new-function name) = new-function
+
+
+add-instance-field: field
+	instance-fields append: field
+	add-instance-function: field name 	--
+		function: (InstanceFieldGetter new: field on-class: this)
+	add-instance-function: field name + ":" 	--
+		function: (InstanceFieldSetter new: field on-class: this)
+
+
+lookup-instance-function: name
+	function = instance-functions at: name
+	if function
+		return function
+	
+	if superclass
+		return superclass lookup-instance-function: name
+	
+	return nil
+
+
+has-instance-function: name
+	return (instance-functions at: name) != nil
+
+
+ensure-superclasses: object-class
+	if superclass == nil && this != object-class
+		this make-subclass-of: object-class
+	
+	super ensure-superclasses: object-class
+
+
+prepare-to-emit
+	for function in functions values
+		function prepare-to-emit
+	for function in instance-functions values
+		function prepare-to-emit
+
+
+emit-c-file
+	file = File new: ".c-sources/" + c-name + ".c"
+	stream = ExistingfileStream new: file
+
+	# ---
+	is-verbose = (lookup-function: "verbose") != nil
+	if is-verbose
+		reporter report: name + " has these instance functions:"
+		reporter indent
+		for name in instance functions keys
+			reporter report: 	--
+				name + " (" + ((instance-functions at: name) class name) + ")"
+		reporter unindent
+	# ---
+
+	# Header, includes.
+	stream write-line: "/*" + c-name + ".c */"
+	stream write-line
+	stream write-line: "#include \"Trylon_.h\""
+	stream write-line
+
+	# Class object.
+	superclass-ref = nil
+	if superclass
+		stream write-line: "extern class_spec_ " + superclass c-name + ";"
+		superclass-ref = "(obj_) &" + superclass c-name
+	else
+		superclass-ref = "NULL"
+	stream write: "DefineClassObj_("
+	stream write: c-name
+	stream write: ", \""
+	stream write: name
+	stream write: "\", "
+	stream write: name length string
+	stream write: ", "
+	stream write: superclass-ref
+	stream write: ", "
+	stream write: total-instance-fields string
+	stream write: ", "
+	stream write: class-num string
+	stream write-line: ")"
+	stream write: "\n\n"
+
+	# Instance field indices.
+	emit-instance-field-indices: stream
+
+	# Functions.
+	if is-verbose
+		reporter indent
+	for function in functions values
+		function emit-code: stream
+	for function in instance-functions values
+		if is-verbose
+			reporter report: "Emitting " + function c-name + "."
+		function emit-code: stream
+	if is-verbose
+		reporter unindent
+	
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+emit-all-class-declarations: stream
+	stream write: "extern class_spec_ "
+	stream write: c-name
+	stream write-line: ";"
+
+	for subclass in subclasses
+		subclass-emit-all-class-declarations
+
+
+emit-all-instance-function-declarations: stream
+	for function in instance-functions values
+		stream write: "extern "
+		stream write: function c-signature
+		stream write-line: ";"
+	
+	for subclass in subclasses
+		subclass emit-all-instance-function-declarations: stream
+
+
+get-dispatch-entries: name inherited-function: inherited-function 	--
+		dispatch-entries: dispatch-entries
+	function = instance-functions at: name
+	if function
+		dispatch-entries functions append: function
+	else
+		function = inherited-function
+	if function
+		dispatch-entries entries append: (DispatchEntry new: this function: function)
+	
+	# Have the subclasses write their entries.
+	for subclass in subclasses
+		subclass 	--
+			get-dispatch-entries: name inherited-function: function 	--
+			dispatch-entries: dispatch-entries
+
+
+get-Object-dispatch-entries: name dispatch-entries: dispatch-entries
+	# Like get-dispatch-entries, but only used for Object.
+
+	# Have all the subclasses go first.
+	for subclass in subclasses
+		subclass 	--
+			get-dispatch-entries: name inherited-function: nil 	--
+			dispatch-entries: dispatch-entries
+	
+	# Add our entry.
+	function = instance-functions at: name
+	if function
+		dispatch-entries functions append: function
+	dispatch-entries object-function = function
+
+
+number-classes: numberer
+	# Depth-first.
+	for subclass in subclasses
+		subclass number-classes: numberer
+	
+	class-num = numberer next-number
+
+
+setup-dispatch-row: row inherited-function: inherited-function
+	# Find the function.
+	function = instance-functions at: row name
+	if function == nil
+		function = inherited-function
+	
+	# Do this in depth-first order, which is the same order as the class 
+	# numbers.  By doing that, we don't need a separate step for sorting 
+	# by class number.
+
+	for subclass in subclasses
+		subclass setup-dispatch-row: row inherited-function: function
+	
+	if function
+		row append: class-num function: function
+
+
+emit-instance-field-indices: stream
+	index = 0
+	if superclass
+		index = superclass emit-instance-field-indices: stream
+	
+	for field in instance-fields
+		stream write: "#define "
+		stream write: MethodBuilder mangle-name: field name
+		stream write: "__fld_\t("
+		stream write: index string
+		index += 1
+		stream write-line: ")"
+	
+	stream write-line
+
+	return index
+
+
+total-instance-fields
+	total = instance-fields count
+	if superclass
+		total += superclass total-instance-fields
+	return total
+
+
+

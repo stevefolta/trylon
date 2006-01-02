@@ -1,0 +1,9 @@
+trylon CaughtExceptionFunction
+superclass TrylonFunction
+
+create
+
+
+emit-call: arguments builder: builder
+	return CaughtExceptionResult new
+

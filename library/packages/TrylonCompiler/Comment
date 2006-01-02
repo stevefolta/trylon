@@ -1,0 +1,14 @@
+trylon Comment
+superclass Statement
+
+fields text
+
+
+create: text
+	this text = text
+
+
+emit-code: builder
+	builder add-line: "/* " + text + " */"
+
+

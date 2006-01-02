@@ -1,0 +1,32 @@
+trylon CharacterLiteral
+superclass Expression
+
+fields name
+
+
+create: name
+	this name = name
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+emit-code: builder
+	mangled-name = builder mangle-name: name
+	builder add-extern-declaration: "UsingChar_(" + mangled-name + ")"
+	return NameResult new: "Char_(" + mangled-name + ")"
+
+
+emit-package-literal: stream
+	mangled-name = MethodBuilder mangle-name: name
+
+	stream write: "UsingChar_"
+	stream write: mangled-name
+	stream write: ")"
+	stream write-line
+
+	return NameResult new: "Char_(" + mangled-name + ")"
+
+
+

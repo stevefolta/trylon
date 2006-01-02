@@ -1,0 +1,20 @@
+trylon CompiledField
+
+fields name type is-primitive
+fields initial-value 	# Only used for class/package fields.
+fields captured-index 	# > 0 if used in a lambda.
+
+
+create: name type: type
+	this name = name
+	this type = type
+	this is-primitive = false
+
+
+create: name type: type is-primitive: is-primitive
+	this name = name
+	this type = type
+	this is-primitive = is-primitive
+
+
+

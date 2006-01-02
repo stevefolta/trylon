@@ -1,0 +1,15 @@
+trylon ClassNumberer
+
+field cur-num
+
+
+create
+	cur-num = 0
+
+
+next-number
+	result = cur-num
+	cur-num += 1
+	return result
+
+
