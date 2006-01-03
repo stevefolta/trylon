@@ -14,4 +14,8 @@ fn write-line: line
 fn write-line
 	write: "\n"
 
+fn write-all: collection
+	for item in collection
+		write: item string
+
 

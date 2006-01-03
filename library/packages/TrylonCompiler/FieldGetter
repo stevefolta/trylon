@@ -1,0 +1,40 @@
+trylon FieldGetter
+superclass TrylonFunction
+
+
+fields field on-package
+
+
+create: field on-package: on-package
+	this field = field
+	this on-package = on-package
+
+
+emit-call: arguments builder: builder
+	builder using-field: field on-package: on-package
+	return FieldGetResult new: field on-package: on-package
+
+
+emit-code: stream
+	if field is-primitive
+		return
+	
+	# If it has an intial value, emit the literal.
+	initial-value = nil
+	if field intial-value
+		initial-value = field initial-value emit-package-literal: stream
+	
+	# Just emit the declaration.
+	stream write-all: ("obj_ ", c-name, " = ")
+	if initial-value == nil
+		stream write: "NULL"
+	else
+		stream write: initial-value access
+	stream write-line: ";"
+	stream write-line
+
+
+c-name
+	return (MethodBuilder mangle-name: field name) + "__" + on-package c-name
+
+

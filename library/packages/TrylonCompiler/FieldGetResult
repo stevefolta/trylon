@@ -1,0 +1,17 @@
+trylon FieldGetResult
+superclass ExpressionResult
+
+fields field on-package
+
+
+create: field on-package: on-package
+	this field = field
+	this on-package = on-package
+
+
+access
+	return MethodBuilder mangle-name: field name + "__" + on-package c-name
+
+
+
+
