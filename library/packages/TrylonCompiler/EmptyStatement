@@ -1,0 +1,12 @@
+trylon EmptyStatement
+superclass Statement
+
+
+create
+
+
+emit-code
+	# Nothing to do.
+
+
+

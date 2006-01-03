@@ -1,0 +1,23 @@
+trylon ExpressionStatement
+superclass Statement
+
+fields expression
+
+
+create: expression comment: comment
+	this expression = expression
+	this comment = comment
+
+
+prepare-to-emit
+	expression prepare-to-emit
+
+
+emit-code: builder
+	saved-temp-num = builder next-temporary-num
+	expression emit-code: builder
+	builder next-temporary-num = saved-temp-num
+	if comment
+		builder add-line: (add-comment: "")
+
+

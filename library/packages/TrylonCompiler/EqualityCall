@@ -1,0 +1,39 @@
+trylon EqualityCall
+superclass Expression
+
+fields name object argument
+
+
+create: name object: object argument: argument
+	this name = name
+	this object = object
+	this argument = argument
+
+
+prepare-to-emit
+	object prepare-to-emit
+	argument prepare-to-emit
+
+
+emit-code: builder
+	# Special-case "== nil" and "!= nil".
+	# This is the whole purpose of this class.
+	if argument is-a: FunctionCall
+		arg-function = argument function
+		if arg-function && (arg-function is-a: NilFunction)
+			object-result = object emit-code: builder
+			temporary = builder get-temporary
+			line = temporary name + " = (" + object-result access
+			line += " " + name + " NULL) ? true__Standard : false__Standard;"
+			builder add-line: line
+			return temporary
+	
+	# Otherwise, it's just a normal object call, so make an ObjectCall 
+	# handle it.
+	arguments = List new
+	arguments append: argument
+	object-call = ObjectCall new: name object: object arguments: arguments
+	return object-call emit-code: builder
+
+
+

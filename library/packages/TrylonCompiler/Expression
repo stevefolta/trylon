@@ -1,0 +1,15 @@
+trylon Expression
+
+
+prepare-to-emit
+	virtual
+
+emit-code
+	virtual
+
+
+emit-package-literal: stream
+	# Most Expressions don't support this.
+	throw MessageExpression new: "Internal error: invalid emit-package-literal."
+
+

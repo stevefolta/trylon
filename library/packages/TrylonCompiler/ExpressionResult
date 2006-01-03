@@ -1,0 +1,11 @@
+trylon ExpressionResult
+
+
+access
+	virtual
+
+is-constant
+	# Default: no.
+	return false
+
+
