@@ -1,0 +1,42 @@
+trylon FunctionOnThis
+superclass TrylonFunction
+
+fields name on-class
+
+
+create: name on-class: on-class
+	this name = name
+	this on-class = on-class
+
+
+emit-call: arguments builder: builder
+	# Special-case instance functions.
+	if TrylonCompiler the-compiler build-settings optimize-field-accesses
+		function = on-class lookup-instance-function: name
+		if function == nil
+			# This would be a good place for a warning... or would we never get here?
+		else if function is-a: InstanceFieldGetter
+			temporary = builder get-temporary
+			line = temporary name + " = Field_(" + (builder mangle-name: name) + ");"
+			builder add-line: line
+			return arguments first-item
+		else if function is-a: InstanceFieldSetter
+			line = 	--
+				"Field_(" + (builder mangle-name: setter field name) + ") = " + 	--
+				arguments first-item access + ";"
+			builder add-line: line
+			return arguments first-item
+	
+	# Emit the call.
+	builder using-object-function: name
+	temporary = builder get-temporary
+	line = 	--
+		temporary name + " = " + "Call_(" + (builder mangle-name: name) + ", this_"
+	for arg in arguments
+		line += ", " + arg access
+	line += ");"
+	builder add-line: line
+	return temporary
+
+
+

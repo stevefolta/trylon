@@ -1,0 +1,17 @@
+trylon FloatLiteralResult
+superclass ExpressionResult
+
+fields index
+
+
+create: index
+	this index = index
+
+
+access
+	return "Float_(" + index string + ")"
+
+
+is-constant
+	return true
+

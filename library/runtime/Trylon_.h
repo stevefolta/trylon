@@ -182,6 +182,29 @@ _FinishExternC_
 		}	\
 	}
 
+
+#define ForStart_(collection, localName) 	\
+		{ 	\
+		obj_ iterator_ = Call_(iterator, collection); 	\
+		while (1) { 	\
+			_StartContinueCatcher_ 	\
+			obj_ is_done_ = Call_(is_done, iterator_); 	\
+			if (Test_(is_done_)) 	\
+				_Break_ 	\
+			{ 	\
+				obj_ localName = Call_(current_item, iterator_);
+
+#define ForEnd_ 	\
+			} 	\
+			_EndContinueCatcher_ 	\
+			Call_(go_forward, iterator_); 	\
+			} 	\
+		}
+
+
+#define Field_(name) 	this_->fields[name##__fld_]
+
+
 _StartExternC_
 extern void RegisterFinalizer_(obj_ object);
 //*** extern int Test_(obj_ object);

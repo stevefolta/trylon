@@ -1,0 +1,55 @@
+trylon FunctionCall
+superclass Expression
+
+fields name arguements context
+fields function 	# Only valid after prepare-to-emit.
+
+
+create: name arguments: arguments context: context
+	this name = name
+	this arguments = arguments
+	this context = context
+
+
+prepare-to-emit
+	function = context lookup-function-autodeclaring: name
+
+	for arg in arguments
+		arg prepare-to-emit
+
+
+emit-code: builder
+	# We already got the function in prepare-to-emit.
+	if function == nil
+		# *** This should becom an ObjectCall on "this" -- if there is a "this".
+		throw MessageException new: "There is no \"" + name + "\" function."
+	
+	# Generate the arguments.
+	arg-results = List new
+	for arg in arguments
+		result = arg emit-code: builder
+		arg-result append: result
+	
+	return function emit-call: arg-results builder: builder
+
+
+convert-to-setter-call: value
+	if name ends-with: ":"
+		name += "set-to:"
+	else
+		name += ":"
+	arguments append: value
+
+
+copy
+	copied-args = List new
+	for arg in arguments
+		copied-args append: arg
+	return FunctionCall new: name arguments: copied-args context: context
+
+
+function
+	return context lookup-function: name
+
+
+

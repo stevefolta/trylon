@@ -1,0 +1,27 @@
+trylon FloatLiteral
+superclass Expression
+
+fields value index
+
+
+create: value
+	this value = value as-float
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+emit-code: builder
+	builder add-float-literal: this 	# The "index" gets set here.
+	return FloatLiteralResult new: index
+
+
+emit-package-literal: stream
+	stream write-all: ("DefineFloat_(", index string, ", ", value string, ")")
+	stream write-line
+
+	return FloatLiteralResult new: index
+
+
+

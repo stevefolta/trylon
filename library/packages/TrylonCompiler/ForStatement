@@ -1,0 +1,40 @@
+trylon ForStatement
+superclass Statement
+
+fields local collection body
+
+
+create: local collection: collection body: body comment: comment
+	this local = local
+	this collection = collection
+	this body = body
+	this comment = comment
+
+
+prepare-to-emit
+	collection prepare-to-emit
+	body prepare-to-emit
+
+
+emit-code: builder
+	builder using-object-function: "iterator"
+	builder using-object-function: "is-done"
+	builder using-object-function: "current-item"
+	builder using-object-function: "go-forward"
+
+	# Start the loop.
+	saved-temp-num = builder next-temporary-num
+	collection-result = collection emit-code: builder
+	builder next-temporary-num = saved-temp-num
+	local-name = MethodBuilder mangle-name: local name
+	builder add-line: "ForStart_(" + collection-result + ", " + local-name + ")"
+
+	# Body.
+	body emit-code: builder
+
+	# Finish the loop.
+	builder add-line: "ForEnd_"
+
+
+
+
