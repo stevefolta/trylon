@@ -1,0 +1,103 @@
+trylon DispatchRowSet
+
+fields root
+
+
+create
+	root = nil
+
+
+add: row
+	if root
+		root = root insert: row
+	else
+		root = Node new: row
+
+
+iterator
+	return Iterator new: root
+
+
+class Node
+	fields row left right level
+
+	create: row
+		this row = row
+		left = nil
+		right = nil
+		level = 1
+	
+	insert: new-row 	# Returns the new top of this subtree.
+		# Insert the new row.
+		if new-row num-entries > row num-entries
+			if left
+				left = left insert: new-row
+			else
+				left = Node new: new-row
+		else
+			if right
+				right = right insert: new-row
+			else
+				right = Node new: new-row
+
+		# Rebalance the tree.
+		new-tree-top = skew
+		new-tree-top = new-tree-top split
+		return new-tree-top
+	
+	skew
+		new-tree-top = this
+
+		if left && left level == level
+			# Rotate with left.
+			new-tree-top = left
+			left = new-tree-top right
+			new-tree-top right = this
+
+		return new-tree-top
+	
+	split
+		new-tree-top = this
+		
+		if right && right right && right right level == level
+			# Rotate with right.
+			new-tree-top = right
+			right = new-tree-top left
+			new-tree-top left = this
+			# Boost the level.
+			new-tree-top level += 1
+
+		return new-tree-top
+
+
+class Iterator
+	fields stack
+
+	create: root
+		stack = List new
+		push-tree: root
+	
+	is-done
+		return stack is-empty
+	
+	go-forward
+		if stack is-empty
+			return
+
+		right = stack first-item right
+		stack pop-front
+		push-tree: right
+	
+	current-item
+		if stack is-empty
+			return nil
+
+		return stack first-item row
+	
+	push-tree: node
+		cur-node = node
+		while cur-node
+			stack push-front: cur-node
+			cur-node = cur-node left
+
+

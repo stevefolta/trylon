@@ -1,0 +1,9 @@
+trylon DispatchEntry
+
+fields for-class function
+
+
+create: for-class function: function
+	this for-class = for-class
+	this function = function
+

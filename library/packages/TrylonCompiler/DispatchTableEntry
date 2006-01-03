@@ -1,0 +1,10 @@
+trylon DispatchTableEntry
+
+fields function selector
+
+
+create: function selector: selector
+	this function = function
+	this selector = selector
+
+

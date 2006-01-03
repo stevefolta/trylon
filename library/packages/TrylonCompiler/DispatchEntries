@@ -1,0 +1,11 @@
+trylon DispatchEntries
+
+fields entries functions object-function
+
+
+create
+	this entries = List new
+	this functions = List new
+	this object-function = nil
+
+
