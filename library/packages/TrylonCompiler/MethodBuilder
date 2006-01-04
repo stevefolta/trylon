@@ -1,0 +1,295 @@
+trylon MethodBuilder
+
+fields code used-object-functions extern-declarations
+fields next-temporary-num num-temporaries-used
+fields string-literals next-string-literal-num
+fields int-literals float-literals next-int-literal-num next-float-literal-num
+fields used-fields used-classes
+fields indent-level
+
+
+create
+	code = StringBuilder new
+	used-object-functions = Dictionary new
+	extern-declarations = List new
+	next-temporary-num = 0
+	num-temporaries-used = 0
+	next-string-literal-num = 0
+	string-literals = List new
+	next-int-literal-num = 0
+	int-literals = List new
+	next-float-literal-num = 0
+	float-literals = List new
+	used-fields = Dictionary new
+	used-classes = Dictionary new
+	indent-level = 0
+
+
+get-temporary
+	temp-num = next-temporary-num
+	next-temporary-num += 1
+	if next-temporary-num > num-temporaries-used
+		num-temporaries-used = next-temporary-num
+	
+	return Temporary new: "t" + temp-num string + "_"
+
+
+add-string-literal: string-literal
+	string-literal index = next-string-literal-num
+	next-string-literal-num += 1
+	string-literals append: string-literal
+
+
+add-int-literal: int-literal
+	int-literal index = next-int-literal-num
+	next-int-literal-num += 1
+	int-literals append: int-literal
+
+
+add-float-literal: float-literal
+	float-literal index = next-float-literal num
+	next-float-literal-num += 1
+	float-literals append: float-literal
+
+
+using-object-function: name
+	used-object-functions at: name set-to: name
+
+
+add-extern-declaration: declaration
+	extern-declarations append: declaration
+
+
+using-field: field on-package: on-package
+	# This is a little tricky.  We count on the fact that we'll be given 
+	# the same "field" object anytime that the field in "on-package" is 
+	# referenced.  So we can use a Dictionary to keep track of them.
+	used-fields at: field set-to: on-package
+
+
+using-class: the-class
+	used-classes at: the-class set-to: the-class
+
+
+add-line: line
+	# Add the indent.
+	adjusted-indent-level = indent-level
+	if adjusted-indent-level > 20
+		adjusted-indent-level = 20
+	code += 	--
+		"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" 	--
+			substr: 0 length: adjusted-indent-level
+	
+	code += line
+	code += "\n"
+
+
+add-blank-line
+	code += "\n"
+
+
+indent
+	indent-level += 1
+
+
+unindent
+	indent-level -= 1
+
+
+emit: stream
+	stream write-line: "{"
+	stream write-line: "\tint _broken_;"
+
+	# Emit the string literals.
+	for literal in string-literals
+		stream write-all: 	--
+			("\tDefineString_(", literal index string, ", \"", literal value, 	--
+			 "\", ", (string-literal-length: literal value) string, ")")
+		stream write-line
+	
+	# Emit the int literals.
+	for literal in int-literals
+		stream write-all: 	--
+			("\tDefineInt_(", literal index string, ", ", literal value string, ")")
+		stream write-line
+	
+	# Emit the float literals.
+	for literal in float-literals
+		stream write-all: 	--
+			("\tDefineFloat_(", literal index string, ", ", 	--
+			 literal value string, ")")
+		stream write-line
+	
+	# Emit the temporary declarations.
+	if num-temporaries-used > 0
+		stream write: "\tobj_ "
+		for temp-num in Interval new: num-temporaries-used
+			if temp-num != 0
+				stream write: ", "
+			stream write-all: ("t", temp-num string, "_")
+			temp-num += 1
+		stream write-line: ";"
+	
+	# Emit the used object functions.
+	if !used-object-functions is-empty
+		stream write: "\t"
+		done-one = false
+		for name = used-object-functions keys
+			if done-one
+				stream write: " "
+			else
+				done-one = true
+			stream write-all: ("UsingMethod_(", (mangle-name: name), ")")
+		stream write-line
+	
+	# Emit the extern declarations.
+	if !extern-declarations is-empty
+		for declaration in extern-declarations
+			stream write: "\t"
+			stream write-line: declaration
+	
+	# Emit the used (non-object fields).
+	if !used-fields is-empty
+		stream write: "\textern obj_ "
+		done-one = false
+		for field in used-fields keys
+			on-package = used-fields at: field
+
+			if done-one
+				stream write: ", "
+			else
+				done-one = true
+			stream write-all: ((mangle-name: field name), "__", on-package c-name)
+		stream write-line: ";"
+	
+	# Emit the used classes.
+	for used-class in used-classes values
+		stream write: "\textern class_spec_ "
+		stream write: used-class c-name
+		stream write-line: ";"
+	
+	stream write-line
+
+	# Emit the body of the code.
+	stream write: code string
+
+	stream write-line: "\treturn NULL;"
+	stream write-line: "}"
+
+
+class-fn mangle-name: name
+	# Certain names are reserved in C and/or C++ but not in Trylon.
+	if name == "class"
+		return "class_"
+	else if name == "char"
+		return "char_"
+	else if name == "int"
+		return "int_"
+	else if name == "short"
+		return "short_"
+	else if name == "long"
+		return "long_"
+	else if name == "float"
+		return "float_"
+	else if name == "double"
+		return "double_"
+	else if name == "inline"
+		return "inline_"
+	else if name == "static"
+		return "static_"
+	else if name == "namespace"
+		return "namespace_"
+	
+	# Mangle the name.
+	result = ""
+	run-start = name start
+	p = run-start
+	stopper = name stopper
+	while p < stopper
+		c = p deref-char
+		if !((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || 	--
+				(c >= '0' && c <= '9'))
+			# Finish off the current run.
+			result += String new: run-start to: p
+			p += 1
+			run-start = p
+
+			# Mangle the character.
+			mangle-char = nil
+			if c == `-`
+				mangled-char = "_"
+			else if c == `:`
+				mangled-char = "_co_"
+			else if c == ` `
+				mangled-char = "__"
+			else if c == `<`
+				mangled-char = "_lt_"
+			else if c == `>`
+				mangled-char = "_gt_"
+			else if c == `=`
+				mangled-char = "_eq_"
+			else if c == `+`
+				mangled-char = "_pl_"
+			else if c == `*`
+				mangled-char = "_st_"
+			else if c == `/`
+				mangled-char = "_dv_"
+			else if c == `%`
+				mangled-char = "_pc_"
+			else if c == `[`
+				mangled-char = "_in_"
+			else if c == `]`
+				mangled-char = "_dx_"
+			else if c == `!`
+				mangled-char = "_nt_"
+			else if c == `~`
+				mangled-char = "_tw_"
+			else if c == `&`
+				mangled-char = "_an_"
+			else if c == `|`
+				mangled-char = "_or_"
+			else if c == `^`
+				mangled-char = "_xr_"
+			else if c == `#`
+				mangled-char = "_lb_"
+			else if c == `_`
+				mangled-char = "_ul_"
+			else
+				mangled-char = "_" + c string + "_"
+
+			result += mangled-char
+
+		else
+			p += 1
+
+	result += String new: run-start to: p
+	return result
+
+
+class-fn string-literal-length: string
+	# Count the characters.
+	p = string start
+	stopper = string stopper
+	length = 0
+	while p < stopper
+		c = p deref-char
+		p += 1
+
+		if c == `\\`
+			c = p deref-char
+			if c >= `0` && c <= `3`
+				# Octal: 3 characters after the `\`.
+				p += 3
+			else if c == `x`
+				# Hex: `x` and 2 more characters after the `\`.
+				p += 3
+			else
+				# Only the single character after the `\` is quoted.
+				p += 1
+
+		length += 1
+	
+	return length
+
+
+

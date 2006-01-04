@@ -1,0 +1,99 @@
+trylon MethodContext
+superclass Context
+
+fields arguments is-object-function parent
+fields captured-variables lambdas
+fields function
+
+
+create: arguments is-object-function: is-object-function parent: parent
+	this arguments = arguments
+	this is-object-funciton = is-object-function
+	this parent = parent
+
+
+lookup-function: name
+	# "this"
+	if is-object-function && name == "this"
+		return ThisFunction new
+	
+	# Arguments.
+	is-setter = name ends-with: ":"
+	set-name = nil
+	if is-setter
+		set-name = name substr: 0 length: name length - 1
+	for argument in arguments
+		if argument name == name
+			return ArgumentFunction new: argument
+		else if is-setter && argument name == set-name
+			return SetArgumentFunction new: argument
+	
+	# Function calls on "this".
+	if is-object-function
+		# The parent will be a CompiledClass.
+		function = on-class lookup-instance-function: name
+		if function
+			return FunctionOnThis new: name on-class: on-class
+	
+	return parent lookup-function: name
+
+
+enclosing-method-context
+	return this
+
+
+has-lambdas
+	return lambdas != nil
+
+
+capture-variable: local
+	# Add it to the captured-variables.
+	var-list = captured-variables at: local name
+	if var-list == nil
+		var-list = List new
+		captured-variables at: local name set-to: var-list
+	var-list append: local
+
+	# Set its captured-index.
+	local captured-index = var-list count
+
+
+emit-lambda-code: stream
+	if captured-variables == nil
+		return
+	
+	# Define the structure containing the captured variables.
+	function-name = function c-name
+	vars-name = function-name + "__locals_"
+	stream write-line: "struct " + vars-name + " {"
+	if function is-object-function
+		stream write-line: "\tobj_ this_;"
+	for list in captured-variables values
+		for var in list
+			var-name = 	--
+				(MethodBuilder mangle-name: var name) + "__" + 	--
+				var captured-index string + "_"
+			stream write: "\tobj_ "
+			stream write: var-name
+			stream write-line: ";"
+	stream write-line: "};"
+	stream write-line
+
+	# Emit the lambdas.
+	for lambda in lambdas
+		# Emit the signature.
+		stream write-all: ("obj_ ", lambda c-name, "(struct ", vars-name, " vars_")
+		for arg in lambda arguments values
+			stream write: ", obj_ "
+			stream write: MethodBuilder mangle-name: arg name
+		stream write: ")"
+		stream write-line
+
+		# Emit the body.
+		method-builder = MethodBuilder new
+		lambda emit-code: method-builder
+		method-builder emit: stream
+		stream write-line
+
+
+
