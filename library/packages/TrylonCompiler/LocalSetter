@@ -1,0 +1,25 @@
+trylon LocalSetter
+superclass TrylonFunction
+
+fields local
+
+
+create: local
+	this local = local
+
+
+emit-call: arguments builder: builder
+	access = builder mangle-name: local name
+	if local captured-index > 0
+		access = "vars_->" + access
+	line = access + " = " + arguments first-item access + ";"
+	builder add-line: line
+	return NameResult new: "NULL"
+
+
+used-by-lambda: block
+	method-context = block enclosing-method-context
+	method-context capture-variable: local
+
+
+

@@ -1,0 +1,19 @@
+trylon LambdaExpression
+superclass Expression
+
+fields block
+
+
+create: block
+	this block = block
+
+
+prepare-to-emit
+	# ***
+
+
+emit-code: builder
+	# ***
+
+
+

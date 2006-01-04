@@ -1,0 +1,23 @@
+trylon LoopStatement
+superclass Statement
+
+fields body
+
+
+create: body comment: comment
+	this body = body
+	this comment = comment
+
+
+prepare-to-emit
+	body prepare-to-emit
+
+
+emit-code: builder
+	builder add-line: "while (1)"
+	builder add-line: "_StartContinueCatcher_"
+	body emit-code: builder
+	builder add-line: "_EndContinueCatcher_"
+
+
+

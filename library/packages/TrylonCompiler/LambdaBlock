@@ -1,0 +1,37 @@
+trylon LambdaBlock
+superclass Block
+
+fields arguments
+
+
+create: parent
+	super create: parent
+	arguments = Dictionary new
+
+
+add-argument: name
+	arguments at: name set-to: (CompiledField new: name type: nil)
+
+
+is-lambda
+	return true
+
+
+lookup-function: name
+	# See if there's an argument for it.
+	arg-name = name
+	is-setter = false
+	if name ends-with: ":"
+		arg-name = name substr: 0 length: name length - 1
+		is-setter = true
+	arg = arguments at: arg-name
+	if arg
+		if is-setter
+			return SetArgumentFunction: arg
+		else
+			return new ArgumentFunction: arg
+	
+	return super lookup-function: name
+
+
+
