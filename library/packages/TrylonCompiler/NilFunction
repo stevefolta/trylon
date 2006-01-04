@@ -1,0 +1,11 @@
+trylon NilFunction
+superclass TrylonFunction
+
+
+create
+
+
+emit-call
+	return NameResult new: "NULL"
+
+
