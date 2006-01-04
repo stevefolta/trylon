@@ -202,7 +202,8 @@ _FinishExternC_
 		}
 
 
-#define Field_(name) 	this_->fields[name##__fld_]
+#define Field_(name)        	this_->fields[name##__fld_]
+#define FieldOf_(obj, name) 	obj->fields[name##__fld_]
 
 
 _StartExternC_

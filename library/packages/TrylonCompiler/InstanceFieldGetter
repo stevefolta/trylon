@@ -1,0 +1,40 @@
+trylon InstanceFieldGetter
+superclass TrylonInstanceFunction
+
+fields field on-class
+
+
+create: field on-class: CompiledClass
+	this field = field
+	this on-class = on-class
+
+
+emit-object-call: object arguments: arguments builder: builder
+	return InstanceFieldResult new: object field: field on-class: on-class
+
+
+emit-delaration: stream
+	stream write: "extern "
+	stream write: c-signature
+	stream write-line: ";"
+
+
+emit-code: stream
+	stream write-line: c-signature
+	stream write-line: "{"
+	stream write-line: 	--
+		"\treturn Field_(" + (MethodBuilder mangle-name: field name) + ");"
+	stream write-line: "}"
+	stream write-line
+	stream write-line
+
+
+c-name
+	return (MethodBuilder mangle-name: field name) + "__" + on-class c-name
+
+
+c-signature
+	return "obj_ " + c-name + "(obj_ this_)"
+
+
+

@@ -1,0 +1,39 @@
+trylon InstanceClassFunction
+superclass TrylonInstanceFunction
+
+fields on-class
+
+
+create: on-class
+	this on-class = on-class
+
+
+emit-object-call: object arguments: arguments builder: builder
+	temporary = builder get-temporary
+	line = temporary name + " = " + c-name + "(" + object-access + ");"
+	builder add-line: line
+	return temporary
+
+
+emit-code: stream
+	stream write-line: c-signature
+	stream write-line: "{"
+
+	stream write: "\treturn (obj_) &"
+	stream write: on-class c-name
+	stream write-line: ";"
+
+	stream write-line: "}"
+	stream write-line
+	stream write-line
+
+
+c-name
+	return "class___" + on-class c-name
+
+
+c-signature
+	return "obj_ " + c-name + "(obj_ this_)"
+
+
+

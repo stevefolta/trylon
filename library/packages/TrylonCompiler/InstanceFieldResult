@@ -1,0 +1,19 @@
+trylon InstanceFieldResult
+superclass ExpressionResult
+
+fields object field on-class
+
+
+create: object field: field on-class: on-class
+	this object = object
+	this field = field
+	this on-class = on-class
+
+
+access
+	return 	--
+		"FieldOf_(" + object access + ", " + 	--
+		(MethodBuilder mangle-name: field name) + ")"
+
+
+

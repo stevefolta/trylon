@@ -1,0 +1,28 @@
+trylon IntLiteral
+superclass Expression
+
+fields value
+fields index 	# The MethodBuilder will set this.
+
+
+create: value
+	this value = value as-int
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+emit-code: builder
+	builder add-int-literal: this 	# The "index" gets set here.
+	return IntLiteralResult new: index
+
+
+emit-package-literal: stream
+	stream write-all: ("DefineInt_(", index string, ", ", value string, ")")
+	stream write-line
+
+	return IntLiteralResult new: index
+
+
+

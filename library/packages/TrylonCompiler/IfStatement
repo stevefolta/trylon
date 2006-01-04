@@ -1,0 +1,39 @@
+trylon IfStatement
+superclass Statement
+
+fields condition body else-block else-comment pre-else-comments
+
+
+create: condition body: body else-block: else-block 	--
+		comment: comment else-comment: else-comment 	--
+		pre-else-comments: pre-else-comments
+	this condition = condition
+	this body = body
+	this else-block = else-block
+	this comment = comment
+	this else-comment = else-comment
+	this pre-else-comments = pre-else-comments
+
+
+prepare-to-emit
+	condition prepare-to-emit
+	body prepare-to-emit
+	if else-block
+		else-block prepare-to-emit
+
+
+emit-code: builder
+	saved-temp-num = builder next-temporary-num
+	result = condition emit-code: builder
+	builder add-line: (add-comment: "if (Test_(" + result access + "))")
+	builder next-temporary-num = saved-temp-num
+	body emit-code: builder
+	if pre-else-comments
+		for statement in pre-else-comments
+			statement emit-code: builder
+	if else-block
+		builder add-line: (add-comment: "else" comment: else-comment)
+		else-block emit-code: builder
+
+
+
