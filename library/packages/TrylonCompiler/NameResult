@@ -1,0 +1,18 @@
+trylon NameResult
+superclass ExpressionResult
+
+# Used for various very simple ExpressionResults, which only have to reference 
+# a name.
+
+fields name
+
+
+create: name
+	this name = name
+
+
+access
+	return name
+
+
+
