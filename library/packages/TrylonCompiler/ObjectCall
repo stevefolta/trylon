@@ -1,0 +1,85 @@
+trylon ObjectCall
+superclass Expression
+
+fields name object arguments
+
+# Very special for prepare-to-emit handling of class and package functions.
+fields package-result-function
+
+
+create: name object: object arguments: arguments
+	this name = name
+	this object = object
+	this arguments = arguments
+
+
+prepare-to-emit
+	object prepare-to-emit
+
+	for arg in arguments
+		arg prepare-to-emit
+	
+	# Handle class functions and package functions.
+	function = nil
+	if object is-a: FunctionCall
+		function = object function
+	else if object is-a: ObjectCall
+		function = object package-result-function
+	if function
+		if (function is-a: PackageFunction) || (function is-a: ClassFunction)
+			package = nil
+			if function is-a: PackageFunction
+				package = function package
+			else
+				package = function the-class
+			package-result-function = package lookup-function: name
+
+
+emit-code: builder
+	# Emit the object.
+	object-result = object emit-code: builder
+
+	# Emit the arguments.
+	arg-results = List new
+	for arg in arguments
+		arg-results append: (arg emit-code: builder)
+	
+	# Handle class functions and package functions.
+	if (object-result is-a: PackageResult) || (object-result is-a: ClassResult)
+		package = nil
+		if object-result is-a: PackageResult
+			package = object-result package
+		else
+			package = object-result the-class
+		function = package lookup-function: name
+		if function
+			return function emit-call: arg-results builder: builder
+	
+	# Emit the call.
+	builder using-object-function: name
+	temporary = builder get-temporary
+	line = temporary name + " = "
+	line += "Call_(" + (builder mangle-name: name) + ", " + object-result access
+	for arg-result in arg-results
+		line += ", " + arg-result access
+	line += ")"
+	builder add-line: line
+	return temporary
+
+
+convert-to-setter-call: value
+	if name ends-with: ":"
+		name += "set-to:"
+	else
+		name += ":"
+	arguments append: value
+
+
+copy
+	copied-args = List new
+	for arg in arguments
+		copied-args append: arg
+	return ObjectCall new: name object: object arguments: copied-args
+
+
+
