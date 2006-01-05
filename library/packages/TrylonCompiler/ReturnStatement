@@ -1,0 +1,20 @@
+trylon ReturnStatement
+superclass Statement
+
+fields value
+
+
+create: value comment: comment
+	this value = value
+	this comment = comment
+
+
+prepare-to-emit
+	value prepare-to-emit
+
+
+emit-code: builder
+	result = value emit-code: builder
+	builder add-line: (add-comment: "return " + result access + ";")
+
+

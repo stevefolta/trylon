@@ -1,0 +1,15 @@
+trylon PackageFunction
+superclass TrylonFunction
+
+fields package
+
+
+create: package
+	this package = package
+
+
+emit-call: arguments builder: builder
+	return PackageResult new: package
+
+
+

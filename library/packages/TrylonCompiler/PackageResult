@@ -1,0 +1,18 @@
+trylon PackageResult
+superclass ExpressionResult
+
+fields package
+
+
+create: package
+	this package = package
+
+
+access
+	return "((obj_) &" + package c-name + ")"
+
+
+is-constant
+	return true
+
+
