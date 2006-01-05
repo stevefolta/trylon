@@ -28,7 +28,7 @@ create(name: String, parent: Package)
 
 lookup-function(name: String): TrylonFunction
 {
-	lookup-function(name, new ObjectMap of Package);
+	return lookup-function(name, new ObjectMap of Package);
 }
 
 

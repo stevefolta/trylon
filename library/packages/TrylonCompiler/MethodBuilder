@@ -20,8 +20,8 @@ create
 	int-literals = List new
 	next-float-literal-num = 0
 	float-literals = List new
-	used-fields = Dictionary new
-	used-classes = Dictionary new
+	used-fields = ObjectMap new
+	used-classes = ObjectMap new
 	indent-level = 0
 
 
@@ -63,7 +63,7 @@ add-extern-declaration: declaration
 using-field: field on-package: on-package
 	# This is a little tricky.  We count on the fact that we'll be given 
 	# the same "field" object anytime that the field in "on-package" is 
-	# referenced.  So we can use a Dictionary to keep track of them.
+	# referenced.  So we can use an ObjectMap to keep track of them.
 	used-fields at: field set-to: on-package
 
 

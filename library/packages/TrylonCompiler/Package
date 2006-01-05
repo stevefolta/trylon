@@ -1,0 +1,302 @@
+class Package
+superclass Context
+
+fields name parent functions fields directories
+fields uses-packages
+fields has-primitives is-main
+fields next-literal-index
+
+
+create: name parent: paretn
+	this name = name
+	this parent = parent
+	functions = Dictionary new
+	fields = Dictionary new
+	directories = List new
+	uses-packages = List new
+	has-primitives = false
+	is-main = false
+	next-literal-index = 0
+
+
+lookup-function: name
+	return lookup-function: name visited-packages: ObjectMap new
+
+
+lookup-function: name visited-packages: visited-packages
+	# Recursion control.
+	if visited-packages contains: this
+		return nil
+	visited-packages add: this
+
+	# Do we know it already?
+	function = functions at: name
+	if function
+		return function
+	
+	# If not, see if it's in one of our directories.
+	for directory in directories
+		# A class?
+		if (directory contains: name) && !(directory entry-is-directory: name)
+			class = add-class: name
+			parser = Parser new: (directory at: name) contents context: this compiler: compiler # ***
+			parser parse-class-file: class
+			return functions at: name
+
+		# A package?
+		if directory entry-is-directory: name
+			return add-package: name directory: (directory at: name)
+		package-dir-name = "packages/" + name
+		if directory entry-is-directory: package-dir-name
+			return add-package: name directory: (directory at: package-dir-name)
+	
+	# Check the parent.
+	if parent
+		function = parent lookup-function: name visited-packages: visited-packages
+		if function
+			return function
+	
+	# Next, check the used packages.
+	for used-package in uses-packages
+		function = 	--
+			used-package lookup-function: name visited-packages: visited-packages
+		if function
+			return function
+	
+	return nil
+
+
+add-function: function
+	functions at: function name set-to: function
+	if function is-primitive
+		has-primitives = true
+
+
+add-field: field
+	fields at: field name set-to: field
+	functions at: field name set-to: (FieldGetter new: field on-package: this)
+	functions 	--
+		at: field name + ":" set-to: (FieldSetter new: field on-package: this)
+	if field is-primitive
+		has-primitives = true
+
+
+add-class: name
+	# If it already exists, return it.
+	existing-function = functions at: name
+	if existing-function
+		if !(existing-function is-a: ClassFunction)
+			throw MessageException new: 	--
+				"Adding \"" + name + "\" as a class, when it's already a non-class."
+		return existing-function the-class
+	
+	# Add the new one.
+	status-reporter report: "Loading " + name + " into " + full-name + "..."
+	status-reporter indent
+	new-class = CompiledClass new: name parent: this
+	class-function = ClassFunction new: new-class
+	functions at: name set-to: class-function
+	the-compiler package-queue append: new-class
+	status-report unindent
+	return new-class
+
+
+add-package: name directory: directory
+	package = Package new: name parent: this
+	if directory
+		package add-directory: directory
+	package-function = PackageFunction new: package
+	functions at: name set-to: package-function
+	the-compiler package-queue append: package
+	return package-function
+
+
+get-subpackage: name
+	# Has it been loaded already?
+	function = functions at: name
+	if function && (function is-a: PackageFunction)
+		return function package
+	
+	# Look for it.
+	for directory in directories
+		if directory entry-is-directory: name
+			return (add-package: name directory: (directory at: name)) package
+		if !directory entry-is-directory: "packages"
+			continue
+		packages-dir = directory at: "packages"
+		if packages-dir entry-is-directory: name
+			return (add-package: name directory: (packages-dir at: name)) package
+	
+	return nil
+
+
+add-directory: directory
+	directories append: directory
+
+	if directory contains: "main"
+		parser = Parser new: (directory at: "main") contents context: this
+		parser parse-package-file: this
+
+
+setup-main: main-directory library-directory: library-directory 	--
+		compile-symbols: compile-symbols
+	is-main = true
+
+	# We want the main-directory to have precedence when looking up names,
+	# but we won't be able to compile its "main" until the library directory
+	# is in the "directories" and Standard is visible.  So add both, *then*
+	# compile the "main"s.
+	directories append: main-directory
+	directories append: library-directory
+
+	# Add the compile-symbols.
+	for symbol in compile-symbols
+		add-field: (CompiledField new: symbol type: nil)
+	
+	# Load Standard.
+	standard-package = get-subpackage: "Standard"
+	if standard-package == nil
+		throw MessageException new: "The Standard package can't be found!"
+	uses-packages append: standard-package
+
+	# Add "nil" to Standard.
+	# This will override the definition in Standard's "main".
+	standard-package functions at: "nil" set-to: NilFunction new
+
+	# Load our "main"s
+	for directory in directories
+		if directory contains: "main"
+			parser = Parser new: (directory at: main) contents context: this
+			parser parse-package-file: this
+	
+	# Load up standard classes.
+	for package-name in ("BytePtr", "Float", "String", "Symbol", "Tuple", "List")
+		standard-package lookup-function: package-name
+	
+	functions at: "Main" set-to: (PackageFunction new: this)
+
+	# If using classes-by-num, replace "Object class" (the primitive version).
+	if the-compiler builder-settings classes-by-num
+		object-function = standard-package lookup-function: "Object"
+		object-class = object-function the-class
+		object-class 	--
+			add-instance-function: "class" 	--
+			function: (InstanceClassFunction new: object-class)
+
+
+ensure-superclasses: object-class
+	for function in functions values
+		if function is-a: PackageFunction
+			package = function package
+			if package != this
+				package ensure-superclasses: object-class
+		else if function is-a: ClassFunction
+			function the-class ensure-superclasses: object-class
+
+
+find-primitives-file: file-name
+	for directory in directories
+		if directory entry-is-directory: "primitives"
+			primitives-dir = directory at: "primitives"
+			if (primitives-dir contains: file-name) && 	--
+			   !(primitives-dir entry-is-directory: file-name)
+				return primitives-dir at: file-name
+	
+	return nil
+
+
+copy-primitives-files: c-files
+	# Copy ours, if there is one.
+	if has-primitives
+		file-name = c-name + ".primitives"
+		c-file-name = file-name + ".c"
+		primitives-file = find-primitives-file(c-file-name)
+		if primitives-file == nil && parent
+			# This might be a class, so check the parent's directories too.
+			primitives-file = parent find-primitives-file: c-file-name
+		if primitives-file
+			is-changed = 	--
+				the-compiler copy-to-sources: primitives-file dest-name: c-file-name
+			c-files add: file-name is-changed: is-changed
+	
+	# Have all children copy theirs.
+	for function in functions values
+		if function is-a: PackageFunction
+			package = function package
+			if package != this
+				package copy-primitives-files: c-files
+		else if function is-a: ClassFunction
+			function the-class copy-primitives-files: c-files
+
+
+prepare-to-emit
+	for function in functions values
+		function prepare-to-emit
+
+
+emit-code
+	reporter report: "Generating code for " + name + "..."
+	reporter indent
+
+	if lookup-function: "verbose"
+		reporter report: name + " has these functions:"
+		reporter indent
+		for name in functions keys
+			reporter report: name + " (" + (functions at: name) class name + ")"
+		reporter unindent
+	
+	is-changed = emit-c-file
+
+	reporter unindent
+
+	return is-changed
+
+
+emit-c-file
+	file = File new: ".c-sources/" + c-name + ".c"
+	stream = ExistingFileStream new: file
+
+	# Header, includes.
+	stream write-line: "/* " + c-name + ".c */"
+	stream write-line
+	stream write-line: "#include \"Trylon_.h\""
+	stream write-line
+
+	# Functions.
+	for function in functions values
+		function emit-code: stream
+	
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+c-name
+	name = MethodBuilder mangle-name: name
+	if parent && !parent is-main
+		name = parent c-name + "__" + name
+	return name
+
+
+total-instance-fields
+	# Only CompiledClasses have instance fields.
+	return 0
+
+
+new-literal-index
+	result = next-literal-index
+	next-literal-index += 1
+	return result
+
+
+
+# Helpers
+
+full-name
+	result = this name
+	package = parent
+	while package
+		result = package name + " " + result
+		package = package parent
+	return result
+
