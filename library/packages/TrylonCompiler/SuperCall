@@ -1,0 +1,54 @@
+trylon SuperCall
+superclass Expression
+
+fields name arguments on-class
+
+
+create: name arguments: arguments on-class: on-class
+	this name = name
+	this arguments = arguments
+	this on-class = on-class
+
+
+prepare-to-emit
+	for arg in arguments
+		arg prepare-to-emit
+
+
+emit-code: builder
+	# Find the class with the super function.
+	fn-class = on-class superclass
+	while fn-class != nil
+		if fn-class has-instance-function: name
+			break
+		fn-class = fn-class superclass
+	if fn-class == nil
+		throw MessageException new: 	--
+			"Attempt to make a super call on \"" + name + 	--
+			"\", but there is no superclass that has it."
+
+	# Declare the function.
+	super-c-name = (builder mangle-name: name) + "__" + fn-class c-name
+	declaration = "extern obj_ " + super-c-name + "(obj_"
+	for arg in arguments
+		declaration += ", obj_"
+	declaration += ");"
+	builder add-extern-declaration: declaration
+
+	# Emit the arguments.
+	arg-results = List new
+	for arg in arguments
+		result = arg emit-code: builder
+		arg-results append: result
+	
+	# Emit the call.
+	temporary = builder get-temporary
+	line = temporary name + " = "
+	line += super-c-name + "(this_"
+	for arg in arg-results
+		line += ", " + arg access
+	line += ");"
+	builder add-line: line
+	return temporary
+
+

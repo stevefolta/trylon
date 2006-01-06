@@ -1,0 +1,18 @@
+trylon StringLiteralResult
+superclass ExpressionResult
+
+field index
+
+
+create: index
+	this index = index
+
+
+access
+	return "Str_(" + index string + ")"
+
+
+is-constant
+	return true
+
+

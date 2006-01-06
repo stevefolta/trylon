@@ -1,0 +1,28 @@
+trylon Statement
+
+fields comment
+
+
+prepare-to-emit
+	# Default: nothing to do.
+
+
+emit-code: builder
+	virtual
+
+
+
+# Helpers.
+
+add-comment: line
+	if comment
+		line += " \t/* " + comment + " */"
+	return line
+
+
+add-comment: line comment: comment
+	if comment
+		line += " \t/* " + comment + " */"
+	return line
+
+

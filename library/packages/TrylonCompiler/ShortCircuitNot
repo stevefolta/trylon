@@ -1,0 +1,21 @@
+trylon ShortCircuitNot
+superclass Expression
+
+fields expr
+
+
+create: expr
+	this expr = expr
+
+
+prepare-to-emit
+	expr prepare-to-emit
+
+
+emit-code: builder
+	expr-result = expr emit-code: builder
+	temp = builder get-temporary
+	builder add-line: temp name + " = Not_(" + expr-result access + ");"
+	return temp
+
+

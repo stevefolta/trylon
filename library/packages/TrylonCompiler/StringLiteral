@@ -1,0 +1,28 @@
+trylon StringLiteral
+superclass Expression
+
+field value
+field index 	# The MethodBuilder will set this.
+
+
+create: value
+	this value = value
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+emit-code: builder
+	builder add-string-literal: this 	# The "index" gets set here.
+	return StringLiteralResult new: index
+
+
+emit-package-literal: stream
+	stream write-all: ("DefineString_(", index string, ", \"", value "\", ")
+	stream write-all: ((MethodBuilder string-literal-length: value) string, ")")
+	stream write-line
+
+	return StringLiteralResult new: index
+
+

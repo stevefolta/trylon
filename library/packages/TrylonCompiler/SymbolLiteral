@@ -1,0 +1,26 @@
+trylon SymbolLiteral
+superclass Expression
+
+field name
+
+
+create: name
+	this name = name
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+emit-code: builder
+	mangle-name = MethodBuilder mangle-name: name
+	builder add-extern-declaration: "UsingSym_(" + mangled-name + ")"
+	return NameResult new: "Sym_(" + mangled-name + ")"
+
+
+emit-package-literal: stream
+	mangled-name = MethodBuilder mangle-name: name
+	stream write-all: ("UsingSym_(", mangled-name, ")\n")
+	return NameResult new: "Sym_(" + mangled-name + ")"
+
+

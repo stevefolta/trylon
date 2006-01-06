@@ -1,0 +1,21 @@
+trylon SetArgumentFunction
+superclass TrylonFunction
+
+fields name
+
+
+create: arg
+	this name = arg name
+
+
+emit-call: arguments builder: builder
+	line = 	--
+		(builder mangle-name: name) + " = " + arguments first-item access + ";"
+	builder add-line: line
+	return NameResult new: "NULL"
+
+
+used-by-lambda
+	# ***
+
+

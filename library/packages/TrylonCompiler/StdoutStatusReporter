@@ -1,0 +1,28 @@
+trylon StdoutStatusReporter
+superclass StatusReporter
+
+fields indent-level
+
+
+create
+	indent-level = 0
+
+
+report: message
+	# Indent.
+	adjusted-indent-level = indent-level
+	if adjusted-indent-level > 20
+		adjusted-indent-level = 20
+	print: ("                    " substr: 0 length: adjusted-indent-level)
+
+	print-line: message
+
+
+indent
+	indent-level += 1
+
+
+unindent
+	indent-level -= 1
+
+
