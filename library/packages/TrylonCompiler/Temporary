@@ -1,0 +1,14 @@
+trylon Temporary
+superclass ExpressionResult
+
+fields name
+
+
+create: name
+	this name = name
+
+
+access
+	return name
+
+

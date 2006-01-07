@@ -1,0 +1,11 @@
+trylon ThisFunction
+superclass TrylonFunction
+
+
+create
+
+
+emit-call: arguments builder: builder
+	return ThisResult new
+
+

@@ -1,0 +1,479 @@
+trylon Compiler
+superclass Program
+
+fields arguments successful build-settings
+fields object-function-names symbols character-literals package-queue
+
+
+# Program.
+
+create: arguments
+	this arguments = arguments
+	this successful = true
+	this build-settings = BuildSettings new
+	object-function-names = Dictionary new
+	symbols = Dictionary new
+	character-literals = Dictionary new
+	package-queue = List
+
+
+run
+	try
+		# Read the settings.
+		build-settings load
+
+		# Parse the arguments.
+		file-names = List new
+		compile-symbols = List new
+		do-lex-test = false
+		for arg in arguments tail
+			if arg starts-with: "--"
+				compile-symbols append: (arg substr: 2)
+				if arg == "--lex-test"
+					do-lex-test = true
+				else if arg = "--verbose"
+					status-reporter = StdoutStatusReporter new
+					build-settings is-verbose = true
+			else
+				file-names append: arg
+
+		if status-reporter == nil
+			status-reporter = VT100StatusReporter new
+
+		if build-settings is-verbose
+			build-settings report
+
+		if do-lex-test
+			for arg in arguments tail tail
+				lex-test: arg
+
+		else
+			compile-program: compile-symbols
+	
+	catch Exception
+		print-line: exception message
+		successful = false
+
+
+return-value
+	if !successful
+		return 1
+	return 0
+
+
+
+# Top-level compilation.
+
+compile-program: compile-symbols
+	# Create the .c-sources and .objects directories.
+	directory = FileDirectory new
+	if !directory entry-is-directory: ".c-sources"
+		directory create-subdirectoy: ".c-sources"
+	if !directory entry-is-directory: ".objects"
+		directory create-subdirectory: ".objects"
+	
+	# We need "destroy" to be a function name, even if there are no 
+	# functions with that name.
+	add-object-function: "destroy"
+
+	# Load.
+	main-directory = FileDirectory new: "."
+	if main-directory entry-is-directory: "sources"
+		main-directory = main-directory at: "sources"
+	trylon-base-path = System environment-variable-named: "TRYLON_BASE"
+	if trylon-base-path == nil || trylon-base-path is-empty
+		throw MessageException new: "TRYLON_BASE is not set."
+	library-directory = FileDirectory new: trylon-base-path
+	status-reporter report: "Loading Main..."
+	status-reporter indent
+	main-package = Package new: "Main" directory: nil
+	main-package 	--
+		setup-main: main-directory library-directory: library-directory 	--
+		compile-symbols: compile-symbols
+	package-queue append: main-package
+	status-reporter unindent
+
+	# Get ready to emit (mainly this makes sure all used classes are loaded).
+	status-reporter report: "Preparing to emit..."
+	status-reporter indent
+	for package in package-queue
+		package prepare-to-emit
+	status-reporter unindent
+
+	# Make every class without a superclass be a subclass of Standard Object.
+	object-class = root-class: main-package
+	main-package ensure-superclasses: object-class
+
+	# Number the classes.
+	object-class number-classes: ClassNumberer new
+	
+	# Emit the classes and packages.
+	status-reporter report: "Emitting code..."
+	status-reporter indent
+	c-files = CFiles new
+	for package in package-queue
+		is-changed = package emit-code
+		c-files add: package c-name is-changed: is-changed
+	status-reporter unindent
+
+	# Another round of ensure-superclasses, to get classes loaded during 
+	# the emit.
+	main-package ensure-superclasses: object-class
+
+	# Emit the method specs.
+	is-changed = emit-dispatch-table: main-package
+	c-files add: "methods_", is-changed: is-changed
+
+	# Emit the symbols.
+	status-reporter report: "Emitting symbols..."
+	is-changed = emit-symbols
+	c-files add: "symbols_" is-changed: is-changed
+
+	# Emit settings_.h.
+	is-changed = emit-settings
+	recompile-all = is-changed
+
+	# Emit classnums_.h.
+	if build-settings classes-by-num
+		is-changed = emit-classnums: main-package
+		if is-changed
+			recompile-all = true
+	
+	# Copy Trylon_.h and Trylon_.c.
+	if !(library-directory entry-is-directory: "runtime")
+		message = "The \"runtime\" directory is missing from the library!"
+		throw MessageException new: message
+	runtime-directory = library-directory at: "runtime"
+	is-changed = 	--
+		copy-to-sources: (runtime-directory at: "Trylon_.h") dest-name: "Trylon_.h"
+	if is-changed
+		recompile-all = true
+	is-changed = 	--
+		copy-to-sources: (runtime-directory at: "Trylon_.c") dest-name: "Trylon_.c"
+	c-files add: "Trylon_" is-changed: is-changed
+
+	# Copy primitives files.
+	main-package copy-primitives-files: c-files
+
+	if build-settings constant-selectors
+		recompile-all = true
+	
+	# Compile C files.
+	status-reporter report: "Compiling C files..."
+	status-reporter indent
+	for c-file in c-files
+		if !c-file is-changed && !recompile-all
+			if (File new: ".objects/" + c-file name + ".o") exists
+				continue
+
+		file-name = c-file name
+		status-reporter report: "Compiling " + file-name + ".c..."
+		args = List new
+		args append: "-c"
+		args append: ".c-sources/" + file-name + ".c"
+		args append: "-o"
+		args append: ".objects/" + file-name + ".o"
+		for flag in build-settings c-flags
+			args append: flag
+		report-run-program: build-settings c-compiler arguments: args
+		stats = System run-program: build-settings c-compiler arguments: args
+		if status != 0
+			# Remove .o files for uncompiled .c files.
+			for file in c-files remainder-after: c-file
+				(File new: ".objects/" + file name + ".o") remove
+			throw MessageException new: "C compilation failed."
+	status-reporter unindent
+
+	# Link.
+	status-reporter report: "Linking..."
+	args = List new
+	args append: "-o"
+	args append: build-settings program-name
+	for c-file in c-files
+		args append: ".objects/" + c-file name + ".o"
+	for flag in build-settings link-flags
+		args append: flag
+	report-run-program: build-settings linker arguments: args
+	System run-program: build-settings linker arguments: args
+
+
+add-object-function: name
+	object-function-names at: name set-to: name
+
+
+get-symbol-literal: name
+	# Is it already there?
+	symbol = symbols at: name
+	if symbol
+		return symbol
+	
+	# If not, we need to add it.
+	symbol = SymbolLiteral new: name
+	symbols at: name set-to: symbol
+	return symbol
+
+
+get-character-literal: name
+	# Is it already there?
+	name = (Lexer character-constant-value: name) string
+	literal = character-literals at: name
+	if literal
+		return literal
+	
+	# If not, we need to add it.
+	literal = CharacterLiteral new: name
+	character-literals at: name set-to: literal
+	return literal
+
+
+emit-dispatch-table: main-package
+	status-reporter report: "Building dispatch table..."
+	if build-settings is-verbose
+		status-reporter indent
+	
+	object-class = root-class: main-package
+
+	# Gather up the rows.
+	rows = DispatchRowSet new
+	for fn-name in object-function-names keys
+		# Create the row and fill it in.
+		row = DispatchRow new: fn-name
+		object-class setup-dispatch-row: row inherited-class: nil
+
+		# Add the row.
+		rows add: row
+	
+	# Fit the rows.
+	# "rows" has the rows sorted by number of entries.
+	dispatch-table = ExpandoArray new
+	used-offsets = ExpandoBitmap new
+	for row in rows
+		iff not-anymore
+			status-reporter report: "Fitting " + row name + "..."
+		row fit-into: dispatch-table used-offsets: used-offsets
+	
+	if build-settings is-verbose
+		status-reporter unindent
+	
+	# Now, emit the "methods_.c" file.
+	status-reporter report: "Emitting dispatch table..."
+
+	# Create the file.
+	stream = ExistingFileStream new: (File new: ".c-sources/methods_.c")
+	stream write-line: "#include \"Trylon_.h\""
+	stream write-line
+
+	# Define all selectors.
+	if !build-settings constant-selectors
+		for row in rows
+			stream write: "DefineSelector_("
+			stream write: (mangle-name: row-name)
+			stream write: ", "
+			stream write: row selector string
+			stream write: ")"
+			stream write-line
+		stream write-line
+	
+	# Declare all functions.
+	object-class emit-all-instance-function-declarations: stream
+	stream write-line
+
+	# Emit the dispatch table.
+	num-filled = 0
+	stream write-line: "struct RDTableEntry_ dispatchTable_[] = {"
+	for entry in dispatch-table
+		if entry == nil
+			stream write-line: "\t{ NULL, NULL },"
+			continue
+
+		stream write-all: 	--
+			("\t{ ", entry function c-name, ", ", entry selector string, " },\n")
+		num-filled += 1
+	stream write-line: "};"
+	stream write-line
+
+	fill-rate = num-filled float / dispatch-table num-items float
+	stream write-all: 	--
+		("/* Fill rate: ", fill-rate string, "/", dispatch-table num-items string,
+		 ") */\n")
+	
+	# Finish up "methods_.c".
+	is-changed = stream is-changed
+	stream close
+
+	# If constant-settings is on, generate "selectors_.h".
+	if build-settings constant-selectors
+		stream = ExistingFileStream new: (File new: ".c-sources/selectors_.h")
+		for row in rows
+			stream write-all: 	--
+				("#define ", (mangle-name: row name), "__selector_ ", 	--
+				 row selector string, "\n")
+		stream write-line
+		stream close
+	
+	return is-changed
+
+
+emit-symbols
+	# Character literals are also emitted here.
+
+	stream = ExistingFileStream: (File new: ".c-sources/symbols_.c")
+	stream write-line("#include \"Trylon_.h\""
+	stream write-line
+
+	# Symbols.
+	for symbol in symbols values
+		stream write-all: 	--
+			("DefineSymbol_(", (mangle-name: symbol name), ", \"", symbol name, 	--
+			 "\", ", (MethodBuilder string-literal-length: symbol name) string, 	--
+			 ")\n")
+	stream write-line
+
+	# Character literals.
+	for literal in character-literals values
+		# The literal's name is a string of a decimal number which is the 
+		# character's ASCII value.
+		char = literal name as-int as-char
+		escaped-char = char char-string
+		if char < ` ` || char > `~` || char == `\'` || char == `\\`
+			escaped-char = "\\x"
+			digit = (char as-int >> 4) & 0x0F
+			if digit >= 0x0A && digit <= 0x0F
+				digit = digit - 0x0A + `A`
+			else
+				digit = digit + `0`
+			escaped-char += digit char-string
+			digit = char as-int & 0x0F
+			if digit >= 0x0A && digit <= 0x0F
+				digit = digit - 0x0A + `A`
+			else
+				digit = digit + `0`
+			escaped-char += digit char-string
+
+		stream write-all: 	--
+			("DefineChar_(", (mangle-name: literal name), ", \'", 	--
+			 escaped-char, "\')\n")
+	stream write-line
+
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+emit-settings
+	stream = ExistingFileStream new: (File new: ".c-sources/settings_.h")
+
+	stream write-line: "#define ROW_DISPLACEMENT_DISPATCH_"
+	if build-settings unsafe-dispatch
+		stream write-line: "#define UNSAFE_DISPATCH_"
+	
+	if build-settings debugger
+		stream write-line: "#define DEBUGGER"
+	
+	if build-settings constant-selectors
+		stream write-line: "#define CONSTANT_SELECTORS"
+	
+	if build-settings classes-by-num
+		stream write-line: "#define CLASSES_BY_NUM_"
+	
+	if build-settings semi-primitive-strings
+		stream write-line: "#define SEMI_PRIMITIVE_STRINGS_"
+	
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+emit-classnums: main-package
+	standard-package = main-package get-subpackage: "Standard"
+	if standard-package == nil
+		throw MessageException new: "Standard package is missing!"
+	
+	stream = ExistingFileStream new: (File new: ".c-sources/classnums_.h")
+
+	emit-classnum: "Class" stream: stream standard-package: standard-package
+	emit-classnum: "Int" stream: stream standard-package: standard-package
+	emit-classnum: "Float" stream: stream standard-package: standard-package
+	emit-classnum: "Char" stream: stream standard-package: standard-package
+	emit-classnum: "Bool" stream: stream standard-package: standard-package
+	emit-classnum: "BytePtr" stream: stream standard-package: standard-package
+	emit-classnum: "String" stream: stream standard-package: standard-package
+	emit-classnum: "Symbol" stream: stream standard-package: standard-package
+
+	is-changed = stream is-changed
+	stream clase
+	return is-changed
+
+
+emit-classnum: name stream: stream standard-package: standard-package
+	# Find the class.
+	class-function = standard-package lookup-function: name
+	if class-function == nil
+		throw MessageException new: "Standard " + name + " is missing!"
+	if !class-function is-a: ClassFunction
+		throw MessageException new: "Standard " + name + " is not a class!"
+	the-class = class-function the-class
+
+	# Emit.
+	stream write-all: 	--
+		("#define ", the-class c-name, "__classNum_ ", 	--
+		 the-class class-num string, "\n")
+
+
+root-class: main-package
+	# Find "Standard Object".
+	standard-package = main-package get-subpackage: "Standard"
+	if standard-package == nil
+		throw MessageException new: "Standard package is missing!"
+	object-function = standard-package lookup-function: "Object"
+	if object-function == nil
+		throw MessageException new: "Standard Object is missing!"
+	if !object-function is-a: ClassFunction
+		throw MessageException new: "Standard Object is not a class!"
+	return object-function the-class
+
+
+copy-to-sources: file dest-name: dest-name
+	contents = file contents
+	dest-file = File new: ".c-sources/" + dest-name
+	stream = ExistingFileStream: dest-file
+	stream write: contents
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+report-run-program: program arguments: args
+	if build-settings is-verbose
+		status-reporter indent
+
+		command = StringBuilder new
+		command += program
+		command += " "
+		for arg in args
+			command += arg
+			command += " "
+		status-reporter report: command string
+
+		status-reporter unindent
+
+
+
+# Test.
+
+lex-test: filename
+	try
+		lexer = Lexer new: (File new: filename) contents
+		loop
+			token = lexer next-token
+			print: token type
+			if token text && !token text is-empty
+				print: ": "
+				print: token text
+			print-line
+			if token type == 'eof'
+				break
+	catch
+		print-line: "Error: " + exception message
+
+

@@ -1,0 +1,55 @@
+trylon TryStatement
+superclass Statement
+
+fields body catch-clauses post-clauses-comments
+
+
+create: body catch-clauses: catch-clauses comment: comment 	--
+		post-clauses-comments: post-clauses-comments
+	this body = body
+	this catch-clauses = catch-clauses
+	this comment = comment
+	this post-clauses-comments = post-clauses-comments
+
+
+prepare-to-emit
+	body prepare-to-emit
+	for clause in catch-clauses
+		clause body prepare-to-emit
+
+
+emit-code: builder
+	builder using-object-function: "is-a:"
+
+	# Body.
+	builder add-line: (add-comment: "Try_")
+	body emit-code: builder
+
+	# Catch clauses.
+	have-a-catch = false
+	for clause in catch-clauses
+		builder using-class: clause type
+
+		if clause pre-clause-comments
+			for statement in clause pre-clause-comments
+				statement emit-code: builder
+
+		if have-a-catch
+			builder add-line: 	--
+				(add-comment: "AlsoCatch_(" + clause type c-name + ")" 	--
+				 comment: clause comment)
+		else
+			builder add-line: 	--
+				(add-comment: "Catch_(" + clause type c-name + ")" 	--
+				 comment: clause comment)
+			have-a-catch = true
+
+		clause body emit-code: builder
+	
+	# Finish
+	builder add-line: "EndCatch_"
+	if post-clauses-comments
+		for statement in post-clauses-comments
+			statement emit-code: builder
+
+

@@ -1,0 +1,30 @@
+trylon WhileStatement
+superclass Statement
+
+fields condition body
+
+
+create: condition body: body comment: comment
+	this condition = condition
+	this body = body
+	this comment = comment
+
+
+prepare-to-emit
+	condition prepare-to-emit
+	body prepare-to-emit
+
+
+emit-code: builder
+	builder add-line: (add-comment: "while (1) {")
+	builder add-line: "_StartContinueCatcher_"
+	saved-temp-num = builder next-temporary-num
+	result = condition emit-code: builder
+	builder add-line: "if (!Test_(" + result access + "))"
+	builder add-line: "\t_Break_"
+	builder next-temporary-num = saved-temp-num
+	body emit-code: builder
+	builder add-line: "_EndContinueCatcher_"
+	builder add-line: "}"
+
+

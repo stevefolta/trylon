@@ -1,0 +1,11 @@
+trylon ThisResult
+superclass ExpressionResult
+
+
+create
+
+
+access
+	return "this_"
+
+

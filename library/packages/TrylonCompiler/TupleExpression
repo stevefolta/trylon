@@ -1,0 +1,40 @@
+trylon TupleExpression
+superclass Expression
+
+fields members
+
+
+create
+	members = List new
+
+
+add-member: member
+	members append: member
+
+
+prepare-to-emit
+	for member in members
+		member prepare-to-emit
+
+
+emit-code: builder
+	builder add-extern-declaration: "extern obj_ new_co___Standard__Tuple(obj_);"
+
+	# Make the tuple object.
+	tuple = builder get-temporary
+	size-result = (IntLiteral new: members count string) emit-code: builder
+	builder add-line: 	--
+		tuple access + " = new_co___Standard__Tuple(" + size-result access + ");"
+	
+	# Set its fields.
+	index = 1 	# Starts after the size.
+	for member in members
+		member-result = member emit-code: builder
+		builder add-line: 	--
+			tuple access + "->fields[" + index string + "] = " + 	--
+			member-result access + ";"
+		index += 1
+	
+	return tuple
+
+

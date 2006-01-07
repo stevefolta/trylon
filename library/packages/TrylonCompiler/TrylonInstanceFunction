@@ -1,0 +1,13 @@
+trylon TrylonInstanceFunction
+superclass TrylonFunction
+
+
+c-signature
+	virtual
+
+
+is-primitive
+	# Default: no.
+	return false
+
+
