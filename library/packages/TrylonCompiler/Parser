@@ -115,11 +115,13 @@ parse-package-contents: package
 		else if current-token type != 'name'
 			break
 
-		if name == "fn" || name == "function" || name == "primitive-fn" || name == "primitive-function"
+		if name == "fn" || name == "function" || name == "primitive-fn" || 	--
+				name == "primitive-function"
 			package add-function: (parse-function: true is-object-function: false)
 		
 		else if name == "field" || name == "fields" || name == "fld" || 	--
-		        name == "primitive-field" || name == "primitive-fields" || name == "primitive-fld"
+		        name == "primitive-field" || name == "primitive-fields" || 	--
+		        name == "primitive-fld"
 			for field in parse-fields
 				package add-field: field
 
@@ -420,7 +422,8 @@ parse-function: at-declarator is-object-function: is-object-function
 			else
 				# Special shortcut: just an argument name.  Equivalent to "name: name".
 				name += current-token text + ":"
-				arg-name = current-token text substr: 0 length: current-token text length - 1
+				arg-name = 	--
+					current-token text substr: 0 length: current-token text length - 1
 				consume-token
 
 			# Get the type and add the argument.
