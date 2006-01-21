@@ -156,13 +156,25 @@ parse-package-member: package in-class: in-class
 	# We're at the name.
 
 	# Handle declaring a field.
-	if next-token == '=' || next-token == ':='
+	if next-token == '=' || next-token == ':=' || next-token == '('
 		# Make sure it *is* a field.
 		if current-token == 'keyword'
 			parse-error: "Bad declaration of a package member."
+		# Name.
 		name = current-token text
 		consume-token 	# Name.
-		consume-token 	# '=' or ':='.
+		# Type.
+		type = nil
+		if current-token == '('
+			consume-token
+			type = parse-type-spec
+			if current-token != ')'
+				parse-error: "\")\" expected."
+			consume-token
+		# '=' or ':='
+		if current-token != '=' && current-token != ':='
+			parse-error: "\"=\" expected."
+		consume-token
 
 		# Get the initial value.
 		initial-value = nil
@@ -585,7 +597,7 @@ parse-statement
 			return parse-throw-statement
 
 		# Is it a declaration?
-		if next-token == ':=' || next-token == '['
+		if next-token == ':=' || next-token == '[' || next=token == '('
 			return parse-declaration
 	
 	else if current-token == 'eol'
@@ -804,10 +816,16 @@ parse-declaration
 		if current-token != ']'
 			parse-error: "Missing \"]\"."
 		consume-token
+	else if current-token == '('
+		consume-token 	# '('
+		type = parse-type-spec
+		if current-token != ')'
+			parse-error: "Missing \")\"."
+		consume-token
 	
 	# ':='
-	if current-token != ':='
-		parse-error: "\":=\" expected."
+	if current-token != '=' || current-token != ':='
+		parse-error: ""\=\" or \":=\" expected."
 	consume-token
 
 	# Initial value.

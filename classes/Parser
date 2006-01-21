@@ -192,16 +192,30 @@ parse-package-member(package: Package, in-class: Bool)
 	// We're at the name.
 
 	// Handle declaring a field.
-	if (next-token.type == '=' || next-token.type == ':=') {
+	if (next-token.type == '=' || next-token.type == ':=' || 
+	    next-token.type == '(') {
 		// Make sure it *is* a field.
 		if (current-token.type == 'keyword') {
 			throw
 				ParseException("Bad declaration of a package member.",
 						        	 current-token);
 			}
+		// Name.
 		name: String = current-token.text;
-		consume-token(); 	// Name.
-		consume-token(); 	// '=' or ':='.
+		consume-token();
+		// Type.
+		type: CompiledClass = nil;
+		if (current-token.type == '(') {
+			consume-token();
+			type = parse-type-spec();
+			if (current-token.type != ')')
+				throw ParseException("\")\" expected.", current-token);
+			consume-token();
+			}
+		// '=' or ':='
+		if (current-token.type != '=' && current-token.type != ':=')
+			throw ParseException("\"=\" expected.", current-token);
+		consume-token();
 
 		// Get the initial value.
 		initial-value: Expression = nil;
@@ -731,7 +745,8 @@ parse-statement: Statement
 			return parse-throw-statement();
 
 		// Is it a declaration?
-		if (next-token.type == ':=' || next-token.type == '[')
+		if (next-token.type == ':=' || next-token.type == '[' || 
+		    next-token.type == '(')
 			return parse-declaration();
 		}
 
@@ -988,10 +1003,17 @@ parse-declaration(): Statement
 			throw ParseException("Missing \"]\".", current-token);
 		consume-token();
 		}
+	else if (current-token.type == '(') {
+		consume-token();
+		type = parse-type-spec();
+		if (current-token.type != ')')
+			throw ParseException("Missing \")\".", current-token);
+		consume-token();
+		}
 
 	// ':="
-	if (current-token.type != ':=')
-		throw ParseException("\":=\" expected.", current-token);
+	if (current-token.type != ':=' && current-token.type != '=')
+		throw ParseException("\"=\" or \":=\" expected.", current-token);
 	consume-token();
 
 	// Initial value

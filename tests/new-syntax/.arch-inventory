@@ -1,4 +1,5 @@
 precious ^\.c-sources$
 precious ^\.objects$
 precious ^test-2\.0$
+precious ^new-syntax-tests$
 

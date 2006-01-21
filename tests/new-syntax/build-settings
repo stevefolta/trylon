@@ -1,4 +1,4 @@
-program = "test-2.0"
+program = "new-syntax-tests"
 
 c-flags += "-g"
 link-flags += "-lgc" "-ldl" "-lm"

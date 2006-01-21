@@ -9,6 +9,7 @@ character-field = `x`
 true-field = true
 false-field = false
 nil-field = nil
+typed-global (Int) = 5
 
 
 main: args
@@ -33,6 +34,7 @@ check: value against: expected-value title: title
 
 
 tests
+	# 2005.5.5?:  Autodeclarations.
 	x = 3
 	check: x against: 3 title: "Autodeclaration of local"
 	if true
@@ -46,4 +48,10 @@ tests
 	check: true-field against: true title: "True field value"
 	check: false-field against: false title: "False field value"
 	test: nil-field == nil title: "Nil field value"
+	print-line
+
+	# 2006.1.21: "(type)" for type declarations.
+	y (Int) = 3
+	check: y against: 3 title: "(Type)"
+	check: typed-global against: 5 title: "(Type) in global"
 
