@@ -134,7 +134,7 @@ emit: stream
 	if !used-object-functions is-empty
 		stream write: "\t"
 		done-one = false
-		for name = used-object-functions keys
+		for name in used-object-functions keys
 			if done-one
 				stream write: " "
 			else

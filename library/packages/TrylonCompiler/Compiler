@@ -1,5 +1,4 @@
 trylon Compiler
-superclass Program
 
 fields arguments successful build-settings
 fields object-function-names symbols character-literals package-queue
@@ -294,8 +293,8 @@ emit-dispatch-table: main-package
 
 	fill-rate = num-filled float / dispatch-table num-items float
 	stream write-all: 	--
-		("/* Fill rate: ", fill-rate string, "/", dispatch-table num-items string,
-		 ") */\n")
+		("/* Fill rate: ", fill-rate string, "/", 	--
+		 dispatch-table num-items string, ") */\n")
 	
 	# Finish up "methods_.c".
 	is-changed = stream is-changed
@@ -318,7 +317,7 @@ emit-symbols
 	# Character literals are also emitted here.
 
 	stream = ExistingFileStream: (File new: ".c-sources/symbols_.c")
-	stream write-line("#include \"Trylon_.h\""
+	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
 
 	# Symbols.
@@ -473,7 +472,7 @@ lex-test: filename
 			print-line
 			if token type == 'eof'
 				break
-	catch
+	catch Exception
 		print-line: "Error: " + exception message
 
 

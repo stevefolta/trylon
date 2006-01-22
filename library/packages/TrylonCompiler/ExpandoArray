@@ -19,7 +19,7 @@ at: index
 	which-block = index / block-size
 	if which-block >= num-blocks
 		return nil
-	return
+	return 	--
 		(blocks ptr-at: which-block) object-ptr-at: index % block-size
 
 

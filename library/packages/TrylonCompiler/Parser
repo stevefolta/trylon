@@ -215,7 +215,7 @@ parse-package-member: package in-class: in-class
 	
 	# Declaring a function.
 	else
-		function = parse-function: false in-object-function: in-class
+		function = parse-function: false is-object-function: in-class
 		if in-class
 			package add-instance-function: function-name function: function
 		else
@@ -282,11 +282,11 @@ parse-class-conents: the-class
 
 		if name == "fn" || name == "function" || 	--
 		   name == "primitive-fn" || name == "primitive-function"
-			function = parse-function: true in-object-function: true
+			function = parse-function: true is-object-function: true
 			the-class add-instance-function: function name function: function
 		else if name == "class-fn" || name == "class-function" || 	--
 		        name == "primitive-class-fn" || name == "primitive-class-function"
-			the-class add-function: (parse-function: true in-object-function: true)
+			the-class add-function: (parse-function: true is-object-function: true)
 
 		else if name == "field" || name == "fields" || name == "fld"
 			for field in parse-fields
@@ -414,7 +414,7 @@ parse-function: at-declarator is-object-function: is-object-function
 	if fn-type != 'name' && fn-type != '~'
 		# Get the first argument.
 		if current-token type != 'name'
-			parse-error: "Missing argument name in " + name "."
+			parse-error: "Missing argument name in " + name + "."
 		arg-name = current-token text
 		consume-token
 		arg-type = parse-arg-type
@@ -597,7 +597,7 @@ parse-statement
 			return parse-throw-statement
 
 		# Is it a declaration?
-		if next-token == ':=' || next-token == '[' || next=token == '('
+		if next-token == ':=' || next-token == '[' || next-token == '('
 			return parse-declaration
 	
 	else if current-token == 'eol'
@@ -825,7 +825,7 @@ parse-declaration
 	
 	# ':='
 	if current-token != '=' || current-token != ':='
-		parse-error: ""\=\" or \":=\" expected."
+		parse-error: "\"=\" or \":=\" expected."
 	consume-token
 
 	# Initial value.

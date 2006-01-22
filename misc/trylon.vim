@@ -37,7 +37,7 @@ syn match	cSpecial	display contained "\\\(x\x\+\|\o\{1,3}\|.\|$\)"
 if !exists("c_no_utf")
   syn match	cSpecial	display contained "\\\(u\x\{4}\|U\x\{8}\)"
 endif
-syn region	String		start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cSpecial
+syn region	String		start=:L\=": skip=:\\\\\|\\": end=:": contains=cSpecial
 syn region	Constant	start=+L\='+ skip=+\\\\\|\\'+ end=+'+ contains=cSpecial
 
 " Character constants
@@ -47,5 +47,7 @@ syn match	Character	"`[^`]*`"
 " Errors
 syn match Error ";"
 
+
+hi def link cSpecial		SpecialChar
 
 let b:current_syntax = "trylon"

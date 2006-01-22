@@ -1,0 +1,10 @@
+trylon main
+
+main: args
+	directory = FileDirectory new: "."
+	for name in directory names
+		if directory entry-is-directory: name
+			print-line: name + "/"
+		else
+			print-line: name
+

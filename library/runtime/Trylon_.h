@@ -366,6 +366,8 @@ _FinishExternC_
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 
+#define BoolFor_(value)	(value ? true__Standard : false__Standard)
+
 #ifndef SEMI_PRIMITIVE_STRINGS_
 
 #define StringStart_(obj) 	\

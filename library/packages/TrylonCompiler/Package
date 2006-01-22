@@ -1,4 +1,4 @@
-class Package
+trylon Package
 superclass Context
 
 fields name parent functions fields directories
@@ -210,7 +210,7 @@ copy-primitives-files: c-files
 	if has-primitives
 		file-name = c-name + ".primitives"
 		c-file-name = file-name + ".c"
-		primitives-file = find-primitives-file(c-file-name)
+		primitives-file = find-primitives-file: c-file-name
 		if primitives-file == nil && parent
 			# This might be a class, so check the parent's directories too.
 			primitives-file = parent find-primitives-file: c-file-name

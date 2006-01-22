@@ -1,0 +1,9 @@
+program = "trylon"
+
+c-flags += "-g"
+link-flags += "-lgc" "-ldl" "-lm"
+
+if Darwin
+	c-flags += "-DOSX_FINK" "-I/sw/include"
+	link-flags += "-L/sw/lib"
+

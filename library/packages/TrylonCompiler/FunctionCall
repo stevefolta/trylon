@@ -48,7 +48,7 @@ copy
 	return FunctionCall new: name arguments: copied-args context: context
 
 
-function
+fn function
 	return context lookup-function: name
 
 

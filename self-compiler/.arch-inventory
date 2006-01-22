@@ -1,0 +1,4 @@
+precious ^\.c-sources$
+precious ^\.objects$
+precious ^trylon$
+
