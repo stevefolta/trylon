@@ -1,0 +1,9 @@
+trylon TrylonCompiler
+
+fields status-reporter the-compiler
+
+
+run: arguments
+	the-compiler = Compiler new: arguments
+	the-compiler run
+	

@@ -175,7 +175,7 @@ compile-program: compile-symbols
 		for flag in build-settings c-flags
 			args append: flag
 		report-run-program: build-settings c-compiler arguments: args
-		stats = System run-program: build-settings c-compiler arguments: args
+		status = System run-program: build-settings c-compiler arguments: args
 		if status != 0
 			# Remove .o files for uncompiled .c files.
 			for file in c-files remainder-after: c-file
@@ -266,7 +266,7 @@ emit-dispatch-table: main-package
 	if !build-settings constant-selectors
 		for row in rows
 			stream write: "DefineSelector_("
-			stream write: (mangle-name: row-name)
+			stream write: (mangle-name: row name)
 			stream write: ", "
 			stream write: row selector string
 			stream write: ")"

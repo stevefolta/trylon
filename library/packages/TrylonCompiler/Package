@@ -91,13 +91,14 @@ add-class: name
 		return existing-function the-class
 	
 	# Add the new one.
+	status-reporter = Compiler status-reporter
 	status-reporter report: "Loading " + name + " into " + full-name + "..."
 	status-reporter indent
 	new-class = CompiledClass new: name parent: this
 	class-function = ClassFunction new: new-class
 	functions at: name set-to: class-function
 	the-compiler package-queue append: new-class
-	status-report unindent
+	status-reporter unindent
 	return new-class
 
 
@@ -235,19 +236,19 @@ prepare-to-emit
 
 
 emit-code
-	reporter report: "Generating code for " + name + "..."
-	reporter indent
+	status-reporter report: "Generating code for " + name + "..."
+	status-reporter indent
 
 	if lookup-function: "verbose"
-		reporter report: name + " has these functions:"
-		reporter indent
+		status-reporter report: name + " has these functions:"
+		status-reporter indent
 		for name in functions keys
-			reporter report: name + " (" + (functions at: name) class name + ")"
-		reporter unindent
+			status-reporter report: name + " (" + (functions at: name) class name + ")"
+		status-reporter unindent
 	
 	is-changed = emit-c-file
 
-	reporter unindent
+	status-reporter unindent
 
 	return is-changed
 

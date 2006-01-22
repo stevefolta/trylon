@@ -2,6 +2,6 @@ trylon main
 
 
 main: args
-	compiler = TrylonCompiler Compiler new: args
-	compiler run
+	TrylonCompiler run: args
+
 
