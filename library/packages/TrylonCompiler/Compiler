@@ -324,8 +324,7 @@ emit-symbols
 	for symbol in symbols values
 		stream write-all: 	--
 			("DefineSymbol_(", (mangle-name: symbol name), ", \"", symbol name, 	--
-			 "\", ", (MethodBuilder string-literal-length: symbol name) string, 	--
-			 ")\n")
+			 "\")\n")
 	stream write-line
 
 	# Character literals.

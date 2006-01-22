@@ -9,7 +9,7 @@
 #define path__fld_	0
 
 UsingMethod_(_pl_)
-DefineString_(slash, "/", 1);
+DefineString_(slash, "/");
 
 
 obj_ count__Standard__FileDirectory(obj_ this_)

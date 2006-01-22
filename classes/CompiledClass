@@ -141,8 +141,6 @@ emit-c-file(): Bool
 	stream.write(", \"");
 	stream.write(name);
 	stream.write("\", ");
-	stream.write(name.length.string);
-	stream.write(", ");
 	stream.write(superclass-ref);
 	stream.write(", ");
 	stream.write(total-instance-fields.string);

@@ -103,8 +103,7 @@ emit: stream
 	# Emit the string literals.
 	for literal in string-literals
 		stream write-all: 	--
-			("\tDefineString_(", literal index string, ", \"", literal value, 	--
-			 "\", ", (string-literal-length: literal value) string, ")")
+			("\tDefineString_(", literal index string, ", \"", literal value, "\")")
 		stream write-line
 	
 	# Emit the int literals.

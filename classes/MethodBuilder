@@ -140,9 +140,7 @@ emit(stream: OutputStream)
 		stream.write(literal.index.string);
 		stream.write(", \"");
 		stream.write(literal.value);
-		stream.write("\", ");
-		stream.write(string-literal-length(literal.value).string);
-		stream.write(")");
+		stream.write("\")");
 		stream.write-line();
 		}
 

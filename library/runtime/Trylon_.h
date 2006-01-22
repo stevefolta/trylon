@@ -295,8 +295,8 @@ extern void* Allocate_(int numBytes);
 _FinishExternC_
 
 
-#define DefineClassObj_(cName, name, nameLen, superclass, numFields, classNum) \
-	DefineString_(classname, name, nameLen) 	\
+#define DefineClassObj_(cName, name, superclass, numFields, classNum) \
+	DefineString_(classname, name) 	\
 	struct Standard__Class__internal cName = 	\
 		{ StdClassRef_(Class), Str_(classname), superclass, 	\
 		  numFields, classNum };
@@ -318,33 +318,35 @@ _FinishExternC_
 
 #ifndef SEMI_PRIMITIVE_STRINGS_
 
-#define DefineString_(index, value, length) 	\
+#define DefineString_(index, value) 	\
 	static const char s##index##__str_[] = value; 	\
 	DefineBytePtr_(s##index##__start_, s##index##__str_) 	\
-	DefineBytePtr_(s##index##__stopper_, s##index##__str_ + length) 	\
+	DefineBytePtr_(s##index##__stopper_, 	\
+	               s##index##__str_ + sizeof(s##index##__str_) - 1) 	\
 	static struct Standard__String__internal s##index##_ =  	\
 		{ StdClassRef_(String), &s##index##__start_, &s##index##__stopper_ };
 
-#define DefineSymbol_(name, value, length) 	\
+#define DefineSymbol_(name, value) 	\
 	static const char y##name##__str_[] = value; 	\
 	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
-	DefineBytePtr_(y##name##__stopper_, y##name##__str_ + length) 	\
+	DefineBytePtr_(y##name##__stopper_, 	\
+	               y##name##__str_ + sizeof(y##name##__str_) - 1) 	\
 	struct Standard__String__internal y##name##__sym_ = 	\
 		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
 
 #else 	// SEMI_PRIMITIVE_STRINGS_
 
-#define DefineString_(index, value, length) 	\
+#define DefineString_(index, value) 	\
 	static const char s##index##__str_[] = value; 	\
 	static struct Standard__String__internal s##index##_ =  	\
 		{ StdClassRef_(String), (byte_ptr_) s##index##__str_, 	\
-		  (byte_ptr_) s##index##__str_ + length };
+		  (byte_ptr_) s##index##__str_ + sizeof(s##index##__str_) - 1 };
 
-#define DefineSymbol_(name, value, length) 	\
+#define DefineSymbol_(name, value) 	\
 	static const char y##name##__str_[] = value; 	\
 	struct Standard__String__internal y##name##__sym_ = 	\
 		{ StdClassRef_(Symbol), (byte_ptr_) y##name##__str_, 	\
-		  (byte_ptr_) y##name##__str_ + length };
+		  (byte_ptr_) y##name##__str_ + sizeof(y##name##__str_) - 1 };
 
 #endif 	// SEMI_PRIMITIVE_STRINGS_
 

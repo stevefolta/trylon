@@ -37,8 +37,8 @@ obj_ _xr___Standard__Bool(obj_ this_, obj_ arg)
 
 obj_ string__Standard__Bool(obj_ this_)
 {
-	DefineString_(0, "true", 4)
-	DefineString_(1, "false", 5)
+	DefineString_(0, "true")
+	DefineString_(1, "false")
 
 	return (value_(this_) ? Str_(0) : Str_(1));
 }

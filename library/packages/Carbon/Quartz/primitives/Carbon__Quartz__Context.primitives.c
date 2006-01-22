@@ -8,7 +8,7 @@ UsingMethod_(left)  UsingMethod_(top) UsingMethod_(width)  UsingMethod_(height)
 
 float FloatValue(obj_ value)
 {
-	DefineString_(1, "Bad parameter to a Carbon Quartz Context.", 41);
+	DefineString_(1, "Bad parameter to a Carbon Quartz Context.");
 	extern obj_ new_co___Standard__MessageException(obj_);
 
 	if (ObjClassIs_(value, Standard__Float))
@@ -24,7 +24,7 @@ obj_ translate_ctm_tx_co_ty_co___Carbon__Quartz__Context(
 	obj_ this_, obj_ tx, obj_ ty)
 {
 	double ftx, fty;
-	DefineString_(1, "Bad parameter to translate-ctm-tx:ty:.", 38);
+	DefineString_(1, "Bad parameter to translate-ctm-tx:ty:.");
 	extern obj_ new_co___Standard__MessageException(obj_);
 
 	if (ObjClassIs_(tx, Standard__Float))
@@ -49,7 +49,7 @@ obj_ scale_ctm_sx_co_sy_co___Carbon__Quartz__Context(
 	obj_ this_, obj_ sx, obj_ sy)
 {
 	double fsx, fsy;
-	DefineString_(1, "Bad parameter to scale-ctm-sx:sy:.", 34);
+	DefineString_(1, "Bad parameter to scale-ctm-sx:sy:.");
 	extern obj_ new_co___Standard__MessageException(obj_);
 
 	if (ObjClassIs_(sx, Standard__Float))
@@ -88,7 +88,7 @@ obj_ restore_state__Carbon__Quartz__Context(obj_ this_)
 static void SetupColorComponents(obj_ components, float* floatComponents)
 {
 	int numComponents, i;
-	DefineString_(1, "Too many color components.", 26)
+	DefineString_(1, "Too many color components.")
 	extern obj_ new_co___Standard__MessageException(obj_);
 	UsingMethod_(num_items)  UsingMethod_(at_co_)
 

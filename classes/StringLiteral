@@ -31,9 +31,7 @@ emit-package-literal(stream: OutputStream): ExpressionResult
 	stream.write(index.string);
 	stream.write(", \"");
 	stream.write(value);
-	stream.write("\", ");
-	stream.write(MethodBuilder.string-literal-length(value).string);
-	stream.write(")");
+	stream.write("\")");
 	stream.write-line();
 
 	return new StringLiteralResult(index);

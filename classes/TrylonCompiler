@@ -456,9 +456,7 @@ emit-symbols(): Bool
 		stream.write(MethodBuilder.mangle-name(symbol.name));
 		stream.write(", \"");
 		stream.write(symbol.name);
-		stream.write("\", ");
-		stream.write(MethodBuilder.string-literal-length(symbol.name).string);
-		stream.write-line(")");
+		stream.write-line("\")");
 		}
 	stream.write-line();
 
