@@ -6,7 +6,7 @@ fields index 	# The MethodBuilder will set this.
 
 
 create: value
-	this value = value as-int
+	this value = value int
 
 
 prepare-to-emit

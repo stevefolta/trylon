@@ -112,6 +112,10 @@ add-package: name directory: directory
 	return package-function
 
 
+add-package: name
+	add-package: name directory: nil
+
+
 get-subpackage: name
 	# Has it been loaded already?
 	function = functions at: name

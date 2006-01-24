@@ -85,7 +85,7 @@ emit-lambda-code: stream
 		stream write-all: ("obj_ ", lambda c-name, "(struct ", vars-name, " vars_")
 		for arg in lambda arguments values
 			stream write: ", obj_ "
-			stream write: MethodBuilder mangle-name: arg name
+			stream write: (MethodBuilder mangle-name: arg name)
 		stream write: ")"
 		stream write-line
 

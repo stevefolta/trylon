@@ -4,7 +4,7 @@ superclass Expression
 fields name object argument
 
 
-create: name object: object argument: argument
+create: name with: object and: argument
 	this name = name
 	this object = object
 	this argument = argument

@@ -82,7 +82,7 @@ parse-member-package
 	report: "Parsing " + package-name + "..."
 	indent
 
-	package = context package-named: package-name
+	package = context get-subpackage: package-name
 	if package == nil
 		package = (context add-package: package-name) package
 	
@@ -457,7 +457,7 @@ parse-function: at-declarator is-object-function: is-object-function
 		saved-context = context
 		method-context = 	--
 			MethodContext new: arguments is-object-function: is-object-function 	--
-				context: context
+				parent: context
 		context = method-context
 		body = parse-block
 		context = saved-context
@@ -466,7 +466,7 @@ parse-function: at-declarator is-object-function: is-object-function
 	new-function = 	--
 		CompiledFunction new: name arguments: arguments 	--
 			return-type: return-type is-object-function: is-object-function 	--
-			is-primitive: is-primitive on-package: context body: body
+			is-a-primitive: is-primitive on-package: context body: body
 	new-function method-context = method-context
 	if method-context
 		method-context function = new-function
@@ -751,7 +751,7 @@ parse-return-statement
 
 	return-value = nil
 	if current-token == 'eol' || current-token == 'comment'
-		return-value = FunctionCall new: "nil" args: List new context: context
+		return-value = FunctionCall new: "nil" arguments: List new context: context
 	else
 		return-value = parse-expression
 	comment = require-eol
@@ -779,7 +779,7 @@ parse-try-statement
 		type = parse-type-spec
 		catch-comment = require-eol
 		catch-clause = 	--
-			CatchClause new: type context: context comment: catch-comment 	--
+			CatchClause new: type parent: context comment: catch-comment 	--
 				pre-clause-comments: pre-clause-comments
 		context = catch-clause
 		catch-clause body = parse-block
@@ -790,7 +790,7 @@ parse-try-statement
 	
 	return 	--
 		TryStatement new: body catch-clauses: catch-clauses comment: comment 	--
-			pre-clause-comments: pre-clause-comments
+			post-clauses-comments: pre-clause-comments
 
 
 parse-throw-statement
@@ -892,7 +892,7 @@ parse-keyword-expression
 			# 	return-token: (Token new: 'eol' text: "")
 			else
 				parse-error: "Missing argument (\"" + name + "\")."
-		expr = ObjectCall new: name object: expr args: args
+		expr = ObjectCall new: name object: expr arguments: args
 	
 	return expr
 
@@ -1276,7 +1276,7 @@ current-block
 make-binop-call: name with: object and: argument
 	arguments: List new
 	arguments append: argument
-	return Object new: name object: object arguments: arguments
+	return ObjectCall new: name object: object arguments: arguments
 
 
 parse-error: message

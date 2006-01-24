@@ -21,7 +21,7 @@ emit-code: stream
 	
 	# If it has an intial value, emit the literal.
 	initial-value = nil
-	if field intial-value
+	if field initial-value
 		initial-value = field initial-value emit-package-literal: stream
 	
 	# Just emit the declaration.
