@@ -55,3 +55,8 @@ tests
 	check: y against: 3 title: "(Type)"
 	check: typed-global against: 5 title: "(Type) in global"
 
+
+blegh: index (Int)
+	return index
+
+

@@ -590,6 +590,13 @@ parse-arg-type(): CompiledClass
 			throw ParseException("Missing \"]\".", current-token);
 		consume-token();
 		}
+	else if (current-token.type == '(') {
+		consume-token();
+		arg-type = parse-type-spec();
+		if (current-token.type != ')')
+			throw ParseException("Missing \")\".", current-token);
+		consume-token();
+		}
 	return arg-type;
 }
 

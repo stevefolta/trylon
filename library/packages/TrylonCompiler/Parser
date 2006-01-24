@@ -482,6 +482,12 @@ parse-arg-type
 		if current-token != ']'
 			parse-error: "Missing \"]\"."
 		consume-token
+	else if current-token == '('
+		consume-token
+		arg-type = parse-type-spec
+		if current-token != ')'
+			parse-error: "Missing \")\"."
+		consume-token
 	return arg-type
 
 
