@@ -111,7 +111,7 @@ obj_ current_directory_path_co___Standard__System(obj_ new_path)
 }
 
 
-obj_ run_program__co_arguments_co___Standard__System(obj_ name, obj_ arguments)
+obj_ run_program_co_arguments_co___Standard__System(obj_ name, obj_ arguments)
 {
 	/* Build the argv[] array. */
 	int numArgs = IntValue_(Call_(count, arguments));

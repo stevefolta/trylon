@@ -24,6 +24,8 @@ fn output-stream
 primitive-fn size
 primitive-fn exists
 
+primitive-fn remove
+
 
 class-fn contents-of: path
 	return (new: path) contents

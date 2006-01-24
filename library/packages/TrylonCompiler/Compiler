@@ -65,7 +65,7 @@ return-value
 
 compile-program: compile-symbols
 	# Create the .c-sources and .objects directories.
-	directory = FileDirectory new
+	directory = FileDirectory new: "."
 	if !directory entry-is-directory: ".c-sources"
 		directory create-subdirectory: ".c-sources"
 	if !directory entry-is-directory: ".objects"
@@ -85,7 +85,7 @@ compile-program: compile-symbols
 	library-directory = FileDirectory new: trylon-base-path
 	status-reporter report: "Loading Main..."
 	status-reporter indent
-	main-package = Package new: "Main" directory: nil
+	main-package = Package new: "Main" parent: nil
 	main-package 	--
 		setup-main: main-directory library-directory: library-directory 	--
 		compile-symbols: compile-symbols
@@ -237,7 +237,7 @@ emit-dispatch-table: main-package
 	for fn-name in object-function-names keys
 		# Create the row and fill it in.
 		row = DispatchRow new: fn-name
-		object-class setup-dispatch-row: row inherited-class: nil
+		object-class setup-dispatch-row: row inherited-function: nil
 
 		# Add the row.
 		rows add: row
@@ -331,22 +331,22 @@ emit-symbols
 	for literal in character-literals values
 		# The literal's name is a string of a decimal number which is the 
 		# character's ASCII value.
-		char = literal name as-int as-char
-		escaped-char = char char-string
+		char = literal name int char
+		escaped-char = char string
 		if char < ` ` || char > `~` || char == `\'` || char == `\\`
 			escaped-char = "\\x"
-			digit = (char as-int >> 4) & 0x0F
+			digit = (char int >> 4) & 0x0F
 			if digit >= 0x0A && digit <= 0x0F
 				digit = digit - 0x0A + `A`
 			else
 				digit = digit + `0`
-			escaped-char += digit char-string
-			digit = char as-int & 0x0F
+			escaped-char += digit string
+			digit = char int & 0x0F
 			if digit >= 0x0A && digit <= 0x0F
 				digit = digit - 0x0A + `A`
 			else
 				digit = digit + `0`
-			escaped-char += digit char-string
+			escaped-char += digit string
 
 		stream write-all: 	--
 			("DefineChar_(", (mangle-name: literal name), ", \'", 	--
@@ -399,7 +399,7 @@ emit-classnums: main-package
 	emit-classnum: "Symbol" stream: stream standard-package: standard-package
 
 	is-changed = stream is-changed
-	stream clase
+	stream close
 	return is-changed
 
 

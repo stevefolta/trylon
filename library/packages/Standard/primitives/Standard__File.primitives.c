@@ -33,6 +33,15 @@ obj_ exists__Standard__File(obj_ this_)
 }
 
 
+obj_ remove__Standard__File(obj_ this_)
+{
+	char* pathStr = MakeCString_(this_->fields[0]);
+	remove(pathStr);
+	return NULL;
+}
+
+
+
 /* ----- */
 
 
