@@ -8,3 +8,11 @@ primitive-class-fn num-garbage-collections
 primitive-class-fn dump-gc-stats
 
 primitive-class-fn debugger
+
+primitive-class-fn environment-variable-named: name
+primitive-class-fn current-directory-path
+primitive-class-fn current-directory-path: new-path
+primitive-class-fn run-program: name arguments: arguments
+primitive-class-fn sysname
+
+

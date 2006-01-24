@@ -67,7 +67,7 @@ compile-program: compile-symbols
 	# Create the .c-sources and .objects directories.
 	directory = FileDirectory new
 	if !directory entry-is-directory: ".c-sources"
-		directory create-subdirectoy: ".c-sources"
+		directory create-subdirectory: ".c-sources"
 	if !directory entry-is-directory: ".objects"
 		directory create-subdirectory: ".objects"
 	
