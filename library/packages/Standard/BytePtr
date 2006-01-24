@@ -26,6 +26,7 @@ primitive-fn ptr-at: index [Int] -> BytePtr
 primitive-fn object-at: index [Int] -> Object
 primitive-fn char-at: index [Int] -> Char
 primitive-fn int-at: index [Int] -> Int
+primitive-fn byte-at: index [Int] -> Int
 
 primitive-fn as-object -> Object
 
@@ -33,6 +34,7 @@ primitive-fn ptr-at: index [Int] set-to: value [BytePtr]
 primitive-fn object-at: index [Int] set-to: value [Object]
 primitive-fn char-at: index [Int] set-to: value [Char]
 primitive-fn int-at: index [Int] set-to: value [Int]
+primitive-fn byte-at: index [Int] set-to: value [Int]
 
 primitive-fn copy-from: source [BytePtr] length: length [BytePtr]
 

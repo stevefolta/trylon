@@ -102,6 +102,12 @@ obj_ int_at_co___Standard__BytePtr(obj_ this_, obj_ index)
 }
 
 
+obj_ byte_at_co___Standard__BytePtr(obj_ this_, obj_ index)
+{
+	return BuildInt_(value_(this_)[IntValue_(index)]);
+}
+
+
 
 obj_ as_object__Standard__BytePtr(obj_ this_)
 {
@@ -131,6 +137,12 @@ obj_ char_at_co_set_to_co___Standard__BytePtr(obj_ this_, obj_ index, obj_ value
 obj_ int_at_co_set_to_co___Standard__BytePtr(obj_ this_, obj_ index, obj_ value)
 {
 	((int*) value_(this_))[IntValue_(index)] = IntValue_(value);
+}
+
+
+obj_ byte_at_co_set_to_co___Standard__BytePtr(obj_ this_, obj_ index, obj_ value)
+{
+	value_(this_)[IntValue_(index)] = IntValue_(value);
 }
 
 

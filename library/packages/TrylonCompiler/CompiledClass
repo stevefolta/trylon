@@ -14,7 +14,8 @@ create: name parent: parent
 	subclasses = List new
 
 	if the-compiler build-settings classes-by-num
-		add-instance-function: class function: InstanceClassFunction new
+		function = InstanceClassFunction new: this
+		add-instance-function: "class" function: function
 
 
 make-subclass-of: superclass
@@ -151,7 +152,7 @@ emit-all-class-declarations: stream
 	stream write-line: ";"
 
 	for subclass in subclasses
-		subclass emit-all-class-declarations
+		subclass emit-all-class-declarations: stream
 
 
 emit-all-instance-function-declarations: stream
@@ -164,31 +165,32 @@ emit-all-instance-function-declarations: stream
 		subclass emit-all-instance-function-declarations: stream
 
 
-get-dispatch-entries: name inherited-function: inherited-function 	--
-		dispatch-entries: dispatch-entries
-	function = instance-functions at: name
-	if function
-		dispatch-entries functions append: function
-	else
-		function = inherited-function
-	if function
-		dispatch-entries entries append: (DispatchEntry new: this function: function)
-	
-	# Have the subclasses write their entries.
-	for subclass in subclasses
-		subclass 	--
-			get-dispatch-entries: name inherited-function: function 	--
+iff old-slow-dispatch
+	get-dispatch-entries: name inherited-function: inherited-function 	--
 			dispatch-entries: dispatch-entries
+		function = instance-functions at: name
+		if function
+			dispatch-entries functions append: function
+		else
+			function = inherited-function
+		if function
+			dispatch-entries entries append: (DispatchEntry new: this function: function)
+		
+		# Have the subclasses write their entries.
+		for subclass in subclasses
+			subclass 	--
+				get-dispatch-entries: name inherited-function: function 	--
+				dispatch-entries: dispatch-entries
 
 
-get-Object-dispatch-entries: name dispatch-entries: dispatch-entries
-	# Like get-dispatch-entries, but only used for Object.
+	get-Object-dispatch-entries: name dispatch-entries: dispatch-entries
+		# Like get-dispatch-entries, but only used for Object.
 
-	# Have all the subclasses go first.
-	for subclass in subclasses
-		subclass 	--
-			get-dispatch-entries: name inherited-function: nil 	--
-			dispatch-entries: dispatch-entries
+		# Have all the subclasses go first.
+		for subclass in subclasses
+			subclass 	--
+				get-dispatch-entries: name inherited-function: nil 	--
+				dispatch-entries: dispatch-entries
 	
 	# Add our entry.
 	function = instance-functions at: name
@@ -229,7 +231,7 @@ emit-instance-field-indices: stream
 	
 	for field in instance-fields
 		stream write: "#define "
-		stream write: MethodBuilder mangle-name: field name
+		stream write: (MethodBuilder mangle-name: field name)
 		stream write: "__fld_\t("
 		stream write: index string
 		index += 1
