@@ -13,8 +13,7 @@ create: name parent: parent
 	instance-fields = List new
 	subclasses = List new
 
-	# *** How shall we access "compiler"?
-	if compiler build-settings classes-by-num
+	if the-compiler build-settings classes-by-num
 		add-instance-function: class function: InstanceClassFunction new
 
 
@@ -36,7 +35,7 @@ make-subclass-of: superclass
 add-instance-function: name function: function
 	(instance-functions at: name) = function
 
-	compiler add-object-function: name
+	the-compiler add-object-function: name
 	if function is-primitive
 		has-primitives = true
 	
@@ -87,17 +86,17 @@ prepare-to-emit
 
 emit-c-file
 	file = File new: ".c-sources/" + c-name + ".c"
-	stream = ExistingfileStream new: file
+	stream = ExistingFileStream new: file
 
 	# ---
 	is-verbose = (lookup-function: "verbose") != nil
 	if is-verbose
-		reporter report: name + " has these instance functions:"
-		reporter indent
-		for name in instance functions keys
-			reporter report: 	--
+		status-reporter report: name + " has these instance functions:"
+		status-reporter indent
+		for name in instance-functions keys
+			status-reporter report: 	--
 				name + " (" + ((instance-functions at: name) class name) + ")"
-		reporter unindent
+		status-reporter unindent
 	# ---
 
 	# Header, includes.
@@ -131,15 +130,15 @@ emit-c-file
 
 	# Functions.
 	if is-verbose
-		reporter indent
+		status-reporter indent
 	for function in functions values
 		function emit-code: stream
 	for function in instance-functions values
 		if is-verbose
-			reporter report: "Emitting " + function c-name + "."
+			status-reporter report: "Emitting " + function c-name + "."
 		function emit-code: stream
 	if is-verbose
-		reporter unindent
+		status-reporter unindent
 	
 	is-changed = stream is-changed
 	stream close
@@ -152,7 +151,7 @@ emit-all-class-declarations: stream
 	stream write-line: ";"
 
 	for subclass in subclasses
-		subclass-emit-all-class-declarations
+		subclass emit-all-class-declarations
 
 
 emit-all-instance-function-declarations: stream

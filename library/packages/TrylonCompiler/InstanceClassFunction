@@ -10,7 +10,7 @@ create: on-class
 
 emit-object-call: object arguments: arguments builder: builder
 	temporary = builder get-temporary
-	line = temporary name + " = " + c-name + "(" + object-access + ");"
+	line = temporary name + " = " + c-name + "(" + object access + ");"
 	builder add-line: line
 	return temporary
 

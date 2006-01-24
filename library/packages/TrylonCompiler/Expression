@@ -10,6 +10,6 @@ emit-code
 
 emit-package-literal: stream
 	# Most Expressions don't support this.
-	throw MessageExpression new: "Internal error: invalid emit-package-literal."
+	throw MessageException new: "Internal error: invalid emit-package-literal."
 
 

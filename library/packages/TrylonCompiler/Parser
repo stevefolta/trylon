@@ -1,12 +1,10 @@
 trylon Parser
 
-fields context lexer curent-token next-token third-token
-fields compiler reporter
+fields context lexer current-token next-token third-token
 
 
-create: source context: context compiler: compiler
+create: source context: context
 	lexer = Lexer new: source
-	this compiler = compiler
 	this context = context
 
 	# Load up the first tokens.
@@ -183,7 +181,7 @@ parse-package-member: package in-class: in-class
 			string-literal index = package new-literal-index
 			initial-value = string-literal
 		else if current-token == 'symbol-literal'
-			initial-value = compiler get-symbol-literal: current-token text
+			initial-value = the-compiler get-symbol-literal: current-token text
 		else if current-token == 'int-literal'
 			int-literal = IntLiteral new: current-token text
 			int-literal index = package new-literal-index
@@ -193,7 +191,7 @@ parse-package-member: package in-class: in-class
 			float-literal index = package new-literal-index
 			initial-value = float-literal
 		else if current-token == 'character-literal'
-			initial-value = compiler get-character-literal: current-token text
+			initial-value = the-compiler get-character-literal: current-token text
 		else if current-token type == 'name'
 			name = current-token text
 			if name == "true"
@@ -217,7 +215,7 @@ parse-package-member: package in-class: in-class
 	else
 		function = parse-function: false is-object-function: in-class
 		if in-class
-			package add-instance-function: function-name function: function
+			package add-instance-function: function name function: function
 		else
 			package add-function: function
 
@@ -352,7 +350,7 @@ check-iff
 	# If it doesn't exist, skip the block.
 	test-succeeded = 	--
 		(context lookup-function: name != nil) || 	--
-		(compiler build-settings has-symbol: name)
+		(the-compiler build-settings has-symbol: name)
 	if invert-sense
 		test-succeeded = !test-succeeded
 	if !test-succeeded
@@ -1196,12 +1194,12 @@ parse-primary-expression
 	else if token == 'symbol-literal'
 		value = current-token text
 		consume-token
-		return compiler get-symbol-literal: value
+		return the-compiler get-symbol-literal: value
 
 	else if token == 'symbol-literal'
 		value = current-token text
 		consume-token
-		return compiler get-character-literal: value
+		return the-compiler get-character-literal: value
 	
 	else if token == '('
 		consume-token
@@ -1288,11 +1286,11 @@ expression-expected: after
 	parse-error: "Expression expected after \"" + after string + "\"."
 
 indent
-	if reporter
-		reporter indent
+	if status-reporter
+		status-reporter indent
 unindent
-	if reporter
-		reporter unindent
+	if status-reporter
+		status-reporter unindent
 
 
 

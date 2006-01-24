@@ -80,7 +80,7 @@ parse-block: lexer
 			else if name == "slow-dispatch"
 				slow-dispatch = parse-boolean: lexer name: name
 			else if name == "unsafe-dispatch"
-				unsafe-dispatch = parse-bookean: lexer name: name
+				unsafe-dispatch = parse-boolean: lexer name: name
 			else if name == "ooptimize-field-accesses"
 				optimize-field-accesses = parse-boolean: lexer name: name
 			else if name == "constant-selectors"

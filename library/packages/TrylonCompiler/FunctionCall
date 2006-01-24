@@ -1,7 +1,7 @@
 trylon FunctionCall
 superclass Expression
 
-fields name arguements context
+fields name arguments context
 fields function 	# Only valid after prepare-to-emit.
 
 
@@ -28,7 +28,7 @@ emit-code: builder
 	arg-results = List new
 	for arg in arguments
 		result = arg emit-code: builder
-		arg-result append: result
+		arg-results append: result
 	
 	return function emit-call: arg-results builder: builder
 

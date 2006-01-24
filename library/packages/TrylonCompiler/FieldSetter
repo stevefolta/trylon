@@ -11,7 +11,7 @@ create: field on-package: on-package
 
 emit-call: arguments builder: builder
 	builder using-field: field on-package: on-package
-	c-name = MethodBuilder mangle-name: field-name + "__" + on-package c-name
+	c-name = MethodBuilder mangle-name: field name + "__" + on-package c-name
 	builder add-line: c-name + " = " + arguments first-item access + ";"
 	return NameResult new: "NULL"
 

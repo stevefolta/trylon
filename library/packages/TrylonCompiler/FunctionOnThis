@@ -22,7 +22,7 @@ emit-call: arguments builder: builder
 			return arguments first-item
 		else if function is-a: InstanceFieldSetter
 			line = 	--
-				"Field_(" + (builder mangle-name: setter field name) + ") = " + 	--
+				"Field_(" + (builder mangle-name: function field name) + ") = " + 	--
 				arguments first-item access + ";"
 			builder add-line: line
 			return arguments first-item

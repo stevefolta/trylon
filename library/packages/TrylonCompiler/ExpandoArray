@@ -41,7 +41,7 @@ iterator
 expand: new-num-blocks
 	# Copy the existing "blocks".
 	new-blocks = BytePtr new: 4 * new-num-blocks
-	new-blocks copy-from: block length: 4 * num-blocks
+	new-blocks copy-from: blocks length: 4 * num-blocks
 
 	# Add the new blocks.
 	which-block = num-blocks

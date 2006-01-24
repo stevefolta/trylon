@@ -39,7 +39,7 @@ lookup-function: name visited-packages: visited-packages
 		# A class?
 		if (directory contains: name) && !(directory entry-is-directory: name)
 			class = add-class: name
-			parser = Parser new: (directory at: name) contents context: this compiler: compiler # ***
+			parser = Parser new: (directory at: name) contents context: this
 			parser parse-class-file: class
 			return functions at: name
 

@@ -8,7 +8,7 @@ fields function
 
 create: arguments is-object-function: is-object-function parent: parent
 	this arguments = arguments
-	this is-object-funciton = is-object-function
+	this is-object-function = is-object-function
 	this parent = parent
 
 
@@ -31,9 +31,9 @@ lookup-function: name
 	# Function calls on "this".
 	if is-object-function
 		# The parent will be a CompiledClass.
-		function = on-class lookup-instance-function: name
+		function = parent lookup-instance-function: name
 		if function
-			return FunctionOnThis new: name on-class: on-class
+			return FunctionOnThis new: name on-class: parent
 	
 	return parent lookup-function: name
 

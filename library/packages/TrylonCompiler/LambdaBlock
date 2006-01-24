@@ -27,9 +27,9 @@ lookup-function: name
 	arg = arguments at: arg-name
 	if arg
 		if is-setter
-			return SetArgumentFunction: arg
+			return SetArgumentFunction new: arg
 		else
-			return new ArgumentFunction: arg
+			return ArgumentFunction new: arg
 	
 	return super lookup-function: name
 

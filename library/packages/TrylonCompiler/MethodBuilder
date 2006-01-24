@@ -47,7 +47,7 @@ add-int-literal: int-literal
 
 
 add-float-literal: float-literal
-	float-literal index = next-float-literal num
+	float-literal index = next-float-literal-num
 	next-float-literal-num += 1
 	float-literals append: float-literal
 
@@ -214,7 +214,7 @@ class-fn mangle-name: name
 			run-start = p
 
 			# Mangle the character.
-			mangle-char = nil
+			mangled-char = nil
 			if c == `-`
 				mangled-char = "_"
 			else if c == `:`

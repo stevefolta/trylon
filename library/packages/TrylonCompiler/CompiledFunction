@@ -100,7 +100,7 @@ c-signature
 		else
 			have-arg = true
 		signature += "obj_ "
-		signature += MethodBuilder mangle-name: arg-name
+		signature += MethodBuilder mangle-name: arg name
 	signature += ")"
 
 	return signature string

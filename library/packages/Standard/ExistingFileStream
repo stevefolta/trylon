@@ -37,8 +37,8 @@ close
 
 write-buffer: buffer length: length
 	if matches-so-far
-		if (String new: buffer length: size) != 	--
-		   (remaining-contents substr: 0 length: size)
+		if (String new: buffer length: length) != 	--
+		   (remaining-contents substr: 0 length: length)
 			# It has stopped matching -- rewrite the file.
 			matches-so-far = false
 			output-stream = file output-stream
@@ -51,10 +51,11 @@ write-buffer: buffer length: length
 			# The new stuff will be written below.
 		else
 			remaining-contents = 	--
-				remaining-contents substr: size length: remaining-contents length - size
+				remaining-contents 	--
+					substr: length length: remaining-contents length - length
 	
 	if !matches-so-far
-		output-stream write-buffer: buffer length: size
+		output-stream write-buffer: buffer length: length
 
 
 is-changed
