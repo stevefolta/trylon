@@ -151,7 +151,7 @@ parse-flags: lexer into: flags name: declaration
 			flags append: flag
 			flag = ""
 
-		have-started true
+		have-started = true
 
 
 parse-boolean: lexer name: declaration

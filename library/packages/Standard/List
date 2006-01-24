@@ -57,6 +57,10 @@ fn tail
 	return tail-list
 
 
+fn push-front: object
+	prepend: object
+
+
 fn pop-front
 	if first-cell == nil
 		return nil

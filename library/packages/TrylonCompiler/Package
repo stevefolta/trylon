@@ -181,7 +181,7 @@ setup-main: main-directory library-directory: library-directory 	--
 	functions at: "Main" set-to: (PackageFunction new: this)
 
 	# If using classes-by-num, replace "Object class" (the primitive version).
-	if the-compiler builder-settings classes-by-num
+	if the-compiler build-settings classes-by-num
 		object-function = standard-package lookup-function: "Object"
 		object-class = object-function the-class
 		object-class 	--
