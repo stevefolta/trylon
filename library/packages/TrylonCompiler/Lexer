@@ -100,6 +100,10 @@ next-token
 				p go-forward
 				return Token new: '-='
 
+			else if next-char == `>`
+				p go-forward
+				return Token new: '->'
+
 			else if next-char >= `0` && next-char <= `9`
 				# Number.
 				p go-forward

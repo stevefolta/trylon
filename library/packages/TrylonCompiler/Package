@@ -27,7 +27,7 @@ lookup-function: name visited-packages: visited-packages
 	# Recursion control.
 	if visited-packages contains: this
 		return nil
-	visited-packages add: this
+	visited-packages at: this set-to: this
 
 	# Do we know it already?
 	function = functions at: name

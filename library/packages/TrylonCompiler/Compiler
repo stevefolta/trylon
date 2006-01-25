@@ -13,7 +13,7 @@ create: arguments
 	object-function-names = Dictionary new
 	symbols = Dictionary new
 	character-literals = Dictionary new
-	package-queue = List
+	package-queue = List new
 
 
 run

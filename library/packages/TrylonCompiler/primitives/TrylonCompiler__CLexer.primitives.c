@@ -235,7 +235,7 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 				break;
 
 			case '-':
-				/* -, --, -= */
+				/* -, --, -=, -> */
 				nextChar = curChar(self);
 				if (nextChar == '-') {
 					/* Line continuation. */
@@ -257,6 +257,11 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 					}
 
 				else if (nextChar == '=') {
+					self->p += 1;
+					return token(Sym_(__eq_));
+					}
+
+				else if (nextChar == '>') {
 					self->p += 1;
 					return token(Sym_(__eq_));
 					}

@@ -263,7 +263,7 @@ parse-member-class
 	unindent
 
 
-parse-class-conents: the-class
+parse-class-contents: the-class
 	saved-context = context
 	context = the-class
 
@@ -275,7 +275,7 @@ parse-class-conents: the-class
 		if current-token == 'keyword'
 			# Null-out the name so it doesn't match any special names.
 			name = ""
-		else if current-token type != 'name'
+		else if current-token != 'name'
 			break
 
 		if name == "fn" || name == "function" || 	--
@@ -291,9 +291,9 @@ parse-class-conents: the-class
 				the-class add-instance-field: field
 
 		else if name == "class-field" || name == "class-fields" || 	--
-		        name == "class-fld" 	--
+		        name == "class-fld" || 	--
 		        name == "primitive-class-fld" || 	--
-		        name == "primitive-class-field" 	--
+		        name == "primitive-class-field" || 	--
 		        name == "primitive-class-fields"
 			for field in parse-fields
 				the-class add-field: field
