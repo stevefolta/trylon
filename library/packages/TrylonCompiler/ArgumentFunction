@@ -9,7 +9,7 @@ create: arg
 
 
 emit-call: arguments builder: builder
-	return NameResult new: (builder mangle-name: name)
+	return NameResult new: (mangle-name: name)
 
 
 used-by-lambda

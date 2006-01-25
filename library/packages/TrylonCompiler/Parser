@@ -349,7 +349,7 @@ check-iff
 
 	# If it doesn't exist, skip the block.
 	test-succeeded = 	--
-		(context lookup-function: name != nil) || 	--
+		((context lookup-function: name) != nil) || 	--
 		(the-compiler build-settings has-symbol: name)
 	if invert-sense
 		test-succeeded = !test-succeeded
@@ -835,7 +835,7 @@ parse-declaration
 		consume-token
 	
 	# ':='
-	if current-token != '=' || current-token != ':='
+	if current-token != '=' && current-token != ':='
 		parse-error: "\"=\" or \":=\" expected."
 	consume-token
 
@@ -1209,7 +1209,7 @@ parse-primary-expression
 		consume-token
 		return the-compiler get-symbol-literal: value
 
-	else if token == 'symbol-literal'
+	else if token == 'character-literal'
 		value = current-token text
 		consume-token
 		return the-compiler get-character-literal: value

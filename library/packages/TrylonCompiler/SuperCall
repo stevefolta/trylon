@@ -28,7 +28,7 @@ emit-code: builder
 			"\", but there is no superclass that has it."
 
 	# Declare the function.
-	super-c-name = (builder mangle-name: name) + "__" + fn-class c-name
+	super-c-name = (mangle-name: name) + "__" + fn-class c-name
 	declaration = "extern obj_ " + super-c-name + "(obj_"
 	for arg in arguments
 		declaration += ", obj_"

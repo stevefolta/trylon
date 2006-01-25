@@ -10,7 +10,7 @@ create: arg
 
 emit-call: arguments builder: builder
 	line = 	--
-		(builder mangle-name: name) + " = " + arguments first-item access + ";"
+		(mangle-name: name) + " = " + arguments first-item access + ";"
 	builder add-line: line
 	return NameResult new: "NULL"
 

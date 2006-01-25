@@ -13,13 +13,13 @@ prepare-to-emit
 
 
 emit-code: builder
-	mangled-name = builder mangle-name: name
+	mangled-name = mangle-name: name
 	builder add-extern-declaration: "UsingChar_(" + mangled-name + ")"
 	return NameResult new: "Char_(" + mangled-name + ")"
 
 
 emit-package-literal: stream
-	mangled-name = MethodBuilder mangle-name: name
+	mangled-name = mangle-name: name
 
 	stream write: "UsingChar_"
 	stream write: mangled-name

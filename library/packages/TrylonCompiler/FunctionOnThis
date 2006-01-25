@@ -17,12 +17,12 @@ emit-call: arguments builder: builder
 			# This would be a good place for a warning... or would we never get here?
 		else if function is-a: InstanceFieldGetter
 			temporary = builder get-temporary
-			line = temporary name + " = Field_(" + (builder mangle-name: name) + ");"
+			line = temporary name + " = Field_(" + (mangle-name: name) + ");"
 			builder add-line: line
 			return arguments first-item
 		else if function is-a: InstanceFieldSetter
 			line = 	--
-				"Field_(" + (builder mangle-name: function field name) + ") = " + 	--
+				"Field_(" + (mangle-name: function field name) + ") = " + 	--
 				arguments first-item access + ";"
 			builder add-line: line
 			return arguments first-item
@@ -31,7 +31,7 @@ emit-call: arguments builder: builder
 	builder using-object-function: name
 	temporary = builder get-temporary
 	line = 	--
-		temporary name + " = " + "Call_(" + (builder mangle-name: name) + ", this_"
+		temporary name + " = " + "Call_(" + (mangle-name: name) + ", this_"
 	for arg in arguments
 		line += ", " + arg access
 	line += ");"

@@ -171,7 +171,7 @@ setup-main: main-directory library-directory: library-directory 	--
 	# Load our "main"s
 	for directory in directories
 		if directory contains: "main"
-			parser = Parser new: (directory at: main) contents context: this
+			parser = Parser new: (directory at: "main") contents context: this
 			parser parse-package-file: this
 	
 	# Load up standard classes.

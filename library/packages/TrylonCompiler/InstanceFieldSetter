@@ -14,7 +14,7 @@ emit-object-call: object arguments: arguments builder: builder
 	# code in the Cleet compiler that was never noticed.
 	line = 	--
 		"FieldOf_(" + object access + ", " + 	--
-		(builder mangle-name: field name) + " = " + 	--
+		(mangle-name: field name) + " = " + 	--
 		arguments first-item access + ";"
 	builder add-line: line
 	return arguments first-item
@@ -31,7 +31,7 @@ emit-code: stream
 	stream write-line: "{"
 
 	stream write: "\tField_("
-	stream write: (MethodBuilder mangle-name: field name)
+	stream write: (mangle-name: field name)
 	stream write-line: ") = set_to;"
 	stream write-line: "\treturn set_to"
 
@@ -41,7 +41,7 @@ emit-code: stream
 
 
 c-name
-	return (MethodBuilder mangle-name: field name) + "_co___" + on-class c-name
+	return (mangle-name: field name) + "_co___" + on-class c-name
 
 
 c-signature

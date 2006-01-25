@@ -14,11 +14,11 @@ create: creator on-class: on-class
 emit-call: arguments builder: builder
 	# Declare the allocator.
 	allocator-c-name = 	--
-		(builder mangle-name: "allocate-object:") + "__Standard__Implementation"
+		(mangle-name: "allocate-object:") + "__Standard__Implementation"
 	builder add-extern-declaration: "extern obj_ " + allocator-c-name + "(obj_);"
 
 	# Declare the creator.
-	creator-c-name = (builder mangle-name: creator name) + "__" + on-class c-name
+	creator-c-name = (mangle-name: creator name) + "__" + on-class c-name
 	line = "extern obj_ " + creator-c-name + "(obj_"
 	for arg in arguments
 		line += ", obj_"
@@ -52,7 +52,7 @@ emit-code: stream
 			stream write: ", "
 		else
 			have-arg = true
-		mangled-arg-name = MethodBuilder mangle-name: arg name
+		mangled-arg-name = mangle-name: arg name
 		stream write: "obj_ "
 		stream write: mangled-arg-name
 		args append: (NameResult new: mangled-arg-name)
@@ -74,7 +74,7 @@ emit-code: stream
 
 
 c-name
-	return (MethodBuilder mangle-name: name) + "__" + on-class c-name
+	return (mangle-name: name) + "__" + on-class c-name
 
 
 

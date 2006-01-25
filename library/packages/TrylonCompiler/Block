@@ -86,7 +86,7 @@ emit-code: builder
 				line += ", "
 			else
 				have-local = true
-			line += builder mangle-name: local-name
+			line += mangle-name: local-name
 		line += ";"
 		builder add-line: line string
 	
