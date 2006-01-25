@@ -373,6 +373,7 @@ parse-fields
 		if current-token != 'name'
 			parse-error: "Field name needed."
 		name = current-token text
+		consume-token
 
 		# Get the type, if given.
 		type = nil
@@ -381,6 +382,12 @@ parse-fields
 			type = parse-type-spec
 			if current-token != ']'
 				parse-error: "Missing \"]\"."
+			consume-token
+		else if current-token == '('
+			consume-token
+			type = parse-type-spec
+			if current-token != ')'
+				parse-error: "Missing \")\"."
 			consume-token
 
 		# Add it.

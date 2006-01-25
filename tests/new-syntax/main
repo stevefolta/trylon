@@ -60,3 +60,7 @@ blegh: index (Int)
 	return index
 
 
+class Foo
+	fields index (Int)
+
+

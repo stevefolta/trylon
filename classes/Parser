@@ -472,9 +472,16 @@ parse-fields(): List of CompiledField
 		type: CompiledClass = nil;
 		if (current-token.type == '[') {
 			consume-token();
-			type: CompiledClass = parse-type-spec();
+			type = parse-type-spec();
 			if (current-token.type != ']')
 				throw ParseException("Missing \"]\".", current-token);
+			consume-token();
+			}
+		else if (current-token.type == '(') {
+			consume-token();
+			type = parse-type-spec();
+			if (current-token.type != ')')
+				throw ParseException("Missing \")\".", current-token);
 			consume-token();
 			}
 

@@ -126,7 +126,7 @@ get-subpackage: name
 	for directory in directories
 		if directory entry-is-directory: name
 			return (add-package: name directory: (directory at: name)) package
-		if !directory entry-is-directory: "packages"
+		if !(directory entry-is-directory: "packages")
 			continue
 		packages-dir = directory at: "packages"
 		if packages-dir entry-is-directory: name
