@@ -30,14 +30,16 @@ run
 				compile-symbols append: (arg substr: 2)
 				if arg == "--lex-test"
 					do-lex-test = true
-				else if arg = "--verbose"
-					status-reporter = StdoutStatusReporter new
+				else if arg == "--verbose"
 					build-settings is-verbose = true
 			else
 				file-names append: arg
 
 		if status-reporter == nil
-			status-reporter = VT100StatusReporter new
+			if build-settings is-verbose
+				status-reporter = StdoutStatusReporter new
+			else
+				status-reporter = VT100StatusReporter new
 
 		if build-settings is-verbose
 			build-settings report

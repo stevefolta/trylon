@@ -81,7 +81,7 @@ parse-block: lexer
 				slow-dispatch = parse-boolean: lexer name: name
 			else if name == "unsafe-dispatch"
 				unsafe-dispatch = parse-boolean: lexer name: name
-			else if name == "ooptimize-field-accesses"
+			else if name == "optimize-field-accesses"
 				optimize-field-accesses = parse-boolean: lexer name: name
 			else if name == "constant-selectors"
 				constant-selectors = parse-boolean: lexer name: name
@@ -91,6 +91,8 @@ parse-block: lexer
 				semi-primitive-strings = parse-boolean: lexer name: name
 			else if name == "debugger"
 				debugger = parse-boolean: lexer name: name
+			else if name == "verbose"
+				is-verbose = parse-boolean: lexer name: name
 
 			else if name == "if" || name == "iff"
 				parse-if: lexer

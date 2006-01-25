@@ -123,3 +123,7 @@ string-literal-length: string
 	return length
 
 
+report: message
+	status-reporter report: message
+
+
