@@ -34,7 +34,7 @@ obj_ _lt__eq___Standard__BytePtr(obj_ this_, obj_ arg)
 
 obj_ _gt___Standard__BytePtr(obj_ this_, obj_ arg)
 {
-	return (value_(this_) >= value_(arg) ? true__Standard : false__Standard);
+	return (value_(this_) > value_(arg) ? true__Standard : false__Standard);
 }
 
 
