@@ -38,8 +38,8 @@ mangle-name: name
 	stopper = name stopper
 	while p < stopper
 		c = p deref-char
-		if !((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || 	--
-				(c >= '0' && c <= '9'))
+		if !((c >= `A` && c <= `Z`) || (c >= `a` && c <= `z`) || 	--
+				(c >= `0` && c <= `9`))
 			# Finish off the current run.
 			result += String new: run-start to: p
 			p += 1

@@ -10,7 +10,7 @@ create: local
 
 emit-call: arguments builder: builder
 	access = mangle-name: local name
-	if local captured-index > 0
+	if local captured-index && local captured-index > 0
 		access = "vars_->" + access
 	return NameResult new: access
 

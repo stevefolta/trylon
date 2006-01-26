@@ -19,7 +19,7 @@ emit-call: arguments builder: builder
 			temporary = builder get-temporary
 			line = temporary name + " = Field_(" + (mangle-name: name) + ");"
 			builder add-line: line
-			return arguments first-item
+			return temporary
 		else if function is-a: InstanceFieldSetter
 			line = 	--
 				"Field_(" + (mangle-name: function field name) + ") = " + 	--

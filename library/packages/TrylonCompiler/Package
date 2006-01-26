@@ -277,10 +277,10 @@ emit-c-file
 
 
 c-name
-	name = MethodBuilder mangle-name: name
+	c-name = mangle-name: name
 	if parent && !parent is-main
-		name = parent c-name + "__" + name
-	return name
+		c-name = parent c-name + "__" + c-name
+	return c-name
 
 
 total-instance-fields
