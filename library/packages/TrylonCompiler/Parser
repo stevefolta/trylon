@@ -1244,7 +1244,7 @@ parse-super-call
 
 	else if current-token == 'keyword'
 		# Get the arguments.
-		name == ""
+		name = ""
 		while current-token == 'keyword'
 			name += current-token text
 			consume-token
@@ -1295,7 +1295,7 @@ make-binop-call: name with: object and: argument
 parse-error: message
 	throw ParseException new: message token: current-token
 
-expression-expected: after
+expression-expected-after: after
 	parse-error: "Expression expected after \"" + after string + "\"."
 
 indent

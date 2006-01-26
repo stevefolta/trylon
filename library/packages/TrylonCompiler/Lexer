@@ -278,7 +278,7 @@ next-token
 		else if c == `|`
 			type = '|'
 			next-char = cur-char
-			if next-char == '|'
+			if next-char == `|`
 				p go-forward
 				type = '||'
 			else if next-char == `=`
