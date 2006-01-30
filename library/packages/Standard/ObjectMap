@@ -26,6 +26,9 @@ contains: key
 	return dictionary contains: key object-ptr
 
 
+keys
+	return Iterator new: dictionary keys
+
 values
 	return dictionary values
 
@@ -35,6 +38,26 @@ count
 
 is-empty
 	return dictionary is-empty
+
+
+
+class Iterator
+	fields dict-iterator
+
+	create: iterator
+		this dict-iterator = iterator
+	
+	is-done
+		return dict-iterator is-done
+	
+	current-item
+		return dict-iterator current-item as-object
+	
+	go-forward
+		dict-iterator go-forward
+	
+	iterator
+		return this
 
 
 

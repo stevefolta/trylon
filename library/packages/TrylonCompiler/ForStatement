@@ -27,7 +27,8 @@ emit-code: builder
 	collection-result = collection emit-code: builder
 	builder next-temporary-num = saved-temp-num
 	local-name = MethodBuilder mangle-name: local name
-	builder add-line: "ForStart_(" + collection-result + ", " + local-name + ")"
+	builder add-line: 	--
+		"ForStart_(" + collection-result access + ", " + local-name + ")"
 
 	# Body.
 	body emit-code: builder

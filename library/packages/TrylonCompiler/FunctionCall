@@ -21,7 +21,7 @@ prepare-to-emit
 emit-code: builder
 	# We already got the function in prepare-to-emit.
 	if function == nil
-		# *** This should becom an ObjectCall on "this" -- if there is a "this".
+		# *** This should become an ObjectCall on "this" -- if there is a "this".
 		throw MessageException new: "There is no \"" + name + "\" function."
 	
 	# Generate the arguments.

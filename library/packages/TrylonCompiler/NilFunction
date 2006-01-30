@@ -5,7 +5,7 @@ superclass TrylonFunction
 create
 
 
-emit-call
+emit-call: arguments builder: builder
 	return NameResult new: "NULL"
 
 
