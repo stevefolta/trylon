@@ -49,7 +49,7 @@ lookup-function-autodeclaring: name
 		return function
 	
 	# If it wasn't found, and it's a setter, autodeclare a local.
-	if (name index-of: ':') == name length - 1
+	if (name index-of: `:`) == name length - 1
 		local = CompiledField new: (name substr: 0 length: name length - 1) type: nil
 		add-local: local
 		return LocalSetter new: local

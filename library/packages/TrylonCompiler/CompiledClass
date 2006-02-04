@@ -86,7 +86,8 @@ prepare-to-emit
 
 
 emit-c-file
-	file = File new: ".c-sources/" + c-name + ".c"
+	file = 	--
+		File new: the-compiler build-settings c-sources-dir + "/" + c-name + ".c"
 	stream = ExistingFileStream new: file
 
 	# ---

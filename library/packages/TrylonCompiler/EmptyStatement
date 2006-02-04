@@ -5,7 +5,7 @@ superclass Statement
 create
 
 
-emit-code
+emit-code: builder
 	# Nothing to do.
 
 

@@ -68,10 +68,10 @@ return-value
 compile-program: compile-symbols
 	# Create the .c-sources and .objects directories.
 	directory = FileDirectory new: "."
-	if !(directory entry-is-directory: ".c-sources")
-		directory create-subdirectory: ".c-sources"
-	if !(directory entry-is-directory: ".objects")
-		directory create-subdirectory: ".objects"
+	if !(directory entry-is-directory: build-settings c-sources-dir)
+		directory create-subdirectory: build-settings c-sources-dir
+	if !(directory entry-is-directory: build-settings objects-dir)
+		directory create-subdirectory: build-settings objects-dir
 	
 	# We need "destroy" to be a function name, even if there are no 
 	# functions with that name.
@@ -123,7 +123,7 @@ compile-program: compile-symbols
 
 	# Emit the method specs.
 	is-changed = emit-dispatch-table: main-package
-	c-files add: "methods_", is-changed: is-changed
+	c-files add: "methods_" is-changed: is-changed
 
 	# Emit the symbols.
 	status-reporter report: "Emitting symbols..."
@@ -164,16 +164,16 @@ compile-program: compile-symbols
 	status-reporter indent
 	for c-file in c-files
 		if !c-file is-changed && !recompile-all
-			if (File new: ".objects/" + c-file name + ".o") exists
+			if (File new: build-settings objects-dir + "/" + c-file name + ".o") exists
 				continue
 
 		file-name = c-file name
 		status-reporter report: "Compiling " + file-name + ".c..."
 		args = List new
 		args append: "-c"
-		args append: ".c-sources/" + file-name + ".c"
+		args append: build-settings c-sources-dir + "/" + file-name + ".c"
 		args append: "-o"
-		args append: ".objects/" + file-name + ".o"
+		args append: build-settings objects-dir + "/" + file-name + ".o"
 		for flag in build-settings c-flags
 			args append: flag
 		report-run-program: build-settings c-compiler arguments: args
@@ -181,7 +181,7 @@ compile-program: compile-symbols
 		if status != 0
 			# Remove .o files for uncompiled .c files.
 			for file in c-files remainder-after: c-file
-				(File new: ".objects/" + file name + ".o") remove
+				(File new: build-settings objects-dir + "/" + file name + ".o") remove
 			throw MessageException new: "C compilation failed."
 	status-reporter unindent
 
@@ -191,7 +191,7 @@ compile-program: compile-symbols
 	args append: "-o"
 	args append: build-settings program-name
 	for c-file in c-files
-		args append: ".objects/" + c-file name + ".o"
+		args append: build-settings objects-dir + "/" + c-file name + ".o"
 	for flag in build-settings link-flags
 		args append: flag
 	report-run-program: build-settings linker arguments: args
@@ -260,7 +260,9 @@ emit-dispatch-table: main-package
 	status-reporter report: "Emitting dispatch table..."
 
 	# Create the file.
-	stream = ExistingFileStream new: (File new: ".c-sources/methods_.c")
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/methods_.c")
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
 
@@ -304,7 +306,9 @@ emit-dispatch-table: main-package
 
 	# If constant-settings is on, generate "selectors_.h".
 	if build-settings constant-selectors
-		stream = ExistingFileStream new: (File new: ".c-sources/selectors_.h")
+		stream = 	--
+			ExistingFileStream new: 	--
+				(File new: build-settings c-sources-dir + "/selectors_.h")
 		for row in rows
 			stream write-all: 	--
 				("#define ", (mangle-name: row name), "__selector_ ", 	--
@@ -318,7 +322,9 @@ emit-dispatch-table: main-package
 emit-symbols
 	# Character literals are also emitted here.
 
-	stream = ExistingFileStream: (File new: ".c-sources/symbols_.c")
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/symbols_.c")
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
 
@@ -361,7 +367,9 @@ emit-symbols
 
 
 emit-settings
-	stream = ExistingFileStream new: (File new: ".c-sources/settings_.h")
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/settings_.h")
 
 	stream write-line: "#define ROW_DISPLACEMENT_DISPATCH_"
 	if build-settings unsafe-dispatch
@@ -389,7 +397,9 @@ emit-classnums: main-package
 	if standard-package == nil
 		throw MessageException new: "Standard package is missing!"
 	
-	stream = ExistingFileStream new: (File new: ".c-sources/classnums_.h")
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/classnums_.h")
 
 	emit-classnum: "Class" stream: stream standard-package: standard-package
 	emit-classnum: "Int" stream: stream standard-package: standard-package
@@ -435,8 +445,8 @@ root-class: main-package
 
 copy-to-sources: file dest-name: dest-name
 	contents = file contents
-	dest-file = File new: ".c-sources/" + dest-name
-	stream = ExistingFileStream: dest-file
+	dest-file = File new: build-settings c-sources-dir + "/" + dest-name
+	stream = ExistingFileStream new: dest-file
 	stream write: contents
 	is-changed = stream is-changed
 	stream close

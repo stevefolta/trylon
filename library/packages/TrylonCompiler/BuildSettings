@@ -3,6 +3,7 @@ trylon BuildSettings
 fields reporter
 fields dictionary
 fields program-name c-flags link-flags c-compiler linker
+fields c-sources-dir objects-dir
 fields is-verbose slow-dispatch unsafe-dispatch optimize-field-accesses
 fields constant-selectors classes-by-num semi-primitive-strings
 fields debugger
@@ -14,6 +15,8 @@ create
 	link-flags = List new
 	c-compiler = "gcc"
 	linker = "gcc"
+	c-sources-dir = ".c-sources"
+	objects-dir = ".objects"
 	dictionary = Dictionary new
 	is-verbose = false
 	slow-dispatch = false
@@ -77,6 +80,10 @@ parse-block: lexer
 				c-compiler = parse-name: lexer name: name
 			else if name == "linker"
 				linker = parse-name: lexer name: name
+			else if name == "c-sources-dir"
+				c-sources-dir = parse-name: lexer name: name
+			else if name == "objects-dir"
+				objects-dir = parse-name: lexer name: name
 			else if name == "slow-dispatch"
 				slow-dispatch = parse-boolean: lexer name: name
 			else if name == "unsafe-dispatch"

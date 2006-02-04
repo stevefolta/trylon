@@ -1,5 +1,5 @@
-precious ^\.c-sources$
-precious ^\.objects$
+precious ^\.c-sources.*$
+precious ^\.objects.*$
 precious ^build-settings.local$
 precious ^trylon$
 
