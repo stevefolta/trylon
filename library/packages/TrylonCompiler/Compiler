@@ -337,9 +337,8 @@ emit-symbols
 
 	# Character literals.
 	for literal in character-literals values
-		# The literal's name is a string of a decimal number which is the 
-		# character's ASCII value.
-		char = literal name int char
+		# The literal's name is a one-character string.
+		char = literal name first-character
 		escaped-char = char string
 		if char < ` ` || char > `~` || char == `\'` || char == `\\`
 			escaped-char = "\\x"
@@ -348,13 +347,13 @@ emit-symbols
 				digit = digit - 0x0A + `A`
 			else
 				digit = digit + `0`
-			escaped-char += digit string
+			escaped-char += digit char string
 			digit = char int & 0x0F
 			if digit >= 0x0A && digit <= 0x0F
 				digit = digit - 0x0A + `A`
 			else
 				digit = digit + `0`
-			escaped-char += digit string
+			escaped-char += digit char string
 
 		stream write-all: 	--
 			("DefineChar_(", (mangle-name: literal name), ", \'", 	--

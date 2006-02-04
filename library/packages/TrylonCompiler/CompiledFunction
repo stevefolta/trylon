@@ -6,7 +6,7 @@ fields body method-context
 
 
 create: name arguments: arguments return-type: return-type 	--
-		is-object-function: is-object-function is-a-primitive: is-a-primtive 	--
+		is-object-function: is-object-function is-a-primitive: is-a-primitive 	--
 		on-package: on-package body: body
 	this name = name
 	this arguments = arguments
@@ -26,7 +26,7 @@ emit-call: arguments builder: builder
 			line += ", "
 		else
 			have-arg = true
-		line = "obj_"
+		line += "obj_"
 	line += ");"
 	builder add-extern-declaration: line
 
@@ -82,7 +82,7 @@ emit-code: stream
 
 
 c-name
-	return MethodBuilder mangle-name: name + "__" + on-package c-name
+	return (mangle-name: name) + "__" + on-package c-name
 
 
 c-signature
@@ -100,7 +100,7 @@ c-signature
 		else
 			have-arg = true
 		signature += "obj_ "
-		signature += MethodBuilder mangle-name: arg name
+		signature += mangle-name: arg name
 	signature += ")"
 
 	return signature string

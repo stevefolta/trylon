@@ -86,7 +86,7 @@ mangle-name: name
 			else if c == `_`
 				mangled-char = "_ul_"
 			else
-				mangled-char = "_" + c string + "_"
+				mangled-char = "_" + c int string + "_"
 
 			result += mangled-char
 

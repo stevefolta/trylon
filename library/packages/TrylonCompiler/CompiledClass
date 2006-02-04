@@ -102,7 +102,7 @@ emit-c-file
 	# ---
 
 	# Header, includes.
-	stream write-line: "/*" + c-name + ".c */"
+	stream write-line: "/* " + c-name + ".c */"
 	stream write-line
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line

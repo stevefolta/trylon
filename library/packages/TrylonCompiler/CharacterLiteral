@@ -21,7 +21,7 @@ emit-code: builder
 emit-package-literal: stream
 	mangled-name = mangle-name: name
 
-	stream write: "UsingChar_"
+	stream write: "UsingChar_("
 	stream write: mangled-name
 	stream write: ")"
 	stream write-line

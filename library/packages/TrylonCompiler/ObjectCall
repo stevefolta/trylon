@@ -72,7 +72,7 @@ emit-code: builder
 	line += "Call_(" + (mangle-name: name) + ", " + object-result access
 	for arg-result in arg-results
 		line += ", " + arg-result access
-	line += ")"
+	line += ");"
 	builder add-line: line
 	return temporary
 

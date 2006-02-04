@@ -284,7 +284,7 @@ parse-class-contents: the-class
 			the-class add-instance-function: function name function: function
 		else if name == "class-fn" || name == "class-function" || 	--
 		        name == "primitive-class-fn" || name == "primitive-class-function"
-			the-class add-function: (parse-function: true is-object-function: true)
+			the-class add-function: (parse-function: true is-object-function: false)
 
 		else if name == "field" || name == "fields" || name == "fld"
 			for field in parse-fields

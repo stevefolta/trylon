@@ -33,7 +33,7 @@ emit-code: stream
 	stream write: "\tField_("
 	stream write: (mangle-name: field name)
 	stream write-line: ") = set_to;"
-	stream write-line: "\treturn set_to"
+	stream write-line: "\treturn set_to;"
 
 	stream write-line: "}"
 	stream write-line

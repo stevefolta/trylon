@@ -9,7 +9,7 @@ create: the-class
 
 
 access
-	return "((obj_) &)" + the-class c-name + ")"
+	return "((obj_) &" + the-class c-name + ")"
 
 
 is-constant
