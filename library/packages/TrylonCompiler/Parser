@@ -978,7 +978,7 @@ parse-logical-and-expression
 		expr2 = parse-inclusive-or-expression
 		if expr2 == nil
 			expression-expected-after: '&&'
-		expr = ShortCircuitOr new: expr with: expr2
+		expr = ShortCircuitAnd new: expr with: expr2
 	
 	return expr
 

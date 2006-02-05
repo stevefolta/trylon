@@ -2,5 +2,6 @@ precious ^\.c-sources.*$
 precious ^\.objects.*$
 precious ^build-settings.local$
 precious ^trylon$
+precious ^trylonx$
 precious ^temp$
 

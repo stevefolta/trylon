@@ -31,7 +31,7 @@ at: index set-to: object
 	((blocks ptr-at: which-block) object-at: index % block-size) = object
 
 	if index >= num-items
-		num-item = index + 1
+		num-items = index + 1
 
 
 iterator

@@ -27,6 +27,7 @@ emit-code: builder
 	builder indent
 	result2 = expr2 emit-code: builder
 	builder add-line: result access + " = " + result2 access + ";"
+	builder add-line: "}"
 	builder unindent
 	return result
 
