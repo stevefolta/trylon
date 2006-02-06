@@ -1,0 +1,26 @@
+trylon mysql-test
+
+main: arguments
+	try
+		connection = 	--
+			MySQL Connection new-host: "localhost" 	--
+				user: "mythtv" password: "mythtv" database: "mythconverg"
+		query = "select title, subtitle, description, chanid, starttime, endtime "
+		query += "from recordedprogram"
+		connection query: query
+		result = connection store-result
+		loop
+			row = result fetch-row
+			if row == nil
+				break
+			print-line: "Title: " + (row at: 0)
+			print-line: "Subtitle: " + (row at: 1)
+			print-line: "Description: " + (row at: 2)
+			print-line: "ChanID: " + (row at: 3)
+			print-line: "Start time: " + (row at: 4)
+			print-line: "End time: " + (row at: 5)
+			print-line
+	catch Exception
+		print-line: exception message
+
+

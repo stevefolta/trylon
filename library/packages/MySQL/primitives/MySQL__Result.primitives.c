@@ -8,6 +8,8 @@
 		return NULL; 	\
 	result = (MYSQL_RES*) BytePtrValue_(raw_result);
 
+#define raw_result__fld_	0
+
 
 obj_ close__MySQL__Result(obj_ this_)
 {
@@ -38,9 +40,13 @@ obj_ fetch_row__MySQL__Result(obj_ this_)
 	extern obj_ new_co___Standard__Tuple(obj_);
 	setup_result
 	
+	row = mysql_fetch_row(result);
+	if (row == NULL)
+		return NULL;
+
+	// Put together a tuple with all the fields.
 	numFields = mysql_num_fields(result);
 	fieldLengths = mysql_fetch_lengths(result);
-	row = mysql_fetch_row(result);
 	tuple = new_co___Standard__Tuple(BuildInt_(numFields));
 	for (whichField = 0; whichField < numFields; ++whichField) {
 		obj_ rowValue;
@@ -50,6 +56,8 @@ obj_ fetch_row__MySQL__Result(obj_ this_)
 			rowValue = BuildStringOfLength_(row[whichField], fieldLengths[whichField]);
 		tuple->fields[whichField + 1] = rowValue;
 		}
+
+	return tuple;
 }
 
 

@@ -12,3 +12,8 @@ destroy
 primitive-fn query: query
 primitive-fn store-result -> Result
 
+
+class-fn bogue
+	# Stuff that's referenced by the primitives.
+	Exception
+

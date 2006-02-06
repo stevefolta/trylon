@@ -36,13 +36,13 @@ obj_ create_host_co_user_co_password_co_database_co___MySQL__Connection(
 
 	connectResult = 
 		mysql_real_connect(mysql, Arg(host), Arg(user), Arg(password), 
-		                   Arg(database));
+		                   Arg(database), 0, NULL, 0);
 	if (connectResult == NULL) {
 		mysql_close(mysql);
 		ThrowException("MySQL connection failed.");
 		}
 
-	Field_(raw_connection) = BuildBytePtr_(mysql);
+	Field_(raw_connection) = BuildBytePtr_((byte_ptr_) mysql);
 
 	return NULL;
 }
@@ -59,7 +59,7 @@ obj_ close__MySQL__Connection(obj_ this_)
 }
 
 
-obj_ query__MySQL__Connection(obj_ this_, obj_ query)
+obj_ query_co___MySQL__Connection(obj_ this_, obj_ query)
 {
 	int queryResult;
 	setup_mysql
@@ -81,7 +81,7 @@ obj_ store_result__MySQL__Connection(obj_ this_)
 	if (result == NULL)
 		ThrowException("No result from MySQL query.");
 
-	return new_co___MySQL__Result(BuildBytePtr_(result));
+	return new_co___MySQL__Result(BuildBytePtr_((byte_ptr_) result));
 }
 
 
