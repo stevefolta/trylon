@@ -1,0 +1,15 @@
+trylon Result
+
+fields raw-result
+
+primitive-fn close
+primitive-fn num-rows
+primitive-fn fetch-row
+
+destroy
+	close
+
+# DON'T USE THIS.  Only the internals should call it.
+create: raw-result
+	this raw-result = raw-result
+

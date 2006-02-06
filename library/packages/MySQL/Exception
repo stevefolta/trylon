@@ -1,0 +1,6 @@
+trylon Exception
+superclass MessageException
+
+create: message
+	super create: message
+

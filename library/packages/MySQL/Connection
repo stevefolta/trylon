@@ -1,0 +1,14 @@
+trylon Connection
+
+fields raw-connection
+
+
+primitive-fn create-host: host user: user password: password database: database
+primitive-fn close
+
+destroy
+	close
+
+primitive-fn query: query
+primitive-fn store-result -> Result
+
