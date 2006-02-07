@@ -18,6 +18,9 @@ fn at: index set-to: value
 		throw MessageException new: "Bad tuple index."
 	this object-ptr object-at: index + 2 set-to: value
 
+fn count
+	return num-items
+
 fn iterator
 	return Iterator new: this
 
