@@ -142,6 +142,12 @@ _FinishExternC_
 	}
 
 
+extern obj_ allocate_object_co___Standard__Implementation(obj_);
+
+#define RawNew_(classObj) 	\
+	(allocate_object_co___Standard__Implementation((obj_) &classObj))
+
+
 #include <setjmp.h>
 
 typedef struct ExceptionCatcher_ {
