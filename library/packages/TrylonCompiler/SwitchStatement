@@ -1,0 +1,56 @@
+trylon SwitchStatement
+superclass Statement
+
+fields expression clauses value-comment post-clauses-comments
+
+
+create: expression value-comment: value-comment
+	this expression = expression
+	this value-comment = value-comment
+	clauses = List new
+
+
+add-clause: clause
+	clauses append: clause
+
+
+prepare-to-emit
+	expression prepare-to-emit
+	for clause in clauses
+		clause prepare-to-emit
+
+
+emit-code: builder
+	saved-temp-num = builder next-temporary-num
+
+	value = expression emit-code: builder
+	value-access = value access
+	if value-comment
+		builder add-line: (add-comment: "")
+
+	did-a-clause = false
+	for clause in clauses
+		if clause pre-clause-comments
+			for comment in clause pre-clause-comments
+				comment emit-code: builder
+
+		# We rely on the fact that the clause's value will not actually emit code.
+		clause-result = clause value emit-code: builder
+		line = "if (" + value-access + " == " + clause-result access + ")"
+		if !did-a-clause
+			did-a-clause = true
+		else
+			line = "else " + line
+		if clause value-comment
+			line = add-comment: line comment: clause value-comment
+		builder add-line: line
+		if clause block
+			clause block emit-code: builder
+	
+	if post-clauses-comments
+		for comment in post-clauses-comments
+			comment emit-code: builder
+
+	builder next-temporary-num = saved-temp-num
+
+

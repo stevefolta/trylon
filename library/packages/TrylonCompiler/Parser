@@ -590,6 +590,8 @@ parse-statement
 			return parse-if-statement
 		else if name == "iff"
 			return parse-iff-statement
+		else if name == "switch"
+			return parse-switch-statement
 		else if name == "loop"
 			return parse-loop-statement
 		else if name == "while"
@@ -681,6 +683,44 @@ parse-iff-statement
 		return BlockStatement new: parse-block
 	else
 		return EmptyStatement new
+
+
+parse-switch-statement
+	consume-token
+	value = parse-expression
+	if value == nil
+		parse-error: "Missing expression in \"switch\" statement."
+	value-comment = require-eol
+
+	switch-statement = SwitchStatement new: value value-comment: value-comment
+
+	# Strip out leading blank lines.
+	while current-token == 'eol'
+		consume-token
+	
+	if current-token == 'indent'
+		consume-token
+		pre-clause-comment = nil
+		while current-token != 'unindent'
+			pre-clause-comment = parse-inter-prong-comments
+
+			value = parse-expression
+			if value == nil
+				parse-error: "Missing value in switch clause."
+			value-comment = require-eol
+			body = parse-block
+			clause = 	--
+				SwitchClause new: value body: body --
+					pre-clause-comment: pre-clause-comment value-comment: value-comment
+			switch-statement add-clause: clause
+
+			pre-clause-comment = nil
+
+		switch-statement post-clauses-comments = pre-clause-comment
+
+		consume-token 	# 'unindent'
+
+	return switch-statement
 
 
 parse-loop-statement

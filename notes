@@ -107,4 +107,16 @@ After:  365 ms
 
 =====
 
+Self-Compiler Timing
+	[2006.2.9]
+
+On the SS40G.
+
+Orig:  13.5
+Semi-primitive-strings: 14.5
+
+Odd...
+
+=====
+
 

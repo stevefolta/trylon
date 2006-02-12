@@ -1,0 +1,20 @@
+trylon SwitchClause
+
+fields value body
+fields pre-clause-comment value-comment
+
+
+create: value body: body 	--
+		pre-clause-comment: pre-clause-comment value-comment: value-comment
+	this value = value
+	this body = body
+	this pre-clause-comment = pre-clause-comment
+	this value-comment = value-comment
+
+
+prepare-to-emit
+	value prepare-to-emit
+	body prepare-to-emit
+
+
+
