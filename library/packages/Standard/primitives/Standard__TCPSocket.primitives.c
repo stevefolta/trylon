@@ -90,27 +90,35 @@ obj_ receive_co___Standard__TCPSocket(obj_ this_, obj_ num_bytes)
 {
 	int socketID;
 	char* buffer;
-	ssize_t bytesReceived;
+	char* p;
+	ssize_t bytesReceived, totalBytesReceived = 0;
 	int numBytes = IntValue_(num_bytes);
+	int bytesLeft = numBytes;
 
 	if (Field_(socket) == NULL)
 		return;
 	socketID = IntValue_(Field_(socket));
 
 	buffer = (char*) Allocate_(numBytes);
+	p = buffer;
 
-	bytesReceived = recv(socketID, buffer, numBytes, 0);
-	if (bytesReceived == -1) {
-		DefineString_(0, "Socket receive failed.\n");
-		ThrowError(Str_(0));
+	while (bytesLeft > 0) {
+		bytesReceived = recv(socketID, p, bytesLeft, 0);
+		if (bytesReceived == -1) {
+			DefineString_(0, "Socket receive failed.\n");
+			ThrowError(Str_(0));
+			}
+		else if (bytesReceived == 0) {
+			close(socketID);
+			Field_(socket) = NULL;
+			break;
+			}
+
+		p += bytesReceived;
+		bytesLeft -= bytesReceived;
+		totalBytesReceived += bytesReceived;
 		}
-	else if (bytesReceived == 0) {
-		DefineString_(0, "");
-		close(socketID);
-		Field_(socket) = NULL;
-		return Str_(0);
-		}
-	return BuildStringStartStopper_(buffer, buffer + bytesReceived);
+	return BuildStringStartStopper_(buffer, buffer + totalBytesReceived);
 }
 
 

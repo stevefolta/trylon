@@ -54,8 +54,14 @@ obj_ _pl___Standard__BytePtr(obj_ this_, obj_ arg)
 
 obj_ ___Standard__BytePtr(obj_ this_, obj_ arg)
 {
-	int increment = ((struct Standard__Int__internal*) arg)->value;
-	return BuildBytePtr_(value_(this_) - increment);
+	if (ObjClassIs_(arg, Standard__Int)) {
+		int increment = ((struct Standard__Int__internal*) arg)->value;
+		return BuildBytePtr_(value_(this_) - increment);
+		}
+	else if (ObjClassIs_(arg, Standard__BytePtr)) {
+		return BuildInt_(BytePtrValue_(this_) - BytePtrValue_(arg));
+		}
+	return NULL;
 }
 
 
