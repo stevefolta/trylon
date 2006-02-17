@@ -219,7 +219,6 @@ obj_ BuildString_(const char* cString)
 obj_ BuildStringOfLength_(const char* cString, unsigned int length)
 {
 	char*	heapString;
-	obj_ 	start, stopper;
 	struct Standard__String__internal* strObj;
 
 	// Copy the string to the heap.
@@ -237,6 +236,26 @@ obj_ BuildStringOfLength_(const char* cString, unsigned int length)
 #else 	// SEMI_PRIMITIVE_STRINGS_
 	strObj->start = (byte_ptr_) heapString;
 	strObj->stopper = (byte_ptr_) heapString + length;
+#endif 	// SEMI_PRIMITIVE_STRINGS_
+	return (obj_) strObj;
+}
+
+
+obj_ BuildStringStartStopper_(const char* start, const char* stopper)
+{
+	struct Standard__String__internal* strObj;
+
+	// Build the string object.
+	strObj =
+		(struct Standard__String__internal*)
+			GC_MALLOC(sizeof(struct Standard__String__internal));
+	strObj->class_ = StdClassRef_(String);
+#ifndef SEMI_PRIMITIVE_STRINGS_
+	strObj->start = BuildBytePtr_((byte_ptr_) start);
+	strObj->stopper = BuildBytePtr_((byte_ptr_) stopper);
+#else 	// SEMI_PRIMITIVE_STRINGS_
+	strObj->start = (byte_ptr_) start;
+	strObj->stopper = (byte_ptr_) stopper;
 #endif 	// SEMI_PRIMITIVE_STRINGS_
 	return (obj_) strObj;
 }

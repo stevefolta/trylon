@@ -297,6 +297,8 @@ extern obj_ BuildBytePtr_(byte_ptr_ value);
 extern obj_ BuildString_(const char* cString); 	// Will copy the string.
 extern obj_ BuildStringOfLength_(const char* cString, unsigned int length);
 	// Will copy the string.
+extern obj_ BuildStringStartStopper_(const char* start, const char* stopper);
+	// Will not copy the string.
 extern char* MakeCString_(obj_ str);
 extern void* Allocate_(int numBytes);
 

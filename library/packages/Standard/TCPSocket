@@ -1,0 +1,15 @@
+trylon TCPSocket
+
+fields socket
+
+
+primitive-fn create: server-address port: port
+primitive-fn close
+primitive-fn send: string
+primitive-fn receive: num-bytes
+
+
+destroy
+	close
+
+
