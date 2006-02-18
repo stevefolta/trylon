@@ -161,3 +161,16 @@ obj_ sysname__Standard__System(void)
 }
 
 
+obj_ strftime_co_format_co___Standard__System(obj_ time_int, obj_ format)
+{
+	time_t timeInt = IntValue_(time_int);
+	char* formatStr = MakeCString_(format);
+	struct tm* timeStruct = localtime(&timeInt);
+	char resultStr[128];
+	size_t numChars = 
+		strftime(resultStr, sizeof(resultStr) - 1, formatStr, timeStruct);
+	return BuildStringOfLength_(resultStr, numChars);
+}
+
+
+

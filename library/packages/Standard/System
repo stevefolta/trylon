@@ -14,5 +14,6 @@ primitive-class-fn current-directory-path
 primitive-class-fn current-directory-path: new-path
 primitive-class-fn run-program: name arguments: arguments
 primitive-class-fn sysname
+primitive-class-fn strftime: time-int format: format
 
 
