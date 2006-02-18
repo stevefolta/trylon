@@ -193,12 +193,12 @@ parse-package-member: package in-class: in-class
 		else if current-token == 'character-literal'
 			initial-value = the-compiler get-character-literal: current-token text
 		else if current-token type == 'name'
-			name = current-token text
-			if name == "true"
+			literal-name = current-token text
+			if literal-name == "true"
 				initial-value = BoolLiteral new: true
-			else if name == "false"
+			else if literal-name == "false"
 				initial-value = BoolLiteral new: false
-			else if name == "nil"
+			else if literal-name == "nil"
 				initial-value = nil
 			else
 				parse-error: "Illegal initial value for a class/package field."
