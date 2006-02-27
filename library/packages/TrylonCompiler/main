@@ -3,11 +3,6 @@ trylon TrylonCompiler
 fields status-reporter the-compiler
 
 
-run: arguments
-	the-compiler = Compiler new: arguments
-	the-compiler run
-
-
 mangle-name: name
 	# Certain names are reserved in C and/or C++ but not in Trylon.
 	if name == "class"

@@ -4,7 +4,10 @@ fields arguments successful build-settings
 fields object-function-names symbols character-literals package-queue
 
 
-# Program.
+class-fn compile: arguments
+	the-compiler = Compiler new: arguments
+	the-compiler run
+
 
 create: arguments
 	this arguments = arguments

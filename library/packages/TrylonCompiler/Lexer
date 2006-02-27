@@ -433,6 +433,13 @@ class-fn unescape-string: string
 	return result
 
 
+# We add this here just so there'll be a "report:" function for programs that 
+# use this class, but nothing else from the TrylonCompiler package.
+report: message
+	status-reporter report: message
+
+
+
 
 # Copyright 2005 Steve Folta
 # See the License file.
