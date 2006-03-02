@@ -4,7 +4,10 @@ fields context lexer current-token next-token third-token
 
 
 create: source context: context
-	lexer = Lexer new: source
+	iff use-c-lexer
+		lexer = CLexer new: source
+	iff !use-c-lexer
+		lexer = Lexer new: source
 	this context = context
 
 	# Load up the first tokens.
