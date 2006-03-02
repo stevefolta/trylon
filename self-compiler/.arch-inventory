@@ -7,4 +7,5 @@ precious ^trylonx$
 precious ^temp$
 precious ^gmon\.out$
 precious ^profile.*$
+precious ^.gdb.*$
 
