@@ -18,6 +18,7 @@ class-fn used-by-primitives
 	'eof'
 	'-'
 	'-='
+	'->'
 	'int-literal'
 	'float-literal'
 	'character-literal'

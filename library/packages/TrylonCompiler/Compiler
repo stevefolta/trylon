@@ -475,7 +475,11 @@ report-run-program: program arguments: args
 
 lex-test: filename
 	try
-		lexer = Lexer new: (File new: filename) contents
+		lexer = nil
+		iff !use-c-lexer
+			lexer = Lexer new: (File new: filename) contents
+		iff use-c-lexer
+			lexer = CLexer new: (File new: filename) contents
 		loop
 			token = lexer next-token
 			print: token type

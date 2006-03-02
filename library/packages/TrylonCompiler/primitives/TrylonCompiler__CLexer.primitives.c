@@ -132,7 +132,7 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 	UsingSym_(indent) UsingSym_(unindent)
 	UsingSym_(name) UsingSym_(keyword)
 	UsingSym_(eol) UsingSym_(eof)
-	UsingSym_(_) UsingSym_(__eq_)
+	UsingSym_(_) UsingSym_(__eq_) UsingSym_(__gt_)
 	UsingSym_(int_literal) UsingSym_(float_literal) UsingSym_(character_literal)
 	UsingSym_(string_literal) UsingSym_(symbol_literal)
 	UsingSym_(comment)
@@ -203,7 +203,7 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 				return token(Sym_(indent));
 				}
 			else if (indentation < self->stackTop->value) {
-				self->unindentsPending = 0;
+				self->unindentsPending = 1;
 				self->unindentTo = indentation;
 				self->stackTop = self->stackTop->next;
 				return token(Sym_(unindent));
@@ -263,7 +263,7 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 
 				else if (nextChar == '>') {
 					self->p += 1;
-					return token(Sym_(__eq_));
+					return token(Sym_(__gt_));
 					}
 
 				else if (nextChar >= '0' && nextChar <= '9') {
