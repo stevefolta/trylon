@@ -240,6 +240,22 @@ fn trimmed -> String
 	return trimmed-copy
 
 
+fn lowercase -> String
+	length = this length
+	buffer = BytePtr new-non-pointer: length
+	p = this start
+	stopper = this stopper
+	out-p = buffer
+	while p < stopper
+		c = p deref-char
+		if c >= `A` && c <= `Z`
+			c += `a` - `A`
+		out-p char-at: 0 set-to: c
+		p += 1
+		out-p += 1
+	return String new: buffer to: buffer + length
+
+
 primitive-fn int -> Int
 primitive-fn float -> Float
 
