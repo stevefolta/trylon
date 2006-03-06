@@ -394,7 +394,8 @@ parse-fields
 			consume-token
 
 		# Add it.
-		fields append: (CompiledField new: name type: type is-primitive: is-primitive)
+		fields 	--
+			append: (CompiledField new: name type: type is-primitive: is-primitive)
 	
 	require-eol
 
@@ -707,15 +708,24 @@ parse-switch-statement
 		while current-token != 'unindent'
 			pre-clause-comments = parse-inter-prong-comments
 
-			value = parse-expression
-			if value == nil
-				parse-error: "Missing value in switch clause."
-			value-comment = require-eol
-			body = parse-block
-			clause = 	--
-				SwitchClause new: value body: body --
-					pre-clause-comments: pre-clause-comments value-comment: value-comment
-			switch-statement add-clause: clause
+			if current-token == 'name' && current-token text == "else"
+				consume-token
+				value-comment = require-eol
+				body = parse-block
+				switch-statement else-clause = 	--
+					SwitchClause new: nil body: body --
+						pre-clause-comments: pre-clause-comments value-comment: value-comment
+
+			else
+				value = parse-expression
+				if value == nil
+					parse-error: "Missing value in switch clause."
+				value-comment = require-eol
+				body = parse-block
+				clause = 	--
+					SwitchClause new: value body: body --
+						pre-clause-comments: pre-clause-comments value-comment: value-comment
+				switch-statement add-clause: clause
 
 			pre-clause-comments = nil
 

@@ -1,7 +1,7 @@
 trylon SwitchStatement
 superclass Statement
 
-fields expression clauses value-comment post-clauses-comments
+fields expression clauses else-clause value-comment post-clauses-comments
 
 
 create: expression value-comment: value-comment
@@ -47,6 +47,22 @@ emit-code: builder
 		builder add-line: line
 		if clause body
 			clause body emit-code: builder
+		else
+			builder add-line: "{}"
+	
+	if else-clause
+		if !did-a-clause
+			throw 	--
+				MessageException new: 	--
+					"\"else\" in \"switch\" statement without any clauses."
+		line = "else"
+		if else-clause value-comment
+			line = add-comment: line comment: else-clause value-comment
+		builder add-line: line
+		if else-clause body
+			else-clause body emit-code: builder
+		else
+			builder add-line: "{}"
 	
 	if post-clauses-comments
 		for comment in post-clauses-comments

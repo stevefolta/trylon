@@ -71,6 +71,11 @@ tests
 			test: false title: "Switch statement (Symbol)"
 		'checkity-test'
 			test: true title: "Switch statement (Symbol)"
+	switch symbol-field
+		'foo'
+			test: false title: "Switch statement (else)"
+		else
+			test: true title: "Switch statement (else)"
 
 
 blegh: index (Int)
