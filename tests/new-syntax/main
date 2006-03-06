@@ -76,6 +76,11 @@ tests
 			test: false title: "Switch statement (else)"
 		else
 			test: true title: "Switch statement (else)"
+	switch "foo"
+		"foo", "bar"	# Comment here...
+			test: true title: "Switch statement (multiple values)"
+		else
+			test: true title: "Switch statement (multiple values)"
 
 
 blegh: index (Int)

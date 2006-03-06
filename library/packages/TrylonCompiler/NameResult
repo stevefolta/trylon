@@ -4,11 +4,16 @@ superclass ExpressionResult
 # Used for various very simple ExpressionResults, which only have to reference 
 # a name.
 
-fields name
+fields name is-constant
 
 
 create: name
+	create: name is-constant: false
+
+
+create: name is-constant: is-constant
 	this name = name
+	this is-constant = is-constant
 
 
 access

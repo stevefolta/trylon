@@ -717,13 +717,20 @@ parse-switch-statement
 						pre-clause-comments: pre-clause-comments value-comment: value-comment
 
 			else
-				value = parse-expression
-				if value == nil
-					parse-error: "Missing value in switch clause."
+				values = List new
+				loop
+					value = parse-keyword-expression
+					if value == nil
+						parse-error: "Missing value in switch clause."
+					values append: value
+					if current-token == ','
+						consume-token
+					else
+						break
 				value-comment = require-eol
 				body = parse-block
 				clause = 	--
-					SwitchClause new: value body: body --
+					SwitchClause new: values body: body --
 						pre-clause-comments: pre-clause-comments value-comment: value-comment
 				switch-statement add-clause: clause
 

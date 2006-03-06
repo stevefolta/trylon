@@ -15,12 +15,12 @@ prepare-to-emit
 emit-code: builder
 	mangled-name = MethodBuilder mangle-name: name
 	builder add-extern-declaration: "UsingSym_(" + mangled-name + ")"
-	return NameResult new: "Sym_(" + mangled-name + ")"
+	return NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
 
 
 emit-package-literal: stream
 	mangled-name = MethodBuilder mangle-name: name
 	stream write-all: ("UsingSym_(", mangled-name, ")\n")
-	return NameResult new: "Sym_(" + mangled-name + ")"
+	return NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
 
 
