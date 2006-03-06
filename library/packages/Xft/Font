@@ -13,4 +13,7 @@ primitive-fn width-of: string -> Int
 primitive-fn width-of-utf8: string -> Int
 
 
+iff debugger
+	debug-write
+		print-line: class name
 

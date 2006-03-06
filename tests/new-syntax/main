@@ -54,6 +54,23 @@ tests
 	y (Int) = 3
 	check: y against: 3 title: "(Type)"
 	check: typed-global against: 5 title: "(Type) in global"
+	print-line
+
+	# 2006.3.5: "switch" statement.
+	switch y
+		1
+			test: false title: "Switch statement (Int)"
+		2
+			test: false title: "Switch statement (Int)"
+		3
+			test: true title: "Switch statement (Int)"
+	switch symbol-field 
+		'foo'
+			test: false title: "Switch statement (Symbol)"
+		'bar'
+			test: false title: "Switch statement (Symbol)"
+		'checkity-test'
+			test: true title: "Switch statement (Symbol)"
 
 
 blegh: index (Int)

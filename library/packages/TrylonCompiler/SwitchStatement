@@ -21,6 +21,7 @@ prepare-to-emit
 
 
 emit-code: builder
+	builder using-object-function: "=="
 	saved-temp-num = builder next-temporary-num
 
 	value = expression emit-code: builder
@@ -36,7 +37,7 @@ emit-code: builder
 
 		# We rely on the fact that the clause's value will not actually emit code.
 		clause-result = clause value emit-code: builder
-		line = "if (" + value-access + " == " + clause-result access + ")"
+		line = "if (Eq_(" + value-access + ", " + clause-result access + "))"
 		if !did-a-clause
 			did-a-clause = true
 		else
@@ -44,8 +45,8 @@ emit-code: builder
 		if clause value-comment
 			line = add-comment: line comment: clause value-comment
 		builder add-line: line
-		if clause block
-			clause block emit-code: builder
+		if clause body
+			clause body emit-code: builder
 	
 	if post-clauses-comments
 		for comment in post-clauses-comments

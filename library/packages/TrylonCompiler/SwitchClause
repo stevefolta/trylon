@@ -1,14 +1,14 @@
 trylon SwitchClause
 
 fields value body
-fields pre-clause-comment value-comment
+fields pre-clause-comments value-comment
 
 
 create: value body: body 	--
-		pre-clause-comment: pre-clause-comment value-comment: value-comment
+		pre-clause-comments: pre-clause-comments value-comment: value-comment
 	this value = value
 	this body = body
-	this pre-clause-comment = pre-clause-comment
+	this pre-clause-comments = pre-clause-comments
 	this value-comment = value-comment
 
 

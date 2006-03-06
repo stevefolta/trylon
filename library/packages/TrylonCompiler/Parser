@@ -703,9 +703,9 @@ parse-switch-statement
 	
 	if current-token == 'indent'
 		consume-token
-		pre-clause-comment = nil
+		pre-clause-comments = nil
 		while current-token != 'unindent'
-			pre-clause-comment = parse-inter-prong-comments
+			pre-clause-comments = parse-inter-prong-comments
 
 			value = parse-expression
 			if value == nil
@@ -714,12 +714,12 @@ parse-switch-statement
 			body = parse-block
 			clause = 	--
 				SwitchClause new: value body: body --
-					pre-clause-comment: pre-clause-comment value-comment: value-comment
+					pre-clause-comments: pre-clause-comments value-comment: value-comment
 			switch-statement add-clause: clause
 
-			pre-clause-comment = nil
+			pre-clause-comments = nil
 
-		switch-statement post-clauses-comments = pre-clause-comment
+		switch-statement post-clauses-comments = pre-clause-comments
 
 		consume-token 	# 'unindent'
 

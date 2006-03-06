@@ -214,7 +214,6 @@ _FinishExternC_
 
 _StartExternC_
 extern void RegisterFinalizer_(obj_ object);
-//*** extern int Test_(obj_ object);
 
 extern obj_ false__Standard;
 extern obj_ true__Standard;
@@ -227,12 +226,7 @@ _FinishExternC_
 #define Test_(object)	(object != NULL && object != false__Standard)
 #define Not_(object)	(Test_(object) ? false__Standard : true__Standard)
 
-
-// everybody needs these:
-/***
-#include "Standard__Object.h"
-#include "Standard__Class.h"
-***/
+#define Eq_(obj1, obj2) 	(Test_(Call_(_eq__eq_, obj1, obj2)))
 
 
 _StartExternC_
