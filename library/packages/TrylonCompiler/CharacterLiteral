@@ -15,7 +15,7 @@ prepare-to-emit
 emit-code: builder
 	mangled-name = mangle-name: name
 	builder add-extern-declaration: "UsingChar_(" + mangled-name + ")"
-	return NameResult new: "Char_(" + mangled-name + ")"
+	return NameResult new: "Char_(" + mangled-name + ")" is-constant: true
 
 
 emit-package-literal: stream
@@ -26,7 +26,7 @@ emit-package-literal: stream
 	stream write: ")"
 	stream write-line
 
-	return NameResult new: "Char_(" + mangled-name + ")"
+	return NameResult new: "Char_(" + mangled-name + ")" is-constant: true
 
 
 
