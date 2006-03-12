@@ -135,6 +135,12 @@ get-subpackage: name
 	return nil
 
 
+get-class: name
+	function = functions at: name
+	if function && (function is-a: ClassFunction)
+		return function the-class
+
+
 add-directory: directory
 	directories append: directory
 

@@ -1,14 +1,19 @@
 trylon Temporary
 superclass ExpressionResult
 
-fields name
+fields name declared-type
 
 
-create: name
+create: name type: type
 	this name = name
+	this declared-type = type
 
 
 access
 	return name
+
+
+type
+	return declared-type
 
 

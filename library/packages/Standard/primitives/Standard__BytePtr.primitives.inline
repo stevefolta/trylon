@@ -1,0 +1,70 @@
+== arg
+	return (this == arg);
+
+!= arg
+	return (this != arg);
+
+< arg
+	return (this < arg);
+
+<= arg
+	return (this <= arg);
+
+> arg
+	return (this > arg);
+
+>= arg
+	return (this >= arg);
+
++ arg
+	return (this + arg);
+
+- arg
+	return (this - arg);
+
+
+deref-ptr
+	return *(byte_ptr*) this;
+
+deref-int
+	return *(int*) this;
+
+deref-char
+	return *(char*) this;
+
+ptr-at: index
+	return ((byte_ptr*) this)[index];
+
+object-at: index
+	return ((obj_*) this)[index];
+
+char-at: index
+	return ((char*) this)[index];
+
+int-at: index
+	return ((int*) this)[index];
+
+byte-at: index
+	return ((char*) this)[index];
+
+
+as-object
+	return (obj_) this;
+
+
+ptr-at: index set-to: value
+	((byte_ptr*) this)[index] = value;
+
+object-at: index set-to: value
+	((obj_*) this)[index] = value;
+
+char-at: index set-to: value
+	((char*) this)[index] = value;
+
+int-at: index set-to: value
+	((int*) this)[index] = value;
+
+byte-at: index set-to: value
+	((char*) this)[index] = value;
+
+

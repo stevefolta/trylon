@@ -25,13 +25,16 @@ create
 	indent-level = 0
 
 
-get-temporary
+get-temporary-of-type: type
 	temp-num = next-temporary-num
 	next-temporary-num += 1
 	if next-temporary-num > num-temporaries-used
 		num-temporaries-used = next-temporary-num
 	
-	return Temporary new: "t" + temp-num string + "_"
+	return Temporary new: "t" + temp-num string + "_" type: type
+
+get-temporary
+	return get-temporary-of-type: nil
 
 
 add-string-literal: string-literal

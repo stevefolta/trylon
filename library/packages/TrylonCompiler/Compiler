@@ -2,6 +2,7 @@ trylon Compiler
 
 fields arguments successful build-settings
 fields object-function-names symbols character-literals package-queue
+fields main-package
 
 
 class-fn compile: arguments
@@ -468,6 +469,10 @@ report-run-program: program arguments: args
 		status-reporter report: command string
 
 		status-reporter unindent
+
+
+get-standard-class: name
+	return (main-package get-subpackage: "Standard") get-class: name
 
 
 

@@ -2,7 +2,7 @@ trylon CompiledFunction
 superclass TrylonInstanceFunction 	# Not always an instance fn, but it can be.
 
 fields name arguments return-type is-object-function is-a-primitive on-package
-fields body method-context
+fields body method-context is-overridden
 
 
 create: name arguments: arguments return-type: return-type 	--
@@ -15,6 +15,7 @@ create: name arguments: arguments return-type: return-type 	--
 	this is-a-primitive = is-a-primitive
 	this on-package = on-package
 	this body = body
+	this is-overridden = false
 
 
 emit-call: arguments builder: builder
@@ -47,7 +48,7 @@ emit-call: arguments builder: builder
 
 
 emit-object-call: object arguments: arguments builder: builder
-	temporary = builder get-temporary
+	temporary = builder get-temporary-of-type: return-type
 	line = temporary name + " = "
 	line += c-name + "(" + object access
 	for arg in arguments

@@ -1,0 +1,86 @@
+trylon InlinePrimitive
+
+fields function text
+
+
+create: function text: text
+	this function = function
+	this text = text
+
+
+emit-object-call: object arguments: arguments builder: builder
+	# First, ensure that we can use the inline version.
+	# That's only allowed if the object and args are stored primitive (for
+	# types that are primitive).
+	if function on-package is-primitive != object stored-primitive
+		return nil
+	declared-args = function arguments
+	for arg in arguments
+		declared-arg = declared-args head
+		declared-args = declared-args tail
+		if declared-arg type is-primitive != arg stored-primitive
+			return nil
+	
+	# Generate the inline call.
+	result = nil
+	line = ""
+	need-space = false
+	lexer = Lexer new: text
+	loop
+		token = lexer next-token
+		if token == 'eof'
+			break
+		else if token == 'comment'
+			continue
+
+		else if token == 'name'
+			if need-space
+				line += " "
+			name = token text
+			if name == "return"
+				result = builder get-temporary-of-type: function return-type
+				line += result access += " ="
+				need-space = true
+			else if name == "this"
+				line += "this_"
+				need-space = true
+			else
+				# If it's an argument, replace it.
+				replaced-arg = false
+				arg-accesses = arguments
+				for arg in function arguments
+					if name == arg name
+						line += arg-accesses head access
+						replaced-arg = true
+					arg-accesses = arg-accesses tail
+
+				# Otherwise, just pass it thru.
+				if !replaced-arg
+					line += name
+
+				need-space = true
+
+		else if token == 'eol'
+			builder add-line: line
+			line = ""
+			need-space = false
+
+		else if token == 'indent'
+			builder indent
+
+		else if token == 'unindent'
+			builder unindent
+
+		else if token == 'keyword'
+			throw MessageException new: "Keyword in inline definition!"
+
+		else
+			# All other tokens are passed thru.  We try to get the spacing right.
+			if need-space && token != ',' && token != ';' && token != '[' && 	--
+					token != ')' && token != ']'
+				line += " "
+			line += token text
+			need-space = (token != '(' && token != '[')
+
+
+

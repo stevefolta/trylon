@@ -56,14 +56,17 @@ emit-code: builder
 			return function emit-call: arg-results builder: builder
 	
 	# Eventually do some optimization based on type.
-	iff someday
+	iff optimize-object-calls
 		if object-result type
 			function = object-result type lookup-instance-function: name
 			if function && !function is-overridden
+				iff debug-optimized-object-calls
+					print-line: "*** Optimizing call to " + name + "."
+				builder add-extern-declaration: "extern " + function c-signature + ";"
 				return 	--
-					function emit-call: object-result arguments: arg-results 	--
+					function emit-object-call: object-result arguments: arg-results 	--
 						builder: builder
-						# Will default to the same code as below, unless optimizable.
+				# Will default to the same code as below, unless optimizable.
 	
 	# Emit the call.
 	builder using-object-function: name

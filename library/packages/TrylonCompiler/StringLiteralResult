@@ -16,3 +16,6 @@ is-constant
 	return true
 
 
+type
+	return the-compiler get-standard-class: "String"
+

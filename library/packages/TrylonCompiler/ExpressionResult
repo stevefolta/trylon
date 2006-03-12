@@ -8,4 +8,12 @@ is-constant
 	# Default: no.
 	return false
 
+type
+	# Usually unspecified.
+	return nil
+
+stored-primitive
+	# Default: no.
+	return false
+
 
