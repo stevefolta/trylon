@@ -1,0 +1,7 @@
+precious ^(\.objects|\.cp-sources|\.classes\.make|\.dependencies)$
+precious ^.cleet-primitives$
+precious ^trylon$
+precious ^trylon\..*$
+precious ^(gdb-commands|gdbit)$
+precious ^makefile.local-settings$
+
