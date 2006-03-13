@@ -1,0 +1,60 @@
+== arg
+	return this == other
+
+!= arg
+	return this != other
+
+< arg
+	return this < other
+
+> arg
+	return this > other
+
+<= arg
+	return this <= other
+
+>= arg
+	return this >= other
+
+
++ arg
+	return this + other
+
+- arg
+	return this - other
+
+* arg
+	return this * other
+
+/ arg
+	return this / other
+
+% arg
+	return this % other
+
+unary-minus
+	return -this
+
+
+| arg
+	return this / other
+
+& arg
+	return this & other
+
+^ arg
+	return this ^ other
+
+~
+	return ~this
+
+<< arg
+	return this << other
+
+>> arg
+	return this >> other
+
+
+char
+	return this
+
