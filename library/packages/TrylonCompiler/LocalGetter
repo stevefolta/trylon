@@ -12,7 +12,7 @@ emit-call: arguments builder: builder
 	access = mangle-name: local name
 	if local captured-index && local captured-index > 0
 		access = "vars_->" + access
-	return NameResult new: access
+	return NameResult new: access type: local type
 
 
 used-by-lambda: block

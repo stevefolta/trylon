@@ -16,4 +16,7 @@ access
 		(MethodBuilder mangle-name: field name) + ")"
 
 
+type
+	return field type
+
 

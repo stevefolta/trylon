@@ -29,5 +29,9 @@ emit-object-call: object arguments: arguments builder: builder
 c-name
 	virtual
 
+is-overridden
+	# Default: no.
+	return false
+
 
 

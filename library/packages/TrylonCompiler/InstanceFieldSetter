@@ -10,11 +10,9 @@ create: field on-class: on-class
 
 
 emit-object-call: object arguments: arguments builder: builder
-	# This might not actually be used; there was a syntax error in the generated 
-	# code in the Cleet compiler that was never noticed.
 	line = 	--
 		"FieldOf_(" + object access + ", " + 	--
-		(mangle-name: field name) + " = " + 	--
+		(mangle-name: field name) + ") = " + 	--
 		arguments first-item access + ";"
 	builder add-line: line
 	return arguments first-item

@@ -1,7 +1,7 @@
 trylon ObjectCall
 superclass Expression
 
-fields name object arguments
+fields name (String) object arguments
 
 # Very special for prepare-to-emit handling of class and package functions.
 fields package-result-function

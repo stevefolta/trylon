@@ -1,7 +1,7 @@
 trylon-class String
 
 iff !semi-primitive-strings
-	fields start [BytePtr] stopper [BytePtr]
+	fields start (BytePtr) stopper (BytePtr)
 iff semi-primitive-strings
 	fields primitive-start primitive-stopper 	# Do not touch these.
 	primitive-fn start
@@ -33,8 +33,8 @@ iff semi-primitive-strings
 
 
 fn == arg -> Bool
-	p [BytePtr] := start
-	other-p [BytePtr] := arg start
+	p (BytePtr) := start
+	other-p (BytePtr) := arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -50,8 +50,8 @@ fn == arg -> Bool
 	return false
 
 fn != arg -> Bool
-	p [BytePtr] := start
-	other-p [BytePtr] := arg start
+	p (BytePtr) := start
+	other-p (BytePtr) := arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -67,8 +67,8 @@ fn != arg -> Bool
 	return true
 
 fn < arg -> Bool
-	p [BytePtr] := start
-	other-p [BytePtr] := arg start
+	p (BytePtr) := start
+	other-p (BytePtr) := arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -86,8 +86,8 @@ fn < arg -> Bool
 	return false
 
 fn <= arg -> Bool
-	p [BytePtr] := start
-	other-p [BytePtr] := arg start
+	p (BytePtr) := start
+	other-p (BytePtr) := arg start
 	loop
 		if p >= stopper
 			return true
@@ -102,8 +102,8 @@ fn <= arg -> Bool
 	return false
 
 fn > arg -> Bool
-	p [BytePtr] := start
-	other-p [BytePtr] := arg start
+	p (BytePtr) := start
+	other-p (BytePtr) := arg start
 	loop
 		if p >= stopper
 			return false
@@ -118,8 +118,8 @@ fn > arg -> Bool
 	return false
 
 fn >= arg -> Bool
-	p [BytePtr] := start
-	other-p [BytePtr] := arg start
+	p (BytePtr) := start
+	other-p (BytePtr) := arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -136,8 +136,8 @@ fn >= arg -> Bool
 		other-p += 1
 	return false
 
-fn + arg [String] -> String
-	new-string [String] := String new: (length + arg length)
+fn + arg (String) -> String
+	new-string (String) := String new: (length + arg length)
 	new-string start copy-from: start length: length
 	(new-string start + length) copy-from: arg start length: arg length
 	new-string stopper = new-string start + length + arg length
@@ -158,7 +158,7 @@ fn substr: from length: length -> String
 	new-start := start + from
 	return String new: new-start to: new-start + dest-length
 
-fn index-of: char [Char] -> Int
+fn index-of: char (Char) -> Int
 	char-ptr := start
 	while char-ptr < stopper
 		if char-ptr deref-char == char
@@ -166,7 +166,7 @@ fn index-of: char [Char] -> Int
 		char-ptr += 1
 	return -1
 
-fn last-index-of: char [Char] -> Int
+fn last-index-of: char (Char) -> Int
 	char-ptr := stopper - 1
 	while char-ptr >= start
 		if char-ptr deref-char == char
@@ -192,7 +192,7 @@ fn ends-with: other -> Bool
 fn contains: other -> Bool
 	return (index-of-string: other) >= 0
 
-fn at: index [Int] -> Char
+fn at: index (Int) -> Char
 	return (start + index) deref-char
 
 fn first-character -> Char
