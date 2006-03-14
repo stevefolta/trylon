@@ -85,10 +85,11 @@ compile-program: compile-symbols
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"
 		main-directory = main-directory at: "sources"
-	trylon-base-path = System environment-variable-named: "TRYLON_BASE"
-	if trylon-base-path == nil || trylon-base-path is-empty
-		throw MessageException new: "TRYLON_BASE is not set."
-	library-directory = FileDirectory new: trylon-base-path
+	library-path = find-library-path
+	if library-path == nil
+		throw MessageException new: 	--
+			"Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY."
+	library-directory = FileDirectory new: library-path
 	status-reporter report: "Loading Main..."
 	status-reporter indent
 	main-package = Package new: "Main" parent: nil
@@ -474,6 +475,16 @@ report-run-program: program arguments: args
 get-standard-class: name
 	return (main-package get-subpackage: "Standard") get-class: name
 
+
+find-library-path
+	library-path = System environment-variable-named: "TRYLON_LIBRARY"
+	if library-path && !library-path is-empty
+		return library-path
+	for prefix-path in ("/usr/lib", "/usr/local/lib", "/opt/lib")
+		prefix-dir = FileDirectory new: prefix-path
+		if prefix-dir entry-is-directory: "trylon"
+			return prefix-path + "/trylon"
+	return nil
 
 
 # Test.

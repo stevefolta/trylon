@@ -1,0 +1,22 @@
+Trylon ReadMe
+=============
+
+Installation
+------------
+
+To install Trylon from the tarball, do this:
+
+	make
+	make install
+
+The "make install" will install /usr/bin/trylon and /usr/lib/trylon.  If you
+want to install it elsewhere, you can use PREFIX:
+
+	make PREFIX=/opt install
+
+The Trylon compiler will look for its library in a few standard places
+(/usr/lib, /usr/local/lib, /opt/lib), but if install it somewhere else, you
+will need to set the $TRYLON_LIBRARY environment variable to tell it where it
+is.
+
+

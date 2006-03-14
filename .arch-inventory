@@ -4,4 +4,5 @@ precious ^trylon$
 precious ^trylon\..*$
 precious ^(gdb-commands|gdbit)$
 precious ^makefile.local-settings$
+precious ^tarball-date$
 
