@@ -21,7 +21,7 @@ install:
 
 # Tarball creation.
 
-TARBALL_FILES := library misc makefile ReadMe tarball-date
+TARBALL_FILES := library misc makefile ReadMe License tarball-date
 TARBALL_FILES += docs/source docs/html docs/makefile
 TARBALL_FILES += docs/doctifier/sources docs/doctifier/build-settings
 TARBALL_FILES += self-compiler/build-settings self-compiler/main
