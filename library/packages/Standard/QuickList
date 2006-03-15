@@ -1,0 +1,72 @@
+trylon QuickList
+
+# Slightly more efficient -- but more limited -- version of a list.
+# For use in situations where a list is first built up, then consumed once
+# or several times.  Especially good when you've got a loop that may consume
+# more than one list item on each iteration.  Example:
+
+# 	load-and-go: file
+# 		list-builder = QuickList Builder new
+# 		for line in file contents
+# 			list-builder append: line
+# 		go: list-builder list
+	
+# 	go: lines
+# 		loop
+# 			line = lines head
+# 			if line == "ignore:"
+# 				lines = lines tail
+# 			else
+# 				print line
+# 			lines = lines tail
+
+
+fields head tail
+
+
+create: value
+	head = value
+
+
+iterator
+	return Iterator new: this
+
+
+#####
+
+class Builder
+	fields first last
+
+	create
+
+	append: value
+		node = QuickList new: value
+		if first != nil
+			last tail = node
+			last = node
+		else
+			first = node
+			last = node
+	
+	list
+		return first
+
+
+#####
+
+class Iterator
+	fields node
+
+	create: node
+		this node = node
+	
+	is-done
+		return node != nil
+	
+	current-value
+		return node head
+	
+	go-forward
+		node = node tail
+
+

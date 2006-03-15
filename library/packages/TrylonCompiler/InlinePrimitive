@@ -1,11 +1,11 @@
 trylon InlinePrimitive
 
-fields function text
+fields function tokens
 
 
-create: function text: text
+create: function tokens: tokens
 	this function = function
-	this text = text
+	this tokens = tokens
 
 
 emit-object-call: object arguments: arguments builder: builder
@@ -25,9 +25,10 @@ emit-object-call: object arguments: arguments builder: builder
 	result = nil
 	line = ""
 	need-space = false
-	lexer = Lexer new: text
+	tokens := this tokens
 	loop
-		token = lexer next-token
+		token = tokens head
+		tokens = tokens tail
 		if token == 'eof'
 			break
 		else if token == 'comment'

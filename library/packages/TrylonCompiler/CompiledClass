@@ -303,13 +303,10 @@ parse-primitives-file: file
 					throw MessageException new: 	--
 						"Internal error: bad inline function definition! (" + name + ")"
 				cur-token = lexer next-token
-			body-start = lexer p
 			cur-token = lexer next-token 	# Consume 'eol'.
 
 			# Get the body.
-			# *** Will this really handle bodies with indentation in such a way
-			# *** that they can be parsed by InlinePrimitive later?
-			body-end = nil
+			body-builder = QuickList Builder new
 			if cur-token == 'indent'
 				indent-level = 0
 				loop
@@ -321,17 +318,15 @@ parse-primitives-file: file
 							cur-token = lexer next-token	# Consume the unindent.
 							break
 						indent-level -= 1
-					else if cur-token == 'eol'
-						# A good place to stop, if this turns out to be the end of the body.
-						body-end = lexer p
+					body-builder append: cur-token
 
 			# Install the inline primitive.
 			function = lookup-instance-function: name
 			if function == nil || !(function is-a: CompiledFunction)
 				throw MessageException new: 	--
 					"Internal error: inline for an undeclared function. (" + name + ")"
-			body = String new: body-start to: body-end
-			function inline-primitive = InlinePrimitive new: function text: body
+			body = body-builder list
+			function inline-primitive = InlinePrimitive new: function tokens: body
 
 
 
