@@ -4,6 +4,10 @@ Trylon ReadMe
 Installation
 ------------
 
+You must have the Boehm-Demers-Wieser garbage collector installed as "libgc".
+This has different package names on different distributions, such as "boehm-gc"
+(Gentoo), "libgc-dev" (Debian/Ubuntu, or so I'm told), or simply "gc" (Fink).
+
 To install Trylon from the tarball, do this:
 
 	make
