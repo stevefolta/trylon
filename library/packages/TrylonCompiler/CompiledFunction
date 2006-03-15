@@ -3,6 +3,7 @@ superclass TrylonInstanceFunction 	# Not always an instance fn, but it can be.
 
 fields name arguments return-type is-object-function is-a-primitive on-package
 fields body method-context is-overridden
+fields inline-primitive
 
 
 create: name arguments: arguments return-type: return-type 	--

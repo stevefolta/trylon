@@ -5,6 +5,7 @@ superclass Package
 # fields, we make it a subclass of Package.
 
 fields instance-functions instance-fields subclasses superclass class-num
+fields is-primitive
 
 
 create: name parent: parent
@@ -12,6 +13,7 @@ create: name parent: parent
 	instance-functions = Dictionary new
 	instance-fields = List new
 	subclasses = List new
+	is-primitive = false
 
 	if the-compiler build-settings classes-by-num
 		function = InstanceClassFunction new: this
@@ -63,6 +65,14 @@ add-instance-field: field
 		function: (InstanceFieldSetter new: field on-class: this)
 
 
+add-field: field
+	super add-field: field
+	if field name == "is-primitive"
+		value = field initial-value
+		if (value is-a: BoolLiteral) && value value == true
+			is-primitive = true
+
+
 lookup-instance-function: name
 	function = instance-functions at: name
 	if function
@@ -86,6 +96,16 @@ ensure-superclasses: object-class
 
 
 prepare-to-emit
+	# Handle inline primitives.
+	if is-primitive
+		file-name = c-name + ".primitives.inline"
+		primitives-file = find-primitives-file: file-name
+		if primitives-file == nil && parent
+			# This might be a class, so check the parent's directories too.
+			primitives-file = parent find-primitives-file: file-name
+		if primitives-file
+			parse-primitives-file: primitives-file
+
 	for function in functions values
 		function prepare-to-emit
 	for function in instance-functions values
@@ -255,6 +275,63 @@ total-instance-fields
 	if superclass
 		total += superclass total-instance-fields
 	return total
+
+
+parse-primitives-file: file
+	lexer = Lexer new: file contents
+	cur-token = lexer next-token
+	loop
+		if cur-token == 'comment' || cur-token == 'eol'
+			cur-token = lexer next-token
+			continue
+
+		else
+			# Parse the function name.
+			# Cheap but effective way of parsing all method types: 
+			# name, keyword, or binop.
+			name = cur-token string
+			cur-token = lexer next-token
+			while cur-token != 'eol'
+				if cur-token == 'name'
+					# It's an argument name.  We ignore it (it must match the
+					# argument name in the Trylon source file).
+				else if cur-token == 'keyword'
+					name += cur-token text
+				else if cur-token == 'comment'
+					# Skip it.
+				else
+					throw MessageException new: 	--
+						"Internal error: bad inline function definition! (" + name + ")"
+				cur-token = lexer next-token
+			body-start = lexer p
+			cur-token = lexer next-token 	# Consume 'eol'.
+
+			# Get the body.
+			# *** Will this really handle bodies with indentation in such a way
+			# *** that they can be parsed by InlinePrimitive later?
+			body-end = nil
+			if cur-token == 'indent'
+				indent-level = 0
+				loop
+					cur-token = lexer next-token
+					if cur-token == 'indent'
+						indent-level += 1
+					else if cur-token == 'unindent'
+						if indent-level <= 0
+							cur-token = lexer next-token	# Consume the unindent.
+							break
+						indent-level -= 1
+					else if cur-token == 'eol'
+						# A good place to stop, if this turns out to be the end of the body.
+						body-end = lexer p
+
+			# Install the inline primitive.
+			function = lookup-instance-function: name
+			if function == nil || !(function is-a: CompiledFunction)
+				throw MessageException new: 	--
+					"Internal error: inline for an undeclared function. (" + name + ")"
+			body = String new: body-start to: body-end
+			function inline-primitive = InlinePrimitive new: function text: body
 
 
 

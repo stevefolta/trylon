@@ -39,7 +39,7 @@ emit-object-call: object arguments: arguments builder: builder
 			name = token text
 			if name == "return"
 				result = builder get-temporary-of-type: function return-type
-				line += result access += " ="
+				line += result access + " ="
 				need-space = true
 			else if name == "this"
 				line += "this_"
@@ -81,6 +81,8 @@ emit-object-call: object arguments: arguments builder: builder
 				line += " "
 			line += token text
 			need-space = (token != '(' && token != '[')
+
+	return result
 
 
 
