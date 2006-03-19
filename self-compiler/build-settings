@@ -7,3 +7,11 @@ if Darwin
 	c-flags += "-DOSX_FINK" "-I/sw/include"
 	link-flags += "-L/sw/lib"
 
+
+# Only the self-compiler handles these, so setting them separates the
+# C/object files from the ones built by the Cleet bootstrap compiler.  Also,
+# this is where the top-level makefile expects to find them when building
+# the tarball.
+c-sources-dir = ".c-sources-self"
+objects-dir = ".objects-self"
+
