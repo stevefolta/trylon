@@ -1,0 +1,21 @@
+trylon LiteralNil
+superclass Expression
+
+# This is only used for package literals.  All other uses of "nil" refer
+# to a value in "Standard".
+
+create
+
+
+prepare-to-emit
+	# Nothing to do.
+
+emit-code
+	# This is used only for package literals, so we don't need to
+	# implement this.
+
+
+emit-package-literal: stream
+	return NameResult new: "NULL" is-constant: true
+
+

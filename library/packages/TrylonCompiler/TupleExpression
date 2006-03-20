@@ -2,6 +2,7 @@ trylon TupleExpression
 superclass Expression
 
 fields members
+fields index count-literal	# Only used by package literals.
 
 
 create
@@ -36,5 +37,37 @@ emit-code: builder
 		index += 1
 	
 	return tuple
+
+
+assign-package-literal-indices: package
+	for member in members
+		member assign-package-literal-indices: package
+	count-literal = IntLiteral new: members count string
+	count-literal assign-package-literal-indices: package
+	index = package new-literal-index
+
+
+emit-package-literal: stream
+	member-results = List new
+	for member in members
+		member-result = member emit-package-literal: stream
+		member-results append: member-result
+	count-result = count-literal emit-package-literal: stream
+	stream write-all: ( "obj_ tu", index string, "_[] = { " )
+	stream write-all: ( "(obj_) StdClassRef_(Tuple), ", count-result access )
+	for member-result in member-results
+		stream write-all: ( ", ", member-result access )
+	stream write: " };\n"
+	return Result new: index
+
+
+class Result
+	fields index
+
+	create: index
+		this index = index
+	
+	access
+		return "((obj_) tu" + index string + "_)"
 
 

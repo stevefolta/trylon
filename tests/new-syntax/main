@@ -13,6 +13,9 @@ typed-global (Int) = 5
 dict-field =
 	x = 20
 	y = 30
+	sub-dict =
+		value = "hello"
+	tuple = ( "a", "b", "c" )
 
 
 main: args
@@ -94,6 +97,10 @@ tests
 	check: (dict at: "bar") against: "Bar value" title: "Dict literal"
 	check: (dict-field at: "x") against: 20 title: "Package dict literal"
 	check: (dict-field at: "y") against: 30 title: "Package dict literal"
+	check: ((dict-field at: "sub-dict") at: "value") against: "hello" 	--
+		title: "Nested package dict literal"
+	check: ((dict-field at: "tuple") at: 0) against: "a" 	--
+		title: "Tuple in package dict literal"
 
 
 blegh: index (Int)

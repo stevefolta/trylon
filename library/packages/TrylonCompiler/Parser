@@ -178,33 +178,7 @@ parse-package-member: package in-class: in-class
 		consume-token
 
 		# Get the initial value.
-		initial-value = nil
-		if current-token == 'string-literal'
-			initial-value = StringLiteral new: current-token text
-		else if current-token == 'symbol-literal'
-			initial-value = the-compiler get-symbol-literal: current-token text
-		else if current-token == 'int-literal'
-			initial-value = IntLiteral new: current-token text
-		else if current-token == 'float-literal'
-			initial-value = FloatLiteral new: current-token text
-		else if current-token == 'character-literal'
-			initial-value = the-compiler get-character-literal: current-token text
-		else if current-token type == 'name'
-			literal-name = current-token text
-			if literal-name == "true"
-				initial-value = BoolLiteral new: true
-			else if literal-name == "false"
-				initial-value = BoolLiteral new: false
-			else if literal-name == "nil"
-				initial-value = nil
-			else
-				parse-error: "Illegal initial value for a class/package field."
-		else if current-token == 'eol' && next-token == 'indent'
-			initial-value = parse-dict-literal-expression
-			if initial-value == nil
-				parse-error: "Bad Dictionary literal declaration."
-		else
-			parse-error: "Syntax error in class/package field initial value."
+		initial-value = parse-package-literal-value
 		if initial-value
 			initial-value assign-package-literal-indices: package
 		consume-token 	# Value.
@@ -221,6 +195,71 @@ parse-package-member: package in-class: in-class
 			package add-instance-function: function name function: function
 		else
 			package add-function: function
+
+
+parse-package-literal-value
+	value = parse-package-literal-tuple
+	if value
+		# Okay.
+	else if current-token == 'eol' && next-token == 'indent'
+		value = parse-dict-literal-expression
+		if value == nil
+			parse-error: "Bad Dictionary literal declaration."
+	else
+		parse-error: "Syntax error in class/package field initial value."
+
+	return value
+
+
+parse-package-literal-tuple
+	value = parse-package-literal-primary
+	if value
+		# See if there's a tuple.
+		if current-token == ','
+			tuple = TupleExpression new
+			tuple add: value
+			while current-token == ','
+				consume-token
+				value = parse-package-literal-tuple
+				if value == nil
+					parse-error: "Missing value in literal tuple."
+				tuple add: value
+			value = tuple
+	else if current-token == '('
+		consume-token
+		value = parse-package-literal-tuple
+		if value == nil
+			parse-error: "Missing expression after '(' in literal."
+		if current-token != ')'
+			parse-error: "Missing ')' in literal."
+		consume-token
+
+	return value
+
+
+parse-package-literal-primary
+	if current-token == 'string-literal'
+		return StringLiteral new: current-token text
+	else if current-token == 'symbol-literal'
+		return the-compiler get-symbol-literal: current-token text
+	else if current-token == 'int-literal'
+		return IntLiteral new: current-token text
+	else if current-token == 'float-literal'
+		return FloatLiteral new: current-token text
+	else if current-token == 'character-literal'
+		return the-compiler get-character-literal: current-token text
+	else if current-token type == 'name'
+		literal-name = current-token text
+		if literal-name == "true"
+			return BoolLiteral new: true
+		else if literal-name == "false"
+			return BoolLiteral new: false
+		else if literal-name == "nil"
+			return LiteralNil new
+		else
+			parse-error: "Illegal initial value for a class/package field."
+
+	return nil
 
 
 parse-class-file: class

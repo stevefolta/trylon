@@ -298,6 +298,7 @@ extern class_spec_ Standard__Bool;
 extern class_spec_ Standard__BytePtr;
 extern class_spec_ Standard__String;
 extern class_spec_ Standard__Symbol;
+extern class_spec_ Standard__Tuple;
 extern class_spec_ Standard__Dictionary;
 extern class_spec_ Standard__Dictionary__Node;
 
