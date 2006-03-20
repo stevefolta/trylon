@@ -1,0 +1,116 @@
+trylon DictLiteral
+superclass Expression
+
+fields dict index
+
+
+create
+	dict = Dictionary new
+
+
+at: key set-to: value
+	dict at: key set-to: (Value new: value)
+
+
+prepare-to-emit
+	the-compiler get-standard-class: "Dictionary"
+	prepare-to-emit: dict root
+
+prepare-to-emit: node
+	if node left
+		prepare-to-emit: node left
+	if node right
+		prepare-to-emit: node right
+	node value value prepare-to-emit
+
+
+emit-code: builder
+	builder using-class: (the-compiler get-standard-class: "Dictionary")
+	emit-node: dict root builder: builder
+	builder add-dict-literal: this 	# "index" gets set here.
+	return Result new: index
+
+emit-node: node builder: builder
+	if node left
+		emit-node: node left builder: builder
+	if node right
+		emit-node: node right builder: builder
+	node value key-result = (StringLiteral new: node key) emit-code: builder
+	node value value-result = node value value emit-code: builder
+
+
+emit-declaration: stream
+	context = DeclarationContext new: stream
+	root-index = declare-node: dict root context: context
+	stream write-all: ( "\tDefineDict_(", index string, ", " )
+	stream write-all: ( "DictNode_(", index string, ", ", root-index string, ")" )
+	stream write-all: ( ", ", dict num-items string, ");" )
+	stream write-line
+
+declare-node: node context: context
+	stream = context stream
+	left-index = -1
+	if node left
+		left-index = declare-node: node left context: context
+	right-index = -1
+	if node right
+		right-index = declare-node: node right context: context
+	node-index = context new-index
+	stream write-all: 	--
+		( "\tDefineDictNode_(", index string, ", ", node-index string, ", " )
+	stream write-all: ( node value key-result access, ", " )
+	stream write-all: ( node value value-result access, ", " )
+	if left-index >= 0
+		stream write-all: 	--
+			( "DictNode_(", index string, ", ", left-index string, "), " )
+	else
+		stream write: "NULL, "
+	if right-index >= 0
+		stream write-all: 	--
+			( "DictNode_(", index string, ", ", right-index string, "), " )
+	else
+		stream write: "NULL, "
+	stream write-all: ( node level string, ");\n")
+	return node-index
+
+
+#####
+
+class Value
+	fields value key-result value-result
+
+	create: value
+		this value = value
+
+
+#####
+
+class DeclarationContext
+	fields stream next-index
+
+	create: stream
+		this stream = stream
+		next-index = 0
+	
+	new-index
+		result = next-index
+		next-index += 1
+		return result
+
+
+#####
+
+class Result
+	field index
+
+	create: index
+		this index = index
+
+	access
+		return "Dict_(" + index string + ")"
+
+	type
+		return the-compiler get-standard-class: "Dictionary"
+
+
+

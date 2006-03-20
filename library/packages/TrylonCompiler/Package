@@ -137,8 +137,11 @@ get-subpackage: name
 
 get-class: name
 	function = functions at: name
+	if function == nil
+		function = lookup-function: name
 	if function && (function is-a: ClassFunction)
 		return function the-class
+	return nil
 
 
 add-directory: directory

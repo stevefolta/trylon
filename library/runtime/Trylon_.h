@@ -275,6 +275,21 @@ struct Standard__String__internal {
 #endif 	// SEMI_PRIMITIVE_STRINGS_
 
 
+struct Standard__DictNode__internal_ {
+	classref_                            	class_;
+	obj_                                 	key;
+	obj_                                 	value;
+	struct Standard__DictNode__internal_*	left;
+	struct Standard__DictNode__internal_*	right;
+	obj_                                 	level;
+};
+struct Standard__Dict__internal_ {
+	classref_                            	class_;
+	struct Standard__DictNode__internal_*	root;
+	obj_                                 	count;
+};
+
+
 extern class_spec_ Standard__Class;
 extern class_spec_ Standard__Int;
 extern class_spec_ Standard__Float;
@@ -283,6 +298,8 @@ extern class_spec_ Standard__Bool;
 extern class_spec_ Standard__BytePtr;
 extern class_spec_ Standard__String;
 extern class_spec_ Standard__Symbol;
+extern class_spec_ Standard__Dictionary;
+extern class_spec_ Standard__Dictionary__Node;
 
 extern obj_ BuildInt_(int value);
 extern obj_ BuildFloat_(double value);
@@ -364,6 +381,20 @@ _FinishExternC_
 	struct object c##name##_ = { StdClassRef_(Char), (obj_) (value) };
 #define UsingChar_(name) 	extern struct object c##name##_;
 #define Char_(name) 	((obj_) &c##name##_)
+
+#define DefineDict_(index, root, count) 	\
+	static struct object d##index##__count_ = 	\
+		{ StdClassRef_(Int), (obj_) (count) }; 	\
+	static struct Standard__Dict__internal_ d##index##_ = 	\
+		{ StdClassRef_(Dictionary), root, (obj_) &d##index##__count_ };
+#define DefineDictNode_(dictIndex, nodeIndex, key, value, left, right, level) 	\
+	static struct object d##dictIndex##_##nodeIndex##__level_ = 	\
+		{ StdClassRef_(Int), (obj_) (level) }; 	\
+	static struct Standard__DictNode__internal_ d##dictIndex##_##nodeIndex##_ = 	\
+		{ StdClassRef_(Dictionary__Node), key, value, left, right, 	\
+			&d##dictIndex##_##nodeIndex##__level_ };
+#define Dict_(index)	((obj_) &d##index##_)
+#define DictNode_(dictIndex, nodeIndex)	(&d##dictIndex##_##nodeIndex##_)
 
 
 // Helpers for primitives

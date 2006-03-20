@@ -4,6 +4,7 @@ fields code used-object-functions extern-declarations
 fields next-temporary-num num-temporaries-used
 fields string-literals next-string-literal-num
 fields int-literals float-literals next-int-literal-num next-float-literal-num
+fields dict-literals next-dict-literal-num
 fields used-fields used-classes
 fields indent-level
 
@@ -20,6 +21,8 @@ create
 	int-literals = List new
 	next-float-literal-num = 0
 	float-literals = List new
+	dict-literals = List new
+	next-dict-literal-num = 0
 	used-fields = ObjectMap new
 	used-classes = ObjectMap new
 	indent-level = 0
@@ -53,6 +56,12 @@ add-float-literal: float-literal
 	float-literal index = next-float-literal-num
 	next-float-literal-num += 1
 	float-literals append: float-literal
+
+
+add-dict-literal: dict-literal
+	dict-literal index = next-dict-literal-num
+	next-dict-literal-num += 1
+	dict-literals append: dict-literal
 
 
 using-object-function: name
@@ -121,6 +130,10 @@ emit: stream
 			("\tDefineFloat_(", literal index string, ", ", 	--
 			 literal value string, ")")
 		stream write-line
+	
+	# Emit the dict literals.
+	for literal in dict-literals
+		literal emit-declaration: stream
 	
 	# Emit the temporary declarations.
 	if num-temporaries-used > 0

@@ -921,6 +921,39 @@ parse-expression-statement
 	return ExpressionStatement new: expr comment: comment
 
 
+parse-dict-literal-expression
+	expr = parse-expression
+	if expr
+		return expr
+	
+	if current-token == 'eol' && next-token == 'indent'
+		consume-token 	# eol
+		consume-token 	# indent
+		expr = DictLiteral new
+		while current-token != 'unindent'
+			if current-token == 'eol' || current-token == 'comment'
+				consume-token
+			else if current-token == 'name'
+				name = current-token text
+				consume-token
+				if current-token != '='
+					parse-error: "Missing '=' in dictionary literal."
+				consume-token
+				value = parse-dict-literal-expression
+				if value == nil
+					parse-error: 	--
+						"Missing value for \"" + name + "\" in dictionary literal."
+				require-eol
+				expr at: name set-to: value
+			else
+				parse-error: "Syntax error in dictionary literal."
+		consume-token 	# unindent
+		# We'll need an eol to finish the statement, so add one:
+		return-token: (Token new: 'eol')
+
+	return expr
+
+
 parse-expression
 	expr = parse-keyword-expression
 	if expr == nil
@@ -984,7 +1017,7 @@ parse-binary-expression
 		consume-token
 		if !(expr is-a: FunctionCall) && !(expr is-a: ObjectCall)
 			parse-error: "Illegal assignment."
-		expr2 = parse-expression
+		expr2 = parse-dict-literal-expression
 		if expr2 == nil
 			expression-expected-after: token
 		if (expr is-a: FunctionCall) || (expr is-a: ObjectCall)

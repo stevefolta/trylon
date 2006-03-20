@@ -81,6 +81,14 @@ tests
 			test: true title: "Switch statement (multiple values)"
 		else
 			test: true title: "Switch statement (multiple values)"
+	print-line
+	
+	# 2006.3.19: Dictionary literals.
+	dict =
+		foo = "Foo value"
+		bar = "Bar value"
+	check: (dict at: "foo") against: "Foo value" title: "Dict literal"
+	check: (dict at: "bar") against: "Bar value" title: "Dict literal"
 
 
 blegh: index (Int)
