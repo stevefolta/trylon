@@ -17,6 +17,10 @@ emit-code: builder
 	return FloatLiteralResult new: index
 
 
+assign-package-literal-indices: package
+	index = package new-literal-index
+
+
 emit-package-literal: stream
 	stream write-all: ("DefineFloat_(", index string, ", ", value string, ")")
 	stream write-line

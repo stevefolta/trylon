@@ -18,6 +18,10 @@ emit-code: builder
 	return StringLiteralResult new: index
 
 
+assign-package-literal-indices: package
+	index = package new-literal-index
+
+
 emit-package-literal: stream
 	stream write-all: ("DefineString_(", index string, ", \"", value, "\")")
 	stream write-line

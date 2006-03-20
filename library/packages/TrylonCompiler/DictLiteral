@@ -48,14 +48,16 @@ emit-declaration: stream
 	stream write-line
 
 declare-node: node context: context
+	if node == nil
+		return -1
 	stream = context stream
-	left-index = -1
-	if node left
-		left-index = declare-node: node left context: context
-	right-index = -1
-	if node right
-		right-index = declare-node: node right context: context
+	left-index = declare-node: node left context: context
+	right-index = declare-node: node right context: context
 	node-index = context new-index
+	if node value key
+		# In a package literal.
+		node value key-result = node value key emit-package-literal: stream
+		node value value-result = node value value emit-package-literal: stream
 	stream write-all: 	--
 		( "\tDefineDictNode_(", index string, ", ", node-index string, ", " )
 	stream write-all: ( node value key-result access, ", " )
@@ -74,10 +76,29 @@ declare-node: node context: context
 	return node-index
 
 
+assign-package-literal-indices: package
+	assign-indices-to: dict root from: package
+	index = package new-literal-index
+
+assign-indices-to: node from: package
+	if node == nil
+		return
+	assign-indices-to: node left from: package
+	assign-indices-to: node right from: package
+	node value key = StringLiteral new: node key
+	node value key assign-package-literal-indices: package
+	node value value assign-package-literal-indices: package
+
+
+emit-package-literal: stream
+	emit-declaration: stream
+	return Result new: index
+
+
 #####
 
 class Value
-	fields value key-result value-result
+	fields value key-result value-result key
 
 	create: value
 		this value = value

@@ -180,19 +180,13 @@ parse-package-member: package in-class: in-class
 		# Get the initial value.
 		initial-value = nil
 		if current-token == 'string-literal'
-			string-literal = StringLiteral new: current-token text
-			string-literal index = package new-literal-index
-			initial-value = string-literal
+			initial-value = StringLiteral new: current-token text
 		else if current-token == 'symbol-literal'
 			initial-value = the-compiler get-symbol-literal: current-token text
 		else if current-token == 'int-literal'
-			int-literal = IntLiteral new: current-token text
-			int-literal index = package new-literal-index
-			initial-value = int-literal
+			initial-value = IntLiteral new: current-token text
 		else if current-token == 'float-literal'
-			float-literal = FloatLiteral new: current-token text
-			float-literal index = package new-literal-index
-			initial-value = float-literal
+			initial-value = FloatLiteral new: current-token text
 		else if current-token == 'character-literal'
 			initial-value = the-compiler get-character-literal: current-token text
 		else if current-token type == 'name'
@@ -205,8 +199,14 @@ parse-package-member: package in-class: in-class
 				initial-value = nil
 			else
 				parse-error: "Illegal initial value for a class/package field."
+		else if current-token == 'eol' && next-token == 'indent'
+			initial-value = parse-dict-literal-expression
+			if initial-value == nil
+				parse-error: "Bad Dictionary literal declaration."
 		else
 			parse-error: "Syntax error in class/package field initial value."
+		if initial-value
+			initial-value assign-package-literal-indices: package
 		consume-token 	# Value.
 
 		# Add the field.

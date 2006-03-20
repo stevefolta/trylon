@@ -18,6 +18,10 @@ emit-code: builder
 	return IntLiteralResult new: index
 
 
+assign-package-literal-indices: package
+	index = package new-literal-index
+
+
 emit-package-literal: stream
 	stream write-all: ("DefineInt_(", index string, ", ", value string, ")")
 	stream write-line

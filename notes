@@ -133,6 +133,8 @@ C Compiling Bug Log
 
 [2006.3.18]
 After a "There is no \"$(name)\" function" error, got a link error for an undefined reference to a package field in "Main".  Seems like "Main.c" didn't get recompiled.
+[2006.3.19]
+TrylonCompiler__Expression.c changed, not recompiled, probably after an error in DictLiteral.
 
 
 =====

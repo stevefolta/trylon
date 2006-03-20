@@ -8,6 +8,9 @@ emit-code
 	virtual
 
 
+assign-package-literal-indices: package
+	# Default: do nothing.
+
 emit-package-literal: stream
 	# Most Expressions don't support this.
 	throw MessageException new: "Internal error: invalid emit-package-literal."

@@ -10,6 +10,9 @@ true-field = true
 false-field = false
 nil-field = nil
 typed-global (Int) = 5
+dict-field =
+	x = 20
+	y = 30
 
 
 main: args
@@ -89,6 +92,8 @@ tests
 		bar = "Bar value"
 	check: (dict at: "foo") against: "Foo value" title: "Dict literal"
 	check: (dict at: "bar") against: "Bar value" title: "Dict literal"
+	check: (dict-field at: "x") against: 20 title: "Package dict literal"
+	check: (dict-field at: "y") against: 30 title: "Package dict literal"
 
 
 blegh: index (Int)
