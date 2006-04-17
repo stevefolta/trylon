@@ -1,7 +1,7 @@
 trylon MethodBuilder
 
 fields code used-object-functions extern-declarations
-fields next-temporary-num num-temporaries-used
+fields next-temporary-num num-temporaries-used primitive-temporaries
 fields string-literals next-string-literal-num
 fields int-literals float-literals next-int-literal-num next-float-literal-num
 fields dict-literals next-dict-literal-num
@@ -29,11 +29,26 @@ create
 
 
 get-temporary-of-type: type
+	# Handle primitive types.
+	## Using a Dictionary, instead of an ObjectDict (since there is no ObjectDict),
+	## so for now only Standard should have primitive types.
+	if type && type is-primitive
+		if primitive-temporaries == nil
+			primitive-temporaries = Dictionary new
+		temp-num = primitive-temporaries at: type name
+		if temp-num == nil
+			temp-num = 0
+		else
+			temp-num = temp-num + 1
+		(primitive-temporaries at: type name) = temp-num
+		temp-name = "t" + type primitive-type-name + temp-num string + "_"
+		return Temporary new: temp-name type: type
+
+	# Standard temporary handling.
 	temp-num = next-temporary-num
 	next-temporary-num += 1
 	if next-temporary-num > num-temporaries-used
 		num-temporaries-used = next-temporary-num
-	
 	return Temporary new: "t" + temp-num string + "_" type: type
 
 get-temporary

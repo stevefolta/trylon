@@ -51,7 +51,11 @@ emit-object-call: object arguments: arguments builder: builder
 				arg-accesses = arguments
 				for arg in function arguments
 					if name == arg name
-						line += arg-accesses head access
+						arg-value = arg-accesses head
+						if arg-value stored-primitive
+							line += arg-value primitive-access
+						else
+							line += arg-value access
 						replaced-arg = true
 					arg-accesses = arg-accesses tail
 

@@ -10,10 +10,21 @@ create: name type: type
 
 
 access
+	if stored-primitive
+		return "Build" + declared-type name + "_(" + name + ")"
+
+	return name
+
+
+primitive-access
 	return name
 
 
 type
 	return declared-type
+
+
+stored-primitive
+	return declared-type && declared-type is-primitive
 
 

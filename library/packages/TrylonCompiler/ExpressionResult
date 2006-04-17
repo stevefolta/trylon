@@ -4,6 +4,9 @@ trylon ExpressionResult
 access
 	virtual
 
+primitive-access
+	throw MessageException: "Internal error: Inappropriate primitive-access."
+
 is-constant
 	# Default: no.
 	return false

@@ -5,7 +5,7 @@ superclass Package
 # fields, we make it a subclass of Package.
 
 fields instance-functions instance-fields subclasses superclass class-num
-fields is-primitive
+fields is-primitive primitive-type-name
 
 
 create: name parent: parent
@@ -71,6 +71,10 @@ add-field: field
 		value = field initial-value
 		if (value is-a: BoolLiteral) && value value == true
 			is-primitive = true
+	else if field name == "primitive-type-name"
+		value = field initial-value
+		if (value is-a: StringLiteral)
+			primitive-type-name = value value
 
 
 lookup-instance-function: name

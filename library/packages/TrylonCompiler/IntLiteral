@@ -15,7 +15,7 @@ prepare-to-emit
 
 emit-code: builder
 	builder add-int-literal: this 	# The "index" gets set here.
-	return IntLiteralResult new: index
+	return IntLiteralResult new: this
 
 
 assign-package-literal-indices: package

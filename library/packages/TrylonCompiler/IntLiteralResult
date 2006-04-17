@@ -1,18 +1,24 @@
 trylon IntLiteralResult
 superclass ExpressionResult
 
-field index
+field literal
 
 
-create: index
-	this index = index
+create: literal
+	this literal = literal
 
 
 access
-	return "Int_(" + index string + ")"
+	return "Int_(" + literal index string + ")"
+
+primitive-access
+	return literal value string
 
 
 is-constant
+	return true
+
+stored-literal
 	return true
 
 
