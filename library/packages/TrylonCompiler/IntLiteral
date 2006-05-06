@@ -26,7 +26,7 @@ emit-package-literal: stream
 	stream write-all: ("DefineInt_(", index string, ", ", value string, ")")
 	stream write-line
 
-	return IntLiteralResult new: index
+	return IntLiteralResult new: this
 
 
 
