@@ -140,6 +140,8 @@ Lambda object:
 
 Need different classes for different numbers of args (Lambda0, ... Lambda9).
 
+Or would it be okay to have one class, and take a tuple?  But there'd still need to be nullary vs. argumented versions.
+
 
 =====
 

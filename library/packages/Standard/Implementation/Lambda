@@ -1,0 +1,46 @@
+trylon Lambda
+
+fields context code
+
+
+create: context code: code
+	this context = context
+	this code = code
+
+
+class Lambda0
+	primitive-fn do
+
+class Lambda1
+	primitive-fn do-with: arg1
+
+class Lambda2
+	primitive-fn do-with: arg1 and: arg2
+
+class Lambda3
+	primitive-fn do-with: arg1 and: arg2 and: arg3
+
+class Lambda4
+	primitive-fn do-with: arg1 and: arg2 and: arg3 and: arg4
+
+class Lambda5
+	primitive-fn do-with: arg1 and: arg2 and: arg3 and: arg4 and: arg5
+
+class Lambda6
+	primitive-fn do-with: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6
+
+class Lambda7
+	primitive-fn 	--
+		do-with: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6 and: arg7
+
+class Lambda8
+	primitive-fn 	--
+		do-with: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6  	--
+			and: arg7 and: arg8
+
+class Lambda9
+	primitive-fn 	--
+		do-with: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6  	--
+			and: arg7 and: arg8 and: arg9
+
+
