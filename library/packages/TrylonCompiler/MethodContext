@@ -46,6 +46,12 @@ has-lambdas
 	return lambdas != nil
 
 
+add-lambda: lambda
+	if lambdas == nil
+		lambdas = List new
+	lambdas append: lambda
+
+
 capture-variable: local
 	# Add it to the captured-variables.
 	var-list = captured-variables at: local name
@@ -82,6 +88,7 @@ emit-lambda-code: stream
 	# Emit the lambdas.
 	for lambda in lambdas
 		# Emit the signature.
+		# *** Next line seems all wrong:
 		stream write-all: ("obj_ ", lambda c-name, "(struct ", vars-name, " vars_")
 		for arg in lambda arguments values
 			stream write: ", obj_ "

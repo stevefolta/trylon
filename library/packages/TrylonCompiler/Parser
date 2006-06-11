@@ -1032,6 +1032,8 @@ parse-keyword-expression
 			# 	block = parse-block: true
 			# 	lambda = LambdaExpression new: block
 			# 	# *** Add the lambda to the CompiledFunction's list (how?).
+			# 	# *** Or just to the MethodContext's list?
+			# 	context enclosing-method-context add-lambda: lambda
 			# 	args append: lambda
 			# 	# We'll need an EOL to finish off the current statement, so fake one.
 			# 	return-token: (Token new: 'eol' text: "")

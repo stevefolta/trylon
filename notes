@@ -129,6 +129,20 @@ CLexer: 13.6s
 
 =====
 
+Lambda Implementation
+	[2006.6.10]
+
+Lambda object:
+
+	<Lambda0 class>
+	context
+	code
+
+Need different classes for different numbers of args (Lambda0, ... Lambda9).
+
+
+=====
+
 C Compiling Bug Log
 
 [2006.3.18]
