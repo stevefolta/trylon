@@ -2,6 +2,9 @@ trylon LambdaExpression
 superclass Expression
 
 fields block
+fields specific-lambda-class 	# Not valid until after prepare-to-emit.
+
+lambda-class = nil
 
 
 create: block
@@ -9,11 +12,38 @@ create: block
 
 
 prepare-to-emit
-	# ***
+	if lambda-class == nil
+		standard-package = the-compiler main-package get-subpackage: "Standard"
+		implementation-package = standard-package get-subpackage: "Implementation"
+		lambda-class = implementation-package get-class: "Lambda"
+
+	specific-lambda-class-name = "Lambda" + block arguments count
+	specific-lambda-class = 	--
+		lambda-class get-class: specific-lambda-class-name
+	if specific-lambda-class == nil
+		throw 	--
+			InternalException new: "No \"" + specific-lambda-class-name + "\" class."
 
 
 emit-code: builder
-	# ***
+	# Declare the creator.
+	creator-c-name = (mangle-name: "create:code:") + "__" + lambda-class c-name
+	line = "extern obj_ " + creator-c-name + "(obj_, obj_, obj_);"
+	builder add-extern-declaration: line
+
+	# Allocate the object.
+	temporary = builder get-temporary
+	line = temporary name + " = RawNew_(" + specific-lambda-class c-name + ");"
+	builder add-line: line
+
+	# Call the creator.
+	line = creator-c-name
+	line += "(" + temporary name + ", "
+	line += "BuildBytePtr_((byte_ptr) vars_), "
+	line += "BuildBytePtr_((byte_ptr) " + block c-name + "));"
+	builder add-line: line
+
+	return temporary
 
 
 
