@@ -145,6 +145,21 @@ Or would it be okay to have one class, and take a tuple?  But there'd still need
 
 =====
 
+Package Macros
+	[2006.6.15]
+
+Add macros to Trylon.h to make declarations (hopefully) easier, or at least more portable.
+
+	#define LambdaPkg_	Subpkg_(Lambda, Subpkg_(Implementation, StandardPkg_))
+
+	obj_ Pkgfn_(do_with_co_, Subpkg_(Lambda0, LambdaPkg_))(obj_ this_, obj_ value)
+	{
+		/***/
+	}
+
+
+=====
+
 C Compiling Bug Log
 
 [2006.3.18]
