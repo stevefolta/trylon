@@ -160,6 +160,28 @@ Add macros to Trylon.h to make declarations (hopefully) easier, or at least more
 
 =====
 
+Package Macros Again
+	[2006.6.17]
+
+Better yet!:  Pass the package and class names in as -D args.
+
+	obj_ Pkgfn_(create, ThisClass_)(obj_ this)
+	{
+		/***/
+	}
+
+	obj_ Pkgfn_(do_with_co_, Subpkg_(Lambda0, ThisClass_))(obj_ this, obj_ value)
+	{
+		/***/
+	}
+
+Not only is this easier on primitives writers, but it means that packages can be relocated without changing the primitives.  Also, use just MyClass.primitives.c (translating the name when the file is copied) instead of MyPackage__MyClass.primitives.c.
+
+The hitches: The cleet-bootstrap-compiler will need to be changed too, or parallel primitives files will need to be maintained.  The class/package will need to be stored in the CFile.
+
+
+=====
+
 C Compiling Bug Log
 
 [2006.3.18]
