@@ -182,6 +182,14 @@ The hitches: The cleet-bootstrap-compiler will need to be changed too, or parall
 
 =====
 
+Package Macros Yet Again
+	[2006.7.8]
+
+I went and implemented this, but it didn't work.  Why not?  Because C++'s ## operator sucks sucks sucks!  It prevents expansion of its arguments!
+
+
+=====
+
 C Compiling Bug Log
 
 [2006.3.18]
