@@ -3,7 +3,7 @@ trylon-class Tuple
 field num-items
 
 class-fn new: num-items
-	tuple [Tuple] := --
+	tuple (Tuple) := --
 		Implementation allocate-object: Tuple with-extra-slots: num-items
 	tuple num-items = num-items
 	return tuple

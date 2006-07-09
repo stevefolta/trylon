@@ -231,7 +231,7 @@ copy-primitives-files: c-files
 		if primitives-file
 			is-changed = 	--
 				the-compiler copy-to-sources: primitives-file dest-name: c-file-name
-			c-files add: file-name is-changed: is-changed
+			c-files add: file-name package: this is-changed: is-changed
 	
 	# Have all children copy theirs.
 	for function in functions values

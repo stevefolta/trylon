@@ -12,3 +12,9 @@ create-package: package is-changed: is-changed
 	this name = package c-name
 	this is-changed = is-changed
 
+
+create: name package: package is-changed: is-changed
+	this name = name
+	this package = package
+	this is-changed = is-changed
+
