@@ -17,6 +17,9 @@
 typedef struct Standard__Class__internal class_spec_;
 typedef struct object* obj_;
 
+#define Pkgfn_(fnName, className) 	fnName##__##className
+#define Subpkg_(subName, superName)	superName##__##subName
+
 #ifdef CLASSES_BY_NUM_
 
 typedef int classref_;

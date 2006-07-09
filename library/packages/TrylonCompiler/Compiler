@@ -119,7 +119,7 @@ compile-program: compile-symbols
 	c-files = CFiles new
 	for package in package-queue
 		is-changed = package emit-code
-		c-files add: package c-name is-changed: is-changed
+		c-files add-package: package is-changed: is-changed
 	status-reporter unindent
 
 	# Another round of ensure-superclasses, to get classes loaded during 
@@ -179,6 +179,12 @@ compile-program: compile-symbols
 		args append: build-settings c-sources-dir + "/" + file-name + ".c"
 		args append: "-o"
 		args append: build-settings objects-dir + "/" + file-name + ".o"
+		package = c-file package
+		if package
+			if package is-a: CompiledClass
+				args append: "-DThisClass_=" + package c-name
+			else
+				args append: "-DThisPkg_=" + package c-name
 		for flag in build-settings c-flags
 			args append: flag
 		report-run-program: build-settings c-compiler arguments: args

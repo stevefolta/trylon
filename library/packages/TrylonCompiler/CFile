@@ -1,9 +1,14 @@
 trylon CFile
 
-fields name is-changed
+fields name package is-changed
 
 create: name is-changed: is-changed
 	this name = name
 	this is-changed = is-changed
 
+
+create-package: package is-changed: is-changed
+	this package = package
+	this name = package c-name
+	this is-changed = is-changed
 

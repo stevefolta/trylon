@@ -10,6 +10,9 @@ create
 add: name is-changed: is-changed
 	files append: (CFile new: name is-changed: is-changed)
 
+add-package: package is-changed: is-changed
+	files append: (CFile new-package: package is-changed: is-changed)
+
 
 iterator
 	return files iterator
