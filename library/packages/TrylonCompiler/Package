@@ -113,7 +113,7 @@ add-package: name directory: directory
 
 
 add-package: name
-	add-package: name directory: nil
+	return add-package: name directory: nil
 
 
 get-subpackage: name
