@@ -3,6 +3,7 @@
 #include "Trylon_.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #ifdef OSX_FINK
 	#include "gc.h"
 #else

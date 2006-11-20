@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/utsname.h>
+#include <stdio.h>
 #ifdef OSX_FINK
 	// Fink doesn't use the gc directory for some reason.
 	#include <gc.h>
