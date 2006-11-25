@@ -190,6 +190,17 @@ I went and implemented this, but it didn't work.  Why not?  Because C++'s ## ope
 
 =====
 
+Dispatch Table Speedup Attempts
+	[2006.11.25]
+
+                	Real	User
+Original        	17  	13
+next-clear-from 	17  	13
+primitive       	13.9	10.4
+
+
+=====
+
 C Compiling Bug Log
 
 [2006.3.18]

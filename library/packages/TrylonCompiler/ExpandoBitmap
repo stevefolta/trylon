@@ -29,6 +29,9 @@ at: index set-to: value
 		(bitmap byte-at: which-byte) &= ~mask
 
 
+primitive-fn next-clear-from: index
+
+
 expand: needed-num-bytes
 	new-num-bytes = num-bytes + growth-increment
 	while new-num-bytes < needed-num-bytes

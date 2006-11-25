@@ -6,6 +6,7 @@ precious ^trylon\..*$
 precious ^trylonx$
 precious ^temp$
 precious ^gmon\.out$
+precious ^gprof\.txt$
 precious ^profile.*$
 precious ^.gdb.*$
 

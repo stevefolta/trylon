@@ -19,9 +19,7 @@ fit-into: dispatch-table used-offsets: used-offsets
 	# Very slow method.
 	offset = 0
 	loop
-		if used-offsets at: offset
-			offset += 1
-			continue
+		offset = used-offsets next-clear-from: offset
 
 		fits-here = true
 		for entry in entries
