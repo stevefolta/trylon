@@ -59,6 +59,18 @@ obj_ ___Standard__Char(obj_ this_, obj_ arg)
 }
 
 
+obj_ _an___Standard__Char(obj_ this_, obj_ arg)
+{
+	return BuildChar_(value_(this_) & value_(arg));
+}
+
+
+obj_ _or___Standard__Char(obj_ this_, obj_ arg)
+{
+	return BuildChar_(value_(this_) | value_(arg));
+}
+
+
 obj_ string__Standard__Char(obj_ this_)
 {
 	char str[32];

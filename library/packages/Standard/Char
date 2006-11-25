@@ -12,6 +12,8 @@ primitive-fn >= arg [Char] -> Bool
 
 primitive-fn + arg [Char] -> Char
 primitive-fn - arg [Char] -> Char
+primitive-fn & arg (Char) -> Char
+primitive-fn | arg (Char) -> Char
 
 primitive-fn string -> String
 primitive-fn int -> Int

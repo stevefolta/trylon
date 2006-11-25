@@ -287,14 +287,33 @@ next-token
 			return Token new: type
 
 		# Name.
-		else if (c >= `a` && c <= `z`) || (c >= `A` && c <= `Z`) || c == `_`
+		else if (c >= `a` && c <= `z`) || (c >= `A` && c <= `Z`) || c == `_` || 	--
+		        (c & 0xF0) >= 0xC0
+			# The first character might be a UTF-8 character, so handle that.
+			hi-nybble = c & 0xF0
+			if hi-nybble >= 0xC0
+				p go-forward
+				if hi-nybble >= 0xE0
+					p go-forward
+					if hi-nybble == 0xF0
+						p go-forward
+			# Read the rest of the characters.
 			loop
 				c = cur-char
 				is-id-char = 	--
 					c == `_` || c == `-` || (c >= `a` && c <= `z`) || 	--
 					(c >= `A` && c <= `Z`) || (c >= `0` && c <= `9`)
 				if !is-id-char
-					break
+					# It still might be the first byte of a UTF-8 character.
+					hi-nybble = c & 0xF0
+					if hi-nybble >= 0xC0
+						p go-forward
+						if hi-nybble >= 0xE0
+							p go-forward
+							if hi-nybble == 0xF0
+								p go-forward
+					else
+						break
 				p go-forward
 			type = 'name'
 			# Could be a keyword.
