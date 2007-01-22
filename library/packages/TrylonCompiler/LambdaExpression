@@ -17,7 +17,7 @@ prepare-to-emit
 		implementation-package = standard-package get-subpackage: "Implementation"
 		lambda-class = implementation-package get-class: "Lambda"
 
-	specific-lambda-class-name = "Lambda" + block arguments count
+	specific-lambda-class-name = "Lambda" + block arguments count string
 	specific-lambda-class = 	--
 		lambda-class get-class: specific-lambda-class-name
 	if specific-lambda-class == nil
