@@ -1,0 +1,21 @@
+Title: Trylon
+
+=====
+
+What is Trylon?
+
+Trylon is a computer language.  It is basically a cross between Python and Smalltalk.  Unlike those languages, it is not a dynamic (or "scripting") language; instead, Trylon programs compile into native binary programs (via an intermediate C step).
+
+=====
+
+Getting Trylon
+
+Trylon is available as a <a href="trylon.tgz">tarball</a> which should compile on Unixy systems (but you'll need to have the Boehm-Demers-Weiser garbage collector package installed).
+
+=====
+
+Documentation
+
+Documentation is very rudimentary and incomplete currently.  There is an <a href="trylon.html">introduction to building Trylon programs</a>, and pages on <a href="expressions.html">expressions</a> and <a href="statements.html">statements</a>.
+
+

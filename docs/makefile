@@ -1,5 +1,5 @@
 PAGES := 	\
-	trylon expressions statements
+	trylon expressions statements index
 
 VPATH = source
 

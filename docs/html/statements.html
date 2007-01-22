@@ -118,6 +118,65 @@ throw MessageException new: "Couldn't connect."</div>
 
 </div>
 
+<div class="entry">
+<div class="entry-title"> Expression Statements </div>
+<p>
+An expression on a line by itself also constitutes a statement:
+</p>
+
+<div class="code">print-line: "Hello world!"</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Assignment </div>
+<p>
+Assignment in Trylon is designed to be easy to read (and type), but the rules behind it can be a little complex.
+</p>
+
+<div class="code">class MyObject
+  fields total
+
+  grand-total = 0   # A class variable, with its initial value.
+
+  reset
+    total = 0   # Sets the object's "total" field.
+
+  frobnicate: value
+    massaged-value = value * 7 + 3   # Creates a new local variable.
+    total = total + massaged-value   # Sets the object's "total" field.
+    grand-total = grand-total + massaged-value   # Sets the class variable.</div>
+
+<p>
+The basic idea is that an assignment will assign to a variable in the current scope, and if no such variable exists, a new local variable will be created.
+</p>
+
+<p>
+Assignment can also be a shorthand for a function call:
+</p>
+
+<div class="code">(array at: 7) = "hello"   # is the same as:
+array at: 7 set-to: "hello"</div>
+
+<p>
+If the function being set is a unary function, rather than a keyword function, then the setter function's name is the unary function's name with a colon appended:
+</p>
+
+<div class="code">class MyClass
+  fields real-name
+
+  name
+    return real-name
+
+  name: new-name
+    real-name = new-name + " Jr."
+
+obj = MyClass new
+obj name = "Joey Jo Jo Shabbadoo"
+print-line: obj name   # Prints "Joey Jo Jo Shabbadoo Jr."</div>
+
+</div>
+
 
 
 </body>
