@@ -80,6 +80,8 @@ mangle-name: name
 				mangled-char = "_lb_"
 			else if c == `_`
 				mangled-char = "_ul_"
+			else if c == `.`
+				mangled-char = "_dt_"
 			else
 				mangled-char = "_" + (c & 0xFF) int string + "_"
 

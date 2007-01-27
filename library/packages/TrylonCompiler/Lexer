@@ -205,8 +205,6 @@ next-token
 			return Token new: '['
 		else if c == `]`
 			return Token new: ']'
-		else if c == `.`
-			return Token new: '.'
 		else if c == `,`
 			return Token new: ','
 		else if c == `;`
@@ -288,7 +286,7 @@ next-token
 
 		# Name.
 		else if (c >= `a` && c <= `z`) || (c >= `A` && c <= `Z`) || c == `_` || 	--
-		        (c & 0xF0) >= 0xC0
+		        c == `.` || (c & 0xF0) >= 0xC0
 			# The first character might be a UTF-8 character, so handle that.
 			hi-nybble = c & 0xF0
 			if hi-nybble >= 0xC0
@@ -301,7 +299,7 @@ next-token
 			loop
 				c = cur-char
 				is-id-char = 	--
-					c == `_` || c == `-` || (c >= `a` && c <= `z`) || 	--
+					c == `_` || c == `-` || c == `.` || (c >= `a` && c <= `z`) || 	--
 					(c >= `A` && c <= `Z`) || (c >= `0` && c <= `9`)
 				if !is-id-char
 					# It still might be the first byte of a UTF-8 character.

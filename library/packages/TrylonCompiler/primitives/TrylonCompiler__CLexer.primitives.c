@@ -137,7 +137,7 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 	UsingSym_(string_literal) UsingSym_(symbol_literal)
 	UsingSym_(comment)
 	UsingSym_(_40_) UsingSym_(_41_) UsingSym_(_123_) UsingSym_(_125_)
-	UsingSym_(_in_) UsingSym_(_dx_) UsingSym_(_46_) UsingSym_(_44_)
+	UsingSym_(_in_) UsingSym_(_dx_) UsingSym_(_44_)
 	UsingSym_(_59_) UsingSym_(_tw_)
 	UsingSym_(_pl_) UsingSym_(_pl__eq_)
 	UsingSym_(_eq_) UsingSym_(_eq__eq_)
@@ -373,8 +373,6 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 				return token(Sym_(_in_));
 			case ']':
 				return token(Sym_(_dx_));
-			case '.':
-				return token(Sym_(_46_));
 			case ',':
 				return token(Sym_(_44_));
 			case ';':
@@ -474,10 +472,11 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 			case 'a' ... 'z':
 			case 'A' ... 'Z':
 			case '_':
+			case '.':
 				while (1) {
 					c = curChar(self);
 					isIDChar = 
-						(c == '_' || c == '-' || (c >= 'a' && c <= 'z') ||
+						(c == '_' || c == '-' || c == '.' || (c >= 'a' && c <= 'z') ||
 						 (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'));
 					if (!isIDChar)
 						break;
