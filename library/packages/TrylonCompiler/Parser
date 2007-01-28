@@ -54,6 +54,37 @@ require-eol
 	return comment
 
 
+get-subblock
+	# Returns a StringBuilder
+	block = StringBuilder new
+
+	# Be careful about our readahead.  We need to see an eol, and then (if
+	# there's anything in the subblock) an indent.  We can't read ahead after
+	# that, because we need to make special lexer calls.
+	if third-token
+		throw MessageException new: 	--
+				"Internal: tried to get an subblock when there was a third-token."
+	if current-token != 'eol'
+		throw MessageException new: "Internal: No eol before a subblock."
+	if next-token != 'indent'
+		consume-token 	# 'eol'
+		return block
+	current-token = nil
+	next-token = nil
+
+	# Read the block.
+	block += lexer first-subblock-line
+	loop
+		line = lexer subblock-line
+		if line == nil
+			break
+		block += line
+
+	# Return to regular parsing.
+	current-token = lexer next-token
+	next-token = lexer next-token
+	return block
+
 
 # Highest level (class or package) parsing
 
@@ -1347,6 +1378,23 @@ parse-primary-expression
 		value = current-token text
 		consume-token
 		return the-compiler get-character-literal: value
+	
+	else if token == 'text-literal-start'
+		initial-text = current-token text
+		consume-token
+		block = get-subblock
+		if !initial-text is-empty
+			block prepend: "\n"
+			block prepend: initial-text
+		# We'll need an eol to finish the statement, so add one:
+		return-token: (Token new: 'eol')
+		# Massage the string, since we (currently) store string literals in
+		# C-escaped form.
+		massaged-block = StringBuilder new
+		for line in block string lines
+			massaged-block += line
+			massaged-block += "\\n\\\n"
+		return StringLiteral new: massaged-block string
 	
 	else if token == '('
 		consume-token

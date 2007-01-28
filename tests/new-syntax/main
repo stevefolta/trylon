@@ -103,11 +103,22 @@ tests
 		title: "Tuple in package dict literal"
 	print-line
 	
-	# 2007.1.27
+	# 2007.1.27: Dots in identifiers.
 	.foo = "dot foo"
 	check: .foo against: "dot foo" title: "Dots in identifiers"
 	foo.bar = "foo dot bar"
 	check: foo.bar against: "foo dot bar" title: "Dots in identifiers"
+	print-line
+
+	# 2007.1.27: Text literals.
+	text = "
+		This is a text literal.
+		This is line 2.
+		This is line 3.
+	print: text
+	text = "Initial line.
+		Blocked line.
+	print: text
 
 
 blegh: index (Int)
