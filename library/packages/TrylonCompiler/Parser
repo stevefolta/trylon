@@ -178,6 +178,10 @@ parse-package-contents: package
 				consume-token
 			consume-token
 
+		else if name == "c-preamble"
+			consume-token
+			package c-preamble = get-subblock string
+
 		else
 			parse-package-member: package in-class: false
 	
@@ -271,6 +275,8 @@ parse-package-literal-tuple
 parse-package-literal-primary
 	if current-token == 'string-literal'
 		return StringLiteral new: current-token text
+	else if current-token == 'text-literal-start'
+		return parse-text-literal
 	else if current-token == 'symbol-literal'
 		return the-compiler get-symbol-literal: current-token text
 	else if current-token == 'int-literal'
@@ -352,7 +358,8 @@ parse-class-contents: the-class
 			break
 
 		if name == "fn" || name == "function" || 	--
-		   name == "primitive-fn" || name == "primitive-function"
+		   name == "primitive-fn" || name == "primitive-function" || 	--
+		   name == "c-fn" || name == "c-function"
 			function = parse-function: true is-object-function: true
 			the-class add-instance-function: function name function: function
 		else if name == "class-fn" || name == "class-function" || 	--
@@ -397,6 +404,10 @@ parse-class-contents: the-class
 			while current-token != 'eol'
 				consume-token
 			consume-token
+
+		else if name == "c-preamble"
+			consume-token
+			the-class c-preamble = get-subblock string
 
 		else
 			parse-package-member: the-class in-class: true
@@ -476,8 +487,10 @@ parse-function: at-declarator is-object-function: is-object-function
 	# "fn" or "function" (etc.) has already been recognized; just check it for 
 	# primitiveness.
 	is-primitive = false
+	has-c-body = false
 	if at-declarator
 		is-primitive = current-token text starts-with: "primitive-"
+		has-c-body = current-token text starts-with: "c-"
 		consume-token
 	
 	# Get the name.
@@ -527,14 +540,17 @@ parse-function: at-declarator is-object-function: is-object-function
 		consume-token
 		return-type = parse-type-spec
 	
-	require-eol
+	if !has-c-body
+		require-eol
 
 	report: "Parsing " + name + "..."
 
 	# Parse the body.
 	body = nil
 	method-context = nil
-	if !is-primitive
+	if has-c-body
+		body = get-subblock string
+	else if !is-primitive
 		saved-context = context
 		method-context = 	--
 			MethodContext new: arguments is-object-function: is-object-function 	--
@@ -544,13 +560,20 @@ parse-function: at-declarator is-object-function: is-object-function
 		context = saved-context
 	
 	# Build the function and return it.
-	new-function = 	--
-		CompiledFunction new: name arguments: arguments 	--
-			return-type: return-type is-object-function: is-object-function 	--
-			is-a-primitive: is-primitive on-package: context body: body
-	new-function method-context = method-context
-	if method-context
-		method-context function = new-function
+	new-function = nil
+	if has-c-body
+		new-function = 	--
+			CompiledFunction new: name arguments: arguments 	--
+				return-type: return-type is-object-function: is-object-function 	--
+				on-package: context c-body: body
+	else
+		new-function = 	--
+			CompiledFunction new: name arguments: arguments 	--
+				return-type: return-type is-object-function: is-object-function 	--
+				is-a-primitive: is-primitive on-package: context body: body
+		new-function method-context = method-context
+		if method-context
+			method-context function = new-function
 	return new-function
 
 
@@ -1380,21 +1403,7 @@ parse-primary-expression
 		return the-compiler get-character-literal: value
 	
 	else if token == 'text-literal-start'
-		initial-text = current-token text
-		consume-token
-		block = get-subblock
-		if !initial-text is-empty
-			block prepend: "\n"
-			block prepend: initial-text
-		# We'll need an eol to finish the statement, so add one:
-		return-token: (Token new: 'eol')
-		# Massage the string, since we (currently) store string literals in
-		# C-escaped form.
-		massaged-block = StringBuilder new
-		for line in block string lines
-			massaged-block += line
-			massaged-block += "\\n\\\n"
-		return StringLiteral new: massaged-block string
+		return parse-text-literal
 	
 	else if token == '('
 		consume-token
@@ -1472,6 +1481,24 @@ make-binop-call: name with: object and: argument
 	arguments: List new
 	arguments append: argument
 	return ObjectCall new: name object: object arguments: arguments
+
+
+parse-text-literal
+	initial-text = current-token text
+	consume-token
+	block = get-subblock
+	if !initial-text is-empty
+		block prepend: "\n"
+		block prepend: initial-text
+	# We'll need an eol to finish the statement, so add one:
+	return-token: (Token new: 'eol')
+	# Massage the string, since we (currently) store string literals in
+	# C-escaped form.
+	massaged-block = StringBuilder new
+	for line in block string lines
+		massaged-block += line
+		massaged-block += "\\n\\\n"
+	return StringLiteral new: massaged-block string
 
 
 parse-error: message

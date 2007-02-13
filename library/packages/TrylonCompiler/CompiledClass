@@ -138,6 +138,10 @@ emit-c-file
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
 
+	# C Preamble
+	if c-preamble
+		stream write-line: c-preamble
+
 	# Class object.
 	superclass-ref = nil
 	if superclass

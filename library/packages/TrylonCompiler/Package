@@ -3,7 +3,7 @@ superclass Context
 
 fields name parent functions fields directories
 fields uses-packages
-fields has-primitives is-main
+fields has-primitives is-main c-preamble
 fields next-literal-index
 
 
@@ -276,6 +276,10 @@ emit-c-file
 	stream write-line
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
+
+	# C Preamble
+	if c-preamble
+		stream write-line: c-preamble
 
 	# Functions.
 	for function in functions values

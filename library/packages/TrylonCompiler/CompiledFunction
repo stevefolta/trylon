@@ -2,7 +2,7 @@ trylon CompiledFunction
 superclass TrylonInstanceFunction 	# Not always an instance fn, but it can be.
 
 fields name arguments return-type is-object-function is-a-primitive on-package
-fields body method-context is-overridden
+fields body method-context is-overridden c-body
 fields inline-primitive
 
 
@@ -16,6 +16,18 @@ create: name arguments: arguments return-type: return-type 	--
 	this is-a-primitive = is-a-primitive
 	this on-package = on-package
 	this body = body
+	this is-overridden = false
+
+
+create: name arguments: arguments return-type: return-type 	--
+		is-object-function: is-object-function 	--
+		on-package: on-package c-body: c-body
+	this name = name
+	this arguments = arguments
+	this return-type = return-type
+	this is-object-function = is-object-function
+	this on-package = on-package
+	this c-body = c-body
 	this is-overridden = false
 
 
@@ -65,7 +77,7 @@ prepare-to-emit
 
 
 emit-code: stream
-	if body == nil
+	if body == nil && c-body == nil
 		return
 	
 	if method-context && method-context has-lambdas
@@ -75,9 +87,15 @@ emit-code: stream
 	stream write-line: c-signature
 
 	# Emit the body.
-	builder = MethodBuilder new
-	body emit-code: builder
-	builder emit: stream
+	if body
+		builder = MethodBuilder new
+		body emit-code: builder
+		builder emit: stream
+	else if c-body
+		stream write-line: "{"
+		stream write: c-body
+		stream write-line: "}"
+		stream write-line
 
 	stream write-line
 	stream write-line
