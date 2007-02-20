@@ -1,0 +1,25 @@
+Trylon
+======
+
+It is a line-oriented language, like Python.
+
+It is fully object-oriented, like Smalltalk.  Expressions are in Smalltalk syntax (but with mathematical precedence).
+
+You use it to make programs.  I'd like it also to work for scripts.
+
+Hello World:
+
+	trylon main
+
+	main: arguments
+		print: "Hello World!"
+
+So Trylon is a line-oriented language.  Indentation is used to delineate blocks.  The first word on a line sometimes signals that the line has a different syntax than normal:
+
+	while index < limit
+		#...
+	if value != nil
+		#...
+
+
+
