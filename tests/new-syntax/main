@@ -39,6 +39,11 @@ check: value against: expected-value title: title
 		throw MessageException new: "*** " + title + " test failed. ***"
 
 
+extend Int
+	incremented
+		return this + 1
+
+
 tests
 	# 2005.5.5?:  Autodeclarations.
 	x = 3
@@ -119,6 +124,10 @@ tests
 	text = "Initial line.
 		Blocked line.
 	print: text
+	print-line
+
+	# 2007.2.25: Extensions.
+	check: 7 incremented against: 8 title: "Class extension"
 
 
 blegh: index (Int)

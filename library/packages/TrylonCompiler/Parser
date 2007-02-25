@@ -132,6 +132,34 @@ parse-member-package
 	unindent
 
 
+parse-extension
+	# "extend"
+	if !at-name: "extend"
+		parse-error: "Expecting \"extend\"."
+	consume-token
+
+	# The package or class to extend.
+	type = parse-class-or-package-spec
+	require-eol
+
+	report: "Parsing " + type name + "..."
+	indent
+
+	while current-token == 'eol'
+		consume-token
+	if current-token == 'indent'
+		consume-token 	# indent
+		if type is-a: CompiledClass
+			parse-class-contents: type
+		else
+			parse-package-contents: type
+		if current-token != 'unindent'
+			parse-error: "Illegal package entry."
+		consume-token 	# unindent
+
+	unindent
+
+
 parse-package-contents: package
 	saved-context = context
 	context = package
@@ -161,6 +189,8 @@ parse-package-contents: package
 			parse-member-package
 		else if name == "class"
 			parse-member-class
+		else if name == "extend"
+			parse-extension
 
 		else if name == "iff"
 			if check-iff
@@ -383,6 +413,8 @@ parse-class-contents: the-class
 
 		else if name == "class"
 			parse-member-class
+		else if name == "extend"
+			parse-extension
 
 		else if name == "superclass"
 			consume-token
@@ -596,6 +628,18 @@ parse-arg-type
 
 
 parse-type-spec
+	type = parse-class-or-package-spec
+
+	# Make sure we got a class.
+	if !type is-a: CompiledClass
+		throw 	--
+			ParseException new: "A type specifier was given, but is not a class." 	--
+				token: type name
+	
+	return type
+
+
+parse-class-or-package-spec
 	type = nil
 	cur-context = context
 	last-name = nil
@@ -620,10 +664,6 @@ parse-type-spec
 	# Make sure we got a class.
 	if type == nil
 		parse-error: "Missing the type in a type specifier."
-	if !type is-a: CompiledClass
-		throw 	--
-			ParseException new: "A type specifier was given, but is not a class." 	--
-				token: last-name
 	
 	return type
 
