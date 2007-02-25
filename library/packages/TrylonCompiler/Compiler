@@ -8,6 +8,7 @@ fields main-package
 class-fn compile: arguments
 	the-compiler = Compiler new: arguments
 	the-compiler run
+	return the-compiler return-value
 
 
 create: arguments
