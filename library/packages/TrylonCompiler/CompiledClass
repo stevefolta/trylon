@@ -36,6 +36,11 @@ make-subclass-of: superclass
 
 
 add-instance-function: name function: function
+	if function has-code
+		existing-function = instance-functions at: name
+		if existing-function && existing-function has-code
+			throw MessageException new: 	--
+				"\"" + this name + " " + name + "\" is defined twice."
 	(instance-functions at: name) = function
 
 	the-compiler add-object-function: name
@@ -100,6 +105,9 @@ ensure-superclasses: object-class
 
 
 prepare-to-emit
+	if superclass == nil
+		ensure-superclasses: (the-compiler get-standard-class: "Object")
+
 	# Handle inline primitives.
 	if is-primitive
 		file-name = c-name + ".primitives.inline"

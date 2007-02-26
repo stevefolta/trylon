@@ -21,6 +21,10 @@ append: statement
 	statements append: statement
 
 
+is-empty
+	return statements is-empty
+
+
 lookup-function: name
 	# See if there's a local for it.
 	if locals

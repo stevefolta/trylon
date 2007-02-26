@@ -67,7 +67,13 @@ lookup-function: name visited-packages: visited-packages
 
 
 add-function: function
-	functions at: function name set-to: function
+	function-name = function name
+	if function has-code
+		existing-function = functions at: function-name
+		if existing-function && existing-function has-code
+			throw MessageException new: 	--
+				"\"" + this name + " " + function-name + "\" is defined twice."
+	functions at: function-name set-to: function
 	if function is-primitive
 		has-primitives = true
 

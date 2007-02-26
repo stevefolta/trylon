@@ -18,6 +18,8 @@ prepare-to-emit
 	expression prepare-to-emit
 	for clause in clauses
 		clause prepare-to-emit
+	if else-clause
+		else-clause prepare-to-emit
 
 
 emit-code: builder

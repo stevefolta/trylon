@@ -125,6 +125,8 @@ compile-program: compile-symbols
 
 	# Another round of ensure-superclasses, to get classes loaded during 
 	# the emit.
+	# (This might not be necessary, now that "CompiledClass prepare-to-emit"
+	# ensures that it has a superclass).
 	main-package ensure-superclasses: object-class
 
 	# Emit the method specs.

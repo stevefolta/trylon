@@ -201,6 +201,16 @@ primitive       	13.9	10.4
 
 =====
 
+A Bug Hunt
+	[2007.2.25]
+
+I was trying to add an error for multiply defining a method (now that we have extensions), but it found an instance in the compiler itself: "FunctionCall function" shadows the field.  I tried taking it out, but then Bool wouldn't build because it wasn't finding "debug-string".  Why not?  Because at emit-code time, Bool didn't have Object as its superclass.  So I forced that in "CompiledClass prepare-to-emit".
+
+Then it turned out that "switch" statements weren't getting "prepare-to-emit" called for their "else" clauses.
+
+
+=====
+
 C Compiling Bug Log
 
 [2006.3.18]

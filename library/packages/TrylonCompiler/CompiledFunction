@@ -31,6 +31,12 @@ create: name arguments: arguments return-type: return-type 	--
 	this is-overridden = false
 
 
+has-code
+	if body
+		return !body is-empty
+	return c-body != nil || is-primitive
+
+
 emit-call: arguments builder: builder
 	# Declare the function.
 	line = "extern obj_ " + c-name + "("

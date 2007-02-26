@@ -13,8 +13,9 @@ create: values body: body 	--
 
 
 prepare-to-emit
-	for value in values
-		value prepare-to-emit
+	if values
+		for value in values
+			value prepare-to-emit
 	body prepare-to-emit
 
 

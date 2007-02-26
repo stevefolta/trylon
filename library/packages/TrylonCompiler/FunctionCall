@@ -21,7 +21,6 @@ prepare-to-emit
 emit-code: builder
 	# We already got the function in prepare-to-emit.
 	if function == nil
-		# *** This should become an ObjectCall on "this" -- if there is a "this".
 		throw MessageException new: "There is no \"" + name + "\" function."
 	
 	# Generate the arguments.
@@ -48,8 +47,12 @@ copy
 	return FunctionCall new: name arguments: copied-args context: context
 
 
-fn function
-	return context lookup-function: name
+### What was this for?  It conflicts with the field.
+### Looks like a hacky fix, since it took a few fixes to the compiler to make
+### it work without it.
+iff not-anymore
+	fn function
+		return context lookup-function: name
 
 
 
