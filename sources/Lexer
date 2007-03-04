@@ -1,0 +1,514 @@
+trylon Lexer
+
+fields p indent-stack at-line-start unindents-pending unindent-to
+
+
+create: text
+	p = text iterator
+	indent-stack = IntStack new
+	indent-stack push: 0
+	at-line-start = true
+	unindents-pending = false
+
+
+next-token
+	c = nil
+	next-char = nil
+
+	if unindents-pending
+		if indent-stack is-empty
+			throw MessageException new: "Indentation error!"
+		if unindent-to == indent-stack top
+			# We're done unindenting.
+			unindents-pending = false
+		else
+			# Unindent one more level.
+			indent-stack pop
+			return Token new: 'unindent'
+	
+	loop
+		# If at line start, figure out the indentation.
+		if at-line-start
+			at-line-start = false
+
+			# Get the indentation.
+			indentation = 0
+			loop
+				c = cur-char
+				if c == `\t`
+					indentation += 2
+				else if c == ` `
+					indentation += 1
+				else
+					break
+				p go-forward
+
+			# If it's just an empty line, emit an EOL.
+			if c == `\n` || c == `\r`
+				p go-forward
+				at-line-start = true
+				return Token new: 'eol'
+
+			# Figure out the indentation change.
+			if indentation > indent-stack top
+				indent-stack push: indentation
+				return Token new: 'indent'
+			else if indentation < indent-stack top
+				unindents-pending = true
+				unindent-to = indentation
+				indent-stack pop
+				return Token new: 'unindent'
+
+		# Get the next character.
+		token-start = p start
+		c = cur-char
+		p go-forward
+		if c == 0
+			return Token new: 'eof'
+
+		# Line break.
+		else if c == `\n` || c == `\r`
+			at-line-start = true
+			return Token new: 'eol'
+
+		# Whitespace.
+		if c == ` ` || c == `\t`
+			# Skip whitespace.
+			token-start = p start
+			continue
+	
+		# -, --, -=
+		else if c == `-`
+			next-char = cur-char
+			if next-char == `-`
+				# Line continuation.
+				p go-forward
+				# Skip to next line.
+				loop
+					c = cur-char
+					p go-forward
+					if c == `\n` || c == `\r`
+						break
+				# Skip whitespace.
+				loop
+					c = cur-char
+					if c == ` ` || c == `\t` || c == 0
+						break
+					p go-forward
+
+			else if next-char == `=`
+				p go-forward
+				return Token new: '-='
+
+			else if next-char == `>`
+				p go-forward
+				return Token new: '->'
+
+			else if next-char >= `0` && next-char <= `9`
+				# Number.
+				p go-forward
+				is-float = false
+				loop
+					c = cur-char
+					if c >= `0` && c <= `9`
+						p go-forward
+					else if c == `.`
+						is-float = true
+						p go-forward
+					else
+						type = nil
+						if is-float
+							type = 'float-literal'
+						else
+							type = 'int-literal'
+						return Token new: type from: token-start to: p start
+
+			else
+				return Token new: '-'
+
+		# Comment.
+		else if c == `#`
+			# Skip initial whitespace.
+			loop
+				c = cur-char
+				if c != `\t` && c != ` `
+					break
+				p go-forward
+
+			# Get the comment.
+			token-start = p start
+			loop
+				c = cur-char
+				if c == `\n` || c == `\r` || c == 0
+					break
+				p go-forward
+			return Token new: 'comment' from: token-start to: p start
+
+		# String literal.
+		else if c == `"`
+			token-start = p start
+			token-end = p start
+			loop
+				c = cur-char
+				token-end = p start
+				if c == `\n` || c == `\r` || c == 0
+					return Token new: 'text-literal-start' from: token-start to: token-end
+				p go-forward
+				if c == 0
+					throw MessageException new: "Unterminated string constant."
+				else if c == `\\`
+					p go-forward
+				else if c == `"`
+					break
+			return Token new: 'string-literal' from: token-start to: token-end
+
+		# Symbol literal.
+		else if c == `'`
+			token-start = p start
+			token-end = p start
+			loop
+				c = cur-char
+				token-end = p start
+				p go-forward
+				if c == 0
+					throw MessageException new: "Unterminated symbol."
+				else if c == `\\`
+					p go-forward
+				else if c == `'`
+					break
+			return Token new: 'symbol-literal' from: token-start to: token-end
+
+		# Character literal.
+		else if c == `\``
+			token-start = p start
+			token-end = p start
+			loop
+				c = cur-char
+				token-end = p start
+				p go-forward
+				if c == 0
+					throw MessageException new: "Unterminated character constant."
+				else if c == `\\`
+					p go-forward
+				else if c == `\``
+					break
+			return Token new: 'character-literal' from: token-start to: token-end
+
+		# Single-character tokens.
+		else if c == `(`
+			return Token new: '('
+		else if c == `)`
+			return Token new: ')'
+		else if c == `{`
+			return Token new: '{'
+		else if c == `}`
+			return Token new: '}'
+		else if c == `[`
+			return Token new: '['
+		else if c == `]`
+			return Token new: ']'
+		else if c == `,`
+			return Token new: ','
+		else if c == `;`
+			return Token new: ';'
+		else if c == `~`
+			return Token new: '~'
+
+		# Could be followed by =.
+		else if c == `+`
+			return possibly-equals-token: '+' or: '+='
+		else if c == `=`
+			return possibly-equals-token: '=' or: '=='
+		else if c == `*`
+			return possibly-equals-token: '*' or: '*='
+		else if c == `/`
+			return possibly-equals-token: '/' or: '/='
+		else if c == `%`
+			return possibly-equals-token: '%' or: '%='
+		else if c == `^`
+			return possibly-equals-token: '^' or: '^='
+		else if c == `!`
+			return possibly-equals-token: '!' or: '!='
+		else if c == `:`
+			return possibly-equals-token: ':' or: ':='
+
+		# Could be doubled, then followed by =.
+		else if c == `<`
+			type = '<'
+			next-char = cur-char
+			if next-char == c
+				# Doubled.
+				p go-forward
+				if cur-char == `=`
+					p go-forward
+					type = '<<='
+				else
+					type = '<<'
+			else if next-char == `=`
+				p go-forward
+				type = '<='
+			return Token new: type
+		else if c == `>`
+			type = '>'
+			next-char = cur-char
+			if next-char == c
+				# Doubled.
+				p go-forward
+				if cur-char == `=`
+					p go-forward
+					type = '>>='
+				else
+					type = '>>'
+			else if next-char == `=`
+				p go-forward
+				type = '>='
+			return Token new: type
+
+		# Could be doubled, or followed by '='.
+		else if c == `&`
+			type = '&'
+			next-char = cur-char
+			if next-char == `&`
+				p go-forward
+				type = '&&'
+			else if next-char == `=`
+				p go-forward
+				type = '&='
+			return Token new: type
+		else if c == `|`
+			type = '|'
+			next-char = cur-char
+			if next-char == `|`
+				p go-forward
+				type = '||'
+			else if next-char == `=`
+				p go-forward
+				type = '|='
+			return Token new: type
+
+		# Name.
+		else if (c >= `a` && c <= `z`) || (c >= `A` && c <= `Z`) || c == `_` || 	--
+		        c == `.` || (c & 0xF0) >= 0xC0
+			# The first character might be a UTF-8 character, so handle that.
+			hi-nybble = c & 0xF0
+			if hi-nybble >= 0xC0
+				p go-forward
+				if hi-nybble >= 0xE0
+					p go-forward
+					if hi-nybble == 0xF0
+						p go-forward
+			# Read the rest of the characters.
+			loop
+				c = cur-char
+				is-id-char = 	--
+					c == `_` || c == `-` || c == `.` || (c >= `a` && c <= `z`) || 	--
+					(c >= `A` && c <= `Z`) || (c >= `0` && c <= `9`)
+				if !is-id-char
+					# It still might be the first byte of a UTF-8 character.
+					hi-nybble = c & 0xF0
+					if hi-nybble >= 0xC0
+						p go-forward
+						if hi-nybble >= 0xE0
+							p go-forward
+							if hi-nybble == 0xF0
+								p go-forward
+					else
+						break
+				p go-forward
+			type = 'name'
+			# Could be a keyword.
+			if cur-char == `:`
+				p go-forward
+				type = 'keyword'
+			return Token new: type from: token-start to: p start
+
+		# Number.
+		else if c >= `0` && c <= `9`
+			# Is it hex?
+			is-hex = false
+			if c == `0`
+				c = cur-char
+				if c == `x` || c == `X`
+					p go-forward
+					is-hex = true
+			# Read the rest of the number.
+			type = 'int-literal'
+			loop
+				c = cur-char
+				if c >= `0` && c <= `9`
+					p go-forward
+				else if is-hex && ((c >= `a` && c <= `f`) || (c >= `A` && c <= `F`))
+					p go-forward
+				else if c == `.`
+					p go-forward
+					type = 'float-literal'
+				else
+					break
+			return Token new: type from: token-start to: p start
+
+		# Unknown character.
+		else
+			throw 	--
+				MessageException new: "Unknown character: \"" + c string + "\""
+	
+	# Never actually get here.
+	return Token new: 'eof'
+
+
+first-subblock-line
+	# We've already got the indentation, just get the rest of the line.
+	line-start = p start
+	c = cur-char
+	while c != 0 && c != `\n` && c != `\r`
+		p go-forward
+		c = cur-char
+	p go-forward 	# Consume the eol.
+	at-line-start = true
+	return String new: line-start to: p start
+
+
+subblock-line
+	# Get the indentation.
+	indentation = 0
+	c = nil
+	while indentation < indent-stack top
+		c = cur-char
+		if c == `\t`
+			indentation += 2
+		else if c == ` `
+			indentation += 1
+		else
+			break
+		p go-forward
+
+	# If it's just an empty line, emit an EOL.
+	if c == `\n` || c == `\r`
+		p go-forward
+		at-line-start = true
+		return "\n"
+
+	# Check for unindent.
+	if indentation < indent-stack top
+		# First, get rid of the block's indentation.
+		indent-stack pop
+		# Then, deal with any further indentation.
+		if indentation < indent-stack top
+			unindents-pending = true
+			unindent-to = indentation
+			indent-stack pop
+		at-line-start = false
+		return nil
+	
+	# Get the rest of the line.
+	# This is just like first-subblock-line, so just call that.
+	return first-subblock-line
+
+
+cur-char
+	if p is-done
+		return 0
+	else
+		return p current-item
+
+
+possibly-equals-token: without-equals or: with-equals
+	if cur-char == `=`
+		p go-forward
+		return Token new: with-equals
+	else
+		return Token new: without-equals
+
+
+# Class helpers.
+
+class-fn parse-character-escape: p
+	# The `\` will already be taken.
+
+	c = p current-item
+	p go-forward
+	if c == `n`
+		return `\n`
+	else if c == `r`
+		return `\r`
+	else if c == `t`
+		return `\t`
+	else if c == `b`
+		return `\b`
+	else if c == `v`
+		return `\v`
+	else if c == `f`
+		return `\f`
+	else if c == `a`
+		return `\a`
+	else if c == `e`
+		return `\e`
+	else if c == `x`
+		value = 0
+		num-digits = 0
+		while !(p is-done) && num-digits < 2
+			digit = p current-item
+			if digit >= `0` && digit <= `9`
+				digit -= `0`
+			else if digit >= `A` && digit <= `F`
+				digit = 0x0A + (digit - `A`)
+			else if digit >= `a` && digit <= `f`
+				digit = 0x0A + (digit - `a`)
+			else
+				break
+			value *= 16
+			value += digit
+			p go-forward
+			num-digits += 1
+		return value
+	
+	# Default: just use whatever was after the `\`.
+	return c
+
+
+class-fn character-constant-value: text
+	p = text iterator
+	if p current-item == `\\`
+		p go-forward 	# Skip `\`.
+		return parse-character-escape: p
+	return p current-item
+
+
+class-fn unescape-string: string
+	result = nil
+	p = string iterator
+	section-start = string start
+	while !p is-done
+		if p current-item == `\\`
+			# Finish the section preceding the `\`.
+			section = String new: section-start to: p start
+			if result
+				result += section
+			else
+				result = section
+			p go-forward 	# Skip `\`.
+			# Add the escaped character.
+			result += (parse-character-escape: p) string
+			# Start the next section.
+			section-start = p start
+		else
+			p go-forward
+	# Finish the last section
+	section = String new: section-start to: p start
+	if result
+		result += section
+	else
+		result = section
+	return result
+
+
+# We add this here just so there'll be a "report:" function for programs that 
+# use this class, but nothing else from the TrylonCompiler package.
+report: message
+	status-reporter report: message
+
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

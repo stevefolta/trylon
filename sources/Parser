@@ -1,0 +1,1443 @@
+trylon Parser
+
+fields context lexer current-token next-token third-token
+
+
+create: source context: context
+	iff use-c-lexer
+		lexer = CLexer new: source
+	iff !use-c-lexer
+		lexer = Lexer new: source
+	this context = context
+
+	# Load up the first tokens.
+	current-token = lexer next-token
+	next-token = lexer next-token
+
+
+
+# Lexing
+
+consume-token
+	current-token = next-token
+	if third-token
+		next-token = third-token
+		third-token = nil
+	else
+		next-token = lexer next-token
+
+
+return-token: token
+	if third-token
+		throw MessageException new: "Tried to return too many tokens."
+	
+	third-token = next-token
+	next-token = current-token
+	current-token = token
+
+
+at-name: name
+	return current-token == 'name' && current-token text == name
+
+
+require-eol
+	# Returns a comment, if there is one.
+	comment = nil
+	if current-token == 'comment'
+		comment = current-token text
+		consume-token
+	
+	if current-token != 'eol'
+		parse-error: "End-of-line required."
+	consume-token
+
+	return comment
+
+
+get-subblock
+	# Returns a StringBuilder
+	block = StringBuilder new
+
+	# Be careful about our readahead.  We need to see an eol, and then (if
+	# there's anything in the subblock) an indent.  We can't read ahead after
+	# that, because we need to make special lexer calls.
+	if third-token
+		throw MessageException new: 	--
+				"Internal: tried to get an subblock when there was a third-token."
+	if current-token != 'eol'
+		throw MessageException new: "Internal: No eol before a subblock."
+	if next-token != 'indent'
+		consume-token 	# 'eol'
+		return block
+	current-token = nil
+	next-token = nil
+
+	# Read the block.
+	block += lexer first-subblock-line
+	loop
+		line = lexer subblock-line
+		if line == nil
+			break
+		block += line
+
+	# Return to regular parsing.
+	current-token = lexer next-token
+	next-token = lexer next-token
+	return block
+
+
+# Highest level (prototype) parsing
+
+
+parse-proto-member: proto
+	# We're at the name.
+
+	# Handle declaring a field.
+	if next-token == '=' || next-token == ':=' || next-token == '('
+		# Make sure it *is* a field.
+		if current-token == 'keyword'
+			parse-error: "Bad declaration of a proto member."
+		# Name.
+		name = current-token text
+		consume-token 	# Name.
+		# Type.
+		type = nil
+		if current-token == '('
+			consume-token
+			type = parse-type-spec
+			if current-token != ')'
+				parse-error: "\")\" expected."
+			consume-token
+		# '=' or ':='
+		if current-token != '=' && current-token != ':='
+			parse-error: "\"=\" expected."
+		consume-token
+
+		# Get the initial value.
+		initial-value = parse-proto-literal-value
+		consume-token 	# Value.
+
+		# Add the field.
+		field = CompiledField new: name type: nil
+		field initial-value = initial-value
+		proto add-shared-field: field
+	
+	# Declaring a function.
+	else
+		function = parse-function: false
+		proto add-instance-function: function name function: function
+
+
+parse-proto-literal-value
+	value = parse-proto-literal-tuple
+	if value
+		# Okay.
+	else if current-token == 'eol' && next-token == 'indent'
+		value = parse-dict-literal-expression
+		if value == nil
+			parse-error: "Bad Dictionary literal declaration."
+	else
+		parse-error: "Syntax error in prototype field initial value."
+
+	return value
+
+
+parse-proto-literal-tuple
+	value = parse-proto-literal-primary
+	if value
+		# See if there's a tuple.
+		if current-token == ','
+			tuple = TupleExpression new
+			tuple add: value
+			while current-token == ','
+				consume-token
+				value = parse-proto-literal-tuple
+				if value == nil
+					parse-error: "Missing value in literal tuple."
+				tuple add: value
+			value = tuple
+	else if current-token == '('
+		consume-token
+		value = parse-proto-literal-tuple
+		if value == nil
+			parse-error: "Missing expression after '(' in literal."
+		if current-token != ')'
+			parse-error: "Missing ')' in literal."
+		consume-token
+
+	return value
+
+
+parse-proto-literal-primary
+	if current-token == 'string-literal'
+		return StringLiteral new: current-token text
+	else if current-token == 'text-literal-start'
+		return parse-text-literal
+	else if current-token == 'symbol-literal'
+		return the-compiler get-symbol-literal: current-token text
+	else if current-token == 'int-literal'
+		return IntLiteral new: current-token text
+	else if current-token == 'float-literal'
+		return FloatLiteral new: current-token text
+	else if current-token == 'character-literal'
+		return the-compiler get-character-literal: current-token text
+	else if current-token type == 'name'
+		literal-name = current-token text
+		if literal-name == "true"
+			return BoolLiteral new: true
+		else if literal-name == "false"
+			return BoolLiteral new: false
+		else if literal-name == "nil"
+			return LiteralNil new
+		else
+			parse-error: "Illegal initial value for a prototype field."
+
+	return nil
+
+
+parse-proto-file: proto
+	report: "Parsing " + proto name + "..."
+	indent
+
+	parse-proto-contents: proto
+	if current-token != 'eof'
+		parse-error: "Extra stuff in prototype."
+	
+	unindent
+
+
+parse-member-proto
+	# "proto" (or "class" for compatibility with Trylon)
+	if (!at-name: proto) && (!at-name: "class")
+		parse-error: "Expecting \"proto\"."
+	consume-token
+
+	# Class name.
+	if current-token != 'name'
+		parse-error: "Missing prototype name."
+	proto-name = current-token text
+	consume-token
+	require-eol
+
+	report: "Parsing " + proto-name + "..."
+	indent
+
+	# Create (or get) the proto.
+	the-proto = context add-proto: proto-name
+
+	# Read the contents (if any).
+	while current-token == 'eol'
+		consume-token
+	if current-token == 'indent'
+		consume-token
+		parse-proto-contents: the-proto
+		if current-token != 'unindent'
+			parse-error: "Unindent required at end of proto."
+		consume-token
+	
+	unindent
+
+
+parse-proto-contents: the-proto
+	saved-context = context
+	context = the-proto
+
+	loop
+		while current-token == 'eol' || current-token == 'comment'
+			consume-token
+
+		name = current-token text
+		if current-token == 'keyword'
+			# Null-out the name so it doesn't match any special names.
+			name = ""
+		else if current-token != 'name'
+			break
+
+		if name == "fn" || name == "function" || 	--
+		   name == "primitive-fn" || name == "primitive-function" || 	--
+		   name == "c-fn" || name == "c-function"
+			function = parse-function: true
+			the-proto add-function: function name function: function
+		else if name == "class-fn" || name == "class-function" || 	--
+		        name == "primitive-class-fn" || name == "primitive-class-function"
+			# For backward compatibility with Trylon.
+			the-proto add-function: (parse-function: true)
+
+		else if name == "field" || name == "fields" || name == "fld"
+			for field in parse-fields
+				the-proto add-field: field
+
+		else if name == "class-field" || name == "class-fields" || 	--
+		        name == "class-fld" || 	--
+		        name == "primitive-class-fld" || 	--
+		        name == "primitive-class-field" || 	--
+		        name == "primitive-class-fields"
+			# For backward compatibility with Trylon.
+			for field in parse-fields
+				the-proto add-shared-field: field
+
+		else if name == "proto" || name == "class"
+			parse-member-proto
+		else if name == "extend"
+			parse-extension
+
+		else if name == "superclass"
+			consume-token
+			superclass = parse-type-spec
+			the-proto make-subclass-of: superclass
+
+		else if name == "iff"
+			if check-iff
+				if current-token == 'indent'
+					consume-token
+					parse-proto-contents: the-proto
+					if current-token != 'unindent'
+						parse-error: "Unindent required at end of proto."
+					consume-token
+
+		else if name == "trylon-class" || name == "trylon"
+			# Should be followed by the name; maybe we should check that, but
+			# for now we're just ignoring the rest of the line.
+			while current-token != 'eol'
+				consume-token
+			consume-token
+
+		else
+			parse-proto-member: the-proto
+	
+	context = saved-context
+
+
+parse-extension
+	# "extend"
+	if !at-name: "extend"
+		parse-error: "Expecting \"extend\"."
+	consume-token
+
+	# The prototype to extend.
+	type = parse-proto-spec
+	require-eol
+
+	report: "Parsing " + type name + "..."
+	indent
+
+	while current-token == 'eol'
+		consume-token
+	if current-token == 'indent'
+		consume-token 	# indent
+		parse-proto-contents: type
+		if current-token != 'unindent'
+			parse-error: "Illegal prototype entry."
+		consume-token 	# unindent
+
+	unindent
+
+
+check-iff
+	consume-token 	# "iff"
+
+	# Check for "!".
+	invert-sense = false
+	if current-token == '!'
+		consume-token
+		invert-sense = true
+	
+	# Get the name.
+	if current-token != 'name'
+		parse-error: "Illegal \"iff\"."
+	name = current-token text
+	consume-token
+	require-eol
+
+	# If it doesn't exist, skip the block.
+	test-succeeded = 	--
+		((context lookup-function: name) != nil) || 	--
+		(the-compiler build-settings has-symbol: name)
+	if invert-sense
+		test-succeeded = !test-succeeded
+	if !test-succeeded
+		skip-block
+		return false
+	
+	# If it does exist, the caller will parse the block.
+	return true
+
+
+parse-fields
+	# "fld"/"field"/etc.
+	is-primitive = current-token text starts-with: "primitive-"
+	consume-token
+
+	# Get the fields.
+	fields = List new
+	while current-token != 'eol' && current-token != 'comment'
+		# Get the name.
+		if current-token != 'name'
+			parse-error: "Field name needed."
+		name = current-token text
+		consume-token
+
+		# Get the type, if given.
+		type = nil
+		if current-token == '['
+			consume-token
+			type = parse-type-spec
+			if current-token != ']'
+				parse-error: "Missing \"]\"."
+			consume-token
+		else if current-token == '('
+			consume-token
+			type = parse-type-spec
+			if current-token != ')'
+				parse-error: "Missing \")\"."
+			consume-token
+
+		# Add it.
+		fields 	--
+			append: (CompiledField new: name type: type is-primitive: is-primitive)
+	
+	require-eol
+
+	return fields
+
+
+parse-function: at-declarator
+	# "fn" or "function" (etc.) has already been recognized; just check it for 
+	# primitiveness.
+	is-primitive = false
+	has-c-body = false
+	if at-declarator
+		is-primitive = current-token text starts-with: "primitive-"
+		has-c-body = current-token text starts-with: "c-"
+		consume-token
+	
+	# Get the name.
+	# We're allowing any name; we want to allow unops and binops and string 
+	# literals as well as names.  Ideally we should reject other names, but 
+	# currently we don't bother.
+	name = current-token string
+	fn-type = current-token type
+	consume-token
+
+	# Get the arguments.
+	arguments = List new
+	if fn-type != 'name' && fn-type != '~'
+		# Get the first argument.
+		if current-token type != 'name'
+			parse-error: "Missing argument name in " + name + "."
+		arg-name = current-token text
+		consume-token
+		arg-type = parse-arg-type
+		arguments append: (CompiledField new: arg-name type: arg-type)
+
+		# Get additional arguments.
+		while current-token == 'name' || current-token == 'keyword'
+			# Get the name.
+			if current-token == 'keyword'
+				# Standard argument declaration ("keyword: name").
+				name += current-token text
+				consume-token
+				if current-token != 'name'
+					parse-error: "Missing argument name."
+				arg-name = current-token text
+				consume-token
+			else
+				# Special shortcut: just an argument name.  Equivalent to "name: name".
+				name += current-token text + ":"
+				arg-name = 	--
+					current-token text substr: 0 length: current-token text length - 1
+				consume-token
+
+			# Get the type and add the argument.
+			arg-type = parse-arg-type
+			arguments append: (CompiledField new: arg-name type: arg-type)
+	
+	# Get the return type.
+	return-type = nil
+	if current-token == '->'
+		consume-token
+		return-type = parse-type-spec
+	
+	if !has-c-body
+		require-eol
+
+	report: "Parsing " + name + "..."
+
+	# Parse the body.
+	body = nil
+	method-context = nil
+	if has-c-body
+		body = get-subblock string
+	else if !is-primitive
+		saved-context = context
+		method-context = 	--
+			MethodContext new: arguments parent: context
+		context = method-context
+		body = parse-block
+		context = saved-context
+	
+	# Build the function and return it.
+	new-function = nil
+	if has-c-body
+		new-function = 	--
+			CompiledFunction new: name arguments: arguments 	--
+				return-type: return-type on-proto: context c-body: body
+	else
+		new-function = 	--
+			CompiledFunction new: name arguments: arguments 	--
+				return-type: return-type is-a-primitive: is-primitive 	--
+				on-proto: context body: body
+		new-function method-context = method-context
+		if method-context
+			method-context function = new-function
+	return new-function
+
+
+parse-arg-type
+	arg-type = nil
+	if current-token == '['
+		# Type is specified.
+		consume-token
+		arg-type = parse-type-spec
+		if current-token != ']'
+			parse-error: "Missing \"]\"."
+		consume-token
+	else if current-token == '('
+		consume-token
+		arg-type = parse-type-spec
+		if current-token != ')'
+			parse-error: "Missing \")\"."
+		consume-token
+	return arg-type
+
+
+parse-type-spec
+	type = parse-proto-spec
+
+	# Make sure we got a proto.
+	if !type is-a: CompiledProto
+		throw 	--
+			ParseException 	--
+				new: "A type specifier was given, but is not a prototype." 	--
+				token: type name
+	
+	return type
+
+
+parse-proto-spec
+	type = nil
+	cur-context = context
+	last-name = nil
+	while current-token == 'name'
+		# Find the prototype.
+		last-name = current-token
+		type-function = cur-context lookup-function: current-token text
+		if type-function == nil
+			parse-error: "Unknown prototype."
+		consume-token
+		type = type-function the-proto
+		cur-context = type
+	
+	# Make sure we got a proto.
+	if type == nil
+		parse-error: "Missing the type in a type specifier."
+	
+	return type
+
+
+parse-block: is-lambda
+	block = nil
+	if is-lambda
+		block = LambdaBlock new: context
+	else
+		block = Block new: context
+	
+	# Strip out leading blank lines.
+	while current-token == 'eol'
+		consume-token
+	
+	if current-token != 'indent'
+		return block
+	consume-token
+
+	context = block
+
+	while current-token != 'unindent'
+		statement = parse-statement
+		if statement == nil
+			parse-error: "Statement expected."
+
+		block append: statement
+	
+	consume-token 	# Unindent.
+
+	context = block parent
+
+	return block
+
+
+parse-block
+	return parse-block: false
+
+
+skip-block
+	if current-token != 'indent'
+		return
+	consume-token
+
+	level = 1
+	loop
+		type = current-token type
+		consume-token
+		if type == 'indent'
+			level += 1
+		else if type == 'unindent'
+			level -= 1
+			if level <= 0
+				break
+
+
+parse-statement
+	if current-token == 'name'
+		name = current-token text
+		if name == "if"
+			return parse-if-statement
+		else if name == "iff"
+			return parse-iff-statement
+		else if name == "switch"
+			return parse-switch-statement
+		else if name == "loop"
+			return parse-loop-statement
+		else if name == "while"
+			return parse-while-statement
+		else if name == "for"
+			return parse-for-statement
+		else if name == "continue"
+			return parse-continue-statement
+		else if name == "break"
+			return parse-break-statement
+		else if name == "return"
+			return parse-return-statement
+		else if name == "try"
+			return parse-try-statement
+		else if name == "throw"
+			return parse-throw-statement
+
+		# Is it a declaration?
+		if next-token == ':=' || next-token == '[' || next-token == '('
+			return parse-declaration
+	
+	else if current-token == 'eol'
+		consume-token
+		return BlankLine new
+	
+	else if current-token == 'comment'
+		comment = current-token text
+		consume-token
+		require-eol
+		return Comment new: comment
+	
+	# If it wasn't anything else, it must be an expression statement.
+	return parse-expression-statement
+
+
+parse-if-statement
+	consume-token
+
+	# Condition.
+	condition = parse-expression
+	if condition == nil
+		parse-error: "Missing condition in an \"if\" statement."
+	comment = require-eol
+
+	# Body.
+	body = parse-block
+
+	# Any comments and blank lines preceding the "else".
+	pre-else-comments = parse-inter-prong-comments
+
+	# "else" block, if there is one.
+	else-block = nil
+	else-comment = nil
+	if current-token == 'name' && current-token text == "else"
+		consume-token 	# "else"
+		if current-token == 'name' && current-token text == "if"
+			else-block = Block new: context
+			else-block append: parse-if-statement
+		else
+			else-comment = require-eol
+			else-block = parse-block
+	
+	return 	--
+		IfStatement new: condition body: body else-block: else-block 	--
+			comment: comment else-comment: else-comment 	--
+			pre-else-comments: pre-else-comments
+
+
+parse-inter-prong-comments
+	comments = nil
+	loop
+		if current-token == 'eol'
+			if comments == nil
+				comments = List new
+			comments append: BlankLine new
+			consume-token
+		else if current-token == 'comment'
+			if comments == nil
+				comments = List new
+			comments append: (Comment new: require-eol)
+		else
+			break
+	
+	return comments
+
+
+parse-iff-statement
+	if check-iff
+		return BlockStatement new: parse-block
+	else
+		return EmptyStatement new
+
+
+parse-switch-statement
+	consume-token
+	value = parse-expression
+	if value == nil
+		parse-error: "Missing expression in \"switch\" statement."
+	value-comment = require-eol
+
+	switch-statement = SwitchStatement new: value value-comment: value-comment
+
+	# Strip out leading blank lines.
+	while current-token == 'eol'
+		consume-token
+	
+	if current-token == 'indent'
+		consume-token
+		pre-clause-comments = nil
+		while current-token != 'unindent'
+			pre-clause-comments = parse-inter-prong-comments
+
+			if current-token == 'name' && current-token text == "else"
+				consume-token
+				value-comment = require-eol
+				body = parse-block
+				switch-statement else-clause = 	--
+					SwitchClause new: nil body: body --
+						pre-clause-comments: pre-clause-comments value-comment: value-comment
+
+			else
+				values = List new
+				loop
+					value = parse-keyword-expression
+					if value == nil
+						parse-error: "Missing value in switch clause."
+					values append: value
+					if current-token == ','
+						consume-token
+					else
+						break
+				value-comment = require-eol
+				body = parse-block
+				clause = 	--
+					SwitchClause new: values body: body --
+						pre-clause-comments: pre-clause-comments value-comment: value-comment
+				switch-statement add-clause: clause
+
+			pre-clause-comments = nil
+
+		switch-statement post-clauses-comments = pre-clause-comments
+
+		consume-token 	# 'unindent'
+
+	return switch-statement
+
+
+parse-loop-statement
+	consume-token 	# "loop"
+	comment = require-eol
+
+	body = parse-block
+	return LoopStatement new: body comment: comment
+
+
+parse-while-statement
+	consume-token 	# "while"
+
+	# Condition.
+	condition = parse-expression
+	if condition == nil
+		parse-error: "Missing condition in a \"while\" statement."
+	
+	# Body.
+	comment = require-eol
+	body = parse-block
+
+	return WhileStatement new: condition body: body comment: comment
+
+
+parse-for-statement
+	consume-token 	# "for"
+
+	# Variable.
+	if current-token != 'name'
+		parse-error: "\"for\" loop variable name expected."
+	name = current-token text
+	consume-token
+	type = nil
+	if current-token == '['
+		consume-token
+		type = parse-type-spec
+		if current-token != ']'
+			parse-error: "Missing \"]\"."
+		consume-token
+	local = CompiledField new: name type: type
+
+	# "in"
+	if current-token != 'name' || current-token text != "in"
+		parse-error: "\"in\" expected."
+	consume-token
+
+	# Collection.
+	collection = parse-expression
+	if collection == nil
+		parse-error: "Missing collection in \"for\" statement."
+	
+	# Add the name to the context and parse the body.
+	comment = require-eol
+	saved-context = context
+	context = ForContext new: local parent: context
+	body = parse-block
+	context = saved-context
+
+	# Make the result.
+	return 	--
+		ForStatement new: local collection: collection body: body comment: comment
+
+
+parse-continue-statement
+	consume-token 	# "continue"
+	comment = require-eol
+
+	return ContinueStatement new: comment
+
+
+parse-break-statement
+	consume-token 	# "break"
+	comment = require-eol
+
+	return BreakStatement new: comment
+
+
+parse-return-statement
+	consume-token 	# "return"
+
+	return-value = nil
+	if current-token == 'eol' || current-token == 'comment'
+		return-value = FunctionCall new: "nil" arguments: List new context: context
+	else
+		return-value = parse-expression
+	comment = require-eol
+
+	return ReturnStatement new: return-value comment: comment
+
+
+parse-try-statement
+	consume-token 	# "try"
+	comment = require-eol
+
+	body = parse-block
+
+	# Catch clauses.
+	catch-clauses = List new
+	saved-context = context
+	pre-clause-comments = nil
+	loop
+		pre-clause-comments = parse-inter-prong-comments
+
+		if current-token != 'name' || current-token text != "catch"
+			break
+
+		consume-token 	# "catch"
+		type = parse-type-spec
+		catch-comment = require-eol
+		catch-clause = 	--
+			CatchClause new: type parent: context comment: catch-comment 	--
+				pre-clause-comments: pre-clause-comments
+		context = catch-clause
+		catch-clause body = parse-block
+		context = saved-context
+		catch-clauses append: catch-clause
+
+		pre-clause-comments = nil
+	
+	return 	--
+		TryStatement new: body catch-clauses: catch-clauses comment: comment 	--
+			post-clauses-comments: pre-clause-comments
+
+
+parse-throw-statement
+	consume-token 	# "throw"
+
+	expr = parse-expression
+	comment = require-eol
+
+	return ThrowStatement new: expr comment: comment
+
+
+parse-declaration
+	name = current-token text
+	consume-token
+
+	# Type.
+	type = nil
+	if current-token == '['
+		consume-token 	# '['
+		type = parse-type-spec
+		if current-token != ']'
+			parse-error: "Missing \"]\"."
+		consume-token
+	else if current-token == '('
+		consume-token 	# '('
+		type = parse-type-spec
+		if current-token != ')'
+			parse-error: "Missing \")\"."
+		consume-token
+	
+	# ':='
+	if current-token != '=' && current-token != ':='
+		parse-error: "\"=\" or \":=\" expected."
+	consume-token
+
+	# Initial value.
+	initial-value = parse-expression
+	comment = require-eol
+
+	# Add the local to the block.
+	current-block add-local: (CompiledField new: name type: type)
+
+	# Set to the initial value.
+	arguments = List new
+	arguments append: initial-value
+	return 	--
+		ExpressionStatement new: 	--
+			(FunctionCall new: name + ":" arguments: arguments context: context) 	--
+			comment: comment
+
+
+parse-expression-statement
+	expr = parse-expression
+	comment = require-eol
+	return ExpressionStatement new: expr comment: comment
+
+
+parse-dict-literal-expression
+	expr = parse-expression
+	if expr
+		return expr
+	
+	if current-token == 'eol' && next-token == 'indent'
+		consume-token 	# eol
+		consume-token 	# indent
+		expr = DictLiteral new
+		while current-token != 'unindent'
+			if current-token == 'eol' || current-token == 'comment'
+				consume-token
+			else if current-token == 'name'
+				name = current-token text
+				consume-token
+				if current-token != '='
+					parse-error: "Missing '=' in dictionary literal."
+				consume-token
+				value = parse-dict-literal-expression
+				if value == nil
+					parse-error: 	--
+						"Missing value for \"" + name + "\" in dictionary literal."
+				require-eol
+				expr at: name set-to: value
+			else
+				parse-error: "Syntax error in dictionary literal."
+		consume-token 	# unindent
+		# We'll need an eol to finish the statement, so add one:
+		return-token: (Token new: 'eol')
+
+	return expr
+
+
+parse-expression
+	expr = parse-keyword-expression
+	if expr == nil
+		return nil
+	
+	if current-token == ','
+		tuple = TupleExpression new
+		tuple add-member: expr
+		while current-token == ','
+			consume-token
+			member = parse-keyword-expression
+			if member == nil
+				parse-error: "Missing expression in tuple."
+			tuple add-member: member
+		expr = tuple
+	
+	return expr
+
+
+parse-keyword-expression
+	expr = parse-binary-expression
+	if expr == nil
+		return nil
+	
+	if current-token == 'keyword'
+		name = ""
+		args = List new
+		while current-token == 'keyword'
+			name += current-token text
+			consume-token
+			arg = parse-binary-expression
+			if arg
+				args append: arg
+			# else if current-token == 'eol' || current-token == 'comment'
+			# 	# Lambda.
+			# 	require-eol
+			# 	block = parse-block: true
+			# 	lambda = LambdaExpression new: block
+			# 	# *** Add the lambda to the CompiledFunction's list (how?).
+			# 	# *** Or just to the MethodContext's list?
+			# 	context enclosing-method-context add-lambda: lambda
+			# 	args append: lambda
+			# 	# We'll need an EOL to finish off the current statement, so fake one.
+			# 	return-token: (Token new: 'eol' text: "")
+			else
+				parse-error: "Missing argument (\"" + name + "\")."
+		expr = ObjectCall new: name object: expr arguments: args
+	
+	return expr
+
+
+parse-binary-expression
+	# At the top level are the '=' expressions.
+
+	expr = parse-logical-or-expression
+	if expr == nil
+		return nil
+	
+	expr2 = nil
+
+	token = current-token type
+	if token == '='
+		consume-token
+		if !(expr is-a: FunctionCall) && !(expr is-a: ObjectCall)
+			parse-error: "Illegal assignment."
+		expr2 = parse-dict-literal-expression
+		if expr2 == nil
+			expression-expected-after: token
+		if (expr is-a: FunctionCall) || (expr is-a: ObjectCall)
+			expr convert-to-setter-call: expr2
+	
+	else if token == '+=' || token == '-=' || token == '*=' || 	--
+	        token == '/=' || token == '%=' || 	--
+	        token == '>>=' || token == '<<=' || 	--
+	        token == '&=' || token == '|=' || token == '^='
+		consume-token
+		if !(expr is-a: FunctionCall) && !(expr is-a: ObjectCall)
+			parse-error: "Illegal assignment."
+		expr2 = parse-expression
+		if expr2 == nil
+			expression-expected-after: token
+		arguments = List new
+		arguments append: expr2
+		call = 	--
+			ObjectCall new: (token substr: 0 length: token length - 1) 	--
+			object: expr arguments: arguments
+		if (expr is-a: FunctionCall) || (expr is-a: ObjectCall)
+			setter = expr copy
+			setter convert-to-setter-call: call
+			expr = setter
+	
+	return expr
+
+
+parse-logical-or-expression
+	expr = parse-logical-and-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '||'
+		consume-token
+		expr2 = parse-logical-and-expression
+		if expr2 == nil
+			expression-expected-after: '||'
+		expr = ShortCircuitOr new: expr with: expr2
+	
+	return expr
+
+
+parse-logical-and-expression
+	expr = parse-inclusive-or-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '&&'
+		consume-token
+		expr2 = parse-inclusive-or-expression
+		if expr2 == nil
+			expression-expected-after: '&&'
+		expr = ShortCircuitAnd new: expr with: expr2
+	
+	return expr
+
+
+parse-inclusive-or-expression
+	expr = parse-exclusive-or-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '|'
+		consume-token
+		expr2 = parse-exclusive-or-expression
+		if expr2 == nil
+			expression-expected-after: '|'
+		expr = make-binop-call: '|' with: expr and: expr2
+	
+	return expr
+
+
+parse-exclusive-or-expression
+	expr = parse-and-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '^'
+		consume-token
+		expr2 = parse-and-expression
+		if expr2 == nil
+			expression-expected-after: '^'
+		expr = make-binop-call: "^" with: expr and: expr2
+	
+	return expr
+
+
+parse-and-expression
+	expr = parse-equality-expression
+	if expr == nil
+		return nil
+	
+	while current-token == '&'
+		consume-token
+		expr2 = parse-equality-expression
+		if expr2 == nil
+			expression-expected-after: '&'
+		expr = make-binop-call: '&' with: expr and: expr2
+	
+	return expr
+
+
+parse-equality-expression
+	expr = parse-relational-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '==' || token == '!='
+		consume-token
+		expr2 = parse-relational-expression
+		if expr2 == nil
+			expression-expected-after: token
+		expr = EqualityCall new: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-relational-expression
+	expr = parse-shift-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '<' || token == '>' || token == '<=' || token == '>='
+		consume-token
+		expr2 = parse-shift-expression
+		if expr2 == nil
+			expression-expected-after: token
+		expr = make-binop-call: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-shift-expression
+	expr = parse-additive-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '<<' || token == '>>'
+		consume-token
+		expr2 = parse-additive-expression
+		if expr2 == nil
+			expression-expected-after: token
+		expr = make-binop-call: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-additive-expression
+	expr = parse-multiplicative-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '+' || token == '-'
+		consume-token
+		expr2 = parse-multiplicative-expression
+		if expr2 == nil
+			expression-expected-after: token
+		expr = make-binop-call: token with: expr and: expr2
+	
+		token = current-token type
+	
+	return expr
+
+
+parse-multiplicative-expression
+	expr = parse-unary-expression
+	if expr == nil
+		return nil
+	
+	token = current-token type
+	while token == '*' || token == '/' || token == '%'
+		consume-token
+		expr2 = parse-unary-expression
+		if expr2 == nil
+			expression-expected-after: token
+		expr = make-binop-call: token with: expr and: expr2
+
+		token = current-token type
+	
+	return expr
+
+
+parse-unary-expression
+	expr = nil
+	token = current-token type
+
+	if token == '!'
+		consume-token
+		expr = parse-unary-expression
+		if expr == nil
+			expression-expected-after: '!'
+		expr = ShortCircuitNot new: expr
+	
+	else if token == '+' || token == '-' || token == '~'
+		consume-token
+		expr = parse-unary-expression
+		if expr == nil
+			expression-expected-after: token
+		name = nil
+		if token == '+'
+			name = "unary-plus"
+		else if token == '-'
+			name = "unary-minus"
+		else
+			name = "~"
+		expr = ObjectCall new: name object: expr arguments: List new
+	
+	else
+		expr = parse-postfix-expression
+	
+	return expr
+
+
+parse-postfix-expression
+	expr = parse-primary-expression
+	if expr == nil
+		return nil
+	
+	while current-token == 'name'
+		# A unary object call.
+		name = current-token text
+		consume-token
+		expr = ObjectCall new: name object: expr arguments: List new
+	
+	return expr
+
+
+parse-primary-expression
+	token = current-token type
+
+	if token == 'name'
+		name = current-token text
+		consume-token
+
+		if name == "super"
+			return parse-super-call
+
+		# Non-object function call.
+		return FunctionCall new: name arguments: List new context: context
+	
+	else if token == 'keyword'
+		# Non-object function call.
+		name = ""
+		arguments = List new
+		while current-token == 'keyword'
+			name += current-token text
+			consume-token
+			arg = parse-binary-expression
+			if arg == nil
+				parse-error: "Missing argument (\"" + name + "\")."
+			arguments append: arg
+		return FunctionCall new: name arguments: arguments context: context
+	
+	else if token == 'int-literal'
+		value = current-token text
+		consume-token
+		return IntLiteral new: value
+	
+	else if token == 'float-literal'
+		value = current-token text
+		consume-token
+		return FloatLiteral new: value
+	
+	else if token == 'string-literal'
+		value = current-token text
+		consume-token
+		return StringLiteral new: value
+	
+	else if token == 'symbol-literal'
+		value = current-token text
+		consume-token
+		return the-compiler get-symbol-literal: value
+
+	else if token == 'character-literal'
+		value = current-token text
+		consume-token
+		return the-compiler get-character-literal: value
+	
+	else if token == 'text-literal-start'
+		return parse-text-literal
+	
+	else if token == '('
+		consume-token
+		expr = parse-expression
+		if expr == nil
+			expression-expected-after: '('
+		if current-token != ')'
+			parse-error: "')' expected."
+		consume-token
+		return expr
+	
+	return nil
+
+
+parse-super-call
+	# Note: the 'super' token has already been consumed.
+
+	# Make sure this is in an object method.
+	method-context = context enclosing-method-context
+	if method-context == nil
+		parse-error: "\"super\" calls are only valid in functions."
+
+	name = nil
+	arguments = List new
+
+	if current-token == 'name'
+		name = current-token text
+		consume-token
+
+	else if current-token == 'keyword'
+		# Get the arguments.
+		name = ""
+		while current-token == 'keyword'
+			name += current-token text
+			consume-token
+			arg = parse-binary-expression
+			if arg == nil
+				parse-error: "Missing argument (\"" + name + "\")."
+			arguments append: arg
+	
+	# We allow binops here.
+	else if current-token text == nil || current-token text is-empty
+		# *** Actually, we're allowing too many things here, but we'd have to
+		# *** explicitly check every binop.
+		name = current-token type
+		consume-token
+		arg = parse-unary-expression
+		if arg == nil
+			parse-error: 	--
+				"Missing unary expression argument in super call (\"" + name + "\")."
+		arguments append: arg
+	
+	else
+		# Does this ever happen?
+		parse-error: "Illegal super call."
+	
+	# Get the proto that it's on.
+	on-proto = method-context parent
+	if !(on-proto is-a: CompiledProto)
+		parse-error: "Internal error: no proto for super call."
+	
+	return SuperCall new: name arguments: arguments on-proto: on-proto
+
+
+
+# Helpers
+
+current-block
+	if !(context is-a: Block)
+		throw MessageException new: "Internal error: Current context isn't a block."
+	return context
+
+
+make-binop-call: name with: object and: argument
+	arguments: List new
+	arguments append: argument
+	return ObjectCall new: name object: object arguments: arguments
+
+
+parse-text-literal
+	initial-text = current-token text
+	consume-token
+	block = get-subblock
+	if !initial-text is-empty
+		block prepend: "\n"
+		block prepend: initial-text
+	# We'll need an eol to finish the statement, so add one:
+	return-token: (Token new: 'eol')
+	# Massage the string, since we (currently) store string literals in
+	# C-escaped form.
+	massaged-block = StringBuilder new
+	for line in block string lines
+		massaged-block += line
+		massaged-block += "\\n\\\n"
+	return StringLiteral new: massaged-block string
+
+
+parse-error: message
+	throw ParseException new: message token: current-token
+
+expression-expected-after: after
+	parse-error: "Expression expected after \"" + after string + "\"."
+
+indent
+	if status-reporter
+		status-reporter indent
+unindent
+	if status-reporter
+		status-reporter unindent
+
+
+
+# NOTES:
+# Local variables are part of a Block.  A Block is a Context; we can use
+# "context" for the current block, as we won't be trying to add fields and
+# functions to it.
+#
+# There are two kinds of function calls: FunctionCall and ObjectCall.
+# FunctionCall is not on an object; it has a context.  ObjectCall is on
+# an object.
