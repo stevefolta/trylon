@@ -4,3 +4,9 @@ Go for fully dynamic:  A special dispatch provides for lazy loading of member pr
 
 Trylon objects get a special vtable that also checks (and knows) the enclosing context.
 
+Just use "arg"/"args" for lambdas:
+
+	collection each:
+		arg item
+		item println
+
