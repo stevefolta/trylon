@@ -1,0 +1,86 @@
+trylon Send
+superclass TrylidExpression
+
+fields name object arguments
+
+# Very special for prepare-to-emit handling of class and package functions.
+fields package-result-function
+
+
+create: name object: object arguments: arguments
+	this name = name
+	this object = object
+	this arguments = arguments
+
+
+prepare-to-emit
+	object prepare-to-emit
+
+	for arg in arguments
+		arg prepare-to-emit
+	
+	# Handle class functions and package functions.
+	# ***  What am I doing here?
+	function = nil
+	if object is-a: FunctionCall
+		function = object function
+	else if object is-a: Send
+		function = object proto-result-function
+	if function
+		if function is-a: ProtoFunction
+			proto = function the-proto
+			proto-result-function = proto lookup-function: name
+
+
+emit-code: builder
+	# Emit the object.
+	object-result = object emit-code
+
+	# Emit the arguments.
+	arg-results = List new
+	for arg in arguments
+		arg-results append: (arg emit-code)
+	
+	# Handle class functions and package functions.
+	if object-result is-a: ProtoResult
+		proto = object-result the-proto
+		function = proto lookup-function: name
+		if function
+			return function emit-call: arg-results
+	
+	# Eventually do some optimization based on type.
+	iff optimize-object-calls
+		if object-result type
+			function = object-result type lookup-instance-function: name
+			if function && !function is-overridden
+				iff debug-optimized-object-calls
+					print-line: "*** Optimizing call to " + name + "."
+				builder add-extern-declaration: "extern " + function c-signature + ";"
+				return 	--
+					function emit-object-call: object-result arguments: arg-results 	--
+						builder: builder
+				# Will default to the same code as below, unless optimizable.
+	
+	# Emit the call.
+	expression = Expression with: 'send' with: object-result access
+	for arg-result in arg-results
+		expression add: arg-result access
+	return expression
+
+
+convert-to-setter-call: value
+	if name ends-with: ":"
+		name += "set-to:"
+	else
+		name += ":"
+	arguments append: value
+
+
+copy
+	copied-args = List new
+	for arg in arguments
+		copied-args append: arg
+	return Send new: name object: object arguments: copied-args
+
+
+

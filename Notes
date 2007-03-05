@@ -1,0 +1,6 @@
+[2007.3.4]
+
+Go for fully dynamic:  A special dispatch provides for lazy loading of member protos.  A ProtoBuilder greedily reads the source(s), then builds the proto (now that it knows the number of ivars), then compiles the methods.  That means the methods are grabbed as text, and the parser can know at the time of parse-primary whether it needs to auto-declare.
+
+Trylon objects get a special vtable that also checks (and knows) the enclosing context.
+

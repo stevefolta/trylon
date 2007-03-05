@@ -1,0 +1,29 @@
+trylon TrylonFunction
+
+
+emit-call: arguments
+	virtual
+
+emit-declaration: stream
+	virtual
+
+prepare-to-emit
+	# Default: nothing to do.
+
+emit-code: stream
+	# Default: nothing to do.
+
+has-code
+	return true
+
+
+# Most TrylonFunctions are non-object functions, and object functions and
+# non-object functions are mostly disjoint sets, but the exception is
+# CompiledProto.  So a TrylonFunction can represent either type of function.
+
+# The rest of these must be defined for object functions.
+
+emit-object-call: object arguments: arguments
+	virtual
+
+
