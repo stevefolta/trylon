@@ -1,0 +1,39 @@
+trylon IfStatement
+superclass Statement
+
+fields condition body else-block else-comment pre-else-comments
+
+
+create: condition body: body else-block: else-block 	--
+		comment: comment else-comment: else-comment 	--
+		pre-else-comments: pre-else-comments
+	this condition = condition
+	this body = body
+	this else-block = else-block
+	this comment = comment
+	this else-comment = else-comment
+	this pre-else-comments = pre-else-comments
+
+
+prepare-to-emit
+	condition prepare-to-emit
+	body prepare-to-emit
+	if else-block
+		else-block prepare-to-emit
+
+
+jolt-expression
+	result = condition jolt-expression
+	expression = Expression with: 'if' with: result with: (body jolt-expression)
+	if else-block
+		else-expression = Expression with: 'begin'
+		if pre-else-comments
+			for statement in pre-else-comments
+				else-expression add: statement jolt-expression
+		if else-comment
+			else-expression add: else-comment jolt-expression
+		else-expression add: else-block jolt-expression
+		expression add: else-expression
+	return expression
+
+

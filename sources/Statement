@@ -1,0 +1,13 @@
+trylon Statement
+
+fields comment
+
+
+prepare-to-emit
+	# Default: nothing to do.
+
+
+jolt-expression
+	virtual
+
+

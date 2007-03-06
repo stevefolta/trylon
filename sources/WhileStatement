@@ -1,0 +1,26 @@
+trylon WhileStatement
+superclass Statement
+
+fields condition body
+
+
+create: condition body: body comment: comment
+	this condition = condition
+	this body = body
+	this comment = comment
+
+
+prepare-to-emit
+	condition prepare-to-emit
+	body prepare-to-emit
+
+
+jolt-expression
+	# (.trylid-while condition ...)
+	expression = Expression with: '.trylid-while' with: condition jolt-expression
+	if comment
+		expression add: comment jolt-expression
+	expression addAll: body jolt-expression
+	return expression
+
+

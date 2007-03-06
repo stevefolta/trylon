@@ -32,7 +32,7 @@ prepare-to-emit
 			proto-result-function = proto lookup-function: name
 
 
-emit-code: builder
+jolt-expression
 	# Emit the object.
 	object-result = object emit-code
 
@@ -47,19 +47,6 @@ emit-code: builder
 		function = proto lookup-function: name
 		if function
 			return function emit-call: arg-results
-	
-	# Eventually do some optimization based on type.
-	iff optimize-object-calls
-		if object-result type
-			function = object-result type lookup-instance-function: name
-			if function && !function is-overridden
-				iff debug-optimized-object-calls
-					print-line: "*** Optimizing call to " + name + "."
-				builder add-extern-declaration: "extern " + function c-signature + ";"
-				return 	--
-					function emit-object-call: object-result arguments: arg-results 	--
-						builder: builder
-				# Will default to the same code as below, unless optimizable.
 	
 	# Emit the call.
 	expression = Expression with: 'send' with: object-result access
