@@ -11,7 +11,7 @@ endif
 set iskeyword+=-
 
 " Keywords
-syn keyword Keyword	trylon class superclass field fields
+syn keyword Keyword	trylon trylid class superclass field fields
 syn keyword Keyword fn class-fn primitive-fn
 syn keyword Conditional	if else switch iff
 syn keyword Repeat	while for in loop
