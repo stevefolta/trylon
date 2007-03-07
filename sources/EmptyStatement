@@ -1,0 +1,12 @@
+trylon EmptyStatement
+superclass Statement
+
+
+create
+
+
+jolt-expression
+	return Expression with: 'quote' with: 'empty'
+
+
+

@@ -1,0 +1,12 @@
+trylon ContinueStatement
+superclass Statement
+
+
+create: comment
+	this comment = comment
+
+
+jolt-expression
+	return Expression with: 'continue'
+
+

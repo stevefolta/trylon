@@ -1,0 +1,22 @@
+trylon LoopStatement
+superclass Statement
+
+fields body
+
+
+create: body comment: comment
+	this body = body
+	this comment = comment
+
+
+prepare-to-emit
+	body prepare-to-emit
+
+
+jolt-expression
+	expression = Expression with: 'while' with: 1 with: body
+	if comment
+		expression add: (Expression with: 'comment' with: comment)
+	return expression
+
+

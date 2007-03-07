@@ -1,0 +1,19 @@
+trylon BlockStatement
+superclass Statement
+
+fields block
+
+
+create: block
+	this block = block
+
+
+prepare-to-emit
+	block prepare-to-emit
+
+
+jolt-expression
+	block jolt-expression
+
+
+

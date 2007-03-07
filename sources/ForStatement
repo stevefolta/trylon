@@ -1,0 +1,26 @@
+trylon ForStatement
+superclass Statement
+
+fields local collection body
+
+
+create: local collection: collection body: body comment: comment
+	this local = local
+	this collection = collection
+	this body = body
+	this comment = comment
+
+
+prepare-to-emit
+	collection prepare-to-emit
+	body prepare-to-emit
+
+
+jolt-expression
+	return 	--
+		Expression 	--
+			with: '.trylid-for' with: local name 	--
+			with: collection jolt-expression 	--
+			with: body jolt-expression
+
+
