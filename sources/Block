@@ -1,0 +1,91 @@
+trylon Block
+superclass Context
+
+fields parent locals statements
+
+
+create: parent
+	this parent = parent
+	locals = nil 	# Will be created if needed.
+	statements = List new
+
+
+add-local: local
+	if locals == nil
+		locals = Dictionary new
+	
+	(locals at: local name) = local
+
+
+append: statement
+	statements append: statement
+
+
+is-empty
+	return statements is-empty
+
+
+lookup-function: name
+	# See if there's a local for it.
+	if locals
+		local-name = name
+		is-setter = false
+		if name ends-with: ":"
+			local-name = name substr: 0 length: name length - 1
+			is-setter = true
+		local = locals at: local-name
+		if local
+			if is-setter
+				return LocalSetter new: local
+			else
+				return LocalGetter new: local
+	
+	# Otherwise, go up the chain.
+	function = parent lookup-function: name
+	return function
+
+
+lookup-function-autodeclaring: name
+	function  = lookup-function: name
+	if function
+		return function
+	
+	# If it wasn't found, and it's a setter, autodeclare a local.
+	if (name index-of: `:`) == name length - 1
+		local = CompiledField new: (name substr: 0 length: name length - 1) type: nil
+		add-local: local
+		return LocalSetter new: local
+	
+	return nil
+
+
+enclosing-method-context
+	return parent enclosing-method-context
+
+
+is-lambda
+	return false
+
+
+prepare-to-emit
+	for statement in statements
+		statement prepare-to-emit
+
+
+jolt-expression
+	expr = Expression new: statements count + 1
+	expr at: 0 put: 'begin'
+	index = 1
+	for statement in statements
+		expr at: index put: statement jolt-expression
+		index += 1
+	if locals
+		locals-expr = Expression new: locals count
+		index = 0
+		for local in locals
+			locals-expr at: index put: local name intern
+			index += 1
+		expr = Expression new: 'trylid-block' new: locals-expr new: expr
+	return expr
+
+

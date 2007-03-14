@@ -1,0 +1,47 @@
+trylon main
+
+iff !in-jolt
+	class Expression
+		superclass Tuple
+
+		class-fn with: value
+			return (Expression new: 1) at: 0 set-to: value
+
+		class-fn with: value-1 with: value-2
+			expr = Expression new: 2
+			expr at: 0 set-to: value-1
+			expr at: 1 set-to: value-2
+			return expr
+
+		class-fn with: value-1 with: value-2 with: value-3
+			expr = Expression new: 3
+			expr at: 0 set-to: value-1
+			expr at: 1 set-to: value-2
+			expr at: 2 set-to: value-3
+			return expr
+
+		class-fn with: value-1 with: value-2 with: value-3 with: value-4
+			expr = Expression new: 4
+			expr at: 0 set-to: value-1
+			expr at: 1 set-to: value-2
+			expr at: 2 set-to: value-3
+			expr at: 3 set-to: value-4
+			return expr
+
+		at: index put: value
+			this at: index put: value
+
+		emit
+			write: "("
+			done-one = false
+			for value in this
+				if done-one
+					write: " "
+				else
+					done-one = true
+				if value is-a: Expression
+					value emit
+				else
+					write: value string
+			write: ")"
+

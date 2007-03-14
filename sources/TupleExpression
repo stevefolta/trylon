@@ -1,0 +1,27 @@
+trylon TupleExpression
+superclass Expression
+
+fields members
+
+
+create
+	members = List new
+
+
+add-member: member
+	members append: member
+
+
+prepare-to-emit
+	for member in members
+		member prepare-to-emit
+
+
+jolt-expression
+	value = Expression new: members count
+	index = 0
+	for member in members
+		value at: index put: member
+		index += 1
+	return Expression with: 'quote' with: value
+
