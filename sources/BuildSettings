@@ -1,0 +1,206 @@
+trylon BuildSettings
+
+fields dictionary
+fields program-name
+fields jolt-sources-dir
+fields is-verbose
+fields debugger
+
+
+create
+	dictionary = Dictionary new
+	program-name = "program-binary"
+	jolt-sources-dir = ".c-sources"
+	is-verbose = false
+
+	sysname = System sysname
+	if !sysname is-empty
+		(dictionary at: sysname) = sysname
+
+
+has-symbol: name
+	return (dictionary at: name) != nil
+
+
+load
+	load-from: "build-settings.local"
+	load-from: "build-settings"
+
+
+load-from: file-name
+	file = File new: file-name
+	if !file exists
+		return
+	
+	try
+		lexer = Lexer new: file contents
+		parse-block: lexer
+	catch Exception
+		throw 	--
+			MessageException new: 	--
+				"Error in \"" + file-name + "\": " + exception message
+
+
+parse-block: lexer
+	loop
+		token = lexer next-token
+		type = token type
+
+		if type == 'eol'
+			continue
+
+		else if type == 'comment'
+			token = lexer next-token 	# It *will* be an 'eol'.
+			continue
+
+		else if type == 'name' || type == 'keyword'
+			name = token text
+			if type == 'keyword'
+				name = name substr: 0 length: name length - 1
+			if name == "program"
+				program-name = parse-name: lexer name: name
+			else if name == "jolt-sources-dir"
+				jolt-sources-dir = parse-name: lexer name: name
+			else if name == "debugger"
+				debugger = parse-boolean: lexer name: name
+			else if name == "verbose"
+				is-verbose = parse-boolean: lexer name: name
+
+			else if name == "if" || name == "iff"
+				parse-if: lexer
+
+			else
+				# Anything else is just a boolean for the dictionary.
+				parse-boolean: lexer name: name
+
+		else if type == 'indent'
+			parse-block: lexer
+
+		else if type == 'eof' || type == 'unindent'
+			break
+
+
+parse-name: lexer name: declaration
+	token = lexer next-token
+	if token == '='
+		token = lexer next-token
+	if token == 'eol' || token == 'comment'
+		throw MessageException new: "Empty \"" + declaration + "\" declaration."
+	
+	name = token text
+	token = lexer next-token
+	if token == 'comment'
+		lexer next-token 	# It *will* be an 'eol'.
+	else if token != 'eol'
+		throw 	--
+			MessageException new: 	--
+				"Extra tokens in \"" + declaration + "\" declaration."
+	
+	return name
+
+
+parse-flags: lexer into: flags name: declaration
+	flag = ""
+	have-started = false
+	loop
+		token = lexer next-token
+
+		if !have-started && token type == '+='
+			# Just go around again.
+		
+		else if token == 'eol'
+			if !flag is-empty
+				flags append: flag
+			break
+
+		else if token == 'comment'
+			# Just go around again; 'eol' will be next.
+
+		else if token == '-'
+			# We want to allow flags starting with hyphens without quoting.
+			flag += "-"
+
+		else
+			flag += token text
+			flags append: flag
+			flag = ""
+
+		have-started = true
+
+
+parse-boolean: lexer name: declaration
+	token = lexer next-token
+	if token == '='
+		token = lexer next-token
+	if token == 'eol' || token == 'comment'
+		throw MessageException new: "Empty \"" + declaration + "\" declaration."
+	
+	name = token text
+	token = lexer next-token
+	if token == 'comment'
+		lexer next-token 	# It *will* be an 'eol'.
+	else if token != 'eol'
+		throw 	--
+			MessageException new: 	--
+				"Extra tokens in \"" + declaration + "\" declaration."
+	
+	on = (name == "true" || name == "on")
+	if on
+		(dictionary at: declaration) = declaration
+	return on
+
+
+parse-if: lexer
+	# Check for "!".
+	token = lexer next-token
+	reverse-sense = false
+	if token == '!'
+		reverse-sense = true
+		token = lexer next-token
+	
+	# Get the value.
+	if token == 'comment' || token == 'eol'
+		throw MessageException new: "Invalid \"if\" statement."
+	value = dictionary at: token text
+	if value == nil
+		value = ""
+	test-is-true = !value is-empty
+	if reverse-sense
+		test-is-true = !test-is-true
+	
+	# Get the end of line.
+	token = lexer next-token
+	if token == 'comment'
+		token = lexer next-token
+	if token != 'eol'
+		throw MessageException new: "Extra tokens in \"if\" statement."
+	
+	# Handle the block.
+	token = lexer next-token
+	if token != 'indent'
+		throw MessageException new: "Missing block in \"if\" statement."
+	if test-is-true
+		parse-block: lexer
+	else
+		# Skip the block.
+		indent-count = 1
+		loop
+			token = lexer next-token
+			if token == 'indent'
+				indent-count += 1
+			else if token == 'unindent'
+				indent-count -= 1
+				if indent-count <= 0
+					break
+
+
+report
+	if reporter == nil
+		return
+	
+	reporter report: "Defined symbols:"
+	reporter indent
+	for name in dictionary keys
+		reporter report: name
+	reporter unindent
+

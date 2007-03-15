@@ -1,0 +1,202 @@
+trylon Compiler
+
+fields arguments successful build-settings
+fields proto-queue main-proto
+fields status-reporter
+
+
+class-fn compile: arguments
+	the-compiler = Compiler new: arguments
+	the-compiler run
+	return the-compiler return-value
+
+
+create: arguments
+	this arguments = arguments
+	this successful = true
+	this build-settings = BuildSettings new
+	proto-queue = List new
+
+
+run
+	try
+		# Read the settings.
+		build-settings load
+
+		# Parse the arguments.
+		file-names = List new
+		compile-symbols = List new
+		do-lex-test = false
+		for arg in arguments tail
+			if arg starts-with: "--"
+				compile-symbols append: (arg substr: 2)
+				if arg == "--lex-test"
+					do-lex-test = true
+				else if arg == "--verbose"
+					build-settings is-verbose = true
+			else
+				file-names append: arg
+
+		if status-reporter == nil
+			if build-settings is-verbose
+				status-reporter = StdoutStatusReporter new
+			else
+				status-reporter = VT100StatusReporter new
+
+		if build-settings is-verbose
+			build-settings report
+
+		if do-lex-test
+			for arg in arguments tail tail
+				lex-test: arg
+
+		else
+			compile-program: compile-symbols
+	
+	catch Exception
+		print-line: exception message
+		successful = false
+
+
+return-value
+	if !successful
+		return 1
+	return 0
+
+
+
+# Top-level compilation.
+
+compile-program: compile-symbols
+	# Create the .c-sources and .objects directories.
+	directory = FileDirectory new: "."
+	if !(directory entry-is-directory: build-settings c-sources-dir)
+		directory create-subdirectory: build-settings c-sources-dir
+	if !(directory entry-is-directory: build-settings objects-dir)
+		directory create-subdirectory: build-settings objects-dir
+	
+	# We need "destroy" to be a function name, even if there are no 
+	# functions with that name.
+	add-object-function: "destroy"
+
+	# Load.
+	main-directory = FileDirectory new: "."
+	if main-directory entry-is-directory: "sources"
+		main-directory = main-directory at: "sources"
+	library-path = find-library-path
+	if library-path == nil
+		throw MessageException new: 	--
+			"Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY."
+	library-directory = FileDirectory new: library-path
+	status-reporter report: "Loading Main..."
+	status-reporter indent
+	main-proto = CompiledProto new: "Main" parent: nil
+	main-proto 	--
+		setup-main: main-directory library-directory: library-directory 	--
+		compile-symbols: compile-symbols
+	proto-queue append: main-proto
+	status-reporter unindent
+
+	# Get ready to emit (mainly this makes sure all used classes are loaded).
+	status-reporter report: "Preparing to emit..."
+	status-reporter indent
+	for proto in proto-queue
+		proto prepare-to-emit
+	status-reporter unindent
+
+	# Make every class without a superclass be a subclass of Standard Object.
+	object-class = root-class: main-proto
+	main-proto ensure-superclasses: object-class
+
+	# Emit the classes and packages.
+	status-reporter report: "Emitting code..."
+	status-reporter indent
+	for proto in proto-queue
+		is-changed = proto emit-code
+		# c-files add-package: package is-changed: is-changed
+	status-reporter unindent
+
+	# Another round of ensure-superclasses, to get classes loaded during 
+	# the emit.
+	# (This might not be necessary, now that "CompiledClass prepare-to-emit"
+	# ensures that it has a superclass).
+	main-proto ensure-superclasses: object-class
+
+	status-reporter report: "Done."
+
+
+root-class: main-proto
+	# Find "Standard Object".
+	standard-package = main-proto get-subpackage: "Standard"
+	if standard-package == nil
+		throw MessageException new: "Standard package is missing!"
+	object-function = standard-package lookup-function: "Object"
+	if object-function == nil
+		throw MessageException new: "Standard Object is missing!"
+	if !object-function is-a: ProtoFunction
+		throw MessageException new: "Standard Object is not a prototype!"
+	return object-function the-class
+
+
+copy-to-sources: file dest-name: dest-name
+	contents = file contents
+	dest-file = File new: build-settings c-sources-dir + "/" + dest-name
+	stream = ExistingFileStream new: dest-file
+	stream write: contents
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+report-run-program: program arguments: args
+	if build-settings is-verbose
+		status-reporter indent
+
+		command = StringBuilder new
+		command += program
+		command += " "
+		for arg in args
+			command += arg
+			command += " "
+		status-reporter report: command string
+
+		status-reporter unindent
+
+
+get-standard-class: name
+	return (main-proto get-subpackage: "Standard") get-class: name
+
+
+find-library-path
+	library-path = System environment-variable-named: "TRYLON_LIBRARY"
+	if library-path && !library-path is-empty
+		return library-path
+	for prefix-path in ("/usr/lib", "/usr/local/lib", "/opt/lib")
+		prefix-dir = FileDirectory new: prefix-path
+		if prefix-dir entry-is-directory: "trylon"
+			return prefix-path + "/trylon"
+	return nil
+
+
+# Test.
+
+lex-test: filename
+	try
+		lexer = nil
+		iff !use-c-lexer
+			lexer = Lexer new: (File new: filename) contents
+		iff use-c-lexer
+			lexer = CLexer new: (File new: filename) contents
+		loop
+			token = lexer next-token
+			print: token type
+			if token text && !token text is-empty
+				print: ": "
+				print: token text
+			print-line
+			if token type == 'eof'
+				break
+	catch Exception
+		print-line: "Error: " + exception message
+
+

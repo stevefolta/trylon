@@ -1,5 +1,11 @@
 trylon main
 
+the-compiler = nil
+
+main: args
+	Compiler compiler: args
+	return 0
+
 iff !in-jolt
 	class Expression
 		superclass Tuple
@@ -31,17 +37,18 @@ iff !in-jolt
 		at: index put: value
 			this at: index put: value
 
-		emit
-			write: "("
+		emit: stream
+			stream write: "("
 			done-one = false
 			for value in this
 				if done-one
-					write: " "
+					stream write: " "
 				else
 					done-one = true
 				if value is-a: Expression
-					value emit
+					value emit: stream
 				else
-					write: value string
-			write: ")"
+					stream write: value string
+			stream write: ")"
+
 

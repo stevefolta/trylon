@@ -1,0 +1,270 @@
+trylon CompiledProto
+superclass Context
+
+fields name parent functions fields shared-fields superclass directories
+fields uses-protos
+fields is-main
+
+
+create: name parent: parent
+	this name = name
+	this parent = parent
+	functions = Dictionary new
+	fields = List new
+	shared-fields = Dictionary new
+	directories = List new
+	uses-protos = List new
+	is-main = false
+
+
+lookup-function: name
+	return lookup-function: name visited-protos: ObjectMap new
+
+
+lookup-function: name visited-protos: visited-protos
+	# Recursion control.
+	if visited-protos contains: this
+		return nil
+	visited-protos at: this set-to: this
+
+	# Do we know it already?
+	function = functions at: name
+	if function
+		return function
+	
+	# If not, see if it's in one of our directories.
+	for directory in directories
+		# A class?
+		if (directory contains: name) && !(directory entry-is-directory: name)
+			proto = add-proto: name
+			parser = Parser new: (directory at: name) contents context: this
+			parser parse-proto-file: proto
+			return functions at: name
+
+		# A proto?
+		if directory entry-is-directory: name
+			return add-proto: name directory: (directory at: name)
+	
+	# Check the parent.
+	if parent
+		function = parent lookup-function: name visited-protos: visited-protos
+		if function
+			return function
+	
+	# Next, check the used protos.
+	for used-proto in uses-protos
+		function = 	--
+			used-proto lookup-function: name visited-protos: visited-protos
+		if function
+			return function
+	
+	return nil
+
+
+make-subclass-of: superclass
+	if this superclass
+		# Already had a superclass (perhaps the default Standard Object); 
+		# replace it.
+		uses-packages remove: this superclass
+	
+	# Install the superclass.
+	this superclass = superclass
+
+	# Automatically "use" the superclass.
+	uses-packages append: superclass
+
+
+add-function: function
+	function-name = function name
+	if function has-code
+		existing-function = functions at: function-name
+		if existing-function && existing-function has-code
+			throw MessageException new: 	--
+				"\"" + this name + " " + function-name + "\" is defined twice."
+
+	functions at: function-name set-to: function
+
+	# "create" functions automatically add a corresponding "new:" function.
+	if (function is-a: CompiledFunction) && 	--
+	    ((name == "create") || (name starts-with: "create:") || 	--
+	     (name starts-with: "create-"))
+		# Add the corresponding "new" function.
+		new-function = NewFunction new: function on-proto: this
+		(functions at: new-function name) = new-function
+
+
+add-field: field
+	fields append: field
+	add-function: field name 	--
+		function: (FieldGetter new: field on-class: this)
+	add-function: field name + ":" 	--
+		function: (FieldSetter new: field on-class: this)
+
+
+add-shared-field: field
+	shared-fields at: field name set-to: field
+	functions at: field name set-to: (SharedFieldGetter new: field on-proto: this)
+	functions 	--
+		at: field name + ":" set-to: (SharedFieldSetter new: field on-proto: this)
+
+
+add-proto: name directory: directory
+	# If it already exists, return it.
+	existing-function = functions at: name
+	if existing-function
+		if !(existing-function is-a: ProtoFunction)
+			throw MessageException new: 	--
+				"Adding \"" + name + "\" as a proto, when it's already a non-proto."
+		return existing-function the-proto
+	
+	# Add the new one.
+	status-reporter = Compiler status-reporter
+	status-reporter report: "Loading " + name + " into " + full-name + "..."
+	status-reporter indent
+	new-proto = CompiledProto new: name parent: this
+	if directory
+		new-proto add-directory: directory
+	proto-function = ProtoFunction new: new-proto
+	functions at: name set-to: proto-function
+	the-compiler proto-queue append: new-proto
+	status-reporter unindent
+	return proto-function
+
+
+add-proto: name
+	return add-proto: name directory: nil
+
+
+get-subproto: name
+	# Has it been loaded already?
+	function = functions at: name
+	if function && (function is-a: ProtoFunction)
+		return function proto
+	
+	# Look for it.
+	for directory in directories
+		if directory entry-is-directory: name
+			return (add-proto: name directory: (directory at: name)) proto
+	
+	return nil
+
+
+get-proto: name
+	function = functions at: name
+	if function == nil
+		function = lookup-function: name
+	if function && (function is-a: ProtoFunction)
+		return function the-proto
+	return nil
+
+
+add-directory: directory
+	directories append: directory
+
+	if directory contains: "main"
+		parser = Parser new: (directory at: "main") contents context: this
+		parser parse-proto-file: this
+
+
+setup-main: main-directory library-directory: library-directory 	--
+		compile-symbols: compile-symbols
+	is-main = true
+
+	# We want the main-directory to have precedence when looking up names,
+	# but we won't be able to compile its "main" until the library directory
+	# is in the "directories" and Standard is visible.  So add both, *then*
+	# compile the "main"s.
+	directories append: main-directory
+	directories append: library-directory
+
+	# Load Standard.
+	standard-proto = get-subproto: "Standard"
+	if standard-proto == nil
+		throw MessageException new: "The Standard proto can't be found!"
+	uses-protos append: standard-proto
+
+	# Add "nil" to Standard.
+	# This will override the definition in Standard's "main".
+	standard-proto functions at: "nil" set-to: NilFunction new
+
+	# Load our "main"s
+	for directory in directories
+		if directory contains: "main"
+			parser = Parser new: (directory at: "main") contents context: this
+			parser parse-proto-file: this
+	
+	# Load up standard protos.
+	for proto-name in ("BytePtr", "Float", "String", "Symbol", "Tuple", "List")
+		standard-proto lookup-function: proto-name
+	
+	functions at: "Main" set-to: (ProtoFunction new: this)
+
+
+ensure-superclasses: object-proto
+	for function in functions values
+		if function is-a: ProtoFunction
+			proto = function proto
+			if proto != this
+				proto ensure-superclasses: object-proto
+
+
+find-primitives-file: file-name
+	for directory in directories
+		if directory entry-is-directory: "primitives"
+			primitives-dir = directory at: "primitives"
+			if (primitives-dir contains: file-name) && 	--
+			   !(primitives-dir entry-is-directory: file-name)
+				return primitives-dir at: file-name
+	
+	return nil
+
+
+prepare-to-emit
+	if superclass == nil
+		ensure-superclasses: (the-compiler get-standard-class: "Object")
+
+	for function in functions values
+		function prepare-to-emit
+
+
+emit-code
+	status-reporter report: "Generating code for " + name + "..."
+	status-reporter indent
+
+	if lookup-function: "verbose"
+		status-reporter report: name + " has these functions:"
+		status-reporter indent
+		for name in functions keys
+			status-reporter report: name + " (" + (functions at: name) proto name + ")"
+		status-reporter unindent
+	
+	is-changed = emit-jolt-file
+
+	status-reporter unindent
+
+	is-changed = true
+	return is-changed
+
+
+emit-jolt-file
+	#...
+	file = 	--
+		File new: 	--
+			the-compiler build-settings jolt-sources-dir + "/" + full-name + ".k"
+	stream = ExistingFileStream new: file
+	#...
+	for function in functions values
+		function emit-code: stream
+
+
+
+# Helpers
+
+full-name
+	result = this name
+	proto = parent
+	while proto
+		result = proto name + " " + result
+		proto = proto parent
+	return result
+
