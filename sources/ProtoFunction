@@ -1,0 +1,15 @@
+trylon ProtoFunction
+superclass TrylidFunction
+
+fields proto
+
+
+create: proto
+	this proto = proto
+
+
+emit-call: arguments
+	return ProtoResult new: proto
+
+
+

@@ -1,0 +1,13 @@
+trylon StatusReporter
+
+
+report: message
+	virtual
+
+indent
+	virtual
+
+unindent
+	virtual
+
+

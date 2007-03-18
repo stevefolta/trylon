@@ -1,0 +1,15 @@
+trylon ExpressionResult
+
+
+access
+	virtual
+
+is-constant
+	# Default: no.
+	return false
+
+type
+	# Usually unspecified.
+	return nil
+
+

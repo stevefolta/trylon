@@ -93,6 +93,10 @@ add-function: function
 		(functions at: new-function name) = new-function
 
 
+add-function: name function: function
+	functions at: name set-to: function
+
+
 add-field: field
 	fields append: field
 	add-function: field name 	--
@@ -255,6 +259,13 @@ emit-jolt-file
 	#...
 	for function in functions values
 		function emit-code: stream
+
+
+access
+	if parent == nil
+		return 'Main'
+	else
+		return Expression with: 'send' with: parent access with: name intern
 
 
 

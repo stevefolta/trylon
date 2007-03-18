@@ -1,0 +1,18 @@
+trylon ProtoResult
+superclass ExpressionResult
+
+fields proto
+
+
+create: proto
+	this proto = proto
+
+
+access
+	return proto access
+
+
+is-constant
+	return true
+
+

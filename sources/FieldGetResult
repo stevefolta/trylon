@@ -1,0 +1,19 @@
+trylon FieldGetResult
+superclass ExpressionResult
+
+fields field on-proto
+
+
+create: field on-proto: on-proto
+	this field = field
+	this on-proto = on-proto
+
+
+access
+	return 	--
+		Expression 	--
+			with: 'send' with: field name intern with: on-proto access
+
+
+
+

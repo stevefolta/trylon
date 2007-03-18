@@ -1,0 +1,18 @@
+trylon FieldSetter
+superclass TrylidFunction
+
+fields field on-proto
+
+
+create: field on-proto: on-proto
+	this field = field
+	this on-proto = on-proto
+
+
+emit-call: arguments
+	return 	--
+		Expression 	--
+			with: 'send' with: (field name + ":") intern with: on-proto access 	--
+			with: arguments first-item access
+
+

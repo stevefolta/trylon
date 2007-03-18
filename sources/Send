@@ -49,10 +49,15 @@ jolt-expression
 			return function emit-call: arg-results
 	
 	# Emit the call.
-	expression = Expression with: 'send' with: object-result access
+	expr = Expression new: arg-results count + 3
+	expr at: 0 put: 'send'
+	expr at: 1 put: name intern
+	expr at: 2 put: object-result access
+	index = 3
 	for arg-result in arg-results
-		expression add: arg-result access
-	return expression
+		expr at: index put: arg-result access
+		index += 1
+	return expr
 
 
 convert-to-setter-call: value

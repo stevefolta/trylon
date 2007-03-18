@@ -1,0 +1,55 @@
+trylon CompiledFunction
+superclass TrylidFunction
+
+fields name arguments return-type on-proto
+fields body method-context
+
+
+create: name arguments: arguments return-type: return-type 	--
+		on-proto: on-proto body: body
+	this name = name
+	this arguments = arguments
+	this return-type = return-type
+	this on-proto = on-proto
+	this body = body
+
+
+has-code
+	if body
+		return !body is-empty
+	return false
+
+
+emit-call: arguments
+	expr = Expression new: arguments count + 3
+	expr at: 0 put: 'send'
+	expr at: 1 put: name intern
+	expr at: 2 put: on-proto access
+	index = 3
+	for arg in arguments
+		expr at: index put: arg access
+		index += 1
+	return expr
+
+
+prepare-to-emit
+	if body
+		body prepare-to-emit
+
+
+emit-code
+	if body == nil
+		return
+	
+	expr = Expression new: arguments count + 4
+	expr at: 0 put: 'define-send'
+	expr at: 1 put: name intern
+	expr at: 2 put: on-proto access
+	index = 3
+	for arg in arguments
+		expr at: index put: arg name intern
+		index += 1
+	expr at: index put: body jolt-expression
+
+
+
