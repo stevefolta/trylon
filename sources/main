@@ -1,6 +1,7 @@
 trylon main
 
 the-compiler = nil
+status-reporter = nil
 
 main: args
 	Compiler compiler: args

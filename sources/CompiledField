@@ -1,0 +1,12 @@
+trylon CompiledField
+
+fields name type
+fields initial-value 	# Only used for class/package fields.
+
+
+create: name type: type
+	this name = name
+	this type = type
+
+
+

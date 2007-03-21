@@ -1,0 +1,39 @@
+trylon DictLiteral
+superclass Expression
+
+fields dict index
+
+
+create
+	dict = Dictionary new
+
+
+at: key set-to: value
+	dict at: key set-to: value
+
+
+prepare-to-emit
+	the-compiler get-standard-class: "Dictionary"
+	prepare-to-emit: dict root
+
+prepare-to-emit: node
+	if node left
+		prepare-to-emit: node left
+	if node right
+		prepare-to-emit: node right
+	node value prepare-to-emit
+
+
+jolt-expression
+	return ( 'trylon-dict', (emit-node: dict root), dict num-items )
+
+emit-node: node
+	if node == nil
+		return 'nil'
+	return 	--
+		( 'trylon-dict-node', 	--
+		  node key, node value jolt-expression, 	--
+		  (emit-node: node left), 	--
+			(emit-node: node right) )
+
+

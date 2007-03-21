@@ -1,0 +1,29 @@
+trylon IntStack
+
+fields top-cell
+
+create
+	top-cell = nil
+
+is-empty
+	return top-cell == nil
+
+push: value
+	top-cell = Cell new: value next: top-cell
+
+pop
+	value = top-cell value
+	top-cell = top-cell next
+	return value
+
+top
+	return top-cell value
+
+
+class Cell
+	fields value next
+
+	create: value next: next
+		this value = value
+		this next = next
+
