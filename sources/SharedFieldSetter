@@ -1,4 +1,4 @@
-trylon FieldSetter
+trylon SharedFieldSetter
 superclass TrylidFunction
 
 fields field on-proto
@@ -10,7 +10,6 @@ create: field on-proto: on-proto
 
 
 emit-call: arguments
-	# Could do this more efficiently...
 	return 	--
 		Expression 	--
 			with: 'send' with: (field name + ":") intern with: on-proto access 	--

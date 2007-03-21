@@ -65,13 +65,13 @@ make-subclass-of: superclass
 	if this superclass
 		# Already had a superclass (perhaps the default Standard Object); 
 		# replace it.
-		uses-packages remove: this superclass
+		uses-protos remove: this superclass
 	
 	# Install the superclass.
 	this superclass = superclass
 
 	# Automatically "use" the superclass.
-	uses-packages append: superclass
+	uses-protos append: superclass
 
 
 add-function: function
@@ -232,6 +232,7 @@ prepare-to-emit
 
 
 emit-code
+	status-reporter = Compiler status-reporter
 	status-reporter report: "Generating code for " + name + "..."
 	status-reporter indent
 

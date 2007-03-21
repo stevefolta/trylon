@@ -1,0 +1,37 @@
+trylon SharedFieldGetter
+superclass TrylidFunction
+
+
+fields field on-proto
+
+
+create: field on-proto: on-proto
+	this field = field
+	this on-proto = on-proto
+
+
+emit-call: arguments
+	return FieldGetResult new: field on-proto: on-proto
+
+
+emit-code
+	if field is-primitive
+		return
+	
+	# If it has an intial value, emit the literal.
+	initial-value = nil
+	if field initial-value
+		initial-value = field initial-value emit-proto-literal: stream
+	
+	# Just emit the declaration.
+	initial-value-access = nil
+	if initial-value
+		initial-value-access = initial-value access
+	else
+		initial-value-access = NilExpression new
+	return 	--
+		Expression 	--
+			with: 'add-shared-field' with: field name intern with: on-proto access 	--
+			with: initial-value-access
+
+

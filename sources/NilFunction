@@ -1,0 +1,11 @@
+trylon NilFunction
+superclass TrylidFunction
+
+
+create
+
+
+emit-call: arguments builder: builder
+	return 'nil'
+
+

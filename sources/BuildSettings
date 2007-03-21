@@ -194,13 +194,3 @@ parse-if: lexer
 					break
 
 
-report
-	if reporter == nil
-		return
-	
-	reporter report: "Defined symbols:"
-	reporter indent
-	for name in dictionary keys
-		reporter report: name
-	reporter unindent
-
