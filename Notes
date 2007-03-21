@@ -10,3 +10,32 @@ Just use "arg"/"args" for lambdas:
 		arg item
 		item println
 
+
+=====
+
+[2007.3.21]
+
+Equals-block should make a new object, not a dict literal:
+
+	trylid List
+	fields head last
+
+	create
+		head = last = nil
+	
+	append: new-value
+		new-cell = Cell new: value
+		if last
+			last tail = new-cell
+		else
+			head = new-cell
+		last = new-cell
+
+	Cell =
+		fields head tail
+
+		create: value
+			head = value
+
+But that should still serve the dict-literal purpose.
+
