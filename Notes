@@ -37,5 +37,5 @@ Equals-block should make a new object, not a dict literal:
 		create: value
 			head = value
 
-But that should still serve the dict-literal purpose (and even better, because you can do 'dict field' instead of 'dict at: "field"').
+But that should still serve the dict-literal purpose.
 
