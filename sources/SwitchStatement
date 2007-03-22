@@ -1,0 +1,39 @@
+trylon SwitchStatement
+superclass Statement
+
+fields expression clauses else-clause value-comment post-clauses-comments
+
+
+create: expression value-comment: value-comment
+	this expression = expression
+	this value-comment = value-comment
+	clauses = List new
+
+
+add-clause: clause
+	clauses append: clause
+
+
+prepare-to-emit
+	expression prepare-to-emit
+	for clause in clauses
+		clause prepare-to-emit
+	if else-clause
+		else-clause prepare-to-emit
+
+
+jolt-expression
+	expr-size = clauses count + 2
+	if else-clause
+		expr-size += 1
+	expr = Expression new: expr-size
+	expr at: 0 put: 'switch'
+	expr at: 1 put: expression jolt-expression
+	index = 2
+	for clause in clauses
+		expr at: index put: clause jolt-expression
+		index += 1
+	if else-clause
+		expr at: index put: else-clause jolt-expression
+
+

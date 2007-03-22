@@ -1,0 +1,28 @@
+trylon CatchClause
+superclass Context
+
+fields type body parent comment pre-clause-comments
+
+
+create: type parent: parent comment: comment 	--
+		pre-clause-comments: pre-clause-comments
+	this type = type
+	this parent = parent
+	this comment = comment
+	this pre-clause-comments = pre-clause-comments
+
+
+lookup-function: name
+	if name == "exception"
+		return CaughtExceptionFunction new
+	
+	return parent lookup-function: name
+
+
+enclosing-method-context
+	return parent enclosing-method-context
+
+
+jolt-expression
+	return Expression with: type jolt-expression with: body jolt-expression
+

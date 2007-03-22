@@ -61,6 +61,17 @@ lookup-function: name visited-protos: visited-protos
 	return nil
 
 
+lookup-instance-function: name
+	function = functions at: name
+	if function
+		return function
+	
+	if superclass
+		return superclass lookup-instance-function: name
+	
+	return nil
+
+
 make-subclass-of: superclass
 	if this superclass
 		# Already had a superclass (perhaps the default Standard Object); 

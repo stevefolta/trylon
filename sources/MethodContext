@@ -1,0 +1,41 @@
+trylon MethodContext
+superclass Context
+
+fields arguments parent
+fields function
+
+
+create: arguments parent: parent
+	this arguments = arguments
+	this parent = parent
+
+
+lookup-function: name
+	# "this"
+	if name == "this"
+		return ThisFunction new
+	
+	# Arguments.
+	is-setter = name ends-with: ":"
+	set-name = nil
+	if is-setter
+		set-name = name substr: 0 length: name length - 1
+	for argument in arguments
+		if argument name == name
+			return ArgumentFunction new: argument
+		else if is-setter && argument name == set-name
+			return SetArgumentFunction new: argument
+	
+	# Function calls on "this".
+	# The parent will be a CompiledProto.
+	function = parent lookup-instance-function: name
+	if function
+		return FunctionOnThis new: name on-class: parent
+	
+	return parent lookup-function: name
+
+
+enclosing-method-context
+	return this
+
+

@@ -208,7 +208,7 @@ parse-proto-file: proto
 
 parse-member-proto
 	# "proto" (or "class" for compatibility with Trylon)
-	if (!at-name: proto) && (!at-name: "class")
+	if (!at-name: "proto") && (!at-name: "class")
 		parse-error: "Expecting \"proto\"."
 	consume-token
 
@@ -1144,7 +1144,7 @@ parse-equality-expression
 		expr2 = parse-relational-expression
 		if expr2 == nil
 			expression-expected-after: token
-		expr = EqualityCall new: token with: expr and: expr2
+		expr = make-binop-call: token with: expr and: expr2
 
 		token = current-token type
 	

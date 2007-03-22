@@ -1,0 +1,18 @@
+trylon SetArgumentFunction
+superclass TrylidFunction
+
+fields name
+
+
+create: arg
+	this name = arg name
+
+
+emit-call: arguments
+	return 	--
+		Expression 	--
+			with: 'set' 	--
+			with: name intern 	--
+			with: arguments first-item jolt-expression
+
+

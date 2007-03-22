@@ -1,0 +1,18 @@
+trylon ShortCircuitNot
+superclass Expression
+
+fields expr
+
+
+create: expr
+	this expr = expr
+
+
+prepare-to-emit
+	expr prepare-to-emit
+
+
+jolt-expression
+	return Expression with: 'not' with: expr jolt-expression
+
+

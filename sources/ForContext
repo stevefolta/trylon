@@ -1,0 +1,25 @@
+trylon ForContext
+superclass Context
+
+fields local parent
+
+
+create: local parent: parent
+	this local = local
+	this parent = parent
+
+
+lookup-function: name
+	if name == local name
+		return LocalGetter new: local
+	else if name == local name + ":"
+		return LocalSetter new: local
+	
+	return parent lookup-function: name
+
+
+enclosing-method-context
+	return parent enclosing-method-context
+
+
+

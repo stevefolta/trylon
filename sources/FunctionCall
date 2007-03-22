@@ -18,20 +18,6 @@ prepare-to-emit
 		arg prepare-to-emit
 
 
-emit-code: builder
-	# We already got the function in prepare-to-emit.
-	if function == nil
-		throw MessageException new: "There is no \"" + name + "\" function."
-	
-	# Generate the arguments.
-	arg-results = List new
-	for arg in arguments
-		result = arg emit-code: builder
-		arg-results append: result
-	
-	return function emit-call: arg-results builder: builder
-
-
 jolt-expression
 	# We already got the function in prepare-to-emit.
 	if function == nil

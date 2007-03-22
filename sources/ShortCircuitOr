@@ -1,0 +1,24 @@
+trylon ShortCircuitOr
+superclass Expression
+
+fields expr1 expr2
+
+
+create: expr1 with: expr2
+	this expr1 = expr1
+	this expr2 = expr2
+
+
+prepare-to-emit
+	expr1 prepare-to-emit
+	expr2 prepare-to-emit
+
+
+jolt-expression
+	return 	--
+		Expression 	--
+			with: 'or' 	--
+			with: (expr1 jolt-expression) 	--
+			with: (expr2 jolt-expression)
+
+

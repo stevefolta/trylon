@@ -1,0 +1,14 @@
+trylon ArgumentFunction
+superclass TrylidFunction
+
+fields name
+
+
+create: arg
+	this name = arg name
+
+
+emit-call: arguments
+	return name intern
+
+

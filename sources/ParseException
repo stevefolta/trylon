@@ -1,0 +1,15 @@
+trylon ParseException
+superclass Exception
+
+fields error-message token
+
+
+create: error-message token: token
+	this error-message = error-message
+	this token = token
+
+
+message
+	return error-message + " (\"" + token string + "\")"
+
+

@@ -1,0 +1,31 @@
+trylon SwitchClause
+
+fields values body
+fields pre-clause-comments value-comment
+
+
+create: values body: body 	--
+	pre-clause-comments: pre-clause-comments value-comment: value-comment
+	this values = values
+	this body = body
+	this pre-clause-comments = pre-clause-comments
+	this value-comment = value-comment
+
+
+prepare-to-emit
+	if values
+		for value in values
+			value prepare-to-emit
+	body prepare-to-emit
+
+
+jolt-expression
+	values-list = Expression new: values count
+	index = 0
+	for value in values
+		values-list at: index put: value jolt-expression
+		index += 1
+	return Expression with: values-list with: body jolt-expression
+
+
+

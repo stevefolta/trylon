@@ -1,0 +1,18 @@
+trylon FloatLiteral
+superclass Expression
+
+fields value
+
+
+create: value
+	this value = value float
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+jolt-expression
+	return Expression with: 'quote' with: value
+
+

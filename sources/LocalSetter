@@ -1,0 +1,18 @@
+trylon LocalSetter
+superclass TrylidFunction
+
+fields local
+
+
+create: local
+	this local = local
+
+
+emit-call: arguments
+	return 	--
+		Expression 	--
+			with: 'set' 	--
+			with: local name intern 	--
+			with: arguments first-item jolt-expression
+
+

@@ -1,0 +1,18 @@
+trylon StringLiteral
+superclass Expression
+
+field value
+
+
+create: value
+	this value = value
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+jolt-expression
+	return Expression with: 'quote' with: value
+
+

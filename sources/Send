@@ -3,9 +3,6 @@ superclass TrylidExpression
 
 fields name object arguments
 
-# Very special for prepare-to-emit handling of class and package functions.
-fields package-result-function
-
 
 create: name object: object arguments: arguments
 	this name = name
@@ -33,29 +30,13 @@ prepare-to-emit
 
 
 jolt-expression
-	# Emit the object.
-	object-result = object emit-code
-
-	# Emit the arguments.
-	arg-results = List new
-	for arg in arguments
-		arg-results append: (arg emit-code)
-	
-	# Handle class functions and package functions.
-	if object-result is-a: ProtoResult
-		proto = object-result the-proto
-		function = proto lookup-function: name
-		if function
-			return function emit-call: arg-results
-	
-	# Emit the call.
-	expr = Expression new: arg-results count + 3
+	expr = Expression new: arguments count + 3
 	expr at: 0 put: 'send'
 	expr at: 1 put: name intern
-	expr at: 2 put: object-result access
+	expr at: 2 put: object jolt-expression
 	index = 3
-	for arg-result in arg-results
-		expr at: index put: arg-result access
+	for arg in arguments
+		expr at: index put: arg jolt-expression
 		index += 1
 	return expr
 

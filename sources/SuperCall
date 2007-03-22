@@ -1,0 +1,28 @@
+trylon SuperCall
+superclass Expression
+
+fields name arguments
+
+
+create: name arguments: arguments
+	this name = name
+	this arguments = arguments
+
+
+prepare-to-emit
+	for arg in arguments
+		arg prepare-to-emit
+
+
+jolt-expression
+	expr = Expression new: arguments count + 3
+	expr at: 0 put: 'super-send'
+	expr at: 1 put: name intern
+	expr at: 2 put: 'this'
+	index = 3
+	for arg in arguments
+		expr at: index put: arg jolt-expression
+		index += 1
+	return expr
+
+

@@ -1,0 +1,14 @@
+trylon LocalGetter
+superclass TrylidFunction
+
+fields local
+
+
+create: local
+	this local = local
+
+
+emit-call: arguments
+	return local name intern
+
+

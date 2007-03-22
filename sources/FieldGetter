@@ -12,11 +12,8 @@ create: field on-proto: on-proto
 
 emit-call: arguments
 	# Could do this more efficiently...
-	return FieldGetResult new: field on-proto: on-proto
-
-
-emit-code
-	# define-type takes care of this for us.
-	return nil
+	return 	--
+		Expression 	--
+			with: 'send' with: field name intern with: on-proto access
 
 

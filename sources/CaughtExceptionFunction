@@ -1,0 +1,10 @@
+trylon CaughtExceptionFunction
+superclass TrylidFunction
+
+create
+
+
+jolt-expression
+	return 'exception'
+
+

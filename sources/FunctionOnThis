@@ -1,0 +1,35 @@
+trylon FunctionOnThis
+superclass TrylidFunction
+
+fields name on-proto
+
+
+create: name on-proto: on-proto
+	this name = name
+	this on-proto = on-proto
+
+
+emit-call: arguments builder: builder
+	iff not-yet
+		# Special-case instance functions.
+		if the-compiler build-settings optimize-field-accesses
+			function = on-proto lookup-instance-function: name
+			if function == nil
+				# This would be a good place for a warning... or would we never get here?
+			else if function is-a: FieldGetter
+				#...
+			else if function is-a: FieldSetter
+				#...
+	
+	# Emit the call.
+	expr = Expression new: arguments count + 3
+	expr at: 0 put: 'send'
+	expr at: 1 put: name intern
+	expr at: 2 put: 'this'
+	index = 3
+	for arg in arguments
+		expr at: index put: arg jolt-expression
+		index += 1
+	return expr
+
+

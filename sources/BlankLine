@@ -1,0 +1,11 @@
+trylon BlankLine
+superclass Statement
+
+
+create
+
+
+jolt-expression
+	return Expression with: 'blank-line'
+
+

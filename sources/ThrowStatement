@@ -1,0 +1,19 @@
+trylon ThrowStatement
+superclass Statement
+
+field value
+
+
+create: value comment: comment
+	this value = value
+	this comment = comment
+
+
+prepare-to-emit
+	value prepare-to-emit
+
+
+jolt-expression
+	return Expression with: 'throw' with: value jolt-expression
+
+

@@ -1,0 +1,21 @@
+trylon BoolLiteral
+superclass Expression
+
+# Only used as a class/package field initial value.
+
+fields value
+
+
+create: value
+	this value = value
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+jolt-expression
+	if value
+		return 'true'
+	else
+		return 'false'
