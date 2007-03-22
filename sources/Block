@@ -85,7 +85,7 @@ jolt-expression
 		for local in locals
 			locals-expr at: index put: local name intern
 			index += 1
-		expr = Expression new: 'trylid-block' new: locals-expr new: expr
+		expr = Expression with: 'trylid-block' with: locals-expr with: expr
 	return expr
 
 

@@ -125,7 +125,7 @@ parse-proto-member: proto
 	# Declaring a function.
 	else
 		function = parse-function: false
-		proto add-instance-function: function name function: function
+		proto add-function: function name function: function
 
 
 parse-proto-literal-value
@@ -148,13 +148,13 @@ parse-proto-literal-tuple
 		# See if there's a tuple.
 		if current-token == ','
 			tuple = TupleExpression new
-			tuple add: value
+			tuple add-member: value
 			while current-token == ','
 				consume-token
 				value = parse-proto-literal-tuple
 				if value == nil
 					parse-error: "Missing value in literal tuple."
-				tuple add: value
+				tuple add-member: value
 			value = tuple
 	else if current-token == '('
 		consume-token
@@ -174,13 +174,13 @@ parse-proto-literal-primary
 	else if current-token == 'text-literal-start'
 		return parse-text-literal
 	else if current-token == 'symbol-literal'
-		return the-compiler get-symbol-literal: current-token text
+		return SymbolLiteral new: current-token text
 	else if current-token == 'int-literal'
 		return IntLiteral new: current-token text
 	else if current-token == 'float-literal'
 		return FloatLiteral new: current-token text
 	else if current-token == 'character-literal'
-		return the-compiler get-character-literal: current-token text
+		return CharacterLiteral new: current-token text
 	else if current-token type == 'name'
 		literal-name = current-token text
 		if literal-name == "true"
@@ -365,7 +365,6 @@ check-iff
 
 parse-fields
 	# "fld"/"field"/etc.
-	is-primitive = current-token text starts-with: "primitive-"
 	consume-token
 
 	# Get the fields.
@@ -393,8 +392,7 @@ parse-fields
 			consume-token
 
 		# Add it.
-		fields 	--
-			append: (CompiledField new: name type: type is-primitive: is-primitive)
+		fields append: (CompiledField new: name type: type)
 	
 	require-eol
 
@@ -404,11 +402,7 @@ parse-fields
 parse-function: at-declarator
 	# "fn" or "function" (etc.) has already been recognized; just check it for 
 	# primitiveness.
-	is-primitive = false
-	has-c-body = false
 	if at-declarator
-		is-primitive = current-token text starts-with: "primitive-"
-		has-c-body = current-token text starts-with: "c-"
 		consume-token
 	
 	# Get the name.
@@ -458,38 +452,25 @@ parse-function: at-declarator
 		consume-token
 		return-type = parse-type-spec
 	
-	if !has-c-body
-		require-eol
+	require-eol
 
 	report: "Parsing " + name + "..."
 
 	# Parse the body.
-	body = nil
-	method-context = nil
-	if has-c-body
-		body = get-subblock string
-	else if !is-primitive
-		saved-context = context
-		method-context = 	--
-			MethodContext new: arguments parent: context
-		context = method-context
-		body = parse-block
-		context = saved-context
+	saved-context = context
+	method-context = 	--
+		MethodContext new: arguments parent: context
+	context = method-context
+	body = parse-block
+	context = saved-context
 	
 	# Build the function and return it.
-	new-function = nil
-	if has-c-body
-		new-function = 	--
-			CompiledFunction new: name arguments: arguments 	--
-				return-type: return-type on-proto: context c-body: body
-	else
-		new-function = 	--
-			CompiledFunction new: name arguments: arguments 	--
-				return-type: return-type is-a-primitive: is-primitive 	--
-				on-proto: context body: body
-		new-function method-context = method-context
-		if method-context
-			method-context function = new-function
+	new-function = 	--
+		CompiledFunction new: name arguments: arguments 	--
+			return-type: return-type --
+			on-proto: context body: body
+	new-function method-context = method-context
+	method-context function = new-function
 	return new-function
 
 
@@ -532,10 +513,10 @@ parse-proto-spec
 		# Find the prototype.
 		last-name = current-token
 		type-function = cur-context lookup-function: current-token text
-		if type-function == nil
+		if type-function == nil || !(type-function is-a: ProtoFunction)
 			parse-error: "Unknown prototype."
 		consume-token
-		type = type-function the-proto
+		type = type-function proto
 		cur-context = type
 	
 	# Make sure we got a proto.
@@ -1312,12 +1293,12 @@ parse-primary-expression
 	else if token == 'symbol-literal'
 		value = current-token text
 		consume-token
-		return the-compiler get-symbol-literal: value
+		return SymbolLiteral new: value
 
 	else if token == 'character-literal'
 		value = current-token text
 		consume-token
-		return the-compiler get-character-literal: value
+		return CharacterLiteral new: value
 	
 	else if token == 'text-literal-start'
 		return parse-text-literal
@@ -1382,7 +1363,7 @@ parse-super-call
 	if !(on-proto is-a: CompiledProto)
 		parse-error: "Internal error: no proto for super call."
 	
-	return SuperCall new: name arguments: arguments on-proto: on-proto
+	return SuperCall new: name arguments: arguments
 
 
 

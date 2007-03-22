@@ -17,10 +17,17 @@ prepare-to-emit
 
 jolt-expression
 	# (.trylid-while condition ...)
-	expression = Expression with: 'while' with: condition jolt-expression
+	expression-size = 3
 	if comment
-		expression add: comment jolt-expression
-	expression add: body jolt-expression
+		expression-size += 1
+	expression = Expression new: expression-size
+	expression at: 0 put: 'while'
+	expression at: 1 put: condition jolt-expression
+	index = 2
+	if comment
+		expression at: index put: comment jolt-expression
+		index += 1
+	expression at: index put: body jolt-expression
 	return expression
 
 

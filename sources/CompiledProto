@@ -111,9 +111,9 @@ add-function: name function: function
 add-field: field
 	fields append: field
 	add-function: field name 	--
-		function: (FieldGetter new: field on-class: this)
+		function: (FieldGetter new: field on-proto: this)
 	add-function: field name + ":" 	--
-		function: (FieldSetter new: field on-class: this)
+		function: (FieldSetter new: field on-proto: this)
 
 
 add-shared-field: field
@@ -130,7 +130,7 @@ add-proto: name directory: directory
 		if !(existing-function is-a: ProtoFunction)
 			throw MessageException new: 	--
 				"Adding \"" + name + "\" as a proto, when it's already a non-proto."
-		return existing-function the-proto
+		return existing-function proto
 	
 	# Add the new one.
 	status-reporter = Compiler status-reporter
@@ -169,7 +169,7 @@ get-proto: name
 	if function == nil
 		function = lookup-function: name
 	if function && (function is-a: ProtoFunction)
-		return function the-proto
+		return function proto
 	return nil
 
 

@@ -23,17 +23,33 @@ prepare-to-emit
 
 
 jolt-expression
-	result = condition jolt-expression
-	expression = Expression with: 'if' with: result with: (body jolt-expression)
+	else-expression = nil
 	if else-block
-		else-expression = Expression with: 'begin'
+		size = 2
+		if pre-else-comments
+			size += pre-else-comments count
+		if else-comment
+			size += 1
+		else-expression = Expression new: size
+		else-expression at: 0 put: 'begin'
+		index = 1
 		if pre-else-comments
 			for statement in pre-else-comments
-				else-expression add: statement jolt-expression
+				else-expression at: index put: statement
+				index += 1
 		if else-comment
-			else-expression add: else-comment jolt-expression
-		else-expression add: else-block jolt-expression
-		expression add: else-expression
-	return expression
+			else-expression at: index put: 	--
+				(Expression with: 'comment' with: else-comment)
+			index += 1
+		else-expression at: index put: else-block jolt-expression
+	else
+		else-expression = 'nil'
+
+	return 	--
+		Expression 	--
+			with: 'if' 	--
+			with: condition jolt-expression 	--
+			with: body jolt-expression 	--
+			with: else-expression
 
 

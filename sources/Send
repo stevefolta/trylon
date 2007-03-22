@@ -15,18 +15,6 @@ prepare-to-emit
 
 	for arg in arguments
 		arg prepare-to-emit
-	
-	# Handle class functions and package functions.
-	# ***  What am I doing here?
-	function = nil
-	if object is-a: FunctionCall
-		function = object function
-	else if object is-a: Send
-		function = object proto-result-function
-	if function
-		if function is-a: ProtoFunction
-			proto = function the-proto
-			proto-result-function = proto lookup-function: name
 
 
 jolt-expression

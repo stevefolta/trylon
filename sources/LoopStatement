@@ -14,9 +14,15 @@ prepare-to-emit
 
 
 jolt-expression
-	expression = Expression with: 'while' with: 1 with: body
+	expression-size = 3
 	if comment
-		expression add: (Expression with: 'comment' with: comment)
+		expression-size += 1
+	expression = Expression new: expression-size
+	expression at: 0 put: 'while'
+	expression at: 1 put: 'true'
+	expression at: 3 put: body jolt-expression
+	if comment
+		expression at: 4 put: (Expression with: 'comment' with: comment)
 	return expression
 
 

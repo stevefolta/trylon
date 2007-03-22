@@ -4,8 +4,8 @@ the-compiler = nil
 status-reporter = nil
 
 main: args
-	Compiler compiler: args
-	return 0
+	return Compiler compile: args
+
 
 iff !in-jolt
 	class Expression
@@ -51,5 +51,13 @@ iff !in-jolt
 				else
 					stream write: value string
 			stream write: ")"
+
+
+extend String
+	intern
+		iff !in-jolt
+			return this
+		iff in-jolt
+			#...
 
 

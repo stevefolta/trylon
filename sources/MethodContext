@@ -30,7 +30,7 @@ lookup-function: name
 	# The parent will be a CompiledProto.
 	function = parent lookup-instance-function: name
 	if function
-		return FunctionOnThis new: name on-class: parent
+		return FunctionOnThis new: name on-proto: parent
 	
 	return parent lookup-function: name
 

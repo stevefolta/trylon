@@ -43,9 +43,6 @@ run
 			else
 				status-reporter = VT100StatusReporter new
 
-		if build-settings is-verbose
-			build-settings report
-
 		if do-lex-test
 			for arg in arguments tail tail
 				lex-test: arg
@@ -68,17 +65,6 @@ return-value
 # Top-level compilation.
 
 compile-program: compile-symbols
-	# Create the .c-sources and .objects directories.
-	directory = FileDirectory new: "."
-	if !(directory entry-is-directory: build-settings c-sources-dir)
-		directory create-subdirectory: build-settings c-sources-dir
-	if !(directory entry-is-directory: build-settings objects-dir)
-		directory create-subdirectory: build-settings objects-dir
-	
-	# We need "destroy" to be a function name, even if there are no 
-	# functions with that name.
-	add-object-function: "destroy"
-
 	# Load.
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"
@@ -105,7 +91,7 @@ compile-program: compile-symbols
 	status-reporter unindent
 
 	# Make every class without a superclass be a subclass of Standard Object.
-	object-class = root-class: main-proto
+	object-class = root-proto: main-proto
 	main-proto ensure-superclasses: object-class
 
 	# Emit the classes and packages.
@@ -125,7 +111,7 @@ compile-program: compile-symbols
 	status-reporter report: "Done."
 
 
-root-class: main-proto
+root-proto: main-proto
 	# Find "Standard Object".
 	standard-package = main-proto get-subpackage: "Standard"
 	if standard-package == nil
@@ -135,17 +121,7 @@ root-class: main-proto
 		throw MessageException new: "Standard Object is missing!"
 	if !object-function is-a: ProtoFunction
 		throw MessageException new: "Standard Object is not a prototype!"
-	return object-function the-class
-
-
-copy-to-sources: file dest-name: dest-name
-	contents = file contents
-	dest-file = File new: build-settings c-sources-dir + "/" + dest-name
-	stream = ExistingFileStream new: dest-file
-	stream write: contents
-	is-changed = stream is-changed
-	stream close
-	return is-changed
+	return object-function proto
 
 
 report-run-program: program arguments: args
@@ -164,7 +140,7 @@ report-run-program: program arguments: args
 
 
 get-standard-class: name
-	return (main-proto get-subpackage: "Standard") get-class: name
+	return (main-proto get-subpackage: "Standard") get-proto: name
 
 
 find-library-path

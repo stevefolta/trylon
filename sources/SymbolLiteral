@@ -1,0 +1,18 @@
+trylon SymbolLiteral
+superclass Expression
+
+field name
+
+
+create: name
+	this name = name
+
+
+prepare-to-emit
+	# Nothing to do.
+
+
+jolt-expression
+	return Expression with: 'quote' with: name intern
+
+

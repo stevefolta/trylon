@@ -17,9 +17,6 @@ emit-call: arguments
 
 
 emit-code
-	if field is-primitive
-		return
-	
 	# If it has an intial value, emit the literal.
 	initial-value = nil
 	if field initial-value
