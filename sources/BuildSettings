@@ -10,12 +10,13 @@ fields debugger
 create
 	dictionary = Dictionary new
 	program-name = "program-binary"
-	jolt-sources-dir = ".c-sources"
+	jolt-sources-dir = ".jolt-sources"
 	is-verbose = false
 
 	sysname = System sysname
 	if !sysname is-empty
 		(dictionary at: sysname) = sysname
+	(dictionary at: "in-trylid") = "true"
 
 
 has-symbol: name

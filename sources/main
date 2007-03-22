@@ -1,10 +1,12 @@
 trylon main
 
 the-compiler = nil
-status-reporter = nil
 
 main: args
 	return Compiler compile: args
+
+status-reporter
+	return the-compiler status-reporter
 
 
 iff !in-jolt

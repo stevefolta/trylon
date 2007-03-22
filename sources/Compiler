@@ -73,7 +73,7 @@ compile-program: compile-symbols
 	if library-path == nil
 		throw MessageException new: 	--
 			"Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY."
-	library-directory = FileDirectory new: library-path
+	library-directory = FileDirectory new: library-path + "/packages"
 	status-reporter report: "Loading Main..."
 	status-reporter indent
 	main-proto = CompiledProto new: "Main" parent: nil
