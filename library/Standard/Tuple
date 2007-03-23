@@ -1,0 +1,51 @@
+trylon-class Tuple
+
+field num-items
+
+new: num-items
+	tuple (Tuple) := --
+		Implementation allocate-object: Tuple with-extra-slots: num-items
+	tuple num-items = num-items
+	return tuple
+
+at: index
+	if index < 0 || index >= num-items
+		throw MessageException new: "Bad tuple index."
+	return this object-ptr object-at: index + 2
+
+at: index set-to: value
+	if index < 0 || index >= num-items
+		throw MessageException new: "Bad tuple index."
+	this object-ptr object-at: index + 2 set-to: value
+
+count
+	return num-items
+
+iterator
+	return Iterator new: this
+
+string
+	result := "("
+	have-item := false
+	for item in this
+		if have-item
+			result += ", "
+		else
+			have-item = true
+		result += item string
+	result += ")"
+	return result
+
+proto Iterator
+	superclass Standard Iterator
+	fields tuple index
+	create: tuple
+		this tuple = tuple
+		index = 0
+	is-done
+		return index >= tuple num-items
+	current-item
+		return tuple at: index
+	go-forward
+		index += 1
+
