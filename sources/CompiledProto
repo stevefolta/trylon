@@ -34,16 +34,17 @@ lookup-function: name visited-protos: visited-protos
 	
 	# If not, see if it's in one of our directories.
 	for directory in directories
-		# A class?
+		# A file?
 		if (directory contains: name) && !(directory entry-is-directory: name)
 			proto = add-proto: name
 			parser = Parser new: (directory at: name) contents context: this
 			parser parse-proto-file: proto
 			return functions at: name
 
-		# A proto?
+		# A directory?
 		if directory entry-is-directory: name
-			return add-proto: name directory: (directory at: name)
+			add-proto: name directory: (directory at: name)
+			return functions at: name
 	
 	# Check the parent.
 	if parent
@@ -143,7 +144,7 @@ add-proto: name directory: directory
 	functions at: name set-to: proto-function
 	the-compiler proto-queue append: new-proto
 	status-reporter unindent
-	return proto-function
+	return new-proto
 
 
 add-proto: name
@@ -159,7 +160,7 @@ get-subproto: name
 	# Look for it.
 	for directory in directories
 		if directory entry-is-directory: name
-			return (add-proto: name directory: (directory at: name)) proto
+			return add-proto: name directory: (directory at: name)
 	
 	return nil
 
