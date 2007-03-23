@@ -1,7 +1,7 @@
-trylon-package Standard
+trylon Standard
 
-primitive-field true [Bool]
-primitive-field false [Bool]
+primitive-field true (Bool)
+primitive-field false (Bool)
 
 primitive-field nil
 
