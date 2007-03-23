@@ -1,0 +1,28 @@
+trylid Char
+
+new
+	return Implementation allocate-object: Char with-extra-slots: 1
+
+primitive-fn == arg (Char) -> Bool
+primitive-fn != arg (Char) -> Bool
+primitive-fn < arg (Char) -> Bool
+primitive-fn > arg (Char) -> Bool
+primitive-fn <= arg (Char) -> Bool
+primitive-fn >= arg (Char) -> Bool
+
+primitive-fn + arg (Char) -> Char
+primitive-fn - arg (Char) -> Char
+primitive-fn & arg (Char) -> Char
+primitive-fn | arg (Char) -> Char
+
+primitive-fn string -> String
+primitive-fn int -> Int
+
+
+iff debugger
+	fn debug-write
+		print-line: debug-string
+	
+	fn debug-string
+		return "`" + this string + "`"
+

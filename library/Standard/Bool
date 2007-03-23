@@ -1,0 +1,18 @@
+trylid Bool
+
+new
+	return Implementation allocate-object: Bool with-extra-slots: 1
+
+primitive-fn == arg (Bool) -> Bool
+primitive-fn != arg (Bool) -> Bool
+
+primitive-fn | arg (Bool) -> Bool
+primitive-fn & arg (Bool) -> Bool
+primitive-fn ^ arg (Bool) -> Bool
+
+primitive-fn string -> String
+
+
+iff debugger
+	fn debug-write
+		print-line: debug-string

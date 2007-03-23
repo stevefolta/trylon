@@ -46,5 +46,10 @@ But that should still serve the dict-literal purpose (and even better: 'dict ent
 
 All fields supporting the use of protos as packages (subproto names, ".parent-context", etc.) should be shared fields.
 
+Will need:
+	.proto
+	.proto-name
+	.parent-context
+
 
 

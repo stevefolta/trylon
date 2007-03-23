@@ -1,0 +1,35 @@
+trylid Int
+
+new
+	return Implementation allocate-object: Int with-extra-slots: 1
+
+primitive-fn == arg (Int) -> Bool
+primitive-fn != arg (Int) -> Bool
+primitive-fn < arg (Int) -> Bool
+primitive-fn > arg (Int) -> Bool
+primitive-fn <= arg (Int) -> Bool
+primitive-fn >= arg (Int) -> Bool
+
+primitive-fn + arg (Int) -> Int
+primitive-fn - arg (Int) -> Int
+primitive-fn * arg (Int) -> Int
+primitive-fn / arg (Int) -> Int
+primitive-fn % arg (Int) -> Int
+primitive-fn unary-minus -> Int
+
+primitive-fn | arg (Int) -> Int
+primitive-fn & arg (Int) -> Int
+primitive-fn ^ arg (Int) -> Int
+primitive-fn ~ -> Int
+primitive-fn << arg (Int) -> Int
+primitive-fn >> arg (Int) -> Int
+
+primitive-fn string -> String
+primitive-fn float -> Float
+primitive-fn char -> Char
+
+
+iff debugger
+	fn debug-write
+		print-line: "Int: " + this string
+

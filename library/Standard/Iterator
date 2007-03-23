@@ -1,0 +1,9 @@
+trylid Iterator
+
+is-done
+	virtual
+current-item
+	virtual
+go-forward
+	virtual
+

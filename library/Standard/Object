@@ -1,19 +1,24 @@
 trylid Object
 
-primitive-fn class -> Class
 primitive-fn object-ptr -> BytePtr
-primitive-fn is-a: class -> Bool
+
+is-a: proto -> Bool
+	cur-proto = .proto
+	while cur-proto
+		if cur-proto == proto
+			return true
+		cur-proto = cur-proto .parent-context
 
 string
-	return "a " + class name
+	return "a " + this .proto-name
 
-same-as: object [Object] -> Bool
+same-as: object
 	return object != nil && this object-ptr == object object-ptr
 
-== other
+fn == other
 	return this same-as: other
 
-!= other -> Bool
+fn != other -> Bool
 	return !(this == other)
 
 iterator -> Iterator

@@ -1,0 +1,257 @@
+trylid String
+
+fields start (BytePtr) stopper (BytePtr)
+
+
+create: start to: stopper
+	this start = start
+	this stopper = stopper
+
+create: start length: length
+	this start = start
+	this stopper = start + length
+
+create: length
+	this start = BytePtr new-non-pointer: length
+	this stopper = this start
+
+length
+	return stopper - start
+is-empty
+	return stopper <= start
+
+
+fn == arg
+	p (BytePtr) = start
+	other-p (BytePtr) = arg start
+	loop
+		if p >= stopper
+			if other-p >= arg stopper
+				return true
+			else
+				return false
+		if other-p >= arg stopper
+			return false
+		if p deref-char != other-p deref-char
+			return false
+		p += 1
+		other-p += 1
+	return false
+
+fn != arg
+	p (BytePtr) = start
+	other-p (BytePtr) = arg start
+	loop
+		if p >= stopper
+			if other-p >= arg stopper
+				return false
+			else
+				return true
+		if other-p >= arg stopper
+			return true
+		if p deref-char != other-p deref-char
+			return true
+		p += 1
+		other-p += 1
+	return true
+
+fn < arg
+	p (BytePtr) = start
+	other-p (BytePtr) = arg start
+	loop
+		if p >= stopper
+			if other-p >= arg stopper
+				return false
+			else
+				return true
+		if other-p >= arg stopper
+			return false
+		if p deref-char > other-p deref-char
+			return false
+		else if p deref-char < other-p deref-char
+			return true
+		p += 1
+		other-p += 1
+	return false
+
+fn <= arg
+	p (BytePtr) = start
+	other-p (BytePtr) = arg start
+	loop
+		if p >= stopper
+			return true
+		if other-p >= arg stopper
+			return false
+		if p deref-char > other-p deref-char
+			return false
+		else if p deref-char < other-p deref-char
+			return true
+		p += 1
+		other-p += 1
+	return false
+
+fn > arg
+	p (BytePtr) = start
+	other-p (BytePtr) = arg start
+	loop
+		if p >= stopper
+			return false
+		if other-p >= arg stopper
+			return true
+		if p deref-char > other-p deref-char
+			return true
+		else if p deref-char < other-p deref-char
+			return false
+		p += 1
+		other-p += 1
+	return false
+
+fn >= arg
+	p (BytePtr) = start
+	other-p (BytePtr) = arg start
+	loop
+		if p >= stopper
+			if other-p >= arg stopper
+				return true
+			else
+				return false
+		if other-p >= arg stopper
+			return true
+		if p deref-char > other-p deref-char
+			return true
+		else if p deref-char < other-p deref-char
+			return false
+		p += 1
+		other-p += 1
+	return false
+
+fn + arg (String)
+	new-string (String) = String new: (length + arg length)
+	new-string start copy-from: start length: length
+	(new-string start + length) copy-from: arg start length: arg length
+	new-string stopper = new-string start + length + arg length
+	return new-string
+
+substr: from
+	if from > this length
+		return ""
+	return String new: start + from to: stopper
+
+substr: from length: length
+	src-length = this length
+	if from > src-length
+		return ""
+	dest-length = length
+	if dest-length > src-length - from
+		dest-length = src-length - from
+	new-start = start + from
+	return String new: new-start to: new-start + dest-length
+
+index-of: char (Char)
+	char-ptr = start
+	while char-ptr < stopper
+		if char-ptr deref-char == char
+			return char-ptr - start
+		char-ptr += 1
+	return -1
+
+last-index-of: char (Char)
+	char-ptr = stopper - 1
+	while char-ptr >= start
+		if char-ptr deref-char == char
+			return char-ptr - start
+		char-ptr -= 1
+	return -1
+
+index-of-string: search-string
+	# Could be more efficient...
+	remainder = this copy
+	while !remainder is-empty
+		if remainder starts-with: search-string
+			return length - remainder length
+		remainder = remainder substr: 1
+	return -1
+
+starts-with: other
+	return (substr: 0 length: other length) == other
+
+ends-with: other
+	return (substr: length - other length) == other
+
+contains: other
+	return (index-of-string: other) >= 0
+
+at: index (Int)
+	return (start + index) deref-char
+
+first-character
+	return start deref-char
+
+last-character
+	len = length
+	if len == 0
+		return 0
+	return this at: len - 1
+
+string
+	return this
+
+copy
+	return String new: start to: stopper
+
+iterator
+	return StringIterator new: this
+
+characters
+	return StringIterator new: this
+
+lines
+	return LinesIterator new: this
+
+
+trimmed
+	trimmed-copy = this copy
+	
+	# Trim the front.
+	while !trimmed-copy is-empty
+		c = trimmed-copy first-character
+		if c != ` ` && c != `\t` && c != `\n` && c != `\r`
+			break
+		trimmed-copy start += 1
+	
+	# Trim the back.
+	while !trimmed-copy is-empty
+		c = trimmed-copy last-character
+		if c != ` ` && c != `\t` && c != `\n` && c != `\r`
+			break
+		trimmed-copy stopper -= 1
+	
+	return trimmed-copy
+
+
+lowercase
+	length = this length
+	buffer = BytePtr new-non-pointer: length
+	p = this start
+	stopper = this stopper
+	out-p = buffer
+	while p < stopper
+		c = p deref-char
+		if c >= `A` && c <= `Z`
+			c += `a` - `A`
+		out-p char-at: 0 set-to: c
+		p += 1
+		out-p += 1
+	return String new: buffer to: buffer + length
+
+
+primitive-fn int -> Int
+primitive-fn float -> Float
+
+
+iff debugger
+	debug-write
+		print-line: debug-string
+	
+	debug-string
+		return "\"" + this + "\""

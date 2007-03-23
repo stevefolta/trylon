@@ -1,0 +1,54 @@
+trylid StringIterator
+
+
+fields start stopper string
+
+
+create: string
+	this string = string
+	this start = string start
+	this stopper = string stopper
+
+
+create: start to: stopper string: string
+	this start = start
+	this stopper = stopper
+	this string = string
+
+
+copy
+	return StringIterator new: start to: stopper string: string
+
+
+is-done
+	return (start >= stopper)
+
+
+current-item
+	return start deref-char
+
+
+go-forward
+	start += 1
+
+
+back-up
+	if start > string start
+		start -= 1
+
+
+skip: num-chars (Int)
+	start += num-chars
+
+
+remainder
+	return String new: start to: stopper
+
+
+> other
+	return (this start > other start)
+
+
+iterator
+	return this
+
