@@ -39,3 +39,12 @@ Equals-block should make a new object, not a dict literal:
 
 But that should still serve the dict-literal purpose (and even better: 'dict entry' vs. 'dict at: "entry"').
 
+
+=====
+
+[2007.3.23]
+
+All fields supporting the use of protos as packages (subproto names, ".parent-context", etc.) should be shared fields.
+
+
+
