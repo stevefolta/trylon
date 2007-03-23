@@ -223,7 +223,7 @@ parse-member-proto
 	indent
 
 	# Create (or get) the proto.
-	the-proto = context add-proto: proto-name
+	the-proto = (context add-proto: proto-name) proto
 
 	# Read the contents (if any).
 	while current-token == 'eol'

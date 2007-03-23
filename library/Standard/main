@@ -1,0 +1,25 @@
+trylon Standard
+
+
+primitive-fn print: string
+
+fn print-line: line
+	print: line
+	print: "\n"
+
+fn print-line
+	print: "\n"
+
+
+# Pseudo-declarations
+
+fn virtual
+	###
+	#	This is a function you can call in "pure virtual" functions.  It
+	#	throws an exception at runtime, and in the future the compiler
+	#	may use it to detect classes with "pure virtual" functions, and warn
+	#	about attempts to instanciate them.
+	###
+	
+	throw MessageException new: "Attempt to call a virtual function!"
+

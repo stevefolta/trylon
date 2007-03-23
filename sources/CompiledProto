@@ -198,9 +198,10 @@ setup-main: main-directory library-directory: library-directory 	--
 		throw MessageException new: "The Standard proto can't be found!"
 	uses-protos append: standard-proto
 
-	# Add "nil" to Standard.
-	# This will override the definition in Standard's "main".
+	# Add "nil", "true", and "false" to Standard.
 	standard-proto functions at: "nil" set-to: NilFunction new
+	standard-proto functions at: "true" set-to: (BoolLiteral new: true)
+	standard-proto functions at: "false" set-to: (BoolLiteral new: false)
 
 	# Load our "main"s
 	for directory in directories

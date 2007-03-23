@@ -1,0 +1,43 @@
+trylid Object
+
+primitive-fn class -> Class
+primitive-fn object-ptr -> BytePtr
+primitive-fn is-a: class -> Bool
+
+string
+	return "a " + class name
+
+same-as: object [Object] -> Bool
+	return object != nil && this object-ptr == object object-ptr
+
+== other
+	return this same-as: other
+
+!= other -> Bool
+	return !(this == other)
+
+iterator -> Iterator
+	# Default: use a SingleObjectIterator.  Collections will 
+	# override this.
+	return SingleObjectIterator new: this
+
+
+
+# Debugging
+
+iff debugger
+	fn debug-write
+		print-line: name
+		num-fields := class num-fields
+		which-field := 0
+		while which-field < num-fields
+			field := object-ptr object-at: (which-field + 1)
+			if field == nil
+				print-line: "  nil"
+			else
+				print-line: "  (" + field object-ptr string + ") " + field debug-string
+			which-field += 1
+	
+	fn debug-string
+		return this string
+

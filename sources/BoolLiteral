@@ -1,8 +1,6 @@
 trylon BoolLiteral
 superclass Expression
 
-# Only used as a class/package field initial value.
-
 fields value
 
 
