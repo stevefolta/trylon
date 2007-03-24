@@ -1,0 +1,10 @@
+trylid Symbol
+superclass String
+
+
+fn == arg
+	return object-ptr == arg object-ptr
+
+fn != arg
+	return object-ptr != arg object-ptr
+

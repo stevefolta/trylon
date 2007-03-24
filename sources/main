@@ -69,7 +69,13 @@ iff !in-jolt
 					stream write: " "
 				else
 					done-one = true
-				if value is-a: Expression
+				if (value is-a: String) && !(value is-a: Symbol)
+					iff debug-emission
+						reporter report: value string
+					stream write: "\""
+					stream write: value
+					stream write: "\""
+				else if value is-a: Expression
 					value emit: stream
 				else
 					iff debug-emission
@@ -82,10 +88,18 @@ iff !in-jolt
 				reporter report: ")"
 
 
+iff !in-jolt
+	class InternedString
+		field string
+
+		create: string
+			this string = string
+
+
 extend String
 	intern
 		iff !in-jolt
-			return this
+			return InternedString new: this
 		iff in-jolt
 			#...
 
