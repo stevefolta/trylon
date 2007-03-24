@@ -1,0 +1,333 @@
+trylid Dictionary
+
+fields root num-items
+
+
+create
+	root = nil
+	num-items = 0
+
+
+insert: value at: key
+	if root
+		insert-result := root insert: value at: key
+		if insert-result
+			root = insert-result
+			num-items += 1
+		else
+			# The key was already present.
+	else
+		# Empty so far.
+		root = Node new: key value: value
+		num-items += 1
+
+at: key set-to: value
+	insert: value at: key
+
+
+at: key
+	node := root
+	while node
+		if key < node key
+			node = node left
+		else if key > node key
+			node = node right
+		else
+			return node value
+	return nil
+
+
+remove: key 	# Returns the old value, if there was one.
+	if root == nil
+		return nil
+	
+	context := RemoveContext new: key
+	root = root remove: context
+	
+	if context item-found
+		num-items -= 1
+	return context deleted-value
+
+
+contains: key
+	node := root
+	while node
+		if key < node key
+			node = node left
+		else if key > node key
+			node = node right
+		else
+			return true
+	return false
+
+
+keys
+	return KeysIterator new: root
+values
+	return ValuesIterator new: root
+pairs
+	return KeyValuePairsIterator new: root
+
+
+count
+	return num-items
+is-empty
+	return (num-items == 0)
+
+
+each-key: block
+	if root
+		each-key-in: root do: block
+
+each-key-in: node do: block
+	if node left
+		each-key-in: node left do: block
+	block do-with: node key
+	if node right
+		each-key-in: node right do: block
+
+each-value: block
+	if root
+		each-value-in: root do: block
+
+each-value-in: node do: block
+	if node left
+		each-value-in: node left do: block
+	block do-with: node value
+	if node right
+		each-value-in: node right do: block
+
+
+iff debug-dictionaries
+	dump
+		if root
+			root dump: 0
+
+
+#####
+
+class Node
+	fields key value left right level
+	
+
+	create: key value: value
+		this key = key
+		this value = value
+		left = nil
+		right = nil
+		level = 1
+	
+
+	insert: new-value at: new-key
+		if new-key < key
+			if left
+				insert-result := left insert: new-value at: new-key
+				if insert-result
+					left = insert-result
+				else
+					return nil 	# Key already exists; propagate that up.
+			else
+				left = Node new: new-key value: new-value
+		
+		else if key < new-key
+			if right
+				insert-result := right insert: new-value at: new-key
+				if insert-result
+					right = insert-result
+				else
+					return nil 	# Key already exists; propagate that up.
+			else
+				right = Node new: new-key value: new-value
+		
+		else
+			# This node *is* the new key.  Signal that by returning nil.
+			value = new-value
+			return nil
+		
+		new-top := skew
+		new-top = new-top split
+		return new-top
+	
+	
+	remove: context 	# Returns the new top of this subtree.
+		# Search down the tree, setting delete-node and last-node.
+		context last-node = this
+		if context key < key
+			if left
+				left = left remove: context
+		else
+			context delete-node = this
+			if right
+				right = right remove: context
+		
+		# If we're at the bottom, and the key is present, remove it.
+		if context last-node == this
+			if context delete-node != nil && 	--
+			   context key == context delete-node key
+				# Found it!  (At delete-node, not here.)
+				context item-found = true
+				context deleted-value = context delete-node value
+				# Move this key/value into the place of the deleted key/value.
+				context delete-node key = key
+				context delete-node value = value
+				return right
+		
+		# Otherwise, we are not at the bottom; rebalance.
+		else
+			left-level = 0
+			if left
+				left-level = left level
+			right-level = 0
+			if right
+				right-level = right level
+			if left-level < level - 1 || right-level < level - 1
+				level -= 1
+				if right && right level > level
+					right level = level
+				new-top := skew
+				if new-top right
+					new-top right = new-top right skew
+				if new-top right && new-top right right
+					new-top right right = new-top right right skew
+				new-top = new-top split
+				if new-top right
+					new-top right = new-top right split
+				return new-top
+		
+		return this
+	
+	
+	skew
+		new-top := this
+		
+		if left && left level == level
+			# Rotate with left.
+			new-top = left
+			left = new-top right
+			new-top right = this
+		
+		return new-top
+	
+	
+	split
+		new-top := this
+		
+		if right && right right && right right level == level
+			# Rotate with right.
+			new-top = right
+			right = new-top left
+			new-top left = this
+			# Boost the level.
+			new-top level += 1
+		
+		return new-top
+	
+	
+	iff debug-dictionaries
+		dump: level
+			write: "                 " substr: 0 length: level
+			write: "\"" + key + "\"  level:" + this level string + "\n"
+			if left
+				left dump: level + 1
+			if right
+				right dump: level + 1
+
+
+#####
+
+class RemoveContext
+	fields name item-found delete-node last-node deleted-value
+	
+	create: key
+		this key = key
+		item-found = false
+
+
+#####
+
+class Iterator
+	fields stack-top
+	
+	create: root
+		push-tree: root
+	
+	is-done
+		return (stack-top == nil)
+	
+	go-forward
+		if stack-top == nil
+			return
+		
+		right := stack-top node right
+		pop
+		push-tree: right
+	
+	iterator
+		return this
+	
+	push-tree: node
+		while node
+			push: node
+			node = node left
+	
+	push: node
+		stack-element := StackElement new: node
+		stack-element next = stack-top
+		stack-top = stack-element
+	
+	pop
+		if stack-top
+			stack-top = stack-top next
+	
+	class StackElement
+		fields node next
+		
+		create: node
+			this node = node
+
+
+#####
+
+class KeysIterator
+	superclass Iterator
+	
+	create: root
+		super create: root
+	
+	current-item
+		if stack-top == nil
+			return nil
+		return stack-top node key
+
+
+class ValuesIterator
+	superclass Iterator
+	
+	create: root
+		super create: root
+	
+	current-item
+		if stack-top == nil
+			return nil
+		return stack-top node value
+
+
+class KeyValuePairsIterator
+	superclass Iterator
+	
+	create: root
+		super create: root
+	
+	current-item
+		if stack-top == nil
+			return nil
+		node := stack-top node
+		return Pair new: node
+	
+	class Pair
+		fields key value
+		
+		create: node
+			key = node key
+			value = node value
+

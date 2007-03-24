@@ -1,0 +1,64 @@
+trylid ExistingFileStream
+superclass OutputStream
+
+fields file contents remaining-contents matches-so-far output-stream
+
+
+create: file
+	if file is-a: String
+		file = File new: file
+	this file = file
+	if file exists
+		contents = file contents
+		remaining-contents = contents
+	else
+		contents = ""
+		remaining-contents = ""
+	# Even if it doesn't match (ie. doesn't exist), "matches-so-far" is set 
+	# so "write-buffer" will create the file.
+	matches-so-far = true
+	output-stream = nil
+
+
+close
+	if !matches-so-far
+		output-stream close
+	else if !remaining-contents is-empty
+		# The new one is shorter than the old one (albeit otherwise identical).  
+		# Rewrite it.  (We could use truncate(), but this is a little easier...)
+		length-so-far = contents length - remaining-contents length
+		output-stream = file output-stream
+		output-stream write: (contents substr: 0 length: length-so-far)
+		contents = ""
+		remaining-contents = ""
+		output-stream close
+
+
+
+write-buffer: buffer length: length
+	if matches-so-far
+		if (String new: buffer length: length) != 	--
+		   (remaining-contents substr: 0 length: length)
+			# It has stopped matching -- rewrite the file.
+			matches-so-far = false
+			output-stream = file output-stream
+			# Rewrite the contents to this point.
+			length-so-far = contents length - remaining-contents length
+			output-stream write: (contents substr: 0 length: length-so-far)
+			# Clean up stuff we don't need anymore.
+			contents = ""
+			remaining-contents = ""
+			# The new stuff will be written below.
+		else
+			remaining-contents = 	--
+				remaining-contents 	--
+					substr: length length: remaining-contents length - length
+	
+	if !matches-so-far
+		output-stream write-buffer: buffer length: length
+
+
+is-changed
+	return !(matches-so-far && remaining-contents is-empty)
+
+

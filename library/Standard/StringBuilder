@@ -1,0 +1,40 @@
+trylid StringBuilder
+
+fields substrings length
+
+
+create
+	substrings = List new
+	length = 0
+
+
+fn + string
+	substrings append: string
+	length += string length
+	return this
+
+
+prepend: string
+	substrings prepend: string
+	length += string length
+
+
+string
+	# Build the consolidated string.
+	bytes := BytePtr new: length
+	ptr := bytes
+	for string in substrings
+		length := string length
+		ptr copy-from: string start length: length
+		ptr += length
+	string := String new: bytes to: ptr
+	
+	# Install it here, in case more strings are added later.
+	substrings = List new
+	substrings append: string
+	
+	return string
+
+
+is-empty
+	return substrings is-empty

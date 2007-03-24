@@ -1,0 +1,162 @@
+trylid List
+
+fields first-cell last-cell
+
+
+create
+	first-cell = nil
+	last-cell = nil
+
+append: object
+	cell := Cell new: object
+	if last-cell != nil
+		last-cell next = cell
+	last-cell = cell
+	if first-cell == nil
+		first-cell = cell
+
+prepend: object
+	cell := Cell new: object
+	cell next = first-cell
+	first-cell = cell
+
+iterator
+	return Iterator new: first-cell
+
+is-empty
+	return (first-cell == nil)
+
+count
+	num-items := 0
+	cell := first-cell
+	while cell
+		num-items += 1
+		cell = cell next
+	return num-items
+
+first-item
+	if first-cell == nil
+		return nil
+	return first-cell object
+
+last-item
+	if last-cell == nil
+		return nil
+	return last-cell object
+
+head
+	return first-item
+
+tail
+	tail-list := List new
+	if first-cell
+		tail-list first-cell = first-cell next
+	else
+		tail-list first-cell = nil
+	tail-list last-cell = last-cell
+	return tail-list
+
+
+push-front: object
+	prepend: object
+
+
+pop-front
+	if first-cell == nil
+		return nil
+	
+	object := first-cell object
+	
+	if first-cell == last-cell
+		first-cell = nil
+		last-cell = nil
+	else
+		first-cell = first-cell next
+	
+	return object
+
+
+remove: object
+	cell := first-cell
+	prev-cell := nil
+	while cell
+		if cell object == object
+			# Unlink the cell.
+			if prev-cell
+				prev-cell next = cell next
+			else
+				first-cell = cell next
+			# Is it the last cell?
+			if cell == last-cell
+				last-cell = prev-cell
+			break
+		
+		prev-cell = cell
+		cell = cell next
+
+
+contains: object
+	cell := first-cell
+	while cell
+		if cell object same-as: object
+			return true
+		cell = cell next
+	return false
+
+
+insert: new-object before: before-object
+	cell := first-cell
+	prev-cell := nil
+	while cell
+		if cell object same-as: before-object
+			new-cell := Cell new: new-object
+			new-cell next = cell
+			if prev-cell
+				prev-cell next = new-cell
+			else
+				first-cell = new-cell
+			return
+		prev-cell = cell
+		cell = cell next
+
+
+replace: old-object with: new-object
+	cell := first-cell
+	while cell
+		if cell object same-as: old-object
+			cell object = new-object
+			return
+		cell = cell next
+
+
+clear
+	first-cell = nil
+	last-cell = nil
+
+
+each: block
+	cell = first-cell
+	while cell
+		block do-with: cell object
+		cell = cell next
+
+
+
+class Cell
+	fields object next
+	create: object
+		this object = object
+		next = nil
+
+
+class Iterator
+	superclass Standard Iterator
+	field cell
+	create: cell
+		this cell = cell
+	is-done -> Bool
+		return cell == nil
+	current-item
+		return cell object
+	go-forward
+		cell = cell next
