@@ -1,4 +1,4 @@
-trylon-class IntArray
+trylon IntArray
 
 fields ptr size
 
