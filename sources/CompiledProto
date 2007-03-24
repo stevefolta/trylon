@@ -218,6 +218,8 @@ setup-main: main-directory library-directory: library-directory 	--
 
 
 ensure-superclasses: object-proto
+	if superclass == nil
+		superclass = object-proto
 	for function in functions values
 		if function is-a: ProtoFunction
 			proto = function proto
@@ -239,7 +241,7 @@ find-primitives-file: file-name
 prepare-to-emit
 	if superclass == nil
 		ensure-superclasses: (the-compiler get-standard-class: "Object")
-
+	
 	for function in functions values
 		function prepare-to-emit
 
