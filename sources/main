@@ -44,7 +44,7 @@ iff !in-jolt
 
 		class-fn 	--
 		  	with: value-1 with: value-2 with: value-3 with: value-4 with: value-5
-			expr = Expression new: 4
+			expr = Expression new: 5
 			expr at: 0 put: value-1
 			expr at: 1 put: value-2
 			expr at: 2 put: value-3

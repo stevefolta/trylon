@@ -276,11 +276,37 @@ emit-jolt-file
 	status-reporter report: "Emitting " + name + "..."
 	status-reporter indent
 
-	#...
+	# Open the file.
 	file = 	--
 		File new: 	--
 			the-compiler build-settings jolt-sources-dir + "/" + full-name + ".k"
 	stream = ExistingFileStream new: file
+
+	# Define the proto.
+	parent-access = 'nil'
+	if parent
+		parent-access = parent access
+	superclass-access = nil
+	if superclass
+		superclass-access = superclass access
+	else
+		superclass-access = '_object' 	#...
+	slots = Expression new: fields count
+	index = 0
+	for field in fields
+		slots at: index put: field name intern
+		index += 1
+	expr = 	--
+		Expression 	--
+			with: 'define-trylid-proto' 	--
+			with: name intern 	--
+			with: parent-access 	--
+			with: superclass-access 	--
+			with: slots
+	expr emit: stream
+	stream write-line
+	stream write-line
+
 	# Compile all the functions.
 	for function in functions values
 		status-reporter report: "Emitting " + function name + "..."
@@ -291,8 +317,8 @@ emit-jolt-file
 			stream write-line
 			stream write-line
 		status-reporter unindent
-	stream close
 
+	stream close
 	status-reporter unindent
 
 
