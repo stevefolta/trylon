@@ -1,0 +1,21 @@
+trylid OutputStream
+
+
+write-buffer: buffer (BytePtr) length: length (Int)
+	virtual
+
+write: string
+	write-buffer: string start length: string length
+
+write-line: line
+	write: line
+	write: "\n"
+
+write-line
+	write: "\n"
+
+write-all: collection
+	for item in collection
+		write: item string
+
+

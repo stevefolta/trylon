@@ -1,0 +1,79 @@
+trylid File
+superclass FileDirectoryEntry
+
+
+field path
+
+
+fn create: path
+	this path = path
+
+fn contents
+	size := this size
+	storage := BytePtr new: size
+	stream := this stream
+	stream read-buffer: storage length: size
+	return String new: storage to: storage + size
+
+fn stream
+	return InStream new: path
+fn output-stream
+	return OutStream new: path
+
+
+primitive-fn size
+primitive-fn exists
+
+primitive-fn remove
+
+
+contents-of: path
+	return (new: path) contents
+
+
+proto InStream
+	superclass InputStream
+	field file 	# Don't touch this.
+	
+	primitive-fn create: path
+	primitive-fn close
+	primitive-fn read-buffer: buffer [BytePtr] length: length [Int]
+	
+	fn destroy
+		close
+
+
+proto OutStream
+	superclass OutputStream
+	field file 	# Don't touch this.
+	
+	primitive-fn create: path
+	primitive-fn close
+	primitive-fn write-buffer: buffer [BytePtr] length: length [Int]
+	
+	fn destroy
+		close
+
+
+proto FileMissingException
+	superclass Exception
+	field path
+	
+	fn create: path
+		this path = path
+	
+	fn message
+		return "File doesn't exist: \"" + path + "\""
+
+
+proto FileOpenException
+	superclass Exception
+	fields path error
+	
+	fn create: path error: error
+		this path = path
+		this error = error
+	
+	fn message
+		return "Couldn't open file: \"" + path + "\" (" + error + ")"
+

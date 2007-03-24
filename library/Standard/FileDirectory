@@ -1,0 +1,52 @@
+trylid FileDirectory
+superclass FileDirectoryEntry
+
+field path
+
+
+create: path
+	this path = path
+
+
+primitive-fn count
+
+
+iterator
+	# Currently returns the names, not the entries themselves.  This may be 
+	# changed in the future, so use "names" instead.
+	return Iterator new: path
+
+
+names
+	return Iterator new: path
+
+
+primitive-fn contains: name
+primitive-fn entry-is-directory: name
+primitive-fn create-subdirectory: name
+
+
+at: name
+	entry-path = ""
+	if path == "/"
+		entry-path = path + name
+	else
+		entry-path = path + "/" + name
+	if entry-is-directory: name
+		return FileDirectory new: entry-path
+	else
+		return File new: entry-path
+
+
+proto Iterator
+	superclass Standard Iterator
+	fields directory-handle current-name
+
+	primitive-fn create: path
+	primitive-fn is-done
+	primitive-fn current-item
+	primitive-fn go-forward
+
+	iterator
+		return this
+
