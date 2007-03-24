@@ -1,0 +1,11 @@
+trylid MessageException
+superclass Exception
+
+field the-message
+
+
+create: message
+	the-message = message
+
+message
+	return the-message

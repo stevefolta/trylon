@@ -1,0 +1,4 @@
+trylid Implementation
+
+primitive-fn allocate-object: proto with-extra-slots: num-extra-slots
+

@@ -38,9 +38,9 @@ add-package: name directory: FileDirectory
 		MessageException new: "Interanl error: bad \"Context add-package\" call."
 
 
-get-subpackage: name
+get-subproto: name
 	# Default: not valid.
 	throw 	--
-		MessageException new: "Internal error: bad \"Context get-subpackage\" call."
+		MessageException new: "Internal error: bad \"Context get-subproto\" call."
 
 

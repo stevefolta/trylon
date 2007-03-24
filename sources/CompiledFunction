@@ -27,7 +27,7 @@ emit-call: arguments
 	expr at: 2 put: on-proto access
 	index = 3
 	for arg in arguments
-		expr at: index put: arg access
+		expr at: index put: arg jolt-expression
 		index += 1
 	return expr
 

@@ -4,7 +4,7 @@ superclass TrylidFunction
 create
 
 
-jolt-expression
+emit-call: arugments
 	return 'exception'
 
 

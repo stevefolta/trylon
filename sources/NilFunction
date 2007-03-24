@@ -5,7 +5,7 @@ superclass TrylidFunction
 create
 
 
-emit-call: arguments builder: builder
+emit-call: arguments
 	return 'nil'
 
 

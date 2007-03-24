@@ -9,7 +9,7 @@ create: name on-proto: on-proto
 	this on-proto = on-proto
 
 
-emit-call: arguments builder: builder
+emit-call: arguments
 	iff not-yet
 		# Special-case instance functions.
 		if the-compiler build-settings optimize-field-accesses

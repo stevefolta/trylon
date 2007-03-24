@@ -201,8 +201,8 @@ setup-main: main-directory library-directory: library-directory 	--
 
 	# Add "nil", "true", and "false" to Standard.
 	standard-proto functions at: "nil" set-to: NilFunction new
-	standard-proto functions at: "true" set-to: (BoolLiteral new: true)
-	standard-proto functions at: "false" set-to: (BoolLiteral new: false)
+	standard-proto functions at: "true" set-to: (BoolLiteralFunction new: true)
+	standard-proto functions at: "false" set-to: (BoolLiteralFunction new: false)
 
 	# Load our "main"s
 	for directory in directories
@@ -271,8 +271,11 @@ emit-jolt-file
 			the-compiler build-settings jolt-sources-dir + "/" + full-name + ".k"
 	stream = ExistingFileStream new: file
 	#...
+	compiled-functions = List new
 	for function in functions values
-		function emit-code: stream
+		compiled-code = function emit-code
+		if compiled-code
+			compiled-functions append: compiled-code
 
 
 access

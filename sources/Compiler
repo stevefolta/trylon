@@ -112,7 +112,7 @@ compile-program: compile-symbols
 
 root-proto: main-proto
 	# Find "Standard Object".
-	standard-package = main-proto get-subpackage: "Standard"
+	standard-package = main-proto get-subproto: "Standard"
 	if standard-package == nil
 		throw MessageException new: "Standard package is missing!"
 	object-function = standard-package lookup-function: "Object"
@@ -139,7 +139,7 @@ report-run-program: program arguments: args
 
 
 get-standard-class: name
-	return (main-proto get-subpackage: "Standard") get-proto: name
+	return (main-proto get-subproto: "Standard") get-proto: name
 
 
 find-library-path

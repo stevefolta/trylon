@@ -82,7 +82,7 @@ jolt-expression
 	if locals
 		locals-expr = Expression new: locals count
 		index = 0
-		for local in locals
+		for local in locals values
 			locals-expr at: index put: local name intern
 			index += 1
 		expr = Expression with: 'trylid-block' with: locals-expr with: expr

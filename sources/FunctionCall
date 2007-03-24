@@ -23,12 +23,7 @@ jolt-expression
 	if function == nil
 		throw MessageException new: "There is no \"" + name + "\" function."
 	
-	# Generate the arguments.
-	arg-results = List new
-	for arg in arguments
-		arg-results append: arg jolt-expression
-	
-	return function emit-call: arg-results
+	return function emit-call: arguments
 
 
 convert-to-setter-call: value

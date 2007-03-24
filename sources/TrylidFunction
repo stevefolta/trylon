@@ -4,26 +4,14 @@ trylon TrylidFunction
 emit-call: arguments
 	virtual
 
-emit-declaration: stream
-	virtual
-
 prepare-to-emit
 	# Default: nothing to do.
 
-emit-code: stream
+emit-code
 	# Default: nothing to do.
+	return nil
 
 has-code
 	return true
-
-
-# Most TrylidFunctions are non-object functions, and object functions and
-# non-object functions are mostly disjoint sets, but the exception is
-# CompiledProto.  So a TrylidFunction can represent either type of function.
-
-# The rest of these must be defined for object functions.
-
-emit-object-call: object arguments: arguments
-	virtual
 
 

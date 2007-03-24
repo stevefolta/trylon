@@ -45,7 +45,7 @@ remainder
 	return String new: start to: stopper
 
 
-> other
+fn > other
 	return (this start > other start)
 
 

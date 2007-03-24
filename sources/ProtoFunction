@@ -9,7 +9,7 @@ create: proto
 
 
 emit-call: arguments
-	return ProtoResult new: proto
+	return proto access
 
 
 

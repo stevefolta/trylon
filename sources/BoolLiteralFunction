@@ -1,0 +1,18 @@
+trylon BoolLiteralFunction
+superclass TrylidFunction
+
+field value
+
+
+create: value
+	this value = value
+
+
+emit-call: arguments
+	if value
+		return 'true'
+	else
+		return 'false'
+
+
+
