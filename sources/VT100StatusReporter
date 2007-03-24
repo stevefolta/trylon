@@ -1,30 +1,39 @@
 trylon VT100StatusReporter
 superclass StatusReporter
 
-fields indent-level last-displayed-indent-level
+fields indent-level last-displayed-indent-level have-line
 
+max-indent-level = 20
 
 create
 	indent-level = 0
 	last-displayed-indent-level = -1
+	have-line = Tuple new: max-indent-level + 1
+	i = 0
+	while i <= max-indent-level
+		(have-line at: i) = false
+		i += 1
 
 
 report: message
 	# Go back up in the display.
-	num-lines-up = last-displayed-indent-level - indent-level + 1
-	while num-lines-up > 0
-		back-up-one-line
-		num-lines-up -= 1
+	level = last-displayed-indent-level
+	while level >= indent-level
+		if have-line at: level
+			back-up-one-line
+			(have-line at: level) = false
+		level -= 1
 	
 	# Indent.
 	adjusted-indent-level = indent-level
-	if adjusted-indent-level > 20
-		adjusted-indent-level = 20
+	if adjusted-indent-level > max-indent-level
+		adjusted-indent-level = max-indent-level
 	print: ("                    " substr: 0 length: adjusted-indent-level)
 
 	# Write the message.
 	print-line: (message substr: 0 length: 80 - adjusted-indent-level)
 	
+	(have-line at: adjusted-indent-level) = true
 	last-displayed-indent-level = indent-level
 
 
@@ -35,11 +44,13 @@ indent
 unindent
 	indent-level -= 1
 
-	num-lines-up = last-displayed-indent-level - indent-level
-	while num-lines-up > 0
-		back-up-one-line
-		num-lines-up -= 1
-		last-displayed-indent-level -= 1
+	level = last-displayed-indent-level
+	while level > indent-level
+		if have-line at: level
+			back-up-one-line
+			(have-line at: level) = false
+		level -= 1
+		last-displayed-indent-level = level
 
 
 back-up-one-line
