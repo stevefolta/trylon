@@ -1,0 +1,26 @@
+trylon PrimitiveFunction
+superclass TrylidFunction
+
+# Functions that are defined outside Trylid code.
+
+fields name on-proto
+
+
+create: name on-proto: on-proto
+	this name = name
+	this on-proto = on-proto
+
+
+emit-call: arguments
+	expr = Expression new: arguments count + 3
+	expr at: 0 put: 'send'
+	expr at: 1 put: name intern
+	expr at: 2 put: on-proto access
+	index = 3
+	for arg in arguments
+		expr at: index put: arg jolt-expression
+		index += 1
+	return expr
+
+
+

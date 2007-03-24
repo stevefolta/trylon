@@ -16,6 +16,11 @@ create: name parent: parent
 	uses-protos = List new
 	is-main = false
 
+	# Will be added by Jolt code:
+	add-function: (PrimitiveFunction new: ".proto" on-proto: this)
+	add-function: (PrimitiveFunction new: ".proto-name" on-proto: this)
+	add-function: (PrimitiveFunction new: ".proto-context" on-proto: this)
+
 
 lookup-function: name
 	return lookup-function: name visited-protos: ObjectMap new
@@ -218,7 +223,7 @@ setup-main: main-directory library-directory: library-directory 	--
 
 
 ensure-superclasses: object-proto
-	if superclass == nil
+	if superclass == nil && object-proto != this
 		superclass = object-proto
 	for function in functions values
 		if function is-a: ProtoFunction

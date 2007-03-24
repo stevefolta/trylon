@@ -32,8 +32,8 @@ iterator -> Iterator
 
 iff debugger
 	fn debug-write
-		print-line: name
-		num-fields := class num-fields
+		print-line: .proto-name
+		num-fields := 0 	#...
 		which-field := 0
 		while which-field < num-fields
 			field := object-ptr object-at: (which-field + 1)
