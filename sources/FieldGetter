@@ -17,3 +17,7 @@ emit-call: arguments
 			with: 'send' with: field name intern with: on-proto access
 
 
+name
+	return field name
+
+

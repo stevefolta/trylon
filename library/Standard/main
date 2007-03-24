@@ -3,11 +3,11 @@ trylon Standard
 
 primitive-fn print: string
 
-fn print-line: line
+print-line: line
 	print: line
 	print: "\n"
 
-fn print-line
+print-line
 	print: "\n"
 
 

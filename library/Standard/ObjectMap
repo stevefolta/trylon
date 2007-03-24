@@ -1,0 +1,63 @@
+trylid ObjectMap
+
+fields dictionary
+
+# We sorta leech of Dictionary.  Dictionary is intended to be used with 
+# Strings as keys, but will work for any comparable type.  So we just 
+# pass some object pointers into the Dictionary.
+
+
+create
+	dictionary = Dictionary new
+
+insert: value at: key
+	dictionary insert: value at: key object-ptr
+
+at: key set-to: value
+	insert: value at: key
+
+at: key
+	return dictionary at: key object-ptr
+
+remove: key
+	return dictionary remove: key object-ptr
+
+contains: key
+	return dictionary contains: key object-ptr
+
+
+keys
+	return Iterator new: dictionary keys
+
+values
+	return dictionary values
+
+
+count
+	return dictionary count
+
+is-empty
+	return dictionary is-empty
+
+
+
+class Iterator
+	fields dict-iterator
+
+	create: iterator
+		this dict-iterator = iterator
+	
+	is-done
+		return dict-iterator is-done
+	
+	current-item
+		return dict-iterator current-item as-object
+	
+	go-forward
+		dict-iterator go-forward
+	
+	iterator
+		return this
+
+
+

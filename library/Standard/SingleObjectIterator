@@ -1,0 +1,22 @@
+trylid SingleObjectIterator
+superclass Iterator
+
+# This allows *any* object to be treated as a collection.  It's useful 
+# because a function can do a "for" loop over an argument, and that 
+# argument could be a collection (eg. a Tuple) or just a single item. 
+# Think of a function that operates on files, and can be passed a single 
+# file or a collection of files.
+
+field object
+
+create: object
+	this object = object
+
+is-done
+	return object == nil
+
+current-item
+	return object
+
+go-forward
+	object = nil

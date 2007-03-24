@@ -65,6 +65,11 @@ return-value
 # Top-level compilation.
 
 compile-program: compile-symbols
+	# Create the .jolt-sources directory.
+	directory = FileDirectory new: "."
+	if !(directory entry-is-directory: build-settings jolt-sources-dir)
+		directory create-subdirectory: build-settings jolt-sources-dir
+	
 	# Load.
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"

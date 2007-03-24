@@ -11,39 +11,60 @@ status-reporter
 
 iff !in-jolt
 	class Expression
-		superclass Tuple
+		field tuple
+
+		create: num-items
+			tuple = Tuple new: num-items
 
 		class-fn with: value
-			return (Expression new: 1) at: 0 set-to: value
+			expr = Expression new: 1
+			expr at: 0 put: value
+			return expr
 
 		class-fn with: value-1 with: value-2
 			expr = Expression new: 2
-			expr at: 0 set-to: value-1
-			expr at: 1 set-to: value-2
+			expr at: 0 put: value-1
+			expr at: 1 put: value-2
 			return expr
 
 		class-fn with: value-1 with: value-2 with: value-3
 			expr = Expression new: 3
-			expr at: 0 set-to: value-1
-			expr at: 1 set-to: value-2
-			expr at: 2 set-to: value-3
+			expr at: 0 put: value-1
+			expr at: 1 put: value-2
+			expr at: 2 put: value-3
 			return expr
 
 		class-fn with: value-1 with: value-2 with: value-3 with: value-4
 			expr = Expression new: 4
-			expr at: 0 set-to: value-1
-			expr at: 1 set-to: value-2
-			expr at: 2 set-to: value-3
-			expr at: 3 set-to: value-4
+			expr at: 0 put: value-1
+			expr at: 1 put: value-2
+			expr at: 2 put: value-3
+			expr at: 3 put: value-4
+			return expr
+
+		class-fn 	--
+		  	with: value-1 with: value-2 with: value-3 with: value-4 with: value-5
+			expr = Expression new: 4
+			expr at: 0 put: value-1
+			expr at: 1 put: value-2
+			expr at: 2 put: value-3
+			expr at: 3 put: value-4
+			expr at: 4 put: value-5
 			return expr
 
 		at: index put: value
-			this at: index put: value
+			tuple at: index put: value
 
 		emit: stream
+			reporter = nil
+			iff debug-emission
+				reporter = the-compiler status-reporter
+				reporter report: "("
+				reporter indent
+
 			stream write: "("
 			done-one = false
-			for value in this
+			for value in tuple
 				if done-one
 					stream write: " "
 				else
@@ -51,8 +72,14 @@ iff !in-jolt
 				if value is-a: Expression
 					value emit: stream
 				else
+					iff debug-emission
+						reporter report: value string
 					stream write: value string
 			stream write: ")"
+
+			iff debug-emission
+				reporter unindent
+				reporter report: ")"
 
 
 extend String

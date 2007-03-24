@@ -50,6 +50,7 @@ emit-code
 		expr at: index put: arg name intern
 		index += 1
 	expr at: index put: body jolt-expression
+	return expr
 
 
 

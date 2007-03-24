@@ -12,4 +12,8 @@ emit-call: arguments
 	return proto access
 
 
+name
+	return proto name
+
+
 

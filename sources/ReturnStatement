@@ -14,10 +14,11 @@ prepare-to-emit
 
 
 jolt-expression
-	expression = Expression with: 'return' with: value
+	expression = Expression with: 'return' with: value jolt-expression
 	if comment
 		comment-expression = Expression with: 'comment' with: comment
 		expression = 	--
 			Expression with: 'begin' with: expression with: comment-expression
+	return expression
 
 

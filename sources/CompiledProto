@@ -272,17 +272,28 @@ emit-code
 
 
 emit-jolt-file
+	status-reporter = Compiler status-reporter
+	status-reporter report: "Emitting " + name + "..."
+	status-reporter indent
+
 	#...
 	file = 	--
 		File new: 	--
 			the-compiler build-settings jolt-sources-dir + "/" + full-name + ".k"
 	stream = ExistingFileStream new: file
-	#...
-	compiled-functions = List new
+	# Compile all the functions.
 	for function in functions values
+		status-reporter report: "Emitting " + function name + "..."
+		status-reporter indent
 		compiled-code = function emit-code
 		if compiled-code
-			compiled-functions append: compiled-code
+			compiled-code emit: stream
+			stream write-line
+			stream write-line
+		status-reporter unindent
+	stream close
+
+	status-reporter unindent
 
 
 access

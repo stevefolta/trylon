@@ -15,4 +15,11 @@ emit-call: arguments
 		return 'false'
 
 
+name
+	if value
+		return "true"
+	else
+		return "false"
+
+
 

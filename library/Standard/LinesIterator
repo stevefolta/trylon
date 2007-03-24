@@ -1,0 +1,39 @@
+trylid LinesIterator
+
+
+fields current-line remaining-string all-done
+
+
+create: string
+	this remaining-string = string
+	this all-done = false
+	go-forward
+
+
+is-done
+	return all-done
+
+
+current-item
+	return current-line
+
+
+go-forward
+	if remaining-string is-empty
+		all-done = true
+		return
+	
+	newline-index := remaining-string index-of: `\n`
+	if newline-index == -1
+		current-line = remaining-string
+		remaining-string = ""
+		return
+	
+	current-line = remaining-string substr: 0 length: newline-index
+	remaining-string = remaining-string substr: newline-index + 1
+
+
+iterator
+	return this
+
+

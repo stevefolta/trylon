@@ -31,9 +31,11 @@ emit-node: node
 	if node == nil
 		return 'nil'
 	return 	--
-		( 'trylon-dict-node', 	--
-		  node key, node value jolt-expression, 	--
-		  (emit-node: node left), 	--
-			(emit-node: node right) )
+		Expression 	--
+			with: 'trylon-dict-node' 	--
+			with: node key 	--
+			with: node value jolt-expression 	--
+			with: (emit-node: node left) 	--
+			with: (emit-node: node right)
 
 

@@ -13,7 +13,7 @@ prepare-to-emit
 
 
 jolt-expression
-	block jolt-expression
+	return block jolt-expression
 
 
 
