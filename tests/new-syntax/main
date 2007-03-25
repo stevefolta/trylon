@@ -15,6 +15,8 @@ dict-field =
 	y = 30
 	sub-dict =
 		value = "hello"
+		long-value = "
+			Test.
 	tuple = ( "a", "b", "c" )
 
 
@@ -106,6 +108,8 @@ tests
 		title: "Nested package dict literal"
 	check: ((dict-field at: "tuple") at: 0) against: "a" 	--
 		title: "Tuple in package dict literal"
+	check: ((dict-field at: "sub-dict") at: "long-value") against: "Test.\n" 	--
+		title: "Text literal in package dict literal"
 	print-line
 	
 	# 2007.1.27: Dots in identifiers.

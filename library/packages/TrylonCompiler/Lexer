@@ -395,7 +395,6 @@ subblock-line
 		if indentation < indent-stack top
 			unindents-pending = true
 			unindent-to = indentation
-			indent-stack pop
 		at-line-start = false
 		return nil
 	
