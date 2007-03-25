@@ -55,6 +55,12 @@ iff !in-jolt
 		at: index put: value
 			tuple at: index put: value
 
+		iterator
+			return tuple iterator
+
+		num-items
+			return tuple num-items
+
 		emit: stream
 			reporter = nil
 			iff debug-emission

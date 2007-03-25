@@ -1,0 +1,128 @@
+trylon CokeLexer
+
+fields p stopper
+
+
+create: text
+	p = text start
+	stopper = text stopper
+
+
+next-expr
+	# What kind of expression?
+	c = next-non-whitespace-char
+	switch c
+		0
+			return nil
+
+		`'`
+			return Expression with: 'quote' with: next-expr
+
+		`"`
+			return lex-string
+
+		`(`
+			return lex-list
+
+		`)`
+			throw MessageException: "Extra \")\" in Coke code."
+
+		`-`
+			c = peek-char
+			if c >= `0` && c <= `9`
+				next-char
+				return -(lex-number: c)
+			else
+				return '-'
+
+		else
+			if c >= `0` && c <= `9`
+				return lex-number: c
+			else
+				start-char = p - 1
+				loop
+					c = peek-char
+					if c == ` ` || c == `\t` || c == `\n` || c == `\r` || c == `)` || 	--
+					   c == 0
+						break
+					next-char
+				return (String new: start-char to: p) intern
+
+
+lex-list
+	# Gather the list.
+	list = List new
+	loop
+		# Skip whitespace.
+		c = peek-non-whitespace-char
+		if c == 0
+			throw MessageException: "Unterminated list in Coke code."
+
+		# Are we done?
+		if c == `)`
+			p += 1
+			break
+
+		list append: next-expr
+	
+	# Build the Expression.
+	expr = Expression new: list count
+	index = 0
+	for item in list
+		expr at: index put: item
+		index += 1
+	return expr
+
+
+lex-string
+	# The initial quote has already been consumed.
+	start = p
+	loop
+		c = next-char
+		if c == `"`
+			break
+	string = String new: start to: p - 1
+	return string
+
+
+lex-number: c
+	# "c" is the first character of the number, already consumed.
+	value = 0
+	loop
+		value *= 10
+		value += c - `0`
+		c = peek-char
+		if c < `0` || c > `9`
+			break
+		next-char
+	return value
+
+
+peek-char
+	if p >= stopper
+		return 0
+	return p deref-char
+
+
+next-char
+	if p >= stopper
+		return 0
+	c = p deref-char
+	p += 1
+	return c
+
+
+peek-non-whitespace-char
+	loop
+		c = peek-char
+		if c != ` ` && c != `\t` && c != `\n` && c != `\r`
+			return c
+		p += 1
+
+
+next-non-whitespace-char
+	c = peek-non-whitespace-char
+	p += 1
+	return c
+
+
