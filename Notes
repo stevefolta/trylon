@@ -68,6 +68,10 @@ Standard Object is a subclass whose access gives "trylid-root-object" -- that al
 
 I still kinda want to make Main special...
 
+"true" and "false" may present problems, but I should probably wait to see if they do before trying to fix them.  If they do, perhaps fake values can be used temporarily until Standard Bool is loaded.
+
+In trylid.k, this is all put together in (load-trylid).
+
 
 =====
 

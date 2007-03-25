@@ -283,29 +283,26 @@ emit-jolt-file
 	stream = ExistingFileStream new: file
 
 	# Define the proto.
-	parent-access = 'nil'
-	if parent
+	# ...but not for Main or Standard Object (which are created specially in
+	# (setup-Main)).
+	if parent && superclass
 		parent-access = parent access
-	superclass-access = nil
-	if superclass
 		superclass-access = superclass access
-	else
-		superclass-access = '_object' 	#...
-	slots = Expression new: fields count
-	index = 0
-	for field in fields
-		slots at: index put: field name intern
-		index += 1
-	expr = 	--
-		Expression 	--
-			with: 'define-trylid-proto' 	--
-			with: name intern 	--
-			with: parent-access 	--
-			with: superclass-access 	--
-			with: slots
-	expr emit: stream
-	stream write-line
-	stream write-line
+		slots = Expression new: fields count
+		index = 0
+		for field in fields
+			slots at: index put: field name intern
+			index += 1
+		expr = 	--
+			Expression 	--
+				with: 'define-trylid-proto' 	--
+				with: name intern 	--
+				with: parent-access 	--
+				with: superclass-access 	--
+				with: slots
+		expr emit: stream
+		stream write-line
+		stream write-line
 
 	# Compile all the functions.
 	for function in functions values
