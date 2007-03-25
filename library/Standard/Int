@@ -73,6 +73,23 @@ fn char
 		(char-obj (int@ self_))
 
 
+# In case we need to play nice with SmallIntegers:
+_integerValue
+	coke
+		(int@ self_)
+asInteger
+	coke
+		(send value_: SmallInteger (int@ self_))
+value_: value_
+	# Switch this to the SmallInteger version, maybe.
+	new-int = Int new
+	coke
+		(set-int@ new-int value_)
+	return new-int
+	# SmallInteger version:
+	# return SmallInteger value_: value_
+
+
 iff debugger
 	fn debug-write
 		print-line: "Int: " + this string
