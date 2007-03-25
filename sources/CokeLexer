@@ -1,11 +1,12 @@
 trylon CokeLexer
 
+fields lines line
 fields p stopper
 
 
-create: text
-	p = text start
-	stopper = text stopper
+create: lines
+	this lines = lines
+	load-line
 
 
 next-expr
@@ -60,7 +61,7 @@ lex-list
 
 		# Are we done?
 		if c == `)`
-			p += 1
+			next-char
 			break
 
 		list append: next-expr
@@ -100,13 +101,18 @@ lex-number: c
 
 peek-char
 	if p >= stopper
-		return 0
+		if line == nil
+			return 0
+		return `\n`
 	return p deref-char
 
 
 next-char
 	if p >= stopper
-		return 0
+		load-line
+		if line == nil
+			return 0
+		return `\n`
 	c = p deref-char
 	p += 1
 	return c
@@ -117,12 +123,19 @@ peek-non-whitespace-char
 		c = peek-char
 		if c != ` ` && c != `\t` && c != `\n` && c != `\r`
 			return c
-		p += 1
+		next-char
 
 
 next-non-whitespace-char
 	c = peek-non-whitespace-char
-	p += 1
+	next-char
 	return c
+
+
+load-line
+	line = lines pop-front
+	if line
+		p = line start
+		stopper = line stopper
 
 

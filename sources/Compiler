@@ -168,11 +168,7 @@ find-library-path
 
 lex-test: filename
 	try
-		lexer = nil
-		iff !use-c-lexer
-			lexer = Lexer new: (File new: filename) contents
-		iff use-c-lexer
-			lexer = CLexer new: (File new: filename) contents
+		lexer = Lexer new: (File new: filename) contents
 		loop
 			token = lexer next-token
 			print: token type
@@ -188,7 +184,10 @@ lex-test: filename
 
 test-coke-lexer: filename
 	try
-		lexer = CokeLexer new: (File new: filename) contents
+		lines = List new
+		for line in (File new: filename) contents lines
+			lines append: line
+		lexer = CokeLexer new: lines
 		loop
 			expr = lexer next-expr
 			if expr == nil
