@@ -175,7 +175,8 @@ parse-proto-literal-primary
 	else if current-token == 'int-literal'
 		return IntLiteral new: current-token text
 	else if current-token == 'float-literal'
-		return FloatLiteral new: current-token text
+		parse-error: "Floats are not supported yet."
+		# return FloatLiteral new: current-token text
 	else if current-token == 'character-literal'
 		return CharacterLiteral new: current-token text
 	else if current-token type == 'name'
@@ -1284,10 +1285,10 @@ parse-primary-expression
 		consume-token
 		return IntLiteral new: value
 	
-	else if token == 'float-literal'
-		value = current-token text
-		consume-token
-		return FloatLiteral new: value
+	# else if token == 'float-literal'
+	# 	value = current-token text
+	# 	consume-token
+	# 	return FloatLiteral new: value
 	
 	else if token == 'string-literal'
 		value = current-token text

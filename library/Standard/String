@@ -246,7 +246,7 @@ lowercase
 
 
 primitive-fn int -> Int
-primitive-fn float -> Float
+# primitive-fn float -> Float
 
 
 iff debugger

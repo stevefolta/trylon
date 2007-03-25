@@ -60,15 +60,15 @@ fn >> arg (Int) -> Int
 	coke
 		(int-obj (>> (int@ self_) (int@ arg)))
 
-fn string -> String
+fn string
 	coke
 		(let ((buf (malloc 64)))
 			(sprintf buf "%d" (int@ self_))
 			(string-obj buf))
-fn float -> Float
+fn float
 	# How to do this?
 	#...
-fn char -> Char
+fn char
 	coke
 		(char-obj (int@ self_))
 

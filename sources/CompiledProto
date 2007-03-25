@@ -216,7 +216,7 @@ setup-main: main-directory library-directory: library-directory 	--
 			parser parse-proto-file: this
 	
 	# Load up standard protos.
-	for proto-name in ("BytePtr", "Float", "String", "Symbol", "Tuple", "List")
+	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
 		standard-proto lookup-function: proto-name
 	
 	functions at: "Main" set-to: (ProtoFunction new: this)
