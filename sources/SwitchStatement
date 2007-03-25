@@ -35,5 +35,6 @@ jolt-expression
 		index += 1
 	if else-clause
 		expr at: index put: else-clause jolt-expression
+	return expr
 
 
