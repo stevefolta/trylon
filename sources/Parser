@@ -600,6 +600,8 @@ parse-statement
 			return parse-try-statement
 		else if name == "throw"
 			return parse-throw-statement
+		else if name == "coke"
+			return parse-coke-statement
 
 		# Is it a declaration?
 		if next-token == ':=' || next-token == '[' || next-token == '('
@@ -861,6 +863,11 @@ parse-throw-statement
 	comment = require-eol
 
 	return ThrowStatement new: expr comment: comment
+
+
+parse-coke-statement
+	consume-token 	# "coke"
+	return CokeStatement new: get-subblock substrings
 
 
 parse-declaration

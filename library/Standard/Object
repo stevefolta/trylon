@@ -1,6 +1,8 @@
 trylid Object
 
-primitive-fn object-ptr -> BytePtr
+object-ptr -> BytePtr
+	coke
+		(byte-ptr this)
 
 is-a: proto -> Bool
 	cur-proto = .proto

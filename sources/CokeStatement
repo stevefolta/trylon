@@ -1,0 +1,36 @@
+trylon CokeStatement
+superclass Statement
+
+fields lines
+
+
+create: lines
+	this lines = lines
+
+
+jolt-expression
+	# Parse the Coke code.
+	exprs = List new
+	lexer = CokeLexer new: lines
+	loop
+		expr = lexer next-expr
+		if expr == nil
+			break
+		exprs append: expr
+	
+	# Build the expression.
+	if exprs count == 0
+		return 'nil'
+	else if exprs count == 1
+		return exprs first-item
+	else
+		expr = Expression new: exprs count + 1
+		expr at: 0 put: 'begin'
+		index = 1
+		for sub-expr in exprs
+			expr at: index put: sub-expr
+			index += 1
+		return expr
+
+
+
