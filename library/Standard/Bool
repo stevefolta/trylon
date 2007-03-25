@@ -3,14 +3,31 @@ trylid Bool
 new
 	return Implementation allocate-object: Bool with-extra-slots: 1
 
-primitive-fn == arg (Bool) -> Bool
-primitive-fn != arg (Bool) -> Bool
+fn == arg (Bool) -> Bool
+	coke
+		(if (== (int@ _self) (int@ arg)) true false)
+fn != arg (Bool) -> Bool
+	coke
+		(if (!= (int@ _self) (int@ arg)) true false)
 
-primitive-fn | arg (Bool) -> Bool
-primitive-fn & arg (Bool) -> Bool
-primitive-fn ^ arg (Bool) -> Bool
+fn | arg (Bool) -> Bool
+	coke
+		(if (or (int@ _self) (int@ arg)) true false)
+fn & arg (Bool) -> Bool
+	coke
+		(if (and (int@ _self) (int@ arg)) true false)
+fn ^ arg (Bool) -> Bool
+	return this != arg
 
-primitive-fn string -> String
+fn int
+	coke
+		return (int@ _self)
+
+fn string
+	if this
+		return "true"
+	else
+		return "false"
 
 
 iff debugger

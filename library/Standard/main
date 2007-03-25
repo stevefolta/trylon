@@ -1,7 +1,9 @@
 trylon Standard
 
 
-primitive-fn print: string
+fn print: string
+	coke
+		(send print: StdOut string)
 
 print-line: line
 	print: line
