@@ -52,4 +52,23 @@ Will need:
 	.parent-context
 
 
+=====
+
+Loading
+	[2007.3.25]
+
+Standard Object must be loaded first, and can't join Standard until later.  Use a (namespace ...) function instead of sends to access parent namespaces, and don't specify Main in its arguments -- (namespace Standard), (namespace Standard Implementation).  It will dynamically check to see if the namespace is loaded and load it from the .k file if not.  Or call it (load-trylid-proto), or just (trylid-proto).  So something like this:
+
+	(define trylid-root-object (read-trylid-proto-file "Standard Object.k"))
+	(setup-Main)
+	(read-trylid-proto-file "Main.k")
+		;; Should result in everything else getting loaded.
+
+Standard Object is a subclass whose access gives "trylid-root-object" -- that allows its own .k file to work before Main is set up.
+
+I still kinda want to make Main special...
+
+
+=====
+
 
