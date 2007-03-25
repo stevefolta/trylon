@@ -1,0 +1,8 @@
+Title: Objects
+
+=====
+
+Prototypes Act as Classes and as Namespaces
+
+In a prototype-based system like Fonc, objects act as both instances and as classes.  In Trylid, they also can act as namespaces (a.k.a. packages).
+

@@ -1,0 +1,21 @@
+Title: The Structure of Trylid Code
+
+=====
+
+Names
+
+Words are separated by whitespace, and can contain most non-whitespace characters, including UTF-8 characters.  In particular, they can contain hyphens ('-'); use of hyphens is encouraged so separate words in a name (as opposed to the use of underscores or camelCase).  However, a name may not start with a hyphen.  Similarly, a name may contain digits but may not start with one.  A name may contain periods ('.'); beginning a name with a period is a way of indicating that the name is normally to be hidden from human eyes (as in the Unix filesystem).
+
+The following characters are not allowed in names:
+
+	# " ' ` ( ) [ ] { } ; ~ = + * / % ^ < > & | ,
+
+
+====
+
+Lines and Blocks
+
+Like Python, Trylid code is organized by lines and indented blocks.
+
+
+
