@@ -6,6 +6,6 @@ create
 
 
 emit-call: arguments
-	return 'this'
+	return 'self'
 
 

@@ -24,8 +24,8 @@ emit-call: arguments
 	# Emit the call.
 	expr = Expression new: arguments count + 3
 	expr at: 0 put: 'send'
-	expr at: 1 put: name intern
-	expr at: 2 put: 'this'
+	expr at: 1 put: (Expression with: 'quote' with: name intern)
+	expr at: 2 put: 'self'
 	index = 3
 	for arg in arguments
 		expr at: index put: arg jolt-expression

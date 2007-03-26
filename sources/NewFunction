@@ -12,10 +12,14 @@ create: creator on-proto: on-proto
 
 
 emit-call: arguments
-	allocation = Expression with: 'send' with: 'clone' with: on-proto access
+	allocation = 	--
+		Expression 	--
+			with: 'send' 	--
+			with: (Expression with: 'quote' with: 'clone') 	--
+			with: on-proto access
 	creator-call = Expression new: arguments count + 3
 	creator-call at: 0 put: 'send'
-	creator-call at: 1 put: creator name intern
+	creator-call at: 1 put: (Expression with: 'quote' with: creator name intern)
 	creator-call at: 2 put: 'new-object'
 	index = 3
 	for arg in arguments
@@ -27,10 +31,14 @@ emit-call: arguments
 
 
 emit-code
-	allocation = Expression with: 'send' with: 'clone' with: on-proto access
+	allocation = 	--
+		Expression 	--
+			with: 'send' 	--
+			with: (Expression with: 'quote' with: 'clone') 	--
+			with: on-proto access
 	creator-call = Expression new: creator arguments count + 3
 	creator-call at: 0 put: 'send'
-	creator-call at: 1 put: creator name intern
+	creator-call at: 1 put: (Expression with: 'quote' with: creator name intern)
 	creator-call at: 2 put: 'new-object'
 	index = 3
 	for arg in creator arguments

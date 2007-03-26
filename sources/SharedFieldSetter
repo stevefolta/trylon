@@ -12,7 +12,9 @@ create: field on-proto: on-proto
 emit-call: arguments
 	return 	--
 		Expression 	--
-			with: 'send' with: (field name + ":") intern with: on-proto access 	--
+			with: 'send' 	--
+			with: (Expression with: 'quote' with: (field name + ":") intern) 	--
+			with: on-proto access 	--
 			with: arguments first-item jolt-expression
 
 

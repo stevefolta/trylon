@@ -13,7 +13,9 @@ emit-call: arguments
 	# Could do this more efficiently...
 	return 	--
 		Expression 	--
-			with: 'send' with: (field name + ":") intern with: on-proto access 	--
+			with: 'send' 	--
+			with: (Expression with: 'quote' with: (field name + ":") intern) 	--
+			with: on-proto access 	--
 			with: arguments first-item access
 
 

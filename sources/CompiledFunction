@@ -43,7 +43,7 @@ emit-code
 	
 	expr = Expression new: arguments count + 4
 	expr at: 0 put: 'define-send'
-	expr at: 1 put: name intern
+	expr at: 1 put: (Expression with: 'quote' with: name intern)
 	expr at: 2 put: on-proto access
 	index = 3
 	for arg in arguments

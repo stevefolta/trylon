@@ -2,7 +2,9 @@
 (define true (import "true"))
 (define false (import "false"))
 
-(define Main nil) 	;; Will be set later.
+;; These globals will be set later:
+(define Main nil)
+(define trylid-root-object nil)
 
 (define shared-field-getter
 	(lambda (_closure _self self)
@@ -87,9 +89,6 @@
 
 (define read-trylid-proto-file
 	(lambda (filename)
-		[StdOut nextPutAll: '"Loading "]
-		[StdOut nextPutAll: filename]
-		[StdOut nextPutAll: '"...\n"]
 		(load [['".jolt-sources/" , filename] _stringValue])
 		))
 
