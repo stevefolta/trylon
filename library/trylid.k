@@ -12,16 +12,56 @@
 		`(add-shared-field-to (quote ,[node at: '0]) ,[node at: '1] ,[node at: '2])
 		))
 
+(define field-getter
+	(lambda (_closure _self self)
+		(long@ (+ _self (long@ _closure 2)))
+		))
+
+(define field-setter
+	(lambda (_closure _self self value)
+		(set-long@ (+ _self (long@ _closure 2)) value)
+		))
+
+(define closure-returner
+	(lambda (_closure _self self)
+		(long@ _closure 2)
+		))
+
+;; This is much like (define-type), but it doesn't operate in a specific
+;; namespace and it's a function, not a syntax.
 (define create-trylid-proto
-	(lambda (superclass fields)
-		;; ...
-		nil
+	(lambda (name superclass fields)
+		(let ((name-string [name asString])
+					(super-size [superclass _sizeof])
+					(num-fields [fields size])
+					(fields-size (* 4 [num-fields _integerValue]))
+					(proto-size (+ super-size fields-size))
+					(proto [superclass _delegated])
+					(vtable [proto _vtable]))
+			[vtable methodAt: '_sizeof put: closure-returner with: proto-size]
+			[vtable methodAt: '_debugName put: closure-returner with: name-string]
+			;; Add the slot accessors.
+			(let ((offset super-size)
+						(field-index '0))
+				(while [field-index < num-fields]
+					(let ((field-name [fields at: field-index])
+								(setter-name [[[field-name asString] append: '":"] intern]))
+						[vtable methodAt: field-name put: field-getter with: offset]
+						[vtable methodAt: setter-name put: field-setter with: offset]
+						(set field-index [field-index + '1])
+						(set offset (+ offset 4))
+						)
+					)
+				)
+			proto
+			)
 		))
 
 (syntax define-trylid-proto 	;; name namespace superclass fields
 	(lambda (node compiler)
 		`(add-shared-field-to (quote ,[node at: '0]) ,[node at: '1]
-			(create-trylid-proto ,[node at: '2] (quote ,[node at: '3])))
+			(create-trylid-proto
+				(quote ,[node at: '0]) ,[node at: '2] (quote ,[node at: '3])))
 		))
 
 (define read-trylid-proto-file
@@ -34,7 +74,7 @@
 		(let ((proto Main) (which-name '0) (filename nil))
 			(while [which-name < [names size]]
 				(let ((name [names at: which-name]))
-					(let ((name-string [String value_: [name _stringValue]]))
+					(let ((name-string [name asString]))
 						(set filename
 							(if filename [[filename , " "] , name-string] name-string)))
 					(if [[proto _vtable] lookup: name]
