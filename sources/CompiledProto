@@ -320,19 +320,32 @@ emit-jolt-file
 
 
 access
-	if parent == nil
+	if is-main
 		return 'Main'
 	else
-		return Expression with: 'send' with: parent access with: name intern
+		list = List new
+		namespace = this
+		while !namespace is-main
+			list push-front: namespace
+			namespace = namespace parent
+		expr = Expression new: list count + 1
+		expr at: 0 put: 'trylid-proto'
+		index = 1
+		for namespace in list
+			expr at: index put: namespace name intern
+			index += 1
+		return expr
 
 
 
 # Helpers
 
 full-name
+	if is-main
+		return name
 	result = this name
 	proto = parent
-	while proto
+	while !proto is-main
 		result = proto name + " " + result
 		proto = proto parent
 	return result
