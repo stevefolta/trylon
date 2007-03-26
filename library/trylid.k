@@ -14,24 +14,24 @@
 
 (define field-getter
 	(lambda (_closure _self self)
-		(long@ (+ _self (long@ _closure 2)))
+		(long@ (+ _self (long@ _closure 1)))
 		))
 
 (define field-setter
 	(lambda (_closure _self self value)
-		(set-long@ (+ _self (long@ _closure 2)) value)
+		(set-long@ (+ _self (long@ _closure 1)) value)
 		))
 
 (define closure-returner
 	(lambda (_closure _self self)
-		(long@ _closure 2)
+		(long@ _closure 1)
 		))
 
 ;; This is much like (define-type), but it doesn't operate in a specific
 ;; namespace and it's a function, not a syntax.
 (define create-trylid-proto
 	(lambda (name superclass fields)
-		(let ((name-string [name asString])
+		(let ((name-string [name _stringValue])
 					(super-size [superclass _sizeof])
 					(num-fields [fields size])
 					(fields-size (* 4 [num-fields _integerValue]))
@@ -45,7 +45,7 @@
 						(field-index '0))
 				(while [field-index < num-fields]
 					(let ((field-name [fields at: field-index])
-								(setter-name [[[field-name asString] append: '":"] intern]))
+								(setter-name [[[field-name asString] , '":"] asSymbol]))
 						[vtable methodAt: field-name put: field-getter with: offset]
 						[vtable methodAt: setter-name put: field-setter with: offset]
 						(set field-index [field-index + '1])
