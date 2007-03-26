@@ -23,7 +23,7 @@ has-code
 emit-call: arguments
 	expr = Expression new: arguments count + 3
 	expr at: 0 put: 'send'
-	expr at: 1 put: name intern
+	expr at: 1 put: (Expression with: 'quote' with: name intern)
 	expr at: 2 put: on-proto access
 	index = 3
 	for arg in arguments

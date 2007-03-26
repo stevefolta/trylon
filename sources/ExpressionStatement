@@ -17,7 +17,8 @@ jolt-expression
 	if comment
 		comment-expression = Expression with: 'comment' with: comment
 		return 	--
-			Expression with: 'begin' with: expression jolt-expression with: comment
+			Expression 	--
+				with: 'begin' with: expression jolt-expression with: comment-expression
 	else
 		return expression jolt-expression
 

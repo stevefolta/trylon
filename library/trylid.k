@@ -128,14 +128,30 @@
 		(trylid-proto Standard)
 		;; Install Standard Object.
 		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
-		(read-trylid-proto-file [String value_: "Standard Object.k"])
+		(read-trylid-proto-file '"Standard Object.k")
 		;; Load the rest of Main
-		(read-trylid-proto-file [String value_: "Main.k"])
+		(read-trylid-proto-file '"Main.k")
 		))
 
 
 
 ;; Statements and expressions
+
+(define make-local-defs
+	(lambda (locals)
+		(define expr [locals copy])
+		(define index '0)
+		(while [index < [expr size]]
+			[expr at: index put: [expr with: [expr at: index] with: 'nil]]
+			(set index [index + '1])
+			)
+		expr
+		))
+
+(syntax trylid-block 	;; (locals...) exprs...
+	(lambda (node compiler)
+		`(let ,(make-local-defs [node at: '1]) ,@[node copyFrom: '2])
+		))
 
 (syntax blank-line
 	(lambda (node compiler)
@@ -145,6 +161,12 @@
 (syntax comment
 	(lambda (node compiler)
 		`(let () 0)
+		))
+
+(define throw
+	(lambda (exception)
+		;;...
+		nil
 		))
 
 
