@@ -1,15 +1,36 @@
 (define nil 0)
+(define true (import "true"))
+(define false (import "false"))
 
 (define Main nil) 	;; Will be set later.
 
+(define shared-field-getter
+	(lambda (_closure _self self)
+		(long@ _closure 1)
+		))
+
+(define shared-field-setter
+	(lambda (_closure _self self value)
+		(let ((getter-closure (long@ _closure 1)))
+			(set-long@ getter-closure 1 value))
+		))
+
 (define add-shared-field-to
 	(lambda (name proto value)
-		;; ...
+		(let ((vtable [proto _vtable]))
+			[vtable methodAt: name put: shared-field-getter with: value]
+			(let ((getter-assoc [vtable lookup: name])
+						(getter-closure (long@ getter-assoc 1))
+						(setter-name [[[name asString] , '":"] asSymbol]))
+				[vtable methodAt: setter-name
+					put: shared-field-setter with: getter-closure]
+				)
+			)
 		))
 
 (syntax add-shared-field 	;; name proto value
 	(lambda (node compiler)
-		`(add-shared-field-to (quote ,[node at: '0]) ,[node at: '1] ,[node at: '2])
+		`(add-shared-field-to ',[node at: '1] ,[node at: '2] ,[node at: '3])
 		))
 
 (define field-getter
@@ -59,9 +80,9 @@
 
 (syntax define-trylid-proto 	;; name namespace superclass fields
 	(lambda (node compiler)
-		`(add-shared-field-to (quote ,[node at: '0]) ,[node at: '1]
+		`(add-shared-field ,[node at: '1] ,[node at: '2]
 			(create-trylid-proto
-				(quote ,[node at: '0]) ,[node at: '2] (quote ,[node at: '3])))
+				(quote ,[node at: '1]) ,[node at: '3] (quote ,[node at: '4])))
 		))
 
 (define read-trylid-proto-file
