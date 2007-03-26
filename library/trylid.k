@@ -106,7 +106,7 @@
 						)
 					(set proto [proto perform: name])
 					)
-				(set which-name [which-name + 1])
+				(set which-name [which-name + '1])
 				)
 			proto
 			)
@@ -132,4 +132,19 @@
 		;; Load the rest of Main
 		(read-trylid-proto-file [String value_: "Main.k"])
 		))
+
+
+
+;; Statements and expressions
+
+(syntax blank-line
+	(lambda (node compiler)
+		`(let () 0)
+		))
+
+(syntax comment
+	(lambda (node compiler)
+		`(let () 0)
+		))
+
 
