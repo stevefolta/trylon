@@ -87,20 +87,23 @@
 
 (define read-trylid-proto-file
 	(lambda (filename)
-		(load [[[String value_: ".jolt-sources/"] , filename] _stringValue])
+		[StdOut nextPutAll: '"Loading "]
+		[StdOut nextPutAll: filename]
+		[StdOut nextPutAll: '"...\n"]
+		(load [['".jolt-sources/" , filename] _stringValue])
 		))
 
 (define get-trylid-proto
 	(lambda (names)
 		(let ((proto Main) (which-name '0) (filename nil))
 			(while [which-name < [names size]]
-				(let ((name [names at: which-name]))
-					(let ((name-string [name asString]))
-						(set filename
-							(if filename [[filename , " "] , name-string] name-string)))
+				(let ((name [names at: which-name])
+							(name-string [name asString]))
+					(set filename
+						(if filename [[filename , " "] , name-string] name-string))
 					(if [[proto _vtable] lookup: name]
 						nil
-						(read-trylid-proto-file [filename , ".k"])
+						(read-trylid-proto-file [filename , '".k"])
 						)
 					(set proto [proto perform: name])
 					)
@@ -118,11 +121,11 @@
 (define load-trylid
 	(lambda ()
 		;; Create Standard Object, but not loaded into a namespace yet.
-		(define trylid-root-object (create-trylid-proto Object '()))
+		(define trylid-root-object (create-trylid-proto 'Object Object '()))
 		;; Create Main.
-		(define-trylid-proto Main nil trylid-root-object ())
+		(set Main (create-trylid-proto 'Main trylid-root-object '()))
 		(add-shared-field Main Main Main)
-		;; Load Standard.
+		;; Create Standard.
 		(trylid-proto Standard)
 		;; Install Standard Object.
 		(add-shared-field Object (trylid-proto Standard) trylid-root-object)

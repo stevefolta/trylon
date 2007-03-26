@@ -3,7 +3,7 @@ superclass Context
 
 fields name parent functions fields shared-fields superclass directories
 fields uses-protos
-fields is-main
+fields is-main is-root-object
 
 
 create: name parent: parent
@@ -15,6 +15,7 @@ create: name parent: parent
 	directories = List new
 	uses-protos = List new
 	is-main = false
+	is-root-object = false
 
 	# Will be added by Jolt code:
 	add-function: (PrimitiveFunction new: ".proto" on-proto: this)
@@ -322,6 +323,8 @@ emit-jolt-file
 access
 	if is-main
 		return 'Main'
+	else if is-root-object
+		return 'trylid-root-object'
 	else
 		list = List new
 		namespace = this

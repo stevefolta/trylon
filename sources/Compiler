@@ -103,6 +103,7 @@ compile-program: compile-symbols
 
 	# Make every class without a superclass be a subclass of Standard Object.
 	object-class = root-proto: main-proto
+	object-class is-root-object = true
 	main-proto ensure-superclasses: object-class
 
 	# Emit the classes and packages.
