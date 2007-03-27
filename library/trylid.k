@@ -164,6 +164,23 @@
 		`(let ,(make-local-defs [node at: '1]) ,@[node copyFrom: '2])
 		))
 
+(syntax catch-continue 	;; exprs...
+	(lambda (node compiler)
+		(let ((block [(import "Block") new])
+					(continue-label [compiler newLabel])
+					(index '1))
+			[[compiler continues] removeFirst]
+			[[compiler continues] addFirst: continue-label]
+			(while [index < [node size]]
+				[block add:
+					[[(import "DROP") new] lhs: [[node at: index] translate: compiler]]]
+				(set index [index + '1])
+				)
+			[block add: continue-label]
+			block
+			)
+		))
+
 (syntax trylid-for 	;; local collection exprs...
 	(lambda (node compiler)
 		;; TO DO: Handle "continue" (somehow).
