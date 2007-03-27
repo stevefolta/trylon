@@ -19,7 +19,7 @@ prepare-to-emit
 jolt-expression
 	return 	--
 		Expression 	--
-			with: '.trylid-for' with: local name 	--
+			with: 'trylid-for' with: local name intern 	--
 			with: collection jolt-expression 	--
 			with: body jolt-expression
 

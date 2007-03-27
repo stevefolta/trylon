@@ -153,6 +153,19 @@
 		`(let ,(make-local-defs [node at: '1]) ,@[node copyFrom: '2])
 		))
 
+(syntax trylid-for 	;; local collection exprs...
+	(lambda (node compiler)
+		;; TO DO: Handle "continue" (somehow).
+		`(let ((.iterator [,[node at: '2] iterator])
+					 (,[node at: '1] nil))
+			(while (not [.iterator is-done])
+				(set ,[node at: '1] [.iterator current-item])
+				,@[node copyFrom: 3]
+				[.iterator go-forward]
+				)
+			 )
+		))
+
 (syntax blank-line
 	(lambda (node compiler)
 		`(let () 0)
