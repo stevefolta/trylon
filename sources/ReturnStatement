@@ -14,7 +14,9 @@ prepare-to-emit
 
 
 jolt-expression
-	expression = Expression with: 'return' with: value jolt-expression
+	# Coke's (return) form is broken, just fake it for now so we can flush out
+	# other bugs.
+	expression = Expression with: 'fake-return' with: value jolt-expression
 	if comment
 		comment-expression = Expression with: 'comment' with: comment
 		expression = 	--

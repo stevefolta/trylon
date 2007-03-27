@@ -169,4 +169,20 @@
 		nil
 		))
 
+(define fake-return
+	(lambda (value)
+		;; Fake version while we wait for Coke's (return) to be fixed.
+		value
+		))
+
+
+(define byte-ptr
+	(lambda (value)
+		;; Make a BytePtr with the value.
+		(let ((byte-ptr [(trylid-proto Standard BytePtr) new]))
+			(set-long@ byte-ptr value)
+			byte-ptr
+			)
+		))
+
 

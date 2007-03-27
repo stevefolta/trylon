@@ -2,7 +2,7 @@ trylid Object
 
 object-ptr -> BytePtr
 	coke
-		(byte-ptr this)
+		(byte-ptr self)
 
 is-a: proto -> Bool
 	cur-proto = .proto
