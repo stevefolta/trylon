@@ -92,8 +92,71 @@ The following characters are not allowed in names:
 <div class="entry">
 <div class="entry-title"> Lines and Blocks </div>
 <p>
-Like Python, Trylid code is organized by lines and indented blocks.
+Like Python, Trylid code is organized by lines and indented blocks.  An indented block is "owned" by the line above it; in a way, it can be thought of as being a part of that line.
 </p>
+
+<p>
+If a line is too long to fit on the screen, it can be continued with "--" at the end of the line.  Then the following line (minus its indentation, which is ignored) will be considered part of that line.
+</p>
+
+<div class="code">if some-value == "this" || some-value == "that" ||   --
+   some-value == "the-other" ||   --
+   some-value == "yet-something-else"
+  do-something</div>
+
+<p>
+The meaning of a line will depend on the current syntax, but might be changed by the first word on the line:
+</p>
+
+<div class="code"># In the method syntax, most lines are expressions:
+foo = bar + baz
+
+# But some words introduce special forms:
+if x < y
+  do-something
+for item in collection
+  print-line: item string</div>
+
+<p>
+Similarly, the syntax of a block is usually determined by its owning line, but the first word of a block may indicate that the block is in a different syntax:
+</p>
+
+<div class="code">print-line: string
+  coke
+  (send (quote print:) StdOut string)
+
+usage =
+  text
+  You may be wondering how to use this program.
+
+  ... and someday there'll be instructions here on how to do it.</div>
+
+<p>
+(*Not yet implemented*: See the "Implementation Quirks" section for an explanation of how the above two examples would currently be done.)
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> The Two Syntaxes </div>
+<p>
+Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other parts of a prototype:
+</p>
+
+<div class="code">fields name collection
+
+help-text = "Help text goes here."   # A "shared field".
+
+num-items
+  return collection num-items
+
+for-each: block
+  for item in collection
+    block value: item
+
+proto SubProto
+  # Another prototype in the "namespace" of the current proto.
+  fields name value</div>
 
 </div>
 

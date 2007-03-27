@@ -3,6 +3,8 @@ PAGES := 	\
 
 VPATH = source
 
+DOCTIFIER = ~/trylon/docs/doctifier/doctifier
+
 HTML_PAGES := $(addprefix html/,$(addsuffix .html,$(PAGES)))
 
 
@@ -12,5 +14,5 @@ all: $(HTML_PAGES)
 
 
 html/%.html: %
-	~/trylon/docs/doctifier/doctifier template: source/template $< > $@
+	$(DOCTIFIER) template: source/template $< > $@
 
