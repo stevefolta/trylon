@@ -1,6 +1,17 @@
+;; trylid.k
+;; Support for the Trylid language.
+;;
+;; Copyright 2007 Steve Folta
+
+
+;; Basic globals.
+
 (define nil 0)
 (define true (import "true"))
 (define false (import "false"))
+
+
+;; Defining and loading objects.
 
 ;; These globals will be set later:
 (define Main nil)
@@ -135,7 +146,7 @@
 
 
 
-;; Statements and expressions
+;; Statements.
 
 (define make-local-defs
 	(lambda (locals)
@@ -182,12 +193,21 @@
 		nil
 		))
 
+(syntax catch 	;; catch-list body
+	(lambda (node compiler)
+		;;...
+		[node at: '2]
+		))
+
 (define fake-return
 	(lambda (value)
 		;; Fake version while we wait for Coke's (return) to be fixed.
 		value
 		))
 
+
+
+;; Primitive support.
 
 (define byte-ptr
 	(lambda (value)
