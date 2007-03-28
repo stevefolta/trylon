@@ -54,7 +54,7 @@ Similarly, the syntax of a block is usually determined by its owning line, but t
 
 The Two Syntaxes
 
-Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other parts of a prototype:
+Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other elements of a prototype:
 
 	fields name collection
 
