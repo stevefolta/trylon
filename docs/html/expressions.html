@@ -1,0 +1,179 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+
+<title> 
+Expressions
+</title>
+
+<style type="text/css">
+body {
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+	margin-left: auto;
+	margin-right: auto;
+	width: 7in;
+	font-family: Bitstream Charter, Lucida Grande, Georgia, Times, serif;
+}
+
+h2 {
+	margin-top: 1.25em;
+	margin-bottom: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	font-size: 1.4em;
+}
+
+p {
+}
+
+div.entry {
+	border-bottom: solid 1px #cccccc;
+	margin-bottom: 1.75em;
+	padding-bottom: 1em;
+}
+
+div.entry-title {
+	margin-top: 1.25em;
+	font-family: Arial, Helvetical, sans-serif;
+	font-weight: bolder;
+	font-size: 1.025em;
+}
+
+div.entry-date {
+	margin-bottom: 1.05em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.titleless-entry-date {
+	margin-bottom: 0.5em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.code {
+	margin-bottom: 1em;
+	font-family: Courier, monospace;
+	font-size: smaller;
+	margin-left: 2em;
+	margin-right: 2em;
+	white-space: pre;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h2>
+Expressions
+</h2>
+
+<div class="entry">
+<div class="entry-title"> Literals </div>
+<p>
+The usual string and numeric literals are supported.
+</p>
+
+<div class="code">"Some kinda something"
+"The whole line.\n"
+3
+2.75
+0xDEADBEEF   [Not yet supported.]</div>
+
+<p>
+Symbols are like strings, except that only one instance of a given symbol exists throughout the entire program.  This means they can be compared for equality without looking at all the characters, and thus can take the place of enumerations.
+</p>
+
+<div class="code">'primary'
+if alignment == 'justified'
+  #...</div>
+
+<p>
+Character literals are specified using backquotes:
+</p>
+
+<div class="code">if cur-char == `\n`
+  #...</div>
+
+<p>
+Finally, although not technically literals (they're actually variables in the "Standard" package), the following are used like literals:
+</p>
+
+<div class="code">true
+false
+nil</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Names </div>
+<p>
+The value of a variable is accessed simply by giving its name:
+</p>
+
+<div class="code">args
+current-line
+point-1</div>
+
+<p>
+It could be the name of a local variable, a function argument, a field, or a shared variable.
+</p>
+
+<p>
+Note that names can contain hyphens (although they can't start or end with a hyphen).  Underscores can also be used, but are heavily frowned upon.  Hyphens are much less ugly and easier to type.
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Operators </div>
+<p>
+Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
+</p>
+
+<p>
+There is a comma operator, but it's not used as it is in C.  Instead, it is used to create "Tuples", which are essentially a form of array:
+</p>
+
+<div class="code">( "one", "two", "three" )</div>
+
+<p>
+These unary operators are available: -, +, ~, !.
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Message Sends </div>
+<p>
+Sending a message to an object uses the normal Smalltalk syntax:
+</p>
+
+<div class="code">"Hello" length
+point x
+"Hello" substr: 3 length: 2   # "ll"</div>
+
+<p>
+For functions in the current scope (that is, in the current namespace and its enclosing namespaces), you don't need to specify the receiver:
+</p>
+
+<div class="code">print-line
+print-line: "Hello"</div>
+
+<p>
+These would be message sends to the namespace prototype in which they are defined.  For instance "print-line" would be the same as "Standard print-line".
+</p>
+
+</div>
+
+
+
+</body>
+</html>

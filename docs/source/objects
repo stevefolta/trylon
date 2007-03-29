@@ -37,6 +37,6 @@ In a prototype-based system like Fonc, objects act as both instances and as clas
 				# Notice that it knows the name "Event":
 				return Event new: get-raw-event
 
-There is a top-level namespace called "Main", which acts as a global namespace for all Trylid objects.  There is a namespace called "Standard" which contains some common classes.  [Currently, in "Standard", there is a prototype called "Object", from which all Trylid prototypes descend.  In the future, the main Fonc "Object" prototype may be used instead.]
+There is a top-level namespace called "Main", which acts as a global namespace for all Trylid objects.  There is a namespace called "Standard" which contains some common classes.  [Currently, in "Standard", there is a prototype called "Object", from which all Trylid prototypes descend.  In the future, the main Fonc "Object" prototype may be used instead, but it still will likely appear in "Standard", not "Main".]
 
 

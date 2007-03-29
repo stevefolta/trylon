@@ -47,7 +47,7 @@ Similarly, the syntax of a block is usually determined by its owning line, but t
 
 		... and someday there'll be instructions here on how to do it.
 
-(*Not yet implemented*: See the "Implementation Quirks" section for an explanation of how the above two examples would currently be done.)
+[*Not yet implemented*: See the "Implementation Quirks" section for an explanation of how the above two examples would currently be done.]
 
 
 ====
@@ -90,7 +90,7 @@ Lines within the "method" syntax are either expressions, assignments (technicall
 
 Prototypes in the Filesystem
 
-Many prototypes will have a file in the filesystem with the code to define it.  Since prototypes may also act as namespaces for other prototypes, a prototype may also be specified by a directory, with files (or directories) for its sub-prototypes and (optionally) a file called "main" for defining methods, fields, etc.
+Most prototypes will have a file in the filesystem with the source code to define it.  Since prototypes may also act as namespaces for other prototypes, a prototype may also be specified by a directory, with files (or directories) for its sub-prototypes and (optionally) a file called "main" with source code for defining methods, fields, etc.
 
 A typical project will live in a directory, with its sources in a subdirectory called "sources":
 

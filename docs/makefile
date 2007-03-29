@@ -1,9 +1,13 @@
 PAGES := 	\
-	objects code-structure
+	objects code-structure expressions statements
 
 VPATH = source
 
-DOCTIFIER = ~/trylon/docs/doctifier/doctifier
+-include makefile.local
+
+ifndef DOCTIFIER
+	DOCTIFIER = ~/trylon/docs/doctifier/doctifier
+endif
 
 HTML_PAGES := $(addprefix html/,$(addsuffix .html,$(PAGES)))
 

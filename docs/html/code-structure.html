@@ -132,7 +132,7 @@ usage =
   ... and someday there'll be instructions here on how to do it.</div>
 
 <p>
-(*Not yet implemented*: See the "Implementation Quirks" section for an explanation of how the above two examples would currently be done.)
+[*Not yet implemented*: See the "Implementation Quirks" section for an explanation of how the above two examples would currently be done.]
 </p>
 
 </div>
@@ -143,7 +143,8 @@ usage =
 Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other elements of a prototype:
 </p>
 
-<div class="code">fields name collection
+<div class="code">superclass SuperProto
+fields name collection
 
 help-text = "Help text goes here."   # A "shared field".
 
@@ -157,6 +158,52 @@ for-each: block
 proto SubProto
   # Another prototype in the "namespace" of the current proto.
   fields name value</div>
+
+<p>
+Lines in the "prototype" syntax are function declarations (with their associated code blocks), shared-field declarations (using "="), or special forms like "fields" or "proto".
+</p>
+
+<p>
+The other is the "method" syntax, for code within a method:
+</p>
+
+<div class="code">frobnify: index
+  adjusted-index = index   # Auto-declaration of a local.
+  if adjusted-index > max-index
+    adjusted-index = max-index
+
+  print-line: "Frobnification complete."</div>
+
+<p>
+Lines within the "method" syntax are either expressions, assignments (technically, assignments are also expressions, and if the name being assigned to doesn't exist in an outer scope, a local is auto-declared in the current block), and special forms like "if", "while", "for", etc.
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Prototypes in the Filesystem </div>
+<p>
+Most prototypes will have a file in the filesystem with the source code to define it.  Since prototypes may also act as namespaces for other prototypes, a prototype may also be specified by a directory, with files (or directories) for its sub-prototypes and (optionally) a file called "main" with source code for defining methods, fields, etc.
+</p>
+
+<p>
+A typical project will live in a directory, with its sources in a subdirectory called "sources":
+</p>
+
+<div class="code">my-project/
+  Notes
+  to-do
+  build-settings
+  sources/
+    main
+    Screen
+    Window
+    XWindows/
+      Screen
+      Window
+    Carbon/
+      Screen
+      Window</div>
 
 </div>
 

@@ -1,0 +1,183 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+
+<title> 
+Statements
+</title>
+
+<style type="text/css">
+body {
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+	margin-left: auto;
+	margin-right: auto;
+	width: 7in;
+	font-family: Bitstream Charter, Lucida Grande, Georgia, Times, serif;
+}
+
+h2 {
+	margin-top: 1.25em;
+	margin-bottom: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	font-size: 1.4em;
+}
+
+p {
+}
+
+div.entry {
+	border-bottom: solid 1px #cccccc;
+	margin-bottom: 1.75em;
+	padding-bottom: 1em;
+}
+
+div.entry-title {
+	margin-top: 1.25em;
+	font-family: Arial, Helvetical, sans-serif;
+	font-weight: bolder;
+	font-size: 1.025em;
+}
+
+div.entry-date {
+	margin-bottom: 1.05em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.titleless-entry-date {
+	margin-bottom: 0.5em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.code {
+	margin-bottom: 1em;
+	font-family: Courier, monospace;
+	font-size: smaller;
+	margin-left: 2em;
+	margin-right: 2em;
+	white-space: pre;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h2>
+Statements
+</h2>
+
+<div class="entry">
+<div class="entry-title"> Control </div>
+<p>
+There are the usual flow-of-control statements:
+</p>
+
+<div class="code">if name == "anyone"
+  print-line: "Anyone"
+
+if x == 0
+  return 0
+else
+  return x * (factorial: x - 1)
+
+return   # No value given, so this returns "nil".
+
+loop
+  token = next-token
+  if token type == 'eof'
+    break
+  consume-token
+
+  if token type == 'comment'
+    continue
+
+while which-item < num-items
+  print-line: (items at: which-item)
+  which-item += 1
+
+for item in items
+  if item name is-empty
+    continue
+  print-line: item name
+
+try
+  event-loop
+catch Exception
+  print-line: exception message
+
+throw MessageException new: "Couldn't connect."</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Expression Statements </div>
+<p>
+An expression on a line by itself also constitutes a statement:
+</p>
+
+<div class="code">print-line: "Hello world!"</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Assignment </div>
+<p>
+Assignment in Trylid is designed to be easy to read (and type), but the rules behind it can be a little complex.
+</p>
+
+<div class="code">proto MyObject
+  fields total
+
+  grand-total = 0   # A shared variable, with its initial value.
+
+  reset
+    total = 0   # Sets the object's "total" field.
+
+  frobnicate: value
+    massaged-value = value * 7 + 3   # Creates a new local variable.
+    total = total + massaged-value   # Sets the object's "total" field.
+    grand-total = grand-total + massaged-value   # Sets the shared variable.</div>
+
+<p>
+The basic idea is that an assignment will assign to a variable in the current scope, and if no such variable exists, a new local variable will be created.
+</p>
+
+<p>
+Assignment can also be a shorthand for a function call:
+</p>
+
+<div class="code">(array at: 7) = "hello"   # is the same as:
+array at: 7 set-to: "hello"</div>
+
+<p>
+If the function being set is a unary function, rather than a keyword function, then the setter function's name is the unary function's name with a colon appended:
+</p>
+
+<div class="code">proto MyProto
+  fields real-name
+
+  name
+    return real-name
+
+  name: new-name
+    real-name = new-name + " Jr."
+
+obj = MyProto new
+obj name = "Joey Jo Jo Shabbadoo"
+print-line: obj name   # Prints "Joey Jo Jo Shabbadoo Jr."</div>
+
+</div>
+
+
+
+</body>
+</html>
