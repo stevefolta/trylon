@@ -56,6 +56,7 @@ The Two Syntaxes
 
 Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other elements of a prototype:
 
+	superclass SuperProto
 	fields name collection
 
 	help-text = "Help text goes here." 	# A "shared field".
@@ -71,6 +72,42 @@ Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining me
 		# Another prototype in the "namespace" of the current proto.
 		fields name value
 
+Lines in the "prototype" syntax are function declarations (with their associated code blocks), shared-field declarations (using "="), or special forms like "fields" or "proto".
+
+The other is the "method" syntax, for code within a method:
+
+	frobnify: index
+		adjusted-index = index 	# Auto-declaration of a local.
+		if adjusted-index > max-index
+			adjusted-index = max-index
+
+		print-line: "Frobnification complete."
+
+Lines within the "method" syntax are either expressions, assignments (technically, assignments are also expressions, and if the name being assigned to doesn't exist in an outer scope, a local is auto-declared in the current block), and special forms like "if", "while", "for", etc.
+
+
+====
+
+Prototypes in the Filesystem
+
+Many prototypes will have a file in the filesystem with the code to define it.  Since prototypes may also act as namespaces for other prototypes, a prototype may also be specified by a directory, with files (or directories) for its sub-prototypes and (optionally) a file called "main" for defining methods, fields, etc.
+
+A typical project will live in a directory, with its sources in a subdirectory called "sources":
+
+	my-project/
+		Notes
+		to-do
+		build-settings
+		sources/
+			main
+			Screen
+			Window
+			XWindows/
+				Screen
+				Window
+			Carbon/
+				Screen
+				Window
 
 
 ====
