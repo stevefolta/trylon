@@ -1,5 +1,14 @@
 trylid Object
 
+raw-new
+	# Use Pepsi's "Object new".
+	# We want this, once super calls are implemented:
+	# return super new
+	coke
+		(let ((vtable (send (quote _vtable) self))
+		      (size (send (quote _sizeof) self)))
+			(return (send (quote _alloc:) vtable size)))
+
 object-ptr -> BytePtr
 	coke
 		(byte-ptr self)

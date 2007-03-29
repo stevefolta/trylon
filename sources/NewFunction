@@ -34,7 +34,7 @@ emit-code
 	allocation = 	--
 		Expression 	--
 			with: 'send' 	--
-			with: (Expression with: 'quote' with: 'clone') 	--
+			with: (Expression with: 'quote' with: 'raw-new') 	--
 			with: on-proto access
 	creator-call = Expression new: creator arguments count + 3
 	creator-call at: 0 put: 'send'
@@ -50,13 +50,14 @@ emit-code
 	
 	expr = Expression new: creator arguments count + 4
 	expr at: 0 put: 'define-send'
-	expr at: 1 put: name intern
+	expr at: 1 put: (Expression with: 'quote' with: name intern)
 	expr at: 2 put: on-proto access
 	index = 3
 	for arg in creator arguments
 		expr at: index put: arg name intern
 		index += 1
 	expr at: index put: body
+	return expr
 
 
 

@@ -122,7 +122,7 @@ parse-proto-member: proto
 	# Declaring a function.
 	else
 		function = parse-function: false
-		proto add-function: function name function: function
+		proto add-function: function
 
 
 parse-proto-literal-value
@@ -255,7 +255,7 @@ parse-proto-contents: the-proto
 		   name == "primitive-fn" || name == "primitive-function" || 	--
 		   name == "c-fn" || name == "c-function"
 			function = parse-function: true
-			the-proto add-function: function name function: function
+			the-proto add-function: function
 		else if name == "class-fn" || name == "class-function" || 	--
 		        name == "primitive-class-fn" || name == "primitive-class-function"
 			# For backward compatibility with Trylon.
