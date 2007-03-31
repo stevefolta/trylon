@@ -75,4 +75,11 @@ In trylid.k, this is all put together in (load-trylid).
 
 =====
 
+[2007.3.30]
+
+It's the "break" statement that's breaking things right now ("cannot reduce 34675(#nil Block ---) to VOID") (in jolt-burg, anyway).
+
+
+=====
+
 
