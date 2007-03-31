@@ -74,6 +74,23 @@ iff !in-jolt
 			if num-items == 2 && (this at: 0) == 'quote'
 				stream write: "'"
 				emit-value: (this at: 1) on: stream
+				iff debug-emission
+					reporter unindent
+				return
+
+			else if num-items >= 3 && (this at: 0) == 'send' && 	--
+			        ((this at: 1) is-a: Expression) && 	--
+							((this at: 1) at: 0) == 'quote'
+				stream write: "["
+				emit-value: (this at: 2) on: stream
+				stream write: " "
+				emit-value: ((this at: 1) at: 1) on: stream
+				index = 3
+				while index < num-items
+					stream write: " "
+					emit-value: (this at: index) on: stream
+					index += 1
+				stream write: "]"
 				return
 
 			stream write: "("
