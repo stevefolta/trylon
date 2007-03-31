@@ -75,9 +75,26 @@ In trylid.k, this is all put together in (load-trylid).
 
 =====
 
-[2007.3.30]
+Jolt's "break" Is Broken
+	[2007.3.30]
 
 It's the "break" statement that's breaking things right now ("cannot reduce 34675(#nil Block ---) to VOID") (in jolt-burg, anyway).
+
+
+=====
+
+Primitive Data
+	[2007.3.31]
+
+A single "PrimitiveWord" type can handle all operations, and be specially handled by the compiler.
+
+Operations:
+	+ - * / % & | &
+	int-obj int-at: byte-at: long-at: obj-at:
+	int-at:put: (etc.)
+
+Shared fields:
+	int-size (etc.)
 
 
 =====
