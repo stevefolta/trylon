@@ -7,6 +7,6 @@ create: comment
 
 
 jolt-expression
-	return Expression with: 'continue'
+	return Expression with: 'fake-continue'
 
 

@@ -216,10 +216,23 @@
 		[node at: '2]
 		))
 
+
+;; Fake stuff, so we can test codegen as much as possible while waiting for
+;; Jolt to work.
+
 (define fake-return
 	(lambda (value)
-		;; Fake version while we wait for Coke's (return) to be fixed.
 		value
+		))
+
+(define fake-break
+	(lambda ()
+		'0
+		))
+
+(define fake-continue
+	(lambda ()
+		'0
 		))
 
 
