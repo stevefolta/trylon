@@ -1,0 +1,12 @@
+trylon CodeLine
+
+fields text block
+
+create: text block: block
+	this text = text
+	this block = block
+
+
+words
+	return WordsLexer new: text
+
