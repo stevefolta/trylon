@@ -22,6 +22,9 @@ fn create: length
 	this start = BytePtr new-non-pointer: length
 	this stopper = this start
 
+class-fn from: start to: stopper
+	return String new: start to: stopper
+
 iff !semi-primitive-strings
 	fn length -> Int
 		return stopper - start

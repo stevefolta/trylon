@@ -18,6 +18,9 @@ primitive-fn | arg (Char) -> Char
 primitive-fn string -> String
 primitive-fn int -> Int
 
+is-whitespace
+	return this == ` ` || this == `\t` || this == `\n` || this == `\r`
+
 
 iff debugger
 	fn debug-write
