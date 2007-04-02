@@ -50,14 +50,36 @@ parse-next-word
 			break
 		p += 1
 	
-	# Gather the word.
 	word-start = p
+
+	# Is it a paren/bracket/brace?
+	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}`
+		p += 1
+		return String from: word-start to: p
+	
+	# A string/symbol?
+	else if c == `"` || c == `'`
+		delimiter = c
+		loop
+			p += 1
+			if p >= stopper
+				throw MessageException new: "Unterminated quote."
+			c = p deref-char
+			if c == delimiter
+				p += 1
+				return String from: word-start to: p
+			else if c == `\\`
+				p += 2
+				#... *** Escape character.
+
+	# Gather the word.
 	loop
 		p += 1
 		if p >= stopper
 			return String from: word-start to: stopper
 		c = p deref-char
-		if c is-whitespace
+		if c is-whitespace || 	--
+		   c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}`
 			break
 	return String from: word-start to: p
 
