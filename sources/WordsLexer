@@ -60,6 +60,7 @@ parse-next-word
 	# A string/symbol?
 	else if c == `"` || c == `'`
 		delimiter = c
+		builder = nil
 		loop
 			p += 1
 			if p >= stopper
@@ -67,10 +68,72 @@ parse-next-word
 			c = p deref-char
 			if c == delimiter
 				p += 1
-				return String from: word-start to: p
+				if builder
+					builder add-from: word-start to: p
+					return builder string
+				else
+					return String from: word-start to: p
 			else if c == `\\`
-				p += 2
-				#... *** Escape character.
+				if builder == nil
+					builder = SmallStringBuilder from: word-start to: p
+				else
+					builder add-from: word-start to: p
+				p += 1
+				escaped-char = nil
+				switch p deref-char
+					`a`
+						escaped-char = `\a`
+					`e`
+						escaped-char = `\e`
+					`f`
+						escaped-char = `\f`
+					`n`
+						escaped-char = `\n`
+					`r`
+						escaped-char = `\r`
+					`t`
+						escaped-char = `\t`
+					`v`
+						escaped-char = `\v`
+					`0` `1` `2`
+						value = p deref-char - `0`
+						p += 1
+						if p < stopper && p deref-char is-digit
+							value <<= 3
+							value += digit - `0`
+							p += 1
+							if p < stopper && p deref-char is-digit
+								value <<= 3
+								value += digit - `0`
+								p += 1
+						escaped-char = value-char
+					`x` `X`
+						p += 1
+						if p >= stopper
+							throw MessageException: "Unterminated quote."
+						value = 0
+						num-digits = 0
+						while num-digits < 2
+							c = p deref-char
+							if c is-digit
+								value <<= 4
+								value += c - `0`
+								num-digits += 1
+							else if c >= `a` && c <= `f`
+								value <<= 4
+								value += c - `a` + 0x0A
+								num-digits += 1
+							else if c >= `A` && c <= `F`
+								value <<= 4
+								value += c - `A` + 0x0A
+								num-digits += 1
+							else
+								break
+						escaped-char = value char
+					else
+						escaped-char = p deref-char
+				if escaped-char
+					builder add-char: escaped-char
 
 	# Gather the word.
 	loop

@@ -1,0 +1,53 @@
+trylon SmallStringBuilder
+
+fields size capacity buffer
+
+create
+	capacity = 16
+	buffer = BytePtr new-non-pointer: capacity
+	size = 0
+
+create: start to: stopper
+	size = stopper - start
+	capacity = size * 2
+	buffer = BytePtr new-non-pointer: capacity
+	buffer copy-from: start length: size
+
+class-fn from: start to: stopper
+	return SmallStringBuffer new: start to: stopper
+
+add-from: start to: stopper
+	src-size = start - stopper
+	new-size = size + src-size
+	if new-size > capacity
+		grow-to: new-size
+	(buffer + size) copy-from: start length: src-size
+	size = new-size
+
+add: string
+	add-from: string start to: string stopper
+
+add-char: char
+	if size == capacity
+		grow-to: size + 1
+	buffer char-at: 0 set-to: char
+	size += 1
+
+string
+	return String from: buffer to: (buffer + size)
+
+
+# ===== Private
+
+grow-to: new-size
+	new-capacity = capacity * 2
+	while new-capacity < new-size
+		new-capacity *= 2
+	new-buffer = BytePtr new-non-pointer: new-capacity
+	new-buffer copy-from: buffer length: size
+	buffer = new-buffer
+	capacity = new-capacity
+
+
+
+
