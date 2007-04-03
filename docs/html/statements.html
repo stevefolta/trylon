@@ -112,9 +112,16 @@ for item in items
 try
   event-loop
 catch Exception
+  # The caught exception is called "exception".
   print-line: exception message
 
-throw MessageException new: "Couldn't connect."</div>
+throw MessageException new: "Couldn't connect."
+
+switch char
+  ` `, `\t`, `\r`, `\n`
+    is-whitespace = false
+  else
+    is-whitespace = true</div>
 
 </div>
 

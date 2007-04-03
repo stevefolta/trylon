@@ -4,7 +4,7 @@ Title: Trylon
 
 Introduction
 
-Trylon is basically a cross between Python and Smalltalk.  Unlike those languages, it is not a dynamic (or "scripting") language; instead, Trylon programs compile into native binary programs (via an intermediate C step).
+Trylon is basically a cross between Python and Smalltalk.  Unlike those languages, it is not a dynamic (or "scripting") language (although it is dynamically typed); instead, Trylon programs compile into native binary programs (via an intermediate C step).
 
 =====
 

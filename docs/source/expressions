@@ -40,7 +40,7 @@ The value of a variable is accessed simply by giving its name:
 	current-line
 	point-1
 
-It could be the name of a local variable, a function argument, a field, or a class or package variable.
+It could be the name of a local variable, a function argument, a field, or a class or package variable.  There are also special names available in certain contexts, such as "this" within a method or "exception" within a catch clause.
 
 Note that names can contain hyphens (although they can't start or end with a hyphen).  Underscores can also be used, but are heavily frowned upon.  Hyphens are much less ugly and easier to type.
 
