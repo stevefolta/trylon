@@ -1,0 +1,113 @@
+trylon LinesLexer
+
+fields p stopper
+fields lines
+fields indent-stack pending-blank-lines
+fields cur-lines cur-indentation 	# Caching top of indent-stack.
+fields had-indent-problem
+
+
+create: text
+	p = text start
+	stopper = text stopper
+	lines = List new
+	cur-lines = lines
+	cur-indentation = 0
+	indent-stack = List new
+	indent-stack push-front: (0, lines)
+	pending-blank-lines = 0
+	had-indent-problem = false
+
+
+lex
+	while p < stopper
+		# Get the current line's indentation.
+		c = nil
+		line-indentation = 0
+		while p < stopper
+			c = p deref-char
+			if c == ` ` || c == `\t`
+				line-indentation += 1
+			else
+				break
+			p += 1
+
+		# Is it a blank line?
+		# If so, the indentation doesn't matter.
+		if c == `\n` || c == `\r` || p >= stopper
+			pending-blank-lines += 1
+			p += 1
+			continue
+
+		# From now on, we know we're going to add a non-blank line to some block.
+
+		# Did a new block start?
+		if line-indentation > cur-indentation
+			# If the file starts with an indented line, handle that specially.
+			if cur-indentation == 0 && lines is-empty
+				# For now, treat it as an error.
+				throw MessageException new: "Indentation error at start of file."
+			# Check for errors.
+			iff debug-lines-lexer
+				if cur-lines last-item == nil
+					throw MessageException new: "Internal error: no line for the block!"
+				if cur-lines last-item block
+					throw MessageException new: "Internal error: double block!"
+			# Start the indentation.
+			new-block = List new
+			cur-lines last-item block = new-block
+			cur-lines = new-block 
+			cur-indentation = line-indentation
+			indent-stack push-front: (line-indentation, new-block)
+			# Any pending blank lines are part of the inner block.
+			while pending-blank-lines > 0
+				cur-lines append: (CodeLine new: "")
+				pending-blank-lines -= 1
+
+		# Did a block end?
+		else if line-indentation < cur-indentation
+			while line-indentation < indent-stack head first
+				indent-stack pop-front
+			if line-indentation > indent-stack head first
+				throw MessageException: "Indentation error."
+			cur-indentation = indent-stack head first
+			cur-lines = indent-stack head second
+			# Any pending blank lines are part of the outer block.
+			while pending-blank-lines > 0
+				cur-lines append: (CodeLine new: "")
+				pending-blank-lines -= 1
+
+		# Get the line's text.
+		line-start = p
+		while p < stopper
+			c = p deref-char
+			p += 1
+			if c == `\n` || c == `\r`
+				break
+		text = String from: line-start to: p
+
+		# Handle line continuations.
+		while text ends-with: "--"
+			text = text substr: 0 length: text length - 2
+			text += " "
+			# Skip whitespace.
+			while p < stopper
+				c = p deref-char
+				if c != ` ` && c != `\t`
+					break
+				p += 1
+			# Gather the line.
+			line-start = p
+			while p < stopper
+				c = p deref-char
+				p += 1
+				if c == `\n` || c == `\r`
+					break
+			continuation-line = String from: line-start to: p
+			text += continuation-line
+
+		# Add the line.
+		cur-lines append: (CodeLine new: text)
+
+	return lines
+
