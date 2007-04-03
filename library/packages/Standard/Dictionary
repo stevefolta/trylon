@@ -332,3 +332,8 @@ class KeyValuePairsIterator
 			key = node key
 			value = node value
 
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

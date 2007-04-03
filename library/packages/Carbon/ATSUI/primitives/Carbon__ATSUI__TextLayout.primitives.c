@@ -118,3 +118,9 @@ obj_ text_width__Carbon__ATSUI__TextLayout(obj_ this_)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

@@ -123,3 +123,8 @@ obj_ receive_co___Standard__TCPSocket(obj_ this_, obj_ num_bytes)
 
 
 
+
+/*
+	Copyright 2005 Steve Folta.
+	See the License file.
+*/

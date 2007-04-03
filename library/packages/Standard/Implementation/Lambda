@@ -44,3 +44,7 @@ class Lambda9
 			and: arg7 and: arg8 and: arg9
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

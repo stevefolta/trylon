@@ -24,3 +24,7 @@ emit-package-literal: stream
 	return NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

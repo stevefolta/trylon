@@ -206,3 +206,9 @@ obj_ write_co___Curses__Window(obj_ this_, obj_ string_)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

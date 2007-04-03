@@ -111,3 +111,8 @@ obj_ write_buffer_co_length_co___Standard__File__OutStream(
 }
 
 
+
+/*
+	Copyright 2005 Steve Folta.
+	See the License file.
+*/

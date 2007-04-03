@@ -26,3 +26,9 @@ obj_ find_font_co___Carbon__ATSUI(obj_ nameObj)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

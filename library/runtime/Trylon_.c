@@ -354,3 +354,11 @@ obj_ showObj_(obj_ object)
 
 
 _FinishExternC_
+
+
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

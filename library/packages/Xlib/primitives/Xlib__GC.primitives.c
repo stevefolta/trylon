@@ -124,3 +124,9 @@ obj_ region_co___Xlib__GC(obj_ this_, obj_ region)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

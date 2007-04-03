@@ -18,3 +18,7 @@ primitive-fn style: style
 primitive-fn draw-x: x y: y
 primitive-fn text-width
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

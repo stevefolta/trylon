@@ -1564,3 +1564,8 @@ unindent
 # There are two kinds of function calls: FunctionCall and ObjectCall.
 # FunctionCall is not on an object; it has a context.  ObjectCall is on
 # an object.
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

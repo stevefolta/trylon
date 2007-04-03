@@ -123,3 +123,9 @@ obj_ contains_rect_x_co_y_co_width_co_height_co___Xlib__Region(
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

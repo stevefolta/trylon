@@ -136,3 +136,7 @@ is-primitive
 	return is-a-primitive
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

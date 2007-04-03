@@ -12,3 +12,8 @@ obj_ num_fields__Standard__Class(obj_ this_)
 }
 
 
+
+/*
+	Copyright 2005 Steve Folta.
+	See the License file.
+*/

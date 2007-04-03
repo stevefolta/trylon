@@ -12,3 +12,7 @@ primitive-fn close
 primitive-fn draw-string: string color: color font: font x: x y: y
 primitive-fn draw-string-utf8: string color: color font: font x: x y: y
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

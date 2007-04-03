@@ -538,3 +538,9 @@ obj_ next_token__TrylonCompiler__CLexer(obj_ this_)
 
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

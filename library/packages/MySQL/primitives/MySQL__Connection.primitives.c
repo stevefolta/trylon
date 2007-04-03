@@ -85,3 +85,8 @@ obj_ store_result__MySQL__Connection(obj_ this_)
 }
 
 
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

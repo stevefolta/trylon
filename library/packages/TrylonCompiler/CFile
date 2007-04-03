@@ -18,3 +18,9 @@ create: name package: package is-changed: is-changed
 	this package = package
 	this is-changed = is-changed
 
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
+

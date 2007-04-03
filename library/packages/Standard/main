@@ -27,3 +27,7 @@ fn virtual
 	
 	throw MessageException new: "Attempt to call a virtual function!"
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

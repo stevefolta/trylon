@@ -240,3 +240,9 @@ obj_ four_char_value__Carbon__EventManager(obj_ value)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

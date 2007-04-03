@@ -53,3 +53,7 @@ back-up-one-line
 	print: "\033[2K"
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

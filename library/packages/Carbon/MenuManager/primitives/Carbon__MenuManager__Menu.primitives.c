@@ -41,3 +41,9 @@ obj_ append_item_co___Carbon__MenuManager__Menu(obj_ this_, obj_ title)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

@@ -36,3 +36,7 @@ primitive-fn noecho
 primitive-fn escape-delay -> Int
 primitive-fn escape-delay: delay [Int]
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

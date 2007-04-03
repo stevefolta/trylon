@@ -19,3 +19,7 @@ is-constant
 type
 	return the-compiler get-standard-class: "String"
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

@@ -29,4 +29,9 @@ primitive-fn fill-path
 primitive-fn eo-fill-path
 
 primitive-fn flush
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
 primitive-fn synchronize

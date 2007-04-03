@@ -17,3 +17,7 @@ primitive-fn line-width
 primitive-fn line-width: new-line-width
 primitive-fn region: region [Region]
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

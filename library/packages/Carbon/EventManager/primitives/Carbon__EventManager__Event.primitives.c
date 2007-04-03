@@ -344,3 +344,9 @@ obj_ target_co___Carbon__EventManager__Event(obj_ this_, obj_ target)
 }
 
 
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+
+

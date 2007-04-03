@@ -325,3 +325,7 @@ full-name
 		package = package parent
 	return result
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

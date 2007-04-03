@@ -161,3 +161,8 @@ class Iterator
 		return cell object
 	fn go-forward
 		cell = cell next
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

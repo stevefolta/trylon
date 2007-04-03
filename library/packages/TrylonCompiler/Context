@@ -44,3 +44,7 @@ get-subpackage: name
 		MessageException new: "Internal error: bad \"Context get-subpackage\" call."
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

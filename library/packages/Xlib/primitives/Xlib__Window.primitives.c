@@ -131,3 +131,9 @@ obj_ title_co___Xlib__Window(obj_ this_, obj_ new_title)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

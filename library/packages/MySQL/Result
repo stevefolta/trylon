@@ -13,3 +13,7 @@ destroy
 create: raw-result
 	this raw-result = raw-result
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

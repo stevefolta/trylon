@@ -375,7 +375,8 @@ obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
 }
 
 
-
-
-
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
 

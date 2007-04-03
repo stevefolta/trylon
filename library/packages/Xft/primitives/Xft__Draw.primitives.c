@@ -56,3 +56,9 @@ obj_ draw_string_utf8_co_color_co_font_co_x_co_y_co___Xft__Draw(
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

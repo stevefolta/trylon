@@ -7,3 +7,7 @@ create
 emit-call: arguments builder: builder
 	return CaughtExceptionResult new
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

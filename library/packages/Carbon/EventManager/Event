@@ -21,3 +21,7 @@ primitive-fn unicode-text-parameter: parameter -> String
 
 primitive-fn target: target
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

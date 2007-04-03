@@ -78,3 +78,8 @@ class FileOpenException
 	fn message
 		return "Couldn't open file: \"" + path + "\" (" + error + ")"
 
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

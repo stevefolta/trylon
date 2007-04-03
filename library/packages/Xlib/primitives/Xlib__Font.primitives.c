@@ -57,3 +57,9 @@ obj_ width_of_co___Xlib__Font(obj_ this_, obj_ string)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

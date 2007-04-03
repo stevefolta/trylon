@@ -147,3 +147,9 @@ obj_ escape_delay_co___Curses__Screen(obj_ this_, obj_ delay)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

@@ -29,3 +29,7 @@ emit-package-literal: stream
 	return StringLiteralResult new: index
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

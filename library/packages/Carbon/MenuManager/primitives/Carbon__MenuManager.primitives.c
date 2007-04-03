@@ -16,3 +16,9 @@ obj_ draw_menu_bar__Carbon__MenuManager(void)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

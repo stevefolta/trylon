@@ -28,3 +28,7 @@ stored-primitive
 	return declared-type && declared-type is-primitive
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

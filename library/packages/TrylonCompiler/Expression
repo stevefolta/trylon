@@ -16,3 +16,7 @@ emit-package-literal: stream
 	throw MessageException new: "Internal error: invalid emit-package-literal."
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

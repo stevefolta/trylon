@@ -30,3 +30,7 @@ remainder-after: after-file
 	result files = remainder tail
 	return result
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

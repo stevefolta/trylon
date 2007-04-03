@@ -53,3 +53,8 @@ class Iterator
 	fn go-forward
 		index += 1
 
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

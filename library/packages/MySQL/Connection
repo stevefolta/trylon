@@ -17,3 +17,7 @@ class-fn bogue
 	# Stuff that's referenced by the primitives.
 	Exception
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

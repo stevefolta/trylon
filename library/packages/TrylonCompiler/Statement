@@ -26,3 +26,7 @@ add-comment: line comment: comment
 	return line
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

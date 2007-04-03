@@ -39,3 +39,7 @@ primitive-fn cursor-y
 primitive-fn cursor-x
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

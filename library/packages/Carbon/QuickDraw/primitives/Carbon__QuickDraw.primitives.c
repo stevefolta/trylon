@@ -94,3 +94,9 @@ obj_ paint_rect_co___Carbon__QuickDraw(obj_ rectObj)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

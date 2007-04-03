@@ -273,3 +273,8 @@ obj_ leading__Carbon__ATSUI__Style(obj_ this_)
 
 
 
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

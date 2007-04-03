@@ -245,3 +245,9 @@ obj_ event_target__Carbon__WindowManager__Window(obj_ this_)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

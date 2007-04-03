@@ -3,3 +3,8 @@ trylon-package ATSUI
 primitive-fn invalid-font-id -> Int
 
 primitive-fn find-font: name -> Int
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

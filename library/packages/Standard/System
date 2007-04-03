@@ -17,3 +17,8 @@ primitive-class-fn sysname
 primitive-class-fn strftime: time-int format: format
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
+

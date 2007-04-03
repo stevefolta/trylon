@@ -86,3 +86,9 @@ next-clear-from: index
 */
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

@@ -11,3 +11,7 @@ primitive-fn incremental-gc -> Bool
 primitive-fn incremental-gc: enable [Bool]
 primitive-fn gc-a-little -> Bool
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

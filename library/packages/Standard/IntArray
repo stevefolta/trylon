@@ -20,3 +20,7 @@ at: index set-to: value
 	return ptr int-at: index set-to: value
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

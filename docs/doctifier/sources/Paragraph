@@ -22,3 +22,7 @@ fn emit
 	print-line: "</p>"
 	print-line
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

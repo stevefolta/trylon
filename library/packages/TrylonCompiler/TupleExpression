@@ -71,3 +71,7 @@ class Result
 		return "((obj_) tu" + index string + "_)"
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

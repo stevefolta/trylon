@@ -152,5 +152,7 @@ obj_ go_forward__Standard__FileDirectory__Iterator(obj_ this_)
 
 
 
-
-
+/*
+	Copyright 2005 Steve Folta.
+	See the License file.
+*/

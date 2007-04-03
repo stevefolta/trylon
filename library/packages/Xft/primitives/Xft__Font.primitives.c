@@ -71,3 +71,9 @@ obj_ width_of_utf8_co___Xft__Font(obj_ this_, obj_ string)
 }
 
 
+
+/*
+	Copyright 2005 - 2007 Steve Folta.
+	See the License file.
+*/
+

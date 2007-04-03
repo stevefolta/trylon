@@ -29,3 +29,7 @@ contains-point: point
 fn == other
 	return this equals: other
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

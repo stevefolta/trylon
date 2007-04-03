@@ -3,3 +3,9 @@ trylon-class Iterator
 fn is-done -> Bool
 fn current-item -> Object
 fn go-forward
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

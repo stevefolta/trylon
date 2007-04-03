@@ -9,3 +9,7 @@ emit-call: arguments builder: builder
 	return ThisResult new
 
 
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

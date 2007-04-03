@@ -38,3 +38,9 @@ fn string
 
 fn is-empty
 	return substrings is-empty
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

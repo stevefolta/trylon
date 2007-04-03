@@ -175,3 +175,8 @@ obj_ strftime_co_format_co___Standard__System(obj_ time_int, obj_ format)
 
 
 
+
+/*
+	Copyright 2005 Steve Folta.
+	See the License file.
+*/
