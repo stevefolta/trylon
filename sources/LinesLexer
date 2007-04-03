@@ -65,7 +65,7 @@ lex
 			while line-indentation < indent-stack head first
 				indent-stack pop-front
 			if line-indentation > indent-stack head first
-				throw MessageException: "Indentation error."
+				throw MessageException new: "Indentation error."
 			cur-indentation = indent-stack head first
 			cur-lines = indent-stack head second
 
