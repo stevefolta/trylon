@@ -5,6 +5,10 @@ create: string
 	p = string start
 	stopper = string stopper
 
+create: start to: stopper
+	p = start
+	this stopper = stopper
+
 next
 	if cached-word
 		result = cached-word
@@ -20,6 +24,21 @@ current
 
 peek
 	current
+
+
+class-fn parse-char-escape-from: start to: stopper
+	lexer = WordsLexer new: start to: stopper
+	c = start deref-char
+	if c == 'u' || c == 'U'
+		num-digits = 4
+		if c == `U`
+			num-digits = 8
+		value = lexer parse-hex: num-digits
+		return (value, lexer p)
+	else
+		builder = SmallStringBuilder new
+		lexer parse-escaped-char-into: builder
+		return (builder string first-character, lexer p)
 
 
 # ===== As a Trylon Iterator
