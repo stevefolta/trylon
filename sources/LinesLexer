@@ -59,10 +59,6 @@ lex
 			cur-lines = new-block 
 			cur-indentation = line-indentation
 			indent-stack push-front: (line-indentation, new-block)
-			# Any pending blank lines are part of the inner block.
-			while pending-blank-lines > 0
-				cur-lines append: (CodeLine new: "")
-				pending-blank-lines -= 1
 
 		# Did a block end?
 		else if line-indentation < cur-indentation
@@ -72,10 +68,14 @@ lex
 				throw MessageException: "Indentation error."
 			cur-indentation = indent-stack head first
 			cur-lines = indent-stack head second
-			# Any pending blank lines are part of the outer block.
-			while pending-blank-lines > 0
-				cur-lines append: (CodeLine new: "")
-				pending-blank-lines -= 1
+
+		# Any pending blank lines go here.
+		# If we just started a block, they go at the top of the inner block.
+		# If we just ended a block, they're part of the outer block (separating
+		# items).
+		while pending-blank-lines > 0
+			cur-lines append: (CodeLine new: "")
+			pending-blank-lines -= 1
 
 		# Get the line's text.
 		line-start = p
@@ -84,7 +84,7 @@ lex
 			p += 1
 			if c == `\n` || c == `\r`
 				break
-		text = String from: line-start to: p
+		text = String from: line-start to: p - 1
 
 		# Handle line continuations.
 		while text ends-with: "--"
@@ -103,7 +103,7 @@ lex
 				p += 1
 				if c == `\n` || c == `\r`
 					break
-			continuation-line = String from: line-start to: p
+			continuation-line = String from: line-start to: p - 1
 			text += continuation-line
 
 		# Add the line.

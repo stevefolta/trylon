@@ -29,6 +29,7 @@ run
 		do-lex-test = false
 		do-coke-lexer-test = false
 		do-words-lexer-test = false
+		do-lines-lexer-test = false
 		for arg in arguments tail
 			if arg starts-with: "--"
 				compile-symbols append: (arg substr: 2)
@@ -38,8 +39,12 @@ run
 					do-coke-lexer-test = true
 				else if arg == "--test-words-lexer"
 					do-words-lexer-test = true
+				else if arg == "--test-lines-lexer"
+					do-lines-lexer-test = true
 				else if arg == "--verbose"
 					build-settings is-verbose = true
+				else
+					throw MessageException new: ("Unknown option: " + arg)
 			else
 				file-names append: arg
 
@@ -58,6 +63,9 @@ run
 		else if do-words-lexer-test
 			for arg in arguments tail tail
 				test-words-lexer: arg
+		else if do-lines-lexer-test
+			for arg in arguments tail tail
+				test-lines-lexer: arg
 
 		else
 			compile-program: compile-symbols
@@ -205,16 +213,6 @@ test-coke-lexer: filename
 		print-line: "Error: " + exception message
 
 
-test-words-lexer: filename
-	try
-		for line in (File new: filename) contents lines
-			lexer = WordsLexer new: line
-			while !lexer is-done
-				print-line: lexer next
-	catch Exception
-		print-line: "Error: " + exception message
-
-
 dump-expr: expr level: level
 	print: ("                                   " substr: 0 length: level)
 	if expr is-a: Expression
@@ -225,5 +223,33 @@ dump-expr: expr level: level
 		print-line: "\"" + expr + "\""
 	else
 		print-line: expr string
+
+
+test-words-lexer: filename
+	try
+		for line in (File new: filename) contents lines
+			lexer = WordsLexer new: line
+			while !lexer is-done
+				print-line: lexer next
+	catch Exception
+		print-line: "Error: " + exception message
+
+
+test-lines-lexer: filename
+	try
+		lexer = LinesLexer new: (File new: filename) contents
+		lines = lexer lex
+		dump-lines: lines level: 0
+	catch Exception
+		print-line: "Error: " + exception message
+
+
+dump-lines: lines level: level
+	for line in lines
+		print: level string
+		print: "> "
+		print-line: line text
+		if line block
+			dump-lines: line block level: level + 1
 
 
