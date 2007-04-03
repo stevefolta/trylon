@@ -27,6 +27,13 @@ fn count
 fn iterator
 	return Iterator new: this
 
+first
+	return this at: 0
+second
+	return this at: 1
+third
+	return this at: 2
+
 fn string
 	result := "("
 	have-item := false
