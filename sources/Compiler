@@ -28,7 +28,7 @@ run
 		compile-symbols = List new
 		do-lex-test = false
 		do-coke-lexer-test = false
-		do-word-lexer-test = false
+		do-words-lexer-test = false
 		for arg in arguments tail
 			if arg starts-with: "--"
 				compile-symbols append: (arg substr: 2)
@@ -36,8 +36,8 @@ run
 					do-lex-test = true
 				else if arg == "--test-coke-lexer"
 					do-coke-lexer-test = true
-				else if arg == "--test-word-lexer"
-					do-word-lexer-test = true
+				else if arg == "--test-words-lexer"
+					do-words-lexer-test = true
 				else if arg == "--verbose"
 					build-settings is-verbose = true
 			else
@@ -55,9 +55,9 @@ run
 		else if do-coke-lexer-test
 			for arg in arguments tail tail
 				test-coke-lexer: arg
-		else if do-word-lexer-test
+		else if do-words-lexer-test
 			for arg in arguments tail tail
-				test-word-lexer: arg
+				test-words-lexer: arg
 
 		else
 			compile-program: compile-symbols
@@ -205,7 +205,7 @@ test-coke-lexer: filename
 		print-line: "Error: " + exception message
 
 
-test-word-lexer: filename
+test-words-lexer: filename
 	try
 		for line in (File new: filename) contents lines
 			lexer = WordsLexer new: line

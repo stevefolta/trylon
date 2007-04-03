@@ -71,8 +71,9 @@ parse-next-word
 	
 	word-start = p
 
-	# Is it a paren/bracket/brace?
-	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}`
+	# Is it a paren/bracket/brace/comma?
+	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}` || 	--
+	   c == ','
 		p += 1
 		return String from: word-start to: p
 	
@@ -110,7 +111,9 @@ parse-next-word
 			return String from: word-start to: stopper
 		c = p deref-char
 		if c is-whitespace || 	--
-		   c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}`
+		   c == `(` || c == `)` || c == `[` || c == `]` || 	--
+			 c == `{` || c == `}`	|| 	--
+			 c == `,`
 			break
 	return String from: word-start to: p
 
