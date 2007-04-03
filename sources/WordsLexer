@@ -61,8 +61,8 @@ parse-next-word
 	else if c == `"` || c == `'`
 		delimiter = c
 		builder = nil
+		p += 1
 		loop
-			p += 1
 			if p >= stopper
 				throw MessageException new: "Unterminated quote."
 			c = p deref-char
@@ -79,61 +79,10 @@ parse-next-word
 				else
 					builder add-from: word-start to: p
 				p += 1
-				escaped-char = nil
-				switch p deref-char
-					`a`
-						escaped-char = `\a`
-					`e`
-						escaped-char = `\e`
-					`f`
-						escaped-char = `\f`
-					`n`
-						escaped-char = `\n`
-					`r`
-						escaped-char = `\r`
-					`t`
-						escaped-char = `\t`
-					`v`
-						escaped-char = `\v`
-					`0` `1` `2`
-						value = p deref-char - `0`
-						p += 1
-						if p < stopper && p deref-char is-digit
-							value <<= 3
-							value += digit - `0`
-							p += 1
-							if p < stopper && p deref-char is-digit
-								value <<= 3
-								value += digit - `0`
-								p += 1
-						escaped-char = value-char
-					`x` `X`
-						p += 1
-						if p >= stopper
-							throw MessageException: "Unterminated quote."
-						value = 0
-						num-digits = 0
-						while num-digits < 2
-							c = p deref-char
-							if c is-digit
-								value <<= 4
-								value += c - `0`
-								num-digits += 1
-							else if c >= `a` && c <= `f`
-								value <<= 4
-								value += c - `a` + 0x0A
-								num-digits += 1
-							else if c >= `A` && c <= `F`
-								value <<= 4
-								value += c - `A` + 0x0A
-								num-digits += 1
-							else
-								break
-						escaped-char = value char
-					else
-						escaped-char = p deref-char
-				if escaped-char
-					builder add-char: escaped-char
+				parse-escaped-char-into: builder
+				word-start = p
+			else
+				p += 1
 
 	# Gather the word.
 	loop
@@ -146,6 +95,107 @@ parse-next-word
 			break
 	return String from: word-start to: p
 
+
+parse-escaped-char-into: builder
+	# The `\` has already been consumed.
+	escaped-char = nil
+	switch p deref-char
+		`a`
+			escaped-char = `\a`
+			p += 1
+		`b`
+			escaped-char = `\b`
+			p += 1
+		`e`
+			escaped-char = `\e`
+			p += 1
+		`f`
+			escaped-char = `\f`
+			p += 1
+		`n`
+			escaped-char = `\n`
+			p += 1
+		`r`
+			escaped-char = `\r`
+			p += 1
+		`t`
+			escaped-char = `\t`
+			p += 1
+		`v`
+			escaped-char = `\v`
+			p += 1
+		`0`, `1`, `2`
+			value = p deref-char - `0`
+			p += 1
+			if p < stopper && p deref-char is-digit
+				digit = p deref-char
+				value <<= 3
+				value += digit - `0`
+				p += 1
+				if p < stopper && p deref-char is-digit
+					value <<= 3
+					value += digit - `0`
+					p += 1
+			escaped-char = value char
+		`x`, `X`
+			p += 1
+			if p >= stopper
+				throw MessageException: "Unterminated quote."
+			escaped-char = (parse-hex: 2) char
+		`u`, `U`
+			p += 1
+			if p >= stopper
+				throw MessageException: "Unterminated quote."
+			num-digits = 4
+			if p deref-char == `U`
+				num-digits = 8
+			value = parse-hex: num-digits
+			utf8-encode: value into: builder
+		else
+			escaped-char = p deref-char
+	if escaped-char
+		builder add-char: escaped-char
+
+
+parse-hex: max-digits
+	value = 0
+	num-digits = 0
+	while num-digits < max-digits
+		if p >= stopper
+			break
+		c = p deref-char
+		digit-value = 0
+		if c is-digit
+			digit-value = c - `0`
+		else if c >= `a` && c <= `f`
+			digit-value = c - `a` + 0x0A
+		else if c >= `A` && c <= `F`
+			digit-value = c - `A` + 0x0A
+		else
+			break
+		p += 1
+		value <<= 4
+		value += digit-value
+		num-digits += 1
+	return value
+
+
+utf8-encode: char into: builder
+	if char < 0x7F
+		builder add-char: char
+		return
+	
+	prefix = 0x80
+	list = List new
+	loop
+		if (char & 0xFFFFFFC0) == 0
+			break
+		list push-front: (char & 0x0000003F)
+		char = (char >> 6) & 0x03FFFFFF
+		prefix = (prefix >> 1) | 0x80
+	builder add-char: prefix | char
+	for char in list
+		builder add-char: (char | 0x80)
 
 
 

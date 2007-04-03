@@ -14,10 +14,10 @@ create: start to: stopper
 	buffer copy-from: start length: size
 
 class-fn from: start to: stopper
-	return SmallStringBuffer new: start to: stopper
+	return SmallStringBuilder new: start to: stopper
 
 add-from: start to: stopper
-	src-size = start - stopper
+	src-size = stopper - start
 	new-size = size + src-size
 	if new-size > capacity
 		grow-to: new-size
@@ -30,7 +30,7 @@ add: string
 add-char: char
 	if size == capacity
 		grow-to: size + 1
-	buffer char-at: 0 set-to: char
+	buffer char-at: size set-to: char
 	size += 1
 
 string
