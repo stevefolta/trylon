@@ -1,15 +1,21 @@
 trylon ParseException
 superclass Exception
 
-fields error-message token
+fields error-message token line
 
 
 create: error-message token: token
 	this error-message = error-message
 	this token = token
 
+create: error-message in: line
+	this error-message = error-message
+	this line = line
+
 
 message
+	if line
+		return error-message + " (\"" + line text trimmed + "\")"
 	return error-message + " (\"" + token string + "\")"
 
 

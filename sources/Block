@@ -20,6 +20,9 @@ add-local: local
 append: statement
 	statements append: statement
 
+prepend: statement
+	statements prepend: statement
+
 
 is-empty
 	return statements is-empty

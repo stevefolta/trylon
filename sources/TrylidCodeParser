@@ -1,0 +1,98 @@
+trylon TrylidCodeParser
+
+fields lines context
+fields block else-target
+
+special-forms = nil
+
+
+create: lines in: context
+	if special-forms == nil
+		initialize
+	this lines = lines
+	this context = context
+	block = Block new: context
+
+class-fn parse-block: lines in: context
+	return (TrylidCodeParser new: lines in: context) parse
+
+
+initialize
+	special-forms = Dictionary new
+	special-forms at: "if" put: IfParser new
+	special-forms at: "while" put: WhileParser new
+	special-forms at: "else" put: ElseParser new
+	special-forms at: "for" put: ForParser new
+	special-forms at: "switch" put: SwitchParser new
+	special-forms at: "try" put: TryParser new
+	special-forms at: "catch" put: CatchParser new
+		# For Trylon compatibility.  CatchParser will be a special kind of
+		# ElseParser that accepts extra tokens on the line.
+	special-forms at: "throw" put: ThrowParser new
+	special-forms at: "return" put: ReturnParser new
+	special-formas at: "#" put: CommentParser new
+
+
+parse
+	for line in lines
+		statement = parse-line: line
+		if statement
+			if !statement ignored-for-else
+				else-target = statement
+			block append: statement
+
+
+parse-line: line
+	words = line words
+
+	# Is it a special form?
+	syntax = special-forms at: words current
+	if syntax
+		words next
+		return syntax parse: words line: line parser: this
+	
+	# Otherwise, it's an expression.
+	# It could be an assignment with a block on the RHS, so we give the block too.
+	expression = (TrylidExpressionParser new: words block: line block) parse
+	comment = get-comment: words line: line
+	return ExpressionStatement new: expression comment: comment
+
+
+attach-else: statement line: line
+	if else-target == nil
+		throw ParseException new: "Illegal \"else\"." in: line
+	else-target attach-else: statement line: line
+	else-target = nil 	# Because you can't have two elses.
+
+
+class-fn get-comment: words line: line
+	if words is-empty
+		return nil
+	if words next == "#"
+		return words remainder
+	throw ParseException new: "Extra words at end of line." in: line
+
+
+
+# ===== Special Forms
+
+class ElseParser
+	create
+
+	parse: words line: line parser: parser
+		statement = nil
+		if words peek == "if"
+			words next
+			statement = (IfParser new) parse: words line: line parser: parser
+		else
+			comment = get-comment: words in: line
+			statement = TrylidCodeParser parse-block: line block in: parser context
+			if comment
+				# "statement" will be a Block.
+				statement prepend: Comment new: comment
+		parser attach-else: statement line: line
+		parser else-target = statement 	# In case it's an "if" statement.
+		return nil
+
+
+

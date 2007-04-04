@@ -9,3 +9,6 @@ jolt-expression
 	return Expression with: 'blank-line'
 
 
+ignored-for-else
+	return true
+

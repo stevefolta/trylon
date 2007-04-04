@@ -11,3 +11,10 @@ jolt-expression
 	virtual
 
 
+ignored-for-else
+	return false
+
+attach-else: statement line: line
+	throw ParseException new: "Illegal \"else\"." in: line
+
+

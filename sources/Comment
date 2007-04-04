@@ -12,3 +12,6 @@ jolt-expression
 	return Expression with: 'comment' with: text
 
 
+ignored-for-else
+	return true
+

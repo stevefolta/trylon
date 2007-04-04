@@ -25,6 +25,12 @@ current
 peek
 	current
 
+is-empty
+	return (current == nil)
+
+remainder
+	return String from: p to: stopper
+
 
 class-fn parse-char-escape-from: start to: stopper
 	lexer = WordsLexer new: start to: stopper
