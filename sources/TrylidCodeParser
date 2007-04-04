@@ -20,17 +20,21 @@ class-fn parse-block: lines in: context
 initialize
 	special-forms = Dictionary new
 	special-forms at: "if" put: IfParser new
-	special-forms at: "while" put: WhileParser new
 	special-forms at: "else" put: ElseParser new
+	special-forms at: "loop" put: LoopParser new
+	special-forms at: "while" put: WhileParser new
 	special-forms at: "for" put: ForParser new
+	special-forms at: "continue" put: ContinueParser new
+	special-forms at: "break" put: BreakParser new
+	special-forms at: "return" put: ReturnParser new
 	special-forms at: "switch" put: SwitchParser new
 	special-forms at: "try" put: TryParser new
 	special-forms at: "catch" put: CatchParser new
 		# For Trylon compatibility.  CatchParser will be a special kind of
 		# ElseParser that accepts extra tokens on the line.
 	special-forms at: "throw" put: ThrowParser new
-	special-forms at: "return" put: ReturnParser new
-	special-formas at: "#" put: CommentParser new
+	special-forms at: "#" put: CommentParser new
+	special-forms at: "iff" put: IffParser new
 
 
 parse
