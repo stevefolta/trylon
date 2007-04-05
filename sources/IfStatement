@@ -14,6 +14,11 @@ create: condition body: body else-block: else-block 	--
 	this else-comment = else-comment
 	this pre-else-comments = pre-else-comments
 
+create: condition body: body comment: comment
+	this condition = condition
+	this body = body
+	this comment = comment
+
 
 prepare-to-emit
 	condition prepare-to-emit

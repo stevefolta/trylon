@@ -1,7 +1,8 @@
 trylon TrylidCodeParser
 
 fields lines context
-fields block else-target
+fields else-target
+fields cur-line cur-context
 
 special-forms = nil
 
@@ -11,10 +12,7 @@ create: lines in: context
 		initialize
 	this lines = lines
 	this context = context
-	block = Block new: context
-
-class-fn parse-block: lines in: context
-	return (TrylidCodeParser new: lines in: context) parse
+	cur-context = context
 
 
 initialize
@@ -38,12 +36,22 @@ initialize
 
 
 parse
+	return parse-block: lines
+
+
+parse-block: lines
+	block = Block new: cur-context
+	old-context = cur-context
+	cur-context = block
 	for line in lines
+		cur-line = line
 		statement = parse-line: line
 		if statement
 			if !statement ignored-for-else
 				else-target = statement
 			block append: statement
+	cur-context = old-context
+	return block
 
 
 parse-line: line
@@ -58,7 +66,7 @@ parse-line: line
 	# Otherwise, it's an expression.
 	# It could be an assignment with a block on the RHS, so we give the block too.
 	expression = (TrylidExpressionParser new: words block: line block) parse
-	comment = get-comment: words line: line
+	comment = get-comment: words
 	return ExpressionStatement new: expression comment: comment
 
 
@@ -69,16 +77,40 @@ attach-else: statement line: line
 	else-target = nil 	# Because you can't have two elses.
 
 
-class-fn get-comment: words line: line
+get-comment: words
 	if words is-empty
 		return nil
 	if words next == "#"
 		return words remainder
-	throw ParseException new: "Extra words at end of line." in: line
+	throw ParseException new: "Extra words at end of line." in: cur-line
+
+
+parse-expression: words
+	return (TrylidExpressionParser new: words block: cur-line block) parse
+
+
+push-context: context
+	cur-context = context
+pop-context: context
+	cur-context = context parent
+
+
+error: message
+	throw ParseException new: message in: cur-line
 
 
 
 # ===== Special Forms
+
+class IfParser
+	create
+
+	parse: words line: line parser: parser
+		expression = parser parse-expression: words
+		comment = parser get-comment: words
+		body = parser parse-block: line block
+		return IfStatement new: expression body: body comment: comment
+
 
 class ElseParser
 	create
@@ -89,14 +121,76 @@ class ElseParser
 			words next
 			statement = (IfParser new) parse: words line: line parser: parser
 		else
-			comment = get-comment: words in: line
-			statement = TrylidCodeParser parse-block: line block in: parser context
+			comment = parser get-comment: words
+			statement = parser parse-block: line block
 			if comment
 				# "statement" will be a Block.
 				statement prepend: Comment new: comment
 		parser attach-else: statement line: line
 		parser else-target = statement 	# In case it's an "if" statement.
 		return nil
+
+
+class LoopParser
+	create
+
+	parse: words line: line parser: parser
+		comment = parser get-comment: words
+		body = parser parse-block: line block
+		return LoopStatement new: body comment: comment
+
+
+class WhileParser
+	create
+
+	parse: words line: line parser: parser
+		condition = parser parse-expression: words
+		comment = parser get-comment: words
+		body = parser parse-block: line block
+		return WhileStatement new: condition body: body comment: comment
+
+
+class ForParser
+	create
+
+	parse: words line: line parser: parser
+		# Get the name of the local.
+		name = words next
+		if !is-name: name
+			parser error: "Bad name."
+		local = CompiledField new: name
+
+		# "in".
+		in-token = words next
+		if in-token != "in"
+			parser error: "Missing \"in\"."
+
+		# Collection, comment.
+		collection = parser parse-expression: words
+		comment = parser get-comment: words
+
+		# Body.
+		context = ForContext new: local parent: parser cur-context
+		parser push-context: context
+		body = parser parse-block: line block
+		parser pop-context: context
+
+		return 	--
+			ForStatement new: local collection: collection body: body comment: comment
+
+
+class BreakParser
+	create
+
+	parse: words line: line parser: parser
+		return BreakStatement new: (parser get-comment: words)
+
+
+class ContinueParser
+	create
+
+	parse: words line: line parser: parser
+		return ContinueStatement new: (parser get-comment: words)
 
 
 

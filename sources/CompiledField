@@ -9,4 +9,8 @@ create: name type: type
 	this type = type
 
 
+create: name
+	this name = name
+
+
 
