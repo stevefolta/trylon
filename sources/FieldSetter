@@ -16,7 +16,7 @@ emit-call: arguments
 			with: 'send' 	--
 			with: (Expression with: 'quote' with: (field name + ":") intern) 	--
 			with: on-proto access 	--
-			with: arguments first-item access
+			with: arguments first-item jolt-expression
 
 
 name
