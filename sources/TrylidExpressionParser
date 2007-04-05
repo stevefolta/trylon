@@ -218,7 +218,152 @@ parse-shift-expression
 
 
 parse-additive-expression
-	#...
+	expr = parse-multiplicative-expression
+	if expr == nil
+		return nil
+	
+	word = words peek
+	while word == "+" || word == "-"
+		words next
+		expr2 = parse-multiplicative-expression
+		if expr2 == nil
+			expression-expected-after: word
+		expr = make-binop-call: word with: expr and: expr2
+	
+		word = words peek
+	
+	return expr
+
+
+parse-multiplicative-expression
+	expr = parse-unary-expression
+	if expr == nil
+		return nil
+	
+	word = words peek
+	while word == "*" || word == "/" || word == "%"
+		words next
+		expr2 = parse-unary-expression
+		if expr2 == nil
+			expression-expected-after: word
+		expr = make-binop-call: word with: expr and: expr2
+
+		word = words peek
+	
+	return expr
+
+
+parse-unary-expression
+	expr = nil
+	word = words peek
+
+	if word == "!"
+		words next
+		expr = parse-unary-expression
+		if expr == nil
+			expression-expected-after: '!'
+		expr = ShortCircuitNot new: expr
+	
+	else if word == "+" || word == "-" || word == "~"
+		words next
+		expr = parse-unary-expression
+		if expr == nil
+			expression-expected-after: word
+		name = nil
+		if word == "+"
+			name = "unary-plus"
+		else if word == "-"
+			name = "unary-minus"
+		else
+			name = "~"
+		expr = Send new: name object: expr arguments: List new
+	
+	else
+		expr = parse-postfix-expression
+	
+	return expr
+
+
+parse-postfix-expression
+	expr = parse-primary-expression
+	if expr == nil
+		return nil
+	
+	while words peek == "name"
+		# A unary object call.
+		name = words next
+		expr = Send new: name object: expr arguments: List new
+	
+	return expr
+
+
+parse-primary-expression
+	word = words next
+
+	if word == "name"
+		name = current-token text
+		consume-token
+
+		if name == "super"
+			return parse-super-call
+
+		# Non-object function call.
+		return FunctionCall new: name arguments: List new context: context
+	
+	if name == "super"
+		return parse-super-call
+	
+	else if name ends-with: ":"
+		# Non-object function call.
+		name = ""
+		arguments = List new
+		while words peek ends-with: ":"
+			name += words next
+			arg = parse-binary-expression
+			if arg == nil
+				parse-error: "Missing argument (\"" + name + "\")."
+			arguments append: arg
+		return FunctionCall new: name arguments: arguments context: context
+	
+	else if token == 'int-literal'
+		value = current-token text
+		consume-token
+		return IntLiteral new: value
+	
+	# else if token == 'float-literal'
+	# 	value = current-token text
+	# 	consume-token
+	# 	return FloatLiteral new: value
+	
+	else if token == 'string-literal'
+		value = current-token text
+		consume-token
+		return StringLiteral new: value
+	
+	else if token == 'symbol-literal'
+		value = current-token text
+		consume-token
+		return SymbolLiteral new: value
+
+	else if token == 'character-literal'
+		value = current-token text
+		consume-token
+		return CharacterLiteral new: value
+	
+	else if token == 'text-literal-start'
+		return parse-text-literal
+	
+	else if token == '('
+		consume-token
+		expr = parse-expression
+		if expr == nil
+			expression-expected-after: '('
+		if current-token != ')'
+			parse-error: "')' expected."
+		consume-token
+		return expr
+	
+	return nil
 
 
 
