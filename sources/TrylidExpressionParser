@@ -134,7 +134,91 @@ parse-inclusive-or-expression
 
 
 parse-exclusive-or-expression
-	return nil 	#...
+	expr = parse-and-expression
+	if expr == nil
+		return nil
+	
+	while words peek == "^"
+		words next
+		expr2 = parse-and-expression
+		if expr2 == nil
+			expression-expected-after: "^"
+		expr = make-binop-call: "^" with: expr and: expr2
+	
+	return expr
+
+
+parse-and-expression
+	expr = parse-equality-expression
+	if expr == nil
+		return nil
+	
+	while words peek == "&"
+		words next
+		expr2 = parse-equality-expression
+		if expr2 == nil
+			expression-expected-after: "&"
+		expr = make-binop-call: "&" with: expr and: expr2
+	
+	return expr
+
+
+parse-equality-expression
+	expr = parse-relational-expression
+	if expr == nil
+		return nil
+	
+	word = words peek
+	while word == "==" || word == "!="
+		words next
+		expr2 = parse-relational-expression
+		if expr2 == nil
+			expression-expected-after: word
+		expr = make-binop-call: word with: expr and: expr2
+
+		word = words peek
+	
+	return expr
+
+
+parse-relational-expression
+	expr = parse-shift-expression
+	if expr == nil
+		return nil
+	
+	word = words peek
+	while word == "<" || word == ">" || word == "<=" || word == ">="
+		words next
+		expr2 = parse-shift-expression
+		if expr2 == nil
+			expression-expected-after: word
+		expr = make-binop-call: word with: expr and: expr2
+
+		word = words peek
+	
+	return expr
+
+
+parse-shift-expression
+	expr = parse-additive-expression
+	if expr == nil
+		return nil
+	
+	word = words peek
+	while word == "<<" || word == ">>"
+		words next
+		expr2 = parse-additive-expression
+		if expr2 == nil
+			expression-expected-after: word
+		expr = make-binop-call: word with: expr and: expr2
+
+		word = words peek
+	
+	return expr
+
+
+parse-additive-expression
+	#...
 
 
 
