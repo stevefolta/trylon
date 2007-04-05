@@ -299,7 +299,7 @@ parse-postfix-expression
 
 
 parse-primary-expression
-	word = words next
+	word = words peek
 
 	if word == "super"
 		return parse-super-call
@@ -329,6 +329,7 @@ parse-primary-expression
 		return SymbolLiteral new: (word substr: 1 length: word length - 2)
 
 	else if word starts-with: "\`"
+		words next
 		return CharacterLiteral new: (word substr: 1 length: word length - 2)
 	
 	else if word == "("
@@ -349,7 +350,53 @@ parse-primary-expression
 
 
 parse-super-call
-	#...
+	# Consume "super".
+	words next
+
+	# Make sure this is in an object method.
+	method-context = context enclosing-method-context
+	if method-context == nil
+		parse-error: "\"super\" calls are only valid in functions."
+
+	name = nil
+	arguments = List new
+
+	word = words peek
+	if word == "name"
+		name = word
+		words next
+
+	else if word ends-with: ":"
+		# Get the arguments.
+		name = ""
+		while words peek ends-with: ":"
+			name += words next
+			arg = parse-binary-expression
+			if arg == nil
+				parse-error: "Missing argument (\"" + name + "\")."
+			arguments append: arg
+	
+	# We allow binops here.
+	else if !(is-name: word)
+		# *** Actually, we're allowing too many things here, but we'd have to
+		# *** explicitly check every binop.
+		name = words next
+		arg = parse-unary-expression
+		if arg == nil
+			parse-error: 	--
+				"Missing unary expression argument in super call (\"" + name + "\")."
+		arguments append: arg
+	
+	else
+		# Does this ever happen?
+		parse-error: "Illegal super call."
+	
+	# Get the proto that it's on.
+	on-proto = method-context parent
+	if !(on-proto is-a: CompiledProto)
+		parse-error: "Internal error: no proto for super call."
+	
+	return SuperCall new: name arguments: arguments
 
 
 
@@ -367,5 +414,31 @@ parse-error: message
 
 expression-expected-after: after
 	parse-error: "Expression expected after \"" + after + "\"."
+
+
+is-name: word
+	switch word
+		"+", "-", "*", "/", "%", "&", "|", "^", "<<", ">>", 	--
+		"==", "!=", "<", ">", "<=", ">=", 	--
+		"&&", "||", 	--
+		"!", "~"
+			return false
+	if (word ends-with: "=") || (word ends-with: ":")
+		return false
+	first-char = word first-character
+	if first-char == `"` || first-char == `'` || first-char == `\``
+		return false
+	if is-number: word
+		return false
+	return true
+
+
+is-number: word
+	first-char = word first-character
+	if (first-char >= `0` && first-char <= `9`)
+		return true
+	if first-char == `-`
+		return is-number: (word substr: 1)
+	return false
 
 
