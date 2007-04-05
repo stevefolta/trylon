@@ -63,7 +63,7 @@ parse-line: line
 	
 	# Otherwise, it's an expression.
 	# It could be an assignment with a block on the RHS, so we give the block too.
-	expression = (TrylidExpressionParser new: words block: line block) parse
+	expression = (TrylidExpressionParser new: words line: line) parse-expression
 	comment = get-comment: words
 	return ExpressionStatement new: expression comment: comment
 
@@ -84,13 +84,14 @@ get-comment: words
 
 
 parse-expression: words
-	expression = (TrylidExpressionParser new: words block: cur-line block) parse
+	expression = 	--
+		(TrylidExpressionParser new: words line: cur-line) parse-expression
 	if expression == nil
 		error: "Missing expression."
 	return expression
 
 parse-optional-expression: words
-	return (TrylidExpressionParser new: words block: cur-line block) parse
+	return (TrylidExpressionParser new: words line: cur-line) parse-expression
 
 
 push-context: context
