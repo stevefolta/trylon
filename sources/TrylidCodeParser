@@ -28,8 +28,6 @@ initialize
 	special-forms at: "switch" put: SwitchParser new
 	special-forms at: "try" put: TryParser new
 	special-forms at: "catch" put: CatchParser new
-		# For Trylon compatibility.  CatchParser will be a special kind of
-		# ElseParser that accepts extra tokens on the line.
 	special-forms at: "throw" put: ThrowParser new
 	special-forms at: "#" put: CommentParser new
 	special-forms at: "iff" put: IffParser new
@@ -86,6 +84,12 @@ get-comment: words
 
 
 parse-expression: words
+	expression = (TrylidExpressionParser new: words block: cur-line block) parse
+	if expression == nil
+		error: "Missing expression."
+	return expression
+
+parse-optional-expression: words
 	return (TrylidExpressionParser new: words block: cur-line block) parse
 
 
@@ -125,7 +129,7 @@ class ElseParser
 			statement = parser parse-block: line block
 			if comment
 				# "statement" will be a Block.
-				statement prepend: Comment new: comment
+				statement prepend: (Comment new: comment)
 		parser attach-else: statement line: line
 		parser else-target = statement 	# In case it's an "if" statement.
 		return nil
@@ -191,6 +195,59 @@ class ContinueParser
 
 	parse: words line: line parser: parser
 		return ContinueStatement new: (parser get-comment: words)
+
+
+class ReturnParser
+	create
+
+	parse: words line: line parser: parser
+		value = parser parse-optional-expression: words
+		comment = parser get-comment: words
+		return ReturnStatement new: value comment: comment
+
+
+class SwitchParser
+	create
+
+	parse: words line: line parser: parser
+		#...
+
+
+class TryParser
+	create
+
+	parse: words line: line parser: parser
+		#...
+
+
+class CatchParser
+	# For Trylon compatibility.  CatchParser will be a special kind of
+	# ElseParser that accepts extra tokens on the line.
+	create
+
+	parse: words line: line parser: parser
+		#...
+
+
+class ThrowParser
+	create
+
+	parse: words line: line parser: parser
+		#...
+
+
+class CommentParser
+	create
+
+	parse: words line: line parser: parser
+		#...
+
+
+class IffParser
+	create
+
+	parse: words line: line parser: parser
+		#...
 
 
 

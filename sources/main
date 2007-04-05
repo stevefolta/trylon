@@ -3,6 +3,7 @@ trylon main
 the-compiler = nil
 
 main: args
+	TrylidCodeParser 	# TEMPORARY: This is just here to test that it compiles.
 	return Compiler compile: args
 
 status-reporter
