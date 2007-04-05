@@ -1,11 +1,12 @@
 trylon TrylidExpressionParser
 
-fields words line
+fields words line context
 
 
-create: words line
+create: words line: line context: context
 	this words = words
 	this line = line
+	this context = context
 
 
 parse-expression
@@ -300,20 +301,10 @@ parse-postfix-expression
 parse-primary-expression
 	word = words next
 
-	if word == "name"
-		name = current-token text
-		consume-token
-
-		if name == "super"
-			return parse-super-call
-
-		# Non-object function call.
-		return FunctionCall new: name arguments: List new context: context
-	
-	if name == "super"
+	if word == "super"
 		return parse-super-call
 	
-	else if name ends-with: ":"
+	else if word ends-with: ":"
 		# Non-object function call.
 		name = ""
 		arguments = List new
@@ -325,45 +316,40 @@ parse-primary-expression
 			arguments append: arg
 		return FunctionCall new: name arguments: arguments context: context
 	
-	else if token == 'int-literal'
-		value = current-token text
-		consume-token
-		return IntLiteral new: value
+	else if is-number: word
+		words next
+		return IntLiteral new: word
 	
-	# else if token == 'float-literal'
-	# 	value = current-token text
-	# 	consume-token
-	# 	return FloatLiteral new: value
+	else if word starts-with: "\""
+		words next
+		return StringLiteral new: (word substr: 1 length: word length - 2)
 	
-	else if token == 'string-literal'
-		value = current-token text
-		consume-token
-		return StringLiteral new: value
-	
-	else if token == 'symbol-literal'
-		value = current-token text
-		consume-token
-		return SymbolLiteral new: value
+	else if word starts-with: "\'"
+		words next
+		return SymbolLiteral new: (word substr: 1 length: word length - 2)
 
-	else if token == 'character-literal'
-		value = current-token text
-		consume-token
-		return CharacterLiteral new: value
+	else if word starts-with: "\`"
+		return CharacterLiteral new: (word substr: 1 length: word length - 2)
 	
-	else if token == 'text-literal-start'
-		return parse-text-literal
-	
-	else if token == '('
-		consume-token
+	else if word == "("
+		words next
 		expr = parse-expression
 		if expr == nil
-			expression-expected-after: '('
-		if current-token != ')'
-			parse-error: "')' expected."
-		consume-token
+			expression-expected-after: "("
+		if words next != ")"
+			parse-error: "\")\" expected."
 		return expr
 	
+	else
+		# Non-object function call.
+		words next
+		return FunctionCall new: word arguments: List new context: context
+	
 	return nil
+
+
+parse-super-call
+	#...
 
 
 
