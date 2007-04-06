@@ -20,6 +20,10 @@ create: condition body: body comment: comment
 	this comment = comment
 
 
+attach-else: statement line: line
+	this else-block = statement
+
+
 prepare-to-emit
 	condition prepare-to-emit
 	body prepare-to-emit

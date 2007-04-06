@@ -12,6 +12,15 @@ create: body catch-clauses: catch-clauses comment: comment 	--
 	this post-clauses-comments = post-clauses-comments
 
 
+attach-else: statement line: line
+	object-proto = the-compiler get-standard-class: "Object"
+	clause = 	--
+		CatchClause 	--
+			new: object-proto parent: body parent 	--
+			comment: nil pre-clause-comments: nil
+	catch-clauses append: clause
+
+
 prepare-to-emit
 	body prepare-to-emit
 	for clause in catch-clauses
