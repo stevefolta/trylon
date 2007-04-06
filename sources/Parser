@@ -830,31 +830,33 @@ parse-try-statement
 	body = parse-block
 
 	# Catch clauses.
-	catch-clauses = List new
+	else-clause = nil
 	saved-context = context
 	pre-clause-comments = nil
 	loop
 		pre-clause-comments = parse-inter-prong-comments
 
-		if current-token != 'name' || current-token text != "catch"
+		if current-token != 'name' || 	--
+		   (current-token text != "catch" && current-token text != "else")
 			break
+		if else-clause
+			parse-error: "Trylid doesn't allow multiple \"catch\" clauses."
 
-		consume-token 	# "catch"
-		type = parse-type-spec
+		consume-token 	# "catch"/"else"
+		type = parse-type-spec 	#*** Real Trylid won't require this.
 		catch-comment = require-eol
-		catch-clause = 	--
-			CatchClause new: type parent: context comment: catch-comment 	--
-				pre-clause-comments: pre-clause-comments
+		catch-clause = CatchClause new: context comment: comment
 		context = catch-clause
 		catch-clause body = parse-block
 		context = saved-context
-		catch-clauses append: catch-clause
+		else-clause = catch-clause
 
 		pre-clause-comments = nil
 	
-	return 	--
-		TryStatement new: body catch-clauses: catch-clauses comment: comment 	--
-			post-clauses-comments: pre-clause-comments
+	try-statement = TryStatement new: body comment: comment
+	if else-clause
+		try-statement else-clause = else-clause
+	return try-statement
 
 
 parse-throw-statement

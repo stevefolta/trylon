@@ -36,7 +36,7 @@ There are the usual flow-of-control statements:
 	
 	try
 		event-loop
-	catch Exception
+	else
 		print-line: exception message
 	
 	throw MessageException new: "Couldn't connect."

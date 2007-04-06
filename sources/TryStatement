@@ -1,38 +1,32 @@
 trylon TryStatement
 superclass Statement
 
-fields body catch-clauses post-clauses-comments
+fields body else-clause
 
 
-create: body catch-clauses: catch-clauses comment: comment 	--
-		post-clauses-comments: post-clauses-comments
+create: body comment: comment
 	this body = body
-	this catch-clauses = catch-clauses
 	this comment = comment
-	this post-clauses-comments = post-clauses-comments
 
 
 attach-else: statement line: line
-	object-proto = the-compiler get-standard-class: "Object"
-	clause = 	--
-		CatchClause 	--
-			new: object-proto parent: body parent 	--
-			comment: nil pre-clause-comments: nil
-	catch-clauses append: clause
+	else-clause = CatchClause new: body parent comment: nil
+	statement parent = this 	# "statement" will be a Block.
+	else-clause body = statement
 
 
 prepare-to-emit
 	body prepare-to-emit
-	for clause in catch-clauses
-		clause body prepare-to-emit
+	if else-clause
+		else-clause prepare-to-emit
 
 
 jolt-expression
-	catch-list = Expression new: catch-clauses count
-	index = 0
-	for clause in catch-clauses
-		catch-list at: index put: clause jolt-expression
-		index += 1
-	return Expression with: 'catch' with: catch-list with: body jolt-expression
+	else-expr = nil
+	if else-clause
+		else-expr = else-clause jolt-expression
+	else
+		else-expr = Expression with: 'quote' with: 'nil'
+	return Expression with: 'catch' with: body jolt-expression with: else-expr
 
 

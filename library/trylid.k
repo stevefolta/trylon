@@ -210,10 +210,10 @@
 		nil
 		))
 
-(syntax catch 	;; catch-list body
+(syntax catch 	;; body else-clause
 	(lambda (node compiler)
 		;;...
-		[node at: '2]
+		[node at: '1]
 		))
 
 
