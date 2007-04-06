@@ -262,14 +262,29 @@ class CommentParser
 	create
 
 	parse: words line: line parser: parser
-		#...
+		return Comment new: words remainder
 
 
 class IffParser
 	create
 
 	parse: words line: line parser: parser
-		#...
+		inverted = false
+		if words peek == "!"
+			inverted = true
+			words next
+		if words is-empty
+			parser error: "\"iff\" statement is missing it's word."
+		name = words next
+		parser get-comment: words
+		test-succeeded = 	--
+			((parser cur-context lookup-function: name) != nil) || 	--
+			(the-compiler build-settings has-symbol: name)
+		if inverted
+			test-succeeded = !test-succeeded
+		if test-succeeded
+			return parser parse-block: line block
+		return nil
 
 
 
