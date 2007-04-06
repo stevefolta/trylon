@@ -20,6 +20,10 @@ enclosing-method-context
 	return parent enclosing-method-context
 
 
+prepare-to-emit
+	body prepare-to-emit
+
+
 jolt-expression
 	return body jolt-expression
 
