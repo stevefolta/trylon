@@ -77,9 +77,9 @@ parse-next-word
 	
 	word-start = p
 
-	# Is it a paren/bracket/brace/comma?
+	# Is it a paren/bracket/brace/comma/minus?
 	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}` || 	--
-	   c == ','
+	   c == `,` || c == `!` || c == `-`
 		p += 1
 		return String from: word-start to: p
 	
@@ -119,7 +119,7 @@ parse-next-word
 		if c is-whitespace || 	--
 		   c == `(` || c == `)` || c == `[` || c == `]` || 	--
 			 c == `{` || c == `}`	|| 	--
-			 c == `,`
+			 c == `,` || c == `!`
 			break
 	return String from: word-start to: p
 
