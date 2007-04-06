@@ -1,5 +1,57 @@
 trylon SwitchOptionsParser
 
+fields lines context
+
 create: lines in: context
-	#...
+	this lines = lines
+	this context = context
+
+
+parse-into: switch-statement
+	for line in lines
+		# Blank line or comment?
+		words = line words
+		first-word = words peek
+		if first-word == nil || first-word == "#"
+			continue
+
+		# Gather the values.
+		parser = TrylidExpressionParser new: words line: line context: context
+		values = List new
+		values-comment = nil
+		while !words is-empty
+			# Comment? 
+			if words peek == "#"
+				words next
+				values-comment = words remainder
+				words = nil
+				break
+
+			# Get a value.
+			expr = parser parse-expression
+			if expr == nil
+				break
+			values append: expr
+
+			# Allow (but don't require) commas between values.
+			if words peek == ","
+				words next
+
+		# There should always be values here, but check anyway.
+		if values is-empty
+			continue
+		if words && !words is-empty
+			throw ParseException new: "Extra words at end of line." in: line
+
+		# Parse the body.
+		body = (TrylidCodeParser new: line body in: context) parse
+
+		# Add the SwitchClause.
+		clause = 	--
+			SwitchClause 	--
+				new: values body: body 	--
+				pre-clause-comments: nil value-comment: values-comment
+		switch-statement add-clause: clause
+
+
 
