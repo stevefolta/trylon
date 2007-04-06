@@ -228,7 +228,9 @@ class TryParser
 	create
 
 	parse: words line: line parser: parser
-		#...
+		comment = parser get-comment: words
+		body = parser parse-block: line block
+		return TryStatement new: body comment: comment
 
 
 class CatchParser
@@ -237,14 +239,23 @@ class CatchParser
 	create
 
 	parse: words line: line parser: parser
-		#...
+		# Ignore words.  In Trylon, these would specify the type to catch.  But
+		# Trylid catches all types always.
+		while (!words is-empty) && (words peek != "#")
+			words next
+		comment = parser get-comment: words
+		body = parser parse-block: line block
+		parser attach-else: body line: line
+		return nil
 
 
 class ThrowParser
 	create
 
 	parse: words line: line parser: parser
-		#...
+		value = parser parse-expression: words
+		comment = parser get-comment: words
+		return ThrowStatement new: value comment: comment
 
 
 class CommentParser
