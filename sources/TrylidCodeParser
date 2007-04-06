@@ -216,7 +216,12 @@ class SwitchParser
 	create
 
 	parse: words line: line parser: parser
-		#...
+		value = parser parse-expression: words
+		comment = parser get-comment: words
+		statement = SwitchStatement new: value value-comment: comment
+		(SwitchOptionsParser new: line block in: parser cur-context) 	--
+			parse-into: statement
+		return statement
 
 
 class TryParser
