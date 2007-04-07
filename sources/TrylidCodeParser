@@ -274,7 +274,7 @@ class IffParser
 			inverted = true
 			words next
 		if words is-empty
-			parser error: "\"iff\" statement is missing it's word."
+			parser error: "\"iff\" statement is missing its word."
 		name = words next
 		parser get-comment: words
 		test-succeeded = 	--
