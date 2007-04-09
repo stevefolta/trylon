@@ -44,7 +44,7 @@ jolt-expression
 		index = 1
 		if pre-else-comments
 			for statement in pre-else-comments
-				else-expression at: index put: statement
+				else-expression at: index put: statement jolt-expression
 				index += 1
 		if else-comment
 			else-expression at: index put: 	--
