@@ -247,6 +247,13 @@
 			)
 		))
 
+(define trylid-char
+	(lambda (value)
+		(let ((char-obj [(trylid-proto Standard Char) new]))
+			(set-long@ char-obj value)
+			char-obj
+			)))
+
 
 (define trylid-string
 	(lambda (id-string)

@@ -178,7 +178,9 @@ parse-proto-literal-primary
 		parse-error: "Floats are not supported yet."
 		# return FloatLiteral new: current-token text
 	else if current-token == 'character-literal'
-		return CharacterLiteral new: current-token text
+		return 	--
+			CharacterLiteral 	--
+				new: (Lexer character-constant-value: current-token text)
 	else if current-token type == 'name'
 		literal-name = current-token text
 		if literal-name == "true"
@@ -1305,7 +1307,9 @@ parse-primary-expression
 	else if token == 'character-literal'
 		value = current-token text
 		consume-token
-		return CharacterLiteral new: value
+		return 	--
+			CharacterLiteral 	--
+				new: (Lexer character-constant-value: value)
 	
 	else if token == 'text-literal-start'
 		return parse-text-literal

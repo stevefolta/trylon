@@ -1,11 +1,11 @@
 trylon CharacterLiteral
 superclass Expression
 
-fields name
+fields char
 
 
-create: name
-	this name = name
+create: char
+	this char = char
 
 
 prepare-to-emit
@@ -13,6 +13,6 @@ prepare-to-emit
 
 
 jolt-expression
-	return Expression with: 'quote' with: name first-character
+	return Expression with: 'trylid-char' with: char int
 
 
