@@ -90,6 +90,11 @@ fn copy-from: source (BytePtr) length: length (Int)
 	coke
 		(memcpy (int@ self) (int@ source) (int@ length))
 
+_ptr
+	coke
+		(int@ self)
+
+
 fn string
 	coke
 		(let ((buf (malloc 64)))
