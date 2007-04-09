@@ -3,7 +3,7 @@ trylon Standard
 
 fn print: string
 	coke
-		(send (quote print:) StdOut string)
+		(send (quote nextPutAll:) StdOut string)
 
 print-line: line
 	print: line

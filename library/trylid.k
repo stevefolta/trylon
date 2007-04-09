@@ -248,3 +248,8 @@
 		))
 
 
+(define trylid-string
+	(lambda (id-string)
+		[(trylid-proto Standard String) new_: id-string]
+		))
+

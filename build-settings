@@ -1,4 +1,5 @@
 program = "trylid"
+debugging = true
 
 iff !in-trylid
 	c-flags += "-g"

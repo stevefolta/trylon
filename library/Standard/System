@@ -2,18 +2,34 @@ trylid System
 
 
 primitive-fn milliseconds
+	#...
 primitive-fn sleep-ms: milliseconds
+	#...
 
 primitive-fn num-garbage-collections
+	#...
 primitive-fn dump-gc-stats
+	#...
 
-primitive-fn debugger
+debugger
+	coke
+		(let ((getpid (dlsym "getpid"))
+		      (kill (dlsym "kill")))
+			(kill (getpid) 5))
 
 primitive-fn environment-variable-named: name
+	#...
 primitive-fn current-directory-path
+	#...
 primitive-fn current-directory-path: new-path
+	#...
 primitive-fn run-program: name arguments: arguments
+	#...
 primitive-fn sysname
+	#...
+	return ""
 primitive-fn strftime: time-int format: format
+	#...
+	return "!strftime not implemented!"
 
 

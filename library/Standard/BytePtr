@@ -9,6 +9,12 @@ new: size
 new-non-pointer: size
 	return Implementation allocate-bytes-non-pointer: size
 
+new_: _value
+	coke
+		(let ((byte-ptr [self new]))
+			(set (long@ byte-ptr) _value)
+			byte-ptr)
+
 fn == arg (BytePtr) -> Bool
 	coke
 		(if (== (int@ self_) (int@ arg)) true false)

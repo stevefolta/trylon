@@ -15,6 +15,12 @@ create: length
 	this start = BytePtr new-non-pointer: length
 	this stopper = this start
 
+new_: id-string
+	coke
+		(let ((start [id-string _stringValue])
+					(stopper (+ start [id-string _size])))
+			[self new: (byte-ptr start) to: (byte-ptr stopper)])
+
 length
 	return stopper - start
 is-empty
@@ -246,6 +252,7 @@ lowercase
 
 
 primitive-fn int -> Int
+	#...
 # primitive-fn float -> Float
 
 

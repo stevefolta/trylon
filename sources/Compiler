@@ -6,7 +6,9 @@ fields status-reporter
 
 
 class-fn compile: arguments
+	debug: "About to create compiler."
 	the-compiler = Compiler new: arguments
+	debug: "About to compiler run:."
 	the-compiler run
 	return the-compiler return-value
 
@@ -14,12 +16,15 @@ class-fn compile: arguments
 create: arguments
 	this arguments = arguments
 	this successful = true
+	debug: "Loading BuildSettings."
 	this build-settings = BuildSettings new
+	debug: "Loading List."
 	proto-queue = List new
 
 
 run
 	try
+		debug: "Compiler run."
 		# Read the settings.
 		build-settings load
 
