@@ -7,7 +7,7 @@ create: comment
 
 
 jolt-expression
-	return Expression with: 'fake-break'
+	return Expression with: 'fixed-break'
 
 
 

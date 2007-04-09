@@ -110,7 +110,7 @@
 				(let ((name [names at: which-name])
 							(name-string [name asString]))
 					(set filename
-						(if filename [[filename , " "] , name-string] name-string))
+						(if filename [[filename , '" "] , name-string] name-string))
 					(if [[proto _vtable] lookup: name]
 						nil
 						(read-trylid-proto-file [filename , '".k"])
@@ -217,22 +217,21 @@
 		))
 
 
-;; Fake stuff, so we can test codegen as much as possible while waiting for
-;; Jolt to work.
+;; Fake stuff to work around Jolt bugs (for now).
 
-(define fake-return
-	(lambda (value)
-		value
+(syntax fixed-return
+	(lambda (node compiler)
+		`(if 1 (return ,[node at: '1]))
 		))
 
-(define fake-break
-	(lambda ()
-		'0
+(syntax fixed-continue
+	(lambda (node compiler)
+		'(if 1 (continue))
 		))
 
-(define fake-continue
-	(lambda ()
-		'0
+(syntax fixed-break
+	(lambda (node compiler)
+		'(if 1 (break))
 		))
 
 
