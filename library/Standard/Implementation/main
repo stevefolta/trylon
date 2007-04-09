@@ -1,4 +1,6 @@
 trylid Implementation
 
-primitive-fn allocate-object: proto with-extra-slots: num-extra-slots
+allocate-object: proto with-extra-slots: num-extra-slots
+	coke
+		[[proto _vtable] _alloc: (+ [proto _sizeof] (* 4 num-extra-slots))]
 

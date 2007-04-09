@@ -254,7 +254,7 @@
 
 (define trylid-int
 	(lambda (value)
-		(let ((int [(trylid-proto Standard int) new]))
+		(let ((int [(trylid-proto Standard Int) new]))
 			(set-long@ int value)
 			int
 			)))
