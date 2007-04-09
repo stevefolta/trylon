@@ -11,6 +11,11 @@
 (define false (import "false"))
 
 
+;; Needed C functions.
+(define strlen (dlsym "strlen"))
+(define memcpy (dlsym "memcpy"))
+
+
 ;; Defining and loading objects.
 
 ;; These globals will be set later:
@@ -246,6 +251,13 @@
 			byte-ptr
 			)
 		))
+
+(define trylid-int
+	(lambda (value)
+		(let ((int [(trylid-proto Standard int) new]))
+			(set-long@ int value)
+			int
+			)))
 
 (define trylid-char
 	(lambda (value)

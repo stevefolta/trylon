@@ -15,11 +15,10 @@ create: length
 	this start = BytePtr new-non-pointer: length
 	this stopper = this start
 
-new_: id-string
+new_: jolt-string
 	coke
-		(let ((start [id-string _stringValue])
-					(stopper (+ start [id-string _size])))
-			[self new: (byte-ptr start) to: (byte-ptr stopper)])
+		(let ((stopper (+ jolt-string (strlen jolt-string))))
+			[self new: (byte-ptr jolt-string) to: (byte-ptr stopper)])
 
 length
 	return stopper - start

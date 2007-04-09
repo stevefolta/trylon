@@ -17,84 +17,84 @@ new_: _value
 
 fn == arg (BytePtr) -> Bool
 	coke
-		(if (== (int@ self_) (int@ arg)) true false)
+		(if (== (int@ self) (int@ arg)) true false)
 fn != arg (BytePtr) -> Bool
 	coke
-		(if (!= (int@ self_) (int@ arg)) true false)
+		(if (!= (int@ self) (int@ arg)) true false)
 fn < arg (BytePtr) -> Bool
 	coke
-		(if (< (int@ self_) (int@ arg)) true false)
+		(if (< (int@ self) (int@ arg)) true false)
 fn > arg (BytePtr) -> Bool
 	coke
-		(if (> (int@ self_) (int@ arg)) true false)
+		(if (> (int@ self) (int@ arg)) true false)
 fn <= arg (BytePtr) -> Bool
 	coke
-		(if (<= (int@ self_) (int@ arg)) true false)
+		(if (<= (int@ self) (int@ arg)) true false)
 fn >= arg (BytePtr) -> Bool
 	coke
-		(if (>= (int@ self_) (int@ arg)) true false)
+		(if (>= (int@ self) (int@ arg)) true false)
 
 fn + arg (BytePtr) -> BytePtr
 	coke
-		(byte-ptr-obj (+ (int@ self_) (int@ arg)))
+		(byte-ptr (+ (int@ self) (int@ arg)))
 fn - arg (BytePtr) -> BytePtr
 	coke
-		(byte-ptr-obj (- (int@ self_) (int@ arg)))
+		(byte-ptr (- (int@ self) (int@ arg)))
 
 fn deref-ptr -> BytePtr
 	coke
-		(byte-ptr-obj (int@ self_))
+		(byte-ptr (int@ self))
 fn deref-int -> Int
 	coke
-		(int-obj (int@ self_))
+		(trylid-int (int@ self))
 fn deref-char -> Char
 	coke
-		(char-obj (int@ self_))
+		(trylid-char (int@ self))
 fn ptr-at: index (Int) -> BytePtr
 	coke
-		(byte-ptr-obj (int@ self_ (int@ index)))
+		(byte-ptr (int@ self (int@ index)))
 fn object-at: index (Int) -> Object
 	coke
-		(int@ self_ (int@ index))
+		(int@ self (int@ index))
 fn char-at: index (Int) -> Char
 	coke
-		(char-obj (int@ self_ (int@ index)))
+		(trylid-char (int@ self (int@ index)))
 fn int-at: index (Int) -> Int
 	coke
-		(int-obj (int@ self_ (int@ index)))
+		(trylid-int (int@ self (int@ index)))
 fn byte-at: index (Int) -> Int
 	coke
-		(int-obj (char@ (+ self_ (int@ index))))
+		(trylid-int (char@ (+ self (int@ index))))
 
 fn as-object -> Object
 	coke
-		(int@ self_)
+		(int@ self)
 
 fn ptr-at: index (Int) set-to: value (BytePtr)
 	coke
-		(set-int@ (int@ self_) (int@ index) (int@ value))
+		(set-int@ (int@ self) (int@ index) (int@ value))
 fn object-at: index (Int) set-to: value (Object)
 	coke
-		(set-int@ (int@ self_) (int@ index) value)
+		(set-int@ (int@ self) (int@ index) value)
 fn char-at: index (Int) set-to: value (Char)
 	coke
-		(set-char@ (int@ self_) (int@ index) (int@ value))
+		(set-char@ (+ (int@ self) (int@ index)) (int@ value))
 fn int-at: index (Int) set-to: value (Int)
 	coke
-		(set-int@ (int@ self_) (int@ index) (int@ value))
+		(set-int@ (int@ self) (int@ index) (int@ value))
 fn byte-at: index (Int) set-to: value (Int)
 	coke
-		(set-char@ (int@ self_) (int@ index) (int@ value))
+		(set-char@ (+ (int@ self) (int@ index)) (int@ value))
 
 fn copy-from: source (BytePtr) length: length (Int)
 	coke
-		(memcpy (int@ self_) (int@ source) (int@ length))
+		(memcpy (int@ self) (int@ source) (int@ length))
 
 fn string
 	coke
 		(let ((buf (malloc 64)))
-			(sprintf buf "0x%08X" (int@ self_))
-			(string-obj buf))
+			(sprintf buf "0x%08X" (int@ self))
+			(trylid-string buf))
 
 
 iff debugger

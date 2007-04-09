@@ -24,26 +24,26 @@ fn >= arg (Char) -> Bool
 
 fn + arg (Char) -> Char
 	coke
-		(char-obj (+ (int@ self_) (int@ arg)))
+		(trylid-char (+ (int@ self_) (int@ arg)))
 fn - arg (Char) -> Char
 	coke
-		(char-obj (- (int@ self_) (int@ arg)))
+		(trylid-char (- (int@ self_) (int@ arg)))
 fn & arg (Char) -> Char
 	coke
-		(char-obj (& (int@ self_) (int@ arg)))
+		(trylid-char (& (int@ self_) (int@ arg)))
 fn | arg (Char) -> Char
 	coke
-		(char-obj (| (int@ self_) (int@ arg)))
+		(trylid-char (| (int@ self_) (int@ arg)))
 
 fn string
 	coke
 		(let ((buf (malloc 8)))
 			(set-char@ buf (int@ self_))
 			(set-char@ buf 1 0)
-			(string-obj buf))
+			(trylid-string buf))
 fn int
 	coke
-		(int-obj (int@ self_))
+		(trylid-int (int@ self_))
 
 is-whitespace
 	return this == ` ` || this == `\t` || this == `\n` || this == `\r`

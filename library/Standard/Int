@@ -24,53 +24,53 @@ fn >= arg (Int) -> Bool
 
 fn + arg (Int) -> Int
 	coke
-		(int-obj (+ (int@ self_) (int@ arg)))
+		(trylid-int (+ (int@ self_) (int@ arg)))
 fn - arg (Int) -> Int
 	coke
-		(int-obj (- (int@ self_) (int@ arg)))
+		(trylid-int (- (int@ self_) (int@ arg)))
 fn * arg (Int) -> Int
 	coke
-		(int-obj (* (int@ self_) (int@ arg)))
+		(trylid-int (* (int@ self_) (int@ arg)))
 fn / arg (Int) -> Int
 	coke
-		(int-obj (/ (int@ self_) (int@ arg)))
+		(trylid-int (/ (int@ self_) (int@ arg)))
 fn % arg (Int) -> Int
 	coke
-		(int-obj (% (int@ self_) (int@ arg)))
+		(trylid-int (% (int@ self_) (int@ arg)))
 fn unary-minus -> Int
 	coke
-		(int-obj (- (int@ self_)))
+		(trylid-int (- (int@ self_)))
 
 fn | arg (Int) -> Int
 	coke
-		(int-obj (| (int@ self_) (int@ arg)))
+		(trylid-int (| (int@ self_) (int@ arg)))
 fn & arg (Int) -> Int
 	coke
-		(int-obj (& (int@ self_) (int@ arg)))
+		(trylid-int (& (int@ self_) (int@ arg)))
 fn ^ arg (Int) -> Int
 	coke
-		(int-obj (^ (int@ self_) (int@ arg)))
+		(trylid-int (^ (int@ self_) (int@ arg)))
 fn ~ -> Int
 	coke
-		(int-obj (not (int@ self_)))
+		(trylid-int (not (int@ self_)))
 fn << arg (Int) -> Int
 	coke
-		(int-obj (<< (int@ self_) (int@ arg)))
+		(trylid-int (<< (int@ self_) (int@ arg)))
 fn >> arg (Int) -> Int
 	coke
-		(int-obj (>> (int@ self_) (int@ arg)))
+		(trylid-int (>> (int@ self_) (int@ arg)))
 
 fn string
 	coke
 		(let ((buf (malloc 64)))
 			(sprintf buf "%d" (int@ self_))
-			(string-obj buf))
+			(trylid-string buf))
 fn float
 	# How to do this?
 	#...
 fn char
 	coke
-		(char-obj (int@ self_))
+		(trylid-char (int@ self_))
 
 
 # In case we need to play nice with SmallIntegers:
