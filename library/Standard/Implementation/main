@@ -5,3 +5,7 @@ allocate-object: proto with-extra-slots: num-extra-slots
 		[[proto _vtable] _alloc:
 			(+ [proto _sizeof] (* 4 [num-extra-slots _integerValue]))]
 
+allocate-bytes-non-ptr: num-bytes
+	coke
+		(byte-ptr (GC_malloc_atomic [num-bytes _integerValue]))
+

@@ -14,6 +14,7 @@
 ;; Needed C functions.
 (define strlen (dlsym "strlen"))
 (define memcpy (dlsym "memcpy"))
+(define GC_malloc_atomic (dlsym "GC_malloc_atomic"))
 
 
 ;; Defining and loading objects.
