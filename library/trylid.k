@@ -254,7 +254,8 @@
 
 (define trylid-int
 	(lambda (value)
-		(let ((int [(trylid-proto Standard Int) new]))
+		;; Can't use "Int new" here, as it would recurse.
+		(let ((int [[(trylid-proto Standard Int) _vtable] _alloc: 4]))
 			(set-long@ int value)
 			int
 			)))
