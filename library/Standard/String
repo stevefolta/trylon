@@ -264,6 +264,16 @@ size
 	coke
 		[SmallInteger value_: (- [[self stopper] _ptr] [[self start] _ptr])]
 
+_stringValue
+	coke
+		(let ((start [[self start] _ptr])
+		      (size (- [[self stopper] _ptr] start))
+		      (c-string (GC_malloc_atomic (+ size 1))))
+			(memcpy c-string start size)
+			(set-char@ (+ c-string size 1) 0)
+			c-string
+			)
+
 
 # ===== Debugging
 
