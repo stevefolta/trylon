@@ -9,7 +9,7 @@ Stat new
 [
 	| _size |
 	{ v__size = (oop) sizeof(struct stat); }.
-	(self _vtable) _alloc: _size
+	^(self _vtable) _alloc: _size
 ]
 
 Stat stat_: _path into: buf
