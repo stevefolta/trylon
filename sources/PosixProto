@@ -2,26 +2,17 @@ trylon PosixProto
 superclass CompiledProto
 
 
-create: name parent: parent
+create: name parent: parent directory: directory
 	super create: name parent: parent
+	this add-directory: directory
 
-
-lookup-function: name visited-protos: visited-protos
-	so-name = name + ".so"
-	for directory in directories
-		if directory contains: so-name
-			proto-function = PosixProtoFunction new: name
-			functions at: name set-to: proto-function
-			return proto-function
-
-	return super lookup-function: name visited-protos: visited-protos
-
-
-access
-	return 	--
-		Expression 	--
-			with: 'trylid-posix-proto' 	--
-			with: (Expression with: 'quote' with: (intern: name))
+	# Add the subprotos now; this is sort of a workaround for not having the
+	# Posix proto handle doesNotUnderstand:.
+	for file-name in directory names
+		if file-name ends-with: ".so"
+			proto-name = file-name substr: 0 length: file-name length - 3
+			proto-function = PosixProtoFunction new: proto-name
+			functions at: proto-name set-to: proto-function
 
 
 
@@ -36,7 +27,7 @@ class PosixProtoFunction
 		return 	--
 			Expression 	--
 				with: 'trylid-posix-proto' 	--
-				with: (Expression with: 'quote' with: (intern: name))
+				with: (Expression with: 'quote' with: name intern)
 	
 	emit-code
 		body = emit-call: nil

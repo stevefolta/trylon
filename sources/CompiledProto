@@ -207,10 +207,10 @@ setup-main: main-directory library-directory: library-directory 	--
 	uses-protos append: standard-proto
 
 	# Set up Posix.
-	posix-proto = PosixProto new: "Posix" parent: this
-	posix-proto add-directory: (library-directory at: "Posix")
+	posix-directory = library-directory at: "Posix"
+	posix-proto = PosixProto new: "Posix" parent: this directory: posix-directory
 	proto-function = ProtoFunction new: posix-proto
-	functions at: name set-to: proto-function
+	functions at: "Posix" set-to: proto-function
 	the-compiler proto-queue append: posix-proto
 
 	# Add "nil", "true", and "false" to Standard.
