@@ -21,10 +21,18 @@ fn output-stream
 	return OutStream new: path
 
 
-primitive-fn size
-primitive-fn exists
+size
+	stat = Posix Stat stat: path
+	if stat == nil
+		return 0
+	return stat st_size
 
-primitive-fn remove
+exists
+	stat = Posix Stat stat: path
+	return stat != nil
+
+remove
+	#...
 
 
 contents-of: path
@@ -36,8 +44,11 @@ proto InStream
 	field file 	# Don't touch this.
 	
 	primitive-fn create: path
+		#...
 	primitive-fn close
+		#...
 	primitive-fn read-buffer: buffer [BytePtr] length: length [Int]
+		#...
 	
 	fn destroy
 		close

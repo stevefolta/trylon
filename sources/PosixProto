@@ -17,17 +17,34 @@ lookup-function: name visited-protos: visited-protos
 	return super lookup-function: name visited-protos: visited-protos
 
 
+access
+	return 	--
+		Expression 	--
+			with: 'trylid-posix-proto' 	--
+			with: (Expression with: 'quote' with: (intern: name))
+
+
+
 class PosixProtoFunction
 	superclass TrylidFunction
 	fields name
 
 	create: name
 		this name = name
-
+	
 	emit-call: arguments
 		return 	--
 			Expression 	--
 				with: 'trylid-posix-proto' 	--
 				with: (Expression with: 'quote' with: (intern: name))
+	
+	emit-code
+		body = emit-call: nil
+		expr = Expression new: 4
+		expr at: 0 put: 'define-send'
+		expr at: 1 put: (Expression with: 'quote' with: name intern)
+		expr at: 2 put: (Expression with: 'trylid-proto' with: 'Posix')
+		expr at: 3 put: body
+		return expr
 
 
