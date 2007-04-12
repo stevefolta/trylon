@@ -1,0 +1,33 @@
+trylon PosixProto
+superclass CompiledProto
+
+
+create: name parent: parent
+	super create: name parent: parent
+
+
+lookup-function: name visited-protos: visited-protos
+	so-name = name + ".so"
+	for directory in directories
+		if directory contains: so-name
+			proto-function = PosixProtoFunction new: name
+			functions at: name set-to: proto-function
+			return proto-function
+
+	return super lookup-function: name visited-protos: visited-protos
+
+
+class PosixProtoFunction
+	superclass TrylidFunction
+	fields name
+
+	create: name
+		this name = name
+
+	emit-call: arguments
+		return 	--
+			Expression 	--
+				with: 'trylid-posix-proto' 	--
+				with: (Expression with: 'quote' with: (intern: name))
+
+

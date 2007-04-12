@@ -141,6 +141,6 @@ extend String
 		iff !in-jolt
 			return InternedString new: this
 		iff in-jolt
-			#...
+			return this asSymbol
 
 

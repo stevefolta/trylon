@@ -134,6 +134,18 @@
 		`(get-trylid-proto '(,@[node copyFrom: '1]))
 		))
 
+(define trylid-posix-proto
+	(lambda (name)
+		(define getenv (dlsym "getenv"))
+		(define lib (getenv "TRYLID_LIBRARY"))
+		(if (not lib) (error "$TRYLID_LIBRARY isn't set."))
+		(define file-name [[[String value_: lib] , '"/Posix/"] , [name asString]])
+		[Object _import: [file-name _stringValue]]
+		(define proto (import [name _stringValue]))
+		(add-shared-field-to name (trylid-proto Posix) proto)
+		proto
+		))
+
 (define load-trylid
 	(lambda ()
 		;; Create Standard Object, but not loaded into a namespace yet.
