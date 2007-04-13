@@ -76,12 +76,17 @@ prepare-to-emit
 
 
 jolt-expression
-	expr = Expression new: statements count + 1
-	expr at: 0 put: 'begin'
-	index = 1
-	for statement in statements
-		expr at: index put: statement jolt-expression
-		index += 1
+	expr = nil
+	num-statements = statements count
+	if num-statements == 1
+		expr = statements first-item jolt-expression
+	else
+		expr = Expression new: statements count + 1
+		expr at: 0 put: 'begin'
+		index = 1
+		for statement in statements
+			expr at: index put: statement jolt-expression
+			index += 1
 	if locals
 		locals-expr = Expression new: locals count
 		index = 0
