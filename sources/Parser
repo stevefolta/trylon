@@ -1139,8 +1139,7 @@ parse-equality-expression
 			message = 'isNil'
 			if token == '!='
 				message = 'notNil'
-			arguments: List new
-			expr = Send new: message object: expr arguments: arguments
+			expr = Send new: message object: expr arguments: List new
 		else
 			expr = make-binop-call: token with: expr and: expr2
 

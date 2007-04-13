@@ -175,7 +175,14 @@ parse-equality-expression
 		expr2 = parse-relational-expression
 		if expr2 == nil
 			expression-expected-after: word
-		expr = make-binop-call: word with: expr and: expr2
+		# Special-case "== nil" and "!= nil".
+		if expr2 is-a: LiteralNil
+			message = "isNil"
+			if word == "!="
+				message = "notNil"
+			expr = Send new: message object: expr arguments: List new
+		else
+			expr = make-binop-call: word with: expr and: expr2
 
 		word = words peek
 	
@@ -340,6 +347,9 @@ parse-primary-expression
 		if words next != ")"
 			parse-error: "\")\" expected."
 		return expr
+
+	else if word == "nil"
+		return LiteralNil new
 	
 	else
 		# Non-object function call.
@@ -404,7 +414,7 @@ parse-super-call
 
 
 make-binop-call: name with: object and: argument
-	arguments: List new
+	arguments = List new
 	arguments append: argument
 	return Send new: name object: object arguments: arguments
 
