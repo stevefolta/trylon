@@ -1,9 +1,6 @@
 trylon LiteralNil
 superclass Expression
 
-# This is only used for proto shared-field literals.  All other uses of "nil"
-# refer to a value in "Standard".
-
 create
 
 

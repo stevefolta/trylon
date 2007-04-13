@@ -1134,7 +1134,15 @@ parse-equality-expression
 		expr2 = parse-relational-expression
 		if expr2 == nil
 			expression-expected-after: token
-		expr = make-binop-call: token with: expr and: expr2
+		# Special-case "== nil" and "!= nil".
+		if expr2 is-a: LiteralNil
+			message = 'isNil'
+			if token == '!='
+				message = 'notNil'
+			arguments: List new
+			expr = Send new: message object: expr arguments: arguments
+		else
+			expr = make-binop-call: token with: expr and: expr2
 
 		token = current-token type
 	
@@ -1267,6 +1275,9 @@ parse-primary-expression
 
 		if name == "super"
 			return parse-super-call
+
+		else if name == "nil"
+			return LiteralNil new
 
 		# Non-object function call.
 		return FunctionCall new: name arguments: List new context: context
