@@ -39,7 +39,7 @@ fn string
 	coke
 		(let ((buf (malloc 8)))
 			(set-char@ buf (int@ self))
-			(set-char@ buf 1 0)
+			(set-char@ (+ buf 1) 0)
 			(trylid-string buf))
 fn int
 	coke
