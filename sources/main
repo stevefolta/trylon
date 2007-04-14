@@ -80,13 +80,14 @@ iff !in-jolt
 
 			if num-items == 2 && (this at: 0) == 'quote'
 				value = this at: 1
-				if (value is-a: InternedString) && 	--
-				   ((value first-character < `A`) || (value first-character >= `{`))
-					# Special-case non-alpha symbols.
-					stream write: "['\""
-					stream write: value string
-					stream write: "\" asSymbol]"
-					return
+				if (value is-a: InternedString)
+					c = value first-character
+				  if (c < `A`) || (c >= `{`) || (c == `[`) || (c == `]`)
+						# Special-case non-alpha symbols.
+						stream write: "['\""
+						stream write: value string
+						stream write: "\" asSymbol]"
+						return
 				stream write: "'"
 				emit-value: value on: stream
 				iff debug-emission
