@@ -287,3 +287,10 @@
 		[(trylid-proto Standard String) new_: id-string]
 		))
 
+
+;; Interoperability.
+
+(define-send '== Object arg
+	[self = arg])
+
+
