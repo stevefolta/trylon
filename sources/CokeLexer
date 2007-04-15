@@ -26,12 +26,12 @@ next-expr
 			return lex-list
 
 		`)`
-			throw MessageException: "Extra \")\" in Coke code."
+			throw MessageException new: "Extra \")\" in Coke code."
 
-		'['
+		`[`
 			return lex-send
-		']'
-			throw MessageException: "Extra \"]\" in Coke code."
+		`]`
+			throw MessageException new: "Extra \"]\" in Coke code."
 
 		`-`
 			c = peek-char
@@ -48,7 +48,8 @@ next-expr
 				start-char = p - 1
 				loop
 					c = peek-char
-					if c == ` ` || c == `\t` || c == `\n` || c == `\r` || c == `)` || 	--
+					if c == ` ` || c == `\t` || c == `\n` || c == `\r` || 	--
+					   c == `)` || c == `]` || 	--
 					   c == 0
 						break
 					next-char
@@ -62,7 +63,7 @@ lex-list
 		# Skip whitespace.
 		c = peek-non-whitespace-char
 		if c == 0
-			throw MessageException: "Unterminated list in Coke code."
+			throw MessageException new: "Unterminated list in Coke code."
 
 		# Are we done?
 		if c == `)`
@@ -84,7 +85,7 @@ lex-send
 	receiver = next-expr
 	message = next-expr
 	if receiver == nil || message == nil
-		throw MessageException: "Bad send in Coke code."
+		throw MessageException new: "Bad send in Coke code."
 
 	# Gather the arguments.
 	args = List new
@@ -92,7 +93,7 @@ lex-send
 		# Skip whitespace.
 		c = peek-non-whitespace-char
 		if c == 0
-			throw MessageException: "Unterminated send in Coke code."
+			throw MessageException new: "Unterminated send in Coke code."
 
 		# Are we done?
 		if c == `]`
@@ -102,10 +103,11 @@ lex-send
 		args append: next-expr
 	
 	# Build the Expression.
-	expr = Expression new: args count + 2
-	expr at: 0 put: receiver
-	expr at: 1 put: (Expression with: 'quote' with: message intern)
-	index = 2
+	expr = Expression new: args count + 3
+	expr at: 0 put: 'send'
+	expr at: 1 put: (Expression with: 'quote' with: message)
+	expr at: 2 put: receiver
+	index = 3
 	for item in args
 		expr at: index put: item
 		index += 1

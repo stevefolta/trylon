@@ -16,6 +16,12 @@
 (define memcpy (dlsym "memcpy"))
 (define GC_malloc (dlsym "GC_malloc"))
 (define GC_malloc_atomic (dlsym "GC_malloc_atomic"))
+(define fopen (dlsym "fopen"))
+(define fclose (dlsym "fclose"))
+(define fread (dlsym "fread"))
+(define fwrite (dlsym "fwrite"))
+(define feof (dlsym "feof"))
+(define unlink (dlsym "unlink"))
 
 
 ;; Defining and loading objects.

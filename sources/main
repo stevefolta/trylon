@@ -15,6 +15,9 @@ debug: message
 	iff debugging
 		print-line: message
 
+log: message
+	debug: message
+
 
 iff !in-jolt
 	class Expression
