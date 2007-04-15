@@ -301,6 +301,9 @@
 (define-send '== Object arg
 	[self = arg])
 
+(define-send '!= Object arg
+	(not [self == arg]))
+
 (define-send 'string SmallInteger
 	[(trylid-int [self _integerValue]) string])
 
