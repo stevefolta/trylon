@@ -27,6 +27,7 @@ run
 		debug: "Compiler run."
 		# Read the settings.
 		build-settings load
+		log: "build-settings loaded."
 
 		# Parse the arguments.
 		file-names = List new
