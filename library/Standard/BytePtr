@@ -36,7 +36,7 @@ fn >= arg (BytePtr) -> Bool
 
 fn + arg (BytePtr) -> BytePtr
 	coke
-		(byte-ptr (+ (int@ self) (int@ arg)))
+		(byte-ptr (+ (int@ self) [arg _integerValue]))
 fn - arg (BytePtr) -> BytePtr
 	coke
 		(trylid-int (- (int@ self) (int@ arg)))
