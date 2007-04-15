@@ -270,7 +270,7 @@ _stringValue
 		      (size (- [[self stopper] _ptr] start))
 		      (c-string (GC_malloc_atomic (+ size 1))))
 			(memcpy c-string start size)
-			(set-char@ (+ c-string size 1) 0)
+			(set-char@ (+ c-string size) 0)
 			c-string
 			)
 
