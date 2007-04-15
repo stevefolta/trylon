@@ -23,7 +23,7 @@ fn != symbol
 string
 	if type == 'name' || type == 'keyword'
 		return text
-	return type
+	return type string
 
 
 
