@@ -5,19 +5,19 @@ superclass FileDirectoryEntry
 field path
 
 
-fn create: path
+create: path
 	this path = path
 
-fn contents
+contents
 	size := this size
 	storage := BytePtr new: size
 	stream := this stream
 	stream read-buffer: storage length: size
 	return String new: storage to: storage + size
 
-fn stream
+stream
 	return InStream new: path
-fn output-stream
+output-stream
 	return OutStream new: path
 
 
