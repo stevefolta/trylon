@@ -232,6 +232,8 @@
 (define throw
 	(lambda (exception)
 		;;...
+		[StdOut print: [exception message]]
+		[StdOut cr]
 		nil
 		))
 
@@ -298,5 +300,8 @@
 
 (define-send '== Object arg
 	[self = arg])
+
+(define-send 'string SmallInteger
+	[(trylid-int [self _integerValue]) string])
 
 
