@@ -43,32 +43,32 @@ fn - arg (BytePtr) -> BytePtr
 
 fn deref-ptr -> BytePtr
 	coke
-		(byte-ptr (int@ self))
+		(byte-ptr (int@ (int@ self)))
 fn deref-int -> Int
 	coke
-		(trylid-int (int@ self))
+		(trylid-int (int@ (int@ self)))
 fn deref-char -> Char
 	coke
-		(trylid-char (int@ self))
+		(trylid-char (char@ (int@ self)))
 fn ptr-at: index (Int) -> BytePtr
 	coke
-		(byte-ptr (int@ self (int@ index)))
+		(byte-ptr (int@ (int@ self) (int@ index)))
 fn object-at: index (Int) -> Object
 	coke
-		(int@ self (int@ index))
+		(int@ (int@ self) (int@ index))
 fn char-at: index (Int) -> Char
 	coke
-		(trylid-char (int@ self (int@ index)))
+		(trylid-char (char@ (int@ self) (int@ index)))
 fn int-at: index (Int) -> Int
 	coke
-		(trylid-int (int@ self (int@ index)))
+		(trylid-int (int@ (int@ self) (int@ index)))
 fn byte-at: index (Int) -> Int
 	coke
-		(trylid-int (char@ (+ self (int@ index))))
+		(trylid-int (char@ (+ (int@ self) (int@ index))))
 
 fn as-object -> Object
 	coke
-		(int@ self)
+		(int@ (int@ self))
 
 fn ptr-at: index (Int) set-to: value (BytePtr)
 	coke
