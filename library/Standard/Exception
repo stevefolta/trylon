@@ -1,5 +1,6 @@
 trylid Exception
 
-fn message
+message
+	virtual
 
 

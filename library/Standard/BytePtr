@@ -7,7 +7,7 @@ new: size
 	return Implementation allocate-bytes: size
 
 new-non-pointer: size
-	return Implementation allocate-bytes-non-pointer: size
+	return Implementation allocate-bytes-non-ptr: size
 
 new_: _value
 	coke
