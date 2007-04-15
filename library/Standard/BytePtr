@@ -39,7 +39,7 @@ fn + arg (BytePtr) -> BytePtr
 		(byte-ptr (+ (int@ self) (int@ arg)))
 fn - arg (BytePtr) -> BytePtr
 	coke
-		(byte-ptr (- (int@ self) (int@ arg)))
+		(trylid-int (- (int@ self) (int@ arg)))
 
 fn deref-ptr -> BytePtr
 	coke
