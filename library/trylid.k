@@ -307,4 +307,8 @@
 (define-send 'string SmallInteger
 	[(trylid-int [self _integerValue]) string])
 
+(define Symbol (import "Symbol"))
+(define-send 'string Symbol
+	[(trylid-proto Standard String) new_: [self _stringValue]])
+
 
