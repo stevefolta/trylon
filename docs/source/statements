@@ -41,6 +41,19 @@ There are the usual flow-of-control statements:
 	
 	throw MessageException new: "Couldn't connect."
 
+	switch justification
+		'left'
+			# ...
+		'right'
+			# ...
+		'center', 'centered'
+			# ...
+		'justified'
+			# ...
+		else
+			throw MessageException new: "Bad justification: " + justification string
+
+
 =====
 
 Expression Statements
@@ -48,6 +61,7 @@ Expression Statements
 An expression on a line by itself also constitutes a statement:
 
 	print-line: "Hello world!"
+
 
 =====
 
@@ -75,6 +89,8 @@ Assignment can also be a shorthand for a function call:
 	(array at: 7) = "hello" 	# is the same as:
 	array at: 7 set-to: "hello"
 
+["set-to:" will likely be changed to "put:".]
+
 If the function being set is a unary function, rather than a keyword function, then the setter function's name is the unary function's name with a colon appended:
 
 	proto MyProto
@@ -89,5 +105,9 @@ If the function being set is a unary function, rather than a keyword function, t
 	obj = MyProto new
 	obj name = "Joey Jo Jo Shabbadoo"
 	print-line: obj name 	# Prints "Joey Jo Jo Shabbadoo Jr."
+
+(Indeed, the compiler treats *all* assignments this way, even those to local variables.  So "foo = bar" can always be written as "foo: bar".)
+
+Assignments are expressions, so you can do things like "x = y = 0".
 
 

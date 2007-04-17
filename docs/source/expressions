@@ -9,7 +9,7 @@ The usual string and numeric literals are supported.
 	"Some kinda something"
 	"The whole line.\n"
 	3
-	2.75
+	2.75       	[Not yet supported.]
 	0xDEADBEEF 	[Not yet supported.]
 
 Symbols are like strings, except that only one instance of a given symbol exists throughout the entire program.  This means they can be compared for equality without looking at all the characters, and thus can take the place of enumerations.
@@ -17,6 +17,15 @@ Symbols are like strings, except that only one instance of a given symbol exists
 	'primary'
 	if alignment == 'justified'
 		#...
+	switch alignment
+		'left'
+			# ...
+		'right'
+			# ...
+		'center'
+			# ...
+		'justified'
+			# ...
 
 Character literals are specified using backquotes:
 
@@ -49,7 +58,7 @@ Note that names can contain hyphens (although they can't start or end with a hyp
 
 Operators
 
-Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
+Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual (that is, C-style) rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
 
 There is a comma operator, but it's not used as it is in C.  Instead, it is used to create "Tuples", which are essentially a form of array:
 

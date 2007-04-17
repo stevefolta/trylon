@@ -109,6 +109,28 @@ A typical project will live in a directory, with its sources in a subdirectory c
 				Screen
 				Window
 
+Note that this could have all been defined within one file ("sources/main"), if that were more convenient:
+
+	trylid main
+	
+	proto Screen
+		# ...
+	
+	proto Window
+		# ...
+	
+	proto XWindows
+		proto Screen
+			# ...
+		proto Window
+			# ...
+	
+	proto Carbon
+		proto Screen
+			# ...
+		proto Window
+			# ...
+
 
 ====
 
