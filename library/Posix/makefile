@@ -3,7 +3,7 @@ IDFLAGS   = -g -I/home/steve/idst-svn/function/objects
 
 OBJEXT_SO       = .so
 
-FILES = Stat.so
+FILES = Stat.so Dirent.so
 
 all: $(FILES)
 

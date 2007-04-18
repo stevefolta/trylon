@@ -8,7 +8,15 @@ create: path
 	this path = path
 
 
-primitive-fn count
+count
+	coke
+		(define directory (opendir [[self path] _stringValue]))
+		(define num-entries 0)
+		(while true
+			(if (not (readdir directory)) (break))
+			(set num-entries (+ num-entries 1)))
+		(closedir directory)
+		(trylid-int num-entries)
 
 
 iterator
@@ -21,9 +29,41 @@ names
 	return Iterator new: path
 
 
-primitive-fn contains: name
-primitive-fn entry-is-directory: name
-primitive-fn create-subdirectory: name
+contains: name
+	iff !Darwin
+		return (Posix Stat stat: (path + "/" + name)) != nil
+	iff Darwin
+		# The stupid Mac OSX filesystem is case-insensitive, so simply doing a
+		# stat() won't tell us if a file with that (case-sensitive) name really
+		# exists.  stat() doesn't give us the filename, so we need to look through
+		# the whole directory.
+		coke
+			(define directory (opendir [[self path] _stringValue]))
+			(if (not directory) (return false))
+			(define name-str [name _stringValue])
+			(define found false)
+			(define Dirent (trylid-proto Standard Dirent))
+			(while true
+				(define entry (readdir directory))
+				(if (not entry) (break))
+				(if (== (strcmp name-str [[Dirent new_: entry] _name]) 0)
+					(begin
+						(set found true)
+						(break))))
+			found
+
+
+entry-is-directory: name
+	stat-buf = Posix Stat stat: path + "/" + name
+	if stat-buf
+		return stat-buf isDir
+	return false
+
+
+create-subdirectory: name
+	entry-path = path + "/" + name
+	coke
+		(mkdir [entry-path _stringValue] 511)
 
 
 at: name

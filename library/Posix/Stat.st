@@ -119,3 +119,12 @@ Stat _st_ctime
 Stat st_ctime 	[ ^SmallInteger value_: (self _st_ctime) ]
 
 
+[ true. false. ]
+
+Stat isDir
+{
+	mode_t mode = ((struct stat*) self)->st_mode;
+	return (S_ISDIR(mode) ? v_true : v_false);
+}
+
+

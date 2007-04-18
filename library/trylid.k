@@ -22,6 +22,10 @@
 (define fwrite (dlsym "fwrite"))
 (define feof (dlsym "feof"))
 (define unlink (dlsym "unlink"))
+(define opendir (dlsym "opendir"))
+(define readdir (dlsym "readdir"))
+(define closedir (dlsym "closedir"))
+(define mkdir (dlsym "mkdir"))
 
 
 ;; Defining and loading objects.
