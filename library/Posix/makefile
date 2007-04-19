@@ -1,5 +1,9 @@
+-include makefile.local
+ifndef IDFLAGS
+	IDFLAGS   = -g -I/home/steve/idst-svn/function/objects
+endif
+
 IDC   = idc -k # -O
-IDFLAGS   = -g -I/home/steve/idst-svn/function/objects
 
 OBJEXT_SO       = .so
 
