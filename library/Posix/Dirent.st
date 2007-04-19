@@ -11,20 +11,6 @@ Dirent new_: _value
 ]
 
 
-Dirent _ino
-{
-	return (oop) (long) ((struct dirent*) self->v__dirent)->d_ino;
-}
-Dirent ino 	[ ^SmallInteger value_: (self _ino) ]
-
-
-Dirent _off
-{
-	return (oop) (long) ((struct dirent*) self->v__dirent)->d_off;
-}
-Dirent off 	[ ^SmallInteger value_: (self _off) ]
-
-
 Dirent _reclen
 {
 	return (oop) (long) ((struct dirent*) self->v__dirent)->d_reclen;
