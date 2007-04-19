@@ -25,3 +25,11 @@ fn virtual
 	
 	throw MessageException new: "Attempt to call a virtual function!"
 
+etc.
+	# Calling this function serves as a placeholder.
+	iff etc-is-error
+		throw MessageException new: "There's an \"etc.\"!"
+	return nil
+
+
+
