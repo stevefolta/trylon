@@ -247,6 +247,23 @@
 		[node at: '1]
 		))
 
+(syntax trylid-tuple 	;; value...
+	(lambda (node compiler)
+		(define num-values [[node size] - '1])
+		(define _num-values [num-values _integerValue])
+		(define setters [Expression new: num-values])
+		(define index '0)
+		(while [index < num-values]
+			[setters at: index put:
+				`[tuple
+					 at: (trylid-int ,index)
+					 put: ,[node at: [index + '1]]]]
+			(set index [index + '1]))
+		`(let ((tuple [(trylid-proto Standard Tuple) new: (trylid-int ,num-values)]))
+			 ,@setters
+			 tuple)
+		))
+
 
 ;; Fake stuff to work around Jolt bugs (for now).
 

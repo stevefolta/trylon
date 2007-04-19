@@ -91,15 +91,18 @@ return-value
 # Top-level compilation.
 
 compile-program: compile-symbols
+	log: "Compiler compile-program."
 	# Create the .jolt-sources directory.
 	directory = FileDirectory new: "."
 	if !(directory entry-is-directory: build-settings jolt-sources-dir)
 		directory create-subdirectory: build-settings jolt-sources-dir
 	
 	# Load.
+	log: "Looking for main directory."
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"
 		main-directory = main-directory at: "sources"
+	log: "Looking for library."
 	library-path = find-library-path
 	if library-path == nil
 		throw MessageException new: 	--

@@ -18,10 +18,11 @@ prepare-to-emit
 
 
 jolt-expression
-	value = Expression new: members count
-	index = 0
+	expr = Expression new: members count + 1
+	expr at: 0 put: 'trylid-tuple'
+	index = 1
 	for member in members
-		value at: index put: member jolt-expression
+		expr at: index put: member jolt-expression
 		index += 1
-	return Expression with: 'quote' with: value
+	return expr
 
