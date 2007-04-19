@@ -241,8 +241,9 @@
 (define throw
 	(lambda (exception)
 		;;...
-		[StdOut print: [exception message]]
+		[StdOut nextPutAll: [exception message]]
 		[StdOut cr]
+		(exit)
 		nil
 		))
 
