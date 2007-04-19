@@ -42,7 +42,7 @@ contains: name
 			(if (not directory) (return false))
 			(define name-str [name _stringValue])
 			(define found false)
-			(define Dirent (trylid-proto Standard Dirent))
+			(define Dirent (trylid-posix-proto Dirent))
 			(while true
 				(define entry (readdir directory))
 				(if (not entry) (break))
@@ -80,13 +80,36 @@ at: name
 
 proto Iterator
 	superclass Standard Iterator
-	fields directory-handle current-name
+	fields _directory current-name
 
-	primitive-fn create: path
-	primitive-fn is-done
-	primitive-fn current-item
-	primitive-fn go-forward
+	create: path
+		coke
+			[self _directory: (opendir [path _stringValue])]
+		go-forward
+
+	is-done
+		return (current-name == nil)
+
+	current-item
+		return current-name
+
+	go-forward
+		coke
+			(define _directory [self _directory])
+			(if (not _directory) (return nil))
+			(define _entry (readdir _directory))
+			(if _entry
+				(begin
+					(define entry [(trylid-posix-proto Dirent) new_: _entry])
+					[self current-name:
+						[(trylid-proto Standard String) new_: [entry _name]]])
+				(begin
+					(closedir _directory)
+					[self _directory: nil]
+					[self current-name: nil]))
 
 	iterator
 		return this
+
+
 
