@@ -19,8 +19,7 @@ create: name parent: parent
 
 	# Will be added by Jolt code:
 	add-function: (PrimitiveFunction new: ".proto" on-proto: this)
-	add-function: (PrimitiveFunction new: ".proto-name" on-proto: this)
-	add-function: (PrimitiveFunction new: ".proto-context" on-proto: this)
+	add-function: (PrimitiveFunction new: ".parent-proto" on-proto: this)
 
 
 lookup-function: name

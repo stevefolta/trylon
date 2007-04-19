@@ -91,6 +91,8 @@
 					(vtable [proto _vtable]))
 			[vtable methodAt: '_sizeof put: closure-returner with: proto-size]
 			[vtable methodAt: '_debugName put: closure-returner with: name-string]
+			[vtable methodAt: '.proto put: closure-returner with: proto]
+			[vtable methodAt: '.parent-proto put: closure-returner with: superclass]
 			;; Add the slot accessors.
 			(let ((offset super-size)
 						(field-index '0))
@@ -169,6 +171,9 @@
 		;; Install Standard Object.
 		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
 		(read-trylid-proto-file '"Standard Object.k")
+		;; Augment Pepsi Object.
+		(add-shared-field .parent-proto Object nil)
+		(add-shared-field .proto Object Object)
 		;; Load the rest of Main
 		(read-trylid-proto-file '"Main.k")
 		))

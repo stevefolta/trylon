@@ -18,7 +18,7 @@ is-a: proto -> Bool
 	while cur-proto
 		if cur-proto == proto
 			return true
-		cur-proto = cur-proto .parent-context
+		cur-proto = cur-proto .parent-proto
 
 string
 	return "a " + this .proto-name
@@ -36,6 +36,9 @@ iterator -> Iterator
 	# Default: use a SingleObjectIterator.  Collections will 
 	# override this.
 	return SingleObjectIterator new: this
+
+.proto-name
+	return String new_: this _debugName
 
 
 
