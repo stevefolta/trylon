@@ -251,7 +251,7 @@ lowercase
 
 
 primitive-fn int -> Int
-	#...
+	etc.
 # primitive-fn float -> Float
 
 

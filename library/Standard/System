@@ -2,14 +2,14 @@ trylid System
 
 
 primitive-fn milliseconds
-	#...
+	etc.
 primitive-fn sleep-ms: milliseconds
-	#...
+	etc.
 
 primitive-fn num-garbage-collections
-	#...
+	etc.
 primitive-fn dump-gc-stats
-	#...
+	etc.
 
 debugger
 	coke
@@ -23,16 +23,16 @@ environment-variable-named: name
 			(if value [(trylid-proto Standard String) new_: value] nil))
 
 primitive-fn current-directory-path
-	#...
+	etc.
 primitive-fn current-directory-path: new-path
-	#...
+	etc.
 primitive-fn run-program: name arguments: arguments
-	#...
+	etc.
 primitive-fn sysname
-	#...
+	etc.
 	return ""
 primitive-fn strftime: time-int format: format
-	#...
+	etc.
 	return "!strftime not implemented!"
 
 

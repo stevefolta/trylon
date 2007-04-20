@@ -34,7 +34,6 @@ exists
 remove
 	coke
 		(unlink [[self path] _stringValue])
-	#...
 
 
 contents-of: path

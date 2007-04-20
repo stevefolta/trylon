@@ -67,7 +67,7 @@ fn string
 			(trylid-string buf))
 fn float
 	# How to do this?
-	#...
+	etc.
 fn char
 	coke
 		(trylid-char (int@ self))
