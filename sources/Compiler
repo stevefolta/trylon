@@ -111,9 +111,11 @@ compile-program: compile-symbols
 	status-reporter report: "Loading Main..."
 	status-reporter indent
 	main-proto = CompiledProto new: "Main" parent: nil
+	log: "About to setup-main."
 	main-proto 	--
 		setup-main: main-directory library-directory: library-directory 	--
 		compile-symbols: compile-symbols
+	log: "setup-main done."
 	proto-queue append: main-proto
 	status-reporter unindent
 
