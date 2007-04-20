@@ -17,8 +17,11 @@ debugger
 		      (kill (dlsym "kill")))
 			(kill (getpid) 5))
 
-primitive-fn environment-variable-named: name
-	#...
+environment-variable-named: name
+	coke
+		(let ((value (getenv [name _stringValue])))
+			(if value [(trylid-proto Standard String) new_: value] nil))
+
 primitive-fn current-directory-path
 	#...
 primitive-fn current-directory-path: new-path
