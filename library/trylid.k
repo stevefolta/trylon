@@ -156,7 +156,6 @@
 		(define file-name [[[String value_: lib] , '"/Posix/"] , [name asString]])
 		[Object _import: [file-name _stringValue]]
 		(define proto (import [name _stringValue]))
-		(add-shared-field-to name (trylid-proto Posix) proto)
 		proto
 		))
 

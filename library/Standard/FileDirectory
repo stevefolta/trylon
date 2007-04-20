@@ -100,7 +100,7 @@ proto Iterator
 			(define _entry (readdir _directory))
 			(if _entry
 				(begin
-					(define entry [(trylid-posix-proto (quote Dirent)) new_: _entry])
+					(define entry [[(trylid-proto Posix) Dirent] new_: _entry])
 					[self current-name:
 						[(trylid-proto Standard String) new_: [entry _name]]])
 				(begin
