@@ -80,6 +80,8 @@ jolt-expression
 	num-statements = statements count
 	if num-statements == 1
 		expr = statements first-item jolt-expression
+	else if num-statements == 0
+		return Expression with: 'begin' with: 'nil'
 	else
 		expr = Expression new: statements count + 1
 		expr at: 0 put: 'begin'
