@@ -26,6 +26,7 @@
 (define readdir (dlsym "readdir"))
 (define closedir (dlsym "closedir"))
 (define mkdir (dlsym "mkdir"))
+(define getenv (dlsym "getenv"))
 
 
 ;; Defining and loading objects.
