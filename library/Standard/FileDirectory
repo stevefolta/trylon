@@ -42,7 +42,7 @@ contains: name
 			(if (not directory) (return false))
 			(define name-str [name _stringValue])
 			(define found false)
-			(define Dirent (trylid-posix-proto Dirent))
+			(define Dirent (trylid-posix-proto (quote Dirent)))
 			(while true
 				(define entry (readdir directory))
 				(if (not entry) (break))
@@ -100,7 +100,7 @@ proto Iterator
 			(define _entry (readdir _directory))
 			(if _entry
 				(begin
-					(define entry [(trylid-posix-proto Dirent) new_: _entry])
+					(define entry [(trylid-posix-proto (quote Dirent)) new_: _entry])
 					[self current-name:
 						[(trylid-proto Standard String) new_: [entry _name]]])
 				(begin
