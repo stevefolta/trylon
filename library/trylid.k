@@ -271,6 +271,18 @@
 			 tuple)
 		))
 
+(syntax super-send ; (super-send selector receiver args...)
+	;; There's some kind of scope problem that means we can't use the same names
+	;; as (send) does (__r, __c), hence __sr and __sc.  (Actually, only __r is
+	;; known to be affected, but we do __c as well just to be sure.)
+	(lambda (node compiler)
+		(or [[node size] >= '3] [compiler errorSyntax: node])
+		(let ((selector [node second])
+					(receiver [node third]))
+			`(let ((__sr ,receiver))
+				 (let ((__sc (_bind ',selector [__sr .parent-proto])))
+					 ((long@ __sc) __sc __sr __sr ,@[node copyFrom: '3]))))))
+
 
 ;; Fake stuff to work around Jolt bugs (for now).
 
