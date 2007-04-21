@@ -155,7 +155,7 @@ root-proto: main-proto
 	object-function = standard-package lookup-function: "Object"
 	if object-function == nil
 		throw MessageException new: "Standard Object is missing!"
-	if !object-function is-a: ProtoFunction
+	if !(object-function is-a: ProtoFunction)
 		throw MessageException new: "Standard Object is not a prototype!"
 	return object-function proto
 
