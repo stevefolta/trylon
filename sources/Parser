@@ -1037,9 +1037,11 @@ parse-binary-expression
 			expression-expected-after: token
 		arguments = List new
 		arguments append: expr2
+		token-string = token string
 		call = 	--
-			Send new: (token substr: 0 length: token length - 1) 	--
-			object: expr arguments: arguments
+			Send	--
+				new: (token-string substr: 0 length: token-string length - 1) 	--
+				object: expr arguments: arguments
 		if (expr is-a: FunctionCall) || (expr is-a: Send)
 			setter = expr copy
 			setter convert-to-setter-call: call
