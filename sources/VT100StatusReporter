@@ -55,12 +55,12 @@ unindent
 
 back-up-one-line
 	# Go up a line.
-	print: "\033[A"
+	print: "\e[A"
 
 	# Go to the beginning of the line.
-	print: "\015"
+	print: "\r"
 
 	# Erase the line.
-	print: "\033[2K"
+	print: "\e[2K"
 
 
