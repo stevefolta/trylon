@@ -222,10 +222,10 @@
 					 (,[node at: '1] nil))
 			(while (not [.iterator is-done])
 				(set ,[node at: '1] [.iterator current-item])
-				,@[node copyFrom: 3]
+				,@[node copyFrom: '3]
 				[.iterator go-forward]
 				)
-			 )
+			)
 		))
 
 (syntax blank-line
