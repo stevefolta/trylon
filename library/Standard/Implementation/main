@@ -13,3 +13,6 @@ allocate-bytes-non-ptr: num-bytes
 	coke
 		(byte-ptr (GC_malloc_atomic [num-bytes _integerValue]))
 
+
+.target-language = "Coke"
+

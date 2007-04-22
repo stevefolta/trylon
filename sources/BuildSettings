@@ -17,6 +17,8 @@ create
 	if !sysname is-empty
 		(dictionary at: sysname) = sysname
 	(dictionary at: "in-trylid") = "true"
+	if Implementation .target-language == "Coke"
+		(dictionary at: "in-jolt") = "true"
 
 
 has-symbol: name
