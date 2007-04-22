@@ -159,26 +159,6 @@
 		proto
 		))
 
-(define load-trylid
-	(lambda ()
-		;; Create Standard Object, but not loaded into a namespace yet.
-		(define trylid-root-object (create-trylid-proto 'Object Object '()))
-		;; Create Main.
-		(set Main (create-trylid-proto 'Main trylid-root-object '()))
-		(add-shared-field Main Main Main)
-		;; Create Standard.
-		(trylid-proto Standard)
-		;; Install Standard Object.
-		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
-		(read-trylid-proto-file '"Standard Object.k")
-		;; Augment Pepsi Object.
-		(add-shared-field .parent-proto Object nil)
-		(add-shared-field .proto Object Object)
-		;; Load the rest of Main
-		(read-trylid-proto-file '"Main.k")
-		))
-
-
 
 ;; Statements.
 
@@ -349,5 +329,34 @@
 (define Symbol (import "Symbol"))
 (define-send 'string Symbol
 	[(trylid-proto Standard String) new_: [self _stringValue]])
+
+
+
+;; Loading (this is last so it can use all the above).
+
+(define load-trylid
+	(lambda ()
+		;; Create Standard Object, but not loaded into a namespace yet.
+		(define trylid-root-object (create-trylid-proto 'Object Object '()))
+		;; Create Main.
+		(set Main (create-trylid-proto 'Main trylid-root-object '()))
+		(add-shared-field Main Main Main)
+		;; Create Standard.
+		(trylid-proto Standard)
+		;; Install Standard Object.
+		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
+		(read-trylid-proto-file '"Standard Object.k")
+		;; Augment Pepsi Object.
+		(add-shared-field .parent-proto Object nil)
+		(add-shared-field .proto Object Object)
+		;; Set "Standard Implementation .target-language".  We can't use
+		;; (trylid-string) until after "Standard Implementation" is loaded, so be
+		;; careful what order we do this in.
+		(trylid-proto Standard Implementation)
+		(add-shared-field .target-language (trylid-proto Standard Implementation)
+			(trylid-string "Coke"))
+		;; Load the rest of Main
+		(read-trylid-proto-file '"Main.k")
+		))
 
 
