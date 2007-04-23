@@ -21,7 +21,7 @@ fn ^ arg (Bool) -> Bool
 
 fn int
 	coke
-		return (int@ _self)
+		(return (int@ _self))
 
 fn string
 	if this
