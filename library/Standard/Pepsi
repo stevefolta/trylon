@@ -3,5 +3,8 @@ trylid Pepsi
 
 doesNotUnderstand: selector
 	coke
-		(import [selector _stringValue])
+		(let ((value (import [selector _stringValue])))
+			(add-shared-field-to selector self value)
+			(long@ [[self _vtable] lookup: selector] 1)
+			)
 
