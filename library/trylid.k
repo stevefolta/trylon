@@ -38,6 +38,7 @@
 (define StandardString nil)
 (define StandardInt nil)
 (define StandardChar nil)
+(define StandardImplementation nil)
 
 (define shared-field-getter
 	(lambda (_closure _self self)
@@ -370,6 +371,7 @@
 		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
 		(read-trylid-proto-file '"Standard Object.k")
 		;; Primitive types in Standard that we want fast access to.
+		(set StandardImplementation (trylid-proto Standard Implementation))
 		(set StandardBytePtr (trylid-proto Standard BytePtr))
 		(set StandardInt (trylid-proto Standard Int))
 		(set StandardChar (trylid-proto Standard Char))

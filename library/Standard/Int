@@ -1,7 +1,10 @@
 trylid Int
 
 new
-	return Implementation allocate-object: this with-extra-slots: 1
+	# Written in Coke for maximum speed.
+	# return Implementation allocate-object: this with-extra-slots: 1
+	coke
+		[StandardImplementation allocate-object: self with-extra-slots: (quote 1)]
 
 fn == arg (Int) -> Bool
 	coke

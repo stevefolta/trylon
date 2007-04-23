@@ -121,6 +121,9 @@ Timing
 Original:                        2:12.
 "self" instead of BytePtr/Char:  1:16.
 Same, with Int added:            1:15.
+"new"s rewritten:                0:19.
+
+The rewritten "new"s (BytePtr/Char/Int) are rewritten so they reference Implementation as a Jolt variable (StandardImplementation) instead of thru (trylid-proto).
 
 
 =====
