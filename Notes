@@ -108,6 +108,7 @@ Always thru trylid-proto:  1:45.
 "Quicker" (trylid-char):   0:58.
 "Quicker" (trylid-string): 1.00.
 
+At this point, the Trylid compiler loads itself (mostly; it did so completely recently, but not at the moment) but doesn't do codegen.  It became obvious that the generated Jolt code is much slower than Trylon's generated C, by about an order of magnitude.  My first theory was that (trylid-proto) might be the cause.  And it turned out that it was called surprisingly often: 7,636,346 times.  An attempt to eliminate its use for proto access failed due to dependency issues (I forget the details), so I tried just optimizing the primitives, as seen above.
 
 =====
 
