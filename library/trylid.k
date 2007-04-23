@@ -152,6 +152,9 @@
 		`(get-trylid-proto '(,@[node copyFrom: '1]))
 		))
 
+;; UNUSED
+;; This was part of an attempt to speed up proto access by loading all a
+;; proto's subprotos when it loaded, but that had dependency problems.
 (syntax new-trylid-proto
 	(lambda (node compiler)
 		(let ((proto Main)
