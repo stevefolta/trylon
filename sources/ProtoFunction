@@ -12,6 +12,23 @@ emit-call: arguments
 	return proto access
 
 
+emit-code
+	return nil
+	####
+	list = List new
+	namespace = proto
+	while !namespace is-main
+		list push-front: namespace
+		namespace = namespace parent
+	expr = Expression new: list count + 1
+	expr at: 0 put: 'trylid-proto'
+	index = 1
+	for namespace in list
+		expr at: index put: namespace name intern
+		index += 1
+	return expr
+
+
 name
 	return proto name
 

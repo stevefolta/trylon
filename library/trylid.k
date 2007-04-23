@@ -34,6 +34,10 @@
 ;; These globals will be set later:
 (define Main nil)
 (define trylid-root-object nil)
+(define StandardBytePtr nil)
+(define StandardString nil)
+(define StandardInt nil)
+(define StandardChar nil)
 
 (define shared-field-getter
 	(lambda (_closure _self self)
@@ -146,6 +150,22 @@
 (syntax trylid-proto
 	(lambda (node compiler)
 		`(get-trylid-proto '(,@[node copyFrom: '1]))
+		))
+
+(syntax new-trylid-proto
+	(lambda (node compiler)
+		(let ((proto Main)
+					(which-name '1)
+					(num-names [node size])
+					(expr 'Main))
+			(while [which-name < num-names]
+				(let ((name [node at: which-name]))
+					(set expr `(send ',name ,expr))
+					)
+				(set which-name [which-name + '1])
+				)
+			expr
+			)
 		))
 
 (define trylid-posix-proto
@@ -287,7 +307,7 @@
 (define byte-ptr
 	(lambda (value)
 		;; Make a BytePtr with the value.
-		(let ((byte-ptr [(trylid-proto Standard BytePtr) new]))
+		(let ((byte-ptr [StandardBytePtr new]))
 			(set-long@ byte-ptr value)
 			byte-ptr
 			)
@@ -296,14 +316,14 @@
 (define trylid-int
 	(lambda (value)
 		;; Can't use "Int new" here, as it would recurse.
-		(let ((int [[(trylid-proto Standard Int) _vtable] _alloc: 4]))
+		(let ((int [[StandardInt _vtable] _alloc: 4]))
 			(set-long@ int value)
 			int
 			)))
 
 (define trylid-char
 	(lambda (value)
-		(let ((char-obj [(trylid-proto Standard Char) new]))
+		(let ((char-obj [StandardChar new]))
 			(set-long@ char-obj value)
 			char-obj
 			)))
@@ -311,7 +331,7 @@
 
 (define trylid-string
 	(lambda (id-string)
-		[(trylid-proto Standard String) new_: id-string]
+		[StandardString new_: id-string]
 		))
 
 
@@ -328,7 +348,7 @@
 
 (define Symbol (import "Symbol"))
 (define-send 'string Symbol
-	[(trylid-proto Standard String) new_: [self _stringValue]])
+	[StandardString new_: [self _stringValue]])
 
 
 
@@ -346,6 +366,11 @@
 		;; Install Standard Object.
 		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
 		(read-trylid-proto-file '"Standard Object.k")
+		;; Primitive types in Standard that we want fast access to.
+		(set StandardBytePtr (trylid-proto Standard BytePtr))
+		(set StandardInt (trylid-proto Standard Int))
+		(set StandardChar (trylid-proto Standard Char))
+		(set StandardString (trylid-proto Standard String))
 		;; Augment Pepsi Object.
 		(add-shared-field .parent-proto Object nil)
 		(add-shared-field .proto Object Object)

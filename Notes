@@ -99,4 +99,16 @@ Shared fields:
 
 =====
 
+Timing
+	[2007.4.22]
+
+Always thru trylid-proto:  1:45.
+"Quicker" (byte-ptr):      1:47. (!)
+"Quicker" (trylid-int):    1.24.
+"Quicker" (trylid-char):   0:58.
+"Quicker" (trylid-string): 1.00.
+
+
+=====
+
 
