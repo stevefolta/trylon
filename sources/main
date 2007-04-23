@@ -136,6 +136,10 @@ iff !in-jolt
 			else
 				stream write: value string
 
+iff in-jolt
+	class Expression
+		superclass Pepsi Expression
+
 
 iff !in-jolt
 	class InternedString

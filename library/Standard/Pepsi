@@ -1,0 +1,7 @@
+trylid Pepsi
+
+
+doesNotUnderstand: selector
+	coke
+		(import [selector _stringValue])
+
