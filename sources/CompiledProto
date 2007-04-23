@@ -335,7 +335,7 @@ emit-jolt-file
 		status-reporter unindent
 	
 	iff debug-loading
-		stream write-line: "(say \"" + name + " loaded.\")"
+		stream write-line: "(say \"; " + name + " loaded.\")"
 
 	stream close
 	status-reporter unindent
