@@ -115,4 +115,14 @@ I'm thinking this can be fixed in the general case by having a proto set up auto
 
 =====
 
+Timing
+	[2007.4.23]
+
+Original:                        2:12.
+"self" instead of BytePtr/Char:  1:16.
+Same, with Int added:            1:15.
+
+
+=====
+
 

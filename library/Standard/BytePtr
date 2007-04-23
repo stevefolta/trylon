@@ -1,7 +1,7 @@
 trylid BytePtr
 
 new
-	return Implementation allocate-object: BytePtr with-extra-slots: 1
+	return Implementation allocate-object: this with-extra-slots: 1
 
 new: size
 	return Implementation allocate-bytes: size

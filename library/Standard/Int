@@ -1,7 +1,7 @@
 trylid Int
 
 new
-	return Implementation allocate-object: Int with-extra-slots: 1
+	return Implementation allocate-object: this with-extra-slots: 1
 
 fn == arg (Int) -> Bool
 	coke
