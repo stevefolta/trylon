@@ -321,18 +321,31 @@ emit-jolt-file
 		stream write-line
 		stream write-line
 
+	# Add loaders for the subprotos.
+	got-one = false
+	for function in functions values
+		if function is-a: ProtoFunction
+			compiled-code = function emit-code
+			if compiled-code
+				compiled-code emit: stream
+				stream write-line
+				got-one = true
+	if got-one
+		stream write-line
+
 	# Compile all the functions.
 	for function in functions values
-		status-reporter report: "Emitting " + function name + "..."
-		status-reporter indent
-		compiled-code = function emit-code
-		if compiled-code
-			compiled-code emit: stream
-			stream write-line
-			iff hacky-backtrace
-				stream write-line: "(name-last-lambda \"" + function name + "\")"
-			stream write-line
-		status-reporter unindent
+		if !(function is-a: ProtoFunction)
+			status-reporter report: "Emitting " + function name + "..."
+			status-reporter indent
+			compiled-code = function emit-code
+			if compiled-code
+				compiled-code emit: stream
+				stream write-line
+				iff hacky-backtrace
+					stream write-line: "(name-last-lambda \"" + function name + "\")"
+				stream write-line
+			status-reporter unindent
 	
 	iff debug-loading
 		stream write-line: "(say \"; " + name + " loaded.\")"
@@ -353,7 +366,7 @@ access
 			list push-front: namespace
 			namespace = namespace parent
 		expr = Expression new: list count + 1
-		expr at: 0 put: 'trylid-proto'
+		expr at: 0 put: 'new-trylid-proto'
 		index = 1
 		for namespace in list
 			expr at: index put: namespace name intern

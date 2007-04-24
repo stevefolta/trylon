@@ -13,15 +13,15 @@ emit-call: arguments
 
 
 emit-code
-	return nil
-	####
+	if proto is-main
+		return nil
 	list = List new
 	namespace = proto
 	while !namespace is-main
 		list push-front: namespace
 		namespace = namespace parent
 	expr = Expression new: list count + 1
-	expr at: 0 put: 'trylid-proto'
+	expr at: 0 put: 'install-proto-loader'
 	index = 1
 	for namespace in list
 		expr at: index put: namespace name intern

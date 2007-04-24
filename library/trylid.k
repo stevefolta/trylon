@@ -172,6 +172,47 @@
 			)
 		))
 
+(define-type TrylidLoadSpec Object (parent name filename))
+(define proto-loader
+	(lambda (_closure _self self)
+		(define load-spec (long@ _closure 1))
+		(read-trylid-proto-file [[load-spec filename] , '".k"])
+		[[load-spec parent] perform: [load-spec name]]
+		))
+(define install-trylid-proto-loader-into
+	(lambda (names)
+		(let ((parent-proto Main)
+					(which-name '0)
+					(last-name [[names size] - '1])
+					(filename nil)
+					(proto-name [names at: last-name])
+					(proto-name-string [proto-name asString]))
+			(while [which-name < last-name]
+				(let ((name [names at: which-name])
+							(name-string [name asString]))
+					(set filename
+						(if filename [[filename , '" "] , name-string] name-string))
+					(set parent-proto [parent-proto perform: name])
+					)
+				(set which-name [which-name + '1])
+				)
+			(if [[parent-proto _vtable] lookup: proto-name]
+				(return [parent-proto perform: proto-name]))
+			(set filename
+				(if filename [[filename , '" "] , proto-name-string] proto-name-string))
+			(define load-spec [TrylidLoadSpec new])
+			[load-spec parent: parent-proto]
+			[load-spec name: proto-name]
+			[load-spec filename: filename]
+			[[parent-proto _vtable]
+				methodAt: proto-name put: proto-loader with: load-spec]
+			)
+		))
+(syntax install-proto-loader
+	(lambda (node compiler)
+		`(install-trylid-proto-loader-into '(,@[node copyFrom: '1]))
+		))
+
 (define trylid-posix-proto
 	(lambda (name)
 		(define getenv (dlsym "getenv"))
