@@ -125,6 +125,9 @@ Same, with Int added:            1:15.
 
 The rewritten "new"s (BytePtr/Char/Int) are rewritten so they reference Implementation as a Jolt variable (StandardImplementation) instead of thru (trylid-proto).
 
+New proto-loading scheme:
+Orig: 22.
+New:  15.5.
 
 =====
 
