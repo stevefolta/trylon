@@ -12,6 +12,9 @@ primitive-fn incremental-gc: enable [Bool]
 primitive-fn gc-a-little -> Bool
 
 
+.target-language = "C"
+
+
 # Copyright 2005-2007 Steve Folta
 # See the License file.
 
