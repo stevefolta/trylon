@@ -508,15 +508,21 @@ parse-type-spec
 parse-proto-spec
 	type = nil
 	cur-context = context
-	last-name = nil
 	while current-token == 'name'
 		# Find the prototype.
-		last-name = current-token
-		type-function = cur-context lookup-function: current-token text
-		if type-function == nil || !(type-function is-a: ProtoFunction)
-			parse-error: "Unknown prototype."
+		type-function = nil
+		if type == nil
+			# The first name can be anything in scope.
+			type-function = cur-context lookup-function: current-token text
+			if type-function == nil || !(type-function is-a: ProtoFunction)
+				parse-error: "Unknown prototype."
+			type = type-function proto
+		else
+			# Other names must be subprotos of the proto specified so far.
+			type = cur-context get-subproto: current-token text
+			if type == nil
+				parse-error: "Unknown prototype."
 		consume-token
-		type = type-function proto
 		cur-context = type
 	
 	# Make sure we got a proto.
