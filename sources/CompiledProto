@@ -203,7 +203,6 @@ setup-main: main-directory library-directory: library-directory 	--
 	# Load Standard.
 	log: "Loading Standard."
 	standard-proto = get-subproto: "Standard"
-	log: "Back from get-subproto:."
 	if standard-proto == nil
 		throw MessageException new: "The Standard proto can't be found!"
 	uses-protos append: standard-proto
@@ -215,6 +214,17 @@ setup-main: main-directory library-directory: library-directory 	--
 	proto-function = ProtoFunction new: posix-proto
 	functions at: "Posix" set-to: proto-function
 	the-compiler proto-queue append: posix-proto
+
+	# Set up Standard Pepsi.
+	log: "Setting up Pepsi."
+	standard-directory = library-directory at: "Standard"
+	pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
+	proto-function = ProtoFunction new: pepsi-proto
+	standard-proto functions at: "Pepsi" set-to: proto-function
+	parser = 	--
+		Parser new: (standard-directory at: "Pepsi") contents context: standard-proto
+	parser parse-proto-file: pepsi-proto
+	the-compiler proto-queue append: pepsi-proto
 
 	# Add "nil", "true", and "false" to Standard.
 	log: "Adding true/false/nil."
