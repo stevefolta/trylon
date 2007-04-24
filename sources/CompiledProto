@@ -269,7 +269,7 @@ prepare-to-emit
 
 
 emit-code
-	status-reporter = Compiler status-reporter
+	status-reporter = the-compiler status-reporter
 	status-reporter report: "Generating code for " + name + "..."
 	status-reporter indent
 
@@ -289,7 +289,7 @@ emit-code
 
 
 emit-jolt-file
-	status-reporter = Compiler status-reporter
+	status-reporter = the-compiler status-reporter
 	status-reporter report: "Emitting " + name + "..."
 	status-reporter indent
 
