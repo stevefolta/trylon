@@ -366,7 +366,7 @@ access
 			list push-front: namespace
 			namespace = namespace parent
 		expr = Expression new: list count + 1
-		expr at: 0 put: 'new-trylid-proto'
+		expr at: 0 put: 'trylid-proto'
 		index = 1
 		for namespace in list
 			expr at: index put: namespace name intern

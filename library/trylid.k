@@ -148,15 +148,12 @@
 			)
 		))
 
-(syntax trylid-proto
+(syntax old-trylid-proto
 	(lambda (node compiler)
 		`(get-trylid-proto '(,@[node copyFrom: '1]))
 		))
 
-;; UNUSED
-;; This was part of an attempt to speed up proto access by loading all a
-;; proto's subprotos when it loaded, but that had dependency problems.
-(syntax new-trylid-proto
+(syntax trylid-proto
 	(lambda (node compiler)
 		(let ((proto Main)
 					(which-name '1)
@@ -407,7 +404,7 @@
 		(set Main (create-trylid-proto 'Main trylid-root-object '()))
 		(add-shared-field Main Main Main)
 		;; Create Standard.
-		(trylid-proto Standard)
+		(get-trylid-proto '(Standard))
 		;; Install Standard Object.
 		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
 		(read-trylid-proto-file '"Standard Object.k")
