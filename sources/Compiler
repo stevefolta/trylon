@@ -134,11 +134,13 @@ compile-program: compile-symbols
 	main-proto ensure-superclasses: object-class
 
 	# Emit the classes and packages.
-	status-reporter report: "Emitting code..."
-	status-reporter indent
-	for proto in proto-queue
-		is-changed = proto emit-code
-	status-reporter unindent
+	### Emission is broken at the moment when running under Coke.
+	iff !in-trylid
+		status-reporter report: "Emitting code..."
+		status-reporter indent
+		for proto in proto-queue
+			is-changed = proto emit-code
+		status-reporter unindent
 
 	# Another round of ensure-superclasses, to get classes loaded during 
 	# the emit.

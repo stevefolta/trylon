@@ -19,7 +19,7 @@ log: message
 	debug: message
 
 
-iff !in-jolt
+iff !in-trylid
 	class Expression
 		field tuple
 
@@ -136,12 +136,12 @@ iff !in-jolt
 			else
 				stream write: value string
 
-iff in-jolt
+iff in-trylid
 	class Expression
 		superclass Pepsi Expression
 
 
-iff !in-jolt
+iff !in-trylid
 	class InternedString
 		field string
 
@@ -157,9 +157,9 @@ iff !in-jolt
 
 extend String
 	intern
-		iff !in-jolt
+		iff !in-trylid
 			return InternedString new: this
-		iff in-jolt
+		iff in-trylid
 			return this asSymbol
 
 
