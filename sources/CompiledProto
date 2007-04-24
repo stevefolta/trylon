@@ -196,19 +196,16 @@ setup-main: main-directory library-directory: library-directory 	--
 	# but we won't be able to compile its "main" until the library directory
 	# is in the "directories" and Standard is visible.  So add both, *then*
 	# compile the "main"s.
-	log: "Adding directories."
 	directories append: main-directory
 	directories append: library-directory
 
 	# Load Standard.
-	log: "Loading Standard."
 	standard-proto = get-subproto: "Standard"
 	if standard-proto == nil
 		throw MessageException new: "The Standard proto can't be found!"
 	uses-protos append: standard-proto
 
 	# Set up Posix.
-	log: "Setting up Posix."
 	posix-directory = library-directory at: "Posix"
 	posix-proto = PosixProto new: "Posix" parent: this directory: posix-directory
 	proto-function = ProtoFunction new: posix-proto
@@ -216,7 +213,6 @@ setup-main: main-directory library-directory: library-directory 	--
 	the-compiler proto-queue append: posix-proto
 
 	# Set up Standard Pepsi.
-	log: "Setting up Pepsi."
 	standard-directory = library-directory at: "Standard"
 	pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
 	proto-function = ProtoFunction new: pepsi-proto
@@ -227,26 +223,21 @@ setup-main: main-directory library-directory: library-directory 	--
 	the-compiler proto-queue append: pepsi-proto
 
 	# Add "nil", "true", and "false" to Standard.
-	log: "Adding true/false/nil."
 	standard-proto functions at: "nil" set-to: NilFunction new
 	standard-proto functions at: "true" set-to: (BoolLiteralFunction new: true)
 	standard-proto functions at: "false" set-to: (BoolLiteralFunction new: false)
 
 	# Load our "main"s
-	log: "Loading our mains."
 	for directory in directories
 		if directory contains: "main"
 			parser = Parser new: (directory at: "main") contents context: this
 			parser parse-proto-file: this
 	
 	# Load up standard protos.
-	log: "Loading standard protos."
 	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
 		standard-proto lookup-function: proto-name
 	
-	log: "Setting \"Main\"."
 	functions at: "Main" set-to: (ProtoFunction new: this)
-	log: "setup-main exiting."
 
 
 ensure-superclasses: object-proto

@@ -6,9 +6,7 @@ fields status-reporter
 
 
 class-fn compile: arguments
-	debug: "About to create compiler."
 	the-compiler = Compiler new: arguments
-	debug: "About to compiler run:."
 	the-compiler run
 	return the-compiler return-value
 
@@ -16,18 +14,14 @@ class-fn compile: arguments
 create: arguments
 	this arguments = arguments
 	this successful = true
-	debug: "Loading BuildSettings."
 	this build-settings = BuildSettings new
-	debug: "Loading List."
 	proto-queue = List new
 
 
 run
 	try
-		debug: "Compiler run."
 		# Read the settings.
 		build-settings load
-		log: "build-settings loaded."
 
 		# Parse the arguments.
 		file-names = List new
@@ -93,18 +87,15 @@ return-value
 # Top-level compilation.
 
 compile-program: compile-symbols
-	log: "Compiler compile-program."
 	# Create the .jolt-sources directory.
 	directory = FileDirectory new: "."
 	if !(directory entry-is-directory: build-settings jolt-sources-dir)
 		directory create-subdirectory: build-settings jolt-sources-dir
 	
 	# Load.
-	log: "Looking for main directory."
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"
 		main-directory = main-directory at: "sources"
-	log: "Looking for library."
 	library-path = find-library-path
 	if library-path == nil
 		throw MessageException new: 	--
@@ -113,11 +104,9 @@ compile-program: compile-symbols
 	status-reporter report: "Loading Main..."
 	status-reporter indent
 	main-proto = CompiledProto new: "Main" parent: nil
-	log: "About to setup-main."
 	main-proto 	--
 		setup-main: main-directory library-directory: library-directory 	--
 		compile-symbols: compile-symbols
-	log: "setup-main done."
 	proto-queue append: main-proto
 	status-reporter unindent
 
