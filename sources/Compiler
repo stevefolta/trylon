@@ -117,10 +117,9 @@ compile-program: compile-symbols
 		proto prepare-to-emit
 	status-reporter unindent
 
-	# Make every class without a superclass be a subclass of Standard Object.
+	# Set up Standard Object.
 	object-class = root-proto: main-proto
 	object-class is-root-object = true
-	main-proto ensure-superclasses: object-class
 
 	# Emit the classes and packages.
 	### Emission is broken at the moment when running under Coke.
@@ -129,12 +128,6 @@ compile-program: compile-symbols
 	for proto in proto-queue
 		is-changed = proto emit-code
 	status-reporter unindent
-
-	# Another round of ensure-superclasses, to get classes loaded during 
-	# the emit.
-	# (This might not be necessary, now that "CompiledProto prepare-to-emit"
-	# ensures that it has a superclass).
-	main-proto ensure-superclasses: object-class
 
 	status-reporter report: "Done."
 
