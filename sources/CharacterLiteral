@@ -1,5 +1,5 @@
 trylon CharacterLiteral
-superclass Expression
+superclass TrylidExpression
 
 fields char
 

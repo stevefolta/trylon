@@ -1,5 +1,5 @@
 trylon ShortCircuitNot
-superclass Expression
+superclass TrylidExpression
 
 fields expr
 

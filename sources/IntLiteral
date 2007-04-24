@@ -1,5 +1,5 @@
 trylon IntLiteral
-superclass Expression
+superclass TrylidExpression
 
 fields value
 

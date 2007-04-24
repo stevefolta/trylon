@@ -1,5 +1,5 @@
 trylon StringLiteral
-superclass Expression
+superclass TrylidExpression
 
 field value
 

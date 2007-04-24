@@ -1,5 +1,5 @@
 trylon SuperCall
-superclass Expression
+superclass TrylidExpression
 
 fields name arguments
 

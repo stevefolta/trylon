@@ -1,5 +1,5 @@
 trylon DictLiteral
-superclass Expression
+superclass TrylidExpression
 
 fields dict index
 
