@@ -274,6 +274,10 @@ _stringValue
 			c-string
 			)
 
+asSymbol
+	coke
+		[Symbol intern: self]
+
 
 # ===== Debugging
 
