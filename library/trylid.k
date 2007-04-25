@@ -385,8 +385,19 @@
 (define-send '!= Object arg
 	(not [self == arg]))
 
+(define-send 'is-a: Object arg
+	(let ((vtable [self _vtable])
+				(target-vtable [arg _vtable]))
+		(while vtable
+			(if (== vtable target-vtable)
+				(return true))
+			(set vtable [_vtable delegate])
+			)))
+
 (define-send 'string SmallInteger
 	[(trylid-int [self _integerValue]) string])
+(define-send 'int SmallInteger
+	(trylid-int [self _integerValue]))
 
 (define Symbol (import "Symbol"))
 (define-send 'string Symbol
