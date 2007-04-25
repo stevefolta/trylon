@@ -14,7 +14,7 @@ debug: message
 		print-line: message
 
 log: message
-	debug: message
+	status-reporter report: message
 
 
 iff !in-trylid
@@ -137,6 +137,79 @@ iff !in-trylid
 iff in-trylid
 	class Expression
 		superclass Pepsi Expression
+
+		new: size
+			return super new: size asInteger
+
+		num-items
+			return this size int
+
+		at: index
+			return super at: index asInteger
+
+		at: index put: value
+			super at: index asInteger put: value
+
+		emit: stream
+			reporter = nil
+			iff debug-emission
+				reporter = the-compiler status-reporter
+				reporter report: "("
+				reporter indent
+
+			if num-items == 2 && (this at: 0) == 'quote'
+				value = this at: 1
+				if (value is-a: Pepsi Symbol)
+					c = value string first-character
+				  if (c < `A`) || (c >= `{`) || (c == `[`) || (c == `]`)
+						# Special-case non-alpha symbols.
+						stream write: "['\""
+						stream write: value string
+						stream write: "\" asSymbol]"
+						return
+				stream write: "'"
+				emit-value: value on: stream
+				iff debug-emission
+					reporter unindent
+				return
+
+			if num-items >= 3 && (this at: 0) == 'send' && 	--
+				 ((this at: 1) is-a: Expression) && 	--
+			   ((this at: 1) at: 0) == 'quote'
+				stream write: "["
+				emit-value: (this at: 2) on: stream
+				stream write: " "
+				emit-value: ((this at: 1) at: 1) on: stream
+				index = 3
+				while index < num-items
+					stream write: " "
+					emit-value: (this at: index) on: stream
+					index += 1
+				stream write: "]"
+				return
+
+			stream write: "("
+			index = 0
+			while index < num-items
+				if index > 0
+					stream write: " "
+				emit-value: (this at: index) on: stream
+				index += 1
+			stream write: ")"
+
+			iff debug-emission
+				reporter unindent
+				reporter report: ")"
+
+		emit-value: value on: stream
+			if (value is-a: String) && !(value is-a: Symbol)
+				stream write: "\""
+				stream write: value
+				stream write: "\""
+			else if value is-a: Expression
+				value emit: stream
+			else
+				stream write: value string
 
 
 iff !in-trylid
