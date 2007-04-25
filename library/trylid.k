@@ -391,8 +391,9 @@
 		(while vtable
 			(if (== vtable target-vtable)
 				(return true))
-			(set vtable [_vtable delegate])
-			)))
+			(set vtable [_vtable delegate]))
+		false
+		))
 
 (define-send 'string SmallInteger
 	[(trylid-int [self _integerValue]) string])

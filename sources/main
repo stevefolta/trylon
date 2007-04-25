@@ -202,7 +202,7 @@ iff in-trylid
 				reporter report: ")"
 
 		emit-value: value on: stream
-			if (value is-a: String) && !(value is-a: Symbol)
+			if value is-a: String
 				stream write: "\""
 				stream write: value
 				stream write: "\""

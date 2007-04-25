@@ -16,15 +16,18 @@ object-ptr -> BytePtr
 is-a: proto -> Bool
 	cur-proto = .proto
 	while cur-proto
-		if cur-proto == proto
+		# Test carefully!  Use same-as: rt ==, and order matters.
+		if proto same-as: cur-proto
 			return true
 		cur-proto = cur-proto .parent-proto
+	return false
 
 string
 	return "a " + this .proto-name
 
 same-as: object
-	return object != nil && this object-ptr == object object-ptr
+	coke
+		(== self object)
 
 fn == other
 	return this same-as: other
