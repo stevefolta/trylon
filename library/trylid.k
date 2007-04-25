@@ -391,7 +391,7 @@
 		(while vtable
 			(if (== vtable target-vtable)
 				(return true))
-			(set vtable [_vtable delegate]))
+			(set vtable [vtable delegate]))
 		false
 		))
 
