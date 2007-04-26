@@ -23,9 +23,7 @@ prepare-to-emit
 
 
 jolt-expression
-	expr-size = clauses count + 2
-	if else-clause
-		expr-size += 1
+	expr-size = clauses count + 3
 	expr = Expression new: expr-size
 	expr at: 0 put: 'switch'
 	expr at: 1 put: expression jolt-expression
@@ -35,6 +33,8 @@ jolt-expression
 		index += 1
 	if else-clause
 		expr at: index put: else-clause jolt-expression
+	else
+		expr at: index put: 'nil'
 	return expr
 
 

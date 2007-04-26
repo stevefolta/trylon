@@ -327,7 +327,7 @@
 
 
 ;; Switch
-;; (switch value (((value...) expr)... else-clause))
+;; (switch value ((value...) expr)... else-clause)
 (define make-switch-condition
 	(lambda (clause)
 		(if [[clause size] == '1]
@@ -358,8 +358,8 @@
 		))
 (syntax switch
 	(lambda (node compiler)
-		`(let ((.switch-value ,[node at: 1]))
-			 ,(switch-expr [node at: 2])
+		`(let ((.switch-value ,[node at: '1]))
+			 ,(switch-expr [node copyFrom: '2])
 			 )
 		))
 
