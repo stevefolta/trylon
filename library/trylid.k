@@ -148,7 +148,7 @@
 			)
 		))
 
-(syntax old-trylid-proto
+(syntax load-trylid-proto
 	(lambda (node compiler)
 		`(get-trylid-proto '(,@[node copyFrom: '1]))
 		))

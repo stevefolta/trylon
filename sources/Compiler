@@ -129,6 +129,18 @@ compile-program: compile-symbols
 		is-changed = proto emit-code
 	status-reporter unindent
 
+	# Emit load.k.
+	status-reporter report: "Emitting load.k..."
+	status-reporter indent
+	path = the-compiler build-settings jolt-sources-dir + "/load.k"
+	file = File new: path
+	stream = ExistingFileStream new: file
+	for proto in proto-queue
+		stream write-all: "(load-trylid-proto " + proto full-name + ")"
+		stream write-line
+	stream close
+	status-reporter unindent
+
 	status-reporter report: "Done."
 
 
