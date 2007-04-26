@@ -40,9 +40,11 @@ fn >= arg (BytePtr) -> Bool
 fn + arg (BytePtr) -> BytePtr
 	coke
 		(byte-ptr (+ (int@ self) [arg _integerValue]))
-fn - arg (BytePtr) -> BytePtr
+fn - arg
 	coke
-		(trylid-int (- (int@ self) (int@ arg)))
+		(if [arg is-a: StandardBytePtr]
+			(trylid-int (- (int@ self) (int@ arg)))
+			(byte-ptr (- (int@ self) [arg _integerValue])))
 
 fn deref-ptr -> BytePtr
 	coke
