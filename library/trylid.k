@@ -363,6 +363,8 @@
 			 )
 		))
 
+
+
 ;; Fake stuff to work around Jolt bugs (for now).
 
 (syntax fixed-return
@@ -441,6 +443,9 @@
 (define Symbol (import "Symbol"))
 (define-send 'string Symbol
 	[StandardString new_: [self _stringValue]])
+
+(define-send 'string Object
+	[StandardString new_: [self _debugName]])
 
 
 
