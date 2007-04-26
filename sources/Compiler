@@ -53,8 +53,6 @@ run
 				status-reporter = StdoutStatusReporter new
 			else
 				status-reporter = VT100StatusReporter new
-			if build-settings has-symbol: "in-jolt"
-				status-reporter = StdoutStatusReporter new
 
 		if do-lex-test
 			for arg in arguments tail tail
