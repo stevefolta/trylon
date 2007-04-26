@@ -76,7 +76,7 @@ proto OutStream
 		coke
 			(let ((result (fopen [path _stringValue] "w+")))
 				(if (== result nil)
-					(throw [FileOpenException new: path]))
+					(throw [(trylid-proto Standard File FileOpenException) new: path]))
 				[self _file: result]
 				self
 				)
