@@ -325,6 +325,44 @@
 					 ((long@ __sc) __sc __sr __sr ,@[node copyFrom: '3]))))))
 
 
+
+;; Switch
+;; (switch value (((value...) expr)... else-clause))
+(define make-switch-condition
+	(lambda (clause)
+		(if [[clause size] == '1]
+			`(send '== .switch-value ,[clause first])
+			(let ((index '0)
+						(size [clause size])
+						(expr [Expression new: [size + '1]]))
+				[expr at: '0 put: 'or]
+				(while [index < size]
+					[expr at: [index + '1] put:
+						`(send '== .switch-value ,[clause at: index])]
+					(set index [index + '1])
+					)
+				expr
+				)
+			)
+		))
+(define switch-expr
+	(lambda (clauses)
+		(if [[clauses size] == '1]
+			[clauses at: '0]
+			(let ((clause [clauses at: '0]))
+				`(if ,(make-switch-condition [clause at: '0])
+					 ,[clause at: '1]
+					 ,(switch-expr [clauses copyFrom: '1]))
+				)
+			)
+		))
+(syntax switch
+	(lambda (node compiler)
+		`(let ((.switch-value ,[node at: 1]))
+			 ,(switch-expr [node at: 2])
+			 )
+		))
+
 ;; Fake stuff to work around Jolt bugs (for now).
 
 (syntax fixed-return
