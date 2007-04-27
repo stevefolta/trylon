@@ -102,7 +102,7 @@ proto Iterator
 				(begin
 					(define entry [[(trylid-proto Posix) Dirent] new_: _entry])
 					[self current-name:
-						[(trylid-proto Standard String) new_: [entry _name]]])
+						[(trylid-proto Standard String) new-copy_: [entry _name]]])
 				(begin
 					(closedir _directory)
 					[self _directory: nil]

@@ -20,6 +20,15 @@ new_: jolt-string
 		(let ((stopper (+ jolt-string (strlen jolt-string))))
 			[self new: (byte-ptr jolt-string) to: (byte-ptr stopper)])
 
+new-copy_: c-string
+	coke
+		(let ((size (+ (strlen c-string) 1))
+		      (str [(trylid-proto Standard BytePtr) new-non-pointer:
+					     	(trylid-int size)]))
+			(memcpy str c-string size)
+			[self new_: str]
+			)
+
 length
 	return stopper - start
 is-empty

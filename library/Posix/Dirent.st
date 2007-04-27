@@ -29,6 +29,6 @@ Dirent _name
 {
 	return (oop) ((struct dirent*) self->v__dirent)->d_name;
 }
-Dirent name 	[ ^String value_: (self _name) ]
+Dirent name 	[ ^((String value_: (self _name)) copy) ]
 
 
