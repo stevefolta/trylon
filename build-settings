@@ -1,3 +1,5 @@
+# Trylon settings.
+
 program = "trylid"
 debugging = true
 
@@ -9,4 +11,10 @@ iff !in-trylid
 		c-flags += "-DOSX_FINK" "-I/sw/include"
 		link-flags += "-L/sw/lib"
 
+
+
+# Trylid settings.
+
+iff in-jolt
+	jolt-sources-dir = ".jolt-sources-self"
 
