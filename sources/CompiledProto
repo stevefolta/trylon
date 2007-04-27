@@ -337,8 +337,9 @@ emit-jolt-file
 	# Compile all the functions.
 	for function in functions values
 		if !(function is-a: ProtoFunction)
-			status-reporter report: "Emitting " + function name + "..."
-			status-reporter indent
+			iff debug-function-emission
+				status-reporter report: "Emitting " + function name + "..."
+				status-reporter indent
 			compiled-code = function emit-code
 			if compiled-code
 				compiled-code emit: stream
@@ -346,7 +347,8 @@ emit-jolt-file
 				iff hacky-backtrace
 					stream write-line: "(name-last-lambda \"" + function name + "\")"
 				stream write-line
-			status-reporter unindent
+			iff debug-function-emission
+				status-reporter unindent
 	
 	iff debug-loading
 		stream write-line: "(say \"; " + name + " loaded.\")"
