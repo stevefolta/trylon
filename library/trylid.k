@@ -255,7 +255,7 @@
 			[[compiler continues] addFirst: continue-label]
 			(while [index < [node size]]
 				[block add:
-					[[(import "DROP") new] lhs: [[node at: index] translate: compiler]]]
+					[[node at: index] translate: compiler]]
 				(set index [index + '1])
 				)
 			[block add: continue-label]
