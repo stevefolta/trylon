@@ -250,8 +250,9 @@ lowercase
 	return String new: buffer to: buffer + length
 
 
-primitive-fn int -> Int
-	etc.
+int -> Int
+	coke
+		(trylid-int (strtol [self _stringValue] 0 0))
 # primitive-fn float -> Float
 
 

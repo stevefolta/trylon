@@ -27,6 +27,7 @@
 (define closedir (dlsym "closedir"))
 (define mkdir (dlsym "mkdir"))
 (define getenv (dlsym "getenv"))
+(define strtol (dlsym "strtol"))
 
 
 ;; Defining and loading objects.
@@ -84,6 +85,11 @@
 		(long@ _closure 1)
 		))
 
+
+;; Loading prototypes from .k files.
+
+(define *jolt-sources-path* '".jolt-sources/")
+
 ;; This is much like (define-type), but it doesn't operate in a specific
 ;; namespace and it's a function, not a syntax.
 (define create-trylid-proto
@@ -125,7 +131,7 @@
 
 (define read-trylid-proto-file
 	(lambda (filename)
-		(load [['".jolt-sources/" , filename] _stringValue])
+		(load [[*jolt-sources-path* , filename] _stringValue])
 		))
 
 (define get-trylid-proto
