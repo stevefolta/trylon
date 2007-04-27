@@ -434,6 +434,8 @@
 			(set vtable [vtable delegate]))
 		false
 		))
+(define-send 'same-as: Object arg
+	(== self arg))
 
 (define-send 'string SmallInteger
 	[(trylid-int [self _integerValue]) string])

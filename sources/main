@@ -15,6 +15,10 @@ debug: message
 
 log: message
 	status-reporter report: message
+log-indent
+	status-reporter indent
+log-unindent
+	status-reporter unindent
 
 
 iff !in-trylid
