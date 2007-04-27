@@ -337,19 +337,20 @@ emit-jolt-file
 
 	# Compile all the functions.
 	for function in functions values
-		if !(function is-a: ProtoFunction)
-			iff debug-function-emission
-				status-reporter report: "Emitting " + function name + "..."
-				status-reporter indent
-			compiled-code = function emit-code
-			if compiled-code
-				compiled-code emit: stream
-				stream write-line
-				iff hacky-backtrace
-					stream write-line: "(name-last-lambda \"" + function name + "\")"
-				stream write-line
-			iff debug-function-emission
-				status-reporter unindent
+		if function is-a: ProtoFunction
+			continue
+		iff debug-function-emission
+			status-reporter report: "Emitting " + function name + "..."
+			status-reporter indent
+		compiled-code = function emit-code
+		if compiled-code
+			compiled-code emit: stream
+			stream write-line
+			iff hacky-backtrace
+				stream write-line: "(name-last-lambda \"" + function name + "\")"
+			stream write-line
+		iff debug-function-emission
+			status-reporter unindent
 	
 	iff debug-loading
 		stream write-line: "(say \"; " + name + " loaded.\")"

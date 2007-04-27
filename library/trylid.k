@@ -269,8 +269,10 @@
 		`(let ((.iterator [,[node at: '2] iterator])
 					 (,[node at: '1] nil))
 			(while (not [.iterator is-done])
-				(set ,[node at: '1] [.iterator current-item])
-				,@[node copyFrom: '3]
+				(catch-continue
+					(set ,[node at: '1] [.iterator current-item])
+					,@[node copyFrom: '3]
+					)
 				[.iterator go-forward]
 				)
 			)
