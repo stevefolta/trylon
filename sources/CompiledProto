@@ -291,8 +291,9 @@ emit-code
 
 emit-jolt-file
 	status-reporter = the-compiler status-reporter
-	status-reporter report: "Emitting " + name + "..."
-	status-reporter indent
+	iff debug-emission
+		status-reporter report: "Emitting " + name + "..."
+		status-reporter indent
 
 	# Open the file.
 	file = 	--
@@ -354,7 +355,8 @@ emit-jolt-file
 		stream write-line: "(say \"; " + name + " loaded.\")"
 
 	stream close
-	status-reporter unindent
+	iff debug-emission
+		status-reporter unindent
 
 
 access
