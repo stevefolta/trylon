@@ -431,6 +431,11 @@
 (define-send '!= Object arg
 	(not [self == arg]))
 
+(define _vtable (import "_vtable"))
+[[_vtable _vtable] methodAt: '_tally put: field-getter with: 0]
+[[_vtable _vtable] methodAt: 'bindings put: field-getter with: 4]
+[[_vtable _vtable] methodAt: 'delegate put: field-getter with: 8]
+
 (define-send 'is-a: Object arg
 	(let ((vtable [self _vtable])
 				(target-vtable [arg _vtable]))
