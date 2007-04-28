@@ -13,6 +13,6 @@ prepare-to-emit
 
 
 jolt-expression
-	return Expression with: 'trylid-string' with: value
+	return Expression with: 'trylid-string-literal' with: value
 
 

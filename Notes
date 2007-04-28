@@ -129,16 +129,17 @@ New proto-loading scheme:
 Orig: 22.
 New:  15.5.
 
+
 =====
 
 Primitive Consing.
-	[2207.4.28]
+	[2207.4.27-8]
 
 Currently, the compiler running in Jolt is about 4x slower than the one Trylon makes.  I'm thinking (trylid-int) and (trylid-char) may be to blame.  Here are the stats on what gets consed during a run:
 
 	BytePtr	...
 	Char   	3202967
-	Int    	...
+	Int    	2933391
 	String 	...
 	
 (I don't get why it takes so much longer to grep through the results than to generate them.  If there are no hits, it only takes a few seconds.)
@@ -148,6 +149,15 @@ Currently, the compiler running in Jolt is about 4x slower than the one Trylon m
 I was thinking of changing (trylid-char) et al. to macros, but realized that was difficult because would I need to keep sets of boxed objects.  And it should be much easier to switch to tagged ints, with chars being ints.
 
 An there are even easier improvements: (byte-ptr) becomes a macro for [StandardBytePtr new_: value].  Strings don't cons their BytePtrs, although then it's not a fair comparison with Trylon.
+
+Well, it isn't that hard to use macros after all:
+
+	Orig                  	9.5
+	trylid-char-literal   	9.0, 8.6
+	+trylid-int-literal   	7.7, 8.0, 8.5
+	+trylid-string-literal	7.8, 8.0
+
+It's odd that trylid-string-literal didn't seem to help, as that would seem to be the "heaviest".
 
 
 =====

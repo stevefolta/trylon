@@ -411,6 +411,11 @@
 			int
 			)))
 
+(syntax trylid-int-literal
+	(lambda (node compiler)
+		`(quote ,(trylid-int [[node at: '1] _integerValue]))
+		))
+
 (define trylid-char
 	(lambda (value)
 		(let ((char-obj [StandardChar new]))
@@ -418,10 +423,24 @@
 			char-obj
 			)))
 
+(syntax trylid-char-literal
+	(lambda (node compiler)
+		`(quote ,(trylid-char [[node at: '1] _integerValue]))
+		))
+
 
 (define trylid-string
-	(lambda (id-string)
-		[StandardString new_: id-string]
+	(lambda (c-string)
+		[StandardString new_: c-string]
+		))
+
+(syntax trylid-string-literal
+	(lambda (node compiler)
+		;; Need to be careful; this can be called during early loading, before
+		;; StandardString is available.
+		(if StandardString
+			`(quote ,(trylid-string [[node at: '1] _stringValue]))
+			`(trylid-string ,[node at: '1]))
 		))
 
 

@@ -13,6 +13,6 @@ prepare-to-emit
 
 
 jolt-expression
-	return Expression with: 'trylid-char' with: char int
+	return Expression with: 'trylid-char-literal' with: char int
 
 
