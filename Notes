@@ -131,4 +131,44 @@ New:  15.5.
 
 =====
 
+Primitive Consing.
+	[2207.4.28]
+
+Currently, the compiler running in Jolt is about 4x slower than the one Trylon makes.  I'm thinking (trylid-int) and (trylid-char) may be to blame.  Here are the stats on what gets consed during a run:
+
+	BytePtr	...
+	Char   	3202967
+	Int    	...
+	String 	...
+	
+(I don't get why it takes so much longer to grep through the results than to generate them.  If there are no hits, it only takes a few seconds.)
+
+(Well, there are 8.5 million lines... I'm not sure I'll ever know the breakdown 'cause grep is so slow.)
+
+I was thinking of changing (trylid-char) et al. to macros, but realized that was difficult because would I need to keep sets of boxed objects.  And it should be much easier to switch to tagged ints, with chars being ints.
+
+An there are even easier improvements: (byte-ptr) becomes a macro for [StandardBytePtr new_: value].  Strings don't cons their BytePtrs, although then it's not a fair comparison with Trylon.
+
+
+=====
+
+Coke Lightbulb Goes On
+	[2007.4.27]
+
+All my Statements and Expressions are supposed to respond to "translate: compiler".  (I think like this:)
+
+	translate: compiler
+		jolt-expression translate: compiler
+
+
+=====
+
+Misc
+	[2007.4.27]
+
+Rename "Main" to "Trylid".
+
+
+=====
+
 
