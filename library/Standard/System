@@ -1,8 +1,11 @@
 trylid System
 
 
-primitive-fn milliseconds
-	etc.
+milliseconds
+	now = Posix Timeval now
+	coke
+		(trylid-int [now _milliseconds])
+
 primitive-fn sleep-ms: milliseconds
 	etc.
 

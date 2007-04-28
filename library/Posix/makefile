@@ -7,7 +7,7 @@ IDC   = idc -k # -O
 
 OBJEXT_SO       = .so
 
-FILES = Stat.so Dirent.so
+FILES = Stat.so Dirent.so Timeval.so
 
 all: $(FILES)
 

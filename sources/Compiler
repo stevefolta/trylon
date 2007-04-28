@@ -6,8 +6,14 @@ fields status-reporter
 
 
 class-fn compile: arguments
+	start-ms = nil
+	iff time-compilation
+		start-ms = System milliseconds
 	the-compiler = Compiler new: arguments
 	the-compiler run
+	iff time-compilation
+		elapsed-time = System milliseconds - start-ms
+		print-line: "Compilation took " + elapsed-time string + "ms."
 	return the-compiler return-value
 
 
