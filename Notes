@@ -137,10 +137,10 @@ Primitive Consing.
 
 Currently, the compiler running in Jolt is about 4x slower than the one Trylon makes.  I'm thinking (trylid-int) and (trylid-char) may be to blame.  Here are the stats on what gets consed during a run:
 
-	BytePtr	...
+	BytePtr	2267775
 	Char   	3202967
 	Int    	2933391
-	String 	...
+	String 	 184508
 	
 (I don't get why it takes so much longer to grep through the results than to generate them.  If there are no hits, it only takes a few seconds.)
 
@@ -157,7 +157,7 @@ Well, it isn't that hard to use macros after all:
 	+trylid-int-literal   	7.7, 8.0, 8.5
 	+trylid-string-literal	7.8, 8.0
 
-It's odd that trylid-string-literal didn't seem to help, as that would seem to be the "heaviest".
+It's odd that trylid-string-literal didn't seem to help, as that would seem to be the "heaviest".  ...Now that I've got the stats filled in, I see why: there just aren't so many of them.  Why so many byte-ptrs, then?  From non-literal strings, undoubtedly.
 
 
 =====
