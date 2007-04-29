@@ -42,7 +42,7 @@ contains: name
 			(if (not directory) (return false))
 			(define name-str [name _stringValue])
 			(define found false)
-			(define Dirent (trylid-posix-proto (quote Dirent)))
+			(define Dirent (trylid-proto Posix Dirent))
 			(while true
 				(define entry (readdir directory))
 				(if (not entry) (break))
