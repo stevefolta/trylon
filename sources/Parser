@@ -1451,3 +1451,6 @@ unindent
 # There are two kinds of function calls: FunctionCall and Send.
 # FunctionCall is not on an object; it has a context.  Send is on
 # an object.
+
+# Copyright 2007 Steve Folta.  See the License file.
+

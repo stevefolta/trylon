@@ -26,3 +26,7 @@ jolt-expression
 		index += 1
 	return expr
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

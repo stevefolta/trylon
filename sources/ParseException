@@ -19,3 +19,6 @@ message
 	return error-message + " (\"" + token string + "\")"
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

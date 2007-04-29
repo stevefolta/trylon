@@ -8,3 +8,7 @@ fn == arg
 fn != arg
 	return object-ptr != arg object-ptr
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

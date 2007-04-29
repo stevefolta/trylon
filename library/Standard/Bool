@@ -33,3 +33,7 @@ fn string
 iff debugger
 	fn debug-write
 		print-line: debug-string
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

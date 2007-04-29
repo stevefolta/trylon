@@ -393,3 +393,7 @@ full-name
 		proto = proto parent
 	return result
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

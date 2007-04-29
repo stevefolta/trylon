@@ -39,3 +39,6 @@ primitive-fn strftime: time-int format: format
 	return "!strftime not implemented!"
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

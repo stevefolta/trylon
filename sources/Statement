@@ -18,3 +18,6 @@ attach-else: statement line: line
 	throw ParseException new: "Illegal \"else\"." in: line
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

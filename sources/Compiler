@@ -265,3 +265,6 @@ dump-lines: lines level: level
 			dump-lines: line block level: level + 1
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

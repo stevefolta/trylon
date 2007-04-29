@@ -30,3 +30,6 @@ jolt-expression
 	return Expression with: 'catch' with: body jolt-expression with: else-expr
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

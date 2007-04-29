@@ -8,3 +8,6 @@ doesNotUnderstand: selector
 			(long@ [[self _vtable] lookup: selector] 1)
 			)
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

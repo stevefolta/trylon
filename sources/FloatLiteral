@@ -16,3 +16,6 @@ jolt-expression
 	return Expression with: 'quote' with: value
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

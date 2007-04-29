@@ -62,3 +62,6 @@ is-changed
 	return !(matches-so-far && remaining-contents is-empty)
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

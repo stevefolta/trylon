@@ -4,3 +4,7 @@ trylid InputStream
 read-buffer: buffer (BytePtr) length: length (Int)
 	virtual
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

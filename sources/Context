@@ -44,3 +44,6 @@ get-subproto: name
 		MessageException new: "Internal error: bad \"Context get-subproto\" call."
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

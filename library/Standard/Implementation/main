@@ -17,3 +17,7 @@ allocate-bytes-non-ptr: num-bytes
 # This can't be set here for complicated reasons, but will be set elsewhere:
 # .target-language = "Coke"
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

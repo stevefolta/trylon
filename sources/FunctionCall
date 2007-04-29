@@ -41,3 +41,6 @@ copy
 	return FunctionCall new: name arguments: copied-args context: context
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

@@ -8,3 +8,6 @@ emit-call: arugments
 	return 'exception'
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

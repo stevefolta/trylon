@@ -17,3 +17,7 @@ jolt-expression
 		return 'true'
 	else
 		return 'false'
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

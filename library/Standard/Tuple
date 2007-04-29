@@ -59,3 +59,7 @@ proto Iterator
 	go-forward
 		index += 1
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

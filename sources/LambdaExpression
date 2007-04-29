@@ -16,3 +16,6 @@ jolt-expression
 	return block jolt-expression
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+

@@ -27,3 +27,7 @@ prepare-to-emit
 jolt-expression
 	return body jolt-expression
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

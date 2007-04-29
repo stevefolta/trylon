@@ -32,3 +32,6 @@ Dirent _name
 Dirent name 	[ ^((String value_: (self _name)) copy) ]
 
 
+
+"Copyright 2007 Steve Folta.  See the License file."
+

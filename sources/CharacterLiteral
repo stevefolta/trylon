@@ -16,3 +16,7 @@ jolt-expression
 	return Expression with: 'trylid-char-literal' with: char int
 
 
+
+# Copyright 2007 Steve Folta.  See the License file.
+
+

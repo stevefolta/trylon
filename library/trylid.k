@@ -1,7 +1,7 @@
 ;; trylid.k
 ;; Support for the Trylid language.
 ;;
-;; Copyright 2007 Steve Folta
+;; Copyright 2007 Steve Folta.  See the License file.
 
 
 ;; Basic globals.

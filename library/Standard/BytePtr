@@ -111,3 +111,7 @@ iff debugger
 	fn debug-write
 		print-line: "BytePtr: " + this string
 
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+
