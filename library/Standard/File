@@ -116,7 +116,7 @@ proto FileOpenException
 		this path = path
 	
 	message
-		return "Couldn't open file: \"" + path + "\")"
+		return "Couldn't open file: \"" + path + "\""
 
 
 
