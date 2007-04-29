@@ -216,7 +216,7 @@
 		`(install-trylid-proto-loader-into '(,@[node copyFrom: '1]))
 		))
 
-(define trylid-posix-proto
+(define load-trylid-posix-proto
 	(lambda (name)
 		(define getenv (dlsym "getenv"))
 		(define lib (getenv "TRYLID_LIBRARY"))
@@ -224,6 +224,8 @@
 		(define file-name [[[String value_: lib] , '"/Posix/"] , [name asString]])
 		[Object _import: [file-name _stringValue]]
 		(define proto (import [name _stringValue]))
+		[[(trylid-proto Posix) _vtable]
+			methodAt: name put: closure-returner with: proto]
 		proto
 		))
 

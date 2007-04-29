@@ -23,14 +23,11 @@ class PosixProtoFunction
 	create: name
 		this name = name
 	
-	emit-call: arguments
-		return 	--
-			Expression 	--
-				with: 'trylid-posix-proto' 	--
-				with: (Expression with: 'quote' with: name intern)
-	
 	emit-code
-		body = emit-call: nil
+		body = 	--
+			Expression 	--
+				with: 'load-trylid-posix-proto' 	--
+				with: (Expression with: 'quote' with: name intern)
 		expr = Expression new: 4
 		expr at: 0 put: 'define-send'
 		expr at: 1 put: (Expression with: 'quote' with: name intern)
