@@ -33,7 +33,7 @@
 ;; Defining and loading objects.
 
 ;; These globals will be set later:
-(define Main nil)
+(define Trylid nil)
 (define trylid-root-object nil)
 (define StandardBytePtr nil)
 (define StandardString nil)
@@ -136,7 +136,7 @@
 
 (define get-trylid-proto
 	(lambda (names)
-		(let ((proto Main) (which-name '0) (filename nil))
+		(let ((proto Trylid) (which-name '0) (filename nil))
 			(while [which-name < [names size]]
 				(let ((name [names at: which-name])
 							(name-string [name asString]))
@@ -161,10 +161,10 @@
 
 (syntax trylid-proto
 	(lambda (node compiler)
-		(let ((proto Main)
+		(let ((proto Trylid)
 					(which-name '1)
 					(num-names [node size])
-					(expr 'Main))
+					(expr 'Trylid))
 			(while [which-name < num-names]
 				(let ((name [node at: which-name]))
 					(set expr `(send ',name ,expr))
@@ -184,7 +184,7 @@
 		))
 (define install-trylid-proto-loader-into
 	(lambda (names)
-		(let ((parent-proto Main)
+		(let ((parent-proto Trylid)
 					(which-name '0)
 					(last-name [[names size] - '1])
 					(filename nil)
@@ -491,9 +491,9 @@
 	(lambda ()
 		;; Create Standard Object, but not loaded into a namespace yet.
 		(define trylid-root-object (create-trylid-proto 'Object Object '()))
-		;; Create Main.
-		(set Main (create-trylid-proto 'Main trylid-root-object '()))
-		(add-shared-field Main Main Main)
+		;; Create Trylid.
+		(set Trylid (create-trylid-proto 'Trylid trylid-root-object '()))
+		(add-shared-field Trylid Trylid Trylid)
 		;; Create Standard.
 		(get-trylid-proto '(Standard))
 		;; Install Standard Object.
@@ -514,8 +514,8 @@
 		(trylid-proto Standard Implementation)
 		(add-shared-field .target-language (trylid-proto Standard Implementation)
 			(trylid-string "Coke"))
-		;; Load the rest of Main
-		(read-trylid-proto-file '"Main.k")
+		;; Load the rest of Trylid.
+		(read-trylid-proto-file '"Trylid.k")
 		))
 
 

@@ -237,7 +237,7 @@ setup-main: main-directory library-directory: library-directory 	--
 	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
 		standard-proto lookup-function: proto-name
 	
-	functions at: "Main" set-to: (ProtoFunction new: this)
+	functions at: "Trylid" set-to: (ProtoFunction new: this)
 
 
 ensure-superclasses: object-proto
@@ -302,8 +302,8 @@ emit-jolt-file
 	stream = ExistingFileStream new: file
 
 	# Define the proto.
-	# ...but not for Main or Standard Object (which are created specially in
-	# (setup-Main)).
+	# ...but not for Trylid or Standard Object (which are created specially in
+	# (setup-Trylid)).
 	if parent && superclass
 		parent-access = parent access
 		superclass-access = superclass access
@@ -362,7 +362,7 @@ emit-jolt-file
 
 access
 	if is-main
-		return 'Main'
+		return 'Trylid'
 	else if is-root-object
 		return 'trylid-root-object'
 	else

@@ -15,5 +15,5 @@
 ;; Run the program.
 (define prog-args [(trylid-proto Standard List) new])
 [prog-args append: (trylid-string "trylid")]
-[Main main: prog-args]
+[Trylid main: prog-args]
 
