@@ -184,8 +184,23 @@ Rename "Main" to "Trylid".
 Misc
 	[2007.4.29]
 
-Rename ".parent-proto" to "..".  This is compatible with filesystem use because the meaning is "parent namespace".
+Rename ".parent-proto" to "..".  This is compatible with filesystem use because the meaning is "parent namespace".  (Still need ".proto", though, unless it's unused.  Hmm, it seems it's only used by 'is-a:' currently, and we already have a good (?) version of that on Pepsi Object.  Might as well leave it since it's already there, though.)
 
+Need to add ThisSetter, perhaps to Trylon too.  Then maybe rewrite create:'s as new:'s, or just add new:'s explicitly:
+
+	new: name
+		return this raw-new create: name
+
+Once exceptions are working, install a new doesNotUnderstand: in Pepsi Object that throws an exception.  Once the new parsers are in, make my own command line.  I want the command line to handle blocks!
+
+Precompile only Standard, Posix, and the compiler itself... which is everything we're precompiling now.  But then have it compile out of the filesystem.  In other words, the current compiler ("Compiler run:") isn't the default action, and must be turned on via build-settings.  Otherwise, run a command line, and allow compiling directly from Trylid in the filesystem to machine code.
+
+	Object iterator
+		# Default: try using the hidden '.iterator'.
+		if this responds-to: '.iterator'
+			return this .iterator
+		else
+			return this doesNotUnderstand: 'iterator'
 
 
 =====
