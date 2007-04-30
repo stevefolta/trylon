@@ -295,9 +295,6 @@
 
 (define throw
 	(lambda (exception)
-		;;... Temporary test code ...
-		[StdOut nextPutAll: [exception message]]
-		[StdOut cr]
 		;; Throw.
 		(let ((jmpbuf [[(trylid-proto Posix) jmp_buf] currentCatcher]))
 			[jmpbuf restore]
