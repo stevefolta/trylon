@@ -9,4 +9,6 @@ junk
 .objects
 .jolt-sources
 .jolt-sources-self
+.jolt-history
+.*.swp
 
