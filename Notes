@@ -202,6 +202,8 @@ Precompile only Standard, Posix, and the compiler itself... which is everything 
 		else
 			return this doesNotUnderstand: 'iterator'
 
+Weird behavior while testing exceptions:  "[(trylid-proto Posix) jmp_buf]" crashes, but if I once do "[Posix jmp_buf]", the first one won't crash after that.  And I have verified that "(trylid-proto Posix)" and "Posix" are the same.
+
 
 =====
 

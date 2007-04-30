@@ -28,6 +28,8 @@
 (define mkdir (dlsym "mkdir"))
 (define getenv (dlsym "getenv"))
 (define strtol (dlsym "strtol"))
+(define setjmp (dlsym "setjmp"))
+(define longjmp (dlsym "longjmp"))
 
 
 ;; Defining and loading objects.
@@ -292,17 +294,29 @@
 
 (define throw
 	(lambda (exception)
-		;;...
+		;;... Temporary test code ...
 		[StdOut nextPutAll: [exception message]]
 		[StdOut cr]
+		;; Throw.
+		(let ((jmpbuf [[(trylid-proto Posix) jmp_buf] currentCatcher]))
+			[jmpbuf restore]
+			(longjmp jmpbuf exception)
+			)
+		;; Should never get here...
 		(exit)
 		nil
 		))
 
 (syntax catch 	;; body else-clause
 	(lambda (node compiler)
-		;;...
-		[node at: '1]
+		`(let ((.jmpbuf [[(trylid-proto Posix) jmp_buf] new])
+					 (exception nil))
+			 [.jmpbuf push]
+			 (set exception (setjmp .jmpbuf))
+			 (if exception
+				 ,[node at: '2]
+				 ,[node at: '1])
+			 )
 		))
 
 (syntax trylid-tuple 	;; value...

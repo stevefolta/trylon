@@ -10,6 +10,7 @@ jmp_buf _sizeof
 	return (oop) sizeof(trylid_jmp_buf);
 }
 
+
 jmp_buf savedExceptionCatcher
 {
 	return (oop) ((trylid_jmp_buf*) self)->savedExceptionCatcher;
@@ -41,9 +42,8 @@ jmp_buf restore
 ]
 
 
-"Debugging"
 
-jmp_buf chain
+jmp_buf currentCatcher
 [
 	"We can see JmpBufChain in the Pepsi namespace, but it isn't correct."
 	^JmpBufChain.
