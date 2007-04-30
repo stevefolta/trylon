@@ -181,4 +181,13 @@ Rename "Main" to "Trylid".
 
 =====
 
+Misc
+	[2007.4.29]
+
+Rename ".parent-proto" to "..".  This is compatible with filesystem use because the meaning is "parent namespace".
+
+
+
+=====
+
 
