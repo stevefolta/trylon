@@ -42,6 +42,7 @@
 (define StandardInt nil)
 (define StandardChar nil)
 (define StandardImplementation nil)
+(define Posix nil)
 
 (define shared-field-getter
 	(lambda (_closure _self self)
@@ -532,6 +533,10 @@
 			(trylid-string "Coke"))
 		;; Load the rest of Trylid.
 		(read-trylid-proto-file '"Trylid.k")
+		;; Weird magic prevents mysterious crash in exceptions code.  It shouldn't
+		;; need this... but it seems to.
+		(set Posix (trylid-proto Posix))
+		[Posix jmp_buf]
 		))
 
 

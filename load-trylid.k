@@ -5,6 +5,5 @@
 
 (define Standard [Trylid Standard])
 (define Pepsi [Standard Pepsi])
-(define Posix [Trylid Posix])
 
 
