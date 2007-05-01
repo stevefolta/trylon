@@ -209,4 +209,13 @@ Weird behavior while testing exceptions:  "[(trylid-proto Posix) jmp_buf]" crash
 
 =====
 
+Misc
+	[2007.4.30]
+
+".parent-proto" actually means "superclass" currently, not "enclosing context".  So ".." would be an entirely new addition.
+
+
+
+=====
+
 
