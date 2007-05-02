@@ -1,20 +1,12 @@
 trylon Compiler
 
+# This is "Compiler Compiler"... if this were pure Trylid, we'd just put
+# everything in "Compiler", but we have to also compile under Trylon, which
+# always treats directories as classes, never as packages.
+
 fields successful build-settings
 fields proto-queue main-proto
 fields status-reporter
-
-
-class-fn compile: compile-symbols
-	start-ms = nil
-	iff time-compilation
-		start-ms = System milliseconds
-	the-compiler = Compiler new
-	the-compiler compile-program: compile-symbols
-	iff time-compilation
-		elapsed-time = System milliseconds - start-ms
-		print-line: "Compilation took " + elapsed-time string + "ms."
-	return the-compiler return-value
 
 
 create

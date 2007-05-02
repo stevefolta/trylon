@@ -289,7 +289,7 @@ extend String
 
 lex-test: filename
 	try
-		lexer = Lexer new: (File new: filename) contents
+		lexer = Compiler Lexer new: (File new: filename) contents
 		loop
 			token = lexer next-token
 			print: token type
@@ -308,7 +308,7 @@ test-coke-lexer: filename
 		lines = List new
 		for line in (File new: filename) contents lines
 			lines append: line
-		lexer = CokeLexer new: lines
+		lexer = Compiler CokeLexer new: lines
 		loop
 			expr = lexer next-expr
 			if expr == nil
@@ -334,7 +334,7 @@ dump-expr: expr level: level
 test-words-lexer: filename
 	try
 		for line in (File new: filename) contents lines
-			lexer = WordsLexer new: line
+			lexer = Compiler WordsLexer new: line
 			while !lexer is-done
 				print-line: lexer next
 	catch Exception
@@ -343,7 +343,7 @@ test-words-lexer: filename
 
 test-lines-lexer: filename
 	try
-		lexer = LinesLexer new: (File new: filename) contents
+		lexer = Compiler LinesLexer new: (File new: filename) contents
 		lines = lexer lex
 		dump-lines: lines level: 0
 	catch Exception
