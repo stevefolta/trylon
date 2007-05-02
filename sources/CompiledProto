@@ -188,8 +188,7 @@ add-directory: directory
 		parser parse-proto-file: this
 
 
-setup-main: main-directory library-directory: library-directory 	--
-		compile-symbols: compile-symbols
+setup-main: main-directory library-directory: library-directory
 	is-main = true
 
 	# We want the main-directory to have precedence when looking up names,

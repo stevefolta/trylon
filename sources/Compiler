@@ -1,84 +1,26 @@
 trylon Compiler
 
-fields arguments successful build-settings
+fields successful build-settings
 fields proto-queue main-proto
 fields status-reporter
 
 
-class-fn compile: arguments
+class-fn compile: compile-symbols
 	start-ms = nil
 	iff time-compilation
 		start-ms = System milliseconds
-	the-compiler = Compiler new: arguments
-	the-compiler run
+	the-compiler = Compiler new
+	the-compiler compile-program: compile-symbols
 	iff time-compilation
 		elapsed-time = System milliseconds - start-ms
 		print-line: "Compilation took " + elapsed-time string + "ms."
 	return the-compiler return-value
 
 
-create: arguments
-	this arguments = arguments
+create
 	this successful = true
 	this build-settings = BuildSettings new
 	proto-queue = List new
-
-
-run
-	try
-		# Read the settings.
-		build-settings load
-
-		# Parse the arguments.
-		file-names = List new
-		compile-symbols = List new
-		do-lex-test = false
-		do-coke-lexer-test = false
-		do-words-lexer-test = false
-		do-lines-lexer-test = false
-		for arg in arguments tail
-			if arg starts-with: "--"
-				compile-symbols append: (arg substr: 2)
-				if arg == "--lex-test"
-					do-lex-test = true
-				else if arg == "--test-coke-lexer"
-					do-coke-lexer-test = true
-				else if arg == "--test-words-lexer"
-					do-words-lexer-test = true
-				else if arg == "--test-lines-lexer"
-					do-lines-lexer-test = true
-				else if arg == "--verbose"
-					build-settings is-verbose = true
-				else
-					throw MessageException new: ("Unknown option: " + arg)
-			else
-				file-names append: arg
-
-		if status-reporter == nil
-			if build-settings is-verbose
-				status-reporter = StdoutStatusReporter new
-			else
-				status-reporter = VT100StatusReporter new
-
-		if do-lex-test
-			for arg in arguments tail tail
-				lex-test: arg
-		else if do-coke-lexer-test
-			for arg in arguments tail tail
-				test-coke-lexer: arg
-		else if do-words-lexer-test
-			for arg in arguments tail tail
-				test-words-lexer: arg
-		else if do-lines-lexer-test
-			for arg in arguments tail tail
-				test-lines-lexer: arg
-
-		else
-			compile-program: compile-symbols
-	
-	catch Exception
-		print-line: exception message
-		successful = false
 
 
 return-value
@@ -91,6 +33,19 @@ return-value
 # Top-level compilation.
 
 compile-program: compile-symbols
+	# Read the settings.
+	build-settings load
+	for setting in compile-symbols
+		if setting == "verbose"
+			build-settings is-verbose = true
+
+	# Create the status reporter.
+	if status-reporter == nil
+		if build-settings is-verbose
+			status-reporter = StdoutStatusReporter new
+		else
+			status-reporter = VT100StatusReporter new
+
 	# Create the .jolt-sources directory.
 	directory = FileDirectory new: "."
 	if !(directory entry-is-directory: build-settings jolt-sources-dir)
@@ -109,8 +64,7 @@ compile-program: compile-symbols
 	status-reporter indent
 	main-proto = CompiledProto new: "Trylid" parent: nil
 	main-proto 	--
-		setup-main: main-directory library-directory: library-directory 	--
-		compile-symbols: compile-symbols
+		setup-main: main-directory library-directory: library-directory
 	proto-queue append: main-proto
 	status-reporter unindent
 
@@ -189,80 +143,6 @@ find-library-path
 		if prefix-dir entry-is-directory: "trylon"
 			return prefix-path + "/trylon"
 	return nil
-
-
-# Test.
-
-lex-test: filename
-	try
-		lexer = Lexer new: (File new: filename) contents
-		loop
-			token = lexer next-token
-			print: token type
-			if token text && !token text is-empty
-				print: ": "
-				print: token text
-			print-line
-			if token type == 'eof'
-				break
-	catch Exception
-		print-line: "Error: " + exception message
-
-
-test-coke-lexer: filename
-	try
-		lines = List new
-		for line in (File new: filename) contents lines
-			lines append: line
-		lexer = CokeLexer new: lines
-		loop
-			expr = lexer next-expr
-			if expr == nil
-				break
-			dump-expr: expr level: 0
-			print-line
-	catch Exception
-		print-line: "Error: " + exception message
-
-
-dump-expr: expr level: level
-	print: ("                                   " substr: 0 length: level)
-	if expr is-a: Expression
-		print-line: "Expression (" + expr num-items string + ")"
-		for item in expr
-			dump-expr: item level: level + 1
-	else if expr is-a: String
-		print-line: "\"" + expr + "\""
-	else
-		print-line: expr string
-
-
-test-words-lexer: filename
-	try
-		for line in (File new: filename) contents lines
-			lexer = WordsLexer new: line
-			while !lexer is-done
-				print-line: lexer next
-	catch Exception
-		print-line: "Error: " + exception message
-
-
-test-lines-lexer: filename
-	try
-		lexer = LinesLexer new: (File new: filename) contents
-		lines = lexer lex
-		dump-lines: lines level: 0
-	catch Exception
-		print-line: "Error: " + exception message
-
-
-dump-lines: lines level: level
-	for line in lines
-		print: level string
-		print: "> "
-		print-line: line text
-		if line block
-			dump-lines: line block level: level + 1
 
 
 
