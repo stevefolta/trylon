@@ -21,7 +21,7 @@ insert: value at: key
 		root = Node new: key value: value
 		num-items += 1
 
-at: key set-to: value
+at: key put: value
 	insert: value at: key
 
 

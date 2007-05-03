@@ -10,7 +10,7 @@ create: parent
 
 
 add-argument: name
-	arguments at: name set-to: (CompiledField new: name type: nil)
+	arguments at: name put: (CompiledField new: name type: nil)
 
 
 is-lambda

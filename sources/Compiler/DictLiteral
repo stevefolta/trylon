@@ -8,8 +8,8 @@ create
 	dict = Dictionary new
 
 
-at: key set-to: value
-	dict at: key set-to: value
+at: key put: value
+	dict at: key put: value
 
 
 prepare-to-emit

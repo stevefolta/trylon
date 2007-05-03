@@ -12,7 +12,7 @@ create: name parent: parent directory: directory
 		if file-name ends-with: ".so"
 			proto-name = file-name substr: 0 length: file-name length - 3
 			proto-function = PosixProtoFunction new: proto-name
-			functions at: proto-name set-to: proto-function
+			functions at: proto-name put: proto-function
 
 
 

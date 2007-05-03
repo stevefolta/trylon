@@ -30,7 +30,7 @@ add: string
 add-char: char
 	if size == capacity
 		grow-to: size + 1
-	buffer char-at: size set-to: char
+	buffer char-at: size put: char
 	size += 1
 
 string

@@ -13,7 +13,7 @@ create
 insert: value at: key
 	dictionary insert: value at: key object-ptr
 
-at: key set-to: value
+at: key put: value
 	insert: value at: key
 
 at: key

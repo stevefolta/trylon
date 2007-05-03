@@ -253,7 +253,7 @@ lowercase
 		c = p deref-char
 		if c >= `A` && c <= `Z`
 			c += `a` - `A`
-		out-p char-at: 0 set-to: c
+		out-p char-at: 0 put: c
 		p += 1
 		out-p += 1
 	return String new: buffer to: buffer + length

@@ -16,7 +16,7 @@ at: index
 at: index put: value
 	if index < 0 || index >= num-items
 		throw MessageException new: "Bad tuple index."
-	this object-ptr object-at: index + 2 set-to: value
+	this object-ptr object-at: index + 2 put: value
 
 at: index set-to: value
 	at: index put: value

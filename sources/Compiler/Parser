@@ -950,7 +950,7 @@ parse-dict-literal-expression
 					parse-error: 	--
 						"Missing value for \"" + name + "\" in dictionary literal."
 				require-eol
-				expr at: name set-to: value
+				expr at: name put: value
 			else
 				parse-error: "Syntax error in dictionary literal."
 		consume-token 	# unindent

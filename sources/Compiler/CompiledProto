@@ -30,7 +30,7 @@ lookup-function: name visited-protos: visited-protos
 	# Recursion control.
 	if visited-protos contains: this
 		return nil
-	visited-protos at: this set-to: this
+	visited-protos at: this put: this
 
 	# Do we know it already?
 	function = functions at: name
@@ -99,7 +99,7 @@ add-function: function
 			throw MessageException new: 	--
 				"\"" + this name + " " + function-name + "\" is defined twice."
 
-	functions at: function-name set-to: function
+	functions at: function-name put: function
 
 	# "create" functions automatically add a corresponding "new:" function.
 	if (function is-a: CompiledFunction) && 	--
@@ -112,7 +112,7 @@ add-function: function
 
 
 add-function: name function: function
-	functions at: name set-to: function
+	functions at: name put: function
 
 
 add-field: field
@@ -124,10 +124,10 @@ add-field: field
 
 
 add-shared-field: field
-	shared-fields at: field name set-to: field
-	functions at: field name set-to: (SharedFieldGetter new: field on-proto: this)
+	shared-fields at: field name put: field
+	functions at: field name put: (SharedFieldGetter new: field on-proto: this)
 	functions 	--
-		at: field name + ":" set-to: (SharedFieldSetter new: field on-proto: this)
+		at: field name + ":" put: (SharedFieldSetter new: field on-proto: this)
 
 
 add-proto: name directory: directory
@@ -147,7 +147,7 @@ add-proto: name directory: directory
 	if directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto
-	functions at: name set-to: proto-function
+	functions at: name put: proto-function
 	the-compiler proto-queue append: new-proto
 	status-reporter unindent
 	return new-proto
@@ -208,23 +208,23 @@ setup-main: main-directory library-directory: library-directory
 	posix-directory = library-directory at: "Posix"
 	posix-proto = PosixProto new: "Posix" parent: this directory: posix-directory
 	proto-function = ProtoFunction new: posix-proto
-	functions at: "Posix" set-to: proto-function
+	functions at: "Posix" put: proto-function
 	the-compiler proto-queue append: posix-proto
 
 	# Set up Standard Pepsi.
 	standard-directory = library-directory at: "Standard"
 	pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
 	proto-function = ProtoFunction new: pepsi-proto
-	standard-proto functions at: "Pepsi" set-to: proto-function
+	standard-proto functions at: "Pepsi" put: proto-function
 	parser = 	--
 		Parser new: (standard-directory at: "Pepsi") contents context: standard-proto
 	parser parse-proto-file: pepsi-proto
 	the-compiler proto-queue append: pepsi-proto
 
 	# Add "nil", "true", and "false" to Standard.
-	standard-proto functions at: "nil" set-to: NilFunction new
-	standard-proto functions at: "true" set-to: (BoolLiteralFunction new: true)
-	standard-proto functions at: "false" set-to: (BoolLiteralFunction new: false)
+	standard-proto functions at: "nil" put: NilFunction new
+	standard-proto functions at: "true" put: (BoolLiteralFunction new: true)
+	standard-proto functions at: "false" put: (BoolLiteralFunction new: false)
 
 	# Load our "main"s
 	for directory in directories
@@ -236,7 +236,7 @@ setup-main: main-directory library-directory: library-directory
 	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
 		standard-proto lookup-function: proto-name
 	
-	functions at: "Trylid" set-to: (ProtoFunction new: this)
+	functions at: "Trylid" put: (ProtoFunction new: this)
 
 
 ensure-superclasses: object-proto

@@ -75,19 +75,19 @@ fn as-object -> Object
 	coke
 		(int@ (int@ self))
 
-fn ptr-at: index (Int) set-to: value (BytePtr)
+fn ptr-at: index (Int) put: value (BytePtr)
 	coke
 		(set-int@ (int@ self) (int@ index) (int@ value))
-fn object-at: index (Int) set-to: value (Object)
+fn object-at: index (Int) put: value (Object)
 	coke
 		(set-int@ (int@ self) (int@ index) value)
-fn char-at: index (Int) set-to: value (Char)
+fn char-at: index (Int) put: value (Char)
 	coke
 		(set-char@ (+ (int@ self) (int@ index)) (int@ value))
-fn int-at: index (Int) set-to: value (Int)
+fn int-at: index (Int) put: value (Int)
 	coke
 		(set-int@ (int@ self) (int@ index) (int@ value))
-fn byte-at: index (Int) set-to: value (Int)
+fn byte-at: index (Int) put: value (Int)
 	coke
 		(set-char@ (+ (int@ self) (int@ index)) (int@ value))
 
