@@ -111,10 +111,22 @@ for item in items
 
 try
   event-loop
-catch Exception
+else
   print-line: exception message
 
-throw MessageException new: "Couldn't connect."</div>
+throw MessageException new: "Couldn't connect."
+
+switch justification
+  'left'
+    # ...
+  'right'
+    # ...
+  'center', 'centered'
+    # ...
+  'justified'
+    # ...
+  else
+    throw MessageException new: "Bad justification: " + justification string</div>
 
 </div>
 
@@ -156,7 +168,7 @@ Assignment can also be a shorthand for a function call:
 </p>
 
 <div class="code">(array at: 7) = "hello"   # is the same as:
-array at: 7 set-to: "hello"</div>
+array at: 7 put: "hello"</div>
 
 <p>
 If the function being set is a unary function, rather than a keyword function, then the setter function's name is the unary function's name with a colon appended:
@@ -174,6 +186,14 @@ If the function being set is a unary function, rather than a keyword function, t
 obj = MyProto new
 obj name = "Joey Jo Jo Shabbadoo"
 print-line: obj name   # Prints "Joey Jo Jo Shabbadoo Jr."</div>
+
+<p>
+(Indeed, the compiler treats *all* assignments this way, even those to local variables.  So "foo = bar" can always be written as "foo: bar".)
+</p>
+
+<p>
+Assignments are expressions, so you can do things like "x = y = 0".
+</p>
 
 </div>
 

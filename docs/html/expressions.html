@@ -84,7 +84,7 @@ The usual string and numeric literals are supported.
 <div class="code">"Some kinda something"
 "The whole line.\n"
 3
-2.75
+2.75         [Not yet supported.]
 0xDEADBEEF   [Not yet supported.]</div>
 
 <p>
@@ -93,7 +93,16 @@ Symbols are like strings, except that only one instance of a given symbol exists
 
 <div class="code">'primary'
 if alignment == 'justified'
-  #...</div>
+  #...
+switch alignment
+  'left'
+    # ...
+  'right'
+    # ...
+  'center'
+    # ...
+  'justified'
+    # ...</div>
 
 <p>
 Character literals are specified using backquotes:
@@ -135,7 +144,7 @@ Note that names can contain hyphens (although they can't start or end with a hyp
 <div class="entry">
 <div class="entry-title"> Operators </div>
 <p>
-Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
+Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual (that is, C-style) rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
 </p>
 
 <p>

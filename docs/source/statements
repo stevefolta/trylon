@@ -87,9 +87,7 @@ The basic idea is that an assignment will assign to a variable in the current sc
 Assignment can also be a shorthand for a function call:
 
 	(array at: 7) = "hello" 	# is the same as:
-	array at: 7 set-to: "hello"
-
-["set-to:" will likely be changed to "put:".]
+	array at: 7 put: "hello"
 
 If the function being set is a unary function, rather than a keyword function, then the setter function's name is the unary function's name with a colon appended:
 
