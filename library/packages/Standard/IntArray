@@ -18,6 +18,8 @@ at: index set-to: value
 	if (index < 0 || index >= size)
 		throw MessageException new: "Index out of range for Array."
 	return ptr int-at: index set-to: value
+at: index put: value
+	at: index set-to: value
 
 
 

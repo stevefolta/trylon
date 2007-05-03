@@ -23,6 +23,8 @@ fn insert: value at: key
 
 fn at: key set-to: value
 	insert: value at: key
+fn at: key put: value
+	insert: value at: key
 
 
 fn at: key
