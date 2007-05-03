@@ -16,6 +16,10 @@ jolt-expression
 	return Expression with: 'trylid-char-literal' with: char int
 
 
+translate: compiler
+	return compiler translateExpression: (Expression with: 'quote' with: char)
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

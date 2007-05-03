@@ -19,5 +19,9 @@ jolt-expression
 		return 'false'
 
 
+translate: compiler
+	return compiler translateExpression: jolt-expression
+
+
 # Copyright 2007 Steve Folta.  See the License file.
 

@@ -215,6 +215,27 @@ Misc
 ".parent-proto" actually means "superclass" currently, not "enclosing context".  So ".." would be an entirely new addition.
 
 
+=====
+
+Misc
+	[2007.5.2]
+
+"Object detach": Give the object its own vtable.  (Can verify that ".proto == this" if it wants.)
+
+
+=====
+
+To Do
+	[live]
+
+Change "set-to:" to "put:".
+Colafy.
+Live Trylid compilation.
+Command line.
+Unify Object.
+Use SmallInteger rt Int and Char.
+Unify String (maybe).
+
 
 =====
 

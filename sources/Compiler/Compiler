@@ -137,6 +137,11 @@ find-library-path
 	return nil
 
 
+# Selectors from Jolt, which we need to make available when in Trylon.
+
+translateExpression: expression
+	# Not really being implemented here...
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 
