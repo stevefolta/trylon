@@ -4,7 +4,7 @@ superclass TrylidFunction
 create
 
 
-emit-call: arugments
+emit-call: arguments
 	return 'exception'
 
 

@@ -30,6 +30,11 @@ emit-call: arguments
 		Expression with: 'let' with: let-spec with: creator-call with: 'new-object'
 
 
+translate-call: arguments compiler: compiler
+	(Send new: name object: on-proto access arguments: arguments) 	--
+		translate: compiler
+
+
 emit-code
 	allocation = 	--
 		Expression 	--

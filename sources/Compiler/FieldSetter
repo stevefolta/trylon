@@ -19,6 +19,17 @@ emit-call: arguments
 			with: arguments first-item jolt-expression
 
 
+translate-call: arguments compiler: compiler
+	# Could do this more efficiently...
+	expr = 	--
+		Expression 	--
+			with: 'send' 	--
+			with: (Expression with: 'quote' with: (field name + ":") intern) 	--
+			with: on-proto access 	--
+			with: arguments first-item
+	return compiler translateExpression: expr
+
+
 name
 	return field name + ":"
 
