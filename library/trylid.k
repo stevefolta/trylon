@@ -256,8 +256,8 @@
 		(let ((block [(import "Block") new])
 					(continue-label [compiler newLabel])
 					(index '1))
-			[[compiler continues] removeFirst]
-			[[compiler continues] addFirst: continue-label]
+			[[compiler continueLabels] removeFirst]
+			[[compiler continueLabels] addFirst: continue-label]
 			(while [index < [node size]]
 				[block add:
 					[[node at: index] translate: compiler]]
