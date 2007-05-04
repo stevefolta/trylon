@@ -1,7 +1,7 @@
 trylon CompiledField
 
 fields name type
-fields initial-value 	# Only used for class/package fields.
+fields initial-value 	# Only used for shared fields.
 
 
 create: name type: type

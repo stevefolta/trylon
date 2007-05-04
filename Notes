@@ -234,6 +234,7 @@ Command line.
 Unify Object.
 Use SmallInteger rt Int and Char.
 Unify String (maybe).
+Lambdas.
 
 
 =====

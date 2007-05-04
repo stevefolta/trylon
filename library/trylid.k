@@ -496,6 +496,8 @@
 
 (define-send 'string Object
 	[StandardString new_: [self _debugName]])
+(define-send 'responds-to: Object selector
+	(if [[self _vtable] lookup: selector] true false))
 
 
 
