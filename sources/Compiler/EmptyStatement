@@ -6,7 +6,7 @@ create
 
 
 jolt-expression
-	return Expression with: 'quote' with: 'empty'
+	return 'nil'
 
 
 
