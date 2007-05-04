@@ -235,6 +235,8 @@ Unify Object.
 Use SmallInteger rt Int and Char.
 Unify String (maybe).
 Lambdas.
+(catch) doesn't [.jmpbuf restore]; make test cases.
+The proto itself doesn't have its new fields; add them.
 
 
 =====
