@@ -66,6 +66,15 @@ jolt-expression
 			with: else-expression
 
 
+translate: compiler
+	else-expr = else-block
+	if else-block == nil
+		else-expr = 'nil'
+	expr = 	--
+		Expression with: 'if' with: condition with: body with: else-expr
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

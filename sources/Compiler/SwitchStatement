@@ -38,6 +38,22 @@ jolt-expression
 	return expr
 
 
+translate: compiler
+	expr-size = clauses count + 3
+	expr = Expression new: expr-size
+	expr at: 0 put: 'switch'
+	expr at: 1 put: expression
+	index = 2
+	for clause in clauses
+		expr at: index put: clause translate-jolt-expression
+		index += 1
+	if else-clause
+		expr at: index put: else-clause translate-jolt-expression
+	else
+		expr at: index put: 'nil'
+	return expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

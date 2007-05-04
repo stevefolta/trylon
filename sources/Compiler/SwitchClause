@@ -32,6 +32,19 @@ jolt-expression
 		return body jolt-expression
 
 
+translate-jolt-expression
+	if values
+		values-list = Expression new: values count
+		index = 0
+		for value in values
+			values-list at: index put: value
+			index += 1
+		return Expression with: values-list with: body
+	else
+		# It's the "else" clause.
+		return body
+
+
 
 
 # Copyright 2007 Steve Folta.  See the License file.

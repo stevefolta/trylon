@@ -17,6 +17,11 @@ jolt-expression
 	return Expression with: 'throw' with: value jolt-expression
 
 
+translate: compiler
+	expr = Expression with: 'throw' with: value
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

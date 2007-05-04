@@ -24,6 +24,11 @@ jolt-expression
 	return expression
 
 
+translate: compiler
+	expr = Expression with: 'fixed-return' with: value
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

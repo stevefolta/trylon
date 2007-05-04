@@ -30,6 +30,16 @@ jolt-expression
 	return Expression with: 'catch' with: body jolt-expression with: else-expr
 
 
+translate: compiler
+	else-expr = nil
+	if else-clause
+		else-expr = else-clause
+	else
+		else-expr = 'nil'
+	expr = Expression with: 'catch' with: body with: else-expr
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 
