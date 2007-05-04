@@ -25,16 +25,36 @@ prepare-to-emit: node
 
 
 jolt-expression
-	return ( 'trylon-dict', (emit-node: dict root), dict num-items )
+	return 	--
+		Expression 	--
+			with: 'trylid-dict' with: (emit-node: dict root) with: dict num-items
 
 emit-node: node
 	if node == nil
 		return 'nil'
 	return 	--
 		Expression 	--
-			with: 'trylon-dict-node' 	--
+			with: 'trylid-dict-node' 	--
 			with: node key 	--
 			with: node value jolt-expression 	--
+			with: (emit-node: node left) 	--
+			with: (emit-node: node right)
+
+
+translate: compiler
+	expr = 	--
+		Expression 	--
+			with: 'trylid-dict' with: (translate-node: dict root) with: dict num-items
+	return compiler translateExpression: expr
+
+translate-node: node
+	if node == nil
+		return 'nil'
+	return 	--
+		Expression 	--
+			with: 'trylid-dict-node' 	--
+			with: node key 	--
+			with: node value 	--
 			with: (emit-node: node left) 	--
 			with: (emit-node: node right)
 

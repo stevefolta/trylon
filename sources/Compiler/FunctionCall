@@ -26,6 +26,16 @@ jolt-expression
 	return function emit-call: arguments
 
 
+translate: compiler
+	# Are we using a prepare-to-emit phase?  Work either way.
+	if function == nil
+		function = context lookup-function-autodeclaring: name
+		if function == nil
+			throw MessageException new: "There is no \"" + name + "\" function."
+	
+	return function translate-call: arguments compiler: compiler
+
+
 convert-to-setter-call: value
 	if name ends-with: ":"
 		name += "put:"

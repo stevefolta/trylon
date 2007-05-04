@@ -7,6 +7,9 @@ emit-call: arguments
 prepare-to-emit
 	# Default: nothing to do.
 
+translate-call: arguments compiler: compiler
+	virtual
+
 emit-code
 	# Default: nothing to do.
 	return nil

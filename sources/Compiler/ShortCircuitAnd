@@ -22,6 +22,11 @@ jolt-expression
 			with: (expr2 jolt-expression)
 
 
+translate: compiler
+	expr = Expression with: 'and' with: expr1 with: expr2
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

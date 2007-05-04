@@ -16,6 +16,11 @@ jolt-expression
 	return Expression with: 'not' with: expr jolt-expression
 
 
+translate: compiler
+	expr = Expression with: 'not' with: expr
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

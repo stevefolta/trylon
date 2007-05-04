@@ -141,6 +141,9 @@ find-library-path
 
 translateExpression: expression
 	# Not really being implemented here...
+translateSymbol: symbol
+	# Not really being implemented here...
+
 
 
 # Copyright 2007 Steve Folta.  See the License file.

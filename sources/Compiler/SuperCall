@@ -26,6 +26,18 @@ jolt-expression
 	return expr
 
 
+translate: compiler
+	expr = Expression new: arguments count + 3
+	expr at: 0 put: 'super-send'
+	expr at: 1 put: name intern
+	expr at: 2 put: (compiler translateSymbol: 'self')
+	index = 3
+	for arg in arguments
+		expr at: index put: arg
+		index += 1
+	return compiler translateExpression: expr
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 
