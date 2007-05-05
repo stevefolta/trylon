@@ -139,10 +139,11 @@ find-library-path
 
 # Selectors from Jolt, which we need to make available when in Trylon.
 
-translateExpression: expression
-	# Not really being implemented here...
-translateSymbol: symbol
-	# Not really being implemented here...
+iff !in-jolt
+	translateExpression: expression
+		#
+	translateSymbol: symbol
+		#
 
 
 

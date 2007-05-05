@@ -348,9 +348,9 @@ emit-jolt-file
 		status-reporter unindent
 
 
-iff not-yet
+iff in-trylid
 	translate: compiler
-		stream = WriteStream on: (Expression new: functions count + 1)
+		stream = Pepsi WriteStream on: (Expression new: functions count + 1)
 		stream nextPut: 'begin'
 
 		# Define the proto.
@@ -370,10 +370,10 @@ iff not-yet
 		# ... We may need to add loaders for any subprotos, to deal with
 		# dependencies.
 
-	# Add the functions.
-	for function in functions values
-		if function is-translatable
-			stream nextPut: function
+		# Add the functions.
+		for function in functions values
+			if function is-translatable
+				stream nextPut: function
 
 
 access
