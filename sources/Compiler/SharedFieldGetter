@@ -33,6 +33,23 @@ emit-code
 			with: initial-value
 
 
+translate: compiler
+	# Handle the initial value.
+	initial-value = field initial-value
+	if initial-value == nil
+		initial-value = 'nil'
+	
+	# Translate.
+	expr = 	--
+		Expression 	--
+			with: 'add-shared-field' with: field name intern with: on-proto access 	--
+			with: initial-value
+	compiler translateExpression: expr
+
+is-translatable
+	return true
+
+
 name
 	return field name
 

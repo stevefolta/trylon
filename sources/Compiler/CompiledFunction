@@ -65,6 +65,22 @@ emit-code
 	return expr
 
 
+translate: compiler
+	expr = Expression new: arguments count + 4
+	expr at: 0 put: 'define-send'
+	expr at: 1 put: (Expression with: 'quote' with: name intern)
+	expr at: 2 put: on-proto access
+	index = 3
+	for arg in arguments
+		expr at: index put: arg name intern
+		index += 1
+	expr at: index put: body
+	return compiler translateExpression: expr
+
+is-translatable
+	return true
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

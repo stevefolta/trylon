@@ -65,6 +65,12 @@ emit-code
 	return expr
 
 
+translate: compiler
+	return compiler translateExpression: emit-code
+is-translatable
+	return true
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 
