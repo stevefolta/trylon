@@ -112,6 +112,7 @@ for item in items
 try
   event-loop
 else
+  # "exception" is automatically defined as the caught object.
   print-line: exception message
 
 throw MessageException new: "Couldn't connect."
@@ -126,7 +127,9 @@ switch justification
   'justified'
     # ...
   else
-    throw MessageException new: "Bad justification: " + justification string</div>
+    throw   --
+      MessageException  --
+        new: "Bad justification: " + justification string</div>
 
 </div>
 

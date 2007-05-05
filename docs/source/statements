@@ -37,6 +37,7 @@ There are the usual flow-of-control statements:
 	try
 		event-loop
 	else
+		# "exception" is automatically defined as the caught object.
 		print-line: exception message
 	
 	throw MessageException new: "Couldn't connect."
@@ -51,7 +52,9 @@ There are the usual flow-of-control statements:
 		'justified'
 			# ...
 		else
-			throw MessageException new: "Bad justification: " + justification string
+			throw 	--
+				MessageException	--
+					new: "Bad justification: " + justification string
 
 
 =====
