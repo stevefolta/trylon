@@ -297,7 +297,6 @@
 	(lambda (exception)
 		;; Throw.
 		(let ((jmpbuf [[(trylid-proto Posix) jmp_buf] currentCatcher]))
-			[jmpbuf restore]
 			(longjmp jmpbuf exception)
 			)
 		;; Should never get here...
@@ -307,13 +306,13 @@
 
 (syntax catch 	;; body else-clause
 	(lambda (node compiler)
-		`(let ((.jmpbuf [[(trylid-proto Posix) jmp_buf] new])
-					 (exception nil))
+		`(let ((.jmpbuf nil) (exception nil))
+			 (set .jmpbuf [[(trylid-proto Posix) jmp_buf] new])
 			 [.jmpbuf push]
 			 (set exception (setjmp .jmpbuf))
 			 (if exception
-				 ,[node at: '2]
-				 ,[node at: '1])
+				 (begin [.jmpbuf restore] ,[node at: '2])
+				 (begin ,[node at: '1] [.jmpbuf restore]))
 			 )
 		))
 
