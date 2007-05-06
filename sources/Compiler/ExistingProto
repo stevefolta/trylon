@@ -1,13 +1,13 @@
 trylid ExistingProto
 superclass Context
 
-fields proto new-functions
+fields name proto new-functions
 
 
 create: name proto: proto
 	this name = name
 	this proto = proto
-	new-functions = List new
+	new-functions = Dictionary new
 
 
 lookup-function: name
@@ -38,7 +38,7 @@ lookup-instance-function: name
 	if proto responds-to: name intern
 		return PrimitiveFunction new: name on-proto: proto
 	
-	function = functions at: name
+	function = new-functions at: name
 	if function
 		return function
 
@@ -69,8 +69,8 @@ add-field: field
 
 
 add-shared-field: field
-	functions at: field name put: (SharedFieldGetter new: field on-proto: this)
-	functions 	--
+	new-functions at: field name put: (SharedFieldGetter new: field on-proto: this)
+	new-functions 	--
 		at: field name + ":" put: (SharedFieldSetter new: field on-proto: this)
 
 
@@ -85,7 +85,7 @@ add-proto: name directory: directory
 	
 	# Add the new one.
 	status-reporter = the-compiler status-reporter
-	status-reporter report: "Loading " + name + " into " + full-name + "..."
+	status-reporter report: "Loading " + name + " into " + this name + "..."
 	status-reporter indent
 	new-proto = CompiledProto new: name parent: this
 	if directory

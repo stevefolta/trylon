@@ -24,6 +24,13 @@ return-value
 
 # Top-level compilation.
 
+compile-file: file as: name into: parent-proto
+	status-reporter = StdoutStatusReporter new
+	proto = parent-proto add-proto: name
+	parser = Parser new: file contents context: parent-proto
+	parser parse-proto-file: proto
+
+
 compile-program: compile-symbols
 	# Read the settings.
 	build-settings load

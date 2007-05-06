@@ -481,22 +481,27 @@
 		))
 (define-send 'same-as: Object arg
 	(== self arg))
+(define-send 'responds-to: Object selector
+	(if [[self _vtable] lookup: selector] true false))
+(define-send 'string Object
+	[StandardString new_: [self _debugName]])
+
 
 (define-send 'string SmallInteger
 	[(trylid-int [self _integerValue]) string])
 (define-send 'int SmallInteger
 	(trylid-int [self _integerValue]))
 
+(define-send 'length String
+	[self size])
+(define-send 'intern String
+	[self asSymbol])
+
 (define Symbol (import "Symbol"))
 (define-send 'string Symbol
 	[StandardString new_: [self _stringValue]])
 (define-send 'intern Symbol
 	self)
-
-(define-send 'string Object
-	[StandardString new_: [self _debugName]])
-(define-send 'responds-to: Object selector
-	(if [[self _vtable] lookup: selector] true false))
 
 
 

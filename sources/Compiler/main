@@ -1,7 +1,7 @@
 trylon Compiler
 
 # See "Compiler Compiler" for the guts of this, and an explanation of why it is
-# separate from this...
+# separate from this... (it's Trylon's fault, not Trylid's).
 
 
 compile: compile-symbols
@@ -14,6 +14,15 @@ compile: compile-symbols
 		elapsed-time = System milliseconds - start-ms
 		print-line: "Compilation took " + elapsed-time string + "ms."
 	return the-compiler return-value
+
+
+iff in-trylid
+	compile-file: file as: name into: parent-proto
+		if !(parent-proto is-a: ExistingProto)
+			parent-proto = ExistingProto new: name proto: parent-proto
+		the-compiler = Compiler new
+		program = the-compiler compile-file: file as: name into: parent-proto
+		program _eval
 
 
 
