@@ -351,12 +351,20 @@ emit-jolt-file
 iff in-trylid
 	translate: compiler
 		debug: "CompiledProto translate:"
+		# Make sure there's a superclass.
+		if superclass == nil
+			superclass = ExistingProto new: "Object" proto: Object
+
+		# Start creating the big expression that creates the proto and all its
+		# components.
 		top-expression = (Expression new: functions count + 1)
 		stream = Pepsi WriteStream on: top-expression
 		stream nextPut: 'begin'
 
 		# Define the proto.
 		debug: "Defining proto."
+		debug: "parent = " + parent string
+		debug: "superclass = " + superclass string
 		slots = Expression new: fields count
 		index = 0
 		for field in fields
@@ -380,7 +388,7 @@ iff in-trylid
 			if function is-translatable
 				stream nextPut: function
 
-		return top-expression
+		return compiler translateExpression: top-expression
 
 
 access

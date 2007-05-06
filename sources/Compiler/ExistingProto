@@ -1,7 +1,7 @@
 trylid ExistingProto
 superclass Context
 
-fields name proto new-functions
+fields name proto new-functions is-main
 
 
 create: name proto: proto
