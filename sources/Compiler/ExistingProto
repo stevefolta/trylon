@@ -129,6 +129,8 @@ translate: compiler
 	for function in new-functions values
 		if function is-translatable
 			stream nextPut: function
+	
+	return compiler translateExpression: stream contents
 
 
 access

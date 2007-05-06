@@ -44,7 +44,7 @@ translate: compiler
 		Expression 	--
 			with: 'add-shared-field' with: field name intern with: on-proto access 	--
 			with: initial-value
-	compiler translateExpression: expr
+	return compiler translateExpression: expr
 
 is-translatable
 	return true

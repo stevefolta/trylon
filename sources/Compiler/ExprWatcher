@@ -1,0 +1,17 @@
+trylid ExprWatcher
+fields node name
+
+# A debuggging aid.
+
+
+create: name on: node
+	this name = name
+	this node = node
+
+
+translate: compiler
+	debug: name + " about to translate:."
+	result = node translate: compiler
+	debug: name + " translated."
+	return result
+
