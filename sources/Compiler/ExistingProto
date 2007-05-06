@@ -1,0 +1,137 @@
+trylid ExistingProto
+superclass Context
+
+fields proto new-functions
+
+
+create: name proto: proto
+	this name = name
+	this proto = proto
+	new-functions = List new
+
+
+lookup-function: name
+	name-selector = name intern
+
+	# Does the proto know it?
+	if proto responds-to: name-selector
+		return PrimitiveFunction new: name on-proto: proto
+
+	# Are we adding it?
+	function = new-functions at: name
+	if function
+		return function
+	
+	# Check the context.
+	cur-proto = proto
+	loop
+		if !(cur-proto responds-to: '.parent-context')
+			break
+		cur-proto = cur-proto .parent-context
+		if cur-proto responds-to: name-selector
+			return PrimitiveFunction new: name on-proto: cur-proto
+	
+	return nil
+
+
+lookup-instance-function: name
+	if proto responds-to: name intern
+		return PrimitiveFunction new: name on-proto: proto
+	
+	function = functions at: name
+	if function
+		return function
+
+	return nil
+
+
+add-function: function
+	function-name = function name
+
+	new-functions at: function-name put: function
+
+	# "create" functions automatically add a corresponding "new:" function.
+	if (function is-a: CompiledFunction) && 	--
+	    ((function-name == "create") || 	--
+			 (function-name starts-with: "create:") || 	--
+	     (function-name starts-with: "create-"))
+		# Add the corresponding "new" function.
+		new-function = NewFunction new: function on-proto: this
+		(new-functions at: new-function name) = new-function
+
+
+add-function: name function: function
+	new-functions at: name put: function
+
+
+add-field: field
+	throw MessageException new: "You can't add fields to pre-existing objects."
+
+
+add-shared-field: field
+	functions at: field name put: (SharedFieldGetter new: field on-proto: this)
+	functions 	--
+		at: field name + ":" put: (SharedFieldSetter new: field on-proto: this)
+
+
+add-proto: name directory: directory
+	# If it already exists, return it.
+	existing-function = lookup-instance-function: name
+	if existing-function
+		if !(existing-function is-a: ProtoFunction)
+			throw MessageException new: 	--
+				"Adding \"" + name + "\" as a proto, when it's already a non-proto."
+		return existing-function proto
+	
+	# Add the new one.
+	status-reporter = the-compiler status-reporter
+	status-reporter report: "Loading " + name + " into " + full-name + "..."
+	status-reporter indent
+	new-proto = CompiledProto new: name parent: this
+	if directory
+		new-proto add-directory: directory
+	proto-function = ProtoFunction new: new-proto
+	new-functions at: name put: proto-function
+	status-reporter unindent
+	return new-proto
+
+
+add-proto: name
+	return add-proto: name directory: nil
+
+
+get-subproto: name
+	# Has it been loaded already?
+	function = lookup-instance-function: name
+	if function && (function is-a: ProtoFunction)
+		return function proto
+	
+	return nil
+
+
+get-proto: name
+	function = new-functions at: name
+	if function == nil
+		function = lookup-function: name
+	if function && (function is-a: ProtoFunction)
+		return function proto
+	return nil
+
+
+translate: compiler
+	stream = Pepsi WriteStream on: (Expression new: new-functions count)
+	stream nextPut: 'begin'
+
+	# ... We may need to add loaders for any subprotos, to deal with
+	# dependencies.
+
+	# Add the functions.
+	for function in new-functions values
+		if function is-translatable
+			stream nextPut: function
+
+
+access
+	return Expression with: 'quote' with: proto
+
+

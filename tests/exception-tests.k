@@ -3,6 +3,9 @@
 
 (define MessageException (trylid-proto Standard MessageException))
 
+(define CompilerOptions (import "CompilerOptions"))
+;; [CompilerOptions verboseTree: true]
+
 (define bottom-level
 	(lambda ()
 		(throw [MessageException new: (trylid-string "Boom!")])
