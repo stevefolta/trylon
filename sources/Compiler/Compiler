@@ -28,7 +28,10 @@ compile-file: file as: name into: parent-proto
 	status-reporter = StdoutStatusReporter new
 	proto = parent-proto add-proto: name
 	parser = Parser new: file contents context: parent-proto
+	debug: "Parsing."
 	parser parse-proto-file: proto
+	debug: "Parsed."
+	return proto
 
 
 compile-program: compile-symbols

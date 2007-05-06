@@ -350,10 +350,13 @@ emit-jolt-file
 
 iff in-trylid
 	translate: compiler
-		stream = Pepsi WriteStream on: (Expression new: functions count + 1)
+		debug: "CompiledProto translate:"
+		top-expression = (Expression new: functions count + 1)
+		stream = Pepsi WriteStream on: top-expression
 		stream nextPut: 'begin'
 
 		# Define the proto.
+		debug: "Defining proto."
 		slots = Expression new: fields count
 		index = 0
 		for field in fields
@@ -366,14 +369,18 @@ iff in-trylid
 				with: parent access 	--
 				with: superclass access 	--
 				with: slots
+		stream nextPut: expr
 
 		# ... We may need to add loaders for any subprotos, to deal with
 		# dependencies.
 
 		# Add the functions.
+		debug: "Adding functions."
 		for function in functions values
 			if function is-translatable
 				stream nextPut: function
+
+		return top-expression
 
 
 access

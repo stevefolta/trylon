@@ -22,6 +22,8 @@ iff in-trylid
 			parent-proto = ExistingProto new: name proto: parent-proto
 		the-compiler = Compiler new
 		program = the-compiler compile-file: file as: name into: parent-proto
+		debug: "Parse tree is " + program string + "."
+		debug: "Gonna _eval the parse tree."
 		program _eval
 
 
