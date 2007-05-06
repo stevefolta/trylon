@@ -30,6 +30,7 @@
 (define strtol (dlsym "strtol"))
 (define setjmp (dlsym "setjmp"))
 (define longjmp (dlsym "longjmp"))
+(define readline (dlsym "readline"))
 
 
 ;; Defining and loading objects.

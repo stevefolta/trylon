@@ -53,6 +53,10 @@ main: arguments
 	return return-value
 
 
+run-command-line
+	CommandLine new run
+
+
 status-reporter
 	return the-compiler status-reporter
 

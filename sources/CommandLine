@@ -1,0 +1,26 @@
+trylid CommandLine
+fields prompt
+
+create
+	prompt = "> "
+
+
+readline
+	_prompt = prompt _stringValue
+	coke
+		(let ((result (readline _prompt)))
+			(if result
+				(let ((return-value [StandardString new-copy_: result]))
+					(free result)
+					return-value)
+				nil))
+
+
+run
+	loop
+		line = readline
+		if line == nil
+			break
+		print-line: line
+
+
