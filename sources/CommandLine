@@ -45,6 +45,9 @@ run
 		print: post-prompt
 		if line == nil
 			break
+		line = line trimmed
+		if line is-empty
+			continue
 		try
 			parser = Compiler Parser new: line context: context
 			expr = parser parse-expression
