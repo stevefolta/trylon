@@ -22,7 +22,7 @@ compile
 iff in-trylid
 	compile-file: file as: name into: parent-proto
 		if !(parent-proto is-a: ExistingProto)
-			parent-proto = ExistingProto new: name proto: parent-proto
+			parent-proto = ExistingProto new: parent-proto
 		the-compiler = Compiler new
 		program = the-compiler compile-file: file as: name into: parent-proto
 		program _eval

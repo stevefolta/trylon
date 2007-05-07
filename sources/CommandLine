@@ -96,4 +96,12 @@ proto Context
 
 
 
+##### Useful functions from the command line.
+
+load: filename
+	proto-name = filename
+	slash-index = filename last-index-of: `/`
+	if slash-index >= 0
+		proto-name = filename substr: slash-index + 1
+	Compiler compile-file: (File new: filename) as: proto-name into: this
 

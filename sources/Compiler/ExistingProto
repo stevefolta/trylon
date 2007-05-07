@@ -9,6 +9,9 @@ create: name proto: proto
 	this proto = proto
 	new-functions = Dictionary new
 
+create: proto
+	create: proto .proto-name proto: proto
+
 
 lookup-function: name
 	name-selector = name intern
@@ -52,6 +55,16 @@ lookup-instance-function: name
 	if function
 		return function
 
+	return nil
+
+
+parent
+	if proto responds-to: '.parent-context'
+		parent-context = proto .parent-context
+		existing-proto = ExistingProto new: parent-context
+		if parent-context == Trylid
+			existing-proto is-main = true
+		return existing-proto
 	return nil
 
 
