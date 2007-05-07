@@ -53,8 +53,9 @@ main: arguments
 	return return-value
 
 
-run-command-line
-	CommandLine new run
+iff in-trylid
+	run-command-line
+		CommandLine new run
 
 
 status-reporter
