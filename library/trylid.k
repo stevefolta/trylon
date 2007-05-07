@@ -95,6 +95,16 @@
 		(long@ _closure 1)
 		))
 
+(define add-constant-field-to
+	(lambda (name proto value)
+		[[proto _vtable] methodAt: name put: closure-returner with: value]
+		))
+
+(syntax add-constant-field 	;; name proto value
+	(lambda (node compiler)
+		`(add-constant-field-to ',[node at: '1] ,[node at: '2] ,[node at: '3])
+		))
+
 
 ;; Loading prototypes from .k files.
 

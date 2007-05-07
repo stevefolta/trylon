@@ -323,6 +323,24 @@ emit-jolt-file
 	if got-one
 		stream write-line
 
+	# Add '.used-contexts'.
+	if !(uses-protos is-empty)
+		tuple-expr = Expression new: uses-protos count + 1
+		tuple-expr at: 0 put: 'trylid-tuple'
+		index = 1
+		for proto in uses-protos
+			tuple-expr at: index put: proto access
+			index += 1
+		expr = 	--
+			Expression 	--
+				with: 'add-constant-field' 	--
+				with: '.used-contexts' 	--
+				with: access 	--
+				with: tuple-expr
+		expr emit: stream
+		stream write-line
+		stream write-line
+
 	# Compile all the functions.
 	for function in functions values
 		if function is-a: ProtoFunction

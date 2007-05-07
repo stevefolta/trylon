@@ -25,12 +25,21 @@ lookup-function: name
 	# Check the context.
 	cur-proto = proto
 	loop
+		# Go up a level.
 		if !(cur-proto responds-to: '.parent-context')
 			break
 		cur-proto = cur-proto .parent-context
+		# Is it directly visible?
 		if cur-proto responds-to: name-selector
 			existing-proto = ExistingProto new: "(unknown)" proto: cur-proto
 			return PrimitiveFunction new: name on-proto: existing-proto
+		# Is it visible due to being in a "used" context?
+		if cur-proto responds-to: '.used-contexts'
+			for context in cur-proto .used-contexts
+				if context responds-to: name-selector
+					existing-proto = ExistingProto new: "(unknown)" proto: context
+					return PrimitiveFunction new: name on-proto: existing-proto
+					
 	
 	return nil
 
