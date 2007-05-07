@@ -1,8 +1,9 @@
 trylid CommandLine
-fields prompt
+fields prompt post-prompt
 
 create
-	prompt = "> "
+	prompt = "\n\e[35m> \e[33m"
+	post-prompt = "\e[0m"
 
 	# Set up history.
 	coke
@@ -40,6 +41,7 @@ run
 	context = Context new: this
 	loop
 		line = readline
+		print: post-prompt
 		if line == nil
 			break
 		try
