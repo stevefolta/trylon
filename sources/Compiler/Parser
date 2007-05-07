@@ -851,7 +851,10 @@ parse-try-statement
 			parse-error: "Trylid doesn't allow multiple \"catch\" clauses."
 
 		consume-token 	# "catch"/"else"
-		type = parse-type-spec 	#*** Real Trylid won't require this.
+		if current-token != 'eol' && current-token != 'comment'
+			# Type spec is not required or used in Trylid, but accept it for backward
+			# compatibility with Trylon code.
+			type = parse-type-spec
 		catch-comment = require-eol
 		catch-clause = CatchClause new: context comment: comment
 		context = catch-clause

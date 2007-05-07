@@ -15,7 +15,7 @@ lookup-function: name
 
 	# Does the proto know it?
 	if proto responds-to: name-selector
-		return PrimitiveFunction new: name on-proto: proto
+		return PrimitiveFunction new: name on-proto: this
 
 	# Are we adding it?
 	function = new-functions at: name
