@@ -31,6 +31,11 @@
 (define setjmp (dlsym "setjmp"))
 (define longjmp (dlsym "longjmp"))
 (define readline (dlsym "readline"))
+(define using_history (dlsym "using_history"))
+(define stifle_history (dlsym "stifle_history"))
+(define add_history (dlsym "add_history"))
+(define read_history (dlsym "read_history"))
+(define write_history (dlsym "write_history"))
 
 
 ;; Defining and loading objects.

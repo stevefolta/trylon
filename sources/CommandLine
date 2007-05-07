@@ -3,6 +3,13 @@ fields prompt
 
 create
 	prompt = "> "
+	coke
+		(using_history)
+		(stifle_history 1000)
+		(read_history ".trylid-history")
+	# I tried using atexit_:, but it crashes; but only if there was a
+	# ".trylid-history" already; weird.
+	# 	[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
 
 
 readline
@@ -11,6 +18,7 @@ readline
 		(let ((result (readline _prompt)))
 			(if result
 				(let ((return-value [StandardString new-copy_: result]))
+					(add_history result)
 					(free result)
 					return-value)
 				nil))
@@ -22,5 +30,8 @@ run
 		if line == nil
 			break
 		print-line: line
+	print-line
+	coke
+		(write_history ".trylid-history")
 
 

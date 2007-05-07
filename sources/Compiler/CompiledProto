@@ -391,7 +391,7 @@ access
 	else if is-root-object
 		return 'trylid-root-object'
 	else
-		iff in-jolt
+		iff not-anymore
 			return 	--
 				Expression 	--
 					with: 'send' 	--

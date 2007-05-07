@@ -11,5 +11,6 @@ junk
 .jolt-sources
 .jolt-sources-self
 .jolt-history
+.trylid-history
 .*.swp
 
