@@ -71,6 +71,7 @@
 				[vtable methodAt: setter-name
 					put: shared-field-setter with: getter-closure]
 				)
+			[_vtable flush]
 			)
 		))
 
@@ -223,6 +224,7 @@
 			[load-spec filename: filename]
 			[[parent-proto _vtable]
 				methodAt: proto-name put: proto-loader with: load-spec]
+			[_vtable flush]
 			)
 		))
 (syntax install-proto-loader
@@ -240,6 +242,7 @@
 		(define proto (import [name _stringValue]))
 		[[(trylid-proto Posix) _vtable]
 			methodAt: name put: closure-returner with: proto]
+		[_vtable flush]
 		proto
 		))
 
