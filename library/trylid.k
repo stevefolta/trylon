@@ -133,9 +133,14 @@
 
 (syntax define-trylid-proto 	;; name namespace superclass fields
 	(lambda (node compiler)
-		`(add-shared-field ,[node at: '1] ,[node at: '2]
-			(create-trylid-proto
-				(quote ,[node at: '1]) ,[node at: '3] (quote ,[node at: '4])))
+		`(let ((new-proto
+						 (create-trylid-proto
+							 (quote ,[node at: '1]) ,[node at: '3] (quote ,[node at: '4]))))
+			(add-shared-field ,[node at: '1] ,[node at: '2] new-proto)
+			[[new-proto _vtable]
+				methodAt: '.parent-context put: closure-returner with: ,[node at: '2]]
+			new-proto
+			)
 		))
 
 (define read-trylid-proto-file

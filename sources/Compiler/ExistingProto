@@ -29,7 +29,8 @@ lookup-function: name
 			break
 		cur-proto = cur-proto .parent-context
 		if cur-proto responds-to: name-selector
-			return PrimitiveFunction new: name on-proto: cur-proto
+			existing-proto = ExistingProto new: "(unknown)" proto: cur-proto
+			return PrimitiveFunction new: name on-proto: existing-proto
 	
 	return nil
 
