@@ -32,7 +32,6 @@ readline
 		(let ((result (readline _prompt)))
 			(if result
 				(let ((return-value [StandardString new-copy_: result]))
-					(if (char@ result) (add_history result))
 					(free result)
 					return-value)
 				nil))
@@ -40,6 +39,7 @@ readline
 
 run
 	context = Context new: this
+	last-line = ""
 	loop
 		line = readline
 		print: post-prompt
@@ -48,6 +48,10 @@ run
 		line = line trimmed
 		if line is-empty
 			continue
+		if line != last-line
+			coke
+				(add_history [line _stringValue])
+			last-line = line
 		try
 			parser = Compiler Parser new: line context: context
 			expr = parser parse-expression
