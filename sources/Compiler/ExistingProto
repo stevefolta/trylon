@@ -34,13 +34,13 @@ lookup-function: name
 		cur-proto = cur-proto .parent-context
 		# Is it directly visible?
 		if cur-proto responds-to: name-selector
-			existing-proto = ExistingProto new: "(unknown)" proto: cur-proto
+			existing-proto = ExistingProto new: cur-proto
 			return PrimitiveFunction new: name on-proto: existing-proto
 		# Is it visible due to being in a "used" context?
 		if cur-proto responds-to: '.used-contexts'
 			for context in cur-proto .used-contexts
 				if context responds-to: name-selector
-					existing-proto = ExistingProto new: "(unknown)" proto: context
+					existing-proto = ExistingProto new: context
 					return PrimitiveFunction new: name on-proto: existing-proto
 					
 	
