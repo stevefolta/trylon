@@ -3,6 +3,8 @@ fields prompt
 
 create
 	prompt = "> "
+
+	# Set up history.
 	coke
 		(using_history)
 		(stifle_history 1000)
@@ -10,6 +12,16 @@ create
 	# I tried using atexit_:, but it crashes; but only if there was a
 	# ".trylid-history" already; weird.
 	# 	[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
+
+	# Unknown messages should throw, not exit.
+	coke
+		(define-send (quote doesNotUnderstand:) Object selector
+			(begin
+				(define message [self string])
+				(set message [message + (trylid-string " doesn't understand ")])
+				(set message [message + [selector string]])
+				(throw [(trylid-proto Standard MessageException) new: message])
+				))
 
 
 readline
