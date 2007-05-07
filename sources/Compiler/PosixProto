@@ -35,6 +35,11 @@ class PosixProtoFunction
 		expr at: 3 put: body
 		return expr
 
+	iff in-trylid
+		translate-call: arguments compiler: compiler
+			return 	--
+				Send new: name object: (ExistingProto new: Posix) arguments: arguments
+
 
 
 # Copyright 2007 Steve Folta.  See the License file.

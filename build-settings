@@ -4,6 +4,7 @@ program = "trylid"
 debugging = true
 
 iff !in-trylid
+	# Trylon boilerplate.
 	c-flags += "-g"
 	link-flags += "-lgc" "-ldl" "-lm"
 
