@@ -15,6 +15,9 @@ compile: compile-symbols
 		print-line: "Compilation took " + elapsed-time string + "ms."
 	return the-compiler return-value
 
+compile
+	compile: List new
+
 
 iff in-trylid
 	compile-file: file as: name into: parent-proto

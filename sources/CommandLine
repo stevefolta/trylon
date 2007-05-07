@@ -32,7 +32,7 @@ readline
 		(let ((result (readline _prompt)))
 			(if result
 				(let ((return-value [StandardString new-copy_: result]))
-					(add_history result)
+					(if (char@ result) (add_history result))
 					(free result)
 					return-value)
 				nil))
