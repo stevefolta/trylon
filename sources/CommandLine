@@ -50,6 +50,8 @@ run
 			if expr
 				result = expr _eval
 				print-line: result string
+			else
+				print-line: "\e[31mUnknown compile error.\e[0m"
 		else
 			print-line: "\e[31m" + exception message + "\e[0m"
 	print-line

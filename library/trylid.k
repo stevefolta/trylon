@@ -514,6 +514,10 @@
 (define-send 'intern Symbol
 	self)
 
+(define UndefinedObject (import "UndefinedObject"))
+(define-send 'string UndefinedObject
+	(trylid-string "nil"))
+
 
 
 ;; Loading (this is last so it can use all the above).
