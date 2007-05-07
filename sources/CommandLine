@@ -19,8 +19,9 @@ create
 		(define-send (quote doesNotUnderstand:) Object selector
 			(begin
 				(define message [self string])
-				(set message [message + (trylid-string " doesn't understand ")])
+				(set message [message + (trylid-string " doesn't understand '")])
 				(set message [message + [selector string]])
+				(set message [message + (trylid-string "'")])
 				(throw [(trylid-proto Standard MessageException) new: message])
 				))
 
@@ -49,7 +50,7 @@ run
 			expr = parser parse-expression
 			if expr
 				result = expr _eval
-				print-line: result string
+				print-line: result print-string
 			else
 				print-line: "\e[31mUnknown compile error.\e[0m"
 		else

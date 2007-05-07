@@ -496,6 +496,8 @@
 	(if [[self _vtable] lookup: selector] true false))
 (define-send 'string Object
 	[StandardString new_: [self _debugName]])
+(define-send 'print-string Object
+	[self string])
 
 
 (define-send 'string SmallInteger
@@ -511,6 +513,9 @@
 (define Symbol (import "Symbol"))
 (define-send 'string Symbol
 	[StandardString new_: [self _stringValue]])
+(define-send 'print-string Symbol
+	(let ((quoter (trylid-string "'")))
+		(fixed-return [[quoter + [self string]] + quoter])))
 (define-send 'intern Symbol
 	self)
 

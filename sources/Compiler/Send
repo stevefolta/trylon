@@ -9,6 +9,9 @@ create: name object: object arguments: arguments
 	this object = object
 	this arguments = arguments
 
+message: name to: object with: arguments
+	return new: name object: object arguments: arguments
+
 
 prepare-to-emit
 	object prepare-to-emit

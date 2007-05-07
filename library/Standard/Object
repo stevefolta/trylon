@@ -23,7 +23,7 @@ is-a: proto -> Bool
 	return false
 
 string
-	return "a " + this .proto-name
+	return this .proto-name
 
 same-as: object
 	coke

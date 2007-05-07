@@ -209,6 +209,8 @@ last-character
 
 string
 	return this
+print-string
+	return "\"" + this + "\""
 
 copy
 	return String new: start to: stopper

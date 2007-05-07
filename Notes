@@ -228,9 +228,6 @@ Misc
 To Do
 	[live]
 
-Colafy.  [Done but not tested.]
-Live Trylid compilation.
-Command line.
 Unify Object.
 Use SmallInteger rt Int and Char.
 Unify String (maybe).
