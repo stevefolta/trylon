@@ -1,0 +1,83 @@
+Getting Trylid
+==============
+
+Get the tarball from:
+
+	http://somefancy.com/trylid/trylid.tgz
+
+If you're a programmer, the Git repo is at:
+
+	git://repo.or.cz/trylid.git
+
+...but you'll still want the tarball to get started (unless you want to do the full bootstrap; see below).
+
+
+Does it self-compile?
+=====================
+
+Try this:
+
+	cd library/Posix
+	make
+	cd ../..
+	jolt start.k
+
+That assumes that you've got a script to start up Jolt.  Something like this:
+
+	#!/bin/bash
+
+	/path/to/jolt-burg/main boot.k "$@"
+
+Once you've done that, try:
+
+	jolt start-self.k
+	jolt start-self.k
+
+If that works, you are using a fully self-compiled Trylid compiler.
+
+
+How fast is Jolt compared to Trylon-generated C?
+================================================
+
+Make sure the Boehm/Demers/Weisner garbage collector is installed on your computer.  It's often called something like "boehm-gc".  Then:
+
+	make trylid
+	trylid
+
+At the time of writing Trylon/C is about 4 times as fast as Trylid/Jolt.  Possible explanations include:
+
+	- Extreme late binding is costly.
+	- Inefficiencies in Jolt's codegen (but I doubt it).
+	- Inefficiencies in Trylid's codegen (it's happened before).
+
+
+Timing it
+=========
+
+To see compilation times, create a file named "build-settings.local" and put this in it:
+
+	time-compilation = true
+
+
+Command Line
+============
+
+	jolt command-line.k
+
+Then type Trylid expressions at it.  You can assign to new variables.  "readline" is in effect.
+
+
+Full Bootstrap
+==============
+
+Install Trylon (see http://somefancy.com/trylon).  Then:
+
+	trylon
+	trylid
+	jolt start.k
+	jolt start-self.k
+	jolt start-self.k
+
+First it compiles Trylon code (in "sources") into C and compiles the C to create the "trylid" program.  Then that compiles Trylid/Trylon code into Jolt, in the ".jolt-sources" directory.  Running that code compiles the Trylid/Trylon source into Jolt again, in the ".jolt-sources-self" directory.  Then that code is run, reproducing itself; and again to make sure.  But normally ".jolt-sources" and ".jolt-sources-self" are (essentially) identical.
+
+
