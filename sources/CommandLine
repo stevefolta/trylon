@@ -84,6 +84,11 @@ proto Context
 		if result
 			return result
 
+		if name == "true"
+			return Compiler BoolLiteralFunction new: true
+		else if name == "false"
+			return Compiler BoolLiteralFunction new: false
+
 		if (name index-of: `:`) == name length - 1
 			# Autodeclare it as a shared field in the command-line.
 			field-name = name substr: 0 length: name length - 1

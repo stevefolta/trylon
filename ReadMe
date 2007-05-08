@@ -72,6 +72,13 @@ Command Line
 
 Then type Trylid expressions at it.  You can assign to new variables.  "readline" is in effect.
 
+Some things to try:
+
+	Compiler compile      # Does the self-compile.
+	load: "tests/Test"    # Loads the file as a proto named "Test".
+	Test name
+	Pepsi CompilerOptions verboseExec = true
+
 
 Full Bootstrap
 ==============
