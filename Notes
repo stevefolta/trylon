@@ -225,6 +225,17 @@ Misc
 
 =====
 
+Cache Stats
+	[2007.5.8]
+
+While self-compiling:
+
+Cache hits:   170017841.
+Cache misses:   9271514.
+
+
+=====
+
 To Do
 	[live]
 
