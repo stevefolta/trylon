@@ -11,6 +11,11 @@
 (define false (import "false"))
 
 
+;; Needed from Pepsi.
+
+(define _vtable (import "_vtable"))
+
+
 ;; Needed C functions.
 (define strlen (dlsym "strlen"))
 (define memcpy (dlsym "memcpy"))
@@ -489,7 +494,6 @@
 (define-send '!= Object arg
 	(not [self == arg]))
 
-(define _vtable (import "_vtable"))
 [[_vtable _vtable] methodAt: '_tally put: field-getter with: 0]
 [[_vtable _vtable] methodAt: 'bindings put: field-getter with: 4]
 [[_vtable _vtable] methodAt: 'delegate put: field-getter with: 8]
