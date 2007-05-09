@@ -442,15 +442,12 @@
 
 (define trylid-int
 	(lambda (value)
-		;; Can't use "Int new" here, as it would recurse.
-		(let ((int [[StandardInt _vtable] _alloc: 4]))
-			(set-long@ int value)
-			int
-			)))
+		[SmallInteger value_: value]
+		))
 
 (syntax trylid-int-literal
 	(lambda (node compiler)
-		`(quote ,(trylid-int [[node at: '1] _integerValue]))
+		`(quote ,[node at: '1])
 		))
 
 (define trylid-char
@@ -517,6 +514,12 @@
 	[(trylid-int [self _integerValue]) string])
 (define-send 'int SmallInteger
 	(trylid-int [self _integerValue]))
+(define-send '% SmallInteger arg
+	[self \\ arg])
+(define-send '^ SmallInteger arg
+	[self bitXor: arg])
+(define-send '~ SmallInteger
+	[SmallInteger value_: (not [self _integerValue])])
 
 (define-send 'length String
 	[self size])
