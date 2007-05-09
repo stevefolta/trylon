@@ -11,12 +11,12 @@ new: num-items
 at: index
 	if index < 0 || index >= num-items
 		throw MessageException new: "Bad tuple index."
-	return this object-ptr object-at: index + 2
+	return this object-ptr object-at: index + 1
 
 at: index put: value
 	if index < 0 || index >= num-items
 		throw MessageException new: "Bad tuple index."
-	this object-ptr object-at: index + 2 put: value
+	this object-ptr object-at: index + 1 put: value
 
 at: index set-to: value
 	at: index put: value
