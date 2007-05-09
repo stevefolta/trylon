@@ -2,8 +2,11 @@ trylon Lexer
 
 fields p indent-stack at-line-start unindents-pending unindent-to
 
+eof-char = 0
+
 
 create: text
+	eof-char = 0 char
 	p = text iterator
 	indent-stack = IntStack new
 	indent-stack push: 0
@@ -63,7 +66,7 @@ next-token
 		token-start = p start
 		c = cur-char
 		p go-forward
-		if c == 0
+		if c == eof-char
 			return Token new: 'eof'
 
 		# Line break.
@@ -92,7 +95,7 @@ next-token
 				# Skip whitespace.
 				loop
 					c = cur-char
-					if c == ` ` || c == `\t` || c == 0
+					if c == ` ` || c == `\t` || c == eof-char
 						break
 					p go-forward
 
@@ -139,7 +142,7 @@ next-token
 			token-start = p start
 			loop
 				c = cur-char
-				if c == `\n` || c == `\r` || c == 0
+				if c == `\n` || c == `\r` || c == eof-char
 					break
 				p go-forward
 			return Token new: 'comment' from: token-start to: p start
@@ -151,10 +154,10 @@ next-token
 			loop
 				c = cur-char
 				token-end = p start
-				if c == `\n` || c == `\r` || c == 0
+				if c == `\n` || c == `\r` || c == eof-char
 					return Token new: 'text-literal-start' from: token-start to: token-end
 				p go-forward
-				if c == 0
+				if c == eof-char
 					throw MessageException new: "Unterminated string constant."
 				else if c == `\\`
 					p go-forward
@@ -170,7 +173,7 @@ next-token
 				c = cur-char
 				token-end = p start
 				p go-forward
-				if c == 0
+				if c == eof-char
 					throw MessageException new: "Unterminated symbol."
 				else if c == `\\`
 					p go-forward
@@ -186,7 +189,7 @@ next-token
 				c = cur-char
 				token-end = p start
 				p go-forward
-				if c == 0
+				if c == eof-char
 					throw MessageException new: "Unterminated character constant."
 				else if c == `\\`
 					p go-forward
@@ -359,7 +362,7 @@ first-subblock-line
 	# We've already got the indentation, just get the rest of the line.
 	line-start = p start
 	c = cur-char
-	while c != 0 && c != `\n` && c != `\r`
+	while c != eof-char && c != `\n` && c != `\r`
 		p go-forward
 		c = cur-char
 	p go-forward 	# Consume the eol.
@@ -405,7 +408,7 @@ subblock-line
 
 cur-char
 	if p is-done
-		return 0
+		return eof-char
 	else
 		return p current-item
 

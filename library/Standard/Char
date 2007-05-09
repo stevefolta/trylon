@@ -8,35 +8,35 @@ new
 
 fn == arg (Char) -> Bool
 	coke
-		(if (== (int@ self) (int@ arg)) true false)
+		(if (== (int@ self) [arg _integerValue]) true false)
 fn != arg (Char) -> Bool
 	coke
-		(if (!= (int@ self) (int@ arg)) true false)
+		(if (!= (int@ self) [arg _integerValue]) true false)
 fn < arg (Char) -> Bool
 	coke
-		(if (< (int@ self) (int@ arg)) true false)
+		(if (< (int@ self) [arg _integerValue]) true false)
 fn > arg (Char) -> Bool
 	coke
-		(if (> (int@ self) (int@ arg)) true false)
+		(if (> (int@ self) [arg _integerValue]) true false)
 fn <= arg (Char) -> Bool
 	coke
-		(if (<= (int@ self) (int@ arg)) true false)
+		(if (<= (int@ self) [arg _integerValue]) true false)
 fn >= arg (Char) -> Bool
 	coke
-		(if (>= (int@ self) (int@ arg)) true false)
+		(if (>= (int@ self) [arg _integerValue]) true false)
 
 fn + arg (Char) -> Char
 	coke
-		(trylid-char (+ (int@ self) (int@ arg)))
+		(trylid-char (+ (int@ self) [arg _integerValue]))
 fn - arg (Char) -> Char
 	coke
-		(trylid-char (- (int@ self) (int@ arg)))
+		(trylid-char (- (int@ self) [arg _integerValue]))
 fn & arg (Char) -> Char
 	coke
-		(trylid-char (& (int@ self) (int@ arg)))
+		(trylid-char (& (int@ self) [arg _integerValue]))
 fn | arg (Char) -> Char
 	coke
-		(trylid-char (| (int@ self) (int@ arg)))
+		(trylid-char (| (int@ self) [arg _integerValue]))
 
 fn string
 	coke
@@ -47,6 +47,9 @@ fn string
 fn int
 	coke
 		(trylid-int (int@ self))
+fn _integerValue
+	coke
+		(int@ self)
 
 is-whitespace
 	return this == ` ` || this == `\t` || this == `\n` || this == `\r`

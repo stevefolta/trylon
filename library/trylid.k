@@ -514,6 +514,8 @@
 	[(trylid-int [self _integerValue]) string])
 (define-send 'int SmallInteger
 	(trylid-int [self _integerValue]))
+(define-send 'char SmallInteger
+	(trylid-char [self _integerValue]))
 (define-send '% SmallInteger arg
 	[self \\ arg])
 (define-send '^ SmallInteger arg
