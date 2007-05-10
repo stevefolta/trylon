@@ -240,7 +240,7 @@ To Do
 	[live]
 
 For release:
-	makefile in Posix has hardcoded path.
+	Test tarball.
 Unify Object.
 Use SmallInteger rt Int and Char.
 Unify String (maybe).
