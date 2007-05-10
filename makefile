@@ -15,10 +15,12 @@ install:
 
 # Tarball creation.
 
-TARBALL_FILES := sources makefile ReadMe License tarball-date
-TARBALL_FILES += library/trylid.k library/Standard library/Posix/*.st
+TARBALL_FILES := sources makefile ReadMe License tarball-date version
+TARBALL_FILES += library/trylid.k library/Standard
+TARBALL_FILES += library/Posix/*.st library/Posix/makefile
 TARBALL_FILES += docs/source docs/html docs/makefile
 TARBALL_FILES += start.k start-self.k command-line.k
+TARBALL_FILES += tests
 TARBALL_FILES += build-settings .c-sources .jolt-sources
 
 TRYLID_DIR := $(notdir $(PWD))
