@@ -253,7 +253,7 @@
 		(define lib (getenv "TRYLID_LIBRARY"))
 		(if (not lib) (error "$TRYLID_LIBRARY isn't set."))
 		(define file-name [[[String value_: lib] , '"/Posix/"] , [name asString]])
-		[Object _import: [file-name _stringValue]]
+		[Object _import: [file-name _stringValue] ""]
 		(define proto (import [name _stringValue]))
 		[[(trylid-proto Posix) _vtable]
 			methodAt: name put: closure-returner with: proto]
