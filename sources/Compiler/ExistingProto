@@ -18,6 +18,11 @@ lookup-function: name
 
 	# Does the proto know it?
 	if proto responds-to: name-selector
+		first-char = name at: 0
+		if (first-char >= `A`) && (first-char <= `Z`)
+			existing-proto = 	--
+				ExistingProto new: name proto: (proto perform: name intern)
+			return ProtoFunction new: existing-proto
 		return PrimitiveFunction new: name on-proto: this
 
 	# Are we adding it?
@@ -47,8 +52,17 @@ lookup-function: name
 	return nil
 
 
+lookup-function: name visited-protos: visited-protos
+	return lookup-function: name
+
+
 lookup-instance-function: name
 	if proto responds-to: name intern
+		first-char = name at: 0
+		if (first-char >= `A`) && (first-char <= `Z`)
+			existing-proto = 	--
+				ExistingProto new: name proto: (proto perform: name intern)
+			return ProtoFunction new: existing-proto
 		return PrimitiveFunction new: name on-proto: proto
 	
 	function = new-functions at: name

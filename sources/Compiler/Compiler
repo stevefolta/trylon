@@ -2,7 +2,7 @@ trylon Compiler
 
 # This is "Compiler Compiler"... if this were pure Trylid, we'd just put
 # everything in "Compiler", but we have to also compile under Trylon, which
-# always treats directories as classes, never as packages.
+# always treats directories as packages, never as classes.
 
 fields successful build-settings
 fields proto-queue main-proto
@@ -25,7 +25,7 @@ return-value
 # Top-level compilation.
 
 compile-file: file as: name into: parent-proto
-	status-reporter = StdoutStatusReporter new
+	status-reporter = VT100StatusReporter new
 	proto = parent-proto add-proto: name
 	parser = Parser new: file contents context: parent-proto
 	parser parse-proto-file: proto
