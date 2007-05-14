@@ -488,17 +488,17 @@
 
 ;; Interoperability.
 
-(define-send '== Object arg
+(define [Object == arg]
 	[self = arg])
 
-(define-send '!= Object arg
+(define [Object != arg]
 	(not [self == arg]))
 
 [[_vtable _vtable] methodAt: '_tally put: field-getter with: 0]
 [[_vtable _vtable] methodAt: 'bindings put: field-getter with: 4]
 [[_vtable _vtable] methodAt: 'delegate put: field-getter with: 8]
 
-(define-send 'is-a: Object arg
+(define [Object is-a: arg]
 	(let ((vtable [self _vtable])
 				(target-vtable [arg _vtable]))
 		(while vtable
@@ -507,37 +507,37 @@
 			(set vtable [vtable delegate]))
 		false
 		))
-(define-send 'same-as: Object arg
+(define [Object same-as: arg]
 	(== self arg))
-(define-send 'responds-to: Object selector
+(define [Object responds-to: selector]
 	(if [[self _vtable] lookup: selector] true false))
-(define-send 'string Object
+(define [Object string]
 	[StandardString new_: [self _debugName]])
-(define-send 'print-string Object
+(define [Object print-string]
 	[self string])
 
 
-(define-send 'string SmallInteger
+(define [SmallInteger string]
 	[(trylid-int [self _integerValue]) string])
-(define-send 'int SmallInteger
+(define [SmallInteger int]
 	(trylid-int [self _integerValue]))
 
-(define-send 'length String
+(define [String length]
 	[self size])
-(define-send 'intern String
+(define [String intern]
 	[self asSymbol])
 
 (define Symbol (import "Symbol"))
-(define-send 'string Symbol
+(define [Symbol string]
 	[StandardString new_: [self _stringValue]])
-(define-send 'print-string Symbol
+(define [Symbol print-string]
 	(let ((quoter (trylid-string "'")))
 		(fixed-return [[quoter + [self string]] + quoter])))
-(define-send 'intern Symbol
+(define [Symbol intern]
 	self)
 
 (define UndefinedObject (import "UndefinedObject"))
-(define-send 'string UndefinedObject
+(define [UndefinedObject string]
 	(trylid-string "nil"))
 
 
