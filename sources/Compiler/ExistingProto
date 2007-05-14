@@ -21,7 +21,7 @@ lookup-function: name
 		first-char = name at: 0
 		if (first-char >= `A`) && (first-char <= `Z`)
 			existing-proto = 	--
-				ExistingProto new: name proto: (proto perform: name intern)
+				ExistingProto new: name proto: (proto perform: name-selector)
 			return ProtoFunction new: existing-proto
 		return PrimitiveFunction new: name on-proto: this
 
