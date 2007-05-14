@@ -496,7 +496,11 @@ parse-type-spec
 	type = parse-proto-spec
 
 	# Make sure we got a proto.
-	if !((type is-a: CompiledProto) || (type is-a: ExistingProto))
+	okay = type is-a: CompiledProto
+	iff in-trylid
+		if !okay
+			okay = type is-a: ExistingProto
+	if !okay
 		throw 	--
 			ParseException 	--
 				new: "A type specifier was given, but is not a prototype." 	--
