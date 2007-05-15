@@ -23,8 +23,8 @@ new_: jolt-string
 new-copy_: c-string
 	coke
 		(let ((size (+ (strlen c-string) 1))
-		      (str [(trylid-proto Standard BytePtr) new-non-pointer:
-					     	(trylid-int size)]))
+		      (str [[(trylid-proto Standard BytePtr) new-non-pointer:
+					       (trylid-int size)] _ptr]))
 			(memcpy str c-string size)
 			[self new_: str]
 			)
