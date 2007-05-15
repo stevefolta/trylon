@@ -129,6 +129,7 @@
 			;; Re-allocate the proto, so it gets its fields.  We'd do that using
 			;; [vtable _delegated], but that doesn't work as advertised.
 			(set proto [vtable _alloc: proto-size])
+			;; Add methods needed to act as a prototype.
 			[vtable methodAt: '_sizeof put: closure-returner with: proto-size]
 			[vtable methodAt: '_debugName put: closure-returner with: name-string]
 			[vtable methodAt: '.proto put: closure-returner with: proto]
