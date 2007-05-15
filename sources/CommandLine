@@ -10,9 +10,7 @@ create
 		(using_history)
 		(stifle_history 1000)
 		(read_history ".trylid-history")
-	# I tried using atexit_:, but it crashes; but only if there was a
-	# ".trylid-history" already; weird.
-	# 	[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
+		[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
 
 	# Unknown messages should throw, not exit.
 	coke
