@@ -3,3 +3,7 @@ fields field1 field2
 
 name = "Test"
 
+foo
+	value = "foo"
+	return value
+

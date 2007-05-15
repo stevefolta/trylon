@@ -398,6 +398,7 @@ iff in-trylid
 		# Add the functions.
 		for function in functions values
 			if function is-translatable
+				function prepare-to-emit
 				stream nextPut: function
 
 		return compiler translateExpression: stream contents

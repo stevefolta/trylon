@@ -20,7 +20,7 @@ jolt-expression
 
 
 translate: compiler
-	return compiler translateExpression: jolt-expression
+	return compiler translateSymbol: jolt-expression
 
 
 # Copyright 2007 Steve Folta.  See the License file.

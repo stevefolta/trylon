@@ -165,6 +165,7 @@ translate: compiler
 	# Add the functions.
 	for function in new-functions values
 		if function is-translatable
+			function prepare-to-emit
 			stream nextPut: function
 	
 	return compiler translateExpression: stream contents

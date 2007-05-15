@@ -1292,6 +1292,10 @@ parse-primary-expression
 
 		else if name == "nil"
 			return LiteralNil new
+		else if name == "true"
+			return BoolLiteral new: true
+		else if name == "false"
+			return BoolLiteral new: false
 
 		# Non-object function call.
 		return FunctionCall new: name arguments: List new context: context
