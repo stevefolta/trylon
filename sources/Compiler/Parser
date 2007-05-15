@@ -827,7 +827,7 @@ parse-return-statement
 
 	return-value = nil
 	if current-token == 'eol' || current-token == 'comment'
-		return-value = FunctionCall new: "nil" arguments: List new context: context
+		return-value = LiteralNil new
 	else
 		return-value = parse-expression
 	comment = require-eol

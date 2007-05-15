@@ -102,6 +102,15 @@ add-function: name function: function
 
 
 add-field: field
+	# Fields can't be added to pre-existing protos.  But we may be re-loading the
+	# proto to update its methods, so check if we're merely trying to add a field
+	# that's already there.
+	# This is not a perfect check; we merely check to see if there's a getter and
+	# a setter, not if there's truly a field.
+	if lookup-instance-function: field name
+		if lookup-instance-function: field name + ":"
+			return
+
 	throw MessageException new: "You can't add fields to pre-existing objects."
 
 
