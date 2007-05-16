@@ -2,7 +2,7 @@ trylid CommandLine
 fields prompt post-prompt
 
 create
-	prompt = "\n\e[35m> \e[33m"
+	prompt = "\n\e[35m> \e[01;30m"
 	post-prompt = "\e[0m"
 
 	# Set up history.
