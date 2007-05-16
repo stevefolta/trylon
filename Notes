@@ -240,6 +240,7 @@ To Do
 	[live]
 
 For release:
+	Fix use of (not).
 	Test tarball.
 Unify Object.
 Use SmallInteger rt Int and Char.
