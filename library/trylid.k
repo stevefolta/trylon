@@ -124,7 +124,7 @@
 		(define file [File openIfPresent: [path , '"/Posix/jmp_buf.so"]])
 		(if file
 			(begin
-				[File close]
+				[file close]
 				(set *trylid-lib-path* path)
 				path
 				)
