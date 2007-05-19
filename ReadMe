@@ -25,7 +25,6 @@ Does it self-compile?
 
 Try this:
 
-	export TRYLID_LIBRARY="/path/to/trylid/library"
 	cd library/Posix
 	make
 	cd ../..

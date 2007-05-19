@@ -115,6 +115,54 @@
 
 (define *jolt-sources-path* '".jolt-sources/")
 
+(define *trylid-lib-path* nil)
+
+(define try-trylid-library
+	(lambda (path)
+		;; There's not an easy way to check for the existence of a directory at
+		;; this point.  So we'll look for a file in the library directory.
+		(define file [File openIfPresent: [path , '"/Posix/jmp_buf.so"]])
+		(if file
+			(begin
+				[File close]
+				(set *trylid-lib-path* path)
+				path
+				)
+			nil)
+		))
+
+(define find-trylid-library
+	(lambda ()
+		;; Already found it?
+		(if *trylid-lib-path*
+			(return *trylid-lib-path*))
+		;; Use $TRYLID_LIBRARY if it's set.
+		(define lib-env (getenv "TRYLID_LIBRARY"))
+		(if lib-env
+			(if (try-trylid-library [String value_: lib-env])
+				(return *trylid-lib-path*)
+				(printf "Warning: Ignoring $TRYLID_LIBRARY; it's not valid.\n")))
+		;; Try $HOME/trylid.
+		(define home-env (getenv "HOME"))
+		(if home-env
+			(if (try-trylid-library [[String value_: home-env] , '"/trylid"])
+				(return *trylid-lib-path*)))
+		;; Try some common places.
+		(or (try-trylid-library '"./library")
+				(try-trylid-library '"/usr/lib/trylid")
+				(try-trylid-library '"/usr/local/lib/trylid")
+				(try-trylid-library '"/usr/share/trylid")
+				(try-trylid-library '"/opt/lib"))
+		(if *trylid-lib-path*
+			(return *trylid-lib-path*))
+		;; Couldn't find it; abort.
+		(printf "Trylid's library couldn't be found.  You can explicitly tell\n")
+		(printf "Trylid where it is by setting $TRYLID_LIBRARY.  Or, perhaps this\n")
+		(printf "means that your Trylid library wasn't built correctly.\n")
+		(exit 1)
+		))
+
+
 ;; This is much like (define-type), but it doesn't operate in a specific
 ;; namespace and it's a function, not a syntax.
 (define create-trylid-proto
@@ -253,10 +301,7 @@
 
 (define load-trylid-posix-proto
 	(lambda (name)
-		(define getenv (dlsym "getenv"))
-		(define lib (getenv "TRYLID_LIBRARY"))
-		(if (not lib) (error "$TRYLID_LIBRARY isn't set."))
-		(define file-name [[[String value_: lib] , '"/Posix/"] , [name asString]])
+		(define file-name [[(find-trylid-library) , '"/Posix/"] , [name asString]])
 		[Object _import: [file-name _stringValue] ""]
 		(define proto (import [name _stringValue]))
 		[[(trylid-proto Posix) _vtable]
