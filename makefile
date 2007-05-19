@@ -5,6 +5,9 @@ endif
 
 all: trylid
 
+trylid:
+	(cd library/Posix && make)
+	trylon
 
 install:
 	install -d $(PREFIX)/bin
