@@ -54,9 +54,10 @@ Make sure the Boehm/Demers/Weisner garbage collector is installed on your comput
 
 At the time of writing Trylon/C is about 4 times as fast as Trylid/Jolt.  Possible (speculative) explanations include:
 
-	- Extreme late binding is costly.
+	- Extreme late binding could be costly.
 	- Inefficiencies in Jolt's codegen (but I doubt it).
 	- Inefficiencies in Trylid's codegen (it's happened before).
+		- Access to self's fields is through a send.
 
 
 Timing it
