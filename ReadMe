@@ -30,7 +30,7 @@ Try this:
 	cd ../..
 	jolt start.k
 
-That assumes that you've got a script to start up Jolt.  Something like this:
+That assumes that you've got a script to run Jolt.  Something like this:
 
 	#!/bin/bash
 

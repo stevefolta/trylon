@@ -7,7 +7,7 @@ all: trylid
 
 trylid:
 	(cd library/Posix && make)
-	trylon
+	$(CC) -o trylid .c-sources/*.c -lgc -lm
 
 install:
 	install -d $(PREFIX)/bin
@@ -20,7 +20,7 @@ install:
 
 TARBALL_FILES := sources makefile ReadMe License tarball-date version
 TARBALL_FILES += library/trylid.k library/Standard
-TARBALL_FILES += library/Posix/*.st library/Posix/makefile
+TARBALL_FILES += library/Posix/*.st library/Posix/makefile library/Posix/*.h
 TARBALL_FILES += docs/source docs/html docs/makefile
 TARBALL_FILES += start.k start-self.k command-line.k
 TARBALL_FILES += tests

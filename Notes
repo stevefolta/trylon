@@ -239,8 +239,6 @@ Cache misses:   9271514.
 To Do
 	[live]
 
-For release:
-	Test tarball.
 Unify Object.
 Use SmallInteger rt Int and Char.
 Unify String (maybe).
