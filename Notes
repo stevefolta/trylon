@@ -243,10 +243,6 @@ Unify Object.
 Use SmallInteger rt Int and Char.
 Unify String (maybe).
 Lambdas.
-(throw) leads to an eventual crash; debug it.
-	(Or is it just a manifestation of the random crash?)
-The proto itself doesn't have its new fields; add them.
-	[Wanted to do this using "_vtable _delegated", but that's broken.  Hacking up a fix for that seemed to get rid of my crashes, but I can't be sure.  Making a copy for now... but that crashed extra hard. ?!?!!]
 
 
 =====

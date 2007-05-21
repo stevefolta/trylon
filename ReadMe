@@ -17,6 +17,8 @@ If you're a programmer, the Git repo is at:
 
 ...but you'll still want the tarball to get started (unless you want to do the full bootstrap; see below).
 
+You'll need a relatively up-to-date version of idst/jolt.  The 5.8alpha1 tarball isn't new enough; svn revision 218 is known to work.
+
 
 Does it self-compile?
 =====================
@@ -28,7 +30,7 @@ Try this:
 	cd ../..
 	jolt start.k
 
-That assumes that you've got a script to start up Jolt.  Something like this:
+That assumes that you've got a script to run Jolt.  Something like this:
 
 	#!/bin/bash
 
@@ -50,11 +52,12 @@ Make sure the Boehm/Demers/Weisner garbage collector is installed on your comput
 	make trylid
 	trylid
 
-At the time of writing Trylon/C is about 4 times as fast as Trylid/Jolt.  Possible explanations include:
+At the time of writing Trylon/C is about 4 times as fast as Trylid/Jolt.  Possible (speculative) explanations include:
 
-	- Extreme late binding is costly.
+	- Extreme late binding could be costly.
 	- Inefficiencies in Jolt's codegen (but I doubt it).
 	- Inefficiencies in Trylid's codegen (it's happened before).
+		- Access to self's fields is through a send.
 
 
 Timing it

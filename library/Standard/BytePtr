@@ -4,7 +4,7 @@ new
 	# Written in Coke for maximum speed.
 	# return Implementation allocate-object: this with-extra-slots: 1
 	coke
-		[StandardImplementation allocate-object: self with-extra-slots: (quote 1)]
+		[[self _vtable] _alloc: 4]
 
 new: size
 	return Implementation allocate-bytes: size

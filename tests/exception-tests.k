@@ -28,10 +28,9 @@
 		(catch
 			(mid-level)
 			(begin
-				([(trylid-proto Standard) print-line: [exception message]])
-				;; It crashes here, I know not why...
-				([(trylid-proto Standard) print-line:
-					(trylid-string "In top-level catch clause.")])
+				[(trylid-proto Standard) print-line: [exception message]]
+				[(trylid-proto Standard) print-line:
+					(trylid-string "In top-level catch clause.")]
 				)
 			)
 		))

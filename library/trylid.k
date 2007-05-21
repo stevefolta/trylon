@@ -11,6 +11,11 @@
 (define false (import "false"))
 
 
+;; Needed from Pepsi.
+
+(define _vtable (import "_vtable"))
+
+
 ;; Needed C functions.
 (define strlen (dlsym "strlen"))
 (define memcpy (dlsym "memcpy"))
@@ -110,6 +115,54 @@
 
 (define *jolt-sources-path* '".jolt-sources/")
 
+(define *trylid-lib-path* nil)
+
+(define try-trylid-library
+	(lambda (path)
+		;; There's not an easy way to check for the existence of a directory at
+		;; this point.  So we'll look for a file in the library directory.
+		(define file [File openIfPresent: [path , '"/Posix/jmp_buf.so"]])
+		(if file
+			(begin
+				[file close]
+				(set *trylid-lib-path* path)
+				path
+				)
+			nil)
+		))
+
+(define find-trylid-library
+	(lambda ()
+		;; Already found it?
+		(if *trylid-lib-path*
+			(return *trylid-lib-path*))
+		;; Use $TRYLID_LIBRARY if it's set.
+		(define lib-env (getenv "TRYLID_LIBRARY"))
+		(if lib-env
+			(if (try-trylid-library [String value_: lib-env])
+				(return *trylid-lib-path*)
+				(printf "Warning: Ignoring $TRYLID_LIBRARY; it's not valid.\n")))
+		;; Try $HOME/trylid.
+		(define home-env (getenv "HOME"))
+		(if home-env
+			(if (try-trylid-library [[String value_: home-env] , '"/trylid"])
+				(return *trylid-lib-path*)))
+		;; Try some common places.
+		(or (try-trylid-library '"./library")
+				(try-trylid-library '"/usr/lib/trylid")
+				(try-trylid-library '"/usr/local/lib/trylid")
+				(try-trylid-library '"/usr/share/trylid")
+				(try-trylid-library '"/opt/lib"))
+		(if *trylid-lib-path*
+			(return *trylid-lib-path*))
+		;; Couldn't find it; abort.
+		(printf "Trylid's library couldn't be found.  You can explicitly tell\n")
+		(printf "Trylid where it is by setting $TRYLID_LIBRARY.  Or, perhaps this\n")
+		(printf "means that your Trylid library wasn't built correctly.\n")
+		(exit 1)
+		))
+
+
 ;; This is much like (define-type), but it doesn't operate in a specific
 ;; namespace and it's a function, not a syntax.
 (define create-trylid-proto
@@ -121,6 +174,10 @@
 					(proto-size (+ super-size fields-size))
 					(proto [superclass _delegated])
 					(vtable [proto _vtable]))
+			;; Re-allocate the proto, so it gets its fields.  We'd do that using
+			;; [vtable _delegated], but that doesn't work as advertised.
+			(set proto [vtable _alloc: proto-size])
+			;; Add methods needed to act as a prototype.
 			[vtable methodAt: '_sizeof put: closure-returner with: proto-size]
 			[vtable methodAt: '_debugName put: closure-returner with: name-string]
 			[vtable methodAt: '.proto put: closure-returner with: proto]
@@ -244,11 +301,8 @@
 
 (define load-trylid-posix-proto
 	(lambda (name)
-		(define getenv (dlsym "getenv"))
-		(define lib (getenv "TRYLID_LIBRARY"))
-		(if (not lib) (error "$TRYLID_LIBRARY isn't set."))
-		(define file-name [[[String value_: lib] , '"/Posix/"] , [name asString]])
-		[Object _import: [file-name _stringValue]]
+		(define file-name [[(find-trylid-library) , '"/Posix/"] , [name asString]])
+		[Object _import: [file-name _stringValue] ""]
 		(define proto (import [name _stringValue]))
 		[[(trylid-proto Posix) _vtable]
 			methodAt: name put: closure-returner with: proto]
@@ -480,18 +534,17 @@
 
 ;; Interoperability.
 
-(define-send '== Object arg
+(define [Object == arg]
 	[self = arg])
 
-(define-send '!= Object arg
+(define [Object != arg]
 	(not [self == arg]))
 
-(define _vtable (import "_vtable"))
 [[_vtable _vtable] methodAt: '_tally put: field-getter with: 0]
 [[_vtable _vtable] methodAt: 'bindings put: field-getter with: 4]
 [[_vtable _vtable] methodAt: 'delegate put: field-getter with: 8]
 
-(define-send 'is-a: Object arg
+(define [Object is-a: arg]
 	(let ((vtable [self _vtable])
 				(target-vtable [arg _vtable]))
 		(while vtable
@@ -500,19 +553,19 @@
 			(set vtable [vtable delegate]))
 		false
 		))
-(define-send 'same-as: Object arg
+(define [Object same-as: arg]
 	(== self arg))
-(define-send 'responds-to: Object selector
+(define [Object responds-to: selector]
 	(if [[self _vtable] lookup: selector] true false))
-(define-send 'string Object
+(define [Object string]
 	[StandardString new_: [self _debugName]])
-(define-send 'print-string Object
+(define [Object print-string]
 	[self string])
 
 
-(define-send 'string SmallInteger
+(define [SmallInteger string]
 	[(trylid-int [self _integerValue]) string])
-(define-send 'int SmallInteger
+(define [SmallInteger int]
 	(trylid-int [self _integerValue]))
 (define-send 'char SmallInteger
 	(trylid-char [self _integerValue]))
@@ -523,22 +576,22 @@
 (define-send '~ SmallInteger
 	[SmallInteger value_: (not [self _integerValue])])
 
-(define-send 'length String
+(define [String length]
 	[self size])
-(define-send 'intern String
+(define [String intern]
 	[self asSymbol])
 
 (define Symbol (import "Symbol"))
-(define-send 'string Symbol
+(define [Symbol string]
 	[StandardString new_: [self _stringValue]])
-(define-send 'print-string Symbol
+(define [Symbol print-string]
 	(let ((quoter (trylid-string "'")))
 		(fixed-return [[quoter + [self string]] + quoter])))
-(define-send 'intern Symbol
+(define [Symbol intern]
 	self)
 
 (define UndefinedObject (import "UndefinedObject"))
-(define-send 'string UndefinedObject
+(define [UndefinedObject string]
 	(trylid-string "nil"))
 
 
@@ -574,7 +627,7 @@
 			(trylid-string "Coke"))
 		;; Load the rest of Trylid.
 		(read-trylid-proto-file '"Trylid.k")
-		;; Weird magic prevents mysterious crash in exceptions code.  It shouldn't
+		;; Weird magic prevents mysterious crash when using Posix.  It shouldn't
 		;; need this... but it seems to.
 		(set Posix (trylid-proto Posix))
 		[Posix jmp_buf]

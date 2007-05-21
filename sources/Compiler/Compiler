@@ -2,7 +2,7 @@ trylon Compiler
 
 # This is "Compiler Compiler"... if this were pure Trylid, we'd just put
 # everything in "Compiler", but we have to also compile under Trylon, which
-# always treats directories as classes, never as packages.
+# always treats directories as packages, never as classes.
 
 fields successful build-settings
 fields proto-queue main-proto
@@ -25,7 +25,7 @@ return-value
 # Top-level compilation.
 
 compile-file: file as: name into: parent-proto
-	status-reporter = StdoutStatusReporter new
+	status-reporter = VT100StatusReporter new
 	proto = parent-proto add-proto: name
 	parser = Parser new: file contents context: parent-proto
 	parser parse-proto-file: proto
@@ -135,13 +135,24 @@ get-standard-class: name
 
 
 find-library-path
+	# Use $TRYLID_LIBRARY if it's set.
 	library-path = System environment-variable-named: "TRYLID_LIBRARY"
-	if library-path && !library-path is-empty
+	if library-path && !(library-path is-empty)
 		return library-path
-	for prefix-path in ("/usr/lib", "/usr/local/lib", "/opt/lib")
+	# Check $HOME/trylid.
+	home-path = System environment-variable-named: "HOME"
+	if home-path && !(home-path is-empty)
+		home-dir = FileDirectory new: home-path
+		if home-dir entry-is-directory: "trylid/library"
+			return home-path + "/trylid/library"
+	# Check ./library.
+	if (FileDirectory new: ".") entry-is-directory: "library"
+		return "./library"
+	# Look in some common places.
+	for prefix-path in ("/usr/lib", "/usr/local/lib", "/usr/share", "/opt/lib")
 		prefix-dir = FileDirectory new: prefix-path
-		if prefix-dir entry-is-directory: "trylon"
-			return prefix-path + "/trylon"
+		if prefix-dir entry-is-directory: "trylid"
+			return prefix-path + "/trylid"
 	return nil
 
 

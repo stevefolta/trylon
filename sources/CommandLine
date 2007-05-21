@@ -2,7 +2,7 @@ trylid CommandLine
 fields prompt post-prompt
 
 create
-	prompt = "\n\e[35m> \e[33m"
+	prompt = "\n\e[34m> \e[0;01m"
 	post-prompt = "\e[0m"
 
 	# Set up history.
@@ -10,9 +10,7 @@ create
 		(using_history)
 		(stifle_history 1000)
 		(read_history ".trylid-history")
-	# I tried using atexit_:, but it crashes; but only if there was a
-	# ".trylid-history" already; weird.
-	# 	[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
+		[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
 
 	# Unknown messages should throw, not exit.
 	coke
@@ -107,10 +105,14 @@ proto Context
 
 ##### Useful functions from the command line.
 
-load: filename
+load: filename into: proto
 	proto-name = filename
 	slash-index = filename last-index-of: `/`
 	if slash-index >= 0
 		proto-name = filename substr: slash-index + 1
-	Compiler compile-file: (File new: filename) as: proto-name into: this
+	(Compiler new) compile-file: (File new: filename) as: proto-name into: proto
+
+
+load: filename
+	load: filename into: this
 
