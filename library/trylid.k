@@ -506,15 +506,14 @@
 
 (define trylid-char
 	(lambda (value)
-		(let ((char-obj [StandardChar new]))
-			(set-long@ char-obj value)
-			char-obj
-			)))
+		[SmallInteger value_: value]
+		))
 
 (syntax trylid-char-literal
 	(lambda (node compiler)
-		`(quote ,(trylid-char [[node at: '1] _integerValue]))
+		`(quote ,[node at: '1])
 		))
+
 
 
 (define trylid-string
@@ -575,6 +574,10 @@
 	[self bitXor: arg])
 (define-send '~ SmallInteger
 	[SmallInteger value_: (not [self _integerValue])])
+(define [SmallInteger .proto-name]
+	(trylid-string "SmallInteger"))
+(define [SmallInteger print-string]
+	(trylid-string [[self printString] _stringValue]))
 
 (define [String length]
 	[self size])
