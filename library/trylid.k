@@ -578,6 +578,8 @@
 	(trylid-string "SmallInteger"))
 (define [SmallInteger print-string]
 	(trylid-string [[self printString] _stringValue]))
+(define [SmallInteger string]
+	[self print-string])
 
 (define [String length]
 	[self size])
