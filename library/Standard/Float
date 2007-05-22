@@ -17,7 +17,7 @@ primitive-fn pow: power (Float) -> Float
 primitive-fn sqrt -> Float
 
 primitive-fn string -> String
-primitive-fn int -> Int
+primitive-fn int
 
 
 iff debugger

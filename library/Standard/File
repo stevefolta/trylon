@@ -61,7 +61,7 @@ proto InStream
 				[self _file: nil]
 				)
 
-	read-buffer: buffer [BytePtr] length: length [Int]
+	read-buffer: buffer length: length
 		coke
 			(trylid-int (fread [buffer _ptr] 1 [length _integerValue] [self _file]))
 	
@@ -89,7 +89,7 @@ proto OutStream
 				[self _file: nil]
 				)
 
-	write-buffer: buffer [BytePtr] length: length [Int]
+	write-buffer: buffer length: length
 		coke
 			(trylid-int (fwrite [buffer _ptr] 1 [length _integerValue] [self _file]))
 	

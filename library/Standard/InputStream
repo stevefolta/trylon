@@ -1,7 +1,7 @@
 trylid InputStream
 
 
-read-buffer: buffer (BytePtr) length: length (Int)
+read-buffer: buffer length: length
 	virtual
 
 

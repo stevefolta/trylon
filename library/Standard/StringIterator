@@ -37,7 +37,7 @@ back-up
 		start -= 1
 
 
-skip: num-chars (Int)
+skip: num-chars
 	start += num-chars
 
 

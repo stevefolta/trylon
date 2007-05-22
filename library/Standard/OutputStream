@@ -1,7 +1,7 @@
 trylid OutputStream
 
 
-write-buffer: buffer (BytePtr) length: length (Int)
+write-buffer: buffer length: length
 	virtual
 
 write: string

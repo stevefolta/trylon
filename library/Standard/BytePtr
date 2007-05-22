@@ -49,49 +49,49 @@ fn - arg
 fn deref-ptr -> BytePtr
 	coke
 		(byte-ptr (int@ (int@ self)))
-fn deref-int -> Int
+fn deref-int
 	coke
 		(trylid-int (int@ (int@ self)))
-fn deref-char -> Char
+fn deref-char
 	coke
 		(trylid-char (char@ (int@ self)))
-fn ptr-at: index (Int) -> BytePtr
+fn ptr-at: index
 	coke
 		(byte-ptr (int@ (int@ self) [index _integerValue]))
-fn object-at: index (Int) -> Object
+fn object-at: index
 	coke
 		(int@ (int@ self) [index _integerValue])
-fn char-at: index (Int) -> Char
+fn char-at: index
 	coke
 		(trylid-char (char@ (int@ self) [index _integerValue]))
-fn int-at: index (Int) -> Int
+fn int-at: index
 	coke
 		(trylid-int (int@ (int@ self) [index _integerValue]))
-fn byte-at: index (Int) -> Int
+fn byte-at: index
 	coke
 		(trylid-int (char@ (+ (int@ self) [index _integerValue])))
 
-fn as-object -> Object
+fn as-object
 	coke
 		(int@ (int@ self))
 
-fn ptr-at: index (Int) put: value (BytePtr)
+fn ptr-at: index put: value
 	coke
 		(set-int@ (int@ self) [index _integerValue] [value _integerValue])
-fn object-at: index (Int) put: value (Object)
+fn object-at: index put: value
 	coke
 		(set-int@ (int@ self) [index _integerValue] value)
-fn char-at: index (Int) put: value (Char)
+fn char-at: index put: value
 	coke
 		(set-char@ (+ (int@ self) [index _integerValue]) [value _integerValue])
-fn int-at: index (Int) put: value (Int)
+fn int-at: index put: value
 	coke
 		(set-int@ (int@ self) [index _integerValue] [value _integerValue])
-fn byte-at: index (Int) put: value (Int)
+fn byte-at: index put: value
 	coke
 		(set-char@ (+ (int@ self) [index _integerValue]) [value _integerValue])
 
-fn copy-from: source (BytePtr) length: length (Int)
+fn copy-from: source length: length
 	coke
 		(memcpy (int@ self) (int@ source) [length _integerValue])
 

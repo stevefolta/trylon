@@ -618,8 +618,6 @@
 		;; Primitive types in Standard that we want fast access to.
 		(set StandardImplementation (trylid-proto Standard Implementation))
 		(set StandardBytePtr (trylid-proto Standard BytePtr))
-		(set StandardInt (trylid-proto Standard Int))
-		(set StandardChar (trylid-proto Standard Char))
 		(set StandardString (trylid-proto Standard String))
 		;; Augment Pepsi Object.
 		(add-shared-field .parent-proto Object nil)

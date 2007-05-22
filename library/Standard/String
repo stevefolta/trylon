@@ -1,6 +1,6 @@
 trylid String
 
-fields start (BytePtr) stopper (BytePtr)
+fields start stopper
 
 
 create: start to: stopper
@@ -36,8 +36,8 @@ is-empty
 
 
 fn == arg
-	p (BytePtr) = start
-	other-p (BytePtr) = arg start
+	p = start
+	other-p = arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -53,8 +53,8 @@ fn == arg
 	return false
 
 fn != arg
-	p (BytePtr) = start
-	other-p (BytePtr) = arg start
+	p = start
+	other-p = arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -70,8 +70,8 @@ fn != arg
 	return true
 
 fn < arg
-	p (BytePtr) = start
-	other-p (BytePtr) = arg start
+	p = start
+	other-p = arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -89,8 +89,8 @@ fn < arg
 	return false
 
 fn <= arg
-	p (BytePtr) = start
-	other-p (BytePtr) = arg start
+	p = start
+	other-p = arg start
 	loop
 		if p >= stopper
 			return true
@@ -105,8 +105,8 @@ fn <= arg
 	return false
 
 fn > arg
-	p (BytePtr) = start
-	other-p (BytePtr) = arg start
+	p = start
+	other-p = arg start
 	loop
 		if p >= stopper
 			return false
@@ -121,8 +121,8 @@ fn > arg
 	return false
 
 fn >= arg
-	p (BytePtr) = start
-	other-p (BytePtr) = arg start
+	p = start
+	other-p = arg start
 	loop
 		if p >= stopper
 			if other-p >= arg stopper
@@ -139,8 +139,8 @@ fn >= arg
 		other-p += 1
 	return false
 
-fn + arg (String)
-	new-string (String) = String new: (length + arg length)
+fn + arg
+	new-string = String new: (length + arg length)
 	new-string start copy-from: start length: length
 	(new-string start + length) copy-from: arg start length: arg length
 	new-string stopper = new-string start + length + arg length
@@ -161,7 +161,7 @@ substr: from length: length
 	new-start = start + from
 	return String new: new-start to: new-start + dest-length
 
-index-of: char (Char)
+index-of: char
 	char-ptr = start
 	while char-ptr < stopper
 		if char-ptr deref-char == char
@@ -169,7 +169,7 @@ index-of: char (Char)
 		char-ptr += 1
 	return -1
 
-last-index-of: char (Char)
+last-index-of: char
 	char-ptr = stopper - 1
 	while char-ptr >= start
 		if char-ptr deref-char == char
@@ -195,7 +195,7 @@ ends-with: other
 contains: other
 	return (index-of-string: other) >= 0
 
-at: index (Int)
+at: index
 	return (start + index) deref-char
 
 first-character
@@ -261,7 +261,7 @@ lowercase
 	return String new: buffer to: buffer + length
 
 
-int -> Int
+int
 	coke
 		(trylid-int (strtol [self _stringValue] 0 0))
 # primitive-fn float -> Float
