@@ -154,7 +154,7 @@ class Iterator
 	field cell
 	create: cell
 		this cell = cell
-	is-done -> Bool
+	is-done
 		return cell == nil
 	current-item
 		return cell object

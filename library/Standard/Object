@@ -9,11 +9,11 @@ raw-new
 		      (size (send (quote _sizeof) self)))
 			(return (send (quote _alloc:) vtable size)))
 
-object-ptr -> BytePtr
+object-ptr
 	coke
 		(byte-ptr self)
 
-is-a: proto -> Bool
+is-a: proto
 	cur-proto = .proto
 	while cur-proto
 		# Test carefully!  Use same-as: rt ==, and order matters.
@@ -32,10 +32,10 @@ same-as: object
 fn == other
 	return this same-as: other
 
-fn != other -> Bool
+fn != other
 	return !(this == other)
 
-iterator -> Iterator
+iterator
 	# Default: use a SingleObjectIterator.  Collections will 
 	# override this.
 	return SingleObjectIterator new: this

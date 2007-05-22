@@ -1,22 +1,22 @@
 trylid Float
 
-primitive-fn == arg (Float) -> Bool
-primitive-fn != arg (Float) -> Bool
-primitive-fn < arg (Float) -> Bool
-primitive-fn > arg (Float) -> Bool
-primitive-fn <= arg (Float) -> Bool
-primitive-fn >= arg (Float) -> Bool
+primitive-fn == arg
+primitive-fn != arg
+primitive-fn < arg
+primitive-fn > arg
+primitive-fn <= arg
+primitive-fn >= arg
 
-primitive-fn + arg (Float) -> Float
-primitive-fn - arg (Float) -> Float
-primitive-fn * arg (Float) -> Float
-primitive-fn / arg (Float) -> Float
-primitive-fn unary-minus -> Float
+primitive-fn + arg
+primitive-fn - arg
+primitive-fn * arg
+primitive-fn / arg
+primitive-fn unary-minus
 
-primitive-fn pow: power (Float) -> Float
-primitive-fn sqrt -> Float
+primitive-fn pow: power
+primitive-fn sqrt
 
-primitive-fn string -> String
+primitive-fn string
 primitive-fn int
 
 

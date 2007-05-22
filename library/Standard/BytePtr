@@ -18,26 +18,26 @@ new_: _value
 			(set (long@ byte-ptr) _value)
 			byte-ptr)
 
-fn == arg (BytePtr) -> Bool
+fn == arg
 	coke
 		(if (== (int@ self) (int@ arg)) true false)
-fn != arg (BytePtr) -> Bool
+fn != arg
 	coke
 		(if (!= (int@ self) (int@ arg)) true false)
-fn < arg (BytePtr) -> Bool
+fn < arg
 	coke
 		(if (< (int@ self) (int@ arg)) true false)
-fn > arg (BytePtr) -> Bool
+fn > arg
 	coke
 		(if (> (int@ self) (int@ arg)) true false)
-fn <= arg (BytePtr) -> Bool
+fn <= arg
 	coke
 		(if (<= (int@ self) (int@ arg)) true false)
-fn >= arg (BytePtr) -> Bool
+fn >= arg
 	coke
 		(if (>= (int@ self) (int@ arg)) true false)
 
-fn + arg (BytePtr) -> BytePtr
+fn + arg
 	coke
 		(byte-ptr (+ (int@ self) [arg _integerValue]))
 fn - arg
@@ -46,7 +46,7 @@ fn - arg
 			(trylid-int (- (int@ self) (int@ arg)))
 			(byte-ptr (- (int@ self) [arg _integerValue])))
 
-fn deref-ptr -> BytePtr
+fn deref-ptr
 	coke
 		(byte-ptr (int@ (int@ self)))
 fn deref-int
