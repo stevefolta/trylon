@@ -167,6 +167,8 @@ get-subproto: name
 	for directory in directories
 		if directory entry-is-directory: name
 			return add-proto: name directory: (directory at: name)
+		else if directory contains: name
+			return add-proto: name
 	
 	return nil
 
