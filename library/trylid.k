@@ -50,8 +50,6 @@
 (define trylid-root-object nil)
 (define StandardBytePtr nil)
 (define StandardString nil)
-(define StandardInt nil)
-(define StandardChar nil)
 (define StandardImplementation nil)
 (define Posix nil)
 
