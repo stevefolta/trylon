@@ -597,6 +597,9 @@
 (define [UndefinedObject string]
 	(trylid-string "nil"))
 
+(define Float (import "Float"))
+(define [Float string]
+	[StandardString new-copy_: [[self asString] _stringValue]])
 
 
 ;; Loading (this is last so it can use all the above).
