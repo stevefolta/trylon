@@ -264,7 +264,9 @@ lowercase
 int -> Int
 	coke
 		(trylid-int (strtol [self _stringValue] 0 0))
-# primitive-fn float -> Float
+float
+	coke
+		[Float fromString: self]
 
 
 # ===== Interoperability with Pepsi strings

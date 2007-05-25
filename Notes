@@ -243,7 +243,6 @@ Unify Object.
 Use SmallInteger rt Int and Char.
 	[Done, just needs to go into the master branch.]
 Loading directories from the command line.
-Floats.
 Unify String (maybe).
 Lambdas.
 
