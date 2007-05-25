@@ -50,6 +50,7 @@ contains: name
 					(begin
 						(set found true)
 						(break))))
+			(closedir directory)
 			found
 
 
