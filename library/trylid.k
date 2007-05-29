@@ -568,16 +568,20 @@
 	(trylid-char [self _integerValue]))
 (define-send '% SmallInteger arg
 	[self \\ arg])
-(define-send '^ SmallInteger arg
-	[self bitXor: arg])
 (define-send '~ SmallInteger
-	[SmallInteger value_: (not [self _integerValue])])
+	[SmallInteger value_: (~ [self _integerValue])])
+(define [SmallInteger unary-minus]
+	[SmallInteger value_: (- [self _integerValue])])
+(define [SmallInteger float]
+	[self asFloat])
 (define [SmallInteger .proto-name]
 	(trylid-string "SmallInteger"))
 (define [SmallInteger print-string]
 	(trylid-string [[self printString] _stringValue]))
 (define [SmallInteger string]
 	[self print-string])
+(define [SmallInteger debug-write]
+	[[Trylid Standard] print-line: [(trylid-string "Int: ") + [self string]]])
 
 (define [String length]
 	[self size])
