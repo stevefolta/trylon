@@ -583,6 +583,19 @@
 (define [SmallInteger debug-write]
 	[[Trylid Standard] print-line: [(trylid-string "Int: ") + [self string]]])
 
+;; SmallInteger as character.
+(define [SmallInteger char-string]
+	(let ((buf (GC_malloc_atomic 8)))
+		(set-char@ buf [self _integerValue])
+		(set-char@ (+ buf 1) 0)
+		(trylid-string buf)))
+(define [SmallInteger is-whitespace]
+	(if (or (== self '$ ) (== self '$\t) (== self '$\n) (== self '$\r))
+		true false))
+(define [SmallInteger is-digit]
+	(if (and (>= self '$0) (<= self '$9))
+		true false))
+
 (define [String length]
 	[self size])
 (define [String intern]
