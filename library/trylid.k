@@ -564,11 +564,11 @@
 	[(trylid-int [self _integerValue]) string])
 (define [SmallInteger int]
 	(trylid-int [self _integerValue]))
-(define-send 'char SmallInteger
+(define [SmallInteger char]
 	(trylid-char [self _integerValue]))
-(define-send '% SmallInteger arg
+(define [SmallInteger % arg]
 	[self \\ arg])
-(define-send '~ SmallInteger
+(define [SmallInteger ~]
 	[SmallInteger value_: (~ [self _integerValue])])
 (define [SmallInteger unary-minus]
 	[SmallInteger value_: (- [self _integerValue])])
