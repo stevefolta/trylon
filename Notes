@@ -243,6 +243,8 @@ Unoptimized:  	9.6s
 Get optimized:	9.5s
 Set optimized:	9.2s
 
+The tradeoff is that the generated Coke code is less readable; at this point I don't think the speedup is worth it.
+
 
 =====
 
