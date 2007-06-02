@@ -241,6 +241,7 @@ Field Access Optimization
 
 Unoptimized:  	9.6s
 Get optimized:	9.5s
+Set optimized:	9.2s
 
 
 =====
@@ -252,6 +253,9 @@ Unify Object.
 Loading directories from the command line.
 Unify String (maybe).
 Lambdas.
+Field access optimization:
+	Setter translate-call:.
+	Explicit calls on "this" (as in constructors).
 
 
 =====
