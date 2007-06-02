@@ -554,6 +554,8 @@
 	(== self arg))
 (define [Object responds-to: selector]
 	(if [[self _vtable] lookup: selector] true false))
+(define [Object object-ptr]
+	(byte-ptr self))
 (define [Object string]
 	[StandardString new_: [self _debugName]])
 (define [Object print-string]
