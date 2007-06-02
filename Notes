@@ -236,6 +236,15 @@ Cache misses:   9271514.
 
 =====
 
+Field Access Optimization
+	[2007.6.2]
+
+Unoptimized:  	9.6s
+Get optimized:	9.5s
+
+
+=====
+
 To Do
 	[live]
 
