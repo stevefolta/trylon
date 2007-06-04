@@ -14,7 +14,7 @@ parse-expression
 	if expr == nil
 		return nil
 	
-	if words peek == ','
+	if !(words is-done) && words peek == ','
 		tuple = TupleExpression new
 		tuple add-member: expr
 		while words peek == ','
@@ -33,11 +33,11 @@ parse-keyword-expression
 	if expr == nil
 		return nil
 	
-	if words peek ends-with: ":"
+	if !(words is-done) && (words peek ends-with: ":")
 		name = ""
 		args = List new
-		while words peek ends-with: ":"
-			name += words next text
+		while !(words is-done) && (words peek ends-with: ":")
+			name += words next
 			arg = parse-binary-expression
 			if arg
 				args append: arg
@@ -58,7 +58,9 @@ parse-binary-expression
 	expr2 = nil
 
 	word = words peek
-	if word == "="
+	if word == nil
+		# Do nothing.
+	else if word == "="
 		words next
 		if !(expr is-a: FunctionCall) && !(expr is-a: Send)
 			parse-error: "Illegal assignment."
@@ -94,7 +96,7 @@ parse-logical-or-expression
 	if expr == nil
 		return nil
 	
-	while words peek == "||"
+	while !(words is-done) && (words peek == "||")
 		words next
 		expr2 = parse-logical-and-expression
 		if expr2 == nil
@@ -109,7 +111,7 @@ parse-logical-and-expression
 	if expr == nil
 		return nil
 	
-	while words peek == '&&'
+	while !(words is-done) && (words peek == '&&')
 		words next
 		expr2 = parse-inclusive-or-expression
 		if expr2 == nil
@@ -124,7 +126,7 @@ parse-inclusive-or-expression
 	if expr == nil
 		return nil
 	
-	while words peek == "|"
+	while !(words is-done) && (words peek == "|")
 		words next
 		expr2 = parse-exclusive-or-expression
 		if expr2 == nil
@@ -139,7 +141,7 @@ parse-exclusive-or-expression
 	if expr == nil
 		return nil
 	
-	while words peek == "^"
+	while !(words is-done) && (words peek == "^")
 		words next
 		expr2 = parse-and-expression
 		if expr2 == nil
@@ -154,7 +156,7 @@ parse-and-expression
 	if expr == nil
 		return nil
 	
-	while words peek == "&"
+	while !(words is-done) && (words peek == "&")
 		words next
 		expr2 = parse-equality-expression
 		if expr2 == nil
@@ -170,7 +172,7 @@ parse-equality-expression
 		return nil
 	
 	word = words peek
-	while word == "==" || word == "!="
+	while word && (word == "==" || word == "!=")
 		words next
 		expr2 = parse-relational-expression
 		if expr2 == nil
@@ -195,7 +197,7 @@ parse-relational-expression
 		return nil
 	
 	word = words peek
-	while word == "<" || word == ">" || word == "<=" || word == ">="
+	while word && (word == "<" || word == ">" || word == "<=" || word == ">=")
 		words next
 		expr2 = parse-shift-expression
 		if expr2 == nil
@@ -213,7 +215,7 @@ parse-shift-expression
 		return nil
 	
 	word = words peek
-	while word == "<<" || word == ">>"
+	while word && (word == "<<" || word == ">>")
 		words next
 		expr2 = parse-additive-expression
 		if expr2 == nil
@@ -231,7 +233,7 @@ parse-additive-expression
 		return nil
 	
 	word = words peek
-	while word == "+" || word == "-"
+	while word && (word == "+" || word == "-")
 		words next
 		expr2 = parse-multiplicative-expression
 		if expr2 == nil
@@ -249,7 +251,7 @@ parse-multiplicative-expression
 		return nil
 	
 	word = words peek
-	while word == "*" || word == "/" || word == "%"
+	while word && (word == "*" || word == "/" || word == "%")
 		words next
 		expr2 = parse-unary-expression
 		if expr2 == nil
@@ -263,6 +265,8 @@ parse-multiplicative-expression
 
 parse-unary-expression
 	expr = nil
+	if words is-done
+		return nil
 	word = words peek
 
 	if word == "!"
@@ -297,7 +301,7 @@ parse-postfix-expression
 	if expr == nil
 		return nil
 	
-	while words peek == "name"
+	while !(words is-done) && words peek == "name"
 		# A unary object call.
 		name = words next
 		expr = Send new: name object: expr arguments: List new
@@ -306,6 +310,8 @@ parse-postfix-expression
 
 
 parse-primary-expression
+	if words is-done
+		return nil
 	word = words peek
 
 	if word == "super"
@@ -426,7 +432,7 @@ expression-expected-after: after
 	parse-error: "Expression expected after \"" + after + "\"."
 
 
-is-name: word
+class-fn is-name: word
 	switch word
 		"+", "-", "*", "/", "%", "&", "|", "^", "<<", ">>", 	--
 		"==", "!=", "<", ">", "<=", ">=", 	--
@@ -443,7 +449,7 @@ is-name: word
 	return true
 
 
-is-number: word
+class-fn is-number: word
 	first-char = word first-character
 	if (first-char >= `0` && first-char <= `9`)
 		return true

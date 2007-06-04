@@ -54,6 +54,8 @@ parse-block: lines
 
 parse-line: line
 	words = line words
+	if words is-done
+		return BlankLine new
 
 	# Is it a special form?
 	syntax = special-forms at: words current
