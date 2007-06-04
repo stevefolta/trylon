@@ -1,10 +1,11 @@
 trylon TrylidProtoParser
 
-fields lines context
+fields lines proto context
 
 
-create: lines context: context
+create: lines into: proto context: context
 	this lines = lines
+	this proto = proto
 	this context = context
 
 

@@ -42,8 +42,9 @@ lookup-function: name visited-protos: visited-protos
 		# A file?
 		if (directory contains: name) && !(directory entry-is-directory: name)
 			proto = add-proto: name
-			parser = Parser new: (directory at: name) contents context: this
-			parser parse-proto-file: proto
+			lines = (LinesLexer new: (directory at: name) contents) lex
+			parser = TrylidProtoParser new: lines into: proto context: this
+			parser parse
 			return functions at: name
 
 		# A directory?
@@ -186,8 +187,9 @@ add-directory: directory
 	directories append: directory
 
 	if directory contains: "main"
-		parser = Parser new: (directory at: "main") contents context: this
-		parser parse-proto-file: this
+		lines = (LinesLexer new: (directory at: "main") contents) lex
+		parser = TrylidProtoParser new: lines into: this context: this
+		parser parse
 
 
 setup-main: main-directory library-directory: library-directory
@@ -218,9 +220,9 @@ setup-main: main-directory library-directory: library-directory
 	pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
 	proto-function = ProtoFunction new: pepsi-proto
 	standard-proto functions at: "Pepsi" put: proto-function
-	parser = 	--
-		Parser new: (standard-directory at: "Pepsi") contents context: standard-proto
-	parser parse-proto-file: pepsi-proto
+	lines = (LinesLexer new: (standard-directory at: "Pepsi") contents) lex
+	parser = TrylidProtoParser new: lines into: pepsi-proto context: standard-proto
+	parser parse
 	the-compiler proto-queue append: pepsi-proto
 
 	# Add "nil", "true", and "false" to Standard.
@@ -231,8 +233,9 @@ setup-main: main-directory library-directory: library-directory
 	# Load our "main"s
 	for directory in directories
 		if directory contains: "main"
-			parser = Parser new: (directory at: "main") contents context: this
-			parser parse-proto-file: this
+			lines = (LinesLexer new: (directory at: "main") contents) lex
+			parser = TrylidProtoParser new: lines into: this context: this
+			parser parse
 	
 	# Load up standard protos.
 	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
