@@ -1,6 +1,7 @@
 trylon TrylidProtoParser
 
 fields lines proto context
+fields line words 	# Only valid during 'parse-line:'.
 
 
 create: lines into: proto context: context
@@ -19,12 +20,16 @@ parse-block: lines
 
 
 parse-line: line
+	this line = line
 	words = line words
+	if words is-done
+		return
 	switch words peek
 		"proto", "class"
 			#...
 		"fn", "function", "class-fn"
-			#...
+			words next
+			parse-function
 		"field", "fields"
 			#...
 		"extend"
@@ -34,6 +39,148 @@ parse-line: line
 		else
 			#...
 
+
+
+parse-function
+	parse-function: nil
+
+
+parse-function: initial-name
+	# Get the name.
+	# We're allowing any name; we want to allow unops and binops and string 
+	# literals as well as names.  Ideally we should reject other names, but 
+	# currently we don't bother.
+	name = initial-name
+	if name == nil
+		name = words next
+
+	# Get the arguments.
+	arguments = List new
+	if !(is-name: name) && name != "~"
+		# Get the first argument.
+		if words is-done
+			parse-error: "Missing argument name in " + name + "."
+		arg-name = words next
+		if !(is-name: arg-name)
+			parse-error: "Missing argument name in " + name + "." token: arg-name
+		arg-type = parse-arg-type
+		arguments append: (CompiledField new: arg-name type: arg-type)
+
+		# Get additional arguments.
+		loop
+			# Are we looking at an argument?
+			if words is-done
+				break
+			token = words peek
+			is-keyword = false
+			if token ends-with: ":"
+				is-keyword = true
+			else if !(is-name: token)
+				break
+
+			# Get the name.
+			if is-keyword
+				# Standard argument declaration ("keyword: name").
+				name += words next
+				arg-name = words next
+				if !(is-name: arg-name)
+					parse-error: "Missing argument name." token: arg-name
+			else
+				# Special shortcut: just an argument name.  Equivalent to "name: name".
+				name += words next + ":"
+				arg-name = words next
+				arg-name = arg-name substr: 0 length: arg-name length - 1
+
+			# Get the type and add the argument.
+			arg-type = parse-arg-type
+			arguments append: (CompiledField new: arg-name type: arg-type)
+	
+	# Get the return type.
+	return-type = nil
+	if !(words is-done) && words peek == '->'
+		words next
+		return-type = parse-type-spec
+	
+	words require-eol
+
+	report: "Parsing " + name + "..."
+
+	# Parse the body.
+	method-context = MethodContext new: arguments parent: context
+	parser = TrylidCodeParser new: line block in: method-context
+	body = parser parse
+	
+	# Build the function and return it.
+	new-function = 	--
+		CompiledFunction new: name arguments: arguments 	--
+			return-type: return-type --
+			on-proto: context body: body
+	new-function method-context = method-context
+	method-context function = new-function
+	return new-function
+
+
+parse-arg-type
+	arg-type = nil
+	if !(words is-done) && words peek == "("
+		# Type is specified.
+		words next
+		arg-type = parse-type-spec
+		if words peek != ")"
+			parse-error: "Missing \")\"."
+		words next
+	return arg-type
+
+
+parse-type-spec
+	type = parse-proto-spec
+
+	# Make sure we got a proto.
+	okay = type is-a: CompiledProto
+	iff in-trylid
+		if !okay
+			okay = type is-a: ExistingProto
+	if !okay
+		parse-error: "A type specifier was given, but is not a prototype." 	--
+			token: type name
+	
+	return type
+
+
+parse-proto-spec
+	type = nil
+	cur-context = context
+	while is-name: words peek
+		# Find the prototype.
+		name = words next
+		if type == nil
+			# The first name can be anything in scope.
+			type-function = cur-context lookup-function: name
+			if type-function == nil || !(type-function is-a: ProtoFunction)
+				parse-error: "Unknown prototype." token: name
+			type = type-function proto
+		else
+			# Other names must be subprotos of the proto specified so far.
+			type = cur-context get-subproto: name
+			if type == nil
+				parse-error: "Unknown prototype." token: name
+		cur-context = type
+	
+	# Make sure we got a proto.
+	if type == nil
+		parse-error: "Missing the type in a type specifier."
+	
+	return type
+
+
+parse-error: message token: token
+	throw ParseException new: message token: token
+parse-error: message
+	parse-error: message token: words peek
+
+
+is-name: name
+	return TrylidExpressionParser is-name: name
 
 
 # Copyright 2007 Steve Folta.  See the License file.
