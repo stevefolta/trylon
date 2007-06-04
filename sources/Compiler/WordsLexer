@@ -85,8 +85,13 @@ parse-next-word
 	word-start = p
 
 	# Is it a paren/bracket/brace/comma/minus?
-	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}` || 	--
-	   c == `,` || c == `!` || c == `-`
+	if c == `!`
+		p += 1
+		if p < stopper && p deref-char == `=`
+			p += 1
+		return String from: word-start to: p
+	else if c == `(` || c == `)` || c == `[` || c == `]` || 	--
+	        c == `{` || c == `}` || c == `,` || c == `!` || c == `-`
 		p += 1
 		return String from: word-start to: p
 	
