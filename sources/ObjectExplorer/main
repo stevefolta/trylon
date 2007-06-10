@@ -1,17 +1,37 @@
 trylid ObjectExplorer
 
-fields cur-object
 
+explore: object
+	explorer = ObjectExplorer new: object
+	explorer show-object
+	print-line
+
+
+######
+
+fields cur-object num-fields selected-field
 
 create: object
+	use-object: object
+
+
+use-object: object
 	cur-object = object
+	num-fields = (Pepsi SmallInteger value_: cur-object _sizeof) / 4
+	selected-field = 0
 
 
 show-object
 	print-line: cur-object print-string
-	print-line: "-----"
+	print-line: "--------------------"
+	which-field = 0
+	while which-field < num-fields
+		field-value = cur-object object-ptr object-at: which-field
+		if which-field == selected-field
+			Standard print: "\e[01m"
+		print-line: field-value print-string
+		if which-field == selected-field
+			Standard print: "\e[0m"
+		which-field += 1
 
-
-test: object
-	(ObjectExplorer new: object) show-object
 
