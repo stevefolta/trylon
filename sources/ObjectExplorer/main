@@ -3,8 +3,7 @@ trylid ObjectExplorer
 
 explore: object
 	explorer = ObjectExplorer new: object
-	explorer show-object
-	print-line
+	explorer run
 
 
 ######
@@ -26,12 +25,86 @@ show-object
 	print-line: "--------------------"
 	which-field = 0
 	while which-field < num-fields
-		field-value = cur-object object-ptr object-at: which-field
-		if which-field == selected-field
-			Standard print: "\e[01m"
-		print-line: field-value print-string
-		if which-field == selected-field
-			Standard print: "\e[0m"
+		show-field: which-field
+		print-line
 		which-field += 1
+
+
+show-field: which-field
+	field-value = cur-object object-ptr object-at: which-field
+	if which-field == selected-field
+		Standard print: "\e[01m"
+	print: field-value print-string
+	if which-field == selected-field
+		Standard print: "\e[0m"
+
+
+field-down
+	if selected-field >= num-fields - 1
+		return
+	selected-field += 1
+	# Redraw old selection deselected.
+	print: "\r\e[2K"
+	show-field: selected-field - 1
+	# Draw newly-selected field.
+	print: "\e[B\r\e[2K"
+	show-field: selected-field
+
+field-up
+	if selected-field <= 0
+		return
+	selected-field -= 1
+	# Redraw current field unselected.
+	print: "\r\e[2K"
+	show-field: selected-field + 1
+	# Draw newly-selected field.
+	print: "\[A\r\e[2K"
+	show-field: selected-field
+
+
+enter-field
+	# ...
+	
+
+run
+	# Put the input into "raw" (unbuffered) mode.
+	saved-termios = Posix Termios new
+	saved-termios get: 0
+	termios = Posix Termios new
+	termios get: 0
+	debug: "iflag: " + termios iflag string
+	debug: "oflag: " + termios oflag string
+	debug: "lflag: " + termios lflag string
+	debug: "cflag: " + termios cflag string
+	termios cfmakeraw
+	termios set: 0
+	termios set: 1
+	termios get: 0
+	debug: "iflag: " + termios iflag string
+	debug: "oflag: " + termios oflag string
+	debug: "lflag: " + termios lflag string
+	debug: "cflag: " + termios cflag string
+
+	# Display the object.
+	show-object
+	print: "\e[" + (num-fields - selected-field) string + "A"
+
+	# Handle commands.
+	input = Pepsi ByteArray new: 8
+	loop
+		Pepsi StdIn read: input size: 1
+		c = input at: 0
+		switch c
+			`q`
+				break
+			`j`
+				field-down
+			`k`
+				field-up
+			`\n`, `\r`
+				enter-field
+
+	# Restore terminal settings.
+	saved-termios set: 0
 
 
