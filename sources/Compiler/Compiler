@@ -31,6 +31,11 @@ compile-file: file as: name into: parent-proto
 	parser parse-proto-file: proto
 	return proto
 
+compile-dir: dir as: name into: parent-proto
+	status-reporter = VT100StatusReporter new
+	proto = parent-proto add-proto: name directory: dir 	# Will compile.
+	return proto
+
 
 compile-program: compile-symbols
 	# Read the settings.
