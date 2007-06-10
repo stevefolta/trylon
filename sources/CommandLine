@@ -106,11 +106,20 @@ proto Context
 ##### Useful functions from the command line.
 
 load: filename into: proto
+	if filename ends-with: "/"
+		filename = filename substr: 0 length: filename length - 1
+	dir-path = "."
 	proto-name = filename
 	slash-index = filename last-index-of: `/`
 	if slash-index >= 0
 		proto-name = filename substr: slash-index + 1
-	(Compiler new) compile-file: (File new: filename) as: proto-name into: proto
+		dir-path = filename substr: 0 length: slash-index
+	directory = FileDirectory new: dir-path
+	if directory entry-is-directory: proto-name
+		(Compiler new) 	--
+			compile-dir: (directory at: proto-name) as: proto-name into: proto
+	else
+		(Compiler new) compile-file: (File new: filename) as: proto-name into: proto
 
 
 load: filename

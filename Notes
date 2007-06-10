@@ -253,6 +253,7 @@ To Do
 
 Unify Object.
 Loading directories from the command line.
+	[Done, but can't re-load.]
 Unify String (maybe).
 Lambdas.
 Field access optimization:
