@@ -1,0 +1,17 @@
+trylid ObjectExplorer
+
+fields cur-object
+
+
+create: object
+	cur-object = object
+
+
+show-object
+	print-line: cur-object print-string
+	print-line: "-----"
+
+
+test: object
+	(ObjectExplorer new: object) show-object
+
