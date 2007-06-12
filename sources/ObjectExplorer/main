@@ -58,7 +58,7 @@ field-up
 	print: "\r\e[2K"
 	show-field: selected-field + 1
 	# Draw newly-selected field.
-	print: "\[A\r\e[2K"
+	print: "\e[A\r\e[2K"
 	show-field: selected-field
 
 
@@ -67,27 +67,17 @@ enter-field
 	
 
 run
+	# Display the object.
+	show-object
+	print: "\e[" + (num-fields - selected-field) string + "A"
+
 	# Put the input into "raw" (unbuffered) mode.
 	saved-termios = Posix Termios new
 	saved-termios get: 0
 	termios = Posix Termios new
 	termios get: 0
-	debug: "iflag: " + termios iflag string
-	debug: "oflag: " + termios oflag string
-	debug: "lflag: " + termios lflag string
-	debug: "cflag: " + termios cflag string
 	termios cfmakeraw
 	termios set: 0
-	termios set: 1
-	termios get: 0
-	debug: "iflag: " + termios iflag string
-	debug: "oflag: " + termios oflag string
-	debug: "lflag: " + termios lflag string
-	debug: "cflag: " + termios cflag string
-
-	# Display the object.
-	show-object
-	print: "\e[" + (num-fields - selected-field) string + "A"
 
 	# Handle commands.
 	input = Pepsi ByteArray new: 8
@@ -103,8 +93,15 @@ run
 				field-up
 			`\n`, `\r`
 				enter-field
+	
+	# Get to the last line.
+	lines-down = num-fields - selected-field
+	if lines-down > 0
+		print: "\r\e[" + lines-down string + "B"
 
 	# Restore terminal settings.
 	saved-termios set: 0
+
+	print-line
 
 
