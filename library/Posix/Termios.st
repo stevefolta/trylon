@@ -17,14 +17,14 @@ Termios get_: _fd
 {
 	tcgetattr((int) v__fd, (struct termios*) self);
 }
-Termios get: fd	[ Termios get_: fd _integerValue]
+Termios get: fd	[ self get_: fd _integerValue]
 
 
 Termios set_: _fd
 {
 	tcsetattr((int) v__fd, TCSANOW, (struct termios*) self);
 }
-Termios set: fd	[ Termios set_: fd _integerValue]
+Termios set: fd	[ self set_: fd _integerValue]
 
 
 Termios cfmakeraw
