@@ -42,7 +42,7 @@ string
 			result += ", "
 		else
 			have-item = true
-		result += item string
+		result += item print-string
 	result += ")"
 	return result
 
