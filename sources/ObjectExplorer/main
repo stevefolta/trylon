@@ -9,8 +9,10 @@ explore: object
 ######
 
 fields cur-object num-fields selected-field
+fields object-history
 
 create: object
+	object-history = List new
 	use-object: object
 
 
@@ -21,12 +23,13 @@ use-object: object
 
 
 show-object
-	print-line: cur-object print-string
-	print-line: "--------------------"
+	print: (ellipsize: cur-object print-string)
+	print: "\r\n"
+	print: "--------------------\r\n"
 	which-field = 0
 	while which-field < num-fields
 		show-field: which-field
-		print-line
+		print: "\r\n"
 		which-field += 1
 
 
@@ -34,9 +37,15 @@ show-field: which-field
 	field-value = cur-object object-ptr object-at: which-field
 	if which-field == selected-field
 		Standard print: "\e[01m"
-	print: field-value print-string
+	print: (ellipsize: field-value print-string)
 	if which-field == selected-field
 		Standard print: "\e[0m"
+
+
+ellipsize: string
+	if string length > 72
+		string = (string substr: 0 length: 72) + "..."
+	return string
 
 
 field-down
@@ -63,7 +72,29 @@ field-up
 
 
 enter-field
-	# ...
+	if num-fields <= 0
+		return
+	object-history push-front: cur-object
+	switch-to-object: (cur-object object-ptr object-at: selected-field)
+
+
+back-up
+	if object-history is-empty
+		return
+	switch-to-object: object-history pop-front
+
+
+switch-to-object: object
+	# Clear the old object from the display.
+	back-lines = 1
+	if num-fields > 0
+		back-lines = selected-field + 2
+	print: "\e[" + back-lines string + "A\r\e[0J"
+
+	# Go to the new object.
+	use-object: object
+	show-object
+	print: "\e[" + (num-fields - selected-field) string + "A"
 	
 
 run
@@ -93,6 +124,8 @@ run
 				field-up
 			`\n`, `\r`
 				enter-field
+			`\b`, `\e`
+				back-up
 	
 	# Get to the last line.
 	lines-down = num-fields - selected-field
