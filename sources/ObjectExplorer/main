@@ -21,6 +21,15 @@ use-object: object
 	num-fields = (Pepsi SmallInteger value_: cur-object _sizeof) / 4
 	selected-field = 0
 
+	# Certain objects can't have their fields safely shown.
+	if (object is-a: Pepsi Symbol) || (object is-a: Pepsi String) || 	--
+	   (object is-a: Pepsi Float)
+		num-fields = 0
+	
+	# Special-case Tuples, to see their contents.
+	else if (object is-a: Tuple)
+		num-fields += object num-items
+
 
 show-object
 	print: (ellipsize: cur-object print-string)
@@ -124,7 +133,7 @@ run
 				field-up
 			`\n`, `\r`
 				enter-field
-			`\b`, `\e`
+			`\b`, `\e`, `u`
 				back-up
 	
 	# Get to the last line.
