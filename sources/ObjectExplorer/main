@@ -121,9 +121,13 @@ run
 
 	# Handle commands.
 	input = Pepsi ByteArray new: 8
+	c = nil
+	peeking = false
 	loop
-		Pepsi StdIn read: input size: 1
-		c = input at: 0
+		if !peeking
+			Pepsi StdIn read: input size: 1
+			c = input at: 0
+			peeking = false
 		switch c
 			`q`
 				break
@@ -133,8 +137,33 @@ run
 				field-up
 			`\n`, `\r`
 				enter-field
-			`\b`, `\e`, `u`
+			`\b`, `u`
 				back-up
+			`\e`
+				if (Pepsi StdIn waitForInput: 0) <= 0
+					# ESC by itself.
+					back-up
+				else
+					# Escape sequence, likely an arrow key.
+					Pepsi StdIn read: input size: 1
+					c = input at: 0
+					if c == `[`
+						Pepsi StdIn read: input size: 1
+						c = input at: 0
+						switch c
+							`A`
+								field-up
+							`B`
+								field-down
+							`C`
+								enter-field
+							`D`
+								back-up
+							else
+								# Unknown; just ignore it.
+					else
+						back-up
+						peeking = true
 	
 	# Get to the last line.
 	lines-down = num-fields - selected-field
