@@ -83,17 +83,20 @@ field-up
 enter-field
 	if num-fields <= 0
 		return
-	object-history push-front: cur-object
+	history-object = HistoricObject new: cur-object selected-field: selected-field
+	object-history push-front: history-object
 	switch-to-object: (cur-object object-ptr object-at: selected-field)
 
 
 back-up
 	if object-history is-empty
 		return
-	switch-to-object: object-history pop-front
+	history-object = object-history pop-front
+	switch-to-object: history-object object 	--
+		selected-field: history-object selected-field
 
 
-switch-to-object: object
+switch-to-object: object selected-field: new-selected-field
 	# Clear the old object from the display.
 	back-lines = 1
 	if num-fields > 0
@@ -102,8 +105,12 @@ switch-to-object: object
 
 	# Go to the new object.
 	use-object: object
+	selected-field = new-selected-field
 	show-object
 	print: "\e[" + (num-fields - selected-field) string + "A"
+
+switch-to-object: object
+	switch-to-object: object selected-field: 0
 	
 
 run
@@ -175,4 +182,11 @@ run
 
 	print-line
 
+
+proto HistoricObject
+	fields object selected-field
+
+	create: object selected-field: selected-field
+		this object = object
+		this selected-field = selected-field
 
