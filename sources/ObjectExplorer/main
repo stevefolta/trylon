@@ -165,9 +165,9 @@ run
 				field-down
 			`k`
 				field-up
-			`\n`, `\r`
+			`\n`, `\r`, `l`
 				enter-field
-			`\b`, `u`
+			`\b`, `u`, `h`
 				back-up
 			`\e`
 				if (Pepsi StdIn waitForInput: 0) <= 0
