@@ -9,6 +9,7 @@ explore: object
 ######
 
 fields cur-object num-fields selected-field
+fields field-names field-names-size
 fields object-history
 
 create: object
@@ -30,6 +31,13 @@ use-object: object
 	else if (object is-a: Tuple)
 		num-fields += object num-items
 
+	# Gather the field names.
+	field-names = Tuple new: num-fields
+	field-names-size = 0
+	fill-field-names: cur-object vtable: cur-object _vtable
+	if field-names-size > 0
+		field-names-size += 3
+
 
 show-object
 	print: (ellipsize: cur-object print-string)
@@ -43,18 +51,33 @@ show-object
 
 
 show-field: which-field
+	# Print the field name.
+	if field-names-size > 0
+		field-name = field-names at: which-field
+		columns-left = field-names-size
+		if field-name && !(field-name is-empty)
+			Standard print: field-name
+			Standard print: ":  "
+			columns-left -= field-name length + 3
+		if columns-left > 0
+			Standard print: "\e[" + columns-left string + "C"
+
+	# Print the value.
 	field-value = cur-object object-ptr object-at: which-field
 	if which-field == selected-field
 		Standard print: "\e[01m"
-	print: (ellipsize: field-value print-string)
+	print: (ellipsize: field-value print-string length: 72 - field-names-size)
 	if which-field == selected-field
 		Standard print: "\e[0m"
 
 
-ellipsize: string
-	if string length > 72
-		string = (string substr: 0 length: 72) + "..."
+ellipsize: string length: max-length
+	if string length > max-length
+		string = (string substr: 0 length: max-length - 3) + "..."
 	return string
+
+ellipsize: string
+	return ellipsize: string length: 72
 
 
 field-down
@@ -182,6 +205,40 @@ run
 
 	print-line
 
+
+fill-field-names: object vtable: vtable
+	# First fill in the fields from the superclass.
+	super-num-fields = 0
+	if vtable delegate
+		super-num-fields = fill-field-names: object vtable: vtable delegate
+
+	# If we have '.added-fields', use them.
+	assoc = vtable findKeyOrNil: '.added-fields'
+	if assoc
+		closure = assoc value
+		added-fields = nil
+		coke
+			(set added-fields ((long@ closure) closure object object))
+		field-index = 0
+		num-added-fields = added-fields size
+		while field-index < num-added-fields
+			field-name = (added-fields at: field-index) string
+			if field-name length > field-names-size
+				field-names-size = field-name length
+			field-names at: super-num-fields + field-index put: field-name
+			field-index += 1
+	
+	# Return the number of fields.
+	assoc = vtable lookup: '_sizeof'
+	_size = 0
+	if assoc
+		closure = assoc value
+		coke
+			(set _size ((long@ closure) closure object object))
+	return (Pepsi SmallInteger value_: _size) / 4
+
+
+#####
 
 proto HistoricObject
 	fields object selected-field
