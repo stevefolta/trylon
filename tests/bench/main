@@ -1,0 +1,24 @@
+trylon Bench
+
+main: args
+	bench = BenchObject new
+	start-time = System milliseconds
+	result = bench nfibs: 35
+	time = System milliseconds - start-time
+	print-line: "nfibs: 35 = " + result string
+	print-line: time string + " milliseconds"
+	print-line: 	--
+		(result float / (time float / 1000.0)) string + " sends per second."
+
+
+class BenchObject
+	create
+		# Nothing to do.
+
+	nfibs: n
+		if n < 2
+			return 2 	# Call to nfibs + call to <
+		else
+			# 6 = nfibs, <, -, -, +, +
+			return (nfibs: n - 1) + (nfibs: n - 2) + 6
+
