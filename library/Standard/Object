@@ -5,8 +5,9 @@ raw-new
 	# We want this, once super calls are implemented:
 	# return super new
 	coke
-		(let ((vtable (send (quote _vtable) self))
-		      (size (send (quote _sizeof) self)))
+		(let ((vtable nil) (size nil))
+			(set vtable (send (quote _vtable) self))
+			(set size (send (quote _sizeof) self))
 			(return (send (quote _alloc:) vtable size)))
 
 object-ptr
