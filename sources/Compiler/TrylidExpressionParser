@@ -301,7 +301,7 @@ parse-postfix-expression
 	if expr == nil
 		return nil
 	
-	while !(words is-done) && words peek == "name"
+	while !(words is-done) && (is-name: words peek)
 		# A unary object call.
 		name = words next
 		expr = Send new: name object: expr arguments: List new
@@ -350,7 +350,7 @@ parse-primary-expression
 		expr = parse-expression
 		if expr == nil
 			expression-expected-after: "("
-		if words next != ")"
+		if words is-done || words next != ")"
 			parse-error: "\")\" expected."
 		return expr
 
@@ -437,7 +437,8 @@ class-fn is-name: word
 		"+", "-", "*", "/", "%", "&", "|", "^", "<<", ">>", 	--
 		"==", "!=", "<", ">", "<=", ">=", 	--
 		"&&", "||", 	--
-		"!", "~"
+		"!", "~", 	--
+		"(", ")", "[", "]", "{", "}"
 			return false
 	if (word ends-with: "=") || (word ends-with: ":")
 		return false

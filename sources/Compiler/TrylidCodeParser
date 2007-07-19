@@ -41,14 +41,16 @@ parse-block: lines
 	block = Block new: cur-context
 	old-context = cur-context
 	cur-context = block
+	old-else-target = else-target
 	for line in lines
 		cur-line = line
 		statement = parse-line: line
 		if statement
-			if !statement ignored-for-else
+			if !(statement ignored-for-else)
 				else-target = statement
 			block append: statement
 	cur-context = old-context
+	else-target = old-else-target
 	return block
 
 
@@ -129,7 +131,7 @@ class ElseParser
 
 	parse: words line: line parser: parser
 		statement = nil
-		if words peek == "if"
+		if !(words is-empty) && words peek == "if"
 			words next
 			statement = (IfParser new) parse: words line: line parser: parser
 		else
