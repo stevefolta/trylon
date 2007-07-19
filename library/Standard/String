@@ -22,9 +22,11 @@ new_: jolt-string
 
 new-copy_: c-string
 	coke
-		(let ((size (+ (strlen c-string) 1))
-		      (str [[(trylid-proto Standard BytePtr) new-non-pointer:
-					       (trylid-int size)] _ptr]))
+		(let ((size nil) (str nil))
+			(set size (+ (strlen c-string) 1))
+			(set str
+				[[(trylid-proto Standard BytePtr) new-non-pointer: (trylid-int size)]
+				 _ptr])
 			(memcpy str c-string size)
 			[self new_: str]
 			)
@@ -280,9 +282,10 @@ size
 
 _stringValue
 	coke
-		(let ((start [[self start] _ptr])
-		      (size (- [[self stopper] _ptr] start))
-		      (c-string (GC_malloc_atomic (+ size 1))))
+		(let ((start nil) (size nil) (c-string nil))
+			(set start [[self start] _ptr])
+			(set size (- [[self stopper] _ptr] start))
+			(set c-string (GC_malloc_atomic (+ size 1)))
 			(memcpy c-string start size)
 			(set-char@ (+ c-string size) 0)
 			c-string
