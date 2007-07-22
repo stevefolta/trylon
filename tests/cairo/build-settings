@@ -1,0 +1,17 @@
+program = "trylon-cairo-test"
+
+debugger = true
+
+c-flags += "-g"
+link-flags += "-lgc" "-ldl" "-lm"
+
+c-flags += "-I/usr/include/cairo"
+link-flags += "-lcairo"
+
+# c-flags += "-I/usr/include/freetype2"
+# link-flags += "-L/usr/X11R6/lib" "-lX11" "-lXft"
+
+if Darwin
+	c-flags += "-DOSX_FINK" "-I/sw/include"
+	link-flags += "-L/sw/lib"
+

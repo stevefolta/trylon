@@ -1,0 +1,295 @@
+trylon Cairo
+
+fields cairo
+
+
+c-fn create: surface
+	Field_(cairo) =
+		BuildBytePtr_(
+			(byte_ptr_) cairo_create((cairo_surface_t*) surface->fields[0]));
+
+c-fn close
+	Preamble_
+	cairo_destroy(cairo);
+	Field_(cairo) = NULL;
+
+destroy
+	close
+
+c-fn new-path
+	Preamble_
+	cairo_new_path(cairo);
+
+c-fn close-path
+	Preamble_
+	cairo_close_path(cairo);
+
+c-fn move-to: x y: y
+	Preamble_
+	cairo_move_to(cairo, DoubleVal(x), DoubleVal(y));
+
+c-fn move-to: pointlike
+	Preamble_
+	cairo_move_to(cairo, DoubleX(pointlike), DoubleY(pointlike));
+
+c-fn line-to: x y: y
+	Preamble_
+	cairo_line_to(cairo, DoubleVal(x), DoubleVal(y));
+
+c-fn line-to: pointlike
+	Preamble_
+	cairo_line_to(cairo, DoubleX(pointlike), DoubleY(pointlike));
+
+c-fn curve-to: x1 y: y1 x: x2 y: y2 x: x3 y: y3
+	Preamble_
+	cairo_curve_to(
+		cairo,
+		DoubleVal(x1), DoubleVal(y1), DoubleVal(x2), DoubleVal(y2),
+		DoubleVal(x3), DoubleVal(y3));
+
+c-fn curve-past: control-point-1 and: control-point-2 to: end-point
+	Preamble_
+	cairo_curve_to(
+		cairo,
+		DoubleX(control_point_1), DoubleY(control_point_1),
+		DoubleX(control_point_2), DoubleY(control_point_2),
+		DoubleX(end_point), DoubleY(end_point));
+
+c-fn arc-x: x y: y radius: radius start-angle: start-angle end-angle: end-angle
+	Preamble_
+	cairo_arc(
+		cairo, DoubleVal(x), DoubleVal(y), DoubleVal(radius),
+		DoubleVal(start_angle), DoubleVal(end_angle));
+
+c-fn arc-negative-x: x y: y radius: radius 	--
+		start-angle: start-angle end-angle: end-angle
+	Preamble_
+	cairo_arc_negative(
+		cairo, DoubleVal(x), DoubleVal(y), DoubleVal(radius),
+		DoubleVal(start_angle), DoubleVal(end_angle));
+
+c-fn source-rgb: tuple
+	Preamble_
+	cairo_set_source_rgb(
+		cairo, DoubleAt(tuple, 0), DoubleAt(tuple, 1), DoubleAt(tuple, 2));
+	return NULL;
+
+c-fn source-rgba: tuple
+	Preamble_
+	cairo_set_source_rgba(
+		cairo,
+		DoubleAt(tuple, 0), DoubleAt(tuple, 1), DoubleAt(tuple, 2),
+		DoubleAt(tuple, 3));
+	return NULL;
+
+c-fn red: red green: green blue: blue
+	Preamble_
+	cairo_set_source_rgb(
+		cairo, DoubleVal(red), DoubleVal(green), DoubleVal(blue));
+
+c-fn red: red green: green blue: blue alpha: alpha
+	Preamble_
+	cairo_set_source_rgba(
+		cairo, DoubleVal(red), DoubleVal(green), DoubleVal(blue), DoubleVal(alpha));
+
+c-fn fill
+	Preamble_
+	cairo_fill(cairo);
+
+c-fn fill-preserve
+	Preamble_
+	cairo_fill_preserve(cairo);
+
+c-fn stroke
+	Preamble_
+	cairo_stroke(cairo);
+
+c-fn stroke-preserve
+	Preamble_
+	cairo_stroke_preserve(cairo);
+
+c-fn select-font-face: family slant: slant weight: weight
+	UsingSym_(normal) UsingSym_(italic) UsingSym_(oblique) UsingSym_(bold)
+	cairo_font_slant_t crSlant = CAIRO_FONT_SLANT_NORMAL;
+	cairo_font_slant_t crWeight = CAIRO_FONT_WEIGHT_NORMAL;
+	Preamble_
+	if (slant == Sym_(italic))
+		crSlant = CAIRO_FONT_SLANT_ITALIC;
+	else if (slant == Sym_(oblique))
+		crSlant = CAIRO_FONT_SLANT_OBLIQUE;
+	if (weight == Sym_(bold))
+		crWeight = CAIRO_FONT_WEIGHT_BOLD;
+	cairo_select_font_face(cairo, MakeCString_(family), crSlant, crWeight);
+
+c-fn font-size: new-size
+	Preamble_
+	cairo_set_font_size(cairo, DoubleVal(new_size));
+
+c-fn show-text: string
+	Preamble_
+	cairo_show_text(cairo, MakeCString_(string));
+
+font-options
+	return FontOptions new: this
+
+font-options: new-options
+	new-options set-context: this
+
+c-fn antialias
+	Preamble_
+	return CairoAntialiasSym(cairo_get_antialias(cairo));
+
+c-fn antialias: new-value
+	Preamble_
+	cairo_set_antialias(cairo, CairoSymToAntialias(new_value));
+
+class FontExtents
+	fields ascent descent height max-x-advance max-y-advance
+
+c-fn font-extents
+	extern class_spec_ Cairo__Context__FontExtents;
+	UsingMethod_(ascent_co_) UsingMethod_(descent_co_) UsingMethod_(height_co_)
+	UsingMethod_(max_x_advance_co_) UsingMethod_(max_y_advance_co_)
+	Preamble_
+	cairo_font_extents_t crExtents;
+	cairo_font_extents(cairo, &crExtents);
+	obj_ extents = RawNew_(Cairo__Context__FontExtents);
+	Call_(ascent_co_, extents, BuildFloat_(crExtents.ascent));
+	Call_(descent_co_, extents, BuildFloat_(crExtents.descent));
+	Call_(height_co_, extents, BuildFloat_(crExtents.height));
+	Call_(max_x_advance_co_, extents, BuildFloat_(crExtents.max_x_advance));
+	Call_(max_y_advance_co_, extents, BuildFloat_(crExtents.max_y_advance));
+	return extents;
+
+class TextExtents
+	fields x-bearing y-bearing width height x-advance y-advance
+
+c-fn text-extents: text
+	extern class_spec_ Cairo__Context__TextExtents;
+	UsingMethod_(x_bearing_co_) UsingMethod_(y_bearing_co_)
+	UsingMethod_(width_co_) UsingMethod_(height_co_)
+	UsingMethod_(x_advance_co_) UsingMethod_(y_advance_co_)
+	Preamble_
+	cairo_text_extents_t crExtents;
+	cairo_text_extents(cairo, MakeCString_(text), &crExtents);
+	obj_ extents = RawNew_(Cairo__Context__TextExtents);
+	Call_(x_bearing_co_, extents, BuildFloat_(crExtents.x_bearing));
+	Call_(y_bearing_co_, extents, BuildFloat_(crExtents.y_bearing));
+	Call_(width_co_, extents, BuildFloat_(crExtents.width));
+	Call_(height_co_, extents, BuildFloat_(crExtents.height));
+	Call_(x_advance_co_, extents, BuildFloat_(crExtents.x_advance));
+	Call_(y_advance_co_, extents, BuildFloat_(crExtents.y_advance));
+	return extents;
+
+
+##### Private #####
+
+.bogue
+	# Symbols needed by the primitive functions.
+	'normal'
+	'italic'
+	'oblique'
+	'bold'
+	'default'
+	'none'
+	'gray'
+	'subpixel'
+	# Classes referenced by the primitive functions.
+	Standard Tuple
+	Standard Point
+	FontExtents
+
+
+c-preamble
+	#include <cairo/cairo.h>
+
+	extern class_spec_ Standard__Point;
+
+	#define Preamble_ 	\
+		if (Field_(cairo) == NULL) 	\
+			return; 	\
+		cairo_t* cairo = (cairo_t*) BytePtrValue_(Field_(cairo));
+	
+	static double DoubleVal(obj_ obj)
+	{
+		double value = 0;
+		UsingMethod_(is_a_co_)
+
+		if (obj == NULL)
+			;
+		else if (Test_(Call_(is_a_co_, obj, &Standard__Float)))
+			value = FloatValue_(obj);
+		else if (Test_(Call_(is_a_co_, obj, &Standard__Int)))
+			value = IntValue_(obj);
+
+		return value;
+	}
+
+	static double DoubleAt(obj_ tuple, int index)
+	{
+		UsingMethod_(at_co_)
+
+		return DoubleVal(Call_(at_co_, tuple, BuildInt_(index)));
+	}
+
+	static double DoubleX(obj_ obj)
+	{
+		double value = 0;
+		UsingMethod_(is_a_co_) UsingMethod_(at_co_) UsingMethod_(x)
+		DefineInt_(0, 0)
+
+		if (obj == NULL)
+			;
+		else if (Test_(Call_(is_a_co_, obj, &Standard__Point)))
+			value = DoubleVal(Call_(x, obj));
+		else if (Test_(Call_(is_a_co_, obj, &Standard__Tuple)))
+			value = DoubleVal(Call_(at_co_, obj, Int_(0)));
+
+		return value;
+	}
+
+	static double DoubleY(obj_ obj)
+	{
+		double value = 0;
+		UsingMethod_(is_a_co_) UsingMethod_(at_co_) UsingMethod_(y)
+		DefineInt_(0, 1)
+
+		if (obj == NULL)
+			;
+		else if (Test_(Call_(is_a_co_, obj, &Standard__Point)))
+			value = DoubleVal(Call_(y, obj));
+		else if (Test_(Call_(is_a_co_, obj, &Standard__Tuple)))
+			value = DoubleVal(Call_(at_co_, obj, Int_(0)));
+
+		return value;
+	}
+
+	obj_ CairoAntialiasSym(cairo_antialias_t value)
+	{
+		UsingSym_(default) UsingSym_(none) UsingSym_(gray) UsingSym_(subpixel)
+		switch (value) {
+			case CAIRO_ANTIALIAS_DEFAULT:
+				return Sym_(default);
+			case CAIRO_ANTIALIAS_NONE:
+				return Sym_(none);
+			case CAIRO_ANTIALIAS_GRAY:
+				return Sym_(gray);
+			case CAIRO_ANTIALIAS_SUBPIXEL:
+				return Sym_(subpixel);
+			}
+		return NULL;
+	}
+
+	cairo_antialias_t CairoSymToAntialias(obj_ sym)
+	{
+		UsingSym_(default) UsingSym_(none) UsingSym_(gray) UsingSym_(subpixel)
+		cairo_antialias_t crValue = CAIRO_ANTIALIAS_DEFAULT;
+		if (sym == Sym_(none))
+			crValue = CAIRO_ANTIALIAS_NONE;
+		else if (sym == Sym_(gray))
+			crValue = CAIRO_ANTIALIAS_GRAY;
+		else if (sym == Sym_(subpixel))
+			crValue = CAIRO_ANTIALIAS_SUBPIXEL;
+		return crValue;
+	}
+

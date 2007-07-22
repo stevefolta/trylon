@@ -1,0 +1,72 @@
+trylon main
+
+fields display window running
+
+
+main: args
+	try
+		display = Xlib Display new
+		window = Window new: display
+		window map
+		event-loop
+	catch Exception
+		print-line: exception message
+		return 1
+
+	return 0
+
+
+event-loop
+	cur-modifiers = 0
+	running = true
+	while running
+		event = display next-event
+		if event window
+			if (!event window is-a: Window) || (event window != window)
+				throw MessageException new: "A window wasn't ours!"
+		
+		if event type == Xlib Display expose-event
+			window draw
+		
+		else if event type == Xlib Display key-press-event
+			cur-modifiers = event state
+			key = event key
+			if !(display is-modifier-key: key)
+				key-string = ""
+				if key == `\r`
+					# X Windows reports Enter as `\r` instead of `\n` for some reason.
+					key-string = "\n"
+				else if (cur-modifiers & Xlib Display control-key) != 0
+					# Eg. Control-A becomes `A` with Control down.
+					key-string = event key-symbol string
+				else
+					key-string = key string
+				if !key-string is-empty
+					window key-down: key-string modifiers: cur-modifiers
+
+		else if event type == Xlib Display key-release-event
+			cur-modifiers = event state
+		
+		else if event type == Xlib Display button-press-event
+			if event button == 4
+				window mouse-wheel-moved: -1
+			else if event button == 5
+				window mouse-wheel-moved: 1
+			else
+				mouse-point = Point new: event x y: event y
+				button-name = ""
+				if event button == 3
+					button-name = 'tertiary'
+				else if event button == 2
+					button-name = 'secondary'
+				else
+					button-name = 'primary'
+				window mouse-down: mouse-point button: button-name
+
+		else if event type == Xlib Display configure-notify-event 
+			window size-changed-to: event width by: event height
+		
+		else
+			#...
+
+
