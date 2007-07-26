@@ -1,0 +1,6 @@
+trylon Functions
+
+extend Compiler TrylidFunction
+	emit-c-call: arguments builder: builder
+		virtual
+

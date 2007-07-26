@@ -1,6 +1,6 @@
 trylon Temporary
 
-fields index
+fields name
 
 
 create: index

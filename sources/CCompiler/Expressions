@@ -3,19 +3,19 @@ trylon Expressions
 
 ##### Fundamentals ####
 
-extend TrylidExpression
+extend Compiler TrylidExpression
 	is-literal
 		# Default: no.
 		return false
 
 
-extend Send
+extend Compiler Send
 	emit-code: builder
 		object-result = object emit-code: builder
 		arg-results = List new
 		for arg in arguments
 			arg-results append: (arg emit-code: builder)
-		builder using-object-function: name
+		builder calling-method: name
 		temporary = builder get-temporary
 		line = temporary name + " = "
 		line += "Call_(" + (mangle-name: name) + ", " + object-result access
@@ -26,19 +26,19 @@ extend Send
 		return temporary
 
 
-extend FunctionCall
+extend Compiler FunctionCall
 	emit-code: builder
 		# We already got the function in prepare-to-emit.
 		if function == nil
 			throw MessageException new: "There is no \"" + name + "\" function."
 		
-		return function emit-c-call: arguments
+		return function emit-c-call: arguments builder: builder
 
 
 
 ##### Literals #####
 
-extend IntLiteral
+extend Compiler IntLiteral
 	fields index 	# The MethodBuilder will set this.
 
 	is-literal
@@ -46,7 +46,7 @@ extend IntLiteral
 
 	emit-code: builder
 		builder int-literals add: this
-		return LiteralResult new: this
+		return CCompiler LiteralResult new: this
 
 	emit-declaration: stream
 		stream write-all: ("DefineInt_(", index string, ", ", value string, ")\n")
@@ -55,7 +55,7 @@ extend IntLiteral
 		return "Int_(" + index string + ")"
 	
 
-extend FloatLiteral
+extend Compiler FloatLiteral
 	field index
 
 	is-literal
@@ -63,7 +63,7 @@ extend FloatLiteral
 
 	emit-code: builder
 		builder float-literals add: this
-		return LiteralResult new: this
+		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
 		stream write-all: ("DefineFloat_(", index string, ", ", value string, ")\n")
@@ -72,7 +72,7 @@ extend FloatLiteral
 		return "Float_(" + index string + ")"
 	
 
-extend StringLiteral
+extend Compiler StringLiteral
 	field	index 	# The MethodBuilder will set this.
 
 	is-literal
@@ -80,7 +80,7 @@ extend StringLiteral
 
 	emit-code: builder
 		builder string-literals add: this
-		return LiteralResult new: this
+		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
 		stream write-all: ("DefineString_(", index string, ", ", value string, ")\n")
@@ -89,25 +89,26 @@ extend StringLiteral
 		return "String_(" + index string + ")"
 
 
-extend SymbolLiteral
+extend Compiler SymbolLiteral
 	is-literal
 		return true
 
 	emit-code: builder
 		mangled-name = mangle-name: name
 		builder add-extern-declaration: "UsingSym_(" + mangled-name + ")"
-		return NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
+		return 	--
+			CCompiler NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
 
 
-extend LiteralNil
+extend Compiler LiteralNil
 	is-literal
 		return true
 
 	emit-code: builder
-		return NameResult new: "nil" is-constant: true
+		return CCompiler NameResult new: "nil" is-constant: true
 
 
-extend BoolLiteral
+extend Compiler BoolLiteral
 	is-literal
 		return true
 
@@ -117,10 +118,10 @@ extend BoolLiteral
 			result = 'true_'
 		else
 			result = 'nil'
-		return NameResult new: result is-constant: true
+		return CCompiler NameResult new: result is-constant: true
 
 
-extend CharacterLiteral
+extend Compiler CharacterLiteral
 	# Just another form of IntLiteral.
 	fields index 	# The MethodBuilder will set this.
 
@@ -129,7 +130,7 @@ extend CharacterLiteral
 
 	emit-code: builder
 		builder int-literals add: this
-		return LiteralResult new: this
+		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
 		stream write-all: ("DefineInt_(", index string, ", ", char string, ")\n")
@@ -138,7 +139,7 @@ extend CharacterLiteral
 		return "Int_(" + index string + ")"
 	
 
-extend DictLiteral
+extend Compiler DictLiteral
 	field	index results
 	field next-node-index
 
@@ -146,14 +147,14 @@ extend DictLiteral
 		return true
 
 	emit-code: builder
-		builder using-proto: (the-compiler get-standard-proto: "Dictionary")
+		builder using-proto: (the-compiler get-standard-class: "Dictionary")
 
 		# Access all values first, so sub-dicts get declared first.
 		next-node-index = 0
-		results = build-results: root builder: builder
+		results = build-results: dict root builder: builder
 
 		builder dict-literals add: this
-		return LiteralResult new: this
+		return CCompiler LiteralResult new: this
 	
 	class ResultsNode
 		fields left right key value level dict node-index
@@ -172,7 +173,8 @@ extend DictLiteral
 				right emit-declaration-on: stream
 				right-access = right access
 			stream write-all: 	--
-				("DefineDictNode_(", index string, ", ", index string, ", ", 	--
+				("DefineDictNode_(", 	--
+				 dict index string, ", ", node-index string, ", ", 	--
 				 key access, ", ", value access, ", ", 	--
 				 left-access, ", ", right-access, ", ", level string, ")\n")
 
@@ -180,7 +182,7 @@ extend DictLiteral
 			return "DictNode_(" + dict index string + ", " + node-index string + ")"
 	
 	build-results: node builder: builder
-		results = ResultsNode new: next-node-index
+		results = ResultsNode new: next-node-index in: this
 		next-node-index += 1
 		if node left
 			results left = build-results: node left builder: builder
@@ -206,10 +208,10 @@ extend DictLiteral
 
 ##### Short-circuits #####
 
-extend ShortCircuitAnd
+extend Compiler ShortCircuitAnd
 	emit-code: builder
 		result = expr1 emit-code: builder
-		if !(result is-a: Temporary)
+		if !(result is-a: CCompiler Temporary)
 			# If it's already a temporary, we just reuse it for our final result;
 			# otherwise, we need a new temporary.
 			temporary = builder get-temporary
@@ -225,10 +227,10 @@ extend ShortCircuitAnd
 		return result
 
 
-extend ShortCircuitOr
+extend Compiler ShortCircuitOr
 	emit-code: builder
 		result = expr1 emit-code: builder
-		if !(result is-a: Temporary)
+		if !(result is-a: CCompiler Temporary)
 			# If it's already a temporary, we just reuse it for our final reault; 
 			# otherwise we need a new temporary.
 			temporary = builder get-temporary
@@ -245,7 +247,7 @@ extend ShortCircuitOr
 		return result
 
 
-extend ShortCircuitNot
+extend Compiler ShortCircuitNot
 	emit-code: builder
 		expr-result = expr emit-code: builder
 		temp = builder get-temporary
@@ -256,7 +258,7 @@ extend ShortCircuitNot
 
 ##### Tuples #####
 
-extend TupleExpression
+extend Compiler TupleExpression
 	fields index results size-result
 
 	is-literal
@@ -267,7 +269,7 @@ extend TupleExpression
 
 	emit-code: builder
 		if is-literal
-			builder using-proto: (the-compiler get-standard-proto: "Dictionary")
+			builder using-proto: (the-compiler get-standard-class: "Dictionary")
 
 			# Access all values first, so sub-tuples get declared first.
 			# Note that the emit-code: calls won't actually emit any code, they'll
@@ -278,7 +280,7 @@ extend TupleExpression
 				results append: (member emit-code: builder)
 
 			builder tuple-literals add: this
-			return LiteralResult new: this
+			return CCompiler LiteralResult new: this
 
 		else
 			# Not all literals, so build it dynamically.

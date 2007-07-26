@@ -364,6 +364,12 @@ dump-lines: lines level: level
 			dump-lines: line block level: level + 1
 
 
+iff test-c-compiler
+	c-compiler-references
+		CCompiler
+		CCompiler MethodBuilder
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

@@ -1,9 +1,12 @@
 trylon MethodBuilder
 
-fields temporaries loops
+fields code temporaries loops
 fields int-literals string-literals float-literals dict-literals tuple-literals
+fields extern-declarations used-classes used-selectors
+fields next-temporary-num indent-level
 
 create
+	code = StringBuilder new
 	temporaries = IndexedResources new
 	loops = IndexedResources new
 	int-literals = IndexedResources new
@@ -11,6 +14,15 @@ create
 	float-literals = IndexedResources new
 	dict-literals = IndexedResources new
 	tuple-literals = IndexedResources new
+	extern-declarations = List new
+	used-classes = ObjectMap new
+	used-selectors = Dictionary new
+	next-temporary-num = 0
+	indent-level = 0
+
+
+supports-only-literals
+	return false
 
 
 get-temporary
@@ -30,6 +42,42 @@ get-temporary
 	# return temporary
 
 
+add-extern-declaration: declaration
+	extern-declarations append: declaration
+
+
+using-class: the-class
+	used-classes at: the-class set-to: the-class
+
+using-proto: proto
+	using-class: proto
+
+calling-method: name
+	used-selectors at: name set-to: name
+
+add-line: line
+	# Add the indent.
+	adjusted-indent-level = indent-level
+	if adjusted-indent-level > 20
+		adjusted-indent-level = 20
+	code += 	--
+		"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" 	--
+			substr: 0 length: adjusted-indent-level
+	
+	code += line
+	code += "\n"
+
+
+add-blank-line
+	code += "\n"
+
+indent
+	indent-level += 1
+
+unindent
+	indent-level -= 1
+
+
 emit: stream
 	stream write-line: "{"
 
@@ -43,11 +91,21 @@ emit: stream
 	dict-literals emit-declarations-on: stream
 
 	# Declare selectors.
-	# ...
+	if !used-selectors is-empty
+		stream write: "\t"
+		done-one = false
+		for name in used-selectors keys
+			if done-one
+				stream write: " "
+			else
+				done-one = true
+			stream write-all: ("UsingMethod_(", (mangle-name: name), ")")
+		stream write-line
+	
 
 	# External declarations.
-	if !external-declarations is-empty
-		for declaration in external-declarations
+	if !extern-declarations is-empty
+		for declaration in extern-declarations
 			stream write: "\t"
 			stream write-line: declaration
 

@@ -1,7 +1,7 @@
 trylon DictLiteral
 superclass TrylidExpression
 
-fields dict index
+fields dict
 
 
 create
