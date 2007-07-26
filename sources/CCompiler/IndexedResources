@@ -1,0 +1,18 @@
+trylon IndexedResources
+
+field resources next-index
+
+create
+	resources = List new
+	next-index = 0
+
+add: resource
+	resource index = next-index
+	next-index += 1
+	resources append: resource
+
+emit-declarations-on: stream
+	for resource in resources
+		resource emit-declaration: stream
+	
+

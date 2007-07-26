@@ -4,12 +4,12 @@ fields temporaries loops
 fields int-literals string-literals float-literals dict-literals
 
 create
-	temporaries = Literals new
-	loops = Literals new
-	int-literals = Literals new
-	string-literals = Literals new
-	float-literals = Literals new
-	dict-literals = Literals new
+	temporaries = IndexedResources new
+	loops = IndexedResources new
+	int-literals = IndexedResources new
+	string-literals = IndexedResources new
+	float-literals = IndexedResources new
+	dict-literals = IndexedResources new
 
 
 get-temporary
@@ -62,20 +62,4 @@ emit: stream
 
 #####
 
-class Literals
-	field literals next-index
-
-	create
-		literals = List new
-		next-index = 0
-	
-	add: literal
-		literal index = next-index
-		next-index += 1
-		literals append: literal
-	
-	emit-declarations-on: stream
-		for literal in literals
-			literal emit-declaration: stream
-	
 

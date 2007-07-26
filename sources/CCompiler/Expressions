@@ -81,7 +81,7 @@ extend BoolLiteral
 		return NameResult new: result is-constant: true
 
 
-extend CharLiteral
+extend CharacterLiteral
 	# Just another form of IntLiteral.
 	fields index 	# The MethodBuilder will set this.
 
@@ -90,33 +90,70 @@ extend CharLiteral
 		return LiteralResult new: this
 	
 	emit-declaration: stream
-		stream write-all: ("DefineInt_(", index string, ", ", value string, ")\n")
+		stream write-all: ("DefineInt_(", index string, ", ", char string, ")\n")
 	
 	access
 		return "Int_(" + index string + ")"
 	
 
 extend DictLiteral
-	#... *** NEEDS WORK
-	field	index
+	field	index results
+	field next-node-index
 
 	emit-code: builder
 		builder using-proto: (the-compiler get-standard-proto: "Dictionary")
+
+		# Access all values first, so sub-dicts get declared first.
+		next-node-index = 0
+		results = build-results: root builder: builder
+
 		builder dict-literals add: this
 		return LiteralResult new: this
 	
-	emit-node: node builder: builder
+	class ResultsNode
+		fields left right key value level dict node-index
+
+		create: node-index in: dict
+			this node-index = node-index
+			this dict = dict
+
+		emit-declaration-on: stream
+			left-access = 'nil'
+			if left
+				left emit-declaration-on: stream
+				left-access = left access
+			right-access = 'nil'
+			if right
+				right emit-declaration-on: stream
+				right-access = right access
+			stream write-all: 	--
+				("DefineDictNode_(", index string, ", ", index string, ", ", 	--
+				 key access, ", ", value access, ", ", 	--
+				 left-access, ", ", right-access, ", ", level string, ")\n")
+
+		access
+			return "DictNode_(" + dict index string + ", " + node-index string + ")"
+	
+	build-results: node builder: builder
+		results = ResultsNode new: next-node-index
+		next-node-index += 1
 		if node left
-			emit-node: node left builder: builder
+			results left = build-results: node left builder: builder
 		if node right
-			emit-node: node right builder: builder
-		#... *** "node value"?
-		node value key-result = (StringLiteral new: node key) emit-code: builder
-		node value value-result = node value value emit-code: builder
+			results right = build-results: node right builder: builder
+		# Keys and values are constants which will not be allowed to emit code, so
+		# we can call emit-code: on them without fear that they'll actually emit
+		# code.  The side-effect is that they set up the builder to declare them.
+		results key = (StringLiteral new: node key) emit-code: builder
+		results value = node value emit-code: builder
+		results level = node level
+		return results
 	
 	emit-declaration: stream
-		# ...
-		emit-node: dict-root builder: builder
+		root = results emit-declaration-on: stream
+		stream write-all: 	--
+			("DefineDict_(", index string, ", ", root access, ", ", 	--
+			 dict num-items string, ")\n")
 	
 	access
 		return "Dict_(" + index string + ")"
