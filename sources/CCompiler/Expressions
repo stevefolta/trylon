@@ -1,5 +1,8 @@
 trylon Expressions
 
+
+##### Fundamentals ####
+
 extend Send
 	emit-code: builder
 		object-result = object emit-code: builder
@@ -16,6 +19,18 @@ extend Send
 		builder add-line: line
 		return temporary
 
+
+extend FunctionCall
+	emit-code: builder
+		# We already got the function in prepare-to-emit.
+		if function == nil
+			throw MessageException new: "There is no \"" + name + "\" function."
+		
+		return function emit-c-call: arguments
+
+
+
+##### Literals #####
 
 extend IntLiteral
 	fields index 	# The MethodBuilder will set this.
@@ -158,5 +173,54 @@ extend DictLiteral
 	access
 		return "Dict_(" + index string + ")"
 	
+
+##### Short-circuits #####
+
+extend ShortCircuitAnd
+	emit-code: builder
+		result = expr1 emit-code: builder
+		if !(result is-a: Temporary)
+			# If it's already a temporary, we just reuse it for our final result;
+			# otherwise, we need a new temporary.
+			temporary = builder get-temporary
+			builder add-line: temporary name + " = " + result access + ";"
+			result = temporary
+
+		builder add-line: "if (" + result access + ") {"
+		builder indent
+		result2 = expr2 emit-code: builder
+		builder add-line: result access + " = " + result2 access + ";"
+		builder add-line: "}"
+		builder unindent
+		return result
+
+
+extend ShortCircuitOr
+	emit-code: builder
+		result = expr1 emit-code: builder
+		if !(result is-a: Temporary)
+			# If it's already a temporary, we just reuse it for our final reault; 
+			# otherwise we need a new temporary.
+			temporary = builder get-temporary
+			builder add-line: temporary name + " = " + result access + ";"
+			result = temporary
+		
+		builder add-line: "if ((" + result access + ") == nil) {"
+		builder indent
+		result2 = expr2 emit-code: builder
+		builder add-line: result access + " = " + result2 access + ";"
+		builder add-line: "}"
+		builder unindent
+
+		return result
+
+
+extend ShortCircuitNot
+	emit-code: builder
+		expr-result = expr emit-code: builder
+		temp = builder get-temporary
+		builder add-line: temp name + " = Not_(" + expr-result access + ");"
+		return temp
+
 
 
