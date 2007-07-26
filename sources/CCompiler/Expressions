@@ -3,6 +3,12 @@ trylon Expressions
 
 ##### Fundamentals ####
 
+extend TrylidExpression
+	is-literal
+		# Default: no.
+		return false
+
+
 extend Send
 	emit-code: builder
 		object-result = object emit-code: builder
@@ -35,6 +41,9 @@ extend FunctionCall
 extend IntLiteral
 	fields index 	# The MethodBuilder will set this.
 
+	is-literal
+		return true
+
 	emit-code: builder
 		builder int-literals add: this
 		return LiteralResult new: this
@@ -48,6 +57,9 @@ extend IntLiteral
 
 extend FloatLiteral
 	field index
+
+	is-literal
+		return true
 
 	emit-code: builder
 		builder float-literals add: this
@@ -63,6 +75,9 @@ extend FloatLiteral
 extend StringLiteral
 	field	index 	# The MethodBuilder will set this.
 
+	is-literal
+		return true
+
 	emit-code: builder
 		builder string-literals add: this
 		return LiteralResult new: this
@@ -75,6 +90,9 @@ extend StringLiteral
 
 
 extend SymbolLiteral
+	is-literal
+		return true
+
 	emit-code: builder
 		mangled-name = mangle-name: name
 		builder add-extern-declaration: "UsingSym_(" + mangled-name + ")"
@@ -82,11 +100,17 @@ extend SymbolLiteral
 
 
 extend LiteralNil
+	is-literal
+		return true
+
 	emit-code: builder
 		return NameResult new: "nil" is-constant: true
 
 
 extend BoolLiteral
+	is-literal
+		return true
+
 	emit-code: builder
 		result = nil
 		if value
@@ -99,6 +123,9 @@ extend BoolLiteral
 extend CharacterLiteral
 	# Just another form of IntLiteral.
 	fields index 	# The MethodBuilder will set this.
+
+	is-literal
+		return true
 
 	emit-code: builder
 		builder int-literals add: this
@@ -114,6 +141,9 @@ extend CharacterLiteral
 extend DictLiteral
 	field	index results
 	field next-node-index
+
+	is-literal
+		return true
 
 	emit-code: builder
 		builder using-proto: (the-compiler get-standard-proto: "Dictionary")
@@ -227,12 +257,65 @@ extend ShortCircuitNot
 ##### Tuples #####
 
 extend TupleExpression
-	fields index count-literal
+	fields index results size-result
+
+	is-literal
+		for member in members
+			if !member is-literal
+				return false
+		return true
 
 	emit-code: builder
-		# Is it completely literal?
-		is-fully-literal = true
-		for member in members
-			#...
+		if is-literal
+			builder using-proto: (the-compiler get-standard-proto: "Dictionary")
+
+			# Access all values first, so sub-tuples get declared first.
+			# Note that the emit-code: calls won't actually emit any code, they'll
+			# just set the member literals up in the builder.
+			size-result = (IntLiteral new: members count string) emit-code: builder
+			results = List new
+			for member in members
+				results append: (member emit-code: builder)
+
+			builder tuple-literals add: this
+			return LiteralResult new: this
+
+		else
+			# Not all literals, so build it dynamically.
+			if builder supports-only-literals
+				throw MessageException: "Using a non-literal tuple outside a method."
+
+			builder add-extern-declaration: 	--
+				"extern obj_ new_co___Standard__Tuple(obj_);"
+
+			# Make the tuple object.
+			tuple = builder get-temporary
+			size-result = (IntLiteral new: members count string) emit-code: builder
+			builder add-line: 	--
+				tuple access + " = new_co___Standard__Tuple(" + size-result access + ");"
+			
+			# Set its fields.
+			index = 1 	# Starts after the size.
+			for member in members
+				member-result = member emit-code: builder
+				builder add-line: 	--
+					tuple access + "->fields[" + index string + "] = " + 	--
+					member-result access + ";"
+				index += 1
+			
+			return tuple
+			
+	emit-declaration: stream
+		if results == nil
+			throw MessageException: "Internal error: No results from literal tuple."
+		stream write-all: ( "obj_ tu", index string, "_[] = { " )
+		stream write-all: ( "(obj_) StdClassRef_(Tuple), ", size-result access )
+		for member-result in results
+			stream write-all: ( ", ", member-result access )
+		stream write: " };\n"
+
+	access
+		return "((obj_) tu" + index string + "_)"
+
 
 

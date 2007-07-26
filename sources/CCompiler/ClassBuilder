@@ -1,10 +1,11 @@
 trylon ClassBuilder
 
-fields int-literals float-literals string-literals dict-literals
+fields int-literals float-literals string-literals dict-literals tuple-literals
 
 create
 	int-literals = IndexedResources new
 	string-literals = IndexedResources new
 	float-literals = IndexedResources new
 	dict-literals = IndexedResources new
+	tuple-literals = IndexedResources new
 
