@@ -1,0 +1,63 @@
+trylon CCompiler
+
+
+extend Send
+	emit-code: builder
+		object-result = object emit-code: builder
+		arg-results = List new
+		for arg in arguments
+			arg-results append: (arg emit-code: builder)
+		builder using-object-function: name
+		temporary = builder get-temporary
+		line = temporary name + " = "
+		line += "Call_(" + (mangle-name: name) + ", " + object-result access
+		for arg-result in arg-results
+			line += ", " + arg-result access
+		line += ");"
+		builder add-line: line
+		return temporary
+
+
+extend IntLiteral
+	fields index 	# The MethodBuilder will set this.
+
+	emit-code: builder
+		builder add-int-literal: this 	# "index" is set here
+		return Result new: this
+	
+	proto Result
+		field literal
+
+		create: literal
+			this literal = literal
+
+		access
+			return "Int_(" + literal index string + ")"
+
+		is-constant
+			return true
+		stored-literal
+			return true
+		primitive-access
+			return literal value string
+
+
+extend StringLiteral
+	field	index 	# The MethodBuilder will set this.
+
+	emit-code: builder
+		builder add-string-literal: this 	# The "index" gets set here.
+		return Result new: index
+	
+	proto Result
+		field index
+
+		create: index
+			this index = index
+
+		access
+			return "Str_(" + index string + ")"
+		is-constant
+			return true
+
+
