@@ -21,61 +21,42 @@ extend IntLiteral
 	fields index 	# The MethodBuilder will set this.
 
 	emit-code: builder
-		builder add-int-literal: this 	# "index" is set here
-		return Result new: this
+		builder int-literals add: this
+		return LiteralResult new: this
+
+	emit-declaration: stream
+		stream write-all: ("DefineInt_(", index string, ", ", value string, ")\n")
 	
-	proto Result
-		field literal
-
-		create: literal
-			this literal = literal
-
-		access
-			return "Int_(" + literal index string + ")"
-
-		is-constant
-			return true
-		stored-primitive
-			return true
-		primitive-access
-			return literal value string
-
+	access
+		return "Int_(" + index string + ")"
+	
 
 extend FloatLiteral
 	field index
 
 	emit-code: builder
-		builder add-float-literal: this 	# "index" gets set here.
-		return result new: index
+		builder float-literals add: this
+		return LiteralsResult new: this
 	
-	proto Result
-		field index
-
-		create: index
-			this index = index
-		access
-			return "Float_(" + index string + ")"
-		is-constant
-			return true
-
+	emit-declaration: stream
+		stream write-all: ("DefineFloat_(", index string, ", ", value string, ")\n")
+	
+	access
+		return "Float_(" + index string + ")"
+	
 
 extend StringLiteral
 	field	index 	# The MethodBuilder will set this.
 
 	emit-code: builder
-		builder add-string-literal: this 	# The "index" gets set here.
-		return Result new: index
+		builder string-literals add: this
+		return LiteralResult new: this
 	
-	proto Result
-		field index
-
-		create: index
-			this index = index
-
-		access
-			return "Str_(" + index string + ")"
-		is-constant
-			return true
+	emit-declaration: stream
+		stream write-all: ("DefineString_(", index string, ", ", value string, ")\n")
+	
+	access
+		return "String_(" + index string + ")"
 
 
 extend SymbolLiteral
@@ -105,25 +86,15 @@ extend CharLiteral
 	fields index 	# The MethodBuilder will set this.
 
 	emit-code: builder
-		builder add-int-literal: this 	# "index" is set here
-		return Result new: this
+		builder int-literals add: this
+		return LiteralResult new: this
 	
-	proto Result
-		field literal
-
-		create: literal
-			this literal = literal
-
-		access
-			return "Int_(" + literal index string + ")"
-
-		is-constant
-			return true
-		stored-primitive
-			return true
-		primitive-access
-			return literal value string
-
+	emit-declaration: stream
+		stream write-all: ("DefineInt_(", index string, ", ", value string, ")\n")
+	
+	access
+		return "Int_(" + index string + ")"
+	
 
 extend DictLiteral
 	#... *** NEEDS WORK
@@ -131,9 +102,8 @@ extend DictLiteral
 
 	emit-code: builder
 		builder using-proto: (the-compiler get-standard-proto: "Dictionary")
-		emit-node: dict-root builder: builder
-		builder add-dict-literal: this 	# "index" gets set here.
-		return Result new: index
+		builder dict-literals add: this
+		return LiteralResult new: this
 	
 	emit-node: node builder: builder
 		if node left
@@ -144,13 +114,12 @@ extend DictLiteral
 		node value key-result = (StringLiteral new: node key) emit-code: builder
 		node value value-result = node value value emit-code: builder
 	
-	proto Result
-		field index
-
-		create: index
-			this index = index
-		access
-			return "Dict_(" + index string + ")"
-
+	emit-declaration: stream
+		# ...
+		emit-node: dict-root builder: builder
+	
+	access
+		return "Dict_(" + index string + ")"
+	
 
 

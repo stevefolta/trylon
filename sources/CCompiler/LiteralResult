@@ -1,0 +1,10 @@
+trylon LiteralResult
+
+fields expression
+
+create: expression
+	this expression = expression
+
+access
+	return expression access
+

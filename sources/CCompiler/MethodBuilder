@@ -1,0 +1,64 @@
+trylon MethodBuilder
+
+fields temporaries loops
+fields int-literals string-literals float-literals dict-literals
+
+create
+	temporaries = Literals new
+	loops = Literals new
+	int-literals = Literals new
+	string-literals = Literals new
+	float-literals = Literals new
+	dict-literals = Literals new
+
+
+emit: stream
+	stream write-line: "{"
+
+	# Declarations.
+	temporaries emit-declarations-on: stream
+	# loops emit-declarations-on: stream 	# Not needed.
+	int-literals emit-declarations-on: stream
+	string-literals emit-declarations-on: stream
+	float-literals emit-declarations-on: stream
+	dict-literals emit-declarations-on: stream
+
+	# Declare selectors.
+	# ...
+
+	# External declarations.
+	if !external-declarations is-empty
+		for declaration in external-declarations
+			stream write: "\t"
+			stream write-line: declaration
+
+	# ...
+
+	stream write-line
+
+	# Emit the body of the code.
+	stream write: code string
+
+	stream write-line: "\treturn nil;"
+	stream write-line: "}"
+
+
+#####
+
+class Literals
+	field literals next-index
+
+	create
+		literals = List new
+		next-index = 0
+	
+	add: literal
+		literal index = next-index
+		next-index += 1
+		literals append: literal
+	
+	emit-declarations-on: stream
+		for literal in literals
+			literal emit-declaration: stream
+	
+
