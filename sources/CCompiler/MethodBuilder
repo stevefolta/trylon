@@ -12,6 +12,23 @@ create
 	dict-literals = Literals new
 
 
+get-temporary
+	temp-num = next-temporary-num
+	next-temporary-num += 1
+	temporary = Temporary new: temp-num
+	if temp-num > temporaries next-index - 1
+		temporaries add: temporary
+	return temporary
+	# Really want:
+	# temp-num = next-temporary-num
+	# next-temporary-num += 1
+	# if temp-num < temporaries next-index
+	# 	return temporaries at: temp-num
+	# temporary = Temporary new: temp-num
+	# temporaries add: temporary
+	# return temporary
+
+
 emit: stream
 	stream write-line: "{"
 

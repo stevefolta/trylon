@@ -1,0 +1,14 @@
+trylon Temporary
+
+fields index
+
+
+create: index
+	name = "t" + index string + "_"
+
+emit-declaration: stream
+	stream write-all: ("obj_ ", name, ";\n")
+
+access
+	return name
+

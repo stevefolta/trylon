@@ -36,7 +36,7 @@ extend FloatLiteral
 
 	emit-code: builder
 		builder float-literals add: this
-		return LiteralsResult new: this
+		return LiteralResult new: this
 	
 	emit-declaration: stream
 		stream write-all: ("DefineFloat_(", index string, ", ", value string, ")\n")
