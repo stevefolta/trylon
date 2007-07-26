@@ -8,11 +8,6 @@ jolt-expression
 	virtual
 
 
-emit-package-literal: stream
-	# Most Expressions don't support this.
-	throw MessageException new: "Internal error: invalid emit-package-literal."
-
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

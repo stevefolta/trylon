@@ -224,3 +224,15 @@ extend ShortCircuitNot
 
 
 
+##### Tuples #####
+
+extend TupleExpression
+	fields index count-literal
+
+	emit-code: builder
+		# Is it completely literal?
+		is-fully-literal = true
+		for member in members
+			#...
+
+

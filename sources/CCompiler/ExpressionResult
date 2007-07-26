@@ -8,10 +8,6 @@ is-constant
 	# Default: no.
 	return false
 
-type
-	# Usually unspecified.
-	return nil
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.
