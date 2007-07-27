@@ -4,3 +4,16 @@ extend Compiler TrylidFunction
 	emit-c-call: arguments builder: builder
 		virtual
 
+
+extend Compiler SetArgumentFunction
+	emit-c-call: arguments builder: builder
+		mangled-name = mangle-name: name
+		value = arguments first-item emit-code: builder
+		builder add-line: mangled-name + " = " + value access + ";"
+		return value
+
+
+extend Compiler ThisFunction
+	emit-c-call: arguments builder: builder
+		return NameResult new: "this_"
+
