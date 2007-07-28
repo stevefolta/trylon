@@ -245,12 +245,12 @@ get-character-literal: name
 
 emit-dispatch-table: main-package
 	status-reporter report: "Building dispatch table..."
-	if build-settings is-verbose
-		status-reporter indent
+	status-reporter indent
 	
 	object-class = root-class: main-package
 
 	# Gather up the rows.
+	status-reporter report: "Gathering rows."
 	rows = DispatchRowSet new
 	for fn-name in object-function-names keys
 		# Create the row and fill it in.
@@ -262,6 +262,7 @@ emit-dispatch-table: main-package
 	
 	# Fit the rows.
 	# "rows" has the rows sorted by number of entries.
+	status-reporter report: "Fitting rows."
 	dispatch-table = ExpandoArray new
 	used-offsets = ExpandoBitmap new
 	for row in rows
@@ -269,8 +270,7 @@ emit-dispatch-table: main-package
 			status-reporter report: "Fitting " + row name + "..."
 		row fit-into: dispatch-table used-offsets: used-offsets
 	
-	if build-settings is-verbose
-		status-reporter unindent
+	status-reporter unindent
 	
 	# Now, emit the "methods_.c" file.
 	status-reporter report: "Emitting dispatch table..."
