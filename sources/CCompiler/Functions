@@ -15,5 +15,38 @@ extend Compiler SetArgumentFunction
 
 extend Compiler ThisFunction
 	emit-c-call: arguments builder: builder
-		return NameResult new: "this_"
+		return CCompiler NameResult new: "this_"
+
+
+extend Compiler SharedFieldGetter
+	emit-c-call: arguments builder: builder
+		builder using-shared-field: field on-proto: on-proto
+		return Result new: field on-proto: on-proto
+	
+	class Result
+		superclass CCompiler ExpressionResult
+
+		fields field on-proto
+
+		create: field on-proto: on-proto
+			this field = field
+			this on-proto = on-proto
+
+		access
+			return 	--
+				"SharedField_(" + 	--
+				(mangle-name: field name) + ", " + on-proto c-name + ")"
+
+
+extend Compiler SharedFieldSetter
+	emit-c-call: arguments builder: builder
+		builder using-shared-field: field on-proto: on-proto
+		value = arguments first emit-code: builder
+		builder add-line: 	--
+			"SetSharedField_(" + 	--
+			(mangle-name: field name) + ", " + on-proto c-name + ", " + 	--
+			value + ");"
+		return value
+
+
 

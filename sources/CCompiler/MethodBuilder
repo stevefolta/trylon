@@ -2,7 +2,7 @@ trylon MethodBuilder
 
 fields code temporaries loops
 fields int-literals string-literals float-literals dict-literals tuple-literals
-fields extern-declarations used-classes used-selectors
+fields extern-declarations used-classes used-selectors used-shared-fields
 fields next-temporary-num indent-level
 
 create
@@ -17,6 +17,7 @@ create
 	extern-declarations = List new
 	used-classes = ObjectMap new
 	used-selectors = Dictionary new
+	used-shared-fields = ObjectMap new
 	next-temporary-num = 0
 	indent-level = 0
 
@@ -47,13 +48,19 @@ add-extern-declaration: declaration
 
 
 using-class: the-class
-	used-classes at: the-class set-to: the-class
+	used-classes at: the-class put: the-class
 
 using-proto: proto
 	using-class: proto
 
 calling-method: name
-	used-selectors at: name set-to: name
+	used-selectors at: name put: name
+
+using-shared-field: field on-proto: on-proto
+	# This is a little tricky.  We count on the fact that we'll be given 
+	# the same "field" object anytime that the field in "on-proto" is 
+	# referenced.  So we can use an ObjectMap to keep track of them.
+	used-shared-fields at: field put: on-proto
 
 add-line: line
 	# Add the indent.
@@ -102,13 +109,21 @@ emit: stream
 			stream write-all: ("UsingMethod_(", (mangle-name: name), ")")
 		stream write-line
 	
+	# Shared field declarations.
+	if !used-shared-fields is-empty
+		for field in used-shared-fields keys
+			on-proto = used-shared-fields at: field
+			stream write-all: 	--
+				("UsingSharedField_(", (mangle-name: field name), ", ", 	--
+				 on-proto c-name, ") ")
+		stream write-line
 
 	# External declarations.
 	if !extern-declarations is-empty
 		for declaration in extern-declarations
 			stream write: "\t"
 			stream write-line: declaration
-
+	
 	# ...
 
 	stream write-line

@@ -124,6 +124,14 @@ report: message
 	status-reporter report: message
 
 
+extend Compiler CompiledProto
+	c-name
+		c-name = mangle-name: name
+		if parent && !(parent is-main)
+			c-name = parent c-name + "__" + c-name
+		return c-name
+
+
 references
 	Expressions
 	Functions
