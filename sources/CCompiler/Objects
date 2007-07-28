@@ -1,0 +1,17 @@
+trylon Objects
+
+extend Compiler CompiledProto
+	field cached-c-name
+
+	c-name
+		if !cached-c-name
+			cached-c-name = mangle-name: name
+			if parent && !(parent is-main)
+				cached-c-name = parent cached-c-name + "__" + cached-c-name
+		return cached-c-name
+
+
+
+# Copyright 2007 Steve Folta
+# See the License file.
+

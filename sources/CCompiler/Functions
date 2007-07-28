@@ -3,6 +3,10 @@ trylon Functions
 extend Compiler TrylidFunction
 	emit-c-call: arguments builder: builder
 		virtual
+	
+	emit-c-function-on: stream
+		# By default, do nothing.
+		# (Not all functions result in object code.)
 
 
 extend Compiler SetArgumentFunction

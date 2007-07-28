@@ -7,6 +7,9 @@ extend Compiler TrylidExpression
 	is-literal
 		# Default: no.
 		return false
+	
+	emit-code: builder
+		virtual
 
 
 extend Compiler Send
