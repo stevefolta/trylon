@@ -143,6 +143,15 @@ extend Compiler CompiledFunction
 		return signature string
 
 
+extend Compiler ProtoFunction
+	emit-c-call: arguments builder: builder
+		return CCompiler LiteralResult new: this
+	
+	access
+		return "Proto_(" + proto c-name + ")"
+
+
+
 ##### Inside a method
 
 extend Compiler ThisFunction
@@ -164,5 +173,42 @@ extend Compiler SetArgumentFunction
 		value = arguments first-item emit-code: builder
 		builder add-line: mangled-name + " = " + value access + ";"
 		return value
+
+
+extend Compiler LocalGetter
+	emit-c-call: arguments builder: builder
+		return CCompiler LiteralResult new: this
+	
+	access
+		return mangle-name: local name
+
+
+extend Compiler LocalSetter
+	emit-c-call: arguments builder: builder
+		mangled-name = mangle-name: local name
+		value = arguments first-item emit-code: builder
+		builder add-line: mangled-name + " = " + value access + ";"
+		return value
+
+
+extend Compiler FunctionOnThis
+	emit-c-call: arguments builder: builder
+		builder calling-method: name
+		arg-results = List new
+		for arg in arguments
+			arg-results append: (arg emit-code: builder)
+		result = builder get-temporary
+		line = StringBuilder new
+		line add: result access
+		line add: " = Call_("
+		line add: (mangle-name: name)
+		line add: ", this_, "
+		for arg in arg-results
+			line add: ", "
+			line add: arg access
+		line add: ");"
+		builder add-line: line string
+		return result
+		
 
 
