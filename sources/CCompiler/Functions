@@ -25,21 +25,21 @@ extend Compiler ThisFunction
 extend Compiler SharedFieldGetter
 	emit-c-call: arguments builder: builder
 		builder using-shared-field: field on-proto: on-proto
-		return Result new: field on-proto: on-proto
+		return CCompiler LiteralResult new: this
 	
-	class Result
-		superclass CCompiler ExpressionResult
-
-		fields field on-proto
-
-		create: field on-proto: on-proto
-			this field = field
-			this on-proto = on-proto
-
-		access
-			return 	--
-				"SharedField_(" + 	--
-				(mangle-name: field name) + ", " + on-proto c-name + ")"
+	emit-c-function-on: stream
+		stream write-all: 	--
+			("obj_ ", (mangle-name: name), "__", on-proto c-name, "(obj_ this_)\n")
+		stream write: "{\n"
+		stream write-all: ("\treturn ", access, ";\n")
+		stream write: "}\n"
+		stream write-line
+		stream write-line
+	
+	access
+		return 	--
+			"SharedField_(" + 	--
+			(mangle-name: field name) + ", " + on-proto c-name + ")"
 
 
 extend Compiler SharedFieldSetter
@@ -51,6 +51,19 @@ extend Compiler SharedFieldSetter
 			(mangle-name: field name) + ", " + on-proto c-name + ", " + 	--
 			value + ");"
 		return value
-
-
+	
+	emit-c-function-on: stream
+		stream write-all: 	--
+			("obj_ ", (mangle-name: name), "__", on-proto c-name, 	--
+			 "(obj_ this_, obj_ value)\n")
+		stream write: "{\n"
+		stream write-all: 	--
+			("\tSetSharedField_(", 	--
+				(mangle-name: field name), ", ", 	--
+				on-proto c-name, ", value);\n")
+		stream write: "\treturn value;\n"
+		stream write: "}\n"
+		stream write-line
+		stream write-line
+	
 
