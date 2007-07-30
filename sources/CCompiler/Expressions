@@ -4,13 +4,13 @@ trylon Expressions
 ##### Fundamentals ####
 
 extend Compiler TrylidExpression
+	emit-code: builder
+		virtual
+
 	is-literal
 		# Default: no.
 		return false
 	
-	emit-code: builder
-		virtual
-
 
 extend Compiler Send
 	emit-code: builder

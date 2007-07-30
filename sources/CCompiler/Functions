@@ -92,7 +92,56 @@ extend Compiler SharedFieldSetter
 		stream write: "}\n"
 		stream write-line
 		stream write-line
+
+
+extend Compiler CompiledFunction
+	emit-c-call: arguments builder: builder
+		# This is a send to the prototype object.
+		# (Can we skip the dispatch and call the function directly?)
+		builder calling-method: name
+		arg-results = List new
+		for arg in arguments
+			arg-results append: (arg emit-code: builder)
+		result = builder get-temporary
+		line = StringBuilder new
+		line add: result access
+		line add: " = Call_("
+		line add: (mangle-name: name)
+		line add: ", Proto_("
+		line add: on-proto c-name
+		line add: ")"
+		for arg in arg-results
+			line add: ", "
+			line add: arg access
+		line add: ");"
+		builder add-line: line string
+		return result
 	
+	emit-c-function-on: stream
+		stream write-line: c-signature
+		if body
+			builder = CCompiler MethodBuilder new
+			body emit-code: builder
+			builder emit: stream
+		else
+			stream write: "{\n\treturn nil;\n}\n"
+		stream write-line
+		stream write-line
+	
+	c-name
+		return (mangle-name: name) + "__" + on-proto c-name
+
+	c-signature
+		signature = StringBuilder new
+		signature add: "obj_ "
+		signature add: c-name
+		signature add: "(obj_ this_"
+		for arg in arguments
+			signature add: ", obj_ "
+			signature add: (mangle-name: arg name)
+		signature add: ")"
+		return signature string
+
 
 ##### Inside a method
 
