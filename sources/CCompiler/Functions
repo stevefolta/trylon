@@ -200,6 +200,19 @@ extend Compiler NewFunction
 		stream write: "}\n\n\n"
 
 
+extend Compiler NilFunction
+	emit-c-call: arguments builder: builder
+		return CCompiler NameResult new: "nil"
+
+extend Compiler BoolLiteralFunction
+	emit-c-call: arguments builder: builder
+		if value
+			return CCompiler NameResult new: "true_"
+		else
+			return CCompiler NameResult new: "nil"
+
+
+
 ##### Inside a method
 
 extend Compiler ThisFunction
@@ -257,6 +270,11 @@ extend Compiler FunctionOnThis
 		line add: ");"
 		builder add-line: line string
 		return result
+
+
+extend Compiler CaughtExceptionFunction
+	emit-c-call: arguments builder: builder
+		return CCompiler NameResult new: "exception"
 		
 
 
