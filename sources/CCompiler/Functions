@@ -151,6 +151,54 @@ extend Compiler ProtoFunction
 		return "Proto_(" + proto c-name + ")"
 
 
+extend Compiler NewFunction
+	emit-c-call: arguments builder: builder
+		arg-results = List new
+		for arg in arguments
+			arg-results append: (arg emit-code: builder)
+		temporary = builder get-temporary
+		line = StringBuilder new
+		line += temporary access
+		line += " = "
+		line += (mangle-name: name)
+		line += "__"
+		line += on-proto c-name
+		line += "(Proto_("
+		line += on-proto c-name
+		line += ")"
+		for arg in arg-results
+			line += ", "
+			line += arg access
+		line += ");"
+		builder add-line: line string
+		return temporary
+
+	emit-c-function-on: stream
+		arg-names = List new
+		for arg in creator arguments
+			arg-names = (mangle-name: arg name)
+		# Signature.
+		proto-name = on-proto c-name
+		stream write: "obj_ "
+		stream write: (mangle-name: name)
+		stream write: "__"
+		stream write: proto-name
+		stream write: "(obj_ this_"
+		for arg-name in arg-names
+			stream write: ", obj_"
+			stream write: arg-name
+		stream write: ")\n"
+		# Body
+		stream write: "{\n"
+		stream write: "\tobj_ obj = AllocObj_(" + proto-name + ");\n"
+		stream write: "\t" + (mangle-name: creator name) + "__" + proto-name + "(obj"
+		for arg-name in arg-names
+			stream write: ", "
+			stream write: arg-name
+		stream write: ");\n"
+		stream write: "\treturn obj;"
+		stream write: "}\n\n\n"
+
 
 ##### Inside a method
 
