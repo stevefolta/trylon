@@ -1,14 +1,14 @@
 trylon Objects
 
 extend Compiler CompiledProto
-	field cached-c-name
+	field .c-name
 
 	c-name
-		if !cached-c-name
-			cached-c-name = mangle-name: name
+		if .c-name == nil
+			.c-name = mangle-name: name
 			if parent && !(parent is-main)
-				cached-c-name = parent cached-c-name + "__" + cached-c-name
-		return cached-c-name
+				.c-name = parent c-name + "__" + .c-name
+		return .c-name
 
 
 
