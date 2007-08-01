@@ -1,0 +1,122 @@
+trylon Statements
+
+extend Compiler Statement
+	emit-code: builder
+		virtual
+	
+	add-comment: line
+		if comment
+			line += " \t/* " + comment + " */"
+		return line
+
+	add-comment: line comment: comment
+		if comment
+			line += " \t/* " + comment + " */"
+		return line
+
+
+extend Compiler ExpressionStatement
+	emit-code: builder
+		expression emit-code: builder
+		builder reset-temporaries
+		if comment
+			builder add-line: (add-comment: "")
+
+
+extend Compiler EmptyStatement
+	emit-code: builder
+		# Do nothing.
+
+
+extend Compiler BlankLine
+	emit-code: builder
+		builder add-line: ""
+
+
+extend Compiler Comment
+	emit-code: builder
+		builder add-line: "/* " + text + " */"
+
+
+extend Compiler BlockStatement
+	emit-code: builder
+		builder indent
+		builder add-line: "{"
+
+		# Declare locals.
+		locals = block locals
+		if locals && !locals is-empty
+			line = StringBuilder new
+			line += "obj_ "
+			done-one = false
+			for local in locals
+				if done-one
+					line += ", "
+				else
+					done-one = true
+				line += mangle-name: local name
+			line += ";"
+			builder add-line: line string
+
+		# Body.
+		for statement in block statements
+			statement emit-code: builder
+
+		builder add-line: "}"
+		builder unindent
+
+
+extend Compiler IfStatement
+	emit-code: builder
+		cond-result = condition emit-code: builder
+		builder add-line: (add-comment: "if (" + cond-result access + ")")
+		builder reset-temporaries
+		body emit-code: builder
+		if pre-else-comments
+			for statement in pre-else-comments
+				statement emit-code: builder
+		if else-block
+			builder add-line: (add-comment: "else" comment: else-comment)
+			else-block emit-code: builder
+
+
+extend Compiler LoopStatement
+	fields index
+
+	emit-code: builder
+		builder start-loop: this
+		builder add-line: (add-comment: "while (1) {")
+		builder add-line: "\tContinuePoint_(" + index string + ")"
+		body emit-code: builder
+		builder add-line: "}"
+		builder end-loop
+
+
+extend Compiler WhileStatement
+	fields index
+
+	emit-code: builder
+		builder start-loop: this
+		builder add-line: (add-comment: "while (1) {")
+		builder indent
+		builder add-line: "ContinuePoint_(" + index string + ")"
+		cond-result = condition emit-code: builder
+		builder add-line: "if (" + cond-result access + ")"
+		builder add-line: "\tBreak_(" + index string + ")"
+		builder reset-temporaries
+		builder unindent
+		body emit-code: builder
+		builder add-line: "\t}"
+		builder end-loop
+
+
+extend Compiler BreakStatement
+	emit-code: builder
+		builder add-line: "Break_(" + builder cur-loop-index string + ")"
+
+extend Compiler ContinueStatement
+	emit-code: builder
+		builder add-line: "Continue_(" + builder cur-loop-index string + ")"
+
+
+

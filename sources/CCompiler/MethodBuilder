@@ -3,7 +3,7 @@ trylon MethodBuilder
 fields code temporaries loops
 fields int-literals string-literals float-literals dict-literals tuple-literals
 fields extern-declarations used-classes used-selectors used-shared-fields
-fields next-temporary-num indent-level
+fields next-temporary-num indent-level loop-stack
 
 create
 	code = StringBuilder new
@@ -20,6 +20,7 @@ create
 	used-shared-fields = ObjectMap new
 	next-temporary-num = 0
 	indent-level = 0
+	loop-stack = List new
 
 
 supports-only-literals
@@ -41,6 +42,9 @@ get-temporary
 	# temporary = Temporary new: temp-num
 	# temporaries add: temporary
 	# return temporary
+
+reset-temporaries
+	next-temporary-num = 0
 
 
 add-extern-declaration: declaration
@@ -83,6 +87,23 @@ indent
 
 unindent
 	indent-level -= 1
+
+
+start-loop: loop
+	loops add: loop
+	push-loop: loop
+
+end-loop
+	pop-loop
+
+push-loop: loop
+	loop-stack prepend: loop index
+
+pop-loop
+	loop-stack pop-front
+
+cur-loop-index
+	return loop-stack head
 
 
 emit: stream
