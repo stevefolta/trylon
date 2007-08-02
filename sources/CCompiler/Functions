@@ -42,7 +42,7 @@ extend Compiler FieldSetter
 			("obj_ ", mangled-name, "__", on-proto c-name, 	--
 			 "(obj_ this_, obj_ value)\n")
 		stream write: "{\n"
-		stream write-all: ("Field_(", mangle-name, ") = value;\n")
+		stream write-all: ("Field_(", mangled-name, ") = value;\n")
 		stream write: "\treturn value;\n"
 		stream write: "}\n"
 		stream write-line

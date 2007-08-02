@@ -120,6 +120,10 @@ string-literal-length: string
 	
 	return length
 
+extend Compiler
+	mangle-name: name
+		return CCompiler mangle-name: name
+
 
 report: message
 	status-reporter report: message
