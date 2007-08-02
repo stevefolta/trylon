@@ -66,6 +66,12 @@ extend Compiler BlockStatement
 		builder unindent
 
 
+extend Compiler ReturnStatement
+	emit-code: builder
+		result = value emit-code: builder
+		builder add-line: (add-comment: "return " + result access + ";")
+
+
 extend Compiler IfStatement
 	emit-code: builder
 		cond-result = condition emit-code: builder
@@ -141,6 +147,25 @@ extend Compiler BreakStatement
 extend Compiler ContinueStatement
 	emit-code: builder
 		builder add-line: "Continue_(" + builder cur-loop-index string + ")"
+
+
+extend Compiler TryStatement
+	emit-code: builder
+		builder add-line: (add-comment: "Try_")
+		body emit-code: builder
+		if else-clause
+			builder add-line: "TryElse_"
+			else-clause emit-code: builder
+		builder add-line: "EndTry_"
+
+extend Compiler ThrowStatement
+	emit-code: builder
+		result = value emit-code: builder
+		builder add-line: (add-comment: "Throw_(" + result access + ");")
+
+
+# extend Compiler SwitchStatement
+# extend Compiler CStatement
 
 
 
