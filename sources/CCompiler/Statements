@@ -164,7 +164,59 @@ extend Compiler ThrowStatement
 		builder add-line: (add-comment: "Throw_(" + result access + ");")
 
 
-# extend Compiler SwitchStatement
+extend Compiler SwitchStatement
+	emit-code: builder
+		value-result = expression emit-code: builder
+		for clause in clauses
+			clause emit-values: builder
+		builder add-line: (add-comment: "Switch_(" + value-result access + ")")
+		builder reset-temporaries
+		at-first = true
+		for clause in clauses
+			clause emit-code: builder is-first: at-first
+			at-first = false
+		if else-clause
+			builder add-line: "else"
+			else-clause body emit-code: builder
+		if post-clauses-comments
+			for comment in post-clauses-comments
+				comment emit-code: builder
+		builder add-line: "EndSwitch_"
+
+extend Compiler SwitchClause
+	field value-results
+
+	emit-values: builder
+		value-results = List new
+		for value in values
+			value-results append: (value emit-code: builder)
+	
+	emit-code: builder is-first: is-first
+		if pre-clause-comments
+			for comment in pre-clause-comments
+				comment emit-code: builder
+		line = StringBuilder new
+		if !is-first
+			line += "else "
+		line += "if ("
+		done-one = false
+		for result in value-results
+			if done-one
+				line += " || "
+			else
+				done-one = true
+			line += "SwitchMatches_("
+			line += result access
+			line += ")"
+		line += ")"
+		builder add-line: line
+		if body
+			body emit-code: builder
+		else
+			builder add-line: "{}"
+
+
+
 # extend Compiler CStatement
 
 
