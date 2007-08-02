@@ -110,6 +110,30 @@ extend Compiler WhileStatement
 		builder end-loop
 
 
+extend Compiler ForStatement
+	emit-code: builder
+		builder calling-method: "iterator"
+		builder calling-method: "is-done"
+		builder calling-method: "current-item"
+		builder calling-method: "go-forward"
+
+		# Start the loop.
+		collection-result = collection emit-code: builder
+		builder reset-temporaries
+		local-name = mangle-name: local name
+		builder start-loop: this
+		builder add-line: 	--
+			"ForStart_(" + builder cur-loop-index string + ", " + 	--
+				collection-result access + ", " + local-name + ")"
+
+		# Body.
+		body emit-code: builder
+
+		# Finish the loop.
+		builder add-line: "ForEnd_"
+		builder end-loop
+
+
 extend Compiler BreakStatement
 	emit-code: builder
 		builder add-line: "Break_(" + builder cur-loop-index string + ")"
