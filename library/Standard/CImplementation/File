@@ -1,0 +1,82 @@
+trylon File
+
+extend Standard File
+	c-preamble
+		#include <sys/types.h>
+		#include <sys/stat.h>
+		#include <unistd.h>
+	
+
+	c-fn size
+		DefineInt_(0, 0);
+		struct stat buf;
+		int error = stat(CString_(Field_(path)), &buf);
+		if (error != 0)
+			return Int_(0);
+		return BuildInt_(buf.st_size);
+
+	c-fn exists
+		struct stat	buf;
+		return (stat(CString_(Field_(path)), &buf) == 0);
+	
+	c-fn remove
+		unlink(CString_(Field_(path)));
+	
+
+extend Standard File InStream
+	fields .file
+
+	c-preamble
+		#include <stdio.h>
+
+	c-fn create: path
+		FILE* result = fopen(CString_(Field_(path)), "r");
+		if (result == nil) {
+			obj_ exception =
+				new_co___Standard__File__FileMissingException(
+					Standard__File__FileMissingException, Field_(path));
+			Throw_(exception);
+			}
+		Field_(_dt_file) = (obj_) result;
+	
+	c-fn close
+		if (Field_(_dt_file))
+			fclose((FILE*) Field_(_dt_file));
+
+	c-fn read-buffer: buffer length: length
+		return
+			BuildInt_(
+				fread(
+					BytePtrValue_(buffer), 1, IntValue_(length),
+					(FILE*) Field_(_dt_file)));
+
+
+
+extend Standard File OutStream
+	fields .file
+
+	c-preamble
+		#include <stdio.h>
+
+	c-fn create: path
+		FILE* result = fopen(CString_(Field_(path)), "w+");
+		if (result == nil) {
+			obj_ exception =
+				new_co___Standard__File__FileOpenException(
+					Standard__File__FileOpenException, Field_(path));
+			Throw_(exception);
+			}
+		Field_(_dt_file) = (obj_) result;
+
+	c-fn close
+		if (Field_(_dt_file))
+			fclose((FILE*) Field_(_dt_file));
+
+	c-fn write-buffer: buffer length: length
+		return
+			BuildInt_(
+				fwrite(
+					BytePtrValue_(buffer), 1, IntValue_(length),
+					(FILE*) Field_(_dt_file)));
+
+

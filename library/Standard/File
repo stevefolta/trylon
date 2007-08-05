@@ -9,9 +9,9 @@ create: path
 	this path = path
 
 contents
-	size := this size
-	storage := BytePtr new: size
-	stream := this stream
+	size = this size
+	storage = BytePtr new: size
+	stream = this stream
 	stream read-buffer: storage length: size
 	stream close
 	return String new: storage to: storage + size
