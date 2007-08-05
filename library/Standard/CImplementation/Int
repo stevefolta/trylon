@@ -1,0 +1,79 @@
+trylon Int
+
+extend Standard Int
+	c-preamble
+		#define Val	(*(int*) &Field_(0))
+		#define SetVal(value)	(*(int*) &Field_(0) = value)
+		#define ValOf(obj)	(*(int*) &FieldOf(obj, 0))
+		#define SetValOf(obj, value)	(*(int*) &FieldOf(obj, 0) = value)
+
+	c-fn new
+		return AllocObjExtra_(Proto_(Standard__Int), 1);
+	
+
+	c-fn + other
+		return BuildInt_(Val + ValOf(other));
+
+	c-fn - other
+		return BuildInt_(Val - ValOf(other));
+
+	c-fn * other
+		return BuildInt_(Val * ValOf(other));
+
+	c-fn / other
+		return BuildInt_(Val / ValOf(other));
+
+	c-fn % other
+		return BuildInt_(Val % ValOf(other));
+
+	c-fn unary-minus
+		return BuildInt(-Val);
+	
+
+	c-fn == other
+		return Bool_(Val == ValOf(other))
+
+	c-fn != other
+		return Bool_(Val == ValOf(other))
+
+	c-fn < other
+		return Bool_(Val < ValOf(other))
+
+	c-fn <= other
+		return Bool_(Val <= ValOf(other))
+
+	c-fn > other
+		return Bool_(Val > ValOf(other))
+
+	c-fn >= other
+		return Bool_(Val >= ValOf(other))
+
+
+	c-fn | other
+		return BuildInt_(Val | ValOf(other));
+
+	c-fn & other
+		return BuildInt_(Val & ValOf(other));
+
+	c-fn ^ other
+		return BuildInt_(Val ^ ValOf(other));
+	
+	c-fn ~
+		return BuildInt_(~Val);
+	
+	c-fn << other
+		return BuildInt_(Val << ValOf(other));
+
+	c-fn >> other
+		return BuildInt_(Val >> ValOf(other));
+
+
+	c-fn string
+		char* buf = AllocNonPtr_(64);
+		sprintf(buf, "%d", Val);
+		return BuildString_(buf);
+	
+	c-fn float
+		return BuildFloat_(Val);
+
+
