@@ -401,7 +401,13 @@ parse-fields
 parse-function: at-declarator
 	# "fn" or "function" (etc.) has already been recognized; just check it for 
 	# primitiveness.
+	is-primitive = false
 	if at-declarator
+		if current-token text starts-with: "c-"
+			iff !targetting-c
+				parse-error: "Can't declare a \"c-function\" when not targetting C."
+			iff targetting-c
+				is-primitive = true
 		consume-token
 	
 	# Get the name.
@@ -456,20 +462,26 @@ parse-function: at-declarator
 	report: "Parsing " + name + "..."
 
 	# Parse the body.
-	saved-context = context
-	method-context = 	--
-		MethodContext new: arguments parent: context
-	context = method-context
-	body = parse-block
-	context = saved-context
+	body = nil
+	method-context = nil
+	if is-primitive
+		body = get-subblock string
+	else
+		saved-context = context
+		method-context = 	--
+			MethodContext new: arguments parent: context
+		context = method-context
+		body = parse-block
+		context = saved-context
 	
 	# Build the function and return it.
 	new-function = 	--
 		CompiledFunction new: name arguments: arguments 	--
 			return-type: return-type --
-			on-proto: context body: body
+			on-proto: context body: body is-primitive: is-primitive
 	new-function method-context = method-context
-	method-context function = new-function
+	if method-context
+		method-context function = new-function
 	return new-function
 
 

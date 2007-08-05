@@ -120,9 +120,14 @@ extend Compiler CompiledFunction
 	emit-c-function-on: stream
 		stream write-line: c-signature
 		if body
-			builder = CCompiler MethodBuilder new
-			body emit-code: builder
-			builder emit: stream
+			if is-primitive
+				stream write-line: "{"
+				stream write: body
+				stream write-line: "}"
+			else
+				builder = CCompiler MethodBuilder new
+				body emit-code: builder
+				builder emit: stream
 		else
 			stream write: "{\n\treturn nil;\n}\n"
 		stream write-line

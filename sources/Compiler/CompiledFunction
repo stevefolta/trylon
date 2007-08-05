@@ -2,16 +2,17 @@ trylon CompiledFunction
 superclass TrylidFunction
 
 fields name arguments return-type on-proto
-fields body method-context
+fields body method-context is-primitive
 
 
 create: name arguments: arguments return-type: return-type 	--
-		on-proto: on-proto body: body
+		on-proto: on-proto body: body is-primitive: is-primitive
 	this name = name
 	this arguments = arguments
 	this return-type = return-type
 	this on-proto = on-proto
 	this body = body
+	this is-primitive = is-primitive
 
 
 has-code
