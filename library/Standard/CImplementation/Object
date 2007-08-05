@@ -1,0 +1,14 @@
+trylon Object
+
+extend Standard Object
+	c-fn raw-new
+		UsingMethod_(_dt_proto)
+		return AllocObj_(Call_(_dt_proto, this_));
+	
+	c-fn object-ptr
+		return BuildBytePtr_(this_);
+	
+	c-fn same-as: other
+		return Bool_(this_ == other);
+
+
