@@ -1,5 +1,36 @@
 trylon JoltImplementation
 
+
+extend Standard
+	fn print: string
+		coke
+			(send (quote nextPutAll:) StdOut string)
+
+
+extend Standard Implementation
+	allocate-object: proto with-extra-slots: num-extra-slots
+		coke
+			[[proto _vtable] _alloc:
+				(+ [proto _sizeof] (* 4 [num-extra-slots _integerValue]))]
+
+	allocate-bytes: num-bytes
+		coke
+			(byte-ptr (GC_malloc [num-bytes _integerValue]))
+
+	allocate-bytes-non-ptr: num-bytes
+		coke
+			(byte-ptr (GC_malloc_atomic [num-bytes _integerValue]))
+
+	# This can't be set here for complicated reasons, but will be set elsewhere:
+	# .target-language = "Coke"
+
+
 references
+	Object
+	BytePtr
 	String
+	System
+	File
+	FileDirectory
+
 

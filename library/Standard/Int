@@ -1,96 +1,32 @@
 trylid Int
 
-new
-	# Written in Coke for maximum speed.
-	# return Implementation allocate-object: this with-extra-slots: 1
-	coke
-		[StandardImplementation allocate-object: self with-extra-slots: (quote 1)]
+# Just about all of these are primitives defined elsewhere.
 
 fn == arg (Int) -> Bool
-	coke
-		(if (== (int@ self) (int@ arg)) true false)
 fn != arg (Int) -> Bool
-	coke
-		(if (!= (int@ self) (int@ arg)) true false)
 fn < arg (Int) -> Bool
-	coke
-		(if (< (int@ self) (int@ arg)) true false)
 fn > arg (Int) -> Bool
-	coke
-		(if (> (int@ self) (int@ arg)) true false)
 fn <= arg (Int) -> Bool
-	coke
-		(if (<= (int@ self) (int@ arg)) true false)
 fn >= arg (Int) -> Bool
-	coke
-		(if (>= (int@ self) (int@ arg)) true false)
 
 fn + arg (Int) -> Int
-	coke
-		(trylid-int (+ (int@ self) (int@ arg)))
 fn - arg (Int) -> Int
-	coke
-		(trylid-int (- (int@ self) (int@ arg)))
 fn * arg (Int) -> Int
-	coke
-		(trylid-int (* (int@ self) (int@ arg)))
 fn / arg (Int) -> Int
-	coke
-		(trylid-int (/ (int@ self) (int@ arg)))
 fn % arg (Int) -> Int
-	coke
-		(trylid-int (% (int@ self) (int@ arg)))
 fn unary-minus -> Int
-	coke
-		(trylid-int (- (int@ self)))
 
 fn | arg (Int) -> Int
-	coke
-		(trylid-int (| (int@ self) (int@ arg)))
 fn & arg (Int) -> Int
-	coke
-		(trylid-int (& (int@ self) (int@ arg)))
 fn ^ arg (Int) -> Int
-	coke
-		(trylid-int (^ (int@ self) (int@ arg)))
 fn ~ -> Int
-	coke
-		(trylid-int (not (int@ self)))
 fn << arg (Int) -> Int
-	coke
-		(trylid-int (<< (int@ self) (int@ arg)))
 fn >> arg (Int) -> Int
-	coke
-		(trylid-int (>> (int@ self) (int@ arg)))
 
 fn string
-	coke
-		(let ((buf (malloc 64)))
-			(sprintf buf "%d" (int@ self))
-			(trylid-string buf))
 fn float
-	# How to do this?
-	etc.
 fn char
-	coke
-		(trylid-char (int@ self))
 
-
-# In case we need to play nice with SmallIntegers:
-_integerValue
-	coke
-		(int@ self)
-asInteger
-	coke
-		[SmallInteger value_: (int@ self)]
-value_: value_
-	# Switch this to the SmallInteger version, maybe.
-	new-int = Int new
-	coke
-		(set-int@ new-int value_)
-	return new-int
-	# SmallInteger version:
-	# return SmallInteger value_: value_
 
 
 iff debugger

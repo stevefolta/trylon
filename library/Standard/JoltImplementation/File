@@ -1,0 +1,68 @@
+trylon File
+
+extend Standard File
+	size
+		stat = Posix Stat stat: path
+		if stat == nil
+			return 0
+		return stat st_size
+
+	exists
+		stat = Posix Stat stat: path
+		return stat != nil
+
+	remove
+		coke
+			(unlink [[self path] _stringValue])
+
+
+extend Standard File InStream
+	field _file
+	
+	create: path
+		coke
+			(let ((result (fopen [path _stringValue] "r")))
+				(if (== result nil)
+					(throw [(trylid-proto Standard File FileMissingException) new: path]))
+				[self _file: result]
+				self
+				)
+
+	close
+		coke
+			(let ((file [self _file]))
+				(if file (fclose file))
+				[self _file: nil]
+				)
+
+	read-buffer: buffer length: length
+		coke
+			(trylid-int (fread [buffer _ptr] 1 [length _integerValue] [self _file]))
+
+
+
+extend Standard File OutStream
+	field _file
+
+	create: path
+		coke
+			(let ((result (fopen [path _stringValue] "w+")))
+				(if (== result nil)
+					(throw [(trylid-proto Standard File FileOpenException) new: path]))
+				[self _file: result]
+				self
+				)
+
+	close
+		coke
+			(let ((file [self _file]))
+				(if file (fclose file))
+				[self _file: nil]
+				)
+
+	write-buffer: buffer length: length
+		coke
+			(trylid-int (fwrite [buffer _ptr] 1 [length _integerValue] [self _file]))
+	
+
+

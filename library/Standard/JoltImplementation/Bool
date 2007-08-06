@@ -1,5 +1,9 @@
 trylid Bool
 
+# Not used.  Instead, we Pepsi Object for true and nil for false, just like
+# Pepsi.
+
+
 new
 	return Implementation allocate-object: Bool with-extra-slots: 1
 

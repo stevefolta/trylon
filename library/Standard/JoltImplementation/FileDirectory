@@ -1,0 +1,82 @@
+trylon FileDirectory
+
+extend Standard FileDirectory
+	count
+		coke
+			(define directory (opendir [[self path] _stringValue]))
+			(define num-entries 0)
+			(while true
+				(if (not (readdir directory)) (break))
+				(set num-entries (+ num-entries 1)))
+			(closedir directory)
+			(trylid-int num-entries)
+
+	contains: name
+		iff !Darwin
+			return (Posix Stat stat: (path + "/" + name)) != nil
+		iff Darwin
+			# The stupid Mac OSX filesystem is case-insensitive, so simply doing a
+			# stat() won't tell us if a file with that (case-sensitive) name really
+			# exists.  stat() doesn't give us the filename, so we need to look through
+			# the whole directory.
+			coke
+				(define directory (opendir [[self path] _stringValue]))
+				(if (not directory) (return false))
+				(define name-str [name _stringValue])
+				(define found false)
+				(define Dirent (trylid-proto Posix Dirent))
+				(while true
+					(define entry (readdir directory))
+					(if (not entry) (break))
+					(if (== (strcmp name-str [[Dirent new_: entry] _name]) 0)
+						(begin
+							(set found true)
+							(break))))
+				(closedir directory)
+				found
+
+
+	entry-is-directory: name
+		stat-buf = Posix Stat stat: path + "/" + name
+		if stat-buf
+			return stat-buf isDir
+		return false
+
+
+	create-subdirectory: name
+		entry-path = path + "/" + name
+		coke
+			(mkdir [entry-path _stringValue] 511)
+
+
+
+extend Standard FileDirectory Iterator
+	fields _directory current-name
+
+	create: path
+		coke
+			[self _directory: (opendir [path _stringValue])]
+		go-forward
+
+	is-done
+		return (current-name == nil)
+
+	current-item
+		return current-name
+
+	go-forward
+		coke
+			(define _directory [self _directory])
+			(if (not _directory) (return nil))
+			(define _entry (readdir _directory))
+			(if _entry
+				(begin
+					(define entry [[(trylid-proto Posix) Dirent] new_: _entry])
+					[self current-name:
+						[(trylid-proto Standard String) new-copy_: [entry _name]]])
+				(begin
+					(closedir _directory)
+					[self _directory: nil]
+					[self current-name: nil]))
+
+

@@ -1,5 +1,8 @@
 trylid Char
 
+# No longer used.  Characters are represented as SmallIntegers now.
+
+
 new
 	# Written in Coke for maximum speed.
 	# return Implementation allocate-object: this with-extra-slots: 1
