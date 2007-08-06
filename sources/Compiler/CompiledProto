@@ -208,6 +208,7 @@ setup-main: main-directory library-directory: library-directory
 	if standard-proto == nil
 		throw MessageException new: "The Standard proto can't be found!"
 	uses-protos append: standard-proto
+	standard-proto get-subproto: "JoltImplementation"
 
 	# Set up Posix.
 	posix-directory = library-directory at: "Posix"
