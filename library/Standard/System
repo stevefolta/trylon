@@ -3,19 +3,19 @@ trylid System
 # These are all primitives, defined elsewhere.
 
 milliseconds
-fn sleep-ms: milliseconds
-fn num-garbage-collections
-fn dump-gc-stats
+sleep-ms: milliseconds
+num-garbage-collections
+dump-gc-stats
 
 debugger
 
 environment-variable-named: name
 
-fn current-directory-path
-fn current-directory-path: new-path
-fn run-program: name arguments: arguments
-fn sysname
-fn strftime: time-int format: format
+current-directory-path
+current-directory-path: new-path
+run-program: name arguments: arguments
+sysname
+strftime: time-int format: format
 
 
 
