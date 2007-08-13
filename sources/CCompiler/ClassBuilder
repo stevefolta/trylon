@@ -9,3 +9,23 @@ create
 	dict-literals = IndexedResources new
 	tuple-literals = IndexedResources new
 
+
+emit
+	# ...
+
+
+emit-on: stream
+	int-literals emit-declarations-on: stream
+	string-literals emit-declarations-on: stream
+	float-literals emit-declarations-on: stream
+	tuple-literals emit-declarations-on: stream
+	dict-literals emit-declarations-on: stream
+
+	for function in functions
+		function emit-c-function-on: stream
+
+
+using-proto: proto
+	# ...
+
+

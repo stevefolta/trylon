@@ -272,7 +272,7 @@ extend Compiler TupleExpression
 
 	emit-code: builder
 		if is-literal
-			builder using-proto: (the-compiler get-standard-class: "Dictionary")
+			builder using-proto: (the-compiler get-standard-class: "Tuple")
 
 			# Access all values first, so sub-tuples get declared first.
 			# Note that the emit-code: calls won't actually emit any code, they'll
