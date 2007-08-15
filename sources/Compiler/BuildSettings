@@ -15,8 +15,7 @@ create
 	c-sources-dir = ".c-sources"
 	objects-dir = ".objects"
 	is-verbose = false
-	targeting-c = false
-	targeting-jolt = true
+	target = 'Jolt'
 
 	sysname = System sysname
 	if !sysname is-empty
@@ -39,6 +38,10 @@ load
 			print-line: "Targeting C."
 		if targeting-jolt
 			print-line: "Targeting Jolt."
+		if has-symbol: "targeting-c"
+			print-line: "Have targeting-c."
+		if has-symbol: "targeting-jolt"
+			print-line: "Have targeting-jolt."
 
 
 load-from: file-name

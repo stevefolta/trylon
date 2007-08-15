@@ -54,7 +54,7 @@ main: arguments
 	return return-value
 
 
-iff in-trylid
+iff targeting-jolt
 	run-command-line
 		CommandLine new run
 
@@ -74,7 +74,7 @@ log-unindent
 	status-reporter unindent
 
 
-iff !in-trylid
+iff !targeting-jolt
 	class Expression
 		field tuple
 
@@ -191,7 +191,7 @@ iff !in-trylid
 			else
 				stream write: value string
 
-iff in-trylid
+iff targeting-jolt
 	class Expression
 		superclass Pepsi Expression
 
@@ -269,7 +269,7 @@ iff in-trylid
 				stream write: value string
 
 
-iff !in-trylid
+iff !targeting-jolt
 	class InternedString
 		field string
 
@@ -285,9 +285,9 @@ iff !in-trylid
 
 extend String
 	intern
-		iff !in-trylid
+		iff !targeting-jolt
 			return InternedString new: this
-		iff in-trylid
+		iff targeting-jolt
 			return this asSymbol
 
 
