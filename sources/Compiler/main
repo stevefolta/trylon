@@ -19,7 +19,7 @@ compile
 	compile: List new
 
 
-iff in-trylid
+iff targeting-jolt
 	compile-file: file as: name into: parent-proto
 		if !(parent-proto is-a: ExistingProto)
 			parent-proto = ExistingProto new: parent-proto

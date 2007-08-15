@@ -3,7 +3,8 @@ trylon BuildSettings
 fields dictionary
 fields program-name
 fields jolt-sources-dir
-fields is-verbose
+fields c-sources-dir objects-dir
+fields is-verbose targeting-c targeting-jolt
 fields debugger
 
 
@@ -11,12 +12,17 @@ create
 	dictionary = Dictionary new
 	program-name = "program-binary"
 	jolt-sources-dir = ".jolt-sources"
+	c-sources-dir = ".c-sources"
+	objects-dir = ".objects"
 	is-verbose = false
+	targeting-c = false
+	targeting-jolt = true
 
 	sysname = System sysname
 	if !sysname is-empty
 		(dictionary at: sysname) = sysname
 	(dictionary at: "in-trylid") = "true"
+	(dictionary at: "trylon-2") = "true"
 	if Implementation .target-language == "Coke"
 		(dictionary at: "in-jolt") = "true"
 
@@ -28,6 +34,11 @@ has-symbol: name
 load
 	load-from: "build-settings.local"
 	load-from: "build-settings"
+	iff debug
+		if targeting-c
+			print-line: "Targeting C."
+		if targeting-jolt
+			print-line: "Targeting Jolt."
 
 
 load-from: file-name
@@ -64,10 +75,22 @@ parse-block: lexer
 				program-name = parse-name: lexer name: name
 			else if name == "jolt-sources-dir"
 				jolt-sources-dir = parse-name: lexer name: name
+			else if name == "c-sources-dir"
+				c-sources-dir = parse-name: lexer name: name
+			else if name == "objects-dir"
+				objects-dir = parse-name: lexer name: name
 			else if name == "debugger"
 				debugger = parse-boolean: lexer name: name
 			else if name == "verbose"
 				is-verbose = parse-boolean: lexer name: name
+			else if name == "targeting-c"
+				targeting-c = parse-boolean: lexer name: name
+				if targeting-c
+					target = 'C'
+			else if name == "targeting-jolt"
+				targeting-jolt = parse-boolean: lexer name: name
+				if targeting-jolt
+					target = 'Jolt'
 
 			else if name == "if" || name == "iff"
 				parse-if: lexer
@@ -81,6 +104,20 @@ parse-block: lexer
 
 		else if type == 'eof' || type == 'unindent'
 			break
+
+
+target: target
+	switch target
+		'C'
+			targeting-c = true
+			targeting-jolt = false
+			dictionary at: "targeting-c" put: "true"
+			dictionary at: "targeting-jolt" put: nil
+		'Jolt'
+			targeting-jolt = true
+			targeting-c = false
+			dictionary at: "targeting-jolt" put: "true"
+			dictionary at: "targeting-c" put: nil
 
 
 parse-name: lexer name: declaration

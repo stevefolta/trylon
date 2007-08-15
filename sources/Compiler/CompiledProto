@@ -208,24 +208,32 @@ setup-main: main-directory library-directory: library-directory
 	if standard-proto == nil
 		throw MessageException new: "The Standard proto can't be found!"
 	uses-protos append: standard-proto
-	standard-proto get-subproto: "JoltImplementation"
 
-	# Set up Posix.
-	posix-directory = library-directory at: "Posix"
-	posix-proto = PosixProto new: "Posix" parent: this directory: posix-directory
-	proto-function = ProtoFunction new: posix-proto
-	functions at: "Posix" put: proto-function
-	the-compiler proto-queue append: posix-proto
+	# Targeting Jolt.
+	if the-compiler build-settings targeting-jolt
+		standard-proto get-subproto: "JoltImplementation"
 
-	# Set up Standard Pepsi.
-	standard-directory = library-directory at: "Standard"
-	pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
-	proto-function = ProtoFunction new: pepsi-proto
-	standard-proto functions at: "Pepsi" put: proto-function
-	parser = 	--
-		Parser new: (standard-directory at: "Pepsi") contents context: standard-proto
-	parser parse-proto-file: pepsi-proto
-	the-compiler proto-queue append: pepsi-proto
+		# Set up Posix.
+		posix-directory = library-directory at: "Posix"
+		posix-proto = PosixProto new: "Posix" parent: this directory: posix-directory
+		proto-function = ProtoFunction new: posix-proto
+		functions at: "Posix" put: proto-function
+		the-compiler proto-queue append: posix-proto
+
+		# Set up Standard Pepsi.
+		standard-directory = library-directory at: "Standard"
+		pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
+		proto-function = ProtoFunction new: pepsi-proto
+		standard-proto functions at: "Pepsi" put: proto-function
+		parser = 	--
+			Parser new: (standard-directory at: "Pepsi") contents 	--
+				context: standard-proto
+		parser parse-proto-file: pepsi-proto
+		the-compiler proto-queue append: pepsi-proto
+	
+	# Targeting C.
+	if the-compiler build-settings targeting-c
+		standard-proto get-subproto: "CImplementation"
 
 	# Add "nil", "true", and "false" to Standard.
 	standard-proto functions at: "nil" put: NilFunction new
@@ -242,7 +250,8 @@ setup-main: main-directory library-directory: library-directory
 	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
 		standard-proto lookup-function: proto-name
 	
-	functions at: "Trylid" put: (ProtoFunction new: this)
+	# Self.
+	functions at: name put: (ProtoFunction new: this)
 
 
 ensure-superclasses: object-proto
@@ -372,7 +381,7 @@ emit-jolt-file
 		status-reporter unindent
 
 
-iff in-trylid
+iff targeting-jolt
 	translate: compiler
 		# Make sure there's a superclass.
 		if superclass == nil

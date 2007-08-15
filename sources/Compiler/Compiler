@@ -39,10 +39,15 @@ compile-dir: dir as: name into: parent-proto
 
 compile-program: compile-symbols
 	# Read the settings.
-	build-settings load
 	for setting in compile-symbols
-		if setting == "verbose"
-			build-settings is-verbose = true
+		switch setting
+			"verbose"
+				build-settings is-verbose = true
+			"target-c", "targeting-c"
+				build-settings target = 'C'
+			"target-jolt", "targeting-jolt"
+				build-settings target = 'Jolt'
+	build-settings load
 
 	# Create the status reporter.
 	if status-reporter == nil
@@ -51,11 +56,17 @@ compile-program: compile-symbols
 		else
 			status-reporter = VT100StatusReporter new
 
-	# Create the .jolt-sources directory.
+	# Create the sources/objects directories
 	directory = FileDirectory new: "."
-	if !(directory entry-is-directory: build-settings jolt-sources-dir)
-		directory create-subdirectory: build-settings jolt-sources-dir
-	
+	if build-settings targeting-jolt
+		if !(directory entry-is-directory: build-settings jolt-sources-dir)
+			directory create-subdirectory: build-settings jolt-sources-dir
+	if build-settings targeting-c
+		if !(directory entry-is-directory: build-settings c-sources-dir)
+			directory create-subdirectory: build-settings c-sources-dir
+		if !(directory entry-is-directory: build-settings objects-dir)
+			directory create-subdirectory: build-settings objects-dir
+
 	# Load.
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"
@@ -65,9 +76,12 @@ compile-program: compile-symbols
 		throw MessageException new: 	--
 			"Couldn't find the Trylid library.  You may need to set $TRYLID_LIBRARY."
 	library-directory = FileDirectory new: library-path
-	status-reporter report: "Loading Trylid..."
+	main-name = "Main"
+	if the-compiler build-settings targeting-jolt
+		main-name = "Trylid"
+	status-reporter report: "Loading " + main-name + "..."
 	status-reporter indent
-	main-proto = CompiledProto new: "Trylid" parent: nil
+	main-proto = CompiledProto new: main-name parent: nil
 	main-proto 	--
 		setup-main: main-directory library-directory: library-directory
 	proto-queue append: main-proto
@@ -84,8 +98,17 @@ compile-program: compile-symbols
 	object-class = root-proto: main-proto
 	object-class is-root-object = true
 
+	# Emit
+	if build-settings targeting-jolt
+		emit-jolt
+	if build-settings targeting-c
+		emit-c
+
+	status-reporter report: "Done."
+
+
+emit-jolt
 	# Emit the classes and packages.
-	### Emission is broken at the moment when running under Coke.
 	status-reporter report: "Emitting code..."
 	status-reporter indent
 	for proto in proto-queue
@@ -104,7 +127,20 @@ compile-program: compile-symbols
 	stream close
 	status-reporter unindent
 
-	status-reporter report: "Done."
+
+emit-c
+	# Emit the classes and packages.
+	status-reporter report: "Emitting code..."
+	status-reporter indent
+	for proto in proto-queue
+		status-reporter report: "Emitting C for " + proto name + "..."
+		builder = CCompiler ClassBuilder new: proto
+		is-changed = builder emit
+		# ...
+	status-reporter unindent
+
+	# Emit Trylon.c and Trylon.h.
+	# ...
 
 
 root-proto: main-proto

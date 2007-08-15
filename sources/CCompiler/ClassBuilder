@@ -1,8 +1,10 @@
 trylon ClassBuilder
 
+fields proto
 fields int-literals float-literals string-literals dict-literals tuple-literals
 
-create
+create: proto
+	this proto = proto
 	int-literals = IndexedResources new
 	string-literals = IndexedResources new
 	float-literals = IndexedResources new
@@ -21,7 +23,7 @@ emit-on: stream
 	tuple-literals emit-declarations-on: stream
 	dict-literals emit-declarations-on: stream
 
-	for function in functions
+	for function in proto functions
 		function emit-c-function-on: stream
 
 

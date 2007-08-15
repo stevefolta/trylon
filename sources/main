@@ -23,7 +23,8 @@ main: arguments
 					do-words-lexer-test = true
 				else if arg == "--test-lines-lexer"
 					do-lines-lexer-test = true
-				else if arg == "--verbose"
+				else if arg == "--verbose" || 	--
+				        arg == "--target-c" || arg == "--target-jolt"
 					# Allowed.
 				else
 					throw MessageException new: ("Unknown option: " + arg)
