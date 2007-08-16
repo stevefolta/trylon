@@ -19,7 +19,7 @@ create
 	used-selectors = Dictionary new
 	used-shared-fields = ObjectMap new
 	next-temporary-num = 0
-	indent-level = 0
+	indent-level = 1
 	loop-stack = List new
 
 

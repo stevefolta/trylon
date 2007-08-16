@@ -7,7 +7,7 @@ create: index
 	name = "t" + index string + "_"
 
 emit-declaration: stream
-	stream write-all: ("obj_ ", name, ";\n")
+	stream write-all: ("\tobj_ ", name, ";\n")
 
 access
 	return name
