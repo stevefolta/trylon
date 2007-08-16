@@ -52,7 +52,7 @@ extend Compiler IntLiteral
 		return CCompiler LiteralResult new: this
 
 	emit-declaration: stream
-		stream write-all: ("DefineInt_(", index string, ", ", value string, ")\n")
+		stream write-all: ("\tDefineInt_(", index string, ", ", value string, ")\n")
 	
 	access
 		return "Int_(" + index string + ")"
@@ -69,7 +69,8 @@ extend Compiler FloatLiteral
 		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
-		stream write-all: ("DefineFloat_(", index string, ", ", value string, ")\n")
+		stream write-all: 	--
+			("\tDefineFloat_(", index string, ", ", value string, ")\n")
 	
 	access
 		return "Float_(" + index string + ")"
@@ -86,10 +87,11 @@ extend Compiler StringLiteral
 		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
-		stream write-all: ("DefineString_(", index string, ", ", value string, ")\n")
+		stream write-all: 	--
+			("\tDefineString_(", index string, ", \"", value string, "\")\n")
 	
 	access
-		return "String_(" + index string + ")"
+		return "Str_(" + index string + ")"
 
 
 extend Compiler SymbolLiteral
@@ -136,7 +138,13 @@ extend Compiler CharacterLiteral
 		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
-		stream write-all: ("DefineInt_(", index string, ", ", char string, ")\n")
+		char-string = nil
+		iff !trylon-2
+			# Old Trylon has Chars separate from Ints.
+			char-string = char int string
+		iff trylon-2
+			char-string = char string
+		stream write-all: ("\tDefineInt_(", index string, ", ", char-string, ")\n")
 	
 	access
 		return "Int_(" + index string + ")"

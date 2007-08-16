@@ -38,6 +38,18 @@ emit
 
 
 emit-on: stream
+	stream write-line: "#include \"Trylon_.h\""
+	stream write-line
+
+	# Fields.
+	proto emit-field-indices: stream
+	for field in proto shared-fields values
+		stream write: "DeclareSharedField_("
+		stream write: (mangle-name: field name)
+		stream write: ", "
+		stream write: proto c-name
+		stream write: ")\n"
+
 	int-literals emit-declarations-on: stream
 	string-literals emit-declarations-on: stream
 	float-literals emit-declarations-on: stream

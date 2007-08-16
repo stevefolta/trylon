@@ -26,23 +26,23 @@ extend Compiler FieldGetter
 		stream write-line
 	
 	access
-		return "Field_(" + mangle-name: field name + ")"
+		return "Field_(" + (mangle-name: field name) + ")"
 
 
 extend Compiler FieldSetter
 	emit-c-call: arguments builder: builder
-		value = arguments first emit-code: builder
+		value = arguments first-item emit-code: builder
 		builder add-line: 	--
 			"Field_(" + (mangle-name: field name) + " = " + value access + ");"
 		return value
 	
 	emit-c-function-on: stream
-		mangled-name = mangle-name: field name
+		mangled-name = mangle-name: name
 		stream write-all: 	--
 			("obj_ ", mangled-name, "__", on-proto c-name, 	--
 			 "(obj_ this_, obj_ value)\n")
 		stream write: "{\n"
-		stream write-all: ("Field_(", mangled-name, ") = value;\n")
+		stream write-all: ("\tField_(", (mangle-name: field name), ") = value;\n")
 		stream write: "\treturn value;\n"
 		stream write: "}\n"
 		stream write-line
@@ -72,7 +72,7 @@ extend Compiler SharedFieldGetter
 extend Compiler SharedFieldSetter
 	emit-c-call: arguments builder: builder
 		builder using-shared-field: field on-proto: on-proto
-		value = arguments first emit-code: builder
+		value = arguments first-item emit-code: builder
 		builder add-line: 	--
 			"SetSharedField_(" + 	--
 			(mangle-name: field name) + ", " + on-proto c-name + ", " + 	--
@@ -99,6 +99,7 @@ extend Compiler CompiledFunction
 		# This is a send to the prototype object.
 		# (Can we skip the dispatch and call the function directly?)
 		builder calling-method: name
+		builder using-class: on-proto
 		arg-results = List new
 		for arg in arguments
 			arg-results append: (arg emit-code: builder)
@@ -150,6 +151,7 @@ extend Compiler CompiledFunction
 
 extend Compiler ProtoFunction
 	emit-c-call: arguments builder: builder
+		builder using-class: proto
 		return CCompiler LiteralResult new: this
 	
 	access
@@ -158,6 +160,7 @@ extend Compiler ProtoFunction
 
 extend Compiler NewFunction
 	emit-c-call: arguments builder: builder
+		builder using-class: on-proto
 		arg-results = List new
 		for arg in arguments
 			arg-results append: (arg emit-code: builder)
@@ -181,7 +184,7 @@ extend Compiler NewFunction
 	emit-c-function-on: stream
 		arg-names = List new
 		for arg in creator arguments
-			arg-names = (mangle-name: arg name)
+			arg-names append: (mangle-name: arg name)
 		# Signature.
 		proto-name = on-proto c-name
 		stream write: "obj_ "
@@ -190,18 +193,19 @@ extend Compiler NewFunction
 		stream write: proto-name
 		stream write: "(obj_ this_"
 		for arg-name in arg-names
-			stream write: ", obj_"
+			stream write: ", obj_ "
 			stream write: arg-name
 		stream write: ")\n"
 		# Body
 		stream write: "{\n"
+		stream write: "\tUsingClass_(" + proto-name + ")\n"
 		stream write: "\tobj_ obj = AllocObj_(" + proto-name + ");\n"
 		stream write: "\t" + (mangle-name: creator name) + "__" + proto-name + "(obj"
 		for arg-name in arg-names
 			stream write: ", "
 			stream write: arg-name
 		stream write: ");\n"
-		stream write: "\treturn obj;"
+		stream write: "\treturn obj;\n"
 		stream write: "}\n\n\n"
 
 
@@ -268,7 +272,7 @@ extend Compiler FunctionOnThis
 		line += result access
 		line += " = Call_("
 		line += (mangle-name: name)
-		line += ", this_, "
+		line += ", this_"
 		for arg in arg-results
 			line += ", "
 			line += arg access

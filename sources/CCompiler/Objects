@@ -11,6 +11,25 @@ extend Compiler CompiledProto
 		return .c-name
 
 
+	emit-field-indices: stream
+		index = 0
+		if superclass
+			index = superclass emit-field-indices: stream
+		
+		for field in fields
+			stream write: "#define "
+			stream write: (mangle-name: field name)
+			stream write: "__fld_\t("
+			stream write: index string
+			index += 1
+			stream write-line: ")"
+		
+		stream write-line
+
+		return index
+
+
+
 
 # Copyright 2007 Steve Folta
 # See the License file.

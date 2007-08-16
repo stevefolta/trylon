@@ -40,16 +40,19 @@ extend Compiler Comment
 
 extend Compiler BlockStatement
 	emit-code: builder
+		block emit-code: builder
+
+extend Compiler Block
+	emit-code: builder
 		builder indent
 		builder add-line: "{"
 
 		# Declare locals.
-		locals = block locals
 		if locals && !locals is-empty
 			line = StringBuilder new
 			line += "obj_ "
 			done-one = false
-			for local in locals
+			for local in locals values
 				if done-one
 					line += ", "
 				else
@@ -59,17 +62,11 @@ extend Compiler BlockStatement
 			builder add-line: line string
 
 		# Body.
-		for statement in block statements
+		for statement in statements
 			statement emit-code: builder
 
 		builder add-line: "}"
 		builder unindent
-
-
-extend Compiler Block
-	emit-code: builder
-		for statement in statements
-			statement emit-code: builder
 
 
 extend Compiler ReturnStatement
@@ -123,6 +120,8 @@ extend Compiler WhileStatement
 
 
 extend Compiler ForStatement
+	fields index
+
 	emit-code: builder
 		builder calling-method: "iterator"
 		builder calling-method: "is-done"
@@ -142,7 +141,7 @@ extend Compiler ForStatement
 		body emit-code: builder
 
 		# Finish the loop.
-		builder add-line: "ForEnd_"
+		builder add-line: "ForEnd_(" + builder cur-loop-index string + ")"
 		builder end-loop
 
 
@@ -163,6 +162,10 @@ extend Compiler TryStatement
 			builder add-line: "TryElse_"
 			else-clause emit-code: builder
 		builder add-line: "EndTry_"
+
+extend Compiler CatchClause
+	emit-code: builder
+		body emit-code: builder
 
 extend Compiler ThrowStatement
 	emit-code: builder
@@ -215,7 +218,7 @@ extend Compiler SwitchClause
 			line += result access
 			line += ")"
 		line += ")"
-		builder add-line: line
+		builder add-line: line string
 		if body
 			body emit-code: builder
 		else

@@ -129,6 +129,18 @@ emit-jolt
 
 
 emit-c
+	# Emit Trylon_.c and Trylon_.h.
+	# Trylon_.h
+	recompile-all = false
+	library-path = find-library-path
+	contents = (File new: library-path + "/Trylon_.h") contents
+	stream = ExistingFileStream new: build-settings c-sources-dir + "/Trylon_.h"
+	stream write: contents
+	if stream is-changed
+		recompile-all = true
+	stream close
+	# ...
+
 	# Emit the classes and packages.
 	status-reporter report: "Emitting code..."
 	status-reporter indent
@@ -138,9 +150,6 @@ emit-c
 		is-changed = builder emit
 		# ...
 	status-reporter unindent
-
-	# Emit Trylon.c and Trylon.h.
-	# ...
 
 
 root-proto: main-proto

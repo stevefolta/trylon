@@ -135,7 +135,7 @@ emit: stream
 		for field in used-shared-fields keys
 			on-proto = used-shared-fields at: field
 			stream write-all: 	--
-				("UsingSharedField_(", (mangle-name: field name), ", ", 	--
+				("\tUsingSharedField_(", (mangle-name: field name), ", ", 	--
 				 on-proto c-name, ") ")
 		stream write-line
 
@@ -144,6 +144,12 @@ emit: stream
 		for declaration in extern-declarations
 			stream write: "\t"
 			stream write-line: declaration
+	
+	# Used classes.
+	for used-class in used-classes values
+		stream write: "\tUsingClass_("
+		stream write: used-class c-name
+		stream write-line: ")"
 	
 	# ...
 

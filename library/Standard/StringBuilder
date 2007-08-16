@@ -13,6 +13,9 @@ fn + string
 	length += string length
 	return this
 
+add: string
+	return this + string
+
 
 prepend: string
 	substrings prepend: string
