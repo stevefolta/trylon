@@ -1,7 +1,7 @@
 trylon BuildSettings
 
 fields dictionary
-fields program-name
+fields program-name c-flags link-flags c-compiler linker
 fields jolt-sources-dir
 fields c-sources-dir objects-dir
 fields is-verbose targeting-c targeting-jolt
@@ -11,6 +11,10 @@ fields debugger
 create
 	dictionary = Dictionary new
 	program-name = "program-binary"
+	c-flags = List new
+	link-flags = List new
+	c-compiler = "gcc"
+	linker = "gcc"
 	jolt-sources-dir = ".jolt-sources"
 	c-sources-dir = ".c-sources"
 	objects-dir = ".objects"
@@ -76,6 +80,14 @@ parse-block: lexer
 				name = name substr: 0 length: name length - 1
 			if name == "program"
 				program-name = parse-name: lexer name: name
+			else if name == "c-flags"
+				parse-flags: lexer into: c-flags name: name
+			else if name == "link-flags"
+				parse-flags: lexer into: link-flags name: name
+			else if name == "c-compiler"
+				c-compiler = parse-name: lexer name: name
+			else if name == "linker"
+				linker = parse-name: lexer name: name
 			else if name == "jolt-sources-dir"
 				jolt-sources-dir = parse-name: lexer name: name
 			else if name == "c-sources-dir"

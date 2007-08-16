@@ -1,8 +1,5 @@
 trylon CCompiler
 
-status-reporter = nil
-the-compiler = nil
-
 
 mangle-name: name
 	# Certain names are reserved in C and/or C++ but not in Trylon.

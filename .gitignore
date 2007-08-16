@@ -15,4 +15,6 @@ junk
 .*.swp
 trylid.tgz
 tarball-date
+.c-sources-2
+.objects-2
 

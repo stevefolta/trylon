@@ -29,6 +29,10 @@ etc.
 		throw MessageException new: "There's an \"etc.\"!"
 	return nil
 
+fn ...
+	# Synonym for etc.
+	etc.
+
 
 
 

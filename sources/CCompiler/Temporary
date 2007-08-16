@@ -12,3 +12,8 @@ emit-declaration: stream
 access
 	return name
 
+
+index: new-index
+	# Don't do anything; we already have our index, but an IndexedResources will
+	# try to set our index when we're added to it.
+

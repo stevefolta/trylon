@@ -138,13 +138,13 @@ extend Compiler CompiledFunction
 
 	c-signature
 		signature = StringBuilder new
-		signature add: "obj_ "
-		signature add: c-name
-		signature add: "(obj_ this_"
+		signature += "obj_ "
+		signature += c-name
+		signature += "(obj_ this_"
 		for arg in arguments
-			signature add: ", obj_ "
-			signature add: (mangle-name: arg name)
-		signature add: ")"
+			signature += ", obj_ "
+			signature += (mangle-name: arg name)
+		signature += ")"
 		return signature string
 
 
@@ -265,14 +265,14 @@ extend Compiler FunctionOnThis
 			arg-results append: (arg emit-code: builder)
 		result = builder get-temporary
 		line = StringBuilder new
-		line add: result access
-		line add: " = Call_("
-		line add: (mangle-name: name)
-		line add: ", this_, "
+		line += result access
+		line += " = Call_("
+		line += (mangle-name: name)
+		line += ", this_, "
 		for arg in arg-results
-			line add: ", "
-			line add: arg access
-		line add: ");"
+			line += ", "
+			line += arg access
+		line += ");"
 		builder add-line: line string
 		return result
 

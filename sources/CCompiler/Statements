@@ -66,6 +66,12 @@ extend Compiler BlockStatement
 		builder unindent
 
 
+extend Compiler Block
+	emit-code: builder
+		for statement in statements
+			statement emit-code: builder
+
+
 extend Compiler ReturnStatement
 	emit-code: builder
 		result = value emit-code: builder
