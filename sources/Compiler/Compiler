@@ -129,6 +129,10 @@ emit-jolt
 
 
 emit-c
+	# Number the classes.
+	object-class = root-proto: main-proto
+	object-class number-classes: CCompiler ClassNumberer new
+	
 	# Emit Trylon_.c and Trylon_.h.
 	# Trylon_.h
 	recompile-all = false

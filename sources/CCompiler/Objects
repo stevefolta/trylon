@@ -1,7 +1,7 @@
 trylon Objects
 
 extend Compiler CompiledProto
-	field .c-name
+	field class-num
 
 	c-name
 		if .c-name == nil
@@ -9,6 +9,7 @@ extend Compiler CompiledProto
 			if parent && !(parent is-main)
 				.c-name = parent c-name + "__" + .c-name
 		return .c-name
+	field .c-name
 
 
 	emit-field-indices: stream
@@ -34,6 +35,13 @@ extend Compiler CompiledProto
 		if superclass
 			total += superclass total-num-fields
 		return total
+
+	number-classes: numberer
+		# Depth-first.
+		for subclass in subclasses
+			subclass number-classes: numberer
+		
+		class-num = numberer next-number
 
 
 # Copyright 2007 Steve Folta

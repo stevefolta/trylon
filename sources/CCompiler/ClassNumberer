@@ -1,0 +1,16 @@
+trylon ClassNumberer
+
+field cur-num
+
+create
+	cur-num = 0
+
+next-number
+	result = cur-num
+	cur-num += 1
+	return result
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

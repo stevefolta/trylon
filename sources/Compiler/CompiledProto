@@ -2,7 +2,7 @@ trylon CompiledProto
 superclass Context
 
 fields name parent functions fields shared-fields superclass directories
-fields uses-protos
+fields uses-protos subclasses
 fields is-main is-root-object
 
 
@@ -14,6 +14,7 @@ create: name parent: parent
 	shared-fields = Dictionary new
 	directories = List new
 	uses-protos = List new
+	subclasses = List new
 	is-main = false
 	is-root-object = false
 
@@ -86,6 +87,7 @@ make-subclass-of: superclass
 	
 	# Install the superclass.
 	this superclass = superclass
+	superclass subclasses append: this
 
 	# Automatically "use" the superclass.
 	uses-protos append: superclass
@@ -256,7 +258,7 @@ setup-main: main-directory library-directory: library-directory
 
 ensure-superclasses: object-proto
 	if superclass == nil && object-proto != this
-		superclass = object-proto
+		make-subclass-of: object-proto
 	for function in functions values
 		if function is-a: ProtoFunction
 			proto = function proto

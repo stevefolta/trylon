@@ -3,15 +3,21 @@
 /* Objects */
 
 typedef struct object* obj_;
-typedef int* classref_;
+typedef struct ClassInfo* classref_;
+
+struct ClassInfo {
+	int        	classNum;
+	obj_       	parentContext, superclass;
+	const char*	name;
+};
 
 struct object {
 	classref_	class_;
 	obj_     	fields[];
 };
 
-#define ClassNumFor_(obj) 	(*obj->class_)
-#define StdClassRef_(className) 	(&Standard__##className##__classNum_)
+#define ClassNumFor_(obj) 	(obj->class_->classNum)
+#define StdClassRef_(className) 	(&Standard__##className##__classInfo_)
 
 typedef obj_ (*fn_ptr_)();
 typedef char* byte_ptr_;
@@ -50,11 +56,14 @@ extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 	extern obj_ className##__##name##__storage_;
 
 #define UsingClass_(className) 	\
-	extern int className##__classNum_; 	\
+	extern struct ClassInfo className##__classInfo_;	 \
 	extern struct object className;
 
-extern obj_ AllocObjByClassNum_(int classNum);
-#define AllocObj_(className)	(AllocObjByClassNum_(className##__classNum_))
+#define Proto_(className) 	(&className)
+
+extern obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo);
+#define AllocObj_(className) 	\
+	(AllocObjFromClassInfo_(&className##__classInfo_))
 
 
 /* Standard objects */
