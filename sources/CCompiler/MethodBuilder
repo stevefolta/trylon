@@ -1,11 +1,13 @@
 trylon MethodBuilder
 
+fields function
 fields code temporaries loops
 fields int-literals string-literals float-literals dict-literals tuple-literals
 fields extern-declarations used-classes used-selectors used-shared-fields
 fields next-temporary-num indent-level loop-stack
 
-create
+create: function
+	this function = function
 	code = StringBuilder new
 	temporaries = IndexedResources new
 	loops = IndexedResources new

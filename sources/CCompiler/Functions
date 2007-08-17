@@ -126,7 +126,7 @@ extend Compiler CompiledFunction
 				stream write: body
 				stream write-line: "}"
 			else
-				builder = CCompiler MethodBuilder new
+				builder = CCompiler MethodBuilder new: this
 				body emit-code: builder
 				builder emit: stream
 		else

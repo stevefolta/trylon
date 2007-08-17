@@ -38,6 +38,42 @@ extend Compiler FunctionCall
 		return function emit-c-call: arguments builder: builder
 
 
+extend Compiler SuperCall
+	emit-code: builder
+		superclass = builder function on-proto superclass
+		if superclass == nil
+			throw MessageException new: 	--
+				"Attempt to do a super call on a class with no superclass."
+		fn-name = (mangle-name: name) + "__" + superclass c-name
+
+		# Declare it.
+		declaration = StringBuilder new
+		declaration += "obj_ "
+		declaration += fn-name
+		declaration += "(obj_"
+		for arg in arguments
+			declaration += ", obj_"
+		declaration += ");"
+		builder add-extern-declaration: declaration string
+
+		# Call it.
+		arg-results = List new
+		for arg in arguments
+			arg-results append: (arg emit-code: builder)
+		result = builder get-temporary
+		line = StringBuilder new
+		line += result access
+		line += " = "
+		line += fn-name
+		line += "(this_"
+		for arg in arg-results
+			line += ", "
+			line += arg access
+		line += ");"
+		builder add-line: line string
+		return result
+
+
 
 ##### Literals #####
 
