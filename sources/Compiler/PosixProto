@@ -35,7 +35,7 @@ class PosixProtoFunction
 		expr at: 3 put: body
 		return expr
 
-	iff in-trylid
+	iff targeting-jolt
 		translate-call: arguments compiler: compiler
 			return 	--
 				Send new: name object: (ExistingProto new: Posix) arguments: arguments

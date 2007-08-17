@@ -508,7 +508,7 @@ parse-type-spec
 
 	# Make sure we got a proto.
 	okay = type is-a: CompiledProto
-	iff in-trylid
+	iff targeting-jolt
 		if !okay
 			okay = type is-a: ExistingProto
 	if !okay
