@@ -20,21 +20,23 @@ emit
 		build-settings c-sources-dir + "/" + proto full-name + ".c"
 	stream = ExistingFileStream new: c-file-name
 	emit-on: stream
+	need-recompile = stream is-changed
 	stream close
 
 	# Compile the C code.
-	status-reporter report: "Compiling " + proto full-name + ".c..."
-	args = List new
-	args append: "-c"
-	args append: c-file-name
-	args append: "-o"
-	args append: object-file-name
-	for flag in build-settings c-flags
-		args append: flag
-	report-run-program: build-settings c-compiler arguments: args
-	status = System run-program: build-settings c-compiler arguments: args
-	if status != 0
-		throw MessageException new: "C compilation failed."
+	if need-recompile || !((File new: object-file-name) exists)
+		status-reporter report: "Compiling " + proto full-name + ".c..."
+		args = List new
+		args append: "-c"
+		args append: c-file-name
+		args append: "-o"
+		args append: object-file-name
+		for flag in build-settings c-flags
+			args append: flag
+		report-run-program: build-settings c-compiler arguments: args
+		status = System run-program: build-settings c-compiler arguments: args
+		if status != 0
+			throw MessageException new: "C compilation failed."
 
 
 emit-on: stream
