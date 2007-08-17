@@ -7,7 +7,7 @@ typedef int* classref_;
 
 struct object {
 	classref_	class_;
-	obj_     	fields[1];
+	obj_     	fields[];
 };
 
 #define ClassNumFor_(obj) 	(*obj->class_)

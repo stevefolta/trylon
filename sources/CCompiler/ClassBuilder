@@ -41,6 +41,24 @@ emit-on: stream
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
 
+	# Prototype.
+	stream write: "UsingClass_("
+	stream write: proto c-name
+	stream write: ")\n"
+	stream write: "struct object "
+	stream write: proto c-name
+	stream write: " = { &"
+	stream write: proto c-name
+	stream write: "__classNum_, {"
+	num-fields = proto total-num-fields
+	i = 0
+	while i < num-fields
+		if i > 0
+			stream write: ", "
+		stream write: "nil"
+		i += 1
+	stream write: "} };\n"
+
 	# Fields.
 	proto emit-field-indices: stream
 	for field in proto shared-fields values

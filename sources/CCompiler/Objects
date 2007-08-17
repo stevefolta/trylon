@@ -29,6 +29,11 @@ extend Compiler CompiledProto
 		return index
 
 
+	total-num-fields
+		total = fields count
+		if superclass
+			total += superclass total-num-fields
+		return total
 
 
 # Copyright 2007 Steve Folta
