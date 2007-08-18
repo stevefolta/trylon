@@ -164,6 +164,18 @@ emit-c
 		objects append: builder object-file-name
 	status-reporter unindent
 
+	# Link.
+	status-reporter report: "Linking..."
+	args = List new
+	args append: "-o"
+	args append: build-settings program-name
+	for object-file in objects
+		args append: object-file
+	for flag in build-settings link-flags
+		args append: flag
+	CCompiler report-run-program: build-settings linker arguments: args
+	System run-program: build-settings linker arguments: args
+
 
 root-proto: main-proto
 	# Find "Standard Object".
