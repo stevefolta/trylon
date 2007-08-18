@@ -9,5 +9,5 @@ extend Standard String
 		return BuildInt_(strtoul(CString_(this_), nil, 0));
 	
 	c-fn float
-		return BuildFloat_(strtod(CString(this_), nil));
+		return BuildFloat_(strtod(CString_(this_), nil));
 

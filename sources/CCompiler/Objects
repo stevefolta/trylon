@@ -1,7 +1,7 @@
 trylon Objects
 
 extend Compiler CompiledProto
-	field class-num
+	field class-num c-preamble
 
 	c-name
 		if .c-name == nil

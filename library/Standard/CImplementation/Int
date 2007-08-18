@@ -2,70 +2,68 @@ trylon Int
 
 extend Standard Int
 	c-preamble
-		#define Val	(*(int*) &Field_(0))
-		#define SetVal(value)	(*(int*) &Field_(0) = value)
-		#define ValOf(obj)	(*(int*) &FieldOf(obj, 0))
-		#define SetValOf(obj, value)	(*(int*) &FieldOf(obj, 0) = value)
+		#include <stdio.h>
+		#define Val	(IntValue_(this_))
 
 	c-fn new
-		return AllocObjExtra_(Proto_(Standard__Int), 1);
+		return CloneObjExtra_(Proto_(Standard__Int), 1);
 	
 
 	c-fn + other
-		return BuildInt_(Val + ValOf(other));
+		return BuildInt_(Val + IntValue_(other));
 
 	c-fn - other
-		return BuildInt_(Val - ValOf(other));
+		return BuildInt_(Val - IntValue_(other));
 
 	c-fn * other
-		return BuildInt_(Val * ValOf(other));
+		return BuildInt_(Val * IntValue_(other));
 
 	c-fn / other
-		return BuildInt_(Val / ValOf(other));
+		return BuildInt_(Val / IntValue_(other));
 
 	c-fn % other
-		return BuildInt_(Val % ValOf(other));
+		return BuildInt_(Val % IntValue_(other));
 
 	c-fn unary-minus
-		return BuildInt(-Val);
+		return BuildInt_(-Val);
 	
 
 	c-fn == other
-		return Bool_(Val == ValOf(other))
+		return Bool_(Val == IntValue_(other));
 
 	c-fn != other
-		return Bool_(Val == ValOf(other))
+		return Bool_(Val == IntValue_(other));
 
 	c-fn < other
-		return Bool_(Val < ValOf(other))
+		return Bool_(Val < IntValue_(other));
 
 	c-fn <= other
-		return Bool_(Val <= ValOf(other))
+		return Bool_(Val <= IntValue_(other));
 
 	c-fn > other
-		return Bool_(Val > ValOf(other))
+		return Bool_(Val > IntValue_(other));
 
 	c-fn >= other
-		return Bool_(Val >= ValOf(other))
+		return Bool_(Val >= IntValue_(other));
 
 
 	c-fn | other
-		return BuildInt_(Val | ValOf(other));
+		return BuildInt_(Val | IntValue_(other));
 
 	c-fn & other
-		return BuildInt_(Val & ValOf(other));
+		return BuildInt_(Val & IntValue_(other));
 
 	c-fn ^ other
-		return BuildInt_(Val ^ ValOf(other));
+		return BuildInt_(Val ^ IntValue_(other));
 	
 	c-fn ~
 		return BuildInt_(~Val);
 	
 	c-fn << other
-		return BuildInt_(Val << ValOf(other));
+		return BuildInt_(Val << IntValue_(other));
 
 	c-fn >> other
-		return BuildInt_(Val >> ValOf(other));
+		return BuildInt_(Val >> IntValue_(other));
 
 
 	c-fn string

@@ -2,12 +2,12 @@ trylid Int
 
 # Just about all of these are primitives defined elsewhere.
 
-fn == arg (Int) -> Bool
-fn != arg (Int) -> Bool
-fn < arg (Int) -> Bool
-fn > arg (Int) -> Bool
-fn <= arg (Int) -> Bool
-fn >= arg (Int) -> Bool
+fn == arg (Int)
+fn != arg (Int)
+fn < arg (Int)
+fn > arg (Int)
+fn <= arg (Int)
+fn >= arg (Int)
 
 fn + arg (Int) -> Int
 fn - arg (Int) -> Int

@@ -301,6 +301,12 @@ parse-proto-contents: the-proto
 				consume-token
 			consume-token
 
+		else if name == "c-preamble"
+			if !(the-compiler build-settings targeting-c)
+				parse-error: "c-preamble not allowed when not targeting C."
+			consume-token
+			the-proto c-preamble = get-subblock string
+
 		else
 			parse-proto-member: the-proto
 	
@@ -403,10 +409,11 @@ parse-function: at-declarator
 	# primitiveness.
 	is-primitive = false
 	if at-declarator
+		log: "declarator: " + current-token text
 		if current-token text starts-with: "c-"
-			iff !targetting-c
+			if !the-compiler build-settings targeting-c
 				parse-error: "Can't declare a \"c-function\" when not targetting C."
-			iff targetting-c
+			if the-compiler build-settings targeting-c
 				is-primitive = true
 		consume-token
 	
@@ -457,8 +464,6 @@ parse-function: at-declarator
 		consume-token
 		return-type = parse-type-spec
 	
-	require-eol
-
 	report: "Parsing " + name + "..."
 
 	# Parse the body.
@@ -467,6 +472,7 @@ parse-function: at-declarator
 	if is-primitive
 		body = get-subblock string
 	else
+		require-eol
 		saved-context = context
 		method-context = 	--
 			MethodContext new: arguments parent: context

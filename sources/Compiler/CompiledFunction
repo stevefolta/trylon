@@ -46,7 +46,7 @@ translate-call: arguments compiler: compiler
 
 
 prepare-to-emit
-	if body
+	if body && !is-primitive
 		body prepare-to-emit
 
 

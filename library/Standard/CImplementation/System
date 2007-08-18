@@ -66,6 +66,7 @@ extend Standard System
 
 	c-fn current-directory-path: new-path
 		UsingMethod_(_pl_)
+		UsingClass_(Standard__MessageException)
 		extern obj_ new_co___Standard__MessageException(obj_, obj_);
 
 		char* dirPath = CString_(new_path);

@@ -172,6 +172,8 @@ UsingClass_(Standard__Dictionary__Node)
 
 #define true_	(&Standard__Object)
 #define Not_(object)	(object ? nil : true_)
+#define Bool_(value)	(value ? true_ : nil)
+
 
 
 /* Statements */
@@ -241,6 +243,29 @@ extern void PopException_();
 
 #define EndSwitch_ 	\
 	}
+
+
+/* Helpers for primitives. */
+
+#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
+#define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
+#define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
+
+extern obj_ BuildInt_(int value);
+extern obj_ BuildFloat_(double value);
+extern obj_ BuildBytePtr_(byte_ptr_ value);
+extern obj_ BuildString_(const char* cString); 	// Will copy the string.
+extern obj_ BuildStringOfLength_(const char* cString, unsigned int length);
+	// Will copy the string.
+extern obj_ BuildStringStartStopper_(const char* start, const char* stopper);
+	// Will not copy the string.
+extern char* CString_(obj_ str);
+extern void* Allocate_(int numBytes);
+extern void* AllocNonPtr_(int numBytes);
+
+extern obj_ CloneObj_(obj_ object);
+extern obj_ CloneObjExtra_(obj_ object, int numExtraFields);
+
 
 
 /*
