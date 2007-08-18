@@ -249,7 +249,8 @@ setup-main: main-directory library-directory: library-directory
 			parser parse-proto-file: this
 	
 	# Load up standard protos.
-	for proto-name in ("BytePtr", "String", "Symbol", "Tuple", "List")
+	std-protos = ("BytePtr", "Int", "String", "Float", "Symbol", "Tuple", "List")
+	for proto-name in std-protos
 		standard-proto lookup-function: proto-name
 	
 	# Self.

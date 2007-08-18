@@ -3,7 +3,7 @@
 program = "trylid"
 debugging = true
 
-iff !in-trylid
+iff !targeting-jolt
 	# Trylon boilerplate.
 	c-flags += "-g"
 	link-flags += "-lgc" "-ldl" "-lm"

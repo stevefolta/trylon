@@ -95,7 +95,7 @@ extend Standard System
 		int argNum = 1;
 		obj_ iterator = Call_(iterator, arguments);
 		while (1) {
-			if (Test_(Call_(is_done, iterator)))
+			if (Call_(is_done, iterator))
 				break;
 
 			obj_ arg = Call_(current_item, iterator);

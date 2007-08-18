@@ -250,6 +250,10 @@ extern void PopException_();
 #define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
+#define StringStart_(obj) 	\
+	(BytePtrValue_(((struct Standard__String__internal*) obj)->start))
+#define StringStopper_(obj) 	\
+	(BytePtrValue_(((struct Standard__String__internal*) obj)->stopper))
 
 extern obj_ BuildInt_(int value);
 extern obj_ BuildFloat_(double value);
