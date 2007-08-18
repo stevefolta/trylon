@@ -133,8 +133,7 @@ emit-c
 	object-class = root-proto: main-proto
 	object-class number-classes: CCompiler ClassNumberer new
 	
-	# Emit Trylon_.c and Trylon_.h.
-	# Trylon_.h
+	# Copy Trylon_.h.
 	recompile-all = false
 	library-path = find-library-path
 	contents = (File new: library-path + "/Trylon_.h") contents
@@ -143,7 +142,17 @@ emit-c
 	if stream is-changed
 		recompile-all = true
 	stream close
-	# ...
+
+	# Copy and compile Trylon_.c.
+	contents = (File new: library-path + "/Trylon_.c") contents
+	c-file-name = build-settings c-sources-dir + "/Trylon_.c"
+	stream = ExistingFileStream new: c-file-name
+	stream write: contents
+	compile-trylon-c = (stream is-changed || recompile-all)
+	stream close
+	objects = List new
+	objects append: 	--
+		(CCompiler compile-c-file: "Trylon_" force-compile: compile-trylon-c)
 
 	# Emit the classes and packages.
 	status-reporter report: "Emitting code..."
@@ -151,8 +160,8 @@ emit-c
 	for proto in proto-queue
 		status-reporter report: "Emitting C for " + proto name + "..."
 		builder = CCompiler ClassBuilder new: proto
-		is-changed = builder emit
-		# ...
+		builder emit
+		objects append: builder object-file-name
 	status-reporter unindent
 
 
@@ -167,21 +176,6 @@ root-proto: main-proto
 	if !(object-function is-a: ProtoFunction)
 		throw MessageException new: "Standard Object is not a prototype!"
 	return object-function proto
-
-
-report-run-program: program arguments: args
-	if build-settings is-verbose
-		status-reporter indent
-
-		command = StringBuilder new
-		command += program
-		command += " "
-		for arg in args
-			command += arg
-			command += " "
-		status-reporter report: command string
-
-		status-reporter unindent
 
 
 get-standard-class: name

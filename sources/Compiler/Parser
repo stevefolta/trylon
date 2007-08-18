@@ -409,7 +409,6 @@ parse-function: at-declarator
 	# primitiveness.
 	is-primitive = false
 	if at-declarator
-		log: "declarator: " + current-token text
 		if current-token text starts-with: "c-"
 			if !the-compiler build-settings targeting-c
 				parse-error: "Can't declare a \"c-function\" when not targetting C."

@@ -122,6 +122,41 @@ extend Compiler
 		return CCompiler mangle-name: name
 
 
+compile-c-file: name force-compile: force-compile
+	build-settings = the-compiler build-settings
+	object-file-name = build-settings objects-dir + "/" + name + ".o"
+	if force-compile || !((File new: object-file-name) exists)
+		status-reporter report: "Compiling " + name + ".c..."
+		args = List new
+		args append: "-c"
+		args append: build-settings c-sources-dir + "/" + name + ".c"
+		args append: "-o"
+		args append: object-file-name
+		for flag in build-settings c-flags
+			args append: flag
+		report-run-program: build-settings c-compiler arguments: args
+		status = System run-program: build-settings c-compiler arguments: args
+		if status != 0
+			throw MessageException new: "C compilation failed."
+
+	return object-file-name
+
+
+report-run-program: program arguments: args
+	if the-compiler build-settings is-verbose
+		status-reporter indent
+
+		command = StringBuilder new
+		command += program
+		command += " "
+		for arg in args
+			command += arg
+			command += " "
+		status-reporter report: command string
+
+		status-reporter unindent
+
+
 report: message
 	status-reporter report: message
 
