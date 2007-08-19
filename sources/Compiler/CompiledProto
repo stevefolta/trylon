@@ -128,9 +128,10 @@ add-field: field
 
 add-shared-field: field
 	shared-fields at: field name put: field
-	functions at: field name put: (SharedFieldGetter new: field on-proto: this)
-	functions 	--
-		at: field name + ":" put: (SharedFieldSetter new: field on-proto: this)
+	add-function: field name 	--
+		function: (SharedFieldGetter new: field on-proto: this)
+	add-function: field name + ":" 	--
+		function: (SharedFieldSetter new: field on-proto: this)
 
 
 add-proto: name directory: directory
@@ -150,7 +151,7 @@ add-proto: name directory: directory
 	if directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto
-	functions at: name put: proto-function
+	add-function: name function: proto-function
 	the-compiler proto-queue append: new-proto
 	status-reporter unindent
 	return new-proto
