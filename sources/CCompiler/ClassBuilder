@@ -52,12 +52,15 @@ emit-on: stream
 	if proto superclass
 		stream write-all: ("UsingClass_(", proto superclass c-name, ")\n")
 		superclass-ref = "Proto_(" + proto superclass c-name + ")"
+	stream write-all: ("UsingClass_(", proto c-name, ")\n")
 	stream write: "struct ClassInfo "
 	stream write: proto c-name
 	stream write: "__classInfo_ = \n\t{ "
 	stream write: proto class-num string
 	stream write: ", "
 	stream write: (proto total-num-fields * 4) string
+	stream write: ", "
+	stream write-all: ("Proto_(", proto c-name, ")")
 	stream write: ", "
 	stream write: parent-context-ref
 	stream write: ", "

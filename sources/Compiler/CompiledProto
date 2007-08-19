@@ -19,8 +19,9 @@ create: name parent: parent
 	is-root-object = false
 
 	# Will be added by Jolt code:
-	add-function: (PrimitiveFunction new: ".proto" on-proto: this)
-	add-function: (PrimitiveFunction new: ".parent-proto" on-proto: this)
+	if build-settings targeting-jolt
+		add-function: (PrimitiveFunction new: ".proto" on-proto: this)
+		add-function: (PrimitiveFunction new: ".parent-proto" on-proto: this)
 
 
 lookup-function: name
@@ -112,6 +113,7 @@ add-function: function
 		# Add the corresponding "new" function.
 		new-function = NewFunction new: function on-proto: this
 		(functions at: new-function name) = new-function
+		the-compiler declaring-selector: new-function name
 
 
 add-function: name function: function

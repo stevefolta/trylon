@@ -8,7 +8,7 @@ typedef struct ClassInfo* classref_;
 struct ClassInfo {
 	int        	classNum;
 	int        	size;
-	obj_       	parentContext, superclass;
+	obj_       	proto, parentContext, superclass;
 	const char*	name;
 };
 

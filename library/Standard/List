@@ -134,11 +134,12 @@ clear
 	last-cell = nil
 
 
-each: block
-	cell = first-cell
-	while cell
-		block do-with: cell object
-		cell = cell next
+iff not-yet
+	each: block
+		cell = first-cell
+		while cell
+			block do-with: cell object
+			cell = cell next
 
 
 

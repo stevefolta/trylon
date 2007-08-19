@@ -9,5 +9,11 @@ extend Standard Object
 	
 	c-fn same-as: other
 		return Bool_(this_ == other);
+	
+	c-fn .proto
+		return this_->class_->proto;
+	
+	c-fn .parent-proto
+		return this_->class_->superclass;
 
 
