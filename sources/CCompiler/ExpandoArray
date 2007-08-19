@@ -1,0 +1,78 @@
+trylon ExpandoArray
+
+fields blocks num-blocks num-items block-size
+
+
+create: block-size
+	this block-size = block-size
+	num-items = 0
+	num-blocks = 1
+	blocks = BytePtr new: 4 * num-blocks
+	(blocks ptr-at: 0) = BytePtr new: 4 * block-size
+
+
+create
+	create: 128
+
+
+at: index
+	which-block = index / block-size
+	if which-block >= num-blocks
+		return nil
+	return 	--
+		(blocks ptr-at: which-block) object-at: index % block-size
+
+
+at: index set-to: object
+	which-block = index / block-size
+	if which-block >= num-blocks
+		expand: which-block + 1
+	
+	((blocks ptr-at: which-block) object-at: index % block-size) = object
+
+	if index >= num-items
+		num-items = index + 1
+
+
+iterator
+	return Iterator new: this
+
+
+expand: new-num-blocks
+	# Copy the existing "blocks".
+	new-blocks = BytePtr new: 4 * new-num-blocks
+	new-blocks copy-from: blocks length: 4 * num-blocks
+
+	# Add the new blocks.
+	which-block = num-blocks
+	while which-block < new-num-blocks
+		(new-blocks ptr-at: which-block) = BytePtr new: 4 * block-size
+		which-block += 1
+	
+	# Install the new "blocks".
+	blocks = new-blocks
+	num-blocks = new-num-blocks
+
+
+class Iterator
+	fields array index
+
+	create: array
+		this array = array
+		index = 0
+	
+	is-done
+		return index >= array num-items
+	
+	current-item
+		return array at: index
+	
+	go-forward
+		index += 1
+
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

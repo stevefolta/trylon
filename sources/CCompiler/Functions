@@ -8,6 +8,20 @@ extend Compiler TrylidFunction
 		# By default, do nothing.
 		# (Not all functions result in object code.)
 
+	# Helper.
+
+	c-signature: c-name arguments: arguments
+		signature = StringBuilder new
+		signature += "obj_ "
+		signature += c-name
+		signature += "(obj_ this_"
+		for arg in arguments
+			signature += ", obj_ "
+			signature += (mangle-name: arg name)
+		signature += ")"
+		return signature string
+	
+
 
 ##### Object structure
 
@@ -16,9 +30,7 @@ extend Compiler FieldGetter
 		return CCompiler LiteralResult new: this
 	
 	emit-c-function-on: stream
-		mangled-name = mangle-name: field name
-		stream write-all: 	--
-			("obj_ ", mangled-name, "__", on-proto c-name, "(obj_ this_)\n")
+		stream write-line: c-signature
 		stream write: "{\n"
 		stream write: "\treturn " + access + ";\n"
 		stream write: "}\n"
@@ -27,6 +39,12 @@ extend Compiler FieldGetter
 	
 	access
 		return "Field_(" + (mangle-name: field name) + ")"
+	
+	c-signature
+		return "obj_ " + c-name + "(obj_ this_)"
+	
+	c-name
+		return (mangle-name: field name) + "__" + on-proto c-name
 
 
 extend Compiler FieldSetter
@@ -37,16 +55,19 @@ extend Compiler FieldSetter
 		return value
 	
 	emit-c-function-on: stream
-		mangled-name = mangle-name: name
-		stream write-all: 	--
-			("obj_ ", mangled-name, "__", on-proto c-name, 	--
-			 "(obj_ this_, obj_ value)\n")
+		stream write-line: c-signature
 		stream write: "{\n"
 		stream write-all: ("\tField_(", (mangle-name: field name), ") = value;\n")
 		stream write: "\treturn value;\n"
 		stream write: "}\n"
 		stream write-line
 		stream write-line
+	
+	c-signature
+		return "obj_ " + c-name + "(obj_ this_, obj_ value)"
+	
+	c-name
+		return (mangle-name: name) + "__" + on-proto c-name
 
 
 extend Compiler SharedFieldGetter
@@ -55,8 +76,7 @@ extend Compiler SharedFieldGetter
 		return CCompiler LiteralResult new: this
 	
 	emit-c-function-on: stream
-		stream write-all: 	--
-			("obj_ ", (mangle-name: name), "__", on-proto c-name, "(obj_ this_)\n")
+		stream write-line: c-signature
 		stream write: "{\n"
 		stream write-all: ("\treturn ", access, ";\n")
 		stream write: "}\n"
@@ -67,6 +87,12 @@ extend Compiler SharedFieldGetter
 		return 	--
 			"SharedField_(" + 	--
 			(mangle-name: field name) + ", " + on-proto c-name + ")"
+
+	c-signature
+		return "obj_ " + c-name + "(obj_ this_)"
+	
+	c-name
+		return (mangle-name: field name) + "__" + on-proto c-name
 
 
 extend Compiler SharedFieldSetter
@@ -80,9 +106,7 @@ extend Compiler SharedFieldSetter
 		return value
 	
 	emit-c-function-on: stream
-		stream write-all: 	--
-			("obj_ ", (mangle-name: name), "__", on-proto c-name, 	--
-			 "(obj_ this_, obj_ value)\n")
+		stream write-line: c-signature
 		stream write: "{\n"
 		stream write-all: 	--
 			("\tSetSharedField_(", 	--
@@ -92,6 +116,12 @@ extend Compiler SharedFieldSetter
 		stream write: "}\n"
 		stream write-line
 		stream write-line
+
+	c-signature
+		return "obj_ " + c-name + "(obj_ this_, obj_ value)"
+	
+	c-name
+		return (mangle-name: name) + "__" + on-proto c-name
 
 
 extend Compiler CompiledFunction
@@ -138,15 +168,7 @@ extend Compiler CompiledFunction
 		return (mangle-name: name) + "__" + on-proto c-name
 
 	c-signature
-		signature = StringBuilder new
-		signature += "obj_ "
-		signature += c-name
-		signature += "(obj_ this_"
-		for arg in arguments
-			signature += ", obj_ "
-			signature += (mangle-name: arg name)
-		signature += ")"
-		return signature string
+		return c-signature: c-name arguments: arguments
 
 
 extend Compiler ProtoFunction
@@ -156,6 +178,16 @@ extend Compiler ProtoFunction
 	
 	access
 		return "Proto_(" + proto c-name + ")"
+	
+	c-signature
+		return "obj_ " + c-name + "(obj_ this_)"
+
+	c-name
+		name = mangle-name: proto name
+		parent = proto parent
+		if parent
+			name += "__" + parent c-name
+		return name
 
 
 extend Compiler NewFunction
@@ -207,11 +239,21 @@ extend Compiler NewFunction
 		stream write: ");\n"
 		stream write: "\treturn obj;\n"
 		stream write: "}\n\n\n"
+	
+	c-signature
+		return c-signature: c-name arguments: creator arguments
+	
+	c-name
+		return (mangle-name: name) + "__" + on-proto c-name
+
 
 
 extend Compiler NilFunction
 	emit-c-call: arguments builder: builder
 		return CCompiler NameResult new: "nil"
+	
+	c-signature
+		return "Standard__nil"
 
 extend Compiler BoolLiteralFunction
 	emit-c-call: arguments builder: builder
@@ -219,6 +261,17 @@ extend Compiler BoolLiteralFunction
 			return CCompiler NameResult new: "true_"
 		else
 			return CCompiler NameResult new: "nil"
+	
+	c-signature
+		if value
+			return "Standard__true"
+		else
+			return "Standard__false"
+
+
+extend Compiler PrimitiveFunction
+	c-signature
+		return on-proto c-name + "__" + (mangle-name: name)
 
 
 

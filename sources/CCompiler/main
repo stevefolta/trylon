@@ -122,6 +122,88 @@ extend Compiler
 		return CCompiler mangle-name: name
 
 
+# Program building.
+
+emit-dispatch-table: main-package
+	status-reporter report: "Building dispatch table..."
+	status-reporter indent
+	
+	object-class = the-compiler root-proto: main-package
+
+	# Gather up the rows.
+	status-reporter report: "Gathering rows."
+	rows = DispatchRowSet new
+	for fn-name in the-compiler selector-names keys
+		# Create the row and fill it in.
+		row = DispatchRow new: fn-name
+		object-class setup-dispatch-row: row inherited-function: nil
+
+		# Add the row.
+		rows add: row
+	
+	# Fit the rows.
+	# "rows" has the rows sorted by number of entries.
+	status-reporter report: "Fitting rows."
+	dispatch-table = ExpandoArray new
+	used-offsets = ExpandoBitmap new
+	for row in rows
+		iff not-anymore
+			status-reporter report: "Fitting " + row name + "..."
+		row fit-into: dispatch-table used-offsets: used-offsets
+	
+	status-reporter unindent
+	
+	# Now, emit the "methods_.c" file.
+	status-reporter report: "Emitting dispatch table..."
+
+	# Create the file.
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/methods_.c")
+	stream write-line: "#include \"Trylon_.h\""
+	stream write-line
+
+	# Define all selectors.
+	for row in rows
+		stream write: "DefineSelector_("
+		stream write: (mangle-name: row name)
+		stream write: ", "
+		stream write: row selector string
+		stream write: ")"
+		stream write-line
+	stream write-line
+	
+	# Declare all functions.
+	object-class emit-all-instance-function-declarations: stream
+	stream write-line
+
+	# Emit the dispatch table.
+	num-filled = 0
+	stream write-line: "struct RDTableEntry_ dispatchTable_[] = {"
+	for entry in dispatch-table
+		if entry == nil
+			stream write-line: "\t{ nil, nil },"
+			continue
+
+		stream write-all: 	--
+			("\t{ ", entry function c-name, ", ", entry selector string, " },\n")
+		num-filled += 1
+	stream write-line: "};"
+	stream write-line
+
+	fill-rate = num-filled float / dispatch-table num-items float
+	stream write-all: 	--
+		("/* Fill rate: ", fill-rate string, "/", 	--
+		 dispatch-table num-items string, ") */\n")
+	
+	# Finish up "methods_.c".
+	is-changed = stream is-changed
+	stream close
+
+
+
+# C Compilation.
+
 compile-c-file: name force-compile: force-compile
 	build-settings = the-compiler build-settings
 	object-file-name = build-settings objects-dir + "/" + name + ".o"

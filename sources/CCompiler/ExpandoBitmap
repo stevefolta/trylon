@@ -1,0 +1,82 @@
+trylon ExpandoBitmap
+
+fields bitmap num-bytes growth-increment
+
+
+create
+	growth-increment = 64
+	num-bytes = growth-increment
+	bitmap = BytePtr new: num-bytes
+
+
+at: index
+	which-byte = index / 8
+	if which-byte > num-bytes
+		return false
+	
+	return ((bitmap byte-at: which-byte) & (1 << (index % 8))) != 0
+
+
+at: index set-to: value
+	which-byte = index / 8
+	if which-byte > num-bytes
+		expand: which-byte + 1
+	
+	mask = 1 << (index % 8)
+	if value
+		(bitmap byte-at: which-byte) |= mask
+	else
+		(bitmap byte-at: which-byte) &= ~mask
+
+
+next-clear-from: index
+	which-int = index / 32
+	num-ints = num-bytes / 4
+
+	# Check the rest of the word containing "index".
+	word = bitmap int-at: which-int
+	if word != 0xFFFFFFFF
+		mask = 1 << (index % 32)
+		while mask != 0
+			if (word & mask) == 0
+				return index
+			index += 1
+			mask <<= 1
+	else
+		index += 32 - (index % 32)
+
+	# Check the rest of the words.
+	which-int += 1
+	while which-int < num-ints
+		word = bitmap int-at: which-int
+		if word != 0xFFFFFFFF
+			mask = 1
+			while mask != 0
+				if (word & mask) == 0
+					return index
+				index += 1
+				mask <<= 1
+		index += 32
+		which-int += 1
+
+	# Not in the allocated area.
+	return index
+
+
+expand: needed-num-bytes
+	new-num-bytes = num-bytes + growth-increment
+	while new-num-bytes < needed-num-bytes
+		new-num-bytes += growth-increment
+	
+	new-bitmap = BytePtr new: new-num-bytes
+	new-bitmap copy-from: bitmap length: num-bytes
+
+	bitmap = new-bitmap
+	num-bytes = new-num-bytes
+
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

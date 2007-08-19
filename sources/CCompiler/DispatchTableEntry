@@ -1,0 +1,14 @@
+trylon DispatchTableEntry
+
+fields function selector
+
+
+create: function selector: selector
+	this function = function
+	this selector = selector
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

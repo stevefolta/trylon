@@ -30,6 +30,33 @@ extend Compiler CompiledProto
 		return index
 
 
+	setup-dispatch-row: row inherited-function: inherited-function
+		# Find the function.
+		function = functions at: row name
+		if function == nil
+			function = inherited-function
+		
+		# Do this in depth-first order, which is the same order as the class 
+		# numbers.  By doing that, we don't need a separate step for sorting 
+		# by class number.
+
+		for subclass in subclasses
+			subclass setup-dispatch-row: row inherited-function: function
+		
+		if function
+			row append: class-num function: function
+
+
+	emit-all-instance-function-declarations: stream
+		for function in functions values
+			stream write: "extern "
+			stream write: function c-signature
+			stream write-line: ";"
+		
+		for subclass in subclasses
+			subclass emit-all-instance-function-declarations: stream
+
+
 	total-num-fields
 		total = fields count
 		if superclass

@@ -62,6 +62,10 @@ iff targeting-jolt
 status-reporter
 	return the-compiler status-reporter
 
+build-settings
+	return the-compiler build-settings
+
+
 debug: message
 	iff debugging
 		print-line: message

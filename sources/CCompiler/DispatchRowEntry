@@ -1,0 +1,14 @@
+trylon DispatchRowEntry
+
+fields class-num function
+
+
+create: class-num function: function
+	this class-num = class-num
+	this function = function
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

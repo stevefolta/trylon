@@ -102,6 +102,7 @@ add-function: function
 				"\"" + this name + " " + function-name + "\" is defined twice."
 
 	functions at: function-name put: function
+	the-compiler declaring-selector: name
 
 	# "create" functions automatically add a corresponding "new:" function.
 	if (function is-a: CompiledFunction) && 	--
@@ -115,6 +116,7 @@ add-function: function
 
 add-function: name function: function
 	functions at: name put: function
+	the-compiler declaring-selector: name
 
 
 add-field: field

@@ -1,0 +1,46 @@
+trylon DispatchRow
+
+fields name entries num-entries selector
+
+
+create: name
+	this name = name
+	this entries = List new
+	this num-entries = 0
+
+
+append: class-num function: function
+	entries append: (DispatchRowEntry new: class-num function: function)
+	num-entries += 1
+
+
+fit-into: dispatch-table used-offsets: used-offsets
+	# Find the offset.
+	# Very slow method.
+	offset = 0
+	loop
+		offset = used-offsets next-clear-from: offset
+
+		fits-here = true
+		for entry in entries
+			if (dispatch-table at: offset + entry class-num) != nil
+				fits-here = false
+				break
+		if fits-here
+			break
+
+		offset += 1
+	
+	# Install the entries.
+	selector = offset
+	for entry in entries
+		(dispatch-table at: offset + entry class-num) = 	--
+			DispatchTableEntry new: entry function selector: offset
+	(used-offsets at: offset) = true
+
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
