@@ -90,9 +90,6 @@ make-subclass-of: superclass
 	this superclass = superclass
 	superclass subclasses append: this
 
-	# Automatically "use" the superclass.
-	uses-protos append: superclass
-
 
 add-function: function
 	function-name = function name
