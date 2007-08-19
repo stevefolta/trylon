@@ -73,5 +73,14 @@ extend Standard Int
 	
 	c-fn float
 		return BuildFloat_(Val);
+	
+	c-fn is-digit
+		int val = Val;
+		return Bool_(val >= '0' && val <= '9');
+	
+	c-fn is-whitespace
+		int val = Val;
+		return Bool_(val == ' ' || val == '\t' || val == '\n' || val == '\r');
+
 
 

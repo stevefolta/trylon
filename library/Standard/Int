@@ -25,7 +25,8 @@ fn >> arg (Int) -> Int
 
 fn string
 fn float
-fn char
+fn is-digit
+fn is-whitespace
 
 
 
