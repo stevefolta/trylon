@@ -270,8 +270,11 @@ extend Compiler BoolLiteralFunction
 
 
 extend Compiler PrimitiveFunction
-	c-signature
+	c-name
 		return on-proto c-name + "__" + (mangle-name: name)
+	
+	c-signature
+		return "obj_ " + c-name + "(obj_ this_)"
 
 
 

@@ -47,14 +47,14 @@ extend Compiler CompiledProto
 			row append: class-num function: function
 
 
-	emit-all-instance-function-declarations: stream
+	emit-all-function-declarations: stream
 		for function in functions values
 			stream write: "extern "
 			stream write: function c-signature
 			stream write-line: ";"
 		
 		for subclass in subclasses
-			subclass emit-all-instance-function-declarations: stream
+			subclass emit-all-function-declarations: stream
 
 
 	total-num-fields

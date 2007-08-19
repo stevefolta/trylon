@@ -174,7 +174,7 @@ emit-dispatch-table: main-package
 	stream write-line
 	
 	# Declare all functions.
-	object-class emit-all-instance-function-declarations: stream
+	object-class emit-all-function-declarations: stream
 	stream write-line
 
 	# Emit the dispatch table.
