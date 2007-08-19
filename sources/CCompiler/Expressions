@@ -136,6 +136,7 @@ extend Compiler SymbolLiteral
 
 	emit-code: builder
 		mangled-name = mangle-name: name
+		the-compiler using-symbol: name
 		builder add-extern-declaration: "UsingSym_(" + mangled-name + ")"
 		return 	--
 			CCompiler NameResult new: "Sym_(" + mangled-name + ")" is-constant: true

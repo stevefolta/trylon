@@ -5,7 +5,7 @@ trylon Compiler
 # always treats directories as packages, never as classes.
 
 fields successful build-settings
-fields proto-queue main-proto selector-names 
+fields proto-queue main-proto selector-names symbols
 fields status-reporter
 
 
@@ -14,6 +14,7 @@ create
 	this build-settings = BuildSettings new
 	proto-queue = List new
 	selector-names = Dictionary new
+	symbols = Dictionary new
 
 
 return-value
@@ -117,6 +118,9 @@ declaring-selector: name
 calling-selector: name
 	selector-names at: name put: name
 
+using-symbol: name
+	symbols at: name put: name
+
 
 emit-jolt
 	# Emit the classes and packages.
@@ -178,9 +182,15 @@ emit-c
 	# Emit the dispatch table.
 	recompile = CCompiler emit-dispatch-table: main-proto
 	if recompile-all
-		is-changed = true
+		recompile = true
 	objects append: 	--
 		(CCompiler compile-c-file: "methods_" force-compile: recompile)
+
+	# Emit the symbols.
+	status-reporter report: "Emitting symbols..."
+	recompile = (CCompiler emit-symbols || recompile-all)
+	objects append: 	--
+		(CCompiler compile-c-file: "symbols_" force-compile: recompile)
 
 	# Link.
 	status-reporter report: "Linking..."

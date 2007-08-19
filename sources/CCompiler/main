@@ -193,16 +193,34 @@ emit-dispatch-table: main-package
 
 	fill-rate = num-filled float / dispatch-table num-items float
 	stream write-all: 	--
-		("/* Fill rate: ", fill-rate string, "/", 	--
-		 dispatch-table num-items string, ") */\n")
+		("/* Fill rate: ", fill-rate string, ", num items: ", 	--
+		 dispatch-table num-items string, " */\n")
 	
 	# Finish up "methods_.c".
 	is-changed = stream is-changed
 	stream close
 
 
+emit-symbols
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/symbols_.c")
+	stream write-line: "#include \"Trylon_.h\""
+	stream write-line
 
-# C Compilation.
+	# Symbols.
+	for symbol in the-compiler symbols keys
+		stream write-all: 	--
+			("DefineSymbol_(", (mangle-name: symbol), ", \"", symbol, "\")\n")
+	stream write-line
+
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+
+# C file compilation.
 
 compile-c-file: name force-compile: force-compile
 	build-settings = the-compiler build-settings
