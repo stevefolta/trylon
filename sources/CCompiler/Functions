@@ -179,14 +179,26 @@ extend Compiler ProtoFunction
 	access
 		return "Proto_(" + proto c-name + ")"
 	
+	emit-c-function-on: stream
+		stream write-line: c-signature
+		stream write-line: "{"
+		stream write-line: "\tUsingClass_(" + proto c-name + ")"
+		stream write-line: "\treturn " + access + ";"
+		stream write-line: "}"
+		stream write-line
+		stream write-line
+	
 	c-signature
 		return "obj_ " + c-name + "(obj_ this_)"
 
 	c-name
+		# In some cases (eg. "Main", "Compiler Compiler"), there could be a name
+		# conflict with the proto, so we add "__accessor_".
 		name = mangle-name: proto name
 		parent = proto parent
 		if parent
 			name += "__" + parent c-name
+		name += "__accessor_"
 		return name
 
 
