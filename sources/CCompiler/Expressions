@@ -303,6 +303,18 @@ extend Compiler ShortCircuitNot
 		return temp
 
 
+extend Compiler NilTest
+	emit-code: builder
+		test = "Not_"
+		if !is-nil
+			test = "Bool_"
+		object-result = object emit-code: builder
+		temp = builder get-temporary
+		builder add-line: 	--
+			temp name + " = " + test + "(" + object-result access + ");"
+		return temp
+
+
 
 ##### Tuples #####
 

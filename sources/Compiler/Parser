@@ -1167,10 +1167,7 @@ parse-equality-expression
 			expression-expected-after: token
 		# Special-case "== nil" and "!= nil".
 		if expr2 is-a: LiteralNil
-			message = 'isNil'
-			if token == '!='
-				message = 'notNil'
-			expr = Send new: message object: expr arguments: List new
+			expr = NilTest new: expr is-nil: (token == '==')
 		else
 			expr = make-binop-call: token with: expr and: expr2
 
