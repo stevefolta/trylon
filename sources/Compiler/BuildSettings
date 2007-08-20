@@ -37,15 +37,6 @@ has-symbol: name
 load
 	load-from: "build-settings.local"
 	load-from: "build-settings"
-	iff debug
-		if targeting-c
-			print-line: "Targeting C."
-		if targeting-jolt
-			print-line: "Targeting Jolt."
-		if has-symbol: "targeting-c"
-			print-line: "Have targeting-c."
-		if has-symbol: "targeting-jolt"
-			print-line: "Have targeting-jolt."
 
 
 load-from: file-name
