@@ -1,0 +1,16 @@
+trylon Implementation
+
+extend Standard Implementation
+	c-fn allocate-object: proto with-extra-slots: num-extra-slots
+		return CloneObjExtra_(proto, IntValue_(num_extra_slots));
+	c-fn allocate-bytes: num-bytes
+		return BuildBytePtr_(Allocate_(IntValue_(num_bytes)));
+	c-fn allocate-bytes-non-ptr: num-bytes
+		return BuildBytePtr_(AllocNonPtr_(IntValue_(num_bytes)));
+
+	.target-language
+		return "C"
+
+
+
+# Copyright 2007 Steve Folta.  See the License file.
