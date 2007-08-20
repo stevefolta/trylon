@@ -100,7 +100,7 @@ add-function: function
 				"\"" + this name + " " + function-name + "\" is defined twice."
 
 	functions at: function-name put: function
-	the-compiler declaring-selector: function-name
+	compiler declaring-selector: function-name
 
 	# "create" functions automatically add a corresponding "new:" function.
 	if (function is-a: CompiledFunction) && 	--
@@ -110,12 +110,12 @@ add-function: function
 		# Add the corresponding "new" function.
 		new-function = NewFunction new: function on-proto: this
 		(functions at: new-function name) = new-function
-		the-compiler declaring-selector: new-function name
+		compiler declaring-selector: new-function name
 
 
 add-function: name function: function
 	functions at: name put: function
-	the-compiler declaring-selector: name
+	compiler declaring-selector: name
 
 
 add-field: field
@@ -144,7 +144,7 @@ add-proto: name directory: directory
 		return existing-function proto
 	
 	# Add the new one.
-	status-reporter = the-compiler status-reporter
+	status-reporter = compiler status-reporter
 	status-reporter report: "Loading " + name + " into " + full-name + "..."
 	status-reporter indent
 	new-proto = CompiledProto new: name parent: this
@@ -152,7 +152,7 @@ add-proto: name directory: directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto
 	add-function: name function: proto-function
-	the-compiler proto-queue append: new-proto
+	compiler proto-queue append: new-proto
 	status-reporter unindent
 	return new-proto
 
@@ -214,7 +214,7 @@ setup-main: main-directory library-directory: library-directory
 	uses-protos append: standard-proto
 
 	# Targeting Jolt.
-	if the-compiler build-settings targeting-jolt
+	if build-settings targeting-jolt
 		standard-proto get-subproto: "JoltImplementation"
 
 		# Set up Posix.
@@ -222,7 +222,7 @@ setup-main: main-directory library-directory: library-directory
 		posix-proto = PosixProto new: "Posix" parent: this directory: posix-directory
 		proto-function = ProtoFunction new: posix-proto
 		functions at: "Posix" put: proto-function
-		the-compiler proto-queue append: posix-proto
+		compiler proto-queue append: posix-proto
 
 		# Set up Standard Pepsi.
 		standard-directory = library-directory at: "Standard"
@@ -233,10 +233,10 @@ setup-main: main-directory library-directory: library-directory
 			Parser new: (standard-directory at: "Pepsi") contents 	--
 				context: standard-proto
 		parser parse-proto-file: pepsi-proto
-		the-compiler proto-queue append: pepsi-proto
+		compiler proto-queue append: pepsi-proto
 	
 	# Targeting C.
-	if the-compiler build-settings targeting-c
+	if compiler build-settings targeting-c
 		standard-proto get-subproto: "CImplementation"
 
 	# Add "nil", "true", and "false" to Standard.
@@ -271,18 +271,18 @@ ensure-superclasses: object-proto
 
 prepare-to-emit
 	if superclass == nil
-		ensure-superclasses: (the-compiler get-standard-class: "Object")
+		ensure-superclasses: (compiler get-standard-class: "Object")
 	
 	for function in functions values
 		function prepare-to-emit
 
 
 emit-code
-	status-reporter = the-compiler status-reporter
+	status-reporter = compiler status-reporter
 	status-reporter report: "Generating code for " + name + "..."
 	status-reporter indent
 
-	if the-compiler build-settings is-verbose
+	if compiler build-settings is-verbose
 		status-reporter report: name + " has these functions:"
 		status-reporter indent
 		for name in functions keys
@@ -298,7 +298,7 @@ emit-code
 
 
 emit-jolt-file
-	status-reporter = the-compiler status-reporter
+	status-reporter = compiler status-reporter
 	iff debug-emission
 		status-reporter report: "Emitting " + name + "..."
 		status-reporter indent
@@ -306,7 +306,7 @@ emit-jolt-file
 	# Open the file.
 	file = 	--
 		File new: 	--
-			the-compiler build-settings jolt-sources-dir + "/" + full-name + ".k"
+			compiler build-settings jolt-sources-dir + "/" + full-name + ".k"
 	stream = ExistingFileStream new: file
 
 	# Define the proto.

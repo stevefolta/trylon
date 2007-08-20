@@ -142,7 +142,7 @@ extend Compiler SymbolLiteral
 
 	emit-code: builder
 		mangled-name = mangle-name: name
-		the-compiler using-symbol: name
+		compiler using-symbol: name
 		builder add-extern-declaration: "UsingSym_(" + mangled-name + ")"
 		return 	--
 			CCompiler NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
@@ -201,7 +201,7 @@ extend Compiler DictLiteral
 		return true
 
 	emit-code: builder
-		builder using-proto: (the-compiler get-standard-class: "Dictionary")
+		builder using-proto: (compiler get-standard-class: "Dictionary")
 
 		# Access all values first, so sub-dicts get declared first.
 		next-node-index = 0
@@ -335,7 +335,7 @@ extend Compiler TupleExpression
 
 	emit-code: builder
 		if is-literal
-			builder using-proto: (the-compiler get-standard-class: "Tuple")
+			builder using-proto: (compiler get-standard-class: "Tuple")
 
 			# Access all values first, so sub-tuples get declared first.
 			# Note that the emit-code: calls won't actually emit any code, they'll

@@ -12,7 +12,7 @@ create: name on-proto: on-proto
 emit-call: arguments
 	iff not-yet
 		# Special-case instance functions.
-		if the-compiler build-settings optimize-field-accesses
+		if build-settings optimize-field-accesses
 			function = on-proto lookup-instance-function: name
 			if function == nil
 				# This would be a good place for a warning... or would we never get here?

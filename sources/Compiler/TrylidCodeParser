@@ -279,7 +279,7 @@ class IffParser
 		parser get-comment: words
 		test-succeeded = 	--
 			((parser cur-context lookup-function: name) != nil) || 	--
-			(the-compiler build-settings has-symbol: name)
+			(build-settings has-symbol: name)
 		if inverted
 			test-succeeded = !test-succeeded
 		if test-succeeded

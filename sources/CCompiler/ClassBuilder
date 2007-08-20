@@ -13,7 +13,7 @@ create: proto
 
 
 emit
-	build-settings = the-compiler build-settings
+	build-settings = compiler build-settings
 
 	# Emit the C code.
 	status-reporter report: "Emitting C for " + proto name + "..."
@@ -117,13 +117,13 @@ object-file-name
 	# Will be called by the ProgramBuilder when it needs the name at link time.
 	if .object-file-name == nil
 		.object-file-name = 	--
-			the-compiler build-settings objects-dir + "/" + proto c-name + ".o"
+			compiler build-settings objects-dir + "/" + proto c-name + ".o"
 	return .object-file-name
 field .object-file-name
 
 
 report-run-program: program arguments: args
-	if the-compiler build-settings is-verbose
+	if compiler build-settings is-verbose
 		status-reporter indent
 
 		command = StringBuilder new

@@ -8,12 +8,12 @@ compile: compile-symbols
 	start-ms = nil
 	iff time-compilation
 		start-ms = System milliseconds
-	the-compiler = Compiler new
-	the-compiler compile-program: compile-symbols
+	compiler = Compiler new
+	compiler compile-program: compile-symbols
 	iff time-compilation
 		elapsed-time = System milliseconds - start-ms
 		print-line: "Compilation took " + elapsed-time string + "ms."
-	return the-compiler return-value
+	return compiler return-value
 
 compile
 	compile: List new
@@ -23,17 +23,17 @@ iff targeting-jolt
 	compile-file: file as: name into: parent-proto
 		if !(parent-proto is-a: ExistingProto)
 			parent-proto = ExistingProto new: parent-proto
-		the-compiler = Compiler new
-		program = the-compiler compile-file: file as: name into: parent-proto
+		compiler = Compiler new
+		program = compiler compile-file: file as: name into: parent-proto
 		program _eval
 	
 	compile-dir: dir as: name into: parent-proto
 		if !(parent-proto is-a: ExistingProto)
 			parent-proto = ExistingProto new: parent-proto
-		the-compiler = Compiler new
-		program = the-compiler compile-dir: dir as: name into: parent-proto
+		compiler = Compiler new
+		program = compiler compile-dir: dir as: name into: parent-proto
 		program _eval
-		the-compiler = nil
+		compiler = nil
 
 
 

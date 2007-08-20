@@ -302,7 +302,7 @@ parse-proto-contents: the-proto
 			consume-token
 
 		else if name == "c-preamble"
-			if !(the-compiler build-settings targeting-c)
+			if !(build-settings targeting-c)
 				parse-error: "c-preamble not allowed when not targeting C."
 			consume-token
 			the-proto c-preamble = get-subblock string
@@ -357,7 +357,7 @@ check-iff
 	# If it doesn't exist, skip the block.
 	test-succeeded = 	--
 		((context lookup-function: name) != nil) || 	--
-		(the-compiler build-settings has-symbol: name)
+		(build-settings has-symbol: name)
 	if invert-sense
 		test-succeeded = !test-succeeded
 	if !test-succeeded
@@ -410,9 +410,9 @@ parse-function: at-declarator
 	is-primitive = false
 	if at-declarator
 		if current-token text starts-with: "c-"
-			if !the-compiler build-settings targeting-c
+			if !build-settings targeting-c
 				parse-error: "Can't declare a \"c-function\" when not targetting C."
-			if the-compiler build-settings targeting-c
+			if build-settings targeting-c
 				is-primitive = true
 		consume-token
 	

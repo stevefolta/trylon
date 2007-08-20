@@ -13,7 +13,7 @@ at: key put: value
 
 
 prepare-to-emit
-	the-compiler get-standard-class: "Dictionary"
+	compiler get-standard-class: "Dictionary"
 	prepare-to-emit: dict root
 
 prepare-to-emit: node

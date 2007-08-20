@@ -130,7 +130,7 @@ add-proto: name directory: directory
 		return existing-function proto
 	
 	# Add the new one.
-	status-reporter = the-compiler status-reporter
+	status-reporter = compiler status-reporter
 	status-reporter report: "Loading " + name + " into " + this name + "..."
 	status-reporter indent
 	new-proto = CompiledProto new: name parent: this

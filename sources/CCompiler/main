@@ -128,12 +128,12 @@ emit-dispatch-table: main-package
 	status-reporter report: "Building dispatch table..."
 	status-reporter indent
 	
-	object-class = the-compiler root-proto: main-package
+	object-class = compiler root-proto: main-package
 
 	# Gather up the rows.
 	status-reporter report: "Gathering rows."
 	rows = DispatchRowSet new
-	for fn-name in the-compiler selector-names keys
+	for fn-name in compiler selector-names keys
 		# Create the row and fill it in.
 		row = DispatchRow new: fn-name
 		object-class setup-dispatch-row: row inherited-function: nil
@@ -209,7 +209,7 @@ emit-symbols
 	stream write-line
 
 	# Symbols.
-	for symbol in the-compiler symbols keys
+	for symbol in compiler symbols keys
 		stream write-all: 	--
 			("DefineSymbol_(", (mangle-name: symbol), ", \"", symbol, "\")\n")
 	stream write-line
@@ -223,7 +223,7 @@ emit-symbols
 # C file compilation.
 
 compile-c-file: name force-compile: force-compile
-	build-settings = the-compiler build-settings
+	build-settings = compiler build-settings
 	object-file-name = build-settings objects-dir + "/" + name + ".o"
 	if force-compile || !((File new: object-file-name) exists)
 		status-reporter report: "Compiling " + name + ".c..."
@@ -243,7 +243,7 @@ compile-c-file: name force-compile: force-compile
 
 
 report-run-program: program arguments: args
-	if the-compiler build-settings is-verbose
+	if compiler build-settings is-verbose
 		status-reporter indent
 
 		command = StringBuilder new

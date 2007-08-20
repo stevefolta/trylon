@@ -1,7 +1,7 @@
 trylon Compiler
 
-# This is "Compiler Compiler"... if this were pure Trylid, we'd just put
-# everything in "Compiler", but we have to also compile under Trylon, which
+# This is "Compiler Compiler"... if this were pure Trylon 2, we'd just put
+# everything in "Compiler", but we have to also compile under Trylon 1, which
 # always treats directories as packages, never as classes.
 
 fields successful build-settings
@@ -79,7 +79,7 @@ compile-program: compile-symbols
 			"Couldn't find the Trylid library.  You may need to set $TRYLID_LIBRARY."
 	library-directory = FileDirectory new: library-path
 	main-name = "Main"
-	if the-compiler build-settings targeting-jolt
+	if compiler build-settings targeting-jolt
 		main-name = "Trylid"
 	status-reporter report: "Loading " + main-name + "..."
 	status-reporter indent
@@ -133,7 +133,7 @@ emit-jolt
 	# Emit load.k.
 	status-reporter report: "Emitting load.k..."
 	status-reporter indent
-	path = the-compiler build-settings jolt-sources-dir + "/load.k"
+	path = compiler build-settings jolt-sources-dir + "/load.k"
 	file = File new: path
 	stream = ExistingFileStream new: file
 	for proto in proto-queue

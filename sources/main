@@ -1,6 +1,6 @@
 trylon main
 
-the-compiler = nil
+compiler = nil
 
 main: arguments
 	return-value = 0
@@ -60,10 +60,10 @@ iff targeting-jolt
 
 
 status-reporter
-	return the-compiler status-reporter
+	return compiler status-reporter
 
 build-settings
-	return the-compiler build-settings
+	return compiler build-settings
 
 
 debug: message
@@ -136,7 +136,7 @@ iff !targeting-jolt
 		emit: stream
 			reporter = nil
 			iff debug-emission
-				reporter = the-compiler status-reporter
+				reporter = compiler status-reporter
 				reporter report: "("
 				reporter indent
 
@@ -214,7 +214,7 @@ iff targeting-jolt
 		emit: stream
 			reporter = nil
 			iff debug-emission
-				reporter = the-compiler status-reporter
+				reporter = compiler status-reporter
 				reporter report: "("
 				reporter indent
 
