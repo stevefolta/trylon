@@ -16,8 +16,9 @@ emit
 	build-settings = the-compiler build-settings
 
 	# Emit the C code.
+	status-reporter report: "Emitting C for " + proto name + "..."
 	c-file-name = 	--
-		build-settings c-sources-dir + "/" + proto full-name + ".c"
+		build-settings c-sources-dir + "/" + proto c-name + ".c"
 	stream = ExistingFileStream new: c-file-name
 	emit-on: stream
 	need-recompile = stream is-changed
@@ -25,7 +26,7 @@ emit
 
 	# Compile the C code.
 	if need-recompile || !((File new: object-file-name) exists)
-		status-reporter report: "Compiling " + proto full-name + ".c..."
+		status-reporter report: "Compiling " + proto c-name + ".c..."
 		args = List new
 		args append: "-c"
 		args append: c-file-name
@@ -116,9 +117,8 @@ object-file-name
 	# Will be called by the ProgramBuilder when it needs the name at link time.
 	if .object-file-name == nil
 		.object-file-name = 	--
-			the-compiler build-settings objects-dir + "/" + proto full-name + ".o"
+			the-compiler build-settings objects-dir + "/" + proto c-name + ".o"
 	return .object-file-name
-
 field .object-file-name
 
 

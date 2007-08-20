@@ -173,7 +173,6 @@ emit-c
 	status-reporter report: "Emitting code..."
 	status-reporter indent
 	for proto in proto-queue
-		status-reporter report: "Emitting C for " + proto name + "..."
 		builder = CCompiler ClassBuilder new: proto
 		builder emit
 		objects append: builder object-file-name
