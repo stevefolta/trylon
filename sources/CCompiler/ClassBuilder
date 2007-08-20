@@ -82,7 +82,16 @@ emit-on: stream
 			stream write: ", "
 		stream write: "nil"
 		i += 1
-	stream write: "} };\n"
+	stream write: "} };\n\n"
+
+	# Shared fields initial values.
+	for field in proto shared-fields values
+		field initial-value-result = field initial-value emit-code: this
+	int-literals emit-declarations-on: stream
+	string-literals emit-declarations-on: stream
+	float-literals emit-declarations-on: stream
+	tuple-literals emit-declarations-on: stream
+	dict-literals emit-declarations-on: stream
 
 	# Fields.
 	proto emit-field-indices: stream
@@ -91,13 +100,10 @@ emit-on: stream
 		stream write: (mangle-name: field name)
 		stream write: ", "
 		stream write: proto c-name
+		stream write: ", "
+		stream write: field initial-value-result access
 		stream write: ")\n"
-
-	int-literals emit-declarations-on: stream
-	string-literals emit-declarations-on: stream
-	float-literals emit-declarations-on: stream
-	tuple-literals emit-declarations-on: stream
-	dict-literals emit-declarations-on: stream
+	stream write-line
 
 	if proto c-preamble
 		stream write: proto c-preamble

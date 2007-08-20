@@ -71,6 +71,10 @@ extend Compiler CompiledProto
 		class-num = numberer next-number
 
 
+extend Compiler CompiledField
+	field initial-value-result
+
+
 # Copyright 2007 Steve Folta
 # See the License file.
 

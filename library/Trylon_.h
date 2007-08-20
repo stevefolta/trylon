@@ -51,8 +51,8 @@ extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 #define SharedField_(name, className)	(className##__##name##__storage_)
 #define SetSharedField_(name, className, value) 	\
 	(className##__##name##__storage_ = value)
-#define DeclareSharedField_(name, className) 	\
-	obj_ className##__##name##__storage_;
+#define DeclareSharedField_(name, className, value) 	\
+	obj_ className##__##name##__storage_ = value;
 #define UsingSharedField_(name, className) 	\
 	extern obj_ className##__##name##__storage_;
 
