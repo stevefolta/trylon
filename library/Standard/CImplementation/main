@@ -1,5 +1,18 @@
 trylon CImplementation
 
+extend Standard
+	c-preamble
+		#include <stdio.h>
+
+	c-fn print: strObj
+		byte_ptr_ start, stopper;
+		UsingMethod_(string)
+		strObj = Call_(string, strObj);
+		start = StringStart_(strObj);
+		stopper = StringStopper_(strObj);
+		fwrite(start, stopper - start, 1, stdout);
+
+
 references
 	Object
 	Int
@@ -7,5 +20,6 @@ references
 	String
 	System
 	File
+	FileDirectory
 	Implementation
 

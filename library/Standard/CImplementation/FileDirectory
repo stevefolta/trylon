@@ -1,0 +1,89 @@
+trylon FileDirectory
+
+extend Standard FileDirectory
+	c-preamble
+		#include <sys/types.h>
+		#include <dirent.h>
+		#include <sys/stat.h>
+		#include <unistd.h>
+		#include <string.h>
+
+		UsingMethod_(_pl_)
+		DefineString_(slash, "/");
+
+	c-fn count
+		/* There must be a better way to do this... */
+		char* pathStr = CString_(Field_(path));
+		DIR* directory = opendir(pathStr);
+
+		int numEntries = 0;
+		while (1) {
+			if (readdir(directory) == NULL)
+				break;
+			numEntries += 1;
+			}
+
+		closedir(directory);
+		return BuildInt_(numEntries);
+
+	c-fn contains: name
+		#ifndef MAC_OSX
+			/* Build the path string. */
+			obj_ entryPath = Call_(_pl_, Call_(_pl_, Field_(path), Str_(slash)), name);
+			char* entryPathStr = CString_(entryPath);
+
+			/* Does the entry exist? */
+			struct stat statBuf;
+			int result = stat(entryPathStr, &statBuf);
+			return Bool_(result != -1);
+
+		#else 	/* MAC_OSX */
+			/* The stupid Mac OSX filesystem is case-insensitive, so simply doing 
+			 * a stat() won't tell us if a file with that (case-sensitive) name 
+			 * really exists.  stat() doesn't give us the filename, so we need to 
+			 * look through the whole directory. */
+
+			/* Open up the directory. */
+			char* nameStr;
+			char* dirPathStr = CString_(Field_(path));
+			DIR* directory = opendir(dirPathStr);
+			if (directory == NULL)
+				return false__Standard;
+
+			/* Search. */
+			nameStr = CString_(name);
+			int found = 0;
+			while (1) {
+				struct dirent* entry = readdir(directory);
+				if (entry == NULL)
+					break;
+				if (strcmp(nameStr, entry->d_name) == 0) {
+					found = 1;
+					break;
+					}
+				}
+
+			return Bool_(found);
+			
+		#endif 	/* MAC_OSX */
+
+	c-fn entry-is-directory: name
+		/* Build the path string. */
+		obj_ entryPath = Call_(_pl_, Call_(_pl_, Field_(path), Str_(slash)), name);
+		char* entryPathStr = CString_(entryPath);
+
+		/* Does the entry exist? */
+		struct stat statBuf;
+		int result = stat(entryPathStr, &statBuf);
+		return Bool_(result != -1 && S_ISDIR(statBuf.st_mode));
+
+	c-fn create-subdirectory: name
+		/* Build the path string. */
+		obj_ entryPath = Call_(_pl_, Call_(_pl_, Field_(path), Str_(slash)), name);
+		char* entryPathStr = CString_(entryPath);
+
+		/* Make the directory. */
+		mkdir(entryPathStr, 0777);
+
+
+
