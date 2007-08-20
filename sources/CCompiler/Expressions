@@ -14,6 +14,12 @@ extend Compiler TrylidExpression
 
 extend Compiler Send
 	emit-code: builder
+		# Special-case calls on prototypes.
+		# "Compiler Send prepare-to-emit" has found the ProtoFunction for us.
+		if proto-result-function
+			return proto-result-function emit-c-call: arguments builder: builder
+
+		# Normal send.
 		object-result = object emit-code: builder
 		arg-results = List new
 		for arg in arguments
