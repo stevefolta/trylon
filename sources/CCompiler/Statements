@@ -110,7 +110,7 @@ extend Compiler WhileStatement
 		builder indent
 		builder add-line: "ContinuePoint_(" + index string + ")"
 		cond-result = condition emit-code: builder
-		builder add-line: "if (" + cond-result access + ")"
+		builder add-line: "if (!(" + cond-result access + "))"
 		builder add-line: "\tBreak_(" + index string + ")"
 		builder reset-temporaries
 		builder unindent
