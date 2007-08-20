@@ -2,7 +2,6 @@ trylon MethodContext
 superclass Context
 
 fields arguments parent
-fields function
 
 
 create: arguments parent: parent

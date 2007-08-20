@@ -19,6 +19,9 @@ extend Standard Object
 	
 	c-fn .parent-proto
 		return this_->class_->superclass;
+	
+	c-fn .proto-name
+		return BuildString_(this_->class_->name);
 
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");
