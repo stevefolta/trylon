@@ -1,0 +1,68 @@
+trylon BytePtr
+
+extend Standard BytePtr
+	c-preamble
+		#include <string.h>
+		#include <stdio.h>
+
+	c-fn == arg
+		return Bool_(BytePtrValue_(this_) == BytePtrValue_(arg));
+	c-fn != arg
+		return Bool_(BytePtrValue_(this_) != BytePtrValue_(arg));
+	c-fn < arg
+		return Bool_(BytePtrValue_(this_) < BytePtrValue_(arg));
+	c-fn > arg
+		return Bool_(BytePtrValue_(this_) > BytePtrValue_(arg));
+	c-fn <= arg
+		return Bool_(BytePtrValue_(this_) <= BytePtrValue_(arg));
+	c-fn >= arg
+		return Bool_(BytePtrValue_(this_) >= BytePtrValue_(arg));
+
+	c-fn + arg
+		return BuildBytePtr_(BytePtrValue_(this_) + IntValue_(arg));
+	c-fn - arg
+		if (arg->class_ == StdClassRef_(BytePtr))
+			return BuildInt_(BytePtrValue_(this_) - BytePtrValue_(arg));
+		else
+			return BuildBytePtr_(BytePtrValue_(this_) - IntValue_(arg));
+
+	c-fn deref-ptr
+		return BuildBytePtr_(*(byte_ptr_*) BytePtrValue_(this_));
+	c-fn deref-int
+		return BuildInt_(*(int*) BytePtrValue_(this_));
+	c-fn deref-char
+		return BuildInt_(*(char*) BytePtrValue_(this_));
+	c-fn ptr-at: index
+		return BuildBytePtr_(((byte_ptr_*) BytePtrValue_(this_))[IntValue_(index)]);
+	c-fn object-at: index
+		return ((obj_*) BytePtrValue_(this_))[IntValue_(index)];
+	c-fn char-at: index
+		return BuildInt_(BytePtrValue_(this_)[IntValue_(index)]);
+	c-fn int-at: index
+		return BuildInt_(((int*) BytePtrValue_(this_))[IntValue_(index)]);
+	c-fn byte-at: index
+		return BuildInt_(BytePtrValue_(this_)[IntValue_(index)]);
+
+	c-fn as-object
+		return (obj_) BytePtrValue_(this_);
+
+	c-fn ptr-at: index put: value
+		((byte_ptr_*) BytePtrValue_(this_))[IntValue_(index)] = BytePtrValue_(value);
+	c-fn object-at: index put: value
+		((obj_*) BytePtrValue_(this_))[IntValue_(index)] = value;
+	c-fn char-at: index put: value
+		BytePtrValue_(this_)[IntValue_(index)] = IntValue_(value);
+	c-fn int-at: index put: value
+		((int*) BytePtrValue_(this_))[IntValue_(index)] = IntValue_(value);
+	c-fn byte-at: index put: value
+		BytePtrValue_(this_)[IntValue_(index)] = IntValue_(value);
+
+	c-fn copy-from: source length: length
+		memcpy(BytePtrValue_(this_), BytePtrValue_(source), IntValue_(length));
+
+	c-fn string
+		char str[64];
+		sprintf(str, "0x%08X", BytePtrValue_(this_));
+		return BuildString_(str);
+
+

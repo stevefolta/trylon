@@ -3,6 +3,7 @@ trylon CImplementation
 references
 	Object
 	Int
+	BytePtr
 	String
 	System
 	File
