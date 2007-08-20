@@ -228,17 +228,18 @@ int main(int argc, char* argv[])
 {
 	obj_ args, result;
 	int whichArg;
-	extern obj_ main_co___Main(obj_ args);
-	extern obj_ new__Standard__List();
+	extern obj_ main_co___Main(obj_ this_, obj_ args);
+	extern obj_ new__Standard__List(obj_ this_);
 	UsingMethod_(append_co_)
+	UsingClass_(Main) UsingClass_(Standard__List)
 
 	// Build the list of args.
-	args = new__Standard__List();
+	args = new__Standard__List(Proto_(Standard__List));
 	for (whichArg = 0; whichArg < argc; ++whichArg)
 		Call_(append_co_, args, BuildString_(argv[whichArg]));
 
 	// Call the main function.
-	result = main_co___Main(args);
+	result = main_co___Main(Proto_(Main), args);
 
 	// Return the result.
 	if (result && result->class_ == StdClassRef_(Int))
@@ -260,7 +261,6 @@ const char* className_(obj_ object)
 }
 
 
-#ifdef DEBUGGER
 obj_ showObj_(obj_ object)
 {
 	obj_ str;
@@ -272,7 +272,6 @@ obj_ showObj_(obj_ object)
 	str = Call_(debug_write, object);
 	return object;
 }
-#endif
 
 
 

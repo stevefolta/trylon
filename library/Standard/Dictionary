@@ -75,27 +75,28 @@ is-empty
 	return (num-items == 0)
 
 
-each-key: block
-	if root
-		each-key-in: root do: block
+iff not-yet
+	each-key: block
+		if root
+			each-key-in: root do: block
 
-each-key-in: node do: block
-	if node left
-		each-key-in: node left do: block
-	block do-with: node key
-	if node right
-		each-key-in: node right do: block
+	each-key-in: node do: block
+		if node left
+			each-key-in: node left do: block
+		block do-with: node key
+		if node right
+			each-key-in: node right do: block
 
-each-value: block
-	if root
-		each-value-in: root do: block
+	each-value: block
+		if root
+			each-value-in: root do: block
 
-each-value-in: node do: block
-	if node left
-		each-value-in: node left do: block
-	block do-with: node value
-	if node right
-		each-value-in: node right do: block
+	each-value-in: node do: block
+		if node left
+			each-value-in: node left do: block
+		block do-with: node value
+		if node right
+			each-value-in: node right do: block
 
 
 iff debug-dictionaries

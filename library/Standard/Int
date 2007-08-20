@@ -28,6 +28,11 @@ fn float
 fn is-digit
 fn is-whitespace
 
+char
+	# For compatibility with Trylon 1 code, which has Int and Char as separate
+	# classes.
+	return this
+
 
 
 iff debugger

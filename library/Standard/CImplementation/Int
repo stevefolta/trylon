@@ -32,7 +32,7 @@ extend Standard Int
 		return Bool_(Val == IntValue_(other));
 
 	c-fn != other
-		return Bool_(Val == IntValue_(other));
+		return Bool_(Val != IntValue_(other));
 
 	c-fn < other
 		return Bool_(Val < IntValue_(other));
