@@ -1,6 +1,10 @@
 trylon Object
 
 extend Standard Object
+	c-preamble
+		#include <stdio.h>
+		#include <stdlib.h>
+
 	c-fn raw-new
 		return CloneObj_(this_);
 	
@@ -16,4 +20,7 @@ extend Standard Object
 	c-fn .parent-proto
 		return this_->class_->superclass;
 
+	c-fn message-not-understood
+		fprintf(stderr, "Message not understood.\n");
+		exit(1);
 
