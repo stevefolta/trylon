@@ -1,0 +1,45 @@
+trylon Float
+
+extend Standard Float
+	c-preamble
+		#include <math.h>
+		#include <stdio.h>
+
+	c-fn == arg
+		return Bool_(FloatValue_(this_) == FloatValue_(arg));
+	c-fn != arg
+		return Bool_(FloatValue_(this_) != FloatValue_(arg));
+	c-fn < arg
+		return Bool_(FloatValue_(this_) < FloatValue_(arg));
+	c-fn > arg
+		return Bool_(FloatValue_(this_) > FloatValue_(arg));
+	c-fn <= arg
+		return Bool_(FloatValue_(this_) <= FloatValue_(arg));
+	c-fn >= arg
+		return Bool_(FloatValue_(this_) >= FloatValue_(arg));
+
+	c-fn + arg
+		return BuildFloat_(FloatValue_(this_) + FloatValue_(arg));
+	c-fn - arg
+		return BuildFloat_(FloatValue_(this_) - FloatValue_(arg));
+	c-fn * arg
+		return BuildFloat_(FloatValue_(this_) * FloatValue_(arg));
+	c-fn / arg
+		return BuildFloat_(FloatValue_(this_) / FloatValue_(arg));
+	c-fn unary-minus
+		return BuildFloat_(-FloatValue_(this_));
+
+	c-fn pow: power
+		return BuildFloat_(pow(FloatValue_(this_), FloatValue_(power)));
+	c-fn sqrt
+		return BuildFloat_(sqrt(FloatValue_(this_)));
+
+	c-fn string
+		char str[64];
+		sprintf(str, "%g", FloatValue_(this_));
+		return BuildString_(str);
+
+	c-fn int
+		return BuildInt_(FloatValue_(this_));
+
+

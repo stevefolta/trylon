@@ -18,6 +18,7 @@ references
 	Int
 	BytePtr
 	String
+	Float
 	System
 	File
 	FileDirectory
