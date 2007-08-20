@@ -485,8 +485,6 @@ parse-function: at-declarator
 			return-type: return-type --
 			on-proto: context body: body is-primitive: is-primitive
 	new-function method-context = method-context
-	if method-context
-		method-context function = new-function
 	return new-function
 
 

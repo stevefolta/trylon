@@ -92,7 +92,8 @@ void RegisterFinalizer_(obj_ object)
 obj_ BuildInt_(int value)
 {
 	struct Standard__Int__internal* result =
-		(struct Standard__Int__internal*) GC_MALLOC(sizeof(struct object));
+		(struct Standard__Int__internal*)
+			GC_MALLOC(sizeof(struct Standard__Int__internal));
 	result->class_ = StdClassRef_(Int);
 	result->value = value;
 	return (obj_) result;
@@ -113,7 +114,8 @@ obj_ BuildFloat_(double value)
 obj_ BuildBytePtr_(byte_ptr_ value)
 {
 	struct Standard__BytePtr__internal* result =
-		(struct Standard__BytePtr__internal*) GC_MALLOC(sizeof(struct object));
+		(struct Standard__BytePtr__internal*)
+			GC_MALLOC(sizeof(struct Standard__BytePtr__internal));
 	result->class_ = StdClassRef_(BytePtr);
 	result->value = value;
 	return (obj_) result;

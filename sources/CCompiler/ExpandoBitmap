@@ -17,7 +17,7 @@ at: index
 	return ((bitmap byte-at: which-byte) & (1 << (index % 8))) != 0
 
 
-at: index set-to: value
+at: index put: value
 	which-byte = index / 8
 	if which-byte > num-bytes
 		expand: which-byte + 1
@@ -27,6 +27,9 @@ at: index set-to: value
 		(bitmap byte-at: which-byte) |= mask
 	else
 		(bitmap byte-at: which-byte) &= ~mask
+
+at: index set-to: value
+	at: index put: value
 
 
 next-clear-from: index

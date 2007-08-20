@@ -28,9 +28,11 @@ fn float
 fn is-digit
 fn is-whitespace
 
+# For compatibility with Trylon 1 code, which has Int and Char as separate
+# classes.
 char
-	# For compatibility with Trylon 1 code, which has Int and Char as separate
-	# classes.
+	return this
+int
 	return this
 
 

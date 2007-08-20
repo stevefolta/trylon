@@ -27,11 +27,11 @@ lookup-function: name
 	
 	# Function calls on "this".
 	# The parent will be a CompiledProto.
-	function = parent lookup-instance-function: name
-	if function
-		if function is-a: ProtoFunction
+	found-function = parent lookup-instance-function: name
+	if found-function
+		if found-function is-a: ProtoFunction
 			# Treat this specially, to make sure protos get loaded.
-			return function
+			return found-function
 		return FunctionOnThis new: name on-proto: parent
 	
 	return parent lookup-function: name

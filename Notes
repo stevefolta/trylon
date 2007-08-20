@@ -248,6 +248,16 @@ The tradeoff is that the generated Coke code is less readable; at this point I d
 
 =====
 
+CCompiler Debugging
+	[2007.8.29]
+
+Can't find members of "Standard" because the path is getting clobbered.  The String and BytePtr ("start", at least) objects are untouched; it seems only the data is getting clobbered.
+
+It turns out BuildBytePtr_() was using the wrong size ("struct object" in Trylon 1 was declared with "fields[1]", and the code relied on that).
+
+
+=====
+
 To Do
 	[live]
 
