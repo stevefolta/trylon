@@ -34,6 +34,15 @@ iff targeting-jolt
 		program = compiler compile-dir: dir as: name into: parent-proto
 		program _eval
 		compiler = nil
+	
+	parse-file: file as: name into: parent-proto
+		if !(parent-proto is-a: ExistingProto)
+			parent-proto = ExistingProto new: parent-proto
+		if !(file is-a: File)
+			file = File new: file
+		compiler = Compiler new
+		program = compiler compile-file: file as: name into: parent-proto
+		return program
 
 
 
