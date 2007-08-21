@@ -3,6 +3,9 @@ superclass TrylidExpression
 
 fields name object arguments
 
+# Very special for prepare-to-emit handling of proto functions.
+fields proto-result-function
+
 
 create: name object: object arguments: arguments
 	this name = name
@@ -18,6 +21,15 @@ prepare-to-emit
 
 	for arg in arguments
 		arg prepare-to-emit
+	
+	# Handle proto functions, to ensure the proto is loaded.
+	function = nil
+	if object is-a: FunctionCall
+		function = object function
+	else if object is-a: Send
+		function = object proto-result-function
+	if function && (function is-a: ProtoFunction)
+		proto-result-function = function proto lookup-function: name
 
 
 jolt-expression

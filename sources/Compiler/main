@@ -34,6 +34,15 @@ iff in-trylid
 		program = the-compiler compile-dir: dir as: name into: parent-proto
 		program _eval
 		the-compiler = nil
+	
+	parse-file: file as: name into: parent-proto
+		if !(parent-proto is-a: ExistingProto)
+			parent-proto = ExistingProto new: parent-proto
+		if !(file is-a: File)
+			file = File new: file
+		the-compiler = Compiler new
+		program = the-compiler compile-file: file as: name into: parent-proto
+		return program
 
 
 

@@ -169,7 +169,10 @@ get-subproto: name
 		if directory entry-is-directory: name
 			return add-proto: name directory: (directory at: name)
 		else if directory contains: name
-			return add-proto: name
+			proto = add-proto: name
+			parser = Parser new: (directory at: name) contents context: this
+			parser parse-proto-file: proto
+			return proto
 	
 	return nil
 
@@ -267,11 +270,11 @@ emit-code
 	status-reporter report: "Generating code for " + name + "..."
 	status-reporter indent
 
-	if lookup-function: "verbose"
+	if the-compiler build-settings is-verbose
 		status-reporter report: name + " has these functions:"
 		status-reporter indent
 		for name in functions keys
-			status-reporter report: name + " (" + (functions at: name) proto name + ")"
+			status-reporter report: name
 		status-reporter unindent
 	
 	is-changed = emit-jolt-file

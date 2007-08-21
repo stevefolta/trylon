@@ -125,3 +125,9 @@ load: filename into: proto
 load: filename
 	load: filename into: this
 
+
+explore: object
+	ObjectExplorer explore: object
+
+
+

@@ -15,6 +15,9 @@ install:
 	install trylid $(PREFIX)/bin
 	cp -r library $(PREFIX)/lib/trylid
 
+clean:
+	rm -rf .c-sources .objects .jolt-sources .jolt-sources-self
+
 
 # Tarball creation.
 

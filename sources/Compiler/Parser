@@ -309,7 +309,7 @@ parse-proto-contents: the-proto
 
 parse-extension
 	# "extend"
-	if !at-name: "extend"
+	if !(at-name: "extend")
 		parse-error: "Expecting \"extend\"."
 	consume-token
 
