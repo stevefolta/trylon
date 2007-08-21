@@ -24,7 +24,7 @@ IDC   = idc -k # -O
 
 OBJEXT_SO       = .so
 
-FILES = Stat.so Dirent.so Timeval.so jmp_buf.so Stdlib.so
+FILES = Stat.so Dirent.so Timeval.so jmp_buf.so Stdlib.so Termios.so
 
 all: $(FILES)
 

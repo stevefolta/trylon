@@ -180,6 +180,7 @@
 			[vtable methodAt: '_debugName put: closure-returner with: name-string]
 			[vtable methodAt: '.proto put: closure-returner with: proto]
 			[vtable methodAt: '.parent-proto put: closure-returner with: superclass]
+			[vtable methodAt: '.added-fields put: closure-returner with: fields]
 			;; Add the slot accessors.
 			(let ((offset super-size)
 						(field-index '0))
