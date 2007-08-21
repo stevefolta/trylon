@@ -18,7 +18,7 @@ extend Standard FileDirectory
 
 		int numEntries = 0;
 		while (1) {
-			if (readdir(directory) == NULL)
+			if (readdir(directory) == nil)
 				break;
 			numEntries += 1;
 			}
@@ -47,15 +47,15 @@ extend Standard FileDirectory
 			char* nameStr;
 			char* dirPathStr = CString_(Field_(path));
 			DIR* directory = opendir(dirPathStr);
-			if (directory == NULL)
-				return false__Standard;
+			if (directory == nil)
+				return nil;
 
 			/* Search. */
 			nameStr = CString_(name);
 			int found = 0;
 			while (1) {
 				struct dirent* entry = readdir(directory);
-				if (entry == NULL)
+				if (entry == nil)
 					break;
 				if (strcmp(nameStr, entry->d_name) == 0) {
 					found = 1;
@@ -84,6 +84,48 @@ extend Standard FileDirectory
 
 		/* Make the directory. */
 		mkdir(entryPathStr, 0777);
+
+
+extend Standard FileDirectory Iterator
+	fields .directory-handle current-name
+
+	c-preamble
+		#include <sys/types.h>
+		#include <dirent.h>
+		#include <sys/stat.h>
+		#include <unistd.h>
+
+		#define directory	((DIR*) Field_(_dt_directory_handle))
+		UsingMethod_(go_forward)
+
+	c-fn create: path
+		char* pathStr = CString_(path);
+		Field_(_dt_directory_handle) = (obj_) opendir(pathStr);
+
+		/* Grab the first name. */
+		Call_(go_forward, this_);
+
+	c-fn is-done
+		return Bool_(Field_(current_name) == nil);
+
+	c-fn current-item
+		return Field_(current_name);
+
+	c-fn go-forward
+		struct dirent* dirEntry;
+
+		if (directory == nil)
+			return nil;
+
+		dirEntry = readdir(directory);
+		if (dirEntry == nil) {
+			closedir(directory);
+			Field_(_dt_directory_handle) = nil;
+			Field_(current_name) = nil;
+			}
+		else
+			Field_(current_name) = BuildString_(dirEntry->d_name);
+
 
 
 
