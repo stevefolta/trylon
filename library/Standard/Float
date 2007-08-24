@@ -20,9 +20,8 @@ primitive-fn string
 primitive-fn int
 
 
-iff debugger
-	fn debug-write
-		print-line: "Float: " + this string
+debug-write
+	print-line: "Float: " + this string
 
 
 # Copyright 2007 Steve Folta.  See the License file.

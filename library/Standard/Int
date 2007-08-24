@@ -37,9 +37,8 @@ int
 
 
 
-iff debugger
-	fn debug-write
-		print-line: "Int: " + this string
+debug-write
+	print-line: "Int: " + this string
 
 
 

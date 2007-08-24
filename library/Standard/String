@@ -254,13 +254,11 @@ float
 
 # ===== Debugging
 
+debug-write
+	print-line: debug-string
 
-iff debugger
-	debug-write
-		print-line: debug-string
-	
-	debug-string
-		return "\"" + this + "\""
+debug-string
+	return "\"" + this + "\""
 
 
 

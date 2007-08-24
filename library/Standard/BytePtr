@@ -40,9 +40,8 @@ fn copy-from: source length: length
 fn string
 
 
-iff debugger
-	fn debug-write
-		print-line: "BytePtr: " + this string
+fn debug-write
+	print-line: "BytePtr: " + this string
 
 
 
