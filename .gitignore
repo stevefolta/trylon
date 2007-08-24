@@ -12,6 +12,7 @@ junk
 .jolt-sources-self
 .jolt-history
 .trylid-history
+.gdb_history
 .*.swp
 trylid.tgz
 tarball-date

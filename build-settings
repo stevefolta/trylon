@@ -9,7 +9,7 @@ iff !targeting-jolt
 	link-flags += "-lgc" "-ldl" "-lm"
 
 	if Darwin
-		c-flags += "-DOSX_FINK" "-I/sw/include"
+		c-flags += "-DMAC_OSX" "-DOSX_FINK" "-I/sw/include"
 		link-flags += "-L/sw/lib"
 
 
