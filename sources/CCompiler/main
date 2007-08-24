@@ -182,7 +182,7 @@ emit-dispatch-table: main-package
 	stream write-line: "struct RDTableEntry_ dispatchTable_[] = {"
 	for entry in dispatch-table
 		if entry == nil
-			stream write-line: "\t{ nil, nil },"
+			stream write-line: "\t{ nil, -1 },"
 			continue
 
 		stream write-all: 	--
