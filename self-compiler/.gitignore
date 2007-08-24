@@ -1,4 +1,7 @@
 trylon
+trylon.working
 .c-sources-self
 .objects-self
+.gdb_history
+temp*
 

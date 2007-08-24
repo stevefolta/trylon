@@ -46,9 +46,10 @@ lookup-function: name visited-packages: visited-packages
 		# A package?
 		if directory entry-is-directory: name
 			return add-package: name directory: (directory at: name)
-		package-dir-name = "packages/" + name
-		if directory entry-is-directory: package-dir-name
-			return add-package: name directory: (directory at: package-dir-name)
+		packages-dir = directory at: "packages"
+		if packages-dir != nil && (packages-dir is-a: FileDirectory)
+			if packages-dir entry-is-directory: name
+				return add-package: name directory: (packages-dir at: name)
 	
 	# Check the parent.
 	if parent

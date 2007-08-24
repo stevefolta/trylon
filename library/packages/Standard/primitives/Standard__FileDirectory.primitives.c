@@ -70,9 +70,10 @@ obj_ contains_co___Standard__FileDirectory(obj_ this_, obj_ name)
 			}
 		}
 
+	closedir(directory);
 	return BoolFor_(found);
 	
-#endif
+#endif 	/* MAC_OSX */
 }
 
 
@@ -85,7 +86,48 @@ obj_ entry_is_directory_co___Standard__FileDirectory(obj_ this_, obj_ name)
 	/* Does the entry exist? */
 	struct stat statBuf;
 	int result = stat(entryPathStr, &statBuf);
+
+#ifndef MAC_OSX
+
 	return BoolFor_(result != -1 && S_ISDIR(statBuf.st_mode));
+
+#else 	/* MAC_OSX */
+
+	if (result == -1 || !S_ISDIR(statBuf.st_mode))
+		return false__Standard;
+
+	/* The stupid Mac OSX filesystem is case-insensitive, so simply doing a
+	 * stat() won't tell us if a directory with that (case-sensitive) name really
+	 * exists.  At this point we know that if the entry is a file, but not if it
+	 * really has that (case-sensitive) name.  stat() doesn't give us the
+	 * filename, so we need to look through the whole directory. */
+
+	{
+	/* Open up the directory. */
+	char* nameStr;
+	char* dirPathStr = MakeCString_(Field_(path));
+	DIR* directory = opendir(dirPathStr);
+	if (directory == NULL)
+		return false__Standard;
+
+	/* Search. */
+	nameStr = MakeCString_(name);
+	int found = 0;
+	while (1) {
+		struct dirent* entry = readdir(directory);
+		if (entry == NULL)
+			break;
+		if (strcmp(nameStr, entry->d_name) == 0) {
+			found = 1;
+			break;
+			}
+		}
+
+	closedir(directory);
+	return BoolFor_(found);
+	}
+
+#endif
 }
 
 
