@@ -369,10 +369,11 @@ dump-lines: lines level: level
 			dump-lines: line block level: level + 1
 
 
-iff test-c-compiler
-	c-compiler-references
-		CCompiler
-		CCompiler MethodBuilder
+c-compiler-references
+	# Make sure these get loaded up; the old Trylon 1 compiler didn't like if if
+	# the extensions came too late.
+	CCompiler
+	CCompiler MethodBuilder
 
 
 
