@@ -12,13 +12,6 @@ prepare-to-emit
 	# Nothing to do.
 
 
-jolt-expression
-	return Expression with: 'quote' with: name intern
-
-
-translate: compiler
-	return compiler translateExpression: jolt-expression
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

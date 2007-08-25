@@ -12,13 +12,6 @@ prepare-to-emit
 	# Nothing to do.
 
 
-jolt-expression
-	return Expression with: 'trylid-int-literal' with: value
-
-
-translate: compiler
-	return compiler translateExpression: (Expression with: 'quote' with: value)
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 

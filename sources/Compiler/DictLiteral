@@ -24,40 +24,6 @@ prepare-to-emit: node
 	node value prepare-to-emit
 
 
-jolt-expression
-	return 	--
-		Expression 	--
-			with: 'trylid-dict' with: (emit-node: dict root) with: dict num-items
-
-emit-node: node
-	if node == nil
-		return 'nil'
-	return 	--
-		Expression 	--
-			with: 'trylid-dict-node' 	--
-			with: node key 	--
-			with: node value jolt-expression 	--
-			with: (emit-node: node left) 	--
-			with: (emit-node: node right)
-
-
-translate: compiler
-	expr = 	--
-		Expression 	--
-			with: 'trylid-dict' with: (translate-node: dict root) with: dict num-items
-	return compiler translateExpression: expr
-
-translate-node: node
-	if node == nil
-		return 'nil'
-	return 	--
-		Expression 	--
-			with: 'trylid-dict-node' 	--
-			with: node key 	--
-			with: node value 	--
-			with: (emit-node: node left) 	--
-			with: (emit-node: node right)
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

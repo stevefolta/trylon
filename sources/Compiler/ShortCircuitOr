@@ -14,18 +14,6 @@ prepare-to-emit
 	expr2 prepare-to-emit
 
 
-jolt-expression
-	return 	--
-		Expression 	--
-			with: 'or' 	--
-			with: (expr1 jolt-expression) 	--
-			with: (expr2 jolt-expression)
-
-
-translate: compiler
-	expr = Expression with: 'or' with: expr1 with: expr2
-	return compiler translateExpression: expr
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

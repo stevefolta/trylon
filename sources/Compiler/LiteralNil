@@ -7,12 +7,6 @@ create
 prepare-to-emit
 	# Nothing to do.
 
-jolt-expression
-	return 'nil'
-
-translate: compiler
-	return compiler translateExpression: (Expression with: 'quote' with: nil)
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

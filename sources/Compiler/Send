@@ -32,30 +32,6 @@ prepare-to-emit
 		proto-result-function = function proto lookup-function: name
 
 
-jolt-expression
-	expr = Expression new: arguments count + 3
-	expr at: 0 put: 'send'
-	expr at: 1 put: (Expression with: 'quote' with: name intern)
-	expr at: 2 put: object jolt-expression
-	index = 3
-	for arg in arguments
-		expr at: index put: arg jolt-expression
-		index += 1
-	return expr
-
-
-translate: compiler
-	expr = Expression new: arguments count + 3
-	expr at: 0 put: 'send'
-	expr at: 1 put: (Expression with: 'quote' with: name intern)
-	expr at: 2 put: object
-	index = 3
-	for arg in arguments
-		expr at: index put: arg
-		index += 1
-	return compiler translateExpression: expr
-
-
 convert-to-setter-call: value
 	if name ends-with: ":"
 		name += "put:"

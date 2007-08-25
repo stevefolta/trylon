@@ -17,25 +17,6 @@ prepare-to-emit
 		member prepare-to-emit
 
 
-jolt-expression
-	expr = Expression new: members count + 1
-	expr at: 0 put: 'trylid-tuple'
-	index = 1
-	for member in members
-		expr at: index put: member jolt-expression
-		index += 1
-	return expr
-
-
-translate: compiler
-	expr = Expression new: members count + 1
-	expr at: 0 put: 'trylid-tuple'
-	index = 1
-	for member in members
-		expr at: index put: member
-		index += 1
-	return compiler translateExpression: expr
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

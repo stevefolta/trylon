@@ -12,25 +12,4 @@ prepare-to-emit
 	object prepare-to-emit
 
 
-jolt-expression
-	message = 'isNil'
-	if !is-nil
-		message = 'notNil'
-	expr = Expression new: 3
-	expr at: 0 put: 'send'
-	expr at: 1 put: (Expression with: 'quote' with: message)
-	expr at: 2 put: object jolt-expression
-	return expr
-
-
-translate: compiler
-	message = 'isNil'
-	if !is-nil
-		message = 'notNil'
-	expr = Expression new: 3
-	expr at: 0 put: 'send'
-	expr at: 1 put: (Expression with: 'quote' with: message)
-	expr at: 2 put: object
-	return compiler translateExpression: expr
-
 

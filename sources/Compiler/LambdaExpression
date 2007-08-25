@@ -12,14 +12,6 @@ prepare-to-emit
 	block prepare-to-emit
 
 
-jolt-expression
-	return block jolt-expression
-
-
-translate: compiler
-	return block translate: compiler
-
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 

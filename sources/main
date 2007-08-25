@@ -375,6 +375,9 @@ c-compiler-references
 	CCompiler
 	CCompiler MethodBuilder
 
+jolt-compiler-references
+	JoltCompiler
+
 
 
 # Copyright 2007 Steve Folta.  See the License file.

@@ -4,9 +4,6 @@ trylon TrylidExpression
 prepare-to-emit
 	virtual
 
-jolt-expression
-	virtual
-
 
 
 
