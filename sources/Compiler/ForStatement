@@ -16,20 +16,6 @@ prepare-to-emit
 	body prepare-to-emit
 
 
-jolt-expression
-	return 	--
-		Expression 	--
-			with: 'trylid-for' with: local name intern 	--
-			with: collection jolt-expression 	--
-			with: body jolt-expression
-
-
-translate: compiler
-	expr = 	--
-		Expression 	--
-			with: 'trylid-for' with: local name intern with: collection with: body
-	return compiler translateExpression: expr
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

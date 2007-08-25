@@ -8,10 +8,6 @@ create: text
 	this text = text
 
 
-jolt-expression
-	return Expression with: 'comment' with: text
-
-
 ignored-for-else
 	return true
 

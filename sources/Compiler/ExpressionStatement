@@ -13,19 +13,6 @@ prepare-to-emit
 	expression prepare-to-emit
 
 
-jolt-expression
-	if comment
-		comment-expression = Expression with: 'comment' with: comment
-		return 	--
-			Expression 	--
-				with: 'begin' with: expression jolt-expression with: comment-expression
-	else
-		return expression jolt-expression
-
-
-translate: compiler
-	return expression translate: compiler
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

@@ -7,15 +7,6 @@ prepare-to-emit
 	# Default: nothing to do.
 
 
-jolt-expression
-	virtual
-
-
-translate: compiler
-	# Default: use jolt-expression.
-	return jolt-expression translate: compiler
-
-
 ignored-for-else
 	return false
 

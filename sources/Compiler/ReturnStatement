@@ -13,21 +13,6 @@ prepare-to-emit
 	value prepare-to-emit
 
 
-jolt-expression
-	# Coke's (return) form is broken, just fake it for now so we can flush out
-	# other bugs.
-	expression = Expression with: 'fixed-return' with: value jolt-expression
-	if comment
-		comment-expression = Expression with: 'comment' with: comment
-		expression = 	--
-			Expression with: 'begin' with: expression with: comment-expression
-	return expression
-
-
-translate: compiler
-	expr = Expression with: 'fixed-return' with: value
-	return compiler translateExpression: expr
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

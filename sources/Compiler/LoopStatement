@@ -13,23 +13,6 @@ prepare-to-emit
 	body prepare-to-emit
 
 
-jolt-expression
-	expression-size = 3
-	if comment
-		expression-size += 1
-	expression = Expression new: expression-size
-	expression at: 0 put: 'while'
-	expression at: 1 put: 'true'
-	expression at: 2 put: body jolt-expression
-	if comment
-		expression at: 3 put: (Expression with: 'comment' with: comment)
-	return expression
-
-
-translate: compiler
-	expr = Expression with: 'while' with: 'true' with: body
-	return compiler translateExpression: expr
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

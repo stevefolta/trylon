@@ -5,10 +5,6 @@ superclass Statement
 create
 
 
-jolt-expression
-	return 'nil'
-
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 

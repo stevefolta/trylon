@@ -75,53 +75,6 @@ prepare-to-emit
 		statement prepare-to-emit
 
 
-jolt-expression
-	expr = nil
-	num-statements = statements count
-	if num-statements == 1
-		expr = statements first-item jolt-expression
-	else if num-statements == 0
-		return Expression with: 'begin' with: 'nil'
-	else
-		expr = Expression new: statements count + 1
-		expr at: 0 put: 'begin'
-		index = 1
-		for statement in statements
-			expr at: index put: statement jolt-expression
-			index += 1
-	if locals
-		locals-expr = Expression new: locals count
-		index = 0
-		for local in locals values
-			locals-expr at: index put: local name intern
-			index += 1
-		expr = Expression with: 'trylid-block' with: locals-expr with: expr
-	return expr
-
-
-translate: compiler
-	expr = nil
-	num-statements = statements count
-	if num-statements == 0
-		return 'nil' translate: compiler
-	else if num-statements == 1
-		expr = statements first-item
-	else
-		expr = Expression new: statements count + 1
-		expr at: 0 put: 'begin'
-		index = 1
-		for statement in statements
-			expr at: index put: statement
-			index += 1
-	if locals
-		locals-expr = Expression new: locals count
-		index = 0
-		for local in locals values
-			locals-expr at: index put: local name intern
-			index += 1
-		expr = Expression with: 'trylid-block' with: locals-expr with: expr
-	return expr translate: compiler
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 
