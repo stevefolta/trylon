@@ -8,20 +8,6 @@ create: local
 	this local = local
 
 
-emit-call: arguments
-	return 	--
-		Expression 	--
-			with: 'set' 	--
-			with: local name intern 	--
-			with: arguments first-item jolt-expression
-
-
-translate-call: arguments compiler: compiler
-	expr = 	--
-		Expression with: 'set' with: local name intern with: arguments first-item
-	return compiler translateExpression: expr
-
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 

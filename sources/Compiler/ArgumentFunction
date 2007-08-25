@@ -8,9 +8,6 @@ create: arg
 	this name = arg name
 
 
-emit-call: arguments
-	return name intern
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 

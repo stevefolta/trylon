@@ -8,13 +8,6 @@ create: value
 	this value = value
 
 
-emit-call: arguments
-	if value
-		return 'true'
-	else
-		return 'false'
-
-
 name
 	if value
 		return "true"

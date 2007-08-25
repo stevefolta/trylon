@@ -1,5 +1,5 @@
 trylon PosixProto
-superclass CompiledProto
+superclass Compiler CompiledProto
 
 
 create: name parent: parent directory: directory
@@ -17,7 +17,7 @@ create: name parent: parent directory: directory
 
 
 class PosixProtoFunction
-	superclass TrylidFunction
+	superclass Compiler TrylidFunction
 	fields name
 
 	create: name
@@ -38,7 +38,10 @@ class PosixProtoFunction
 	iff targeting-jolt
 		translate-call: arguments compiler: compiler
 			return 	--
-				Send new: name object: (ExistingProto new: Posix) arguments: arguments
+				Compiler Send 	--
+					new: name 	--
+					object: (Compiler ExistingProto new: Posix) 	--
+					arguments: arguments
 
 
 

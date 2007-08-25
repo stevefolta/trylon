@@ -8,10 +8,6 @@ create: local
 	this local = local
 
 
-emit-call: arguments
-	return local name intern
-
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 

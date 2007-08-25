@@ -5,10 +5,6 @@ superclass TrylidFunction
 create
 
 
-emit-call: arguments
-	return 'nil'
-
-
 name
 	return "nil"
 

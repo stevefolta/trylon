@@ -11,64 +11,6 @@ create: creator on-proto: on-proto
 	name = "new" + (creator name substr: 6)
 
 
-emit-call: arguments
-	allocation = 	--
-		Expression 	--
-			with: 'send' 	--
-			with: (Expression with: 'quote' with: 'clone') 	--
-			with: on-proto access
-	creator-call = Expression new: arguments count + 3
-	creator-call at: 0 put: 'send'
-	creator-call at: 1 put: (Expression with: 'quote' with: creator name intern)
-	creator-call at: 2 put: 'new-object'
-	index = 3
-	for arg in arguments
-		creator-call at: index put: arg jolt-expression
-		index += 1
-	let-spec = Expression with: (Expression with: 'new-object' with: allocation)
-	return 	--
-		Expression with: 'let' with: let-spec with: creator-call with: 'new-object'
-
-
-translate-call: arguments compiler: compiler
-	(Send new: name object: on-proto access arguments: arguments) 	--
-		translate: compiler
-
-
-emit-code
-	allocation = 	--
-		Expression 	--
-			with: 'send' 	--
-			with: (Expression with: 'quote' with: 'raw-new') 	--
-			with: on-proto access
-	creator-call = Expression new: creator arguments count + 3
-	creator-call at: 0 put: 'send'
-	creator-call at: 1 put: (Expression with: 'quote' with: creator name intern)
-	creator-call at: 2 put: 'new-object'
-	index = 3
-	for arg in creator arguments
-		creator-call at: index put: arg name intern
-		index += 1
-	let-spec = Expression with: (Expression with: 'new-object' with: allocation)
-	body = 	--
-		Expression with: 'let' with: let-spec with: creator-call with: 'new-object'
-	
-	expr = Expression new: creator arguments count + 4
-	expr at: 0 put: 'define-send'
-	expr at: 1 put: (Expression with: 'quote' with: name intern)
-	expr at: 2 put: on-proto access
-	index = 3
-	for arg in creator arguments
-		expr at: index put: arg name intern
-		index += 1
-	expr at: index put: body
-	return expr
-
-
-translate: compiler
-	return compiler translateExpression: emit-code
-is-translatable
-	return true
 
 
 

@@ -10,15 +10,6 @@ create: field on-proto: on-proto
 	this on-proto = on-proto
 
 
-emit-call: arguments
-	# Could do this more efficiently...
-	return 	--
-		Expression 	--
-			with: 'send' 	--
-			with: (Expression with: 'quote' with: field name intern) 	--
-			with: on-proto access
-
-
 name
 	return field name
 

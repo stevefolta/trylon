@@ -10,46 +10,6 @@ create: field on-proto: on-proto
 	this on-proto = on-proto
 
 
-emit-call: arguments
-	return 	--
-		Expression 	--
-			with: 'send' 	--
-			with: (Expression with: 'quote' with: field name intern) 	--
-			with: on-proto access
-
-
-emit-code
-	# If it has an intial value, emit the literal.
-	initial-value = nil
-	if field initial-value
-		initial-value = field initial-value jolt-expression
-	else
-		initial-value = 'nil'
-	
-	# Just emit the declaration.
-	return 	--
-		Expression 	--
-			with: 'add-shared-field' with: field name intern with: on-proto access 	--
-			with: initial-value
-
-
-translate: compiler
-	# Handle the initial value.
-	initial-value = field initial-value
-	if initial-value == nil
-		initial-value = 'nil'
-	
-	# Translate.
-	expr = 	--
-		Expression 	--
-			with: 'add-shared-field' with: field name intern with: on-proto access 	--
-			with: initial-value
-	return compiler translateExpression: expr
-
-is-translatable
-	return true
-
-
 name
 	return field name
 

@@ -9,25 +9,6 @@ create: field on-proto: on-proto
 	this on-proto = on-proto
 
 
-emit-call: arguments
-	return 	--
-		Expression 	--
-			with: 'send' 	--
-			with: (Expression with: 'quote' with: (field name + ":") intern) 	--
-			with: on-proto access 	--
-			with: arguments first-item jolt-expression
-
-
-translate-call: arguments compiler: compiler
-	expr = 	--
-		Expression 	--
-			with: 'send' 	--
-			with: (Expression with: 'quote' with: (field name + ":") intern) 	--
-			with: on-proto access 	--
-			with: arguments first-item
-	return compiler translateExpression: expr
-
-
 name
 	return field name + ":"
 

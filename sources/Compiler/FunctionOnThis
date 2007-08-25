@@ -9,41 +9,6 @@ create: name on-proto: on-proto
 	this on-proto = on-proto
 
 
-emit-call: arguments
-	iff not-yet
-		# Special-case instance functions.
-		if build-settings optimize-field-accesses
-			function = on-proto lookup-instance-function: name
-			if function == nil
-				# This would be a good place for a warning... or would we never get here?
-			else if function is-a: FieldGetter
-				#...
-			else if function is-a: FieldSetter
-				#...
-	
-	# Emit the call.
-	expr = Expression new: arguments count + 3
-	expr at: 0 put: 'send'
-	expr at: 1 put: (Expression with: 'quote' with: name intern)
-	expr at: 2 put: 'self'
-	index = 3
-	for arg in arguments
-		expr at: index put: arg jolt-expression
-		index += 1
-	return expr
-
-
-translate-call: arguments compiler: compiler
-	expr = Expression new: arguments count + 3
-	expr at: 0 put: 'send'
-	expr at: 1 put: (Expression with: 'quote' with: name intern)
-	expr at: 2 put: 'self'
-	index = 3
-	for arg in arguments
-		expr at: index put: arg
-		index += 1
-	return compiler translateExpression: expr
-
 
 
 # Copyright 2007 Steve Folta.  See the License file.

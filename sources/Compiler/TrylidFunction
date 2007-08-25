@@ -1,25 +1,11 @@
 trylon TrylidFunction
 
 
-emit-call: arguments
-	virtual
-
-translate-call: arguments compiler: compiler
-	# Default: use emit-call.
-	return (emit-call: arguments) translate: compiler
-
 prepare-to-emit
 	# Default: nothing to do.
 
-emit-code
-	# Default: nothing to do.
-	return nil
-
 has-code
 	return true
-
-is-translatable
-	return false
 
 
 

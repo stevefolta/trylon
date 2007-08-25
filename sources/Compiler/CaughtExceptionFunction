@@ -1,11 +1,9 @@
 trylon CaughtExceptionFunction
 superclass TrylidFunction
 
+
 create
 
-
-emit-call: arguments
-	return 'exception'
 
 
 
