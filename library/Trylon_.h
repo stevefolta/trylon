@@ -48,13 +48,13 @@ extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 #define Field_(name)        	this_->fields[name##__fld_]
 #define FieldOf_(obj, name) 	obj->fields[name##__fld_]
 
-#define SharedField_(name, className)	(className##__##name##__storage_)
+#define SharedField_(name, className)	(name##__##className##__storage_)
 #define SetSharedField_(name, className, value) 	\
-	(className##__##name##__storage_ = value)
+	(name##__##className##__storage_ = value)
 #define DeclareSharedField_(name, className, value) 	\
-	obj_ className##__##name##__storage_ = value;
+	obj_ name##__##className##__storage_ = value;
 #define UsingSharedField_(name, className) 	\
-	extern obj_ className##__##name##__storage_;
+	extern obj_ name##__##className##__storage_;
 
 #define UsingClass_(className) 	\
 	extern struct ClassInfo className##__classInfo_;	 \
