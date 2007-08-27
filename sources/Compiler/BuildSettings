@@ -19,7 +19,7 @@ create
 	c-sources-dir = ".c-sources"
 	objects-dir = ".objects"
 	is-verbose = false
-	target = 'Jolt'
+	target = 'C'
 
 	sysname = System sysname
 	if !sysname is-empty
