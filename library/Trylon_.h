@@ -90,6 +90,12 @@ struct Standard__String__internal {
 	obj_     	stopper;
 };
 
+struct Standard__Symbol__internal {
+	classref_	class_;
+	obj_     	start;
+	obj_     	stopper;
+};
+
 struct Standard__DictNode__internal_ {
 	classref_                            	class_;
 	obj_                                 	key;
@@ -144,7 +150,7 @@ UsingClass_(Standard__Dictionary__Node)
 	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
 	DefineBytePtr_(y##name##__stopper_, 	\
 	               y##name##__str_ + sizeof(y##name##__str_) - 1) 	\
-	struct Standard__String__internal y##name##__sym_ = 	\
+	struct Standard__Symbol__internal y##name##__sym_ = 	\
 		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
 #define DefineSymbolData_(name, value) 	\
 	static const char y##name##__str_[] = value; 	\
@@ -152,13 +158,13 @@ UsingClass_(Standard__Dictionary__Node)
 	DefineBytePtr_(y##name##__stopper_, 	\
 	               y##name##__str_ + sizeof(y##name##__str_) - 1)
 #define DefineSymbolObject_(name) 	\
-	struct Standard__String__internal y##name##__sym_ = 	\
+	struct Standard__Symbol__internal y##name##__sym_ = 	\
 		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
 
 #define Str_(index)	((obj_) &s##index##_)
 
 #define UsingSym_(name) 	\
-	extern struct Standard__String__internal y##name##__sym_;
+	extern struct Standard__Symbol__internal y##name##__sym_;
 #define Sym_(name) 	((obj_) &y##name##__sym_)
 
 #define DefineDict_(index, root, count) 	\

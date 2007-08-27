@@ -8,16 +8,15 @@ extend Standard Symbol
 
 	intern: name
 		# First check the symbols that were present in the source.
-		if built-in-table
-			result = built-in-table at: name
-			if result
-				return result
+		if built-in-table == nil
+			built-in-table = CImplementation Symbol BuiltInSymbols new
+		result = built-in-table at: name
+		if result
+			return result
 
-		# We need the dynamic symbol table; make sure it's there.
+		# Next see if it's already in the dynamic symbol table.
 		if dynamic-table == nil
 			dynamic-table = Dictionary new
-
-		# Does the dynamic table have it already?
 		result = dynamic-table at: name
 		if result
 			return result
@@ -26,6 +25,33 @@ extend Standard Symbol
 		result = Symbol new: name start to: name stopper
 		dynamic-table at: name put: result
 		return result
+
+
+class BuiltInSymbols
+	c-preamble
+		extern struct Standard__Symbol__internal* firstSymbol_;
+		extern struct Standard__Symbol__internal* lastSymbol_;
+
+	create
+
+	c-fn at: name
+		UsingMethod_(string) UsingMethod_(_eq__eq_) UsingMethod_(_lt_)
+		struct Standard__Symbol__internal* start = firstSymbol_;
+		struct Standard__Symbol__internal* end = lastSymbol_ + 1;
+		struct Standard__Symbol__internal* symbol;
+
+		name = Call_(string, name); 	/* In case we get a symbol. */
+		while (start < end) {
+			int index = (end - start) / 2;
+			struct Standard__Symbol__internal* symbol = &start[index];
+			if (Call_(_eq__eq_, name, symbol))
+				return (obj_) symbol;
+			else if (Call_(_lt_, name, symbol))
+				end = symbol;
+			else
+				start = symbol;
+			}
+		return nil;
 
 	
 

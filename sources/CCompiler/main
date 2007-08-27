@@ -213,9 +213,27 @@ emit-symbols
 		stream write-all: 	--
 			("DefineSymbolData_(", (mangle-name: symbol), ", \"", symbol, "\")\n")
 	stream write-line
+	first-symbol-name = nil
+	last-symbol-name = nil
 	for symbol in compiler symbols keys
+		if first-symbol-name == nil
+			first-symbol-name = symbol
+		last-symbol-name = symbol
 		stream write-all: 	--
 			("DefineSymbolObject_(", (mangle-name: symbol), ")\n")
+	stream write-line
+
+	# First and last symbol (for lookup).
+	stream write-all: 	--
+		("struct Standard__Symbol__internal* firstSymbol_ = \n", 	--
+		 "\t(struct Standard__Symbol__internal*) Sym_(", 	--
+		 (mangle-name: first-symbol-name), 	--
+		 ");\n")
+	stream write-all: 	--
+		("struct Standard__Symbol__internal* lastSymbol_ = \n", 	--
+		 "\t(struct Standard__Symbol__internal*) Sym_(", 	--
+		 (mangle-name: last-symbol-name), 	--
+		 ");\n")
 	stream write-line
 
 	is-changed = stream is-changed
