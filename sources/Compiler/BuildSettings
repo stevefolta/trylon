@@ -35,6 +35,9 @@ has-symbol: name
 
 
 load
+	library-path = compiler find-library-path
+	if library-path
+		load-from: library-path + "/build-settings"
 	load-from: "build-settings.local"
 	load-from: "build-settings"
 

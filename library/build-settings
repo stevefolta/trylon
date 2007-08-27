@@ -1,0 +1,13 @@
+# This is the global boilerplate.  It is loaded first, so later build-settings
+# files can replace the values here.
+
+# C compilation.
+c-flags += "-g"
+link-flags += "-lgc" "-ldl" "-lm"
+
+if Darwin
+	# Currently, we assume that Fink was used to install the BDW GC.
+	c-flags += "-DMAC_OSX" "-DOSX_FINK"
+	c-flags += "-I/sw/include"
+	link-flags += "-L/sw/lib"
+
