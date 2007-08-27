@@ -18,7 +18,7 @@ struct object {
 };
 
 #define ClassNumFor_(obj) 	(obj->class_->classNum)
-#define StdClassRef_(className) 	(&Standard__##className##__classInfo_)
+#define StdClassRef_(className) 	(&className##__Standard__classInfo_)
 
 typedef obj_ (*fn_ptr_)();
 typedef char* byte_ptr_;
@@ -111,15 +111,15 @@ struct Standard__Dict__internal_ {
 };
 
 
-UsingClass_(Standard__Object)
-UsingClass_(Standard__Int)
-UsingClass_(Standard__Float)
-UsingClass_(Standard__BytePtr)
-UsingClass_(Standard__String)
-UsingClass_(Standard__Symbol)
-UsingClass_(Standard__Tuple)
-UsingClass_(Standard__Dictionary)
-UsingClass_(Standard__Dictionary__Node)
+UsingClass_(Object__Standard)
+UsingClass_(Int__Standard)
+UsingClass_(Float__Standard)
+UsingClass_(BytePtr__Standard)
+UsingClass_(String__Standard)
+UsingClass_(Symbol__Standard)
+UsingClass_(Tuple__Standard)
+UsingClass_(Dictionary__Standard)
+UsingClass_(Node__Dictionary__Standard)
 
 
 
@@ -184,7 +184,7 @@ UsingClass_(Standard__Dictionary__Node)
 
 /* Expressions */
 
-#define true_	(&Standard__Object)
+#define true_	(&Object__Standard)
 #define Not_(object)	(object ? nil : true_)
 #define Bool_(value)	(value ? true_ : nil)
 

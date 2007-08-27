@@ -7,7 +7,7 @@ extend Compiler CompiledProto
 		if .c-name == nil
 			.c-name = mangle-name: name
 			if parent && !(parent is-main)
-				.c-name = parent c-name + "__" + .c-name
+				.c-name += "__" + parent c-name
 		return .c-name
 	field .c-name
 
