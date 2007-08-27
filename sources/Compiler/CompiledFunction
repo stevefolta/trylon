@@ -1,5 +1,5 @@
 trylon CompiledFunction
-superclass TrylidFunction
+superclass TrylonFunction
 
 fields name arguments return-type on-proto
 fields body method-context is-primitive

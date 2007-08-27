@@ -1,5 +1,5 @@
 trylon FunctionOnThis
-superclass TrylidFunction
+superclass TrylonFunction
 
 fields name on-proto
 

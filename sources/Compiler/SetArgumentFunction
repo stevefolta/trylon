@@ -1,5 +1,5 @@
 trylon SetArgumentFunction
-superclass TrylidFunction
+superclass TrylonFunction
 
 fields name
 

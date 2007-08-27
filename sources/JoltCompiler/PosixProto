@@ -17,7 +17,7 @@ create: name parent: parent directory: directory
 
 
 class PosixProtoFunction
-	superclass Compiler TrylidFunction
+	superclass Compiler TrylonFunction
 	fields name
 
 	create: name

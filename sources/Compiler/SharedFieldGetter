@@ -1,5 +1,5 @@
 trylon SharedFieldGetter
-superclass TrylidFunction
+superclass TrylonFunction
 
 
 fields field on-proto

@@ -1,6 +1,6 @@
 trylon Functions
 
-extend Compiler TrylidFunction
+extend Compiler TrylonFunction
 	emit-call: arguments
 		virtual
 

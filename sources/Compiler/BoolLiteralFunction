@@ -1,5 +1,5 @@
 trylon BoolLiteralFunction
-superclass TrylidFunction
+superclass TrylonFunction
 
 field value
 

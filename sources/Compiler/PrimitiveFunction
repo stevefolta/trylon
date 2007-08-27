@@ -1,5 +1,5 @@
 trylon PrimitiveFunction
-superclass TrylidFunction
+superclass TrylonFunction
 
 # Functions that are defined outside Trylid code.
 
