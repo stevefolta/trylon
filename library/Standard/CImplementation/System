@@ -66,8 +66,8 @@ extend Standard System
 
 	c-fn current-directory-path: new-path
 		UsingMethod_(_pl_)
-		UsingClass_(Standard__MessageException)
-		extern obj_ new_co___Standard__MessageException(obj_, obj_);
+		UsingClass_(MessageException__Standard)
+		extern obj_ new_co___MessageException__Standard(obj_, obj_);
 
 		char* dirPath = CString_(new_path);
 		int result = chdir(dirPath);
@@ -77,8 +77,8 @@ extend Standard System
 			obj_ message = Call_(_pl_, Str_(0), new_path);
 			message = Call_(_pl_, message, Str_(1));
 			obj_ exception =
-				new_co___Standard__MessageException(
-					Proto_(Standard__MessageException), message);
+				new_co___MessageException__Standard(
+					Proto_(MessageException__Standard), message);
 			Throw_(exception);
 			}
 

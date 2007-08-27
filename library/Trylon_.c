@@ -231,12 +231,12 @@ int main(int argc, char* argv[])
 	obj_ args, result;
 	int whichArg;
 	extern obj_ main_co___Main(obj_ this_, obj_ args);
-	extern obj_ new__Standard__List(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
 	UsingMethod_(append_co_)
-	UsingClass_(Main) UsingClass_(Standard__List)
+	UsingClass_(Main) UsingClass_(List__Standard)
 
 	// Build the list of args.
-	args = new__Standard__List(Proto_(Standard__List));
+	args = new__List__Standard(Proto_(List__Standard));
 	for (whichArg = 0; whichArg < argc; ++whichArg)
 		Call_(append_co_, args, BuildString_(argv[whichArg]));
 

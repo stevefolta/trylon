@@ -30,13 +30,13 @@ extend Standard File InStream
 		#include <stdio.h>
 
 	c-fn create: path
-		UsingClass_(Standard__File__FileMissingException)
-		extern obj_ new_co___Standard__File__FileMissingException(obj_, obj_);
+		UsingClass_(FileMissingException__File__Standard)
+		extern obj_ new_co___FileMissingException__File__Standard(obj_, obj_);
 		FILE* result = fopen(CString_(path), "r");
 		if (result == nil) {
 			obj_ exception =
-				new_co___Standard__File__FileMissingException(
-					Proto_(Standard__File__FileMissingException), path);
+				new_co___FileMissingException__File__Standard(
+					Proto_(FileMissingException__File__Standard), path);
 			Throw_(exception);
 			}
 		Field_(_dt_file) = (obj_) result;
@@ -61,13 +61,13 @@ extend Standard File OutStream
 		#include <stdio.h>
 
 	c-fn create: path
-		UsingClass_(Standard__File__FileOpenException);
-		extern obj_ new_co___Standard__File__FileOpenException(obj_, obj_);
+		UsingClass_(FileOpenException__File__Standard);
+		extern obj_ new_co___FileOpenException__File__Standard(obj_, obj_);
 		FILE* result = fopen(CString_(path), "w+");
 		if (result == nil) {
 			obj_ exception =
-				new_co___Standard__File__FileOpenException(
-					Proto_(Standard__File__FileOpenException), path);
+				new_co___FileOpenException__File__Standard(
+					Proto_(FileOpenException__File__Standard), path);
 			Throw_(exception);
 			}
 		Field_(_dt_file) = (obj_) result;

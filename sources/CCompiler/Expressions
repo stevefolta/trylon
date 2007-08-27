@@ -354,14 +354,14 @@ extend Compiler TupleExpression
 				throw MessageException: "Using a non-literal tuple outside a method."
 
 			builder add-extern-declaration: 	--
-				"extern obj_ new_co___Standard__Tuple(obj_, obj_);"
+				"extern obj_ new_co___Tuple__Standard(obj_, obj_);"
 
 			# Make the tuple object.
 			tuple = builder get-temporary
 			size-result = (IntLiteral new: members count string) emit-code: builder
 			builder add-line: 	--
 				tuple access + 	--
-				" = new_co___Standard__Tuple(Proto_(Standard__Tuple), " + 	--
+				" = new_co___Tuple__Standard(Proto_(Tuple__Standard), " + 	--
 				size-result access + 	--
 				");"
 			

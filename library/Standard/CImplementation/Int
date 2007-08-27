@@ -6,7 +6,7 @@ extend Standard Int
 		#define Val	(IntValue_(this_))
 
 	c-fn new
-		return CloneObjExtra_(Proto_(Standard__Int), 1);
+		return CloneObjExtra_(Proto_(Int__Standard), 1);
 	
 
 	c-fn + other
