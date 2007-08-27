@@ -206,7 +206,7 @@ parse-proto-file: proto
 
 
 parse-member-proto
-	# "proto" (or "class" for compatibility with Trylon)
+	# "class" (or "proto" for compatibility with Trylid).
 	if (!at-name: "proto") && (!at-name: "class")
 		parse-error: "Expecting \"proto\"."
 	consume-token
@@ -259,7 +259,7 @@ parse-proto-contents: the-proto
 			the-proto add-function: function
 		else if name == "class-fn" || name == "class-function" || 	--
 		        name == "primitive-class-fn" || name == "primitive-class-function"
-			# For backward compatibility with Trylon.
+			# For backward compatibility with Trylon 1.
 			the-proto add-function: (parse-function: true)
 
 		else if name == "field" || name == "fields" || name == "fld"
@@ -271,7 +271,7 @@ parse-proto-contents: the-proto
 		        name == "primitive-class-fld" || 	--
 		        name == "primitive-class-field" || 	--
 		        name == "primitive-class-fields"
-			# For backward compatibility with Trylon.
+			# For backward compatibility with Trylon 1.
 			for field in parse-fields
 				the-proto add-shared-field: field
 
@@ -866,12 +866,12 @@ parse-try-statement
 		   (current-token text != "catch" && current-token text != "else")
 			break
 		if else-clause
-			parse-error: "Trylid doesn't allow multiple \"catch\" clauses."
+			parse-error: "Trylon doesn't allow multiple \"catch\" clauses."
 
 		consume-token 	# "catch"/"else"
 		if current-token != 'eol' && current-token != 'comment'
-			# Type spec is not required or used in Trylid, but accept it for backward
-			# compatibility with Trylon code.
+			# Type spec is not required or used in Trylon 2, but accept it for backward
+			# compatibility with Trylon 1 code.
 			type = parse-type-spec
 		catch-comment = require-eol
 		catch-clause = CatchClause new: context comment: comment

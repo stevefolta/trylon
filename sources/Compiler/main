@@ -1,7 +1,7 @@
 trylon Compiler
 
 # See "Compiler Compiler" for the guts of this, and an explanation of why it is
-# separate from this... (it's Trylon's fault, not Trylid's).
+# separate from this... (it's Trylon 1's fault, not Trylon 2's).
 
 
 compile: compile-symbols

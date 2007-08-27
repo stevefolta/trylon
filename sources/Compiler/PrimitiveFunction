@@ -1,7 +1,7 @@
 trylon PrimitiveFunction
 superclass TrylonFunction
 
-# Functions that are defined outside Trylid code.
+# Functions that are defined outside Trylon code.
 
 fields name on-proto
 
