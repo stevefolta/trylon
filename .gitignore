@@ -1,7 +1,8 @@
 trylid
 build-settings.local
+temp
 temp.*
-temp2.*
+temp2*
 test.k
 test2.k
 *-test.k

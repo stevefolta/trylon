@@ -146,6 +146,14 @@ UsingClass_(Standard__Dictionary__Node)
 	               y##name##__str_ + sizeof(y##name##__str_) - 1) 	\
 	struct Standard__String__internal y##name##__sym_ = 	\
 		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
+#define DefineSymbolData_(name, value) 	\
+	static const char y##name##__str_[] = value; 	\
+	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
+	DefineBytePtr_(y##name##__stopper_, 	\
+	               y##name##__str_ + sizeof(y##name##__str_) - 1)
+#define DefineSymbolObject_(name) 	\
+	struct Standard__String__internal y##name##__sym_ = 	\
+		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
 
 #define Str_(index)	((obj_) &s##index##_)
 

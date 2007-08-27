@@ -211,7 +211,11 @@ emit-symbols
 	# Symbols.
 	for symbol in compiler symbols keys
 		stream write-all: 	--
-			("DefineSymbol_(", (mangle-name: symbol), ", \"", symbol, "\")\n")
+			("DefineSymbolData_(", (mangle-name: symbol), ", \"", symbol, "\")\n")
+	stream write-line
+	for symbol in compiler symbols keys
+		stream write-all: 	--
+			("DefineSymbolObject_(", (mangle-name: symbol), ")\n")
 	stream write-line
 
 	is-changed = stream is-changed
