@@ -114,9 +114,13 @@ compile-program: compile-symbols
 
 declaring-selector: name
 	selector-names at: name put: name
+	if build-settings include-selector-symbols
+		using-symbol: name
 
 calling-selector: name
 	selector-names at: name put: name
+	if build-settings include-selector-symbols
+		using-symbol: name
 
 using-symbol: name
 	symbols at: name put: name

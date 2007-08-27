@@ -1,2 +1,4 @@
 program = "symbols"
 
+include-selector-symbols = true
+

@@ -5,7 +5,7 @@ fields program-name c-flags link-flags c-compiler linker
 fields jolt-sources-dir
 fields c-sources-dir objects-dir
 fields is-verbose targeting-c targeting-jolt
-fields debugger
+fields debugger include-selector-symbols
 
 
 create
@@ -90,6 +90,8 @@ parse-block: lexer
 				objects-dir = parse-name: lexer name: name
 			else if name == "debugger"
 				debugger = parse-boolean: lexer name: name
+			else if name == "include-selector-symbols"
+				include-selector-symbols = parse-boolean: lexer name: name
 			else if name == "verbose"
 				is-verbose = parse-boolean: lexer name: name
 			else if name == "targeting-c"
