@@ -1,0 +1,32 @@
+trylon Symbol
+
+extend Standard Symbol
+	# Dynamic lookup.
+
+	built-in-table = nil
+	dynamic-table = nil
+
+	intern: name
+		# First check the symbols that were present in the source.
+		if built-in-table
+			result = built-in-table at: name
+			if result
+				return result
+
+		# We need the dynamic symbol table; make sure it's there.
+		if dynamic-table == nil
+			dynamic-table = Dictionary new
+
+		# Does the dynamic table have it already?
+		result = dynamic-table at: name
+		if result
+			return result
+
+		# Need to add it.
+		result = Symbol new: name start to: name stopper
+		dynamic-table at: name put: result
+		return result
+
+	
+
+
