@@ -1,5 +1,5 @@
 trylon NilTest
-superclass TrylidExpression
+superclass TrylonExpression
 
 fields object is-nil
 

@@ -1,5 +1,5 @@
 trylon Send
-superclass TrylidExpression
+superclass TrylonExpression
 
 fields name object arguments
 

@@ -1,5 +1,5 @@
 trylon SymbolLiteral
-superclass TrylidExpression
+superclass TrylonExpression
 
 field name
 

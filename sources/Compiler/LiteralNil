@@ -1,5 +1,5 @@
 trylon LiteralNil
-superclass TrylidExpression
+superclass TrylonExpression
 
 create
 

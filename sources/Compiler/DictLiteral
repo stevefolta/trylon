@@ -1,5 +1,5 @@
 trylon DictLiteral
-superclass TrylidExpression
+superclass TrylonExpression
 
 fields dict
 

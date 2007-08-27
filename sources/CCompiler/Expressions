@@ -3,7 +3,7 @@ trylon Expressions
 
 ##### Fundamentals ####
 
-extend Compiler TrylidExpression
+extend Compiler TrylonExpression
 	emit-code: builder
 		virtual
 

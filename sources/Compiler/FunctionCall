@@ -1,5 +1,5 @@
 trylon FunctionCall
-superclass TrylidExpression
+superclass TrylonExpression
 
 fields name arguments context
 fields function 	# Only valid after prepare-to-emit.

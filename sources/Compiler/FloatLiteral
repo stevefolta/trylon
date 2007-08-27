@@ -1,5 +1,5 @@
 trylon FloatLiteral
-superclass TrylidExpression
+superclass TrylonExpression
 
 fields value
 

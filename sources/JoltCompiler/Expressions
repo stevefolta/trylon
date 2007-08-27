@@ -1,6 +1,6 @@
 trylon Expressions
 
-extend Compiler TrylidExpression
+extend Compiler TrylonExpression
 	jolt-expression
 		virtual
 
