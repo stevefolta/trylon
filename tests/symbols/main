@@ -5,5 +5,8 @@ main: args
 	print-line: "Generated 'foo': " + (Symbol intern: "foo") object-ptr string
 	print-line: "Generated 'foo': " + (Symbol intern: "foo") object-ptr string
 	print-line: "Built-in 'foo':  " + 'foo' object-ptr string
+	'afoo'
+	'symbol-1'
+	'symbol-2'
 
 
