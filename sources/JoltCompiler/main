@@ -1,10 +1,41 @@
 trylon JoltCompiler
 
+emit-jolt: compiler
+	# Emit the classes and packages.
+	status-reporter report: "Emitting code..."
+	status-reporter indent
+	for proto in compiler all-protos
+		is-changed = proto emit-code
+	status-reporter unindent
+
+	# Emit load.k.
+	status-reporter report: "Emitting load.k..."
+	status-reporter indent
+	path = compiler build-settings jolt-sources-dir + "/load.k"
+	file = File new: path
+	stream = ExistingFileStream new: file
+	for proto in compiler all-protos
+		stream write: "(load-trylid-proto " + proto full-name + ")"
+		stream write-line
+	stream close
+	status-reporter unindent
+
+
 references
 	Expressions
 	Functions
 	Statements
 	Objects
+
+
+# Selectors from Jolt, which we need to make available when in Trylon.
+
+iff !in-jolt
+	class BogueObject
+		translateExpression: expression
+			#
+		translateSymbol: symbol
+			#
 
 
 

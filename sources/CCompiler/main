@@ -1,6 +1,66 @@
 trylon CCompiler
 
 
+emit-c: compiler
+	build-settings = compiler build-settings
+	library-path = compiler find-library-path
+	recompile-all = false
+
+	# Number the classes.
+	object-class = compiler standard-object-proto
+	object-class number-classes: ClassNumberer new
+	
+	# Copy Trylon_.h.
+	contents = (File new: library-path + "/Trylon_.h") contents
+	stream = ExistingFileStream new: build-settings c-sources-dir + "/Trylon_.h"
+	stream write: contents
+	if stream is-changed
+		recompile-all = true
+	stream close
+
+	# Copy and compile Trylon_.c.
+	contents = (File new: library-path + "/Trylon_.c") contents
+	c-file-name = build-settings c-sources-dir + "/Trylon_.c"
+	stream = ExistingFileStream new: c-file-name
+	stream write: contents
+	compile-trylon-c = (stream is-changed || recompile-all)
+	stream close
+	objects = List new
+	objects append: (compile-c-file: "Trylon_" force-compile: compile-trylon-c)
+
+	# Emit the classes and packages.
+	status-reporter report: "Emitting code..."
+	status-reporter indent
+	for proto in compiler all-protos
+		builder = ClassBuilder new: proto
+		builder emit
+		objects append: builder object-file-name
+	status-reporter unindent
+
+	# Emit the dispatch table.
+	recompile = emit-dispatch-table: compiler main-proto
+	if recompile-all
+		recompile = true
+	objects append: (compile-c-file: "methods_" force-compile: recompile)
+
+	# Emit the symbols.
+	status-reporter report: "Emitting symbols..."
+	recompile = (emit-symbols || recompile-all)
+	objects append: (compile-c-file: "symbols_" force-compile: recompile)
+
+	# Link.
+	status-reporter report: "Linking..."
+	args = List new
+	args append: "-o"
+	args append: build-settings program-name
+	for object-file in objects
+		args append: object-file
+	for flag in build-settings link-flags
+		args append: flag
+	report-run-program: build-settings linker arguments: args
+	System run-program: build-settings linker arguments: args
+
+
 mangle-name: name
 	# Certain names are reserved in C and/or C++ but not in Trylon.
 	if name == "class"

@@ -102,15 +102,18 @@ compile-program: compile-symbols
 
 	# Emit
 	if build-settings targeting-jolt
-		emit-jolt
+		JoltCompiler emit-jolt: this
 	if build-settings targeting-c
-		emit-c
+		CCompiler emit-c: this
 
 	status-reporter report: "Done."
 
 
 
 # Lower-level compilation.
+
+all-protos
+	return proto-queue
 
 declaring-selector: name
 	selector-names at: name put: name
@@ -126,88 +129,6 @@ using-symbol: name
 	symbols at: name put: name
 
 
-emit-jolt
-	# Emit the classes and packages.
-	status-reporter report: "Emitting code..."
-	status-reporter indent
-	for proto in proto-queue
-		is-changed = proto emit-code
-	status-reporter unindent
-
-	# Emit load.k.
-	status-reporter report: "Emitting load.k..."
-	status-reporter indent
-	path = compiler build-settings jolt-sources-dir + "/load.k"
-	file = File new: path
-	stream = ExistingFileStream new: file
-	for proto in proto-queue
-		stream write: "(load-trylid-proto " + proto full-name + ")"
-		stream write-line
-	stream close
-	status-reporter unindent
-
-
-emit-c
-	# Number the classes.
-	object-class = root-proto: main-proto
-	object-class number-classes: CCompiler ClassNumberer new
-	
-	# Copy Trylon_.h.
-	recompile-all = false
-	library-path = find-library-path
-	contents = (File new: library-path + "/Trylon_.h") contents
-	stream = ExistingFileStream new: build-settings c-sources-dir + "/Trylon_.h"
-	stream write: contents
-	if stream is-changed
-		recompile-all = true
-	stream close
-
-	# Copy and compile Trylon_.c.
-	contents = (File new: library-path + "/Trylon_.c") contents
-	c-file-name = build-settings c-sources-dir + "/Trylon_.c"
-	stream = ExistingFileStream new: c-file-name
-	stream write: contents
-	compile-trylon-c = (stream is-changed || recompile-all)
-	stream close
-	objects = List new
-	objects append: 	--
-		(CCompiler compile-c-file: "Trylon_" force-compile: compile-trylon-c)
-
-	# Emit the classes and packages.
-	status-reporter report: "Emitting code..."
-	status-reporter indent
-	for proto in proto-queue
-		builder = CCompiler ClassBuilder new: proto
-		builder emit
-		objects append: builder object-file-name
-	status-reporter unindent
-
-	# Emit the dispatch table.
-	recompile = CCompiler emit-dispatch-table: main-proto
-	if recompile-all
-		recompile = true
-	objects append: 	--
-		(CCompiler compile-c-file: "methods_" force-compile: recompile)
-
-	# Emit the symbols.
-	status-reporter report: "Emitting symbols..."
-	recompile = (CCompiler emit-symbols || recompile-all)
-	objects append: 	--
-		(CCompiler compile-c-file: "symbols_" force-compile: recompile)
-
-	# Link.
-	status-reporter report: "Linking..."
-	args = List new
-	args append: "-o"
-	args append: build-settings program-name
-	for object-file in objects
-		args append: object-file
-	for flag in build-settings link-flags
-		args append: flag
-	CCompiler report-run-program: build-settings linker arguments: args
-	System run-program: build-settings linker arguments: args
-
-
 root-proto: main-proto
 	# Find "Standard Object".
 	standard-package = main-proto get-subproto: "Standard"
@@ -219,6 +140,10 @@ root-proto: main-proto
 	if !(object-function is-a: ProtoFunction)
 		throw MessageException new: "Standard Object is not a prototype!"
 	return object-function proto
+
+
+standard-object-proto
+	return root-proto: main-proto
 
 
 get-standard-class: name
@@ -245,15 +170,6 @@ find-library-path
 		if prefix-dir entry-is-directory: "trylid"
 			return prefix-path + "/trylid"
 	return nil
-
-
-# Selectors from Jolt, which we need to make available when in Trylon.
-
-iff !in-jolt
-	translateExpression: expression
-		#
-	translateSymbol: symbol
-		#
 
 
 
