@@ -1,6 +1,11 @@
 trylon JoltCompiler
 
 emit-jolt: compiler
+	# Create the sources directory.
+	directory = FileDirectory new: "."
+	if !(directory entry-is-directory: build-settings jolt-sources-dir)
+		directory create-subdirectory: build-settings jolt-sources-dir
+
 	# Emit the classes and packages.
 	status-reporter report: "Emitting code..."
 	status-reporter indent

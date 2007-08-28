@@ -6,6 +6,13 @@ emit-c: compiler
 	library-path = compiler find-library-path
 	recompile-all = false
 
+	# Create sources/objects directories.
+	directory = FileDirectory new: "."
+	if !(directory entry-is-directory: build-settings c-sources-dir)
+		directory create-subdirectory: build-settings c-sources-dir
+	if !(directory entry-is-directory: build-settings objects-dir)
+		directory create-subdirectory: build-settings objects-dir
+
 	# Number the classes.
 	object-class = compiler standard-object-proto
 	object-class number-classes: ClassNumberer new

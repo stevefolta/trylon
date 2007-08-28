@@ -58,17 +58,6 @@ compile-program: compile-symbols
 		else
 			status-reporter = VT100StatusReporter new
 
-	# Create the sources/objects directories
-	directory = FileDirectory new: "."
-	if build-settings targeting-jolt
-		if !(directory entry-is-directory: build-settings jolt-sources-dir)
-			directory create-subdirectory: build-settings jolt-sources-dir
-	if build-settings targeting-c
-		if !(directory entry-is-directory: build-settings c-sources-dir)
-			directory create-subdirectory: build-settings c-sources-dir
-		if !(directory entry-is-directory: build-settings objects-dir)
-			directory create-subdirectory: build-settings objects-dir
-
 	# Load.
 	main-directory = FileDirectory new: "."
 	if main-directory entry-is-directory: "sources"
