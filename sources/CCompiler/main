@@ -310,16 +310,21 @@ emit-symbols
 	stream write-line
 
 	# First and last symbol (for lookup).
-	stream write-all: 	--
-		("struct Standard__Symbol__internal* firstSymbol_ = \n", 	--
-		 "\t(struct Standard__Symbol__internal*) Sym_(", 	--
-		 (mangle-name: first-symbol-name), 	--
-		 ");\n")
-	stream write-all: 	--
-		("struct Standard__Symbol__internal* lastSymbol_ = \n", 	--
-		 "\t(struct Standard__Symbol__internal*) Sym_(", 	--
-		 (mangle-name: last-symbol-name), 	--
-		 ");\n")
+	if first-symbol-name
+		stream write-all: 	--
+			("struct Standard__Symbol__internal* firstSymbol_ = \n", 	--
+			 "\t(struct Standard__Symbol__internal*) Sym_(", 	--
+			 (mangle-name: first-symbol-name), 	--
+			 ");\n")
+		stream write-all: 	--
+			("struct Standard__Symbol__internal* lastSymbol_ = \n", 	--
+			 "\t(struct Standard__Symbol__internal*) Sym_(", 	--
+			 (mangle-name: last-symbol-name), 	--
+			 ");\n")
+	else
+		# No symbols at all.
+		stream write-line: "struct Standard__Symbol__internal* firstSymbol_ = nil;\n"
+		stream write-line: "struct Standard__Symbol__internal* lastSymbol_ = nil;\n"
 	stream write-line
 
 	is-changed = stream is-changed
