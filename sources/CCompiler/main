@@ -16,6 +16,11 @@ emit-c: compiler
 	# Number the classes.
 	object-class = compiler standard-object-proto
 	object-class number-classes: ClassNumberer new
+
+	# Emit the settings.
+	settings-changed = emit-settings: build-settings
+	if settings-changed
+		recompile-all = true
 	
 	# Copy Trylon_.h.
 	contents = (File new: library-path + "/Trylon_.h") contents
@@ -40,7 +45,7 @@ emit-c: compiler
 	status-reporter indent
 	for proto in compiler all-protos
 		builder = ClassBuilder new: proto
-		builder emit
+		builder emit: recompile-all
 		objects append: builder object-file-name
 	status-reporter unindent
 
@@ -66,6 +71,20 @@ emit-c: compiler
 		args append: flag
 	report-run-program: build-settings linker arguments: args
 	System run-program: build-settings linker arguments: args
+
+
+emit-settings: build-settings
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/settings_.h")
+
+	if build-settings debugger
+		stream write-line: "#define DEBUGGER_"
+	
+	stream write-line
+	is-changed = stream is-changed
+	stream close
+	return is-changed
 
 
 mangle-name: name

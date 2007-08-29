@@ -12,7 +12,7 @@ create: proto
 	tuple-literals = IndexedResources new
 
 
-emit
+emit: force-compile
 	build-settings = compiler build-settings
 
 	# Emit the C code.
@@ -25,7 +25,7 @@ emit
 	stream close
 
 	# Compile the C code.
-	if need-recompile || !((File new: object-file-name) exists)
+	if need-recompile || force-compile || !((File new: object-file-name) exists)
 		status-reporter report: "Compiling " + proto c-name + ".c..."
 		args = List new
 		args append: "-c"

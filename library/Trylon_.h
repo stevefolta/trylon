@@ -1,5 +1,7 @@
 /* Trylon_.h */
 
+#include "settings_.h"
+
 /* Objects */
 
 typedef struct object* obj_;
