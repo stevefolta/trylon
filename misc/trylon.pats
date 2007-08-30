@@ -1,0 +1,28 @@
+! NEdit syntax highlighting patterns and commenting for Cleet
+! Version 1.0
+!
+! INSTALLATION
+!
+! Load this pattern by starting nedit with:
+!
+!       nedit -import <name of this file>
+!
+! Then, check that the patterns were loaded correctly, and choose Save Defaults
+! from the Preferences menu.  The new patterns will now be incorporated into
+! your own .nedit file, so the next time you start NEdit, you will no longer
+! need to use -import.
+!
+! These comments will not appear in your ~/.nedit
+!
+nedit.highlightPatterns: 	Trylon:1:0{\n\
+		Comment:"#.*$":::Comment::\n\
+		Statement:"^\\s*<(trylon-class|trylon-package|trylon|class-fn|class-field|class-fields|class|package|superclass|function|fn|field|fields|fld|primitive-fn|primitive-class-fn|primitive-field|primitive-fld|primitive-fields|return|if|else if|else|iff|case|default|switch|break|continue|loop|while|do|for|try|catch|throw)>":::Keyword::\n\
+		Keyword:"<(:=|this|in|true|false|nil)>":::Keyword::\n\
+		Typespec:"\\[(\\w|\\s)*\\]":::Typespec::\n\
+		Return Typespec:"-\\>(\\s*\\w+)+":::Typespec::\n\
+		Continuator:"--":::Continuator::\n\
+		Arg Name:"<(\\w|-)*:>":::Identifier::\n\
+	}
+nedit.languageModes:	Trylon::"^(<trylon-class|trylon-package|trylon|class|package>)":::::".,/\\`'!|@#%^&*()=+{}[]"":;<>?~"
+nedit.styles: 		Typespec:LightGreen:Plain\n\
+	Continuator:DarkGray:Plain
