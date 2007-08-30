@@ -16,6 +16,10 @@ create
 
 
 at: index
+at: index put: object
+at: index set-to: object
+	at: index put: object
+
 
 iff !targeting-c
 	at: index
@@ -24,6 +28,18 @@ iff !targeting-c
 			return nil
 		return 	--
 			(blocks ptr-at: which-block) object-at: index % block-size
+
+	at: index put: object
+		which-block = index / block-size
+		if which-block >= num-blocks
+			expand: which-block + 1
+		
+		((blocks ptr-at: which-block) object-at: index % block-size) = object
+
+		if index >= num-items
+			num-items = index + 1
+	
+
 
 iff targeting-c
 	c-fn at: index-arg
@@ -35,19 +51,20 @@ iff targeting-c
 		return
 			((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size];
 
+	c-fn at: index-arg put: object
+		UsingMethod_(expand_co_)
+		int index = IntValue_(index_arg);
+		int block_size = IntValue_(Field_(block_size));
+		int which_block = index / block_size;
+		if (which_block >= IntValue_(Field_(num_blocks)))
+			Call_(expand_co_, this_, BuildInt_(which_block + 1));
 
-at: index put: object
-	which-block = index / block-size
-	if which-block >= num-blocks
-		expand: which-block + 1
-	
-	((blocks ptr-at: which-block) object-at: index % block-size) = object
+		((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size] =
+			object;
 
-	if index >= num-items
-		num-items = index + 1
+		if (index >= IntValue_(Field_(num_items)))
+			Field_(num_items) = BuildInt_(index + 1);
 
-at: index set-to: object
-	at: index put: object
 
 
 iterator
