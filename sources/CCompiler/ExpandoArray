@@ -16,11 +16,24 @@ create
 
 
 at: index
-	which-block = index / block-size
-	if which-block >= num-blocks
-		return nil
-	return 	--
-		(blocks ptr-at: which-block) object-at: index % block-size
+
+iff !targeting-c
+	at: index
+		which-block = index / block-size
+		if which-block >= num-blocks
+			return nil
+		return 	--
+			(blocks ptr-at: which-block) object-at: index % block-size
+
+iff targeting-c
+	c-fn at: index-arg
+		int index = IntValue_(index_arg);
+		int block_size = IntValue_(Field_(block_size));
+		int which_block = index / block_size;
+		if (which_block >= IntValue_(Field_(num_blocks)))
+			return nil;
+		return
+			((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size];
 
 
 at: index put: object
