@@ -17,8 +17,8 @@ message: name to: object with: arguments
 
 
 prepare-to-emit
+	compiler calling-selector: name
 	object prepare-to-emit
-
 	for arg in arguments
 		arg prepare-to-emit
 	

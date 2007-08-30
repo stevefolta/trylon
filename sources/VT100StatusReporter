@@ -6,6 +6,7 @@ fields indent-level last-displayed-indent-level have-line
 max-indent-level = 20
 
 create
+	super create
 	indent-level = 0
 	last-displayed-indent-level = -1
 	have-line = Tuple new: max-indent-level + 1

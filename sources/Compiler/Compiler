@@ -5,7 +5,7 @@ trylon Compiler
 # always treats directories as packages, never as classes.
 
 fields successful build-settings
-fields proto-queue main-proto selector-names symbols
+fields proto-queue main-proto selectors symbols
 fields status-reporter
 
 
@@ -13,7 +13,7 @@ create
 	this successful = true
 	this build-settings = BuildSettings new
 	proto-queue = List new
-	selector-names = Dictionary new
+	selectors = Dictionary new
 	symbols = Dictionary new
 
 
@@ -96,6 +96,8 @@ compile-program: compile-symbols
 		CCompiler emit-c: this
 
 	status-reporter report: "Done."
+	status-reporter show-warnings
+
 
 
 
@@ -105,14 +107,21 @@ all-protos
 	return proto-queue
 
 declaring-selector: name
-	selector-names at: name put: name
+	(selector-info-for: name) declared = true
 	if build-settings include-selector-symbols
 		using-symbol: name
 
 calling-selector: name
-	selector-names at: name put: name
+	(selector-info-for: name) called = true
 	if build-settings include-selector-symbols
 		using-symbol: name
+
+selector-info-for: name
+	info = selectors at: name
+	if info == nil
+		info = SelectorInfo new: name
+		selectors at: name put: info
+	return info
 
 using-symbol: name
 	symbols at: name put: name

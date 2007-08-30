@@ -72,6 +72,12 @@ emit-c: compiler
 	report-run-program: build-settings linker arguments: args
 	System run-program: build-settings linker arguments: args
 
+	# Check for undeclared selectors.
+	for selector-info in compiler selectors values
+		if selector-info called && !(selector-info declared)
+			status-reporter warn: 	--
+				"'" + selector-info name + "' is called but never defined."
+
 
 emit-settings: build-settings
 	stream = 	--
@@ -219,7 +225,7 @@ emit-dispatch-table: main-package
 	# Gather up the rows.
 	status-reporter report: "Gathering rows."
 	rows = DispatchRowSet new
-	for fn-name in compiler selector-names keys
+	for fn-name in compiler selectors keys
 		# Create the row and fill it in.
 		row = DispatchRow new: fn-name
 		object-class setup-dispatch-row: row inherited-function: nil
@@ -285,6 +291,7 @@ emit-dispatch-table: main-package
 	# Finish up "methods_.c".
 	is-changed = stream is-changed
 	stream close
+	return is-changed
 
 
 emit-symbols

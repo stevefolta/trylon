@@ -1,5 +1,9 @@
 trylon StatusReporter
 
+fields warnings
+
+create
+	warnings = List new
 
 report: message
 	virtual
@@ -9,6 +13,15 @@ indent
 
 unindent
 	virtual
+
+warn: message
+	warnings append: message
+
+show-warnings
+	if !(warnings is-empty)
+		print-line: "\nWarning:"
+		for warning in warnings
+			print-line: warning
 
 
 
