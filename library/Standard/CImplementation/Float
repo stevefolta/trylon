@@ -36,7 +36,7 @@ extend Standard Float
 
 	c-fn string
 		char str[64];
-		sprintf(str, "%g", FloatValue_(this_));
+		sprintf(str, "%f", FloatValue_(this_));
 		return BuildString_(str);
 
 	c-fn int
