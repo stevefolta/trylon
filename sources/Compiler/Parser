@@ -1456,6 +1456,10 @@ parse-error: message
 expression-expected-after: after
 	parse-error: "Expression expected after \"" + after string + "\"."
 
+report: message
+	iff report-parsing
+		if status-reporter
+			status-reporter report: message
 indent
 	if status-reporter
 		status-reporter indent
