@@ -11,8 +11,9 @@ endif
 set iskeyword+=-
 
 " Keywords
-syn keyword Keyword	trylon trylid class superclass field fields
-syn keyword Keyword fn class-fn primitive-fn
+syn keyword Keyword	trylon trylid class superclass field fields extend
+syn keyword Keyword fn class-fn primitive-fn c-fn
+syn keyword Keyword c-preamble coke
 syn keyword Conditional	if else switch iff
 syn keyword Repeat	while for in loop
 syn keyword Statement	return break continue
@@ -44,8 +45,6 @@ syn region	Constant	start=+L\='+ skip=+\\\\\|\\'+ end=+'+ contains=cSpecial
 " syn match	Character	"L\=`[^\\]`"
 syn match	Character	"`[^`]*`"
 
-" Errors
-syn match Error ";"
 
 
 hi def link cSpecial		SpecialChar
