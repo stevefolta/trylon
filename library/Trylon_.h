@@ -273,7 +273,7 @@ extern void PopException_();
 
 extern obj_ BuildInt_(int value);
 extern obj_ BuildFloat_(double value);
-extern obj_ BuildBytePtr_(byte_ptr_ value);
+extern obj_ BuildBytePtr_(void* value);
 extern obj_ BuildString_(const char* cString); 	// Will copy the string.
 extern obj_ BuildStringOfLength_(const char* cString, unsigned int length);
 	// Will copy the string.

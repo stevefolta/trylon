@@ -111,7 +111,7 @@ obj_ BuildFloat_(double value)
 }
 
 
-obj_ BuildBytePtr_(byte_ptr_ value)
+obj_ BuildBytePtr_(void* value)
 {
 	struct Standard__BytePtr__internal* result =
 		(struct Standard__BytePtr__internal*)
