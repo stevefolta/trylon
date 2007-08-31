@@ -51,7 +51,7 @@ extend Compiler FieldSetter
 	emit-c-call: arguments builder: builder
 		value = arguments first-item emit-code: builder
 		builder add-line: 	--
-			"Field_(" + (mangle-name: field name) + " = " + value access + ");"
+			"Field_(" + (mangle-name: field name) + ") = " + value access + ";"
 		return value
 	
 	emit-c-function-on: stream

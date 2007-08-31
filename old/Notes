@@ -1,0 +1,276 @@
+[2007.3.4]
+
+Go for fully dynamic:  A special dispatch provides for lazy loading of member protos.  A ProtoBuilder greedily reads the source(s), then builds the proto (now that it knows the number of ivars), then compiles the methods.  That means the methods are grabbed as text, and the parser can know at the time of parse-primary whether it needs to auto-declare.
+
+Trylon objects get a special vtable that also checks (and knows) the enclosing context.
+
+Just use "arg"/"args" for lambdas:
+
+	collection each:
+		arg item
+		item println
+
+
+=====
+
+[2007.3.21]
+
+Equals-block should make a new object, not a dict literal:
+
+	trylid List
+	fields head last
+
+	create
+		head = last = nil
+	
+	append: new-value
+		new-cell = Cell new: value
+		if last
+			last tail = new-cell
+		else
+			head = new-cell
+		last = new-cell
+
+	Cell =
+		fields head tail
+
+		create: value
+			head = value
+
+But that should still serve the dict-literal purpose (and even better: 'dict entry' vs. 'dict at: "entry"').
+
+
+=====
+
+[2007.3.23]
+
+All fields supporting the use of protos as packages (subproto names, ".parent-context", etc.) should be shared fields.
+
+Will need:
+	.proto
+	.proto-name
+	.parent-context
+
+
+=====
+
+Loading
+	[2007.3.25]
+
+Standard Object must be loaded first, and can't join Standard until later.  Use a (namespace ...) function instead of sends to access parent namespaces, and don't specify Main in its arguments -- (namespace Standard), (namespace Standard Implementation).  It will dynamically check to see if the namespace is loaded and load it from the .k file if not.  Or call it (load-trylid-proto), or just (trylid-proto).  So something like this:
+
+	(define trylid-root-object (read-trylid-proto-file "Standard Object.k"))
+	(setup-Main)
+	(read-trylid-proto-file "Main.k")
+		;; Should result in everything else getting loaded.
+
+Standard Object is a subclass whose access gives "trylid-root-object" -- that allows its own .k file to work before Main is set up.
+
+I still kinda want to make Main special...
+
+"true" and "false" may present problems, but I should probably wait to see if they do before trying to fix them.  If they do, perhaps fake values can be used temporarily until Standard Bool is loaded.
+
+In trylid.k, this is all put together in (load-trylid).
+
+
+=====
+
+Jolt's "break" Is Broken
+	[2007.3.30]
+
+It's the "break" statement that's breaking things right now ("cannot reduce 34675(#nil Block ---) to VOID") (in jolt-burg, anyway).
+
+
+=====
+
+Primitive Data
+	[2007.3.31]
+
+A single "PrimitiveWord" type can handle all operations, and be specially handled by the compiler.
+
+Operations:
+	+ - * / % & | &
+	int-obj int-at: byte-at: long-at: obj-at:
+	int-at:put: (etc.)
+
+Shared fields:
+	int-size (etc.)
+
+
+=====
+
+Timing
+	[2007.4.22]
+
+Always thru trylid-proto:  1:45.
+"Quicker" (byte-ptr):      1:47. (!)
+"Quicker" (trylid-int):    1.24.
+"Quicker" (trylid-char):   0:58.
+"Quicker" (trylid-string): 1.00.
+
+At this point, the Trylid compiler loads itself (mostly; it did so completely recently, but not at the moment) but doesn't do codegen.  It became obvious that the generated Jolt code is much slower than Trylon's generated C, by about an order of magnitude.  My first theory was that (trylid-proto) might be the cause.  And it turned out that it was called surprisingly often: 7,636,346 times.  An attempt to eliminate its use for proto access failed due to dependency issues (I forget the details), so I tried just optimizing the primitives, as seen above.
+
+I'm thinking this can be fixed in the general case by having a proto set up auto-loading stubs for its subprotos early in its loading process.  The stub would replace itself with the real proto-returner (via (add-shared-field-to)).
+
+
+=====
+
+Timing
+	[2007.4.23]
+
+Original:                        2:12.
+"self" instead of BytePtr/Char:  1:16.
+Same, with Int added:            1:15.
+"new"s rewritten:                0:19.
+
+The rewritten "new"s (BytePtr/Char/Int) are rewritten so they reference Implementation as a Jolt variable (StandardImplementation) instead of thru (trylid-proto).
+
+New proto-loading scheme:
+Orig: 22.
+New:  15.5.
+
+
+=====
+
+Primitive Consing.
+	[2207.4.27-8]
+
+Currently, the compiler running in Jolt is about 4x slower than the one Trylon makes.  I'm thinking (trylid-int) and (trylid-char) may be to blame.  Here are the stats on what gets consed during a run:
+
+	BytePtr	2267775
+	Char   	3202967
+	Int    	2933391
+	String 	 184508
+	
+(I don't get why it takes so much longer to grep through the results than to generate them.  If there are no hits, it only takes a few seconds.)
+
+(Well, there are 8.5 million lines... I'm not sure I'll ever know the breakdown 'cause grep is so slow.)
+
+I was thinking of changing (trylid-char) et al. to macros, but realized that was difficult because would I need to keep sets of boxed objects.  And it should be much easier to switch to tagged ints, with chars being ints.
+
+An there are even easier improvements: (byte-ptr) becomes a macro for [StandardBytePtr new_: value].  Strings don't cons their BytePtrs, although then it's not a fair comparison with Trylon.
+
+Well, it isn't that hard to use macros after all:
+
+	Orig                  	9.5
+	trylid-char-literal   	9.0, 8.6
+	+trylid-int-literal   	7.7, 8.0, 8.5
+	+trylid-string-literal	7.8, 8.0
+
+It's odd that trylid-string-literal didn't seem to help, as that would seem to be the "heaviest".  ...Now that I've got the stats filled in, I see why: there just aren't so many of them.  Why so many byte-ptrs, then?  From non-literal strings, undoubtedly.
+
+
+=====
+
+Cola Lightbulb Goes On
+	[2007.4.27]
+
+All my Statements and Expressions are supposed to respond to "translate: compiler".  (I think like this:)
+
+	translate: compiler
+		jolt-expression translate: compiler
+
+
+=====
+
+Misc
+	[2007.4.27]
+
+Rename "Main" to "Trylid".
+
+
+=====
+
+Misc
+	[2007.4.29]
+
+Rename ".parent-proto" to "..".  This is compatible with filesystem use because the meaning is "parent namespace".  (Still need ".proto", though, unless it's unused.  Hmm, it seems it's only used by 'is-a:' currently, and we already have a good (?) version of that on Pepsi Object.  Might as well leave it since it's already there, though.)
+
+Need to add ThisSetter, perhaps to Trylon too.  Then maybe rewrite create:'s as new:'s, or just add new:'s explicitly:
+
+	new: name
+		return this raw-new create: name
+
+Once exceptions are working, install a new doesNotUnderstand: in Pepsi Object that throws an exception.  Once the new parsers are in, make my own command line.  I want the command line to handle blocks!
+
+Precompile only Standard, Posix, and the compiler itself... which is everything we're precompiling now.  But then have it compile out of the filesystem.  In other words, the current compiler ("Compiler run:") isn't the default action, and must be turned on via build-settings.  Otherwise, run a command line, and allow compiling directly from Trylid in the filesystem to machine code.
+
+	Object iterator
+		# Default: try using the hidden '.iterator'.
+		if this responds-to: '.iterator'
+			return this .iterator
+		else
+			return this doesNotUnderstand: 'iterator'
+
+Weird behavior while testing exceptions:  "[(trylid-proto Posix) jmp_buf]" crashes, but if I once do "[Posix jmp_buf]", the first one won't crash after that.  And I have verified that "(trylid-proto Posix)" and "Posix" are the same.
+
+".source" should specify a proto's source in the filesystem.  As a FilesystemObject (new name for FileDirectoryEntry), or as a path?
+
+
+=====
+
+Misc
+	[2007.4.30]
+
+".parent-proto" actually means "superclass" currently, not "enclosing context".  So ".." would be an entirely new addition.
+
+
+=====
+
+Misc
+	[2007.5.2]
+
+"Object detach": Give the object its own vtable.  (Can verify that ".proto == this" if it wants.)
+
+
+=====
+
+Cache Stats
+	[2007.5.8]
+
+While self-compiling:
+
+Cache hits:   170017841.
+Cache misses:   9271514.
+
+
+=====
+
+Field Access Optimization
+	[2007.6.2]
+
+Unoptimized:  	9.6s
+Get optimized:	9.5s
+Set optimized:	9.2s
+
+The tradeoff is that the generated Coke code is less readable; at this point I don't think the speedup is worth it.
+
+
+=====
+
+CCompiler Debugging
+	[2007.8.29]
+
+Can't find members of "Standard" because the path is getting clobbered.  The String and BytePtr ("start", at least) objects are untouched; it seems only the data is getting clobbered.
+
+It turns out BuildBytePtr_() was using the wrong size ("struct object" in Trylon 1 was declared with "fields[1]", and the code relied on that).
+
+
+=====
+
+To Do
+	[live]
+
+Unify Object.
+Loading directories from the command line.
+	[Done, but can't re-load.]
+Unify String (maybe).
+Lambdas.
+Field access optimization:
+	Setter translate-call:.
+	Explicit calls on "this" (as in constructors).
+
+
+=====
+
+
