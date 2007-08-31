@@ -117,6 +117,7 @@ calling-selector: name
 		using-symbol: name
 
 selector-info-for: name
+	name = name string
 	info = selectors at: name
 	if info == nil
 		info = SelectorInfo new: name
