@@ -6,6 +6,7 @@ raw-new
 object-ptr
 same-as: object
 .proto-name
+.object-size
 
 
 is-a: proto
@@ -37,10 +38,13 @@ iterator
 
 debug-write
 	print-line: .proto-name
-	num-fields := 0 	#...
-	which-field := 0
+	num-fields = .object-size / 4
+	which-field = 0
+	iff targeting-c
+		# Skip the classref.
+		which-field = 1
 	while which-field < num-fields
-		field := object-ptr object-at: (which-field + 1)
+		field = object-ptr object-at: which-field
 		if field == nil
 			print-line: "  nil"
 		else

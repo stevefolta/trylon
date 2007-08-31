@@ -23,6 +23,9 @@ extend Standard Object
 	c-fn .proto-name
 		return BuildString_(this_->class_->name);
 
+	c-fn .object-size
+		return BuildInt_(sizeof(classref_) + this_->class_->size);
+
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");
 		exit(1);

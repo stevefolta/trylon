@@ -21,4 +21,8 @@ extend Standard Object
 	.proto-name
 		return String new_: this _debugName
 
+	.object-size
+		coke
+			[SmallInteger value_: [self _sizeof]]
+
 
