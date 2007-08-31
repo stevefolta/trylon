@@ -1,9 +1,9 @@
 ;; Suitable for use from Jolt's command line.
 
-(load "library/trylid.k")
-(load-trylid)
+(load "library/trylon.k")
+(load-trylon)
 
-(define Standard [Trylid Standard])
+(define Standard [Trylon Standard])
 (define Pepsi [Standard Pepsi])
 
 

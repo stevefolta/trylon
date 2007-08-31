@@ -1,10 +1,6 @@
-(load "library/trylid.k")
-(load-trylid)
+(load "library/trylon.k")
+(load-trylon)
 (load ".jolt-sources/load.k")
 
-; (Failed) attempt to fix crash of "Standard System milliseconds".
-[Posix Timeval]
-[Posix Stat]
-
-[Trylid run-command-line]
+[Trylon run-command-line]
 
