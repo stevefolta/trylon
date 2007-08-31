@@ -1,4 +1,4 @@
-trylid Bool
+trylon Bool
 
 # Not used.  Instead, we Pepsi Object for true and nil for false, just like
 # Pepsi.

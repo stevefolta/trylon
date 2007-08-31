@@ -9,15 +9,15 @@ extend Standard String
 	new-copy_: c-string
 		coke
 			(let ((size (+ (strlen c-string) 1))
-						(str [[(trylid-proto Standard BytePtr) new-non-pointer:
-									 (trylid-int size)] _ptr]))
+						(str [[(trylon-proto Standard BytePtr) new-non-pointer:
+									 (trylon-int size)] _ptr]))
 				(memcpy str c-string size)
 				[self new_: str]
 				)
 
 	int
 		coke
-			(trylid-int (strtol [self _stringValue] 0 0))
+			(trylon-int (strtol [self _stringValue] 0 0))
 	float
 		coke
 			[Float fromString: self]

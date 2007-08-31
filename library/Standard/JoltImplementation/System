@@ -1,10 +1,10 @@
-trylid System
+trylon System
 
 extend Standard System
 	milliseconds
 		now = Posix Timeval now
 		coke
-			(trylid-int [now _milliseconds])
+			(trylon-int [now _milliseconds])
 
 	primitive-fn sleep-ms: milliseconds
 		etc.
@@ -23,7 +23,7 @@ extend Standard System
 	environment-variable-named: name
 		coke
 			(let ((value (getenv [name _stringValue])))
-				(if value [(trylid-proto Standard String) new_: value] nil))
+				(if value [(trylon-proto Standard String) new_: value] nil))
 
 	primitive-fn current-directory-path
 		etc.

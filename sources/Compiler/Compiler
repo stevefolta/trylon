@@ -65,11 +65,11 @@ compile-program: compile-symbols
 	library-path = find-library-path
 	if library-path == nil
 		throw MessageException new: 	--
-			"Couldn't find the Trylid library.  You may need to set $TRYLID_LIBRARY."
+			"Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY."
 	library-directory = FileDirectory new: library-path
 	main-name = "Main"
 	if compiler build-settings targeting-jolt
-		main-name = "Trylid"
+		main-name = "Trylon"
 	status-reporter report: "Loading " + main-name + "..."
 	status-reporter indent
 	main-proto = CompiledProto new: main-name parent: nil
@@ -149,24 +149,24 @@ get-standard-class: name
 
 
 find-library-path
-	# Use $TRYLID_LIBRARY if it's set.
-	library-path = System environment-variable-named: "TRYLID_LIBRARY"
+	# Use $TRYLON_LIBRARY if it's set.
+	library-path = System environment-variable-named: "TRYLON_LIBRARY"
 	if library-path && !(library-path is-empty)
 		return library-path
-	# Check $HOME/trylid.
+	# Check $HOME/trylon.
 	home-path = System environment-variable-named: "HOME"
 	if home-path && !(home-path is-empty)
 		home-dir = FileDirectory new: home-path
-		if home-dir entry-is-directory: "trylid/library"
-			return home-path + "/trylid/library"
+		if home-dir entry-is-directory: "trylon/library"
+			return home-path + "/trylon/library"
 	# Check ./library.
 	if (FileDirectory new: ".") entry-is-directory: "library"
 		return "./library"
 	# Look in some common places.
 	for prefix-path in ("/usr/lib", "/usr/local/lib", "/usr/share", "/opt/lib")
 		prefix-dir = FileDirectory new: prefix-path
-		if prefix-dir entry-is-directory: "trylid"
-			return prefix-path + "/trylid"
+		if prefix-dir entry-is-directory: "trylon"
+			return prefix-path + "/trylon"
 	return nil
 
 

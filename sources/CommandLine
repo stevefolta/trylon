@@ -1,4 +1,4 @@
-trylid CommandLine
+trylon CommandLine
 fields prompt post-prompt
 
 create
@@ -9,18 +9,18 @@ create
 	coke
 		(using_history)
 		(stifle_history 1000)
-		(read_history ".trylid-history")
-		[[Posix Stdlib] atexit_: (lambda () (write_history ".trylid-history"))]
+		(read_history ".trylon-history")
+		[[Posix Stdlib] atexit_: (lambda () (write_history ".trylon-history"))]
 
 	# Unknown messages should throw, not exit.
 	coke
 		(define-send (quote doesNotUnderstand:) Object selector
 			(begin
 				(define message [self string])
-				(set message [message + (trylid-string " doesn't understand '")])
+				(set message [message + (trylon-string " doesn't understand '")])
 				(set message [message + [selector string]])
-				(set message [message + (trylid-string "'")])
-				(throw [(trylid-proto Standard MessageException) new: message])
+				(set message [message + (trylon-string "'")])
+				(throw [(trylon-proto Standard MessageException) new: message])
 				))
 
 
@@ -62,7 +62,7 @@ run
 			print-line: "\e[31m" + exception message + "\e[0m"
 	print-line
 	coke
-		(write_history ".trylid-history")
+		(write_history ".trylon-history")
 
 
 proto Context

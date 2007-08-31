@@ -34,8 +34,8 @@ extend Compiler CompiledProto
 		stream = ExistingFileStream new: file
 
 		# Define the proto.
-		# ...but not for Trylid or Standard Object (which are created specially in
-		# (setup-Trylid)).
+		# ...but not for Trylon or Standard Object (which are created specially in
+		# (setup-Trylon)).
 		if parent && superclass
 			parent-access = parent access
 			superclass-access = superclass access
@@ -46,7 +46,7 @@ extend Compiler CompiledProto
 				index += 1
 			expr = 	--
 				Expression 	--
-					with: 'define-trylid-proto' 	--
+					with: 'define-trylon-proto' 	--
 					with: name intern 	--
 					with: parent-access 	--
 					with: superclass-access 	--
@@ -70,7 +70,7 @@ extend Compiler CompiledProto
 		# Add '.used-contexts'.
 		if !(uses-protos is-empty)
 			tuple-expr = Expression new: uses-protos count + 1
-			tuple-expr at: 0 put: 'trylid-tuple'
+			tuple-expr at: 0 put: 'trylon-tuple'
 			index = 1
 			for proto in uses-protos
 				tuple-expr at: index put: proto access
@@ -129,7 +129,7 @@ extend Compiler CompiledProto
 				index += 1
 			expr = 	--
 				Expression 	--
-					with: 'define-trylid-proto' 	--
+					with: 'define-trylon-proto' 	--
 					with: name intern 	--
 					with: parent access 	--
 					with: superclass access 	--
@@ -150,9 +150,9 @@ extend Compiler CompiledProto
 
 	access
 		if is-main
-			return 'Trylid'
+			return 'Trylon'
 		else if is-root-object
-			return 'trylid-root-object'
+			return 'trylon-root-object'
 		else
 			iff not-anymore
 				return 	--
@@ -166,7 +166,7 @@ extend Compiler CompiledProto
 				list push-front: namespace
 				namespace = namespace parent
 			expr = Expression new: list count + 1
-			expr at: 0 put: 'trylid-proto'
+			expr at: 0 put: 'trylon-proto'
 			index = 1
 			for namespace in list
 				expr at: index put: namespace name intern

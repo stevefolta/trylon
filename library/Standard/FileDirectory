@@ -1,4 +1,4 @@
-trylid FileDirectory
+trylon FileDirectory
 superclass FileDirectoryEntry
 
 field path

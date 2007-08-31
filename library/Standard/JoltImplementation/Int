@@ -1,4 +1,4 @@
-trylid Int
+trylon Int
 
 # This is no longer used; instead we've extended Pepsi's SmallInteger to
 # respond to our messages, instead of having our own boxed Ints.
@@ -31,53 +31,53 @@ fn >= arg (Int) -> Bool
 
 fn + arg (Int) -> Int
 	coke
-		(trylid-int (+ (int@ self) (int@ arg)))
+		(trylon-int (+ (int@ self) (int@ arg)))
 fn - arg (Int) -> Int
 	coke
-		(trylid-int (- (int@ self) (int@ arg)))
+		(trylon-int (- (int@ self) (int@ arg)))
 fn * arg (Int) -> Int
 	coke
-		(trylid-int (* (int@ self) (int@ arg)))
+		(trylon-int (* (int@ self) (int@ arg)))
 fn / arg (Int) -> Int
 	coke
-		(trylid-int (/ (int@ self) (int@ arg)))
+		(trylon-int (/ (int@ self) (int@ arg)))
 fn % arg (Int) -> Int
 	coke
-		(trylid-int (% (int@ self) (int@ arg)))
+		(trylon-int (% (int@ self) (int@ arg)))
 fn unary-minus -> Int
 	coke
-		(trylid-int (- (int@ self)))
+		(trylon-int (- (int@ self)))
 
 fn | arg (Int) -> Int
 	coke
-		(trylid-int (| (int@ self) (int@ arg)))
+		(trylon-int (| (int@ self) (int@ arg)))
 fn & arg (Int) -> Int
 	coke
-		(trylid-int (& (int@ self) (int@ arg)))
+		(trylon-int (& (int@ self) (int@ arg)))
 fn ^ arg (Int) -> Int
 	coke
-		(trylid-int (^ (int@ self) (int@ arg)))
+		(trylon-int (^ (int@ self) (int@ arg)))
 fn ~ -> Int
 	coke
-		(trylid-int (not (int@ self)))
+		(trylon-int (not (int@ self)))
 fn << arg (Int) -> Int
 	coke
-		(trylid-int (<< (int@ self) (int@ arg)))
+		(trylon-int (<< (int@ self) (int@ arg)))
 fn >> arg (Int) -> Int
 	coke
-		(trylid-int (>> (int@ self) (int@ arg)))
+		(trylon-int (>> (int@ self) (int@ arg)))
 
 fn string
 	coke
 		(let ((buf (malloc 64)))
 			(sprintf buf "%d" (int@ self))
-			(trylid-string buf))
+			(trylon-string buf))
 fn float
 	# How to do this?
 	etc.
 fn char
 	coke
-		(trylid-char (int@ self))
+		(trylon-char (int@ self))
 
 
 # In case we need to play nice with SmallIntegers:

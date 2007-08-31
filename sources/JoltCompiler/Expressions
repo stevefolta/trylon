@@ -78,7 +78,7 @@ extend Compiler FunctionCall
 
 extend Compiler IntLiteral
 	jolt-expression
-		return Expression with: 'trylid-int-literal' with: value
+		return Expression with: 'trylon-int-literal' with: value
 
 	translate: compiler
 		return compiler translateExpression: (Expression with: 'quote' with: value)
@@ -86,7 +86,7 @@ extend Compiler IntLiteral
 
 extend Compiler CharacterLiteral
 	jolt-expression
-		return Expression with: 'trylid-char-literal' with: char int
+		return Expression with: 'trylon-char-literal' with: char int
 
 	translate: compiler
 		return compiler translateExpression: (Expression with: 'quote' with: char)
@@ -121,7 +121,7 @@ extend Compiler LiteralNil
 
 extend Compiler StringLiteral
 	jolt-expression
-		return Expression with: 'trylid-string-literal' with: value
+		return Expression with: 'trylon-string-literal' with: value
 
 	translate: compiler
 		return compiler translateExpression: (Expression with: 'quote' with: value)
@@ -140,7 +140,7 @@ extend Compiler SymbolLiteral
 extend Compiler TupleExpression
 	jolt-expression
 		expr = Expression new: members count + 1
-		expr at: 0 put: 'trylid-tuple'
+		expr at: 0 put: 'trylon-tuple'
 		index = 1
 		for member in members
 			expr at: index put: member jolt-expression
@@ -149,7 +149,7 @@ extend Compiler TupleExpression
 
 	translate: compiler
 		expr = Expression new: members count + 1
-		expr at: 0 put: 'trylid-tuple'
+		expr at: 0 put: 'trylon-tuple'
 		index = 1
 		for member in members
 			expr at: index put: member
@@ -161,14 +161,14 @@ extend Compiler DictLiteral
 	jolt-expression
 		return 	--
 			Expression 	--
-				with: 'trylid-dict' with: (emit-node: dict root) with: dict num-items
+				with: 'trylon-dict' with: (emit-node: dict root) with: dict num-items
 
 	emit-node: node
 		if node == nil
 			return 'nil'
 		return 	--
 			Expression 	--
-				with: 'trylid-dict-node' 	--
+				with: 'trylon-dict-node' 	--
 				with: node key 	--
 				with: node value jolt-expression 	--
 				with: (emit-node: node left) 	--
@@ -177,7 +177,7 @@ extend Compiler DictLiteral
 	translate: compiler
 		expr = 	--
 			Expression 	--
-				with: 'trylid-dict' 	--
+				with: 'trylon-dict' 	--
 				with: (translate-node: dict root) 	--
 				with: dict num-items
 		return compiler translateExpression: expr
@@ -187,7 +187,7 @@ extend Compiler DictLiteral
 			return 'nil'
 		return 	--
 			Expression 	--
-				with: 'trylid-dict-node' 	--
+				with: 'trylon-dict-node' 	--
 				with: node key 	--
 				with: node value 	--
 				with: (emit-node: node left) 	--

@@ -1,4 +1,4 @@
-trylid ExistingFileStream
+trylon ExistingFileStream
 superclass OutputStream
 
 fields file contents remaining-contents matches-so-far output-stream

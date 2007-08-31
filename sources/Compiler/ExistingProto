@@ -1,4 +1,4 @@
-trylid ExistingProto
+trylon ExistingProto
 superclass Context
 
 fields name proto new-functions is-main
@@ -76,7 +76,7 @@ parent
 	if proto responds-to: '.parent-context'
 		parent-context = proto .parent-context
 		existing-proto = ExistingProto new: parent-context
-		if parent-context == Trylid
+		if parent-context == Trylon
 			existing-proto is-main = true
 		return existing-proto
 	return nil

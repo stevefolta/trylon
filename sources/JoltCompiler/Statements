@@ -54,7 +54,7 @@ extend Compiler Block
 			for local in locals values
 				locals-expr at: index put: local name intern
 				index += 1
-			expr = Expression with: 'trylid-block' with: locals-expr with: expr
+			expr = Expression with: 'trylon-block' with: locals-expr with: expr
 		return expr
 
 	translate: compiler
@@ -77,7 +77,7 @@ extend Compiler Block
 			for local in locals values
 				locals-expr at: index put: local name intern
 				index += 1
-			expr = Expression with: 'trylid-block' with: locals-expr with: expr
+			expr = Expression with: 'trylon-block' with: locals-expr with: expr
 		return expr translate: compiler
 
 
@@ -202,14 +202,14 @@ extend Compiler ForStatement
 	jolt-expression
 		return 	--
 			Expression 	--
-				with: 'trylid-for' with: local name intern 	--
+				with: 'trylon-for' with: local name intern 	--
 				with: collection jolt-expression 	--
 				with: body jolt-expression
 
 	translate: compiler
 		expr = 	--
 			Expression 	--
-				with: 'trylid-for' with: local name intern with: collection with: body
+				with: 'trylon-for' with: local name intern with: collection with: body
 		return compiler translateExpression: expr
 
 

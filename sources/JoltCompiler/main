@@ -20,7 +20,7 @@ emit-jolt: compiler
 	file = File new: path
 	stream = ExistingFileStream new: file
 	for proto in compiler all-protos
-		stream write: "(load-trylid-proto " + proto full-name + ")"
+		stream write: "(load-trylon-proto " + proto full-name + ")"
 		stream write-line
 	stream close
 	status-reporter unindent

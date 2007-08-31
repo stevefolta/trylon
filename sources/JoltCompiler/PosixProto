@@ -26,12 +26,12 @@ class PosixProtoFunction
 	emit-code
 		body = 	--
 			Expression 	--
-				with: 'load-trylid-posix-proto' 	--
+				with: 'load-trylon-posix-proto' 	--
 				with: (Expression with: 'quote' with: name intern)
 		expr = Expression new: 4
 		expr at: 0 put: 'define-send'
 		expr at: 1 put: (Expression with: 'quote' with: name intern)
-		expr at: 2 put: (Expression with: 'trylid-proto' with: 'Posix')
+		expr at: 2 put: (Expression with: 'trylon-proto' with: 'Posix')
 		expr at: 3 put: body
 		return expr
 

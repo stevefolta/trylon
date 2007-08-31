@@ -1,4 +1,4 @@
-trylid Char
+trylon Char
 
 # No longer used.  Characters are represented as SmallIntegers now.
 
@@ -30,26 +30,26 @@ fn >= arg (Char) -> Bool
 
 fn + arg (Char) -> Char
 	coke
-		(trylid-char (+ (int@ self) [arg _integerValue]))
+		(trylon-char (+ (int@ self) [arg _integerValue]))
 fn - arg (Char) -> Char
 	coke
-		(trylid-char (- (int@ self) [arg _integerValue]))
+		(trylon-char (- (int@ self) [arg _integerValue]))
 fn & arg (Char) -> Char
 	coke
-		(trylid-char (& (int@ self) [arg _integerValue]))
+		(trylon-char (& (int@ self) [arg _integerValue]))
 fn | arg (Char) -> Char
 	coke
-		(trylid-char (| (int@ self) [arg _integerValue]))
+		(trylon-char (| (int@ self) [arg _integerValue]))
 
 fn string
 	coke
 		(let ((buf (malloc 8)))
 			(set-char@ buf (int@ self))
 			(set-char@ (+ buf 1) 0)
-			(trylid-string buf))
+			(trylon-string buf))
 fn int
 	coke
-		(trylid-int (int@ self))
+		(trylon-int (int@ self))
 fn _integerValue
 	coke
 		(int@ self)

@@ -1,8 +1,8 @@
-;; Setup Trylid's runtime.
-(load "library/trylid.k")
+;; Setup Trylon's runtime.
+(load "library/trylon.k")
 ;; Uncomment the next line to run the self-generated compiler:
 (set *jolt-sources-path* '".jolt-sources-self/")
-(load-trylid)
+(load-trylon)
 
 ;; Add nice debugging stuff to Pepsi.
 [[(import "Expression") _vtable] methodAt: '_debugName put: closure-returner with: "PepsiExpression"]
@@ -13,8 +13,8 @@
 
 
 ;; Run the program.
-(define prog-args [(trylid-proto Standard List) new])
-[prog-args append: (trylid-string "trylid")]
-[prog-args append: (trylid-string "--target-jolt")]
-[Trylid main: prog-args]
+(define prog-args [(trylon-proto Standard List) new])
+[prog-args append: (trylon-string "trylon")]
+[prog-args append: (trylon-string "--target-jolt")]
+[Trylon main: prog-args]
 

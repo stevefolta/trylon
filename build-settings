@@ -1,10 +1,8 @@
-# Trylon settings.
-
-program = "trylid"
+program = "trylon"
 debugging = true
 
 iff !targeting-jolt
-	# Trylon boilerplate.
+	# Trylon 1 boilerplate.
 	c-flags += "-g"
 	link-flags += "-lgc" "-ldl" "-lm"
 

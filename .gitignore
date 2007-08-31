@@ -1,5 +1,5 @@
-trylid
-trylid.working
+trylon
+trylon.working
 build-settings.local
 temp
 temp.*
@@ -16,7 +16,7 @@ junk
 .trylid-history
 .gdb_history
 .*.swp
-trylid.tgz
+trylon.tgz
 tarball-date
 .c-sources-2
 .objects-2

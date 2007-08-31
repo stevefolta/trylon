@@ -23,7 +23,7 @@ extend Standard File InStream
 		coke
 			(let ((result (fopen [path _stringValue] "r")))
 				(if (== result nil)
-					(throw [(trylid-proto Standard File FileMissingException) new: path]))
+					(throw [(trylon-proto Standard File FileMissingException) new: path]))
 				[self _file: result]
 				self
 				)
@@ -37,7 +37,7 @@ extend Standard File InStream
 
 	read-buffer: buffer length: length
 		coke
-			(trylid-int (fread [buffer _ptr] 1 [length _integerValue] [self _file]))
+			(trylon-int (fread [buffer _ptr] 1 [length _integerValue] [self _file]))
 
 
 
@@ -48,7 +48,7 @@ extend Standard File OutStream
 		coke
 			(let ((result (fopen [path _stringValue] "w+")))
 				(if (== result nil)
-					(throw [(trylid-proto Standard File FileOpenException) new: path]))
+					(throw [(trylon-proto Standard File FileOpenException) new: path]))
 				[self _file: result]
 				self
 				)
@@ -62,7 +62,7 @@ extend Standard File OutStream
 
 	write-buffer: buffer length: length
 		coke
-			(trylid-int (fwrite [buffer _ptr] 1 [length _integerValue] [self _file]))
+			(trylon-int (fwrite [buffer _ptr] 1 [length _integerValue] [self _file]))
 	
 
 

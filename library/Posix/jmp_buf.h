@@ -6,10 +6,10 @@
 /* Because it'll often need to save and restore an exception chain, we include
    a field for that always. */
 
-typedef struct trylid_jmp_buf {
+typedef struct trylon_jmp_buf {
 	jmp_buf	jmpBuf;
 	oop    	savedExceptionCatcher;
-} trylid_jmp_buf;
+} trylon_jmp_buf;
 
 
 #endif 	/* !__jmp_buf_h__ */

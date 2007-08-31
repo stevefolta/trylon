@@ -1,4 +1,4 @@
-trylid LinesIterator
+trylon LinesIterator
 
 
 fields current-line remaining-string all-done

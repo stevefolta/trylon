@@ -1,5 +1,5 @@
-;; trylid.k
-;; Support for the Trylid language.
+;; trylon.k
+;; Support for the Trylon language.
 ;;
 ;; Copyright 2007 Steve Folta.  See the License file.
 
@@ -46,8 +46,8 @@
 ;; Defining and loading objects.
 
 ;; These globals will be set later:
-(define Trylid nil)
-(define trylid-root-object nil)
+(define Trylon nil)
+(define trylon-root-object nil)
 (define StandardBytePtr nil)
 (define StandardString nil)
 (define StandardImplementation nil)
@@ -113,9 +113,9 @@
 
 (define *jolt-sources-path* '".jolt-sources/")
 
-(define *trylid-lib-path* nil)
+(define *trylon-lib-path* nil)
 
-(define try-trylid-library
+(define try-trylon-library
 	(lambda (path)
 		;; There's not an easy way to check for the existence of a directory at
 		;; this point.  So we'll look for a file in the library directory.
@@ -123,47 +123,47 @@
 		(if file
 			(begin
 				[file close]
-				(set *trylid-lib-path* path)
+				(set *trylon-lib-path* path)
 				path
 				)
 			nil)
 		))
 
-(define find-trylid-library
+(define find-trylon-library
 	(lambda ()
 		;; Already found it?
-		(if *trylid-lib-path*
-			(return *trylid-lib-path*))
-		;; Use $TRYLID_LIBRARY if it's set.
-		(define lib-env (getenv "TRYLID_LIBRARY"))
+		(if *trylon-lib-path*
+			(return *trylon-lib-path*))
+		;; Use $TRYLON_LIBRARY if it's set.
+		(define lib-env (getenv "TRYLON_LIBRARY"))
 		(if lib-env
-			(if (try-trylid-library [String value_: lib-env])
-				(return *trylid-lib-path*)
-				(printf "Warning: Ignoring $TRYLID_LIBRARY; it's not valid.\n")))
-		;; Try $HOME/trylid.
+			(if (try-trylon-library [String value_: lib-env])
+				(return *trylon-lib-path*)
+				(printf "Warning: Ignoring $TRYLON_LIBRARY; it's not valid.\n")))
+		;; Try $HOME/trylon.
 		(define home-env (getenv "HOME"))
 		(if home-env
-			(if (try-trylid-library [[String value_: home-env] , '"/trylid"])
-				(return *trylid-lib-path*)))
+			(if (try-trylon-library [[String value_: home-env] , '"/trylon"])
+				(return *trylon-lib-path*)))
 		;; Try some common places.
-		(or (try-trylid-library '"./library")
-				(try-trylid-library '"/usr/lib/trylid")
-				(try-trylid-library '"/usr/local/lib/trylid")
-				(try-trylid-library '"/usr/share/trylid")
-				(try-trylid-library '"/opt/lib"))
-		(if *trylid-lib-path*
-			(return *trylid-lib-path*))
+		(or (try-trylon-library '"./library")
+				(try-trylon-library '"/usr/lib/trylon")
+				(try-trylon-library '"/usr/local/lib/trylon")
+				(try-trylon-library '"/usr/share/trylon")
+				(try-trylon-library '"/opt/lib"))
+		(if *trylon-lib-path*
+			(return *trylon-lib-path*))
 		;; Couldn't find it; abort.
-		(printf "Trylid's library couldn't be found.  You can explicitly tell\n")
-		(printf "Trylid where it is by setting $TRYLID_LIBRARY.  Or, perhaps this\n")
-		(printf "means that your Trylid library wasn't built correctly.\n")
+		(printf "Trylon's library couldn't be found.  You can explicitly tell\n")
+		(printf "Trylon where it is by setting $TRYLON_LIBRARY.  Or, perhaps this\n")
+		(printf "means that your Trylon library wasn't built correctly.\n")
 		(exit 1)
 		))
 
 
 ;; This is much like (define-type), but it doesn't operate in a specific
 ;; namespace and it's a function, not a syntax.
-(define create-trylid-proto
+(define create-trylon-proto
 	(lambda (name superclass fields)
 		(let ((name-string [name _stringValue])
 					(super-size [superclass _sizeof])
@@ -198,10 +198,10 @@
 			)
 		))
 
-(syntax define-trylid-proto 	;; name namespace superclass fields
+(syntax define-trylon-proto 	;; name namespace superclass fields
 	(lambda (node compiler)
 		`(let ((new-proto
-						 (create-trylid-proto
+						 (create-trylon-proto
 							 (quote ,[node at: '1]) ,[node at: '3] (quote ,[node at: '4]))))
 			(add-shared-field ,[node at: '1] ,[node at: '2] new-proto)
 			[[new-proto _vtable]
@@ -210,14 +210,14 @@
 			)
 		))
 
-(define read-trylid-proto-file
+(define read-trylon-proto-file
 	(lambda (filename)
 		(load [[*jolt-sources-path* , filename] _stringValue])
 		))
 
-(define get-trylid-proto
+(define get-trylon-proto
 	(lambda (names)
-		(let ((proto Trylid) (which-name '0) (filename nil))
+		(let ((proto Trylon) (which-name '0) (filename nil))
 			(while [which-name < [names size]]
 				(let ((name [names at: which-name])
 							(name-string [name asString]))
@@ -225,7 +225,7 @@
 						(if filename [[filename , '" "] , name-string] name-string))
 					(if [[proto _vtable] lookup: name]
 						nil
-						(read-trylid-proto-file [filename , '".k"])
+						(read-trylon-proto-file [filename , '".k"])
 						)
 					(set proto [proto perform: name])
 					)
@@ -235,17 +235,17 @@
 			)
 		))
 
-(syntax load-trylid-proto
+(syntax load-trylon-proto
 	(lambda (node compiler)
-		`(get-trylid-proto '(,@[node copyFrom: '1]))
+		`(get-trylon-proto '(,@[node copyFrom: '1]))
 		))
 
-(syntax trylid-proto
+(syntax trylon-proto
 	(lambda (node compiler)
-		(let ((proto Trylid)
+		(let ((proto Trylon)
 					(which-name '1)
 					(num-names [node size])
-					(expr 'Trylid))
+					(expr 'Trylon))
 			(while [which-name < num-names]
 				(let ((name [node at: which-name]))
 					(set expr `(send ',name ,expr))
@@ -256,16 +256,16 @@
 			)
 		))
 
-(define-type TrylidLoadSpec Object (parent name filename))
+(define-type TrylonLoadSpec Object (parent name filename))
 (define proto-loader
 	(lambda (_closure _self self)
 		(define load-spec (long@ _closure 1))
-		(read-trylid-proto-file [[load-spec filename] , '".k"])
+		(read-trylon-proto-file [[load-spec filename] , '".k"])
 		[[load-spec parent] perform: [load-spec name]]
 		))
-(define install-trylid-proto-loader-into
+(define install-trylon-proto-loader-into
 	(lambda (names)
-		(let ((parent-proto Trylid)
+		(let ((parent-proto Trylon)
 					(which-name '0)
 					(last-name [[names size] - '1])
 					(filename nil)
@@ -284,7 +284,7 @@
 				(return [parent-proto perform: proto-name]))
 			(set filename
 				(if filename [[filename , '" "] , proto-name-string] proto-name-string))
-			(define load-spec [TrylidLoadSpec new])
+			(define load-spec [TrylonLoadSpec new])
 			[load-spec parent: parent-proto]
 			[load-spec name: proto-name]
 			[load-spec filename: filename]
@@ -295,15 +295,15 @@
 		))
 (syntax install-proto-loader
 	(lambda (node compiler)
-		`(install-trylid-proto-loader-into '(,@[node copyFrom: '1]))
+		`(install-trylon-proto-loader-into '(,@[node copyFrom: '1]))
 		))
 
-(define load-trylid-posix-proto
+(define load-trylon-posix-proto
 	(lambda (name)
-		(define file-name [[(find-trylid-library) , '"/Posix/"] , [name asString]])
+		(define file-name [[(find-trylon-library) , '"/Posix/"] , [name asString]])
 		[Object _import: [file-name _stringValue] ""]
 		(define proto (import [name _stringValue]))
-		[[(trylid-proto Posix) _vtable]
+		[[(trylon-proto Posix) _vtable]
 			methodAt: name put: closure-returner with: proto]
 		[_vtable flush]
 		proto
@@ -323,7 +323,7 @@
 		expr
 		))
 
-(syntax trylid-block 	;; (locals...) exprs...
+(syntax trylon-block 	;; (locals...) exprs...
 	(lambda (node compiler)
 		`(let ,(make-local-defs [node at: '1]) ,@[node copyFrom: '2])
 		))
@@ -345,7 +345,7 @@
 			)
 		))
 
-(syntax trylid-for 	;; local collection exprs...
+(syntax trylon-for 	;; local collection exprs...
 	(lambda (node compiler)
 		;; TO DO: Handle "continue" (somehow).
 		`(let ((.iterator [,[node at: '2] iterator])
@@ -373,7 +373,7 @@
 (define throw
 	(lambda (exception)
 		;; Throw.
-		(let ((jmpbuf [[(trylid-proto Posix) jmp_buf] currentCatcher]))
+		(let ((jmpbuf [[(trylon-proto Posix) jmp_buf] currentCatcher]))
 			(longjmp jmpbuf exception)
 			)
 		;; Should never get here...
@@ -384,7 +384,7 @@
 (syntax catch 	;; body else-clause
 	(lambda (node compiler)
 		`(let ((.jmpbuf nil) (exception nil))
-			 (set .jmpbuf [[(trylid-proto Posix) jmp_buf] new])
+			 (set .jmpbuf [[(trylon-proto Posix) jmp_buf] new])
 			 [.jmpbuf push]
 			 (set exception (setjmp .jmpbuf))
 			 (if exception
@@ -393,7 +393,7 @@
 			 )
 		))
 
-(syntax trylid-tuple 	;; value...
+(syntax trylon-tuple 	;; value...
 	(lambda (node compiler)
 		(define num-values [[node size] - '1])
 		(define _num-values [num-values _integerValue])
@@ -402,10 +402,10 @@
 		(while [index < num-values]
 			[setters at: index put:
 				`[tuple
-					 at: (trylid-int ,index)
+					 at: (trylon-int ,index)
 					 put: ,[node at: [index + '1]]]]
 			(set index [index + '1]))
-		`(let ((tuple [(trylid-proto Standard Tuple) new: (trylid-int ,num-values)]))
+		`(let ((tuple [(trylon-proto Standard Tuple) new: (trylon-int ,num-values)]))
 			 ,@setters
 			 tuple)
 		))
@@ -493,40 +493,40 @@
 			)
 		))
 
-(define trylid-int
+(define trylon-int
 	(lambda (value)
 		[SmallInteger value_: value]
 		))
 
-(syntax trylid-int-literal
+(syntax trylon-int-literal
 	(lambda (node compiler)
 		`(quote ,[node at: '1])
 		))
 
-(define trylid-char
+(define trylon-char
 	(lambda (value)
 		[SmallInteger value_: value]
 		))
 
-(syntax trylid-char-literal
+(syntax trylon-char-literal
 	(lambda (node compiler)
 		`(quote ,[node at: '1])
 		))
 
 
 
-(define trylid-string
+(define trylon-string
 	(lambda (c-string)
 		[StandardString new_: c-string]
 		))
 
-(syntax trylid-string-literal
+(syntax trylon-string-literal
 	(lambda (node compiler)
 		;; Need to be careful; this can be called during early loading, before
 		;; StandardString is available.
 		(if StandardString
-			`(quote ,(trylid-string [[node at: '1] _stringValue]))
-			`(trylid-string ,[node at: '1]))
+			`(quote ,(trylon-string [[node at: '1] _stringValue]))
+			`(trylon-string ,[node at: '1]))
 		))
 
 
@@ -564,11 +564,11 @@
 
 
 (define [SmallInteger string]
-	[(trylid-int [self _integerValue]) string])
+	[(trylon-int [self _integerValue]) string])
 (define [SmallInteger int]
-	(trylid-int [self _integerValue]))
+	(trylon-int [self _integerValue]))
 (define [SmallInteger char]
-	(trylid-char [self _integerValue]))
+	(trylon-char [self _integerValue]))
 (define [SmallInteger % arg]
 	[self \\ arg])
 (define [SmallInteger ~]
@@ -578,20 +578,20 @@
 (define [SmallInteger float]
 	[self asFloat])
 (define [SmallInteger .proto-name]
-	(trylid-string "SmallInteger"))
+	(trylon-string "SmallInteger"))
 (define [SmallInteger print-string]
-	(trylid-string [[self printString] _stringValue]))
+	(trylon-string [[self printString] _stringValue]))
 (define [SmallInteger string]
 	[self print-string])
 (define [SmallInteger debug-write]
-	[[Trylid Standard] print-line: [(trylid-string "Int: ") + [self string]]])
+	[[Trylon Standard] print-line: [(trylon-string "Int: ") + [self string]]])
 
 ;; SmallInteger as character.
 (define [SmallInteger char-string]
 	(let ((buf (GC_malloc_atomic 8)))
 		(set-char@ buf [self _integerValue])
 		(set-char@ (+ buf 1) 0)
-		(trylid-string buf)))
+		(trylon-string buf)))
 (define [SmallInteger is-whitespace]
 	(if (or (== self '$ ) (== self '$\t) (== self '$\n) (== self '$\r))
 		true false))
@@ -608,14 +608,14 @@
 (define [Symbol string]
 	[StandardString new_: [self _stringValue]])
 (define [Symbol print-string]
-	(let ((quoter (trylid-string "'")))
+	(let ((quoter (trylon-string "'")))
 		(fixed-return [[quoter + [self string]] + quoter])))
 (define [Symbol intern]
 	self)
 
 (define UndefinedObject (import "UndefinedObject"))
 (define [UndefinedObject string]
-	(trylid-string "nil"))
+	(trylon-string "nil"))
 
 (define Float (import "Float"))
 (define [Float string]
@@ -624,36 +624,36 @@
 
 ;; Loading (this is last so it can use all the above).
 
-(define load-trylid
+(define load-trylon
 	(lambda ()
 		;; Create Standard Object, but not loaded into a namespace yet.
-		(define trylid-root-object (create-trylid-proto 'Object Object '()))
-		;; Create Trylid.
-		(set Trylid (create-trylid-proto 'Trylid trylid-root-object '()))
-		(add-shared-field Trylid Trylid Trylid)
+		(define trylon-root-object (create-trylon-proto 'Object Object '()))
+		;; Create Trylon.
+		(set Trylon (create-trylon-proto 'Trylon trylon-root-object '()))
+		(add-shared-field Trylon Trylon Trylon)
 		;; Create Standard.
-		(get-trylid-proto '(Standard))
+		(get-trylon-proto '(Standard))
 		;; Install Standard Object.
-		(add-shared-field Object (trylid-proto Standard) trylid-root-object)
-		(read-trylid-proto-file '"Standard Object.k")
+		(add-shared-field Object (trylon-proto Standard) trylon-root-object)
+		(read-trylon-proto-file '"Standard Object.k")
 		;; Primitive types in Standard that we want fast access to.
-		(set StandardImplementation (trylid-proto Standard Implementation))
-		(set StandardBytePtr (trylid-proto Standard BytePtr))
-		(set StandardString (trylid-proto Standard String))
+		(set StandardImplementation (trylon-proto Standard Implementation))
+		(set StandardBytePtr (trylon-proto Standard BytePtr))
+		(set StandardString (trylon-proto Standard String))
 		;; Augment Pepsi Object.
 		(add-shared-field .parent-proto Object nil)
 		(add-shared-field .proto Object Object)
 		;; Set "Standard Implementation .target-language".  We can't use
-		;; (trylid-string) until after "Standard Implementation" is loaded, so be
+		;; (trylon-string) until after "Standard Implementation" is loaded, so be
 		;; careful what order we do this in.
-		(trylid-proto Standard Implementation)
-		(add-shared-field .target-language (trylid-proto Standard Implementation)
-			(trylid-string "Coke"))
-		;; Load the rest of Trylid.
-		(read-trylid-proto-file '"Trylid.k")
+		(trylon-proto Standard Implementation)
+		(add-shared-field .target-language (trylon-proto Standard Implementation)
+			(trylon-string "Coke"))
+		;; Load the rest of Trylon.
+		(read-trylon-proto-file '"Trylon.k")
 		;; Weird magic prevents mysterious crash when using Posix.  It shouldn't
 		;; need this... but it seems to.
-		(set Posix (trylid-proto Posix))
+		(set Posix (trylon-proto Posix))
 		[Posix jmp_buf]
 		))
 

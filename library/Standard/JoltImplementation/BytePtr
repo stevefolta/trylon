@@ -1,4 +1,4 @@
-trylid BytePtr
+trylon BytePtr
 
 extend Standard BytePtr
 	new
@@ -38,7 +38,7 @@ extend Standard BytePtr
 	fn - arg
 		coke
 			(if [arg is-a: StandardBytePtr]
-				(trylid-int (- (int@ self) (int@ arg)))
+				(trylon-int (- (int@ self) (int@ arg)))
 				(byte-ptr (- (int@ self) [arg _integerValue])))
 
 	fn deref-ptr
@@ -46,10 +46,10 @@ extend Standard BytePtr
 			(byte-ptr (int@ (int@ self)))
 	fn deref-int
 		coke
-			(trylid-int (int@ (int@ self)))
+			(trylon-int (int@ (int@ self)))
 	fn deref-char
 		coke
-			(trylid-char (char@ (int@ self)))
+			(trylon-char (char@ (int@ self)))
 	fn ptr-at: index
 		coke
 			(byte-ptr (int@ (int@ self) [index _integerValue]))
@@ -58,13 +58,13 @@ extend Standard BytePtr
 			(int@ (int@ self) [index _integerValue])
 	fn char-at: index
 		coke
-			(trylid-char (char@ (int@ self) [index _integerValue]))
+			(trylon-char (char@ (int@ self) [index _integerValue]))
 	fn int-at: index
 		coke
-			(trylid-int (int@ (int@ self) [index _integerValue]))
+			(trylon-int (int@ (int@ self) [index _integerValue]))
 	fn byte-at: index
 		coke
-			(trylid-int (char@ (+ (int@ self) [index _integerValue])))
+			(trylon-int (char@ (+ (int@ self) [index _integerValue])))
 
 	fn as-object
 		coke
@@ -99,7 +99,7 @@ extend Standard BytePtr
 		coke
 			(let ((buf (malloc 64)))
 				(sprintf buf "0x%08X" (int@ self))
-				(trylid-string buf))
+				(trylon-string buf))
 
 
 
