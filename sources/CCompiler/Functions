@@ -21,6 +21,28 @@ extend Compiler TrylonFunction
 		signature += ")"
 		return signature string
 	
+	emit-proto-send: proto arguments: arguments builder: builder
+		# Calling class must respond to "c-name" and "c-signature".
+		builder using-class: proto
+		builder add-extern-declaration: "extern " + this c-signature + ";"
+		arg-results = List new
+		for arg in arguments
+			arg-results append: (arg emit-code: builder)
+		result = builder get-temporary
+		line = StringBuilder new
+		line add: result access
+		line add: " = "
+		line add: this c-name
+		line add: "(Proto_("
+		line add: proto c-name
+		line add: ")"
+		for arg in arg-results
+			line += ", "
+			line += arg access
+		line += ");"
+		builder add-line: line string
+		return result
+	
 
 
 ##### Object structure
@@ -134,12 +156,7 @@ extend Compiler SharedFieldSetter
 extend Compiler CompiledFunction
 	emit-c-call: arguments builder: builder
 		# This is a send to the prototype object.
-		# (Can't we skip the dispatch and call the function directly?)
-		builder using-class: on-proto
-		proto-access = "Proto_(" + on-proto c-name + ")"
-		return 	--
-			CCompiler emit-send: name 	--
-				to-string: proto-access with: arguments builder: builder
+		return emit-proto-send: on-proto arguments: arguments builder: builder
 	
 	emit-c-function-on: stream
 		stream write-line: c-signature
@@ -197,44 +214,16 @@ extend Compiler ProtoFunction
 
 extend Compiler NewFunction
 	emit-c-call: arguments builder: builder
-		builder using-class: on-proto
-		builder add-extern-declaration: c-signature + ";"
-		arg-results = List new
-		for arg in arguments
-			arg-results append: (arg emit-code: builder)
-		temporary = builder get-temporary
-		line = StringBuilder new
-		line += temporary access
-		line += " = "
-		line += (mangle-name: name)
-		line += "__"
-		line += on-proto c-name
-		line += "(Proto_("
-		line += on-proto c-name
-		line += ")"
-		for arg in arg-results
-			line += ", "
-			line += arg access
-		line += ");"
-		builder add-line: line string
-		return temporary
+		return emit-proto-send: on-proto arguments: arguments builder: builder
 
 	emit-c-function-on: stream
 		arg-names = List new
 		for arg in creator arguments
 			arg-names append: (mangle-name: arg name)
 		# Signature.
-		proto-name = on-proto c-name
-		stream write: "obj_ "
-		stream write: (mangle-name: name)
-		stream write: "__"
-		stream write: proto-name
-		stream write: "(obj_ this_"
-		for arg-name in arg-names
-			stream write: ", obj_ "
-			stream write: arg-name
-		stream write: ")\n"
+		stream write-line: c-signature
 		# Body
+		proto-name = on-proto c-name
 		stream write: "{\n"
 		stream write: "\tUsingClass_(" + proto-name + ")\n"
 		stream write: "\tobj_ obj = AllocObj_(" + proto-name + ");\n"
