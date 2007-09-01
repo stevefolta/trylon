@@ -1,0 +1,49 @@
+trylon Pixmap
+
+extend Xlib Pixmap
+	c-preamble
+		#include <X11/Xlib.h>
+
+		UsingMethod_(primitive_display)
+
+	c-fn create: window-or-display width: width height: height depth: depth
+		UsingClass_(Window__Xlib);
+		obj_ display;
+		Drawable drawable;
+		Pixmap pixmap;
+		Display* xdisplay;
+		UsingMethod_(is_a_co_) UsingMethod_(display) UsingMethod_(id)
+
+		if (Call_(is_a_co_, window_or_display, Proto_(Window__Xlib))) {
+			display = Call_(display, window_or_display);
+			xdisplay = (Display*) BytePtrValue_(Call_(primitive_display, display));
+			drawable = (Drawable) IntValue_(Call_(id, window_or_display));
+			}
+		else {
+			display = window_or_display;
+			xdisplay = (Display*) BytePtrValue_(Call_(primitive_display, display));
+			drawable = DefaultRootWindow(xdisplay);
+			}
+		pixmap =
+			XCreatePixmap(
+				xdisplay, drawable,
+				IntValue_(width), IntValue_(height), IntValue_(depth));
+		Field_(display) = display;
+		Field_(id) = BuildInt_(pixmap);
+		return nil;
+
+	c-fn close
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, Field_(display)));
+		Pixmap pixmap;
+		UsingMethod_(id) UsingMethod_(id_co_)
+
+		pixmap = (Pixmap) IntValue_(Field_(id));
+		if (pixmap) {
+			XFreePixmap(xdisplay, pixmap);
+			Field_(id) = BuildInt_(0);
+			}
+
+		return nil;
+
+

@@ -1,0 +1,18 @@
+trylon Pixmap
+superclass Drawable
+
+
+# Primitive functions.
+
+create: window-or-display width: width height: height depth: depth
+close
+
+
+destroy
+	close
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

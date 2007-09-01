@@ -1,0 +1,7 @@
+trylon Xlib
+
+references
+	iff targeting-c
+		CImplementation
+		Event
+

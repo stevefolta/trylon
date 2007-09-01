@@ -1,0 +1,11 @@
+class CImplementation
+
+references
+	Display
+	Drawable
+	GC
+	Font
+	Region
+	Pixmap
+	Window
+

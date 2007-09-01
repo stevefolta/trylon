@@ -1,0 +1,59 @@
+trylon FontOptions
+
+fields .font-options
+
+
+c-fn create
+	Field_(_dt_font_options) =
+		BuildBytePtr_((byte_ptr_) cairo_font_options_create());
+
+
+c-fn create: context
+	UsingMethod_(cairo)
+	cairo_t* cr = (cairo_t*) BytePtrValue_(Call_(cairo, context));
+	cairo_font_options_t* options = cairo_font_options_create();
+	Field_(_dt_font_options) = BuildBytePtr_((byte_ptr_) options);
+	cairo_get_font_options(cr, options);
+
+c-fn close
+	if (Field_(_dt_font_options))
+		cairo_font_options_destroy((cairo_font_options_t*) Field_(_dt_font_options));
+	Field_(_dt_font_options) = nil;
+
+destroy
+	close
+
+
+c-fn set-context: context
+	UsingMethod_(cairo)
+	Preamble_
+	cairo_t* cr = (cairo_t*) BytePtrValue_(Call_(cairo, context));
+	cairo_set_font_options(cr, options);
+
+
+c-fn antialias
+	UsingSym_(default) UsingSym_(none) UsingSym_(gray) UsingSym_(subpixel)
+	Preamble_
+	cairo_antialias_t value = cairo_font_options_get_antialias(options);
+	return CairoAntialiasSym(value);
+
+c-fn antialias: value
+	UsingSym_(default) UsingSym_(none) UsingSym_(gray) UsingSym_(subpixel)
+	Preamble_
+	cairo_font_options_set_antialias(options, CairoSymToAntialias(value));
+
+
+##### Private #####
+
+c-preamble
+	#include <cairo/cairo.h>
+
+	#define Preamble_ 	\
+		if (Field_(_dt_font_options) == nil) 	\
+			return nil; 	\
+		cairo_font_options_t* options = 	\
+			(cairo_font_options_t*) BytePtrValue_(Field_(_dt_font_options));
+
+	extern obj_ CairoAntialiasSym(cairo_antialias_t value);
+	extern cairo_antialias_t CairoSymToAntialias(obj_ sym);
+

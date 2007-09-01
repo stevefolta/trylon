@@ -1,0 +1,24 @@
+trylon GC
+
+fields primitive-gc display
+
+
+# Primitive functions.
+
+create: drawable
+close
+font: font
+foreground: foreground
+background: background
+copy-from: other
+line-width
+line-width: new-line-width
+region: region
+
+destroy
+	close
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

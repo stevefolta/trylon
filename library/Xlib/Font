@@ -1,0 +1,23 @@
+trylon Font
+
+
+fields primitive-font display
+
+
+# Primitive functions.
+
+create: display name: name
+is-valid
+close
+ascent
+descent
+width-of: string
+
+
+destroy
+	close
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

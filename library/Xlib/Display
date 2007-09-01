@@ -1,0 +1,103 @@
+trylon Display
+
+fields primitive-display windows
+
+expose-event = nil
+button-press-event = nil
+button-release-event = nil
+key-press-event = nil
+key-release-event = nil
+motion-notify-event = nil
+configure-notify-event = nil
+client-message-event = nil
+
+expose-event-mask = nil
+button-press-event-mask = nil
+button-release-event-mask = nil
+key-press-event-mask = nil
+key-release-event-mask = nil
+configure-notify-event-mask = nil
+pointer-motion-event-mask = nil
+
+button-1-motion-event-mask = nil
+button-2-motion-event-mask = nil
+button-3-motion-event-mask = nil
+button-4-motion-event-mask = nil
+button-5-motion-event-mask = nil
+button-motion-event-mask = nil
+pointer-motion-hint-mask = nil
+
+page-up-key = nil
+page-down-key = nil
+home-key = nil
+end-key = nil
+up-arrow-key = nil
+down-arrow-key = nil
+left-arrow-key = nil
+right-arrow-key = nil
+
+primary-mouse-button = nil
+secondary-mouse-button = nil
+tertiary-mouse-button = nil
+
+shift-key = nil
+lock-key = nil
+control-key = nil
+mod-1-key = nil
+mod-2-key = nil
+mod-3-key = nil
+mod-4-key = nil
+mod-5-key = nil
+
+class-initialized = false
+
+
+create
+close
+destroy
+	close
+
+default-screen
+width
+height
+white-pixel
+black-pixel
+depth
+flush
+sync
+next-event
+check-mask-event: event-mask
+send-event-to: window propagate: propagate --
+	event-mask: event-mask event: event
+alloc-named-color: color-name
+alloc-color-red: red green: green blue: blue
+mouse-buttons
+auto-repeat
+auto-repeat: enable
+intern-atom: name only-if-exists: only-if-exists
+
+
+# Helper
+
+is-modifier-key: key
+
+
+# Private
+
+register-window: window
+	windows append: window
+
+unregister-window: window
+	windows remove: window
+
+window-for-id: id
+	for window in windows
+		if window id == id
+			return window
+	return nil
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

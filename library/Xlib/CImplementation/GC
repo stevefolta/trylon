@@ -1,0 +1,81 @@
+trylon GC
+
+extend Xlib GC
+	c-preamble
+		#include <X11/Xlib.h>
+		#include <X11/Xutil.h>
+
+		UsingMethod_(primitive_display) UsingMethod_(id) UsingMethod_(display)
+
+		#define Preamble_ 	\
+			Display* xdisplay = 	\
+				(Display*) BytePtrValue_(Call_(primitive_display, Field_(display))); 	\
+			GC gc = (GC) BytePtrValue_(Field_(primitive_gc));
+
+
+	c-fn create: drawableObj
+		obj_ displayObj;
+		Display* xdisplay;
+		Drawable drawable;
+
+		displayObj = Call_(display, drawableObj);
+		Field_(display) = displayObj;
+		xdisplay = (Display*) BytePtrValue_(Call_(primitive_display, displayObj));
+		drawable = (Drawable) IntValue_(Call_(id, drawableObj));
+		Field_(primitive_gc) = BuildBytePtr_(XCreateGC(xdisplay, drawable, 0, nil));
+		return nil;
+
+
+	c-fn close
+		if (Field_(primitive_gc) == nil)
+			return nil;
+		Preamble_
+		if (gc) {
+			XFreeGC(xdisplay, gc);
+			Field_(primitive_gc) = nil;
+			}
+		return nil;
+
+	c-fn font: font
+		Preamble_
+		UsingMethod_(primitive_font)
+		XSetFont(
+			xdisplay, gc,
+			((XFontStruct*) BytePtrValue_(Call_(primitive_font, font)))->fid);
+		return nil;
+
+	c-fn foreground: foreground
+		Preamble_
+		XSetForeground(xdisplay, gc, IntValue_(foreground));
+		return nil;
+
+	c-fn background: background
+		Preamble_
+		XSetBackground(xdisplay, gc, IntValue_(background));
+		return nil;
+
+	c-fn copy-from: other
+		Preamble_
+		GC otherGC = (GC) BytePtrValue_(FieldOf_(other, primitive_gc));
+		XCopyGC(xdisplay, otherGC, 0xFFFFFFFF, gc);
+		return nil;
+
+	c-fn line-width
+		Preamble_
+		XGCValues values;
+		XGetGCValues(xdisplay, gc, GCLineWidth, &values);
+		return BuildInt_(values.line_width);
+
+	c-fn line-width: new-line-width
+		Preamble_
+		XGCValues values;
+		values.line_width = IntValue_(new_line_width);
+		XChangeGC(xdisplay, gc, GCLineWidth, &values);
+		return nil;
+
+	c-fn region: region
+		Preamble_
+		XSetRegion(xdisplay, gc, ((Region) region->fields[0]));
+		return nil;
+
+

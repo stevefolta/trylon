@@ -1,0 +1,107 @@
+trylon Window
+
+extend Xlib Window
+	c-preamble
+		#include <X11/Xlib.h>
+		#include <X11/Xutil.h>
+
+		UsingMethod_(primitive_display)
+
+		#define Preamble_ 	\
+			Display* xdisplay = 	\
+				(Display*) BytePtrValue_(Call_(primitive_display, Field_(display))); 	\
+			Window wind = (Window) IntValue_(Field_(id));
+
+	c-fn create: display x: x y: y width: width height: height
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, display));
+		int screen = DefaultScreen(xdisplay);
+		Window wind;
+		UsingMethod_(register_window_co_)
+
+		Field_(display) = display;
+		wind =
+			XCreateSimpleWindow(
+				xdisplay, RootWindow(xdisplay, screen),
+				IntValue_(x), IntValue_(y),
+				IntValue_(width), IntValue_(height), 0,
+				BlackPixel(xdisplay, screen),
+				WhitePixel(xdisplay, screen));
+		Field_(id) = BuildInt_(wind);
+		if (wind)
+			Call_(register_window_co_, display, this_);
+
+		return nil;
+
+	c-fn close
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, Field_(display)));
+		UsingMethod_(unregister_window_co_)
+
+		if (Field_(id)) {
+			Window wind = (Window) IntValue_(Field_(id));
+			if (wind) {
+				Call_(unregister_window_co_, Field_(display), this_);
+				XDestroyWindow(xdisplay, wind);
+				}
+			Field_(id) = nil;
+			}
+
+		return nil;
+
+	c-fn map
+		Preamble_
+		XMapWindow(xdisplay, wind);
+		return nil;
+
+	c-fn select-input: mask
+		Preamble_
+		XSelectInput(xdisplay, wind, IntValue_(mask));
+		return nil;
+
+	c-fn dont-flash-on-resize
+		Preamble_
+		XSetWindowAttributes attributes;
+		attributes.bit_gravity = NorthWestGravity;
+		XChangeWindowAttributes(xdisplay, wind, CWBitGravity, &attributes);
+		return nil;
+
+	c-fn mouse-point
+		Preamble_
+		Window rootWindow, childWindow;
+		int rootX, rootY, winX, winY;
+		unsigned int mask;
+		extern obj_ new_co_y_co___Point__Standard(obj_, obj_, obj_);
+		UsingClass_(Point__Standard)
+
+		Bool onSameScreen =
+			XQueryPointer(xdisplay, wind, &rootWindow, &childWindow, &rootX, &rootY,
+										&winX, &winY, &mask);
+		if (!onSameScreen)
+			winX = winY = -1;
+
+		return
+			new_co_y_co___Point__Standard(
+				Proto_(Point__Standard), BuildInt_(winX), BuildInt_(winY));
+
+	c-fn check-window-event: event-mask
+		Preamble_
+		XEvent rawEvent;
+		extern obj_ XEventObjectFor(XEvent* rawEvent, obj_ display);
+
+		Bool hadEvent =
+			XCheckWindowEvent(xdisplay, wind, IntValue_(event_mask), &rawEvent);
+		if (!hadEvent)
+			return NULL;
+		return XEventObjectFor(&rawEvent, Field_(display));
+
+	c-fn title: new-title
+		Preamble_
+		char* titleString = CString_(new_title);
+		XTextProperty titleProperty;
+		XStringListToTextProperty(&titleString, 1, &titleProperty);
+		XSetWMName(xdisplay, wind, &titleProperty);
+		XSetWMIconName(xdisplay, wind, &titleProperty);
+		return nil;
+
+

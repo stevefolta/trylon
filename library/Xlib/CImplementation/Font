@@ -1,0 +1,44 @@
+trylon Font
+
+extend Xlib Font
+	c-preamble
+		#include <X11/Xlib.h>
+
+		UsingMethod_(primitive_display)
+
+		#define fontStruct	((XFontStruct*) BytePtrValue_(Field_(primitive_font)))
+		#define Preamble_ 	\
+			Display* xdisplay = 	\
+				(Display*) BytePtrValue_(Call_(primitive_display, Field_(display)));
+
+
+	c-fn create: display name: name
+		Preamble_
+		Field_(display) = display;
+		Field_(primitive_font) =
+			BuildBytePtr_(XLoadQueryFont(xdisplay, CString_(name)));
+		return nil;
+
+	c-fn is-valid
+		return Bool_(Field_(display));
+
+	c-fn close
+		if (Field_(primitive_font)) {
+			Preamble_
+			XFreeFont(xdisplay, fontStruct);
+			Field_(primitive_font) = nil;
+			}
+		return nil;
+
+	c-fn ascent
+		return BuildInt_(fontStruct->ascent);
+
+	c-fn descent
+		return BuildInt_(fontStruct->descent);
+
+	c-fn width-of: string
+		char* start = StringStart_(string);
+		return
+			BuildInt_(XTextWidth(fontStruct, start, StringStopper_(string) - start));
+
+

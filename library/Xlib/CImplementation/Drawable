@@ -1,0 +1,106 @@
+trylon Drawable
+
+extend Xlib Drawable
+	c-preamble
+		#include <X11/Xlib.h>
+
+		UsingMethod_(primitive_display) UsingMethod_(primitive_gc)
+
+		#define Preamble_ 	\
+			Display* xdisplay = 	\
+				(Display*) BytePtrValue_(Call_(primitive_display, Field_(display))); 	\
+			Drawable drawable = (Drawable) IntValue_(Field_(id));
+		#define GCPreamble_ 	\
+			GC xgc = (GC) BytePtrValue_(Call_(primitive_gc, gc));
+
+
+	c-fn draw-string: string gc: gc x: x y: y
+		Preamble_
+		GCPreamble_
+		char* stringStart = StringStart_(string);
+		XDrawString(xdisplay, drawable, xgc, IntValue_(x), IntValue_(y),
+								stringStart, StringStopper_(string) - stringStart);
+		return string;
+
+
+	c-fn fill-rectangle: gc x: x y: y width: width height: height
+		Preamble_
+		GCPreamble_
+		XFillRectangle(xdisplay, drawable, xgc, IntValue_(x), IntValue_(y),
+									 IntValue_(width), IntValue_(height));
+		return nil;
+
+
+	c-fn draw-rectangle: gc x: x y: y width: width height: height
+		Preamble_
+		GCPreamble_
+		XDrawRectangle(xdisplay, drawable, xgc, IntValue_(x), IntValue_(y),
+									 IntValue_(width), IntValue_(height));
+		return nil;
+
+
+	c-fn draw-line: gc x1: x1 y1: y1 x2: x2 y2: y2
+		Preamble_
+		GCPreamble_
+		XDrawLine(xdisplay, drawable, xgc,
+							IntValue_(x1), IntValue_(y1), IntValue_(x2), IntValue_(y2));
+		return nil;
+
+
+	c-fn draw-arc: gc x: x y: y width: width height: height 	--
+			angle-1: angle-1 angle-2: angle-2
+		Preamble_
+		GCPreamble_
+		XDrawArc(xdisplay, drawable, xgc,
+						 IntValue_(x), IntValue_(y), IntValue_(width), IntValue_(height),
+						 IntValue_(angle_1), IntValue_(angle_2));
+		return nil;
+
+
+	c-fn fill-arc: gc x: x y: y width: width height: height 	--
+			angle-1: angle-1 angle-2: angle-2
+		Preamble_
+		GCPreamble_
+		XFillArc(xdisplay, drawable, xgc,
+						 IntValue_(x), IntValue_(y), IntValue_(width), IntValue_(height),
+						 IntValue_(angle_1), IntValue_(angle_2));
+		return nil;
+
+
+	c-fn copy-from: source gc: gc source-x: source-x source-y: source-y 	--
+			width: width height: height dest-x: dest-x dest-y: dest-y
+		Preamble_
+		GCPreamble_
+		UsingMethod_(id)
+		Drawable srcDrawable = (Drawable) IntValue_(Call_(id, source));
+		XCopyArea(xdisplay, srcDrawable, drawable, xgc,
+							IntValue_(source_x), IntValue_(source_y),
+							IntValue_(width), IntValue_(height),
+							IntValue_(dest_x), IntValue_(dest_y));
+		return nil;
+
+
+	c-fn width
+		Window root;
+		int x, y;
+		unsigned int width, height, borderWidth, depth;
+		Preamble_
+		XGetGeometry(xdisplay, drawable, &root, &x, &y, &width, &height,
+								 &borderWidth, &depth);
+		return BuildInt_(width);
+
+	c-fn height
+		Window root;
+		int x, y;
+		unsigned int width, height, borderWidth, depth;
+		Preamble_
+		XGetGeometry(xdisplay, drawable, &root, &x, &y, &width, &height,
+								 &borderWidth, &depth);
+		return BuildInt_(height);
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
+

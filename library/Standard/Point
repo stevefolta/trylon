@@ -1,0 +1,22 @@
+trylon-class Point
+
+fields x y
+
+
+fn create: x y: y
+	this x = x
+	this y = y
+
+
+fn copy
+	return new: x y: y
+
+
+fn string
+	return "(" + x string + ", " + y string + ")"
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

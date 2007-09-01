@@ -1,0 +1,5 @@
+trylon-cairo-test
+.c-sources
+.objects
+build-settings.local
+

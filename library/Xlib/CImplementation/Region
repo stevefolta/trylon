@@ -1,0 +1,73 @@
+trylon Region
+
+extend Xlib Region
+	c-preamble
+		#include <X11/Xlib.h>
+		#include <X11/Xutil.h>
+
+		#define region 	((Region) BytePtrValue_(Field_(primitive_region)))
+		#define RegionOf_(obj) 	\
+			((Region) BytePtrValue_(FieldOf_(obj, primitive_region)))
+
+	c-fn create
+		Field_(primitive_region) = BuildBytePtr_(XCreateRegion());
+		return nil;
+
+	c-fn close
+		if (Field_(primitive_region)) {
+			XDestroyRegion(region);
+			Field_(primitive_region) = nil;
+			}
+		return nil;
+
+	c-fn offset-by-x: dx y: dy
+		XOffsetRegion(region, IntValue_(dx), IntValue_(dy));
+		return nil;
+
+	c-fn shrink-by-x: dx y: dy
+		XShrinkRegion(region, IntValue_(dx), IntValue_(dy));
+		return nil;
+
+	c-fn set-to-intersection-of: first-region and: second-region
+		XIntersectRegion(RegionOf_(first_region), RegionOf_(second_region), region);
+		return nil;
+
+	c-fn set-to-union-of: first-region and: second-region
+		XUnionRegion(RegionOf_(first_region), RegionOf_(second_region), region);
+		return nil;
+
+	c-fn set-to-union-of-rect-x: x y: y width: width height: height 	--
+			and: otherRegion
+		XRectangle rect;
+		rect.x = IntValue_(x);
+		rect.y = IntValue_(y);
+		rect.width = IntValue_(width);
+		rect.height = IntValue_(height);
+		XUnionRectWithRegion(&rect, RegionOf_(otherRegion), region);
+		return nil;
+
+	c-fn set-to-subtraction-of: first-region and: second-region
+		XSubtractRegion(RegionOf_(first_region), RegionOf_(second_region), region);
+		return nil;
+
+	c-fn set-to-xor-of: first-region and: second-region
+		XXorRegion(RegionOf_(first_region), RegionOf_(second_region), region);
+		return nil;
+
+	c-fn is-empty
+		return Bool_(XEmptyRegion(region));
+
+	c-fn equals: other
+		return Bool_(XEqualRegion(region, RegionOf_(other)));
+
+	c-fn contains-point-x: x y: y
+		return Bool_(XPointInRegion(region, IntValue_(x), IntValue_(y)));
+
+	c-fn contains-rect-x: x y: y width: width height: height
+		return
+			Bool_(
+				XRectInRegion(
+					region,
+					IntValue_(x), IntValue_(y), IntValue_(width), IntValue_(height)));
+
+

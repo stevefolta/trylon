@@ -1,0 +1,36 @@
+trylon Region
+
+fields primitive-region
+
+
+# Primitive functions.
+
+create
+close
+offset-by-x: dx y: dy
+shrink-by-x: dx y: dy
+set-to-intersection-of: first-region and: second-region
+set-to-union-of: first-region and: second-region
+set-to-union-of-rect-x: x y: y width: width height: height and: region
+set-to-subtraction-of: first-region and: second-region
+set-to-xor-of: first-region and: second-region
+is-empty
+equals: other
+contains-point-x: x y: y
+contains-rect-x: x y: y width: width height: height
+
+
+destroy
+	close
+
+
+contains-point: point
+	return contains-point-x: point x y: point y
+
+fn == other
+	return this equals: other
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

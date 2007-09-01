@@ -1,0 +1,23 @@
+trylon Drawable
+
+fields display id
+
+
+draw-string: string gc: gc x: x y: y
+fill-rectangle: gc x: x y: y width: width height: height
+draw-rectangle: gc x: x y: y width: width height: height
+draw-line: gc x1: x1 y1: y1 x2: x2 y2: y2
+draw-arc: gc x: x y: y width: width height: height 	--
+	angle-1: angle-1 angle-2: angle-2
+fill-arc: gc x: x y: y width: width height: height 	--
+	angle-1: angle-1 angle-2: angle-2
+copy-from: source gc: gc source-x: source-x source-y: source-y 	--
+	width: width height: height dest-x: dest-x dest-y: dest-y
+width
+height
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

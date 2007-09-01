@@ -1,0 +1,23 @@
+trylon XlibSurface
+
+fields primitive-surface
+
+
+c-fn create: x-display drawable: x-drawable width: width height: height
+	UsingMethod_(primitive_display) UsingMethod_(id)
+	Display* display =
+		(Display*) BytePtrValue_(Call_(primitive_display, x_display));
+	cairo_surface_t* surface =
+		cairo_xlib_surface_create(
+			display, (Drawable) IntValue_(Call_(id, x_drawable)),
+			DefaultVisualOfScreen(DefaultScreenOfDisplay(display)),
+			IntValue_(width), IntValue_(height));
+	Field_(primitive_surface) = BuildBytePtr_(surface);
+
+
+c-preamble
+	#include <cairo/cairo-xlib.h>
+	#include <X11/Xlib.h>
+
+
+

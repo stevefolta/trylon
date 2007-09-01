@@ -1,0 +1,298 @@
+trylon Display
+
+extend Xlib Display
+	c-preamble
+		#include <X11/Xutil.h>
+		#include <X11/keysym.h>
+
+		#define xdisplay 	((Display*) BytePtrValue_(Field_(primitive_display)))
+
+		/* Helper function */
+
+		obj_ XEventObjectFor(XEvent* rawEvent, obj_ display)
+		{
+			obj_ window;
+			extern obj_ new_co___Event__Xlib(obj_, obj_);
+			UsingClass_(Event__Xlib)
+			UsingMethod_(window_for_id_co_)
+			UsingMethod_(type_co_) UsingMethod_(window_co_)
+			UsingMethod_(x_co_) UsingMethod_(y_co_)
+			UsingMethod_(width_co_) UsingMethod_(height_co_)
+			UsingMethod_(button_co_) UsingMethod_(state_co_) UsingMethod_(time_co_)
+			UsingMethod_(key_co_) UsingMethod_(key_symbol_co_)
+			UsingMethod_(data_0_co_) UsingMethod_(data_1_co_) UsingMethod_(data_2_co_)
+			UsingMethod_(data_3_co_) UsingMethod_(data_4_co_) 
+
+			obj_ event =
+				new_co___Event__Xlib(Proto_(Event__Xlib), BuildInt_(rawEvent->type));
+			window =
+				Call_(window_for_id_co_, display, BuildInt_(rawEvent->xany.window));
+			Call_(window_co_, event, window);
+			switch (rawEvent->type) {
+				case Expose:
+					Call_(x_co_, event, BuildInt_(rawEvent->xexpose.x));
+					Call_(y_co_, event, BuildInt_(rawEvent->xexpose.y));
+					Call_(width_co_, event, BuildInt_(rawEvent->xexpose.width));
+					Call_(height_co_, event, BuildInt_(rawEvent->xexpose.height));
+					break;
+				case ButtonPress:
+				case ButtonRelease:
+					Call_(x_co_, event, BuildInt_(rawEvent->xbutton.x));
+					Call_(y_co_, event, BuildInt_(rawEvent->xbutton.y));
+					Call_(button_co_, event, BuildInt_(rawEvent->xbutton.button));
+					Call_(state_co_, event, BuildInt_(rawEvent->xbutton.state));
+					Call_(time_co_, event, BuildInt_(rawEvent->xbutton.time));
+					break;
+				case KeyPress:
+				case KeyRelease:
+					{
+					char keyBuffer[20];
+					KeySym sym;
+					int len =
+						XLookupString(
+							&rawEvent->xkey, keyBuffer, sizeof(keyBuffer), &sym, 0);
+					if (len > 0)
+						Call_(key_co_, event, BuildInt_(keyBuffer[0]));
+					else
+						Call_(key_co_, event, BuildInt_(sym));
+					Call_(key_symbol_co_, event, BuildInt_(sym));
+					Call_(state_co_, event, BuildInt_(rawEvent->xkey.state));
+					Call_(time_co_, event, BuildInt_(rawEvent->xkey.time));
+					Call_(x_co_, event, BuildInt_(rawEvent->xkey.x));
+					Call_(y_co_, event, BuildInt_(rawEvent->xkey.y));
+					}
+					break;
+				case MotionNotify:
+					Call_(x_co_, event, BuildInt_(rawEvent->xmotion.x));
+					Call_(y_co_, event, BuildInt_(rawEvent->xmotion.y));
+					Call_(state_co_, event, BuildInt_(rawEvent->xmotion.state));
+					Call_(time_co_, event, BuildInt_(rawEvent->xmotion.time));
+					break;
+				case ConfigureNotify:
+					Call_(x_co_, event, BuildInt_(rawEvent->xconfigure.x));
+					Call_(y_co_, event, BuildInt_(rawEvent->xconfigure.y));
+					Call_(width_co_, event, BuildInt_(rawEvent->xconfigure.width));
+					Call_(height_co_, event, BuildInt_(rawEvent->xconfigure.height));
+					break;
+				case ClientMessage:
+					Call_(data_0_co_, event,
+								BuildBytePtr_((byte_ptr_) rawEvent->xclient.data.l[0]));
+					Call_(data_1_co_, event,
+								BuildBytePtr_((byte_ptr_) rawEvent->xclient.data.l[1]));
+					Call_(data_2_co_, event,
+								BuildBytePtr_((byte_ptr_) rawEvent->xclient.data.l[2]));
+					Call_(data_3_co_, event, BuildInt_(rawEvent->xclient.data.l[3]));
+					Call_(data_4_co_, event, BuildInt_(rawEvent->xclient.data.l[4]));
+					break;
+				}
+
+			return event;
+		}
+
+
+	c-fn create
+		extern obj_ new__List__Standard(obj_);
+		UsingClass_(List__Standard)
+
+		Field_(primitive_display) = BuildBytePtr_((byte_ptr_) XOpenDisplay(nil));
+		Field_(windows) = new__List__Standard(Proto_(List__Standard));
+
+		if (!SharedField_(class_initialized, Display__Xlib)) {
+			SharedField_(expose_event, Display__Xlib) = BuildInt_(Expose);
+			SharedField_(button_press_event, Display__Xlib) = BuildInt_(ButtonPress);
+			SharedField_(button_release_event, Display__Xlib) =
+				BuildInt_(ButtonRelease);
+			SharedField_(key_press_event, Display__Xlib) = BuildInt_(KeyPress);
+			SharedField_(key_release_event, Display__Xlib) = BuildInt_(KeyRelease);
+			SharedField_(motion_notify_event, Display__Xlib) = BuildInt_(MotionNotify);
+			SharedField_(configure_notify_event, Display__Xlib) =
+				BuildInt_(ConfigureNotify);
+			SharedField_(client_message_event, Display__Xlib) =
+				BuildInt_(ClientMessage);
+
+			SharedField_(expose_event_mask, Display__Xlib) = BuildInt_(ExposureMask);
+			SharedField_(button_press_event_mask, Display__Xlib) =
+				BuildInt_(ButtonPressMask);
+			SharedField_(button_release_event_mask, Display__Xlib) =
+				BuildInt_(ButtonReleaseMask);
+			SharedField_(key_press_event_mask, Display__Xlib) =
+				BuildInt_(KeyPressMask);
+			SharedField_(key_release_event_mask, Display__Xlib) =
+				BuildInt_(KeyReleaseMask);
+			SharedField_(configure_notify_event_mask, Display__Xlib) =
+				BuildInt_(StructureNotifyMask);
+			SharedField_(pointer_motion_event_mask, Display__Xlib) =
+				BuildInt_(PointerMotionMask);
+			SharedField_(button_1_motion_event_mask, Display__Xlib) =
+				BuildInt_(Button1MotionMask);
+			SharedField_(button_2_motion_event_mask, Display__Xlib) =
+				BuildInt_(Button2MotionMask);
+			SharedField_(button_3_motion_event_mask, Display__Xlib) =
+				BuildInt_(Button3MotionMask);
+			SharedField_(button_4_motion_event_mask, Display__Xlib) =
+				BuildInt_(Button4MotionMask);
+			SharedField_(button_5_motion_event_mask, Display__Xlib) =
+				BuildInt_(Button5MotionMask);
+			SharedField_(button_motion_event_mask, Display__Xlib) =
+				BuildInt_(ButtonMotionMask);
+			SharedField_(pointer_motion_hint_mask, Display__Xlib) =
+				BuildInt_(PointerMotionHintMask);
+
+			SharedField_(page_up_key, Display__Xlib) = BuildInt_(XK_Page_Up);
+			SharedField_(page_down_key, Display__Xlib) = BuildInt_(XK_Page_Down);
+			SharedField_(home_key, Display__Xlib) = BuildInt_(XK_Home);
+			SharedField_(end_key, Display__Xlib) = BuildInt_(XK_End);
+			SharedField_(up_arrow_key, Display__Xlib) = BuildInt_(XK_Up);
+			SharedField_(down_arrow_key, Display__Xlib) = BuildInt_(XK_Down);
+			SharedField_(left_arrow_key, Display__Xlib) = BuildInt_(XK_Left);
+			SharedField_(right_arrow_key, Display__Xlib) = BuildInt_(XK_Right);
+
+			SharedField_(primary_mouse_button, Display__Xlib) = BuildInt_(Button1Mask);
+			SharedField_(secondary_mouse_button, Display__Xlib) =
+				BuildInt_(Button2Mask);
+			SharedField_(tertiary_mouse_button, Display__Xlib) =
+				BuildInt_(Button3Mask);
+			SharedField_(shift_key, Display__Xlib) = BuildInt_(ShiftMask);
+			SharedField_(lock_key, Display__Xlib) = BuildInt_(LockMask);
+			SharedField_(control_key, Display__Xlib) = BuildInt_(ControlMask);
+			SharedField_(mod_1_key, Display__Xlib) = BuildInt_(Mod1Mask);
+			SharedField_(mod_2_key, Display__Xlib) = BuildInt_(Mod2Mask);
+			SharedField_(mod_3_key, Display__Xlib) = BuildInt_(Mod3Mask);
+			SharedField_(mod_4_key, Display__Xlib) = BuildInt_(Mod4Mask);
+			SharedField_(mod_5_key, Display__Xlib) = BuildInt_(Mod5Mask);
+
+			SharedField_(class_initialized, Display__Xlib) = true_;
+			}
+
+		return nil;
+
+
+	c-fn close
+		if (xdisplay)
+			XCloseDisplay(xdisplay);
+		Field_(primitive_display) = nil;
+		return nil;
+
+
+	c-fn default-screen
+		return BuildInt_(DefaultScreen(xdisplay));
+
+	c-fn width
+		return BuildInt_(DisplayWidth(xdisplay, DefaultScreen(xdisplay)));
+
+	c-fn height
+		return BuildInt_(DisplayHeight(xdisplay, DefaultScreen(xdisplay)));
+
+	c-fn white-pixel
+		return BuildInt_(WhitePixel(xdisplay, DefaultScreen(xdisplay)));
+
+	c-fn black-pixel
+		return BuildInt_(BlackPixel(xdisplay, DefaultScreen(xdisplay)));
+
+	c-fn depth
+		return BuildInt_(DefaultDepth(xdisplay, DefaultScreen(xdisplay)));
+
+	c-fn flush
+		XFlush(xdisplay);
+		return nil;
+
+	c-fn sync
+		XSync(xdisplay, False);
+		return nil;
+
+	c-fn next-event
+		XEvent rawEvent;
+		XNextEvent(xdisplay, &rawEvent);
+		return XEventObjectFor(&rawEvent, this_);
+
+	c-fn check-mask-event: event-mask
+		XEvent rawEvent;
+		Bool found = XCheckMaskEvent(xdisplay, IntValue_(event_mask), &rawEvent);
+		if (!found)
+			return nil;
+		return XEventObjectFor(&rawEvent, this_);
+
+	c-fn send-event-to: window propagate: propagate --
+				event-mask: event-mask event: event
+		XEvent xEvent;
+		Window xwind = IntValue_(window->fields[1]);
+		obj_ data;
+		UsingMethod_(type)
+		UsingMethod_(data_0) UsingMethod_(data_1) UsingMethod_(data_2)
+		UsingMethod_(data_3) UsingMethod_(data_4)
+
+		xEvent.xclient.type = IntValue_(Call_(type, event));
+		xEvent.xclient.window = xwind;
+		xEvent.xclient.format = 32;
+		data = Call_(data_0, event);
+		xEvent.xclient.data.l[0] = (data ? (long) BytePtrValue_(data) : 0);
+		data = Call_(data_1, event);
+		xEvent.xclient.data.l[1] = (data ? (long) BytePtrValue_(data) : 0);
+		data = Call_(data_2, event);
+		xEvent.xclient.data.l[2] = (data ? (long) BytePtrValue_(data) : 0);
+		data = Call_(data_3, event);
+		xEvent.xclient.data.l[3] = (data ? IntValue_(data) : 0);
+		data = Call_(data_4, event);
+		xEvent.xclient.data.l[4] = (data ? IntValue_(data) : 0);
+		XSendEvent(
+			xdisplay, xwind, (propagate ? True : False),
+			IntValue_(event_mask), &xEvent);
+		return nil;
+
+
+	c-fn alloc-named-color: color-name
+		char* colorName = CString_(color_name);
+		Colormap colormap = DefaultColormap(xdisplay, DefaultScreen(xdisplay));
+		XColor screenColor, exactColor;
+		XAllocNamedColor(xdisplay, colormap, colorName, &screenColor, &exactColor);
+		return BuildInt_(screenColor.pixel);
+
+	c-fn alloc-color-red: red green: green blue: blue
+		XColor color;
+		Colormap colormap;
+		color.red = IntValue_(red);
+		color.green = IntValue_(green);
+		color.blue = IntValue_(blue);
+		color.flags = DoRed | DoGreen | DoBlue;
+		colormap = DefaultColormap(xdisplay, DefaultScreen(xdisplay));
+		XAllocColor(xdisplay, colormap, &color);
+		return BuildInt_(color.pixel);
+
+
+	c-fn mouse-buttons
+		Window rootWindow, childWindow;
+		int rootX, rootY, winX, winY;
+		unsigned int mask;
+		Bool onSameScreen =
+			XQueryPointer(xdisplay, DefaultRootWindow(xdisplay),
+										&rootWindow, &childWindow,
+										&rootX, &rootY, &winX, &winY, &mask);
+		return BuildInt_(mask);
+
+
+	c-fn auto-repeat
+		XKeyboardState keyboardState;
+		XGetKeyboardControl(xdisplay, &keyboardState);
+		if (keyboardState.global_auto_repeat == AutoRepeatModeOn)
+			return true_;
+		else
+			return nil;
+
+	c-fn auto-repeat: enable
+		if (enable)
+			XAutoRepeatOn(xdisplay);
+		else
+			XAutoRepeatOff(xdisplay);
+		return nil;
+
+
+	c-fn intern-atom: name only-if-exists: only-if-exists
+		return
+			BuildInt_(
+				XInternAtom(xdisplay, CString_(name), (only_if_exists ? True : False)));
+
+	c-fn is-modifier-key: keyObj
+		int key = IntValue_(keyObj);
+		return Bool_(key >= XK_Shift_L && key <= XK_Hyper_R);
+
+

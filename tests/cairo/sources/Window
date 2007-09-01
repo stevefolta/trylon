@@ -1,0 +1,174 @@
+trylon Window
+superclass Xlib Window
+
+fields pixmap pixmap-gc window-gc cairo width height
+fields show-text show-arc show-path font-size
+
+
+create: display
+	# Window and pixmap.
+	width = display width
+	height = display height
+	super create: display x: 0 y: 0 width: width height: height
+	select-input: 	--
+		Xlib Display expose-event-mask + 	--
+	  Xlib Display key-press-event-mask + 	--
+	  Xlib Display key-release-event-mask + 	--
+	  Xlib Display button-press-event-mask + 	--
+	  Xlib Display button-release-event-mask + 	--
+	  Xlib Display pointer-motion-event-mask + 	--
+	  Xlib Display configure-notify-event-mask
+	pixmap = 	--
+		Xlib Pixmap new: display width: width height: height depth: display depth
+	pixmap-gc = Xlib GC new: pixmap
+	pixmap-gc foreground = display black-pixel
+	pixmap-gc background = display white-pixel
+
+	# Cairo.
+	surface = 	--
+		Cairo XlibSurface new: display drawable: pixmap width: width height: height
+	cairo = Cairo Context new: surface
+	font-options = cairo font-options
+	font-options antialias = 'gray'
+	cairo font-options = font-options
+
+	# Keys.
+	up-arrow-key = Xlib Display up-arrow-key string
+	down-arrow-key = Xlib Display down-arrow-key string
+	page-up-key = Xlib Display page-up-key string
+	page-down-key = Xlib Display page-down-key string
+	home-key = Xlib Display home-key string
+	end-key = Xlib Display end-key string
+
+	# Settings.
+	show-path = show-text = show-arc = true
+	font-size = 20
+
+
+
+# Event Handling
+# ##############
+
+draw
+	clear
+	# Text.
+	if show-text
+		cairo source-rgb: (0, 0, 0)
+		cairo select-font-face: "Arial Black" slant: 'normal' weight: 'normal'
+		cairo font-size = font-size
+		cairo move-to: 100 y: 100
+		cairo show-text: "Cairo Test"
+	# Arc.
+	if show-arc
+		cairo new-path
+		cairo red: 0 green: 0 blue: 1 alpha: 0.50
+		pi = 3.14159
+		deg-to-rads = pi / 180.0
+		x = 120
+		y = 94
+		cairo move-to: x y: y
+		cairo arc-x: x y: y radius: 20 	--
+			start-angle: 45.0 * deg-to-rads end-angle: 312.0 * deg-to-rads
+		cairo close-path
+		cairo fill
+	# Path
+	if show-path
+		left = 82
+		right = 234
+		top = 64
+		bottom = 120
+		radius = 24
+		cairo new-path
+		cairo move-to: left + radius y: top
+		cairo line-to: right - radius y: top
+		corner = (right, top)
+		cairo curve-past: corner and: corner to: (right, top + radius)
+		cairo line-to: right y: bottom - radius
+		corner = (right, bottom)
+		cairo curve-past: corner and: corner to: (right - radius, bottom)
+		cairo line-to: left + radius y: bottom
+		corner = (left, bottom)
+		cairo curve-past: corner and: corner to: (left, bottom - radius)
+		cairo line-to: left y: top + radius
+		corner = (left, top)
+		cairo curve-past: corner and: corner to: (left + radius, top)
+		cairo red: 0 green: 1.0 blue: 0 alpha: 0.6
+		cairo stroke
+	# Finish
+	finish-drawing
+
+
+key-down: key modifiers: modifiers
+	switch key
+		"q"
+			running = false
+		"t"
+			show-text = !show-text
+		"a"
+			show-arc = !show-arc
+		"p"
+			show-path = !show-path
+		"i"
+			print-info
+		"n"
+			toggle-antialias
+		"=", "+"
+			font-size += 1
+		"-"
+			if font-size > 1
+				font-size -= 1
+	draw
+
+
+mouse-wheel-moved: amount
+	#...
+
+mouse-down: where button: button
+	#...
+
+
+size-changed-to: width by: height
+	this width = width
+	this height = height
+	#... rebuild pixmap etc.
+
+
+print-info
+	font-options = cairo font-options
+	print-line: "font-options antialias: " + font-options antialias string
+	print-line: "shapes antialias: " + cairo antialias string
+	print-line: "width of \"hello\": " + 	--
+		(cairo text-extents: "hello") x-advance string
+
+toggle-antialias
+	font-options = cairo font-options
+	new-antialias = 'default'
+	switch font-options antialias
+		'default'
+			new-antialias = 'none'
+		'none'
+			new-antialias = 'gray'
+		'gray'
+			new-antialias = 'subpixel'
+		else
+			new-antialias = 'default'
+	font-options antialias = new-antialias
+	cairo font-options = font-options
+
+
+# Low-level Drawing
+# #################
+
+clear
+	pixmap-gc foreground = display white-pixel
+	pixmap fill-rectangle: pixmap-gc x: 0 y: 0 	--
+		width: pixmap width height: pixmap height
+	pixmap-gc foreground = display black-pixel
+
+
+finish-drawing
+	display sync
+	copy-from: pixmap gc: pixmap-gc source-x: 0 source-y: 0 	--
+		width: width height: height dest-x: 0 dest-y: 0
+
+

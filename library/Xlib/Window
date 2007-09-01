@@ -1,0 +1,23 @@
+trylon Window
+superclass Drawable
+
+
+# Primitive functions.
+create: display x: x y: y width: width height: height
+close
+map
+select-input: mask
+dont-flash-on-resize
+mouse-point
+check-window-event: event-mask
+title: new-title
+
+
+destroy
+	close
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
