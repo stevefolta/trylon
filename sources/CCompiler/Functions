@@ -27,18 +27,23 @@ extend Compiler TrylonFunction
 
 extend Compiler FieldGetter
 	emit-c-call: arguments builder: builder
-		return CCompiler LiteralResult new: this
+		# Don't be confused!  (I was!)  This is not a class's method accessing its
+		# own field.  It will only be used when a method accesses a field of an
+		# enclosing namespace.  That means accessing the the field of the
+		# namespace's prototype.
+		builder using-class: on-proto
+		proto-access = "Proto_(" + on-proto c-name + ")"
+		return 	--
+			CCompiler emit-send: field name 	--
+				to-string: proto-access with: arguments builder: builder
 	
 	emit-c-function-on: stream
 		stream write-line: c-signature
 		stream write: "{\n"
-		stream write: "\treturn " + access + ";\n"
+		stream write: "\treturn Field_(" + (mangle-name: field name) + ");\n"
 		stream write: "}\n"
 		stream write-line
 		stream write-line
-	
-	access
-		return "Field_(" + (mangle-name: field name) + ")"
 	
 	c-signature
 		return "obj_ " + c-name + "(obj_ this_)"
@@ -49,10 +54,12 @@ extend Compiler FieldGetter
 
 extend Compiler FieldSetter
 	emit-c-call: arguments builder: builder
-		value = arguments first-item emit-code: builder
-		builder add-line: 	--
-			"Field_(" + (mangle-name: field name) + ") = " + value access + ";"
-		return value
+		# Don't be confused!  See FieldGetter...
+		builder using-class: on-proto
+		proto-access = "Proto_(" + on-proto c-name + ")"
+		return 	--
+			CCompiler emit-send: field name + ":" 	--
+				to-string: proto-access with: arguments builder: builder
 	
 	emit-c-function-on: stream
 		stream write-line: c-signature
@@ -127,7 +134,7 @@ extend Compiler SharedFieldSetter
 extend Compiler CompiledFunction
 	emit-c-call: arguments builder: builder
 		# This is a send to the prototype object.
-		# (Can we skip the dispatch and call the function directly?)
+		# (Can't we skip the dispatch and call the function directly?)
 		builder calling-method: name
 		builder using-class: on-proto
 		arg-results = List new

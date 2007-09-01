@@ -377,9 +377,33 @@ report-run-program: program arguments: args
 		status-reporter unindent
 
 
+# Helpers.
+
 report: message
 	status-reporter report: message
 
+
+emit-send: name to-string: receiver with: arguments builder: builder
+	builder calling-method: name
+	arg-results = List new
+	for arg in arguments
+		arg-results append: (arg emit-code: builder)
+	result = builder get-temporary
+	line = StringBuilder new
+	line add: result access
+	line add: " = Call_("
+	line add: (mangle-name: name)
+	line add: ", "
+	line add: receiver
+	for arg in arg-results
+		line add: ", "
+		line add: arg access
+	line add: ");"
+	builder add-line: line string
+	return result
+
+
+# References.
 
 references
 	Expressions

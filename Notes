@@ -5,9 +5,9 @@ Field Codegen Bug
 
 	fields my-field
 
-Classes can see "my-field" (which is correct), but the codegen is a field access, when it should be a send to the "Main" proto.  "emit-c-call:builder:" methods of FieldGetter and FieldSetter need to be fixed.
+Classes can see "my-field" (which is correct), but the codegen is a field access, when it should be a send to the "Main" proto.  "emit-c-call:builder:" methods of FieldGetter and FieldSetter need to be fixed.  [Fixed 2007.9.1]
 
-To optimize field access, "MethodContext lookup-function:" would need to explicitly check fields before checking for function calls on "this".  But that's not semantically safe, as a subclass could override the getter and setter.
+To optimize field access, "MethodContext lookup-function:" would need to explicitly check fields before checking for function calls on "this".  But that's not semantically safe, as a subclass could override the getter and/or setter.
 
 
 =====
@@ -15,9 +15,7 @@ To optimize field access, "MethodContext lookup-function:" would need to explici
 To Do
 	[live]
 
-Fix context field bug (see 2007.8.31).
 Lambdas.
-Field access optimization:
-	Explicit calls on "this" (as in constructors).
+Field access optimization.  Strictly optional, since even in constructors we can't be sure we aren't dealing with a subclass that overrides the getter and/or setter.  But it might be a helpful optimization for those who know what they're doing.
 
 
