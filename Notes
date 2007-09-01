@@ -1,10 +1,13 @@
-[2007.8.31]
+Field Codegen Bug
+	[2007.8.31]
 
 	trylon main
 
 	fields my-field
 
-Classes can see "my-field" (which is correct), but the codegen is a field access, when it should be a send to the "Main" proto.
+Classes can see "my-field" (which is correct), but the codegen is a field access, when it should be a send to the "Main" proto.  "emit-c-call:builder:" methods of FieldGetter and FieldSetter need to be fixed.
+
+To optimize field access, "MethodContext lookup-function:" would need to explicitly check fields before checking for function calls on "this".  But that's not semantically safe, as a subclass could override the getter and setter.
 
 
 =====
