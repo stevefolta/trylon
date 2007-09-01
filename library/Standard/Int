@@ -24,6 +24,7 @@ fn << arg (Int) -> Int
 fn >> arg (Int) -> Int
 
 fn string
+fn char-string
 fn float
 fn is-digit
 fn is-whitespace

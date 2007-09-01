@@ -67,9 +67,15 @@ extend Standard Int
 
 
 	c-fn string
-		char* buf = AllocNonPtr_(64);
-		sprintf(buf, "%d", Val);
-		return BuildString_(buf);
+		char str[64];
+		sprintf(str, "%d", Val);
+		return BuildString_(str);
+	
+	c-fn char-string
+		char str[4];
+		str[0] = Val;
+		str[1] = 0;
+		return BuildString_(str);
 	
 	c-fn float
 		return BuildFloat_(Val);
