@@ -21,18 +21,10 @@ extend Compiler Send
 
 		# Normal send.
 		object-result = object emit-code: builder
-		arg-results = List new
-		for arg in arguments
-			arg-results append: (arg emit-code: builder)
-		builder calling-method: name
-		temporary = builder get-temporary
-		line = temporary name + " = "
-		line += "Call_(" + (mangle-name: name) + ", " + object-result access
-		for arg-result in arg-results
-			line += ", " + arg-result access
-		line += ");"
-		builder add-line: line
-		return temporary
+		return 	--
+			CCompiler 	--
+				emit-send: name to-string: object-result access 	--
+				with: arguments builder: builder
 
 
 extend Compiler FunctionCall

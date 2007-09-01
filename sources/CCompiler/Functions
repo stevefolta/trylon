@@ -135,25 +135,11 @@ extend Compiler CompiledFunction
 	emit-c-call: arguments builder: builder
 		# This is a send to the prototype object.
 		# (Can't we skip the dispatch and call the function directly?)
-		builder calling-method: name
 		builder using-class: on-proto
-		arg-results = List new
-		for arg in arguments
-			arg-results append: (arg emit-code: builder)
-		result = builder get-temporary
-		line = StringBuilder new
-		line add: result access
-		line add: " = Call_("
-		line add: (mangle-name: name)
-		line add: ", Proto_("
-		line add: on-proto c-name
-		line add: ")"
-		for arg in arg-results
-			line add: ", "
-			line add: arg access
-		line add: ");"
-		builder add-line: line string
-		return result
+		proto-access = "Proto_(" + on-proto c-name + ")"
+		return 	--
+			CCompiler emit-send: name 	--
+				to-string: proto-access with: arguments builder: builder
 	
 	emit-c-function-on: stream
 		stream write-line: c-signature
@@ -339,22 +325,9 @@ extend Compiler LocalSetter
 
 extend Compiler FunctionOnThis
 	emit-c-call: arguments builder: builder
-		builder calling-method: name
-		arg-results = List new
-		for arg in arguments
-			arg-results append: (arg emit-code: builder)
-		result = builder get-temporary
-		line = StringBuilder new
-		line += result access
-		line += " = Call_("
-		line += (mangle-name: name)
-		line += ", this_"
-		for arg in arg-results
-			line += ", "
-			line += arg access
-		line += ");"
-		builder add-line: line string
-		return result
+		return 	--
+			CCompiler 	--
+				emit-send: name to-string: "this_" with: arguments builder: builder
 
 
 extend Compiler CaughtExceptionFunction
