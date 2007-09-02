@@ -32,4 +32,15 @@ extend Standard Object
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");
 		exit(1);
+	
+	iff debugger
+		.gather-field-names-into: tuple
+			index = 0
+			if .parent-proto
+				index = .parent-proto .gather-field-names-into: tuple
+			for field-name in .added-fields
+				tuple at: index put: field-name
+				index += 1
+			return index
+
 

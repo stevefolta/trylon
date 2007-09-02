@@ -39,12 +39,35 @@ iterator
 debug-write
 	print-line: .proto-name
 	num-fields = .object-size / 4
-	which-field = 0
+	ptr = this object-ptr
+	field-names = nil
+	max-field-name-length = 0
 	iff targeting-c
 		# Skip the classref.
-		which-field = 1
+		ptr += 4
+		num-fields -= 1
+		# Gather the field names.
+		iff debugger
+			field-names = Tuple new: num-fields
+			.gather-field-names-into: field-names
+			for field-name in field-names
+				length = field-name length
+				if length > max-field-name-length
+					max-field-name-length = length
+	which-field = 0
 	while which-field < num-fields
-		field = object-ptr object-at: which-field
+		# Field name.
+		iff targeting-c
+			iff debugger
+				if field-names
+					print: "  "
+					field-name = field-names at: which-field
+					padding = max-field-name-length - field-name length
+					print: ("                    " substr: 0 length: padding)
+					print: field-name
+					print: ":"
+		# Value.
+		field = ptr object-at: which-field
 		if field == nil
 			print-line: "  nil"
 		else
