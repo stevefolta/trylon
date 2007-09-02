@@ -21,6 +21,9 @@ is-a: proto
 string
 	return this .proto-name
 
+print-string
+	return this string
+
 fn == other
 	return this same-as: other
 

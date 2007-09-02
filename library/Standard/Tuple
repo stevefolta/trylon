@@ -48,7 +48,10 @@ string
 			result += ", "
 		else
 			have-item = true
-		result += item print-string
+		if item
+			result += item print-string
+		else
+			result += "nil"
 	result += ")"
 	return result
 
