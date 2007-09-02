@@ -259,7 +259,7 @@ const char* className_(obj_ object)
 	if (object == NULL)
 		return "NULL";
 
-	return object->class_->name;
+	return StringStart_(object->class_->name);
 }
 
 

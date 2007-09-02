@@ -8,11 +8,11 @@ typedef struct object* obj_;
 typedef struct ClassInfo* classref_;
 
 struct ClassInfo {
-	int        	classNum;
-	int        	size;
-	obj_       	proto, parentContext, superclass;
-	const char*	name;
-	obj_       	addedFields; 	/* Only if "debugger" is on. */
+	int 	classNum;
+	int 	size;
+	obj_	proto, parentContext, superclass;
+	obj_	name;
+	obj_	addedFields; 	/* Only if "debugger" is on. */
 };
 
 struct object {

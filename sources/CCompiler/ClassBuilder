@@ -57,6 +57,9 @@ emit-on: stream
 		added-fields-access = tuple access
 
 	# Class info.
+	compiler using-symbol: proto name
+	mangled-name = mangle-name: proto name
+	stream write-all: ("UsingSym_(", mangled-name, ")")
 	parent-context-ref = "nil"
 	if proto parent && (proto parent is-a: Compiler CompiledProto)
 		stream write-all: ("UsingClass_(", proto parent c-name, ")\n")
@@ -78,9 +81,9 @@ emit-on: stream
 	stream write: parent-context-ref
 	stream write: ", "
 	stream write: superclass-ref
-	stream write: ", \""
-	stream write: proto name
-	stream write: "\" ,"
+	stream write: ", Sym_("
+	stream write: mangled-name
+	stream write: ") ,"
 	stream write: added-fields-access
 	stream write: " };\n"
 
