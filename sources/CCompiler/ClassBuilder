@@ -2,6 +2,7 @@ trylon ClassBuilder
 
 fields proto
 fields int-literals float-literals string-literals dict-literals tuple-literals
+fields extern-declarations
 
 create: proto
 	this proto = proto
@@ -10,6 +11,7 @@ create: proto
 	float-literals = IndexedResources new
 	dict-literals = IndexedResources new
 	tuple-literals = IndexedResources new
+	extern-declarations = List new
 
 
 emit: force-compile
@@ -44,6 +46,16 @@ emit-on: stream
 	stream write-line: "#include \"Trylon_.h\""
 	stream write-line
 
+	# Debugging info.
+	added-fields-access = "nil"
+	if build-settings debugger
+		tuple = Compiler TupleExpression new
+		for field in proto fields
+			tuple add-member: (Compiler SymbolLiteral new: field name)
+		tuple emit-code: this
+		stream write-line: tuple forward-declaration
+		added-fields-access = tuple access
+
 	# Class info.
 	parent-context-ref = "nil"
 	if proto parent && (proto parent is-a: Compiler CompiledProto)
@@ -68,7 +80,9 @@ emit-on: stream
 	stream write: superclass-ref
 	stream write: ", \""
 	stream write: proto name
-	stream write: "\" };\n"
+	stream write: "\" ,"
+	stream write: added-fields-access
+	stream write: " };\n"
 
 	# Prototype.
 	stream write: "struct object "
@@ -88,6 +102,10 @@ emit-on: stream
 	# Shared fields initial values.
 	for field in proto shared-fields values
 		field initial-value-result = field initial-value emit-code: this
+	if !extern-declarations is-empty
+		for declaration in extern-declarations
+			stream write: "\t"
+			stream write-line: declaration
 	int-literals emit-declarations-on: stream
 	string-literals emit-declarations-on: stream
 	float-literals emit-declarations-on: stream
@@ -142,5 +160,8 @@ report-run-program: program arguments: args
 
 using-proto: proto
 	# ...
+
+add-extern-declaration: declaration
+	extern-declarations append: declaration
 
 

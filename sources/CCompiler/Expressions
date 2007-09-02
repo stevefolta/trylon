@@ -343,7 +343,7 @@ extend Compiler TupleExpression
 		else
 			# Not all literals, so build it dynamically.
 			if builder supports-only-literals
-				throw MessageException: "Using a non-literal tuple outside a method."
+				throw MessageException new: "Using a non-literal tuple outside a method."
 
 			builder add-extern-declaration: 	--
 				"extern obj_ new_co___Tuple__Standard(obj_, obj_);"
@@ -370,8 +370,9 @@ extend Compiler TupleExpression
 			
 	emit-declaration: stream
 		if results == nil
-			throw MessageException: "Internal error: No results from literal tuple."
-		stream write-all: ( "obj_ tu", index string, "_[] = { " )
+			throw 	--
+				MessageException new: "Internal error: No results from literal tuple."
+		stream write-all: ( "static obj_ tu", index string, "_[] = { " )
 		stream write-all: ( "(obj_) StdClassRef_(Tuple), ", size-result access )
 		for member-result in results
 			stream write-all: ( ", ", member-result access )
@@ -379,6 +380,9 @@ extend Compiler TupleExpression
 
 	access
 		return "((obj_) tu" + index string + "_)"
+	
+	forward-declaration
+		return "static obj_ tu" + index string + "_[];"
 
 
 

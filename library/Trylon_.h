@@ -12,6 +12,7 @@ struct ClassInfo {
 	int        	size;
 	obj_       	proto, parentContext, superclass;
 	const char*	name;
+	obj_       	addedFields; 	/* Only if "debugger" is on. */
 };
 
 struct object {
