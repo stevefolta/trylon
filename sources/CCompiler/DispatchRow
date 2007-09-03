@@ -1,12 +1,16 @@
 trylon DispatchRow
 
-fields name entries num-entries selector
+fields symbol-info entries num-entries selector
 
 
-create: name
-	this name = name
+create: symbol-info
+	this symbol-info = symbol-info
 	this entries = List new
 	this num-entries = 0
+
+
+name
+	return symbol-info name
 
 
 append: class-num function: function
@@ -37,6 +41,7 @@ fit-into: dispatch-table used-offsets: used-offsets
 		(dispatch-table at: offset + entry class-num) = 	--
 			DispatchTableEntry new: entry function selector: offset
 	(used-offsets at: offset) = true
+	symbol-info index = offset
 
 
 

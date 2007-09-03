@@ -1,0 +1,8 @@
+trylon SymbolInfo
+
+fields name declared called used-as-symbol index
+
+create: name
+	this name = name
+	index = -1
+

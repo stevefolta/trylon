@@ -73,10 +73,10 @@ emit-c: compiler
 	System run-program: build-settings linker arguments: args
 
 	# Check for undeclared selectors.
-	for selector-info in compiler selectors values
-		if selector-info called && !(selector-info declared)
+	for symbol-info in compiler symbols values
+		if symbol-info called && !(symbol-info declared)
 			status-reporter warn: 	--
-				"'" + selector-info name + "' is called but never defined."
+				"'" + symbol-info name + "' is called but never defined."
 
 
 emit-settings: build-settings
@@ -84,6 +84,8 @@ emit-settings: build-settings
 		ExistingFileStream new: 	--
 			(File new: build-settings c-sources-dir + "/settings_.h")
 
+	if build-settings support-perform
+		stream write-line: "#define SUPPORT_PERFORM_"
 	if build-settings debugger
 		stream write-line: "#define DEBUGGER_"
 	
@@ -225,9 +227,12 @@ emit-dispatch-table: main-package
 	# Gather up the rows.
 	status-reporter report: "Gathering rows."
 	rows = DispatchRowSet new
-	for fn-name in compiler selectors keys
+	for symbol in compiler symbols values
+		if !(symbol declared)
+			continue
+
 		# Create the row and fill it in.
-		row = DispatchRow new: fn-name
+		row = DispatchRow new: symbol
 		object-class setup-dispatch-row: row inherited-function: nil
 
 		# Add the row.
@@ -239,8 +244,6 @@ emit-dispatch-table: main-package
 	dispatch-table = ExpandoArray new
 	used-offsets = ExpandoBitmap new
 	for row in rows
-		iff not-anymore
-			status-reporter report: "Fitting " + row name + "..."
 		row fit-into: dispatch-table used-offsets: used-offsets
 	
 	status-reporter unindent
@@ -256,14 +259,15 @@ emit-dispatch-table: main-package
 	stream write-line
 
 	# Define all selectors.
-	for row in rows
-		stream write: "DefineSelector_("
-		stream write: (mangle-name: row name)
-		stream write: ", "
-		stream write: row selector string
-		stream write: ")"
+	if !(build-settings support-perform)
+		for row in rows
+			stream write: "DefineSelector_("
+			stream write: (mangle-name: row name)
+			stream write: ", "
+			stream write: row selector string
+			stream write: ")"
+			stream write-line
 		stream write-line
-	stream write-line
 	
 	# Declare all functions.
 	object-class emit-all-function-declarations: stream
@@ -302,18 +306,27 @@ emit-symbols
 	stream write-line
 
 	# Symbols.
-	for symbol in compiler symbols keys
+	include-selectors = 	--
+		build-settings include-selector-symbols || build-settings support-perform
+	for symbol in compiler symbols values
+		if !include-selectors && !(symbol used-as-symbol)
+			continue
+		name = symbol name
 		stream write-all: 	--
-			("DefineSymbolData_(", (mangle-name: symbol), ", \"", symbol, "\")\n")
+			("DefineSymbolData_(", (mangle-name: name), ", \"", name, "\")\n")
 	stream write-line
 	first-symbol-name = nil
 	last-symbol-name = nil
-	for symbol in compiler symbols keys
+	for symbol in compiler symbols values
+		if !include-selectors && !(symbol used-as-symbol)
+			continue
+		name = symbol name
 		if first-symbol-name == nil
-			first-symbol-name = symbol
-		last-symbol-name = symbol
+			first-symbol-name = name
+		last-symbol-name = name
 		stream write-all: 	--
-			("DefineSymbolObject_(", (mangle-name: symbol), ")\n")
+			("DefineSymbolObject_(", (mangle-name: name), ", ", 	--
+			 symbol index string, ")\n")
 	stream write-line
 
 	# First and last symbol (for lookup).

@@ -1,8 +1,0 @@
-trylon SelectorInfo
-
-fields name declared called index
-
-create: name
-	this name = name
-	index = 0
-

@@ -39,17 +39,15 @@ extern struct RDTableEntry_ dispatchTable_[];
 
 extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 
-#define UsingMethod_(methodName) 	\
-	extern selector_ methodName##__selector_;
-#define DefineSelector_(methodName, value) 	\
-	selector_ methodName##__selector_ = value;
-#define Selector_(fnName)	fnName##__selector_
-
-#ifdef NOT_YET
-	#ifdef SUPPORT_PERFORM_
-		#define UsingMethod_(methodName)	UsingSym_(methodName)
-		#define Selector_(methodName)   	(y##name##__sym_.selector)
-	#endif
+#ifdef SUPPORT_PERFORM_
+	#define UsingMethod_(methodName)	UsingSym_(methodName)
+	#define Selector_(methodName)   	(y##methodName##__sym_.selector)
+#else
+	#define UsingMethod_(methodName) 	\
+		extern selector_ methodName##__selector_;
+	#define DefineSelector_(methodName, value) 	\
+		selector_ methodName##__selector_ = value;
+	#define Selector_(fnName)	fnName##__selector_
 #endif
 
 #define Call_(fnName, object, args...) \
@@ -159,21 +157,20 @@ UsingClass_(Node__Dictionary__Standard)
 	static struct Standard__String__internal s##index##_ =  	\
 		{ StdClassRef_(String), &s##index##__start_, &s##index##__stopper_ };
 
-#define DefineSymbol_(name, value) 	\
-	static const char y##name##__str_[] = value; 	\
-	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
-	DefineBytePtr_(y##name##__stopper_, 	\
-	               y##name##__str_ + sizeof(y##name##__str_) - 1) 	\
-	struct Standard__Symbol__internal y##name##__sym_ = 	\
-		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
 #define DefineSymbolData_(name, value) 	\
 	static const char y##name##__str_[] = value; 	\
 	DefineBytePtr_(y##name##__start_, y##name##__str_) 	\
 	DefineBytePtr_(y##name##__stopper_, 	\
 	               y##name##__str_ + sizeof(y##name##__str_) - 1)
-#define DefineSymbolObject_(name) 	\
-	struct Standard__Symbol__internal y##name##__sym_ = 	\
-		{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
+#ifdef SUPPORT_PERFORM_
+	#define DefineSymbolObject_(name, index) 	\
+		struct Standard__Symbol__internal y##name##__sym_ = 	\
+			{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_, index };
+#else
+	#define DefineSymbolObject_(name, index) 	\
+		struct Standard__Symbol__internal y##name##__sym_ = 	\
+			{ StdClassRef_(Symbol), &y##name##__start_, &y##name##__stopper_ };
+#endif
 
 #define Str_(index)	((obj_) &s##index##_)
 
