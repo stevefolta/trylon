@@ -43,9 +43,17 @@ extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 	extern selector_ methodName##__selector_;
 #define DefineSelector_(methodName, value) 	\
 	selector_ methodName##__selector_ = value;
+#define Selector_(fnName)	fnName##__selector_
+
+#ifdef NOT_YET
+	#ifdef SUPPORT_PERFORM_
+		#define UsingMethod_(methodName)	UsingSym_(methodName)
+		#define Selector_(methodName)   	(y##name##__sym_.selector)
+	#endif
+#endif
 
 #define Call_(fnName, object, args...) \
-	((*Dispatch_(fnName##__selector_, (obj_) (object))) \
+	((*Dispatch_(Selector_(fnName), (obj_) (object))) \
 	 ((obj_) object, ##args))
 
 #define Field_(name)        	this_->fields[name##__fld_]
@@ -97,6 +105,9 @@ struct Standard__Symbol__internal {
 	classref_	class_;
 	obj_     	start;
 	obj_     	stopper;
+#ifdef SUPPORT_PERFORM_
+	int      	selector;
+#endif
 };
 
 struct Standard__DictNode__internal_ {

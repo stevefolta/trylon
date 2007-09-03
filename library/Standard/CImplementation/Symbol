@@ -1,6 +1,9 @@
 trylon Symbol
 
 extend Standard Symbol
+	iff support-perform
+		field ._selector
+
 	# Dynamic lookup.
 
 	built-in-table = nil
