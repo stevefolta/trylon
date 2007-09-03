@@ -15,7 +15,7 @@ is-a: proto
 		# Test carefully!  Use same-as: rt ==, and order matters.
 		if proto same-as: cur-proto
 			return true
-		cur-proto = cur-proto .parent-proto
+		cur-proto = cur-proto .superclass
 	return false
 
 string

@@ -17,7 +17,7 @@ extend Standard Object
 	c-fn .proto
 		return this_->class_->proto;
 	
-	c-fn .parent-proto
+	c-fn .superclass
 		return this_->class_->superclass;
 	
 	c-fn .proto-name
@@ -36,8 +36,8 @@ extend Standard Object
 	iff debugger
 		.gather-field-names-into: tuple
 			index = 0
-			if .parent-proto
-				index = .parent-proto .gather-field-names-into: tuple
+			if .superclass
+				index = .superclass .gather-field-names-into: tuple
 			for field-name in .added-fields
 				tuple at: index put: field-name
 				index += 1

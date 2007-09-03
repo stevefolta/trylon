@@ -179,7 +179,7 @@
 			[vtable methodAt: '_sizeof put: closure-returner with: proto-size]
 			[vtable methodAt: '_debugName put: closure-returner with: name-string]
 			[vtable methodAt: '.proto put: closure-returner with: proto]
-			[vtable methodAt: '.parent-proto put: closure-returner with: superclass]
+			[vtable methodAt: '.superclass put: closure-returner with: superclass]
 			[vtable methodAt: '.added-fields put: closure-returner with: fields]
 			;; Add the slot accessors.
 			(let ((offset super-size)
@@ -419,7 +419,7 @@
 		(let ((selector [node second])
 					(receiver [node third]))
 			`(let ((__sr ,receiver))
-				 (let ((__sc (_bind ',selector [__sr .parent-proto])))
+				 (let ((__sc (_bind ',selector [__sr .superclass])))
 					 ((long@ __sc) __sc __sr __sr ,@[node copyFrom: '3]))))))
 
 
@@ -641,7 +641,7 @@
 		(set StandardBytePtr (trylon-proto Standard BytePtr))
 		(set StandardString (trylon-proto Standard String))
 		;; Augment Pepsi Object.
-		(add-shared-field .parent-proto Object nil)
+		(add-shared-field .superclass Object nil)
 		(add-shared-field .proto Object Object)
 		;; Set "Standard Implementation .target-language".  We can't use
 		;; (trylon-string) until after "Standard Implementation" is loaded, so be
