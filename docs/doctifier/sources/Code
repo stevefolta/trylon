@@ -27,7 +27,7 @@ fn add-blank-line
 fn emit
 	print: "<div class=\"code\">"
 	
-	had-line := false
+	had-line = false
 	for line in lines
 		if had-line
 			print-line
@@ -35,11 +35,14 @@ fn emit
 			had-line = true
 		
 		# Write out the line, character-by-character, turning tabs into two spaces.
-		for char in line
+		for char in line characters
 			if char == `\t`
 				print: "  "
 			else
-				print: char
+				iff trylon-2
+					print: char char-string
+				iff !trylon-2
+					print: char
 	
 	print-line: "</div>"
 	print-line

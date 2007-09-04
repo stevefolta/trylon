@@ -1,4 +1,4 @@
-trylon-package Main
+trylon Main
 
 # field debug
 
@@ -6,10 +6,10 @@ field given-title
 
 main: all-args
 	try
-		args := all-args tail
-		template := nil
+		args = all-args tail
+		template = nil
 		while !args is-empty
-			arg := args pop-front
+			arg = args pop-front
 			
 			if arg == "-t" || arg == "--template" || arg == "template:"
 				arg = args pop-front
@@ -37,21 +37,21 @@ process-file: file-name template: template-name
 		template-name = "template"
 	
 	# Read the file.
-	contents := File contents-of: file-name
-	page := parse-source: contents
+	contents = File contents-of: file-name
+	page = parse-source: contents
 	
 	# Override the title, if it's given on the command line.
 	if given-title
 		page title = given-title
 	
 	# Read the template.
-	template-contents := File contents-of: template-name
+	template-contents = File contents-of: template-name
 	
 	# Copy the template out, substituting the page.
 	for line in template-contents lines
-		trimmed-line := line trimmed
+		trimmed-line = line trimmed
 		if (trimmed-line starts-with: "<?") && (trimmed-line ends-with: "?>")
-			section := trimmed-line substr: 2 length: (trimmed-line length - 4)
+			section = trimmed-line substr: 2 length: (trimmed-line length - 4)
 			section = section trimmed
 			if section == "contents"
 				for section in page entries
@@ -63,28 +63,28 @@ process-file: file-name template: template-name
 
 
 parse-source: source
-	page := Page new
-	lines := source lines
+	page = Page new
+	lines = source lines
 	
 	# Read the header.
-	have-header := false
+	have-header = false
 	for raw-line in lines
-		line := raw-line trimmed
+		line = raw-line trimmed
 		if line is-empty
 			break
-		colon-index := line index-of: `:`
+		colon-index = line index-of: `:`
 		if colon-index > 0
-			header-name := line substr: 0 length: colon-index
-			header-value := (line substr: colon-index + 1) trimmed
+			header-name = line substr: 0 length: colon-index
+			header-value = (line substr: colon-index + 1) trimmed
 			if header-name == "title" || header-name == "Title"
 				page title = header-value
 		else
 			break
 	
 	# Read the entries.
-	section := nil
-	paragraph := nil
-	in-code := false
+	section = nil
+	paragraph = nil
+	in-code = false
 	for line in lines
 		if line starts-with: "===="
 			# Finish the current section
@@ -97,7 +97,7 @@ parse-source: source
 				in-code = false
 			continue
 		
-		trimmed-line := line trimmed
+		trimmed-line = line trimmed
 		if trimmed-line is-empty && paragraph == nil
 			continue
 		
@@ -127,8 +127,9 @@ parse-source: source
 			continue
 		
 		# Did the "is-code" status change?
-		line-is-code := line starts-with: "\t"
-		if line-is-code != in-code && paragraph
+		line-is-code = line starts-with: "\t"
+		status-changed = (line-is-code && !in-code) || (!line-is-code && in-code)
+		if status-changed && paragraph
 			section add-paragraph: paragraph
 			paragraph = nil
 		if paragraph == nil

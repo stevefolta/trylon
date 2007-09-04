@@ -17,7 +17,7 @@ fn check-validity
 	if date == nil
 		if title == nil
 			title = "(none)"
-		message := "An entry is missing its date!  (" + title + ")"
+		message = "An entry is missing its date!  (" + title + ")"
 		throw MessageException new: message
 
 
