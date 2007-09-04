@@ -1,99 +1,31 @@
-What is Trylid?
-===============
+Welcome to Trylon 2!  Sorry, the documentation isn't ready yet.
 
-Trylid is a computer language, basically a combination of Smalltalk and Python, running on top of Jolt.
+Trylon 2 is the next iteration of the Trylon language, changed based on lessons
+learned while doing Trylid:
 
+- Each class now has prototype object associated with it.  Naming the class in
+an expression names that prototype object.  There is no more distinction
+between packages and classes; it's all classes now, and you can use a directory
+to define a class.
 
-Getting Trylid
-==============
+- "nil" is the only falsy value, which makes tests quicker.
 
-Get the tarball from:
+- Catch clauses don't specify a type, 'cause I've found you don't care about
+the type often enough.  Why incur those "is-a:" calls?  It's just as easy to
+add them to the source when needed.
 
-	http://somefancy.com/trylid/trylid.tgz
+In fact, the Trylon 2 compiler is derived from the Trylid compiler; a C backend
+was added.
 
-If you're a programmer, the Git repo is at:
+Additionally, you no longer need the "boilerplate" in your build-settings file;
+that's automatically included.  In most cases, the build-settings file can be
+as simple as:
 
-	git://repo.or.cz/trylid.git
+	program = "my-program-name"
 
-...but you'll still want the tarball to get started (unless you want to do the full bootstrap; see below).
-
-You'll need a relatively up-to-date version of idst/jolt.  The 5.8alpha1 tarball isn't new enough; svn revision 218 is known to work.
-
-
-Does it self-compile?
-=====================
-
-Try this:
-
-	cd library/Posix
-	make
-	cd ../..
-	jolt start.k
-
-That assumes that you've got a script to run Jolt.  Something like this:
-
-	#!/bin/bash
-
-	/path/to/jolt-burg/main boot.k "$@"
-
-Once you've done that, try:
-
-	jolt start-self.k
-	jolt start-self.k
-
-If that works, you are using a fully self-compiled Trylid compiler.
-
-
-How fast is Jolt compared to Trylon-generated C?
-================================================
-
-Make sure the Boehm/Demers/Weisner garbage collector is installed on your computer.  It's often called something like "boehm-gc".  Then:
-
-	make trylid
-	trylid
-
-At the time of writing Trylon/C is about 4 times as fast as Trylid/Jolt.  Possible (speculative) explanations include:
-
-	- Extreme late binding could be costly.
-	- Inefficiencies in Jolt's codegen (but I doubt it).
-	- Inefficiencies in Trylid's codegen (it's happened before).
-		- Access to self's fields is through a send.
-
-
-Timing it
-=========
-
-To see compilation times, create a file named "build-settings.local" and put this in it:
-
-	time-compilation = true
-
-
-Command Line
-============
-
-	jolt command-line.k
-
-Then type Trylid expressions at it.  You can assign to new variables.  "readline" is in effect.
-
-Some things to try:
-
-	Compiler compile      # Does the self-compile.
-	load: "tests/Test"    # Loads the file as a proto named "Test".
-	Test name
-	Pepsi CompilerOptions verboseExec = true
-
-
-Full Bootstrap
-==============
-
-Install Trylon (see http://somefancy.com/trylon).  Then:
-
-	trylon
-	trylid
-	jolt start.k
-	jolt start-self.k
-	jolt start-self.k
-
-First it compiles Trylon code (in "sources") into C and compiles the C to create the "trylid" program.  Then that compiles Trylid/Trylon code into Jolt, in the ".jolt-sources" directory.  Running that code compiles the Trylid/Trylon source into Jolt again, in the ".jolt-sources-self" directory.  Then that code is run, reproducing itself; and again to make sure.  But normally ".jolt-sources" and ".jolt-sources-self" are (essentially) identical.
+How to use it?  Depends how you got it.  If as a tarball, I think you can type
+"make" to build the compiler, and then "trylon" to try self-compiling.  If you
+got it from Git, you'll need a Trylon compiler already built (the Trylon 1
+compiler is fine); see <http://somefancy.com/trylon>.
 
 
