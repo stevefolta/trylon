@@ -32,6 +32,15 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 }
 
 
+obj_ RespondsTo_(obj_ object, selector_ selector)
+{
+	struct RDTableEntry_* entry =
+		&dispatchTable_[selector + ClassNumFor_(object)];
+
+	return Bool_(entry->selector == selector);
+}
+
+
 obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
 {
 	obj_ object = (obj_) GC_MALLOC(sizeof(classref_) + classInfo->size);

@@ -32,7 +32,41 @@ extend Standard Object
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");
 		exit(1);
+
 	
+	iff support-perform
+		c-fn responds-to: selector
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return RespondsTo_(this_, symbol->selector);
+
+		c-fn perform: selector
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return (*Dispatch_(symbol->selector, this_))(this_);
+	
+		c-fn perform: selector with: arg-1
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return (*Dispatch_(symbol->selector, this_))(this_, arg_1);
+	
+		c-fn perform: selector with: arg-1 with: arg-2
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return (*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return (*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2, arg_3);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2, arg_3, arg_4);
+	
+
 	iff debugger
 		.gather-field-names-into: tuple
 			index = 0

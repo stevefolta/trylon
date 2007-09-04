@@ -8,6 +8,8 @@ fn == arg
 fn != arg
 	return object-ptr != arg object-ptr
 
+print-string
+	return "'" + this + "'"
 
 
 

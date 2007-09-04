@@ -1,0 +1,17 @@
+trylon perform-test
+
+main: args
+	selector = 'print-string'
+	print-line: (Object perform: selector)
+	test-responds-to: 'print-string'
+	test-responds-to: 'foo'
+
+test-responds-to: selector
+	print: "Object responds-to: "
+	print: selector print-string
+	print: " = "
+	if Object responds-to: selector
+		print-line: "true"
+	else
+		print-line: "false"
+
