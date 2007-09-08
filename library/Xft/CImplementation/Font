@@ -1,0 +1,72 @@
+trylon Font
+
+
+extend Xft Font
+	c-preamble
+		#include <X11/Xlib.h>
+		#include <X11/Xft/Xft.h>
+
+		UsingMethod_(display)
+		#define Preamble_ 	\
+			if (Field_(primitive_font) == nil) 	\
+				return nil; 	\
+			Display* xdisplay = 	\
+				(Display*) BytePtrValue_(Call_(primitive_display, Field_(display))); 	\
+			XftFont* xftFont = (XftFont*) BytePtrValue_(Field_(primitive_font));
+
+
+	c-fn create: name display: display
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, display));
+		UsingMethod_(display_co_)
+		UsingMethod_(ascent_co_) UsingMethod_(descent_co_)
+		UsingMethod_(line_height_co_)
+
+		XftFont* xftFont =
+			XftFontOpenName(xdisplay, DefaultScreen(xdisplay), MakeCString_(name));
+
+		Field_(display) = display;
+		Field_(primitive_font) = BuildBytePtr_(xftFont);
+
+		/* Get the metrics */
+		Field_(ascent) = BuildInt_(xftFont->ascent);
+		Field_(descent) = BuildInt_(xftFont->descent);
+		Field_(line_height) = BuildInt_(xftFont->height);
+
+		return nil;
+
+
+	c-fn close
+		Preamble_
+		XftFontClose(xdisplay, xftFont);
+		Fields_(primitive_font) = nil;
+
+
+	c-fn width-of: string
+		Preamble_
+		char* start = StringStart_(string);
+		XGlyphInfo glyphInfo;
+		XftTextExtents8(
+			xdisplay, xftFont,
+			(XftChar8*) start, StringStopper_(string) - start,
+			&glyphInfo);
+		return BuildInt_(glyphInfo.xOff);
+
+
+	c-fn width-of-utf8: string
+		Preamble_
+		char* start = StringStart_(string);
+		XGlyphInfo glyphInfo;
+		XftTextExtentsUtf8(
+			xdisplay, xftFont,
+			(XftChar8*) start, StringStopper_(string) - start,
+			&glyphInfo);
+		return BuildInt_(glyphInfo.xOff);
+
+
+
+# Copyright 2007 Steve Folta
+# See the License file.
+
+
+

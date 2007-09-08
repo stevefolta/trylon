@@ -1,0 +1,14 @@
+trylon Draw
+
+fields primitive-draw display
+
+
+create: display drawable: drawable
+close
+draw-string: string color: color font: font x: x y: y
+draw-string-utf8: string color: color font: font x: x y: y
+
+
+destroy
+	close
+
