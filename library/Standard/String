@@ -18,6 +18,8 @@ create: length
 
 length
 	return stopper - start
+size
+	return stopper - start
 is-empty
 	return stopper <= start
 
