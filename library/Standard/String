@@ -7,6 +7,9 @@ create: start to: stopper
 	this start = start
 	this stopper = stopper
 
+from: start to: stopper
+	return String new: start to: stopper
+
 create: start length: length
 	this start = start
 	this stopper = start + length
