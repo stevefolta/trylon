@@ -5,12 +5,14 @@ extend Xft Color
 		#include <X11/Xlib.h>
 		#include <X11/Xft/Xft.h>
 
+		UsingMethod_(primitive_display)
+
 
 	c-fn create: name display: display
 		Display* xdisplay =
 			(Display*) BytePtrValue_(Call_(primitive_display, display));
 		int screen = DefaultScreen(xdisplay);
-		char* nameStr = MakeCString_(name);
+		char* nameStr = CString_(name);
 		XftColor* xftColor = (XftColor*) Allocate_(sizeof(XftColor));
 
 		Field_(display) = display;
@@ -43,16 +45,16 @@ extend Xft Color
 
 
 	c-fn close
-		if (Field_(primitive_display) == nil)
+		if (Field_(primitive_color) == nil)
 			return nil;
 		Display* xdisplay =
 			(Display*) BytePtrValue_(Call_(primitive_display, Field_(display)));
 		int screen = DefaultScreen(xdisplay);
-		XftColor* xftColor = (XftColor*) BytePtrValue_(Field_(primitive_display));
+		XftColor* xftColor = (XftColor*) BytePtrValue_(Field_(primitive_color));
 		XftColorFree(
 			xdisplay, DefaultVisual(xdisplay, screen),
 			DefaultColormap(xdisplay, screen), xftColor);
-		Field_(primitive_display) = nil;
+		Field_(primitive_color) = nil;
 
 
 

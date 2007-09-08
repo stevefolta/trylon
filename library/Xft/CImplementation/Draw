@@ -12,6 +12,7 @@ extend Xft Draw
 			XftDraw* xftdraw = (XftDraw*) BytePtrValue_(Field_(primitive_draw));
 
 	c-fn create: display drawable: drawable
+		UsingMethod_(primitive_display)
 		Display* xdisplay =
 			(Display*) BytePtrValue_(Call_(primitive_display, display));
 		int screen = DefaultScreen(xdisplay);
@@ -42,7 +43,7 @@ extend Xft Draw
 		XftColor* primitive_color =
 			(XftColor*) BytePtrValue_(Call_(primitive_color, color));
 		XftFont* primitive_font =
-			(XftFont*) BytePtrValue_(Call_(primitive_font), font);
+			(XftFont*) BytePtrValue_(Call_(primitive_font, font));
 		XftDrawString8(
 			xftdraw, primitive_color, primitive_font,
 			IntValue_(x), IntValue_(y),
@@ -56,7 +57,7 @@ extend Xft Draw
 		XftColor* primitive_color =
 			(XftColor*) BytePtrValue_(Call_(primitive_color, color));
 		XftFont* primitive_font =
-			(XftFont*) BytePtrValue_(Call_(primitive_font), font);
+			(XftFont*) BytePtrValue_(Call_(primitive_font, font));
 		XftDrawStringUtf8(
 			xftdraw, primitive_color, primitive_font,
 			IntValue_(x), IntValue_(y),

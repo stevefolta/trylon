@@ -6,7 +6,7 @@ extend Xft Font
 		#include <X11/Xlib.h>
 		#include <X11/Xft/Xft.h>
 
-		UsingMethod_(display)
+		UsingMethod_(primitive_display)
 		#define Preamble_ 	\
 			if (Field_(primitive_font) == nil) 	\
 				return nil; 	\
@@ -20,7 +20,7 @@ extend Xft Font
 			(Display*) BytePtrValue_(Call_(primitive_display, display));
 
 		XftFont* xftFont =
-			XftFontOpenName(xdisplay, DefaultScreen(xdisplay), MakeCString_(name));
+			XftFontOpenName(xdisplay, DefaultScreen(xdisplay), CString_(name));
 
 		Field_(display) = display;
 		Field_(primitive_font) = BuildBytePtr_(xftFont);
@@ -36,7 +36,7 @@ extend Xft Font
 	c-fn close
 		Preamble_
 		XftFontClose(xdisplay, xftFont);
-		Fields_(primitive_font) = nil;
+		Field_(primitive_font) = nil;
 
 
 	c-fn width-of: string
