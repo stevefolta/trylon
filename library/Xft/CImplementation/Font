@@ -18,9 +18,6 @@ extend Xft Font
 	c-fn create: name display: display
 		Display* xdisplay =
 			(Display*) BytePtrValue_(Call_(primitive_display, display));
-		UsingMethod_(display_co_)
-		UsingMethod_(ascent_co_) UsingMethod_(descent_co_)
-		UsingMethod_(line_height_co_)
 
 		XftFont* xftFont =
 			XftFontOpenName(xdisplay, DefaultScreen(xdisplay), MakeCString_(name));
