@@ -28,6 +28,10 @@ extend Standard Symbol
 		result = Symbol new: name start to: name stopper
 		dynamic-table at: name put: result
 		return result
+	
+	intern
+		# Intern this Symbol.  It's a Symbol, therefore already interned.
+		return this
 
 
 class BuiltInSymbols
