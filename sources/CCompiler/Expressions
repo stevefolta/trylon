@@ -243,9 +243,9 @@ extend Compiler DictLiteral
 		return results
 	
 	emit-declaration: stream
-		root = results emit-declaration-on: stream
+		results emit-declaration-on: stream
 		stream write-all: 	--
-			("DefineDict_(", index string, ", ", root access, ", ", 	--
+			("DefineDict_(", index string, ", ", results access, ", ", 	--
 			 dict num-items string, ")\n")
 	
 	access
