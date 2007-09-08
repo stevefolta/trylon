@@ -94,6 +94,14 @@ c-fn red: red green: green blue: blue alpha: alpha
 	cairo_set_source_rgba(
 		cairo, DoubleVal(red), DoubleVal(green), DoubleVal(blue), DoubleVal(alpha));
 
+c-fn line-width: width
+	Preamble_
+	cairo_set_line_width(cairo, DoubleVal(width));
+
+c-fn line-width
+	Preamble_
+	return BuildFloat_(cairo_get_line_width(cairo));
+
 c-fn fill
 	Preamble_
 	cairo_fill(cairo);
