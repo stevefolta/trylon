@@ -42,10 +42,13 @@ parse-line: line
 
 
 parse-function
-	parse-function: nil
-
+	return parse-function: nil is-primitive: false
 
 parse-function: initial-name
+	return parse-function: initial-name is-primitive: false
+
+
+parse-function: initial-name is-primitive: is-primitive
 	# Get the name.
 	# We're allowing any name; we want to allow unops and binops and string 
 	# literals as well as names.  Ideally we should reject other names, but 
@@ -106,15 +109,20 @@ parse-function: initial-name
 	report: "Parsing " + name + "..."
 
 	# Parse the body.
-	method-context = MethodContext new: arguments parent: context
-	parser = TrylidCodeParser new: line block in: method-context
-	body = parser parse
+	body = nil
+	method-context = nil
+	if is-primitive
+		body = line block
+	else
+		method-context = MethodContext new: arguments parent: context
+		parser = TrylidCodeParser new: line block in: method-context
+		body = parser parse
 	
 	# Build the function and return it.
 	new-function = 	--
 		CompiledFunction new: name arguments: arguments 	--
 			return-type: return-type --
-			on-proto: context body: body
+			on-proto: context body: body is-primitive: is-primitive
 	new-function method-context = method-context
 	method-context function = new-function
 	return new-function
@@ -137,7 +145,7 @@ parse-type-spec
 
 	# Make sure we got a proto.
 	okay = type is-a: CompiledProto
-	iff in-trylid
+	iff in-jolt
 		if !okay
 			okay = type is-a: ExistingProto
 	if !okay
