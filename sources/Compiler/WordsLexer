@@ -23,13 +23,20 @@ current
 	return cached-word
 
 peek
-	current
+	return current
 
 is-empty
 	return (current == nil)
 
 remainder
 	return String from: p to: stopper
+
+require-eol
+	if is-empty
+		return nil
+	if current == "#"
+		return remainder
+	throw ParseException new: "Extra stuff at end of line." token: current
 
 
 class-fn parse-char-escape-from: start to: stopper
@@ -78,8 +85,13 @@ parse-next-word
 	word-start = p
 
 	# Is it a paren/bracket/brace/comma/minus?
-	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}` || 	--
-	   c == `,` || c == `!` || c == `-`
+	if c == `!`
+		p += 1
+		if p < stopper && p deref-char == `=`
+			p += 1
+		return String from: word-start to: p
+	else if c == `(` || c == `)` || c == `[` || c == `]` || 	--
+	        c == `{` || c == `}` || c == `,` || c == `!` || c == `-`
 		p += 1
 		return String from: word-start to: p
 	

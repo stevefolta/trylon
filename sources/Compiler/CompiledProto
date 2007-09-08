@@ -44,8 +44,9 @@ lookup-function: name visited-protos: visited-protos
 		# A file?
 		if (directory contains: name) && !(directory entry-is-directory: name)
 			proto = add-proto: name
-			parser = Parser new: (directory at: name) contents context: this
-			parser parse-proto-file: proto
+			lines = (LinesLexer new: (directory at: name) contents) lex
+			parser = TrylidProtoParser new: lines into: proto context: this
+			parser parse
 			return functions at: name
 
 		# A directory?
@@ -193,8 +194,9 @@ add-directory: directory
 	directories append: directory
 
 	if directory contains: "main"
-		parser = Parser new: (directory at: "main") contents context: this
-		parser parse-proto-file: this
+		lines = (LinesLexer new: (directory at: "main") contents) lex
+		parser = TrylidProtoParser new: lines into: this context: this
+		parser parse
 
 
 setup-main: main-directory library-directory: library-directory
@@ -249,8 +251,9 @@ setup-main: main-directory library-directory: library-directory
 	# Load our "main"s
 	for directory in directories
 		if directory contains: "main"
-			parser = Parser new: (directory at: "main") contents context: this
-			parser parse-proto-file: this
+			lines = (LinesLexer new: (directory at: "main") contents) lex
+			parser = TrylidProtoParser new: lines into: this context: this
+			parser parse
 	
 	# Load up standard protos.
 	std-protos = ("BytePtr", "Int", "String", "Float", "Symbol", "Tuple", "List")
