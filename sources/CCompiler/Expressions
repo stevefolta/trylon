@@ -228,19 +228,19 @@ extend Compiler DictLiteral
 			return "DictNode_(" + dict index string + ", " + node-index string + ")"
 	
 	build-results: node builder: builder
-		results = ResultsNode new: next-node-index in: this
+		node-results = ResultsNode new: next-node-index in: this
 		next-node-index += 1
 		if node left
-			results left = build-results: node left builder: builder
+			node-results left = build-results: node left builder: builder
 		if node right
-			results right = build-results: node right builder: builder
+			node-results right = build-results: node right builder: builder
 		# Keys and values are constants which will not be allowed to emit code, so
 		# we can call emit-code: on them without fear that they'll actually emit
 		# code.  The side-effect is that they set up the builder to declare them.
-		results key = (StringLiteral new: node key) emit-code: builder
-		results value = node value emit-code: builder
-		results level = node level
-		return results
+		node-results key = (StringLiteral new: node key) emit-code: builder
+		node-results value = node value emit-code: builder
+		node-results level = node level
+		return node-results
 	
 	emit-declaration: stream
 		results emit-declaration-on: stream

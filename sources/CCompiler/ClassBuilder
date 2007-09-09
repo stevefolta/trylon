@@ -161,6 +161,9 @@ report-run-program: program arguments: args
 
 ##### Support for literals in shared variables.
 
+supports-only-literals
+	return true
+
 using-proto: proto
 	# ...
 
