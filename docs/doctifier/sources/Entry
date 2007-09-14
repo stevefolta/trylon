@@ -1,0 +1,40 @@
+trylon-class Entry
+
+fields date title paragraphs
+
+
+fn create
+	date = nil
+	title = nil
+	paragraphs = List new
+
+
+fn add-paragraph: paragraph
+	paragraphs append: paragraph
+
+
+fn check-validity
+	if date == nil
+		if title == nil
+			title = "(none)"
+		message = "An entry is missing its date!  (" + title + ")"
+		throw MessageException new: message
+
+
+fn emit
+	print-line: "<div class=\"entry\">"
+	if title
+		print-line: "<div class=\"entry-title\"> " + title + " </div>"
+		print-line: "<div class=\"entry-date\"> " + date + " </div>"
+	else
+		print-line: "<div class=\"titleless-entry-date\"> " + date + " </div>"
+	for paragraph in paragraphs
+		paragraph emit
+	print-line: "</div>"
+	print-line
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

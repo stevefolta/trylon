@@ -1,0 +1,54 @@
+trylon-class Code
+superclass Paragraph
+
+field blank-lines
+
+
+fn create
+	super create
+	blank-lines = 0
+
+
+fn add-line: line
+	# If there are any accumulated blank lines, add them in.
+	# We treat blank lines this way in order to get rid of any blank lines 
+	# at the end of the code block.
+	while blank-lines > 0
+		lines append: ""
+		blank-lines -= 1
+	# Trim off the initial `\t`.
+	lines append: (line substr: 1)
+
+
+fn add-blank-line
+	blank-lines += 1
+
+
+fn emit
+	print: "<div class=\"code\">"
+	
+	had-line = false
+	for line in lines
+		if had-line
+			print-line
+		else
+			had-line = true
+		
+		# Write out the line, character-by-character, turning tabs into two spaces.
+		for char in line characters
+			if char == `\t`
+				print: "  "
+			else
+				iff trylon-2
+					print: char char-string
+				iff !trylon-2
+					print: char
+	
+	print-line: "</div>"
+	print-line
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
