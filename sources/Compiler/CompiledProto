@@ -3,6 +3,7 @@ superclass Context
 
 fields name parent functions fields shared-fields superclass directories
 fields uses-protos subclasses
+fields source-name 	# The name given in the "trylon" line.
 fields is-main is-root-object
 
 
