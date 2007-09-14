@@ -1,4 +1,4 @@
-Title: The Structure of Trylid Code
+Title: The Structure of Trylon Code
 
 =====
 
@@ -15,7 +15,7 @@ The following characters are not allowed in names:
 
 Lines and Blocks
 
-Like Python, Trylid code is organized by lines and indented blocks.  An indented block is "owned" by the line above it; in a way, it can be thought of as being a part of that line.
+Like Python, Trylon code is organized by lines and indented blocks.  An indented block is "owned" by the line above it; in a way, it can be thought of as being a part of that line.
 
 If a line is too long to fit on the screen, it can be continued with "--" at the end of the line.  Then the following line (minus its indentation, which is ignored) will be considered part of that line.
 
@@ -54,7 +54,7 @@ Similarly, the syntax of a block is usually determined by its owning line, but t
 
 The Two Syntaxes
 
-Trylid has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other elements of a prototype:
+Trylon has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other elements of a prototype:
 
 	superclass SuperProto
 	fields name collection

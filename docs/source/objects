@@ -4,7 +4,7 @@ Title: Objects
 
 Functions, Fields, and Shared Fields
 
-An object may have functions and fields, just like any normal Fonc object.  But fields defined in Trylid always have getter and setter functions defined; that is, they are "public".
+An object may have functions and fields, just like any normal Fonc object.  But fields defined in Trylon always have getter and setter functions defined; that is, they are "public".
 
 There is also such a thing as a "shared field", whose value is shared by the prototype and all its clones, much like a "class variable" in class-oriented object-oriented systems.
 
@@ -25,7 +25,7 @@ There is also such a thing as a "shared field", whose value is shared by the pro
 
 Prototypes Act as Classes and as Namespaces
 
-In a prototype-based system like Fonc, objects act as both instances and as classes.  In Trylid, they also can act as namespaces (a.k.a. packages).  One prototype may be "contained" in another (as a shared field); functions in the child prototype have access to functions in the parent prototype.
+In a prototype-based system like Fonc, objects act as both instances and as classes.  In Trylon, they also can act as namespaces (a.k.a. packages).  One prototype may be "contained" in another (as a shared field); functions in the child prototype have access to functions in the parent prototype.
 
 	proto WindowSystem
 		proto Event
@@ -37,6 +37,8 @@ In a prototype-based system like Fonc, objects act as both instances and as clas
 				# Notice that it knows the name "Event":
 				return Event new: get-raw-event
 
-There is a top-level namespace called "Trylid", which acts as a global namespace for all Trylid objects.  There is a namespace called "Standard" which contains some common classes.  [Currently, in "Standard", there is a prototype called "Object", from which all Trylid prototypes descend.  In the future, the main Fonc "Object" prototype may be used instead, but it still will likely appear in "Standard", not "Trylid".]  You can access the members of "Standard" without having to specify it explicitly.  A namespace called "Pepsi" (actually "Standard Pepsi") allows access to Pepsi's namespace.  And a namespace called "Posix" contains some prototypes that access types from the Posix C API.
+There is a top-level namespace called "Main", which acts as a global namespace for all Trylon objects.  There is a namespace called "Standard" which contains some common classes.  One of these is "Object", from which all prototypes descend.  You can access the members of "Standard" without having to specify it explicitly.
+
+If you're using the Fonc/Jolt/Id backend, there are a few differences from the above.  The main namespace is called "Trylon" instead of "Main".  Also, a namespace called "Pepsi" (actually "Standard Pepsi") allows access to Pepsi's namespace.  And a namespace called "Posix" contains some prototypes that access types from the Posix C API.
 
 

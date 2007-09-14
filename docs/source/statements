@@ -70,7 +70,7 @@ An expression on a line by itself also constitutes a statement:
 
 Assignment
 
-Assignment in Trylid is designed to be easy to read (and type), but the rules behind it can be a little complex.
+Assignment in Trylon is designed to be easy to read (and type), but the rules behind it can be a little complex.
 
 	proto MyObject
 		fields total
