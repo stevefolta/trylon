@@ -1,5 +1,5 @@
 PAGES := 	\
-	objects code-structure expressions statements
+	objects code-structure expressions statements building
 
 VPATH = source
 

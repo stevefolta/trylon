@@ -1,0 +1,224 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+
+<title> 
+Building Trylon Programs
+</title>
+
+<style type="text/css">
+body {
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+	margin-left: auto;
+	margin-right: auto;
+	width: 7in;
+	font-family: Bitstream Charter, Lucida Grande, Georgia, Times, serif;
+}
+
+h2 {
+	margin-top: 1.25em;
+	margin-bottom: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	font-size: 1.4em;
+}
+
+p {
+}
+
+div.entry {
+	border-bottom: solid 1px #cccccc;
+	margin-bottom: 1.75em;
+	padding-bottom: 1em;
+}
+
+div.entry-title {
+	margin-top: 1.25em;
+	font-family: Arial, Helvetical, sans-serif;
+	font-weight: bolder;
+	font-size: 1.025em;
+}
+
+div.entry-date {
+	margin-bottom: 1.05em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.titleless-entry-date {
+	margin-bottom: 0.5em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.code {
+	margin-bottom: 1em;
+	font-family: Courier, monospace;
+	font-size: smaller;
+	margin-left: 2em;
+	margin-right: 2em;
+	white-space: pre;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h2>
+Building Trylon Programs
+</h2>
+
+<div class="entry">
+<div class="entry-title"> Hello World </div>
+<p>
+Here is the "hello world" program in Trylon.  It can also be found in the "tests" directory of the distribution.  Here are the contents of the "main" file:
+</p>
+
+<div class="code">trylon hello-world
+
+main: args
+  print-line: "Hello world!"
+  return 0</div>
+
+<p>
+The "trylon" line is not necessary, but it may help your editor highlight syntax.  Anything after the word "trylon" on that line is usually ignored, but often the name of the class defined in the file is put there.  But we're looking at the one case where it makes a difference: in your main "main" file, the word after "trylon" is used as the name of the resulting binary, if it isn't specified elsewhere.
+</p>
+
+<p>
+The rest of the file declares a function named "main:".  The "main:" function is, as one might expect, the main function of the program.  Every Trylon program needs to have one.
+</p>
+
+<p>
+To build this program, make a directory for your program, and put the code into a file named "main" in that directory:
+</p>
+
+<div class="code">hello-world/
+  main</div>
+
+<p>
+Go into that directory and type "trylon".  The code will be compiled into a program that's ready to run:
+</p>
+
+<div class="code">hello-world/
+  hello-world
+  main</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Larger Programs </div>
+<p>
+If you have more than one class in your program, you'll normally want each class to have its own file.  These can go directly in your program's directory:
+</p>
+
+<div class="code">my-program/
+  main
+  CodeView
+  HTMLView
+  Window</div>
+
+<p>
+But you can keep your top-level directory cleaner by putting your code into a "sources" directory:
+</p>
+
+<div class="code">my-program/
+  my-program
+  sources/
+    main
+    CodeView
+    HTMLView
+    Window
+  ReadMe</div>
+
+<p>
+A more complex example, showing how some classes are used as namespaces containing other classes:
+</p>
+
+<div class="code">my-program/
+  my-program
+  sources/
+    main
+    CodeView/
+      main
+      Line
+    HTMLView/
+      main
+      Document
+      Element
+      Node
+      Text</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Build Settings </div>
+<p>
+Your program's directory may also contain a "build-settings" file.  Here's an example:
+</p>
+
+<div class="code"># The program name.  (This overrides what the "trylon"
+# line in "main" says.)
+program = "my-program"
+
+# If you ever need to debug your program in GDB, this will
+# add some helpful things, like showObj_().
+debugger = true
+
+# As of this writing, this is needed if you want to use
+# "perform:".  In the future, this will likely be on by
+# default, and you'd turn it off if you don't need to send
+# 'perform:' and want your program to be as small as
+# possible.
+support-perform = true
+
+# A little optimization can be nice.  Note the "+=", which
+# is supported by the "c-flags" and "link-flags" settings.
+c-flags += "-O1"
+
+# One of the more common uses for the "build-settings"
+# file is to give the location of C libraries that are
+# used.
+c-flags += "-I/usr/include/cairo"
+link-flags += "-lcairo"
+
+# Don't like the way the C sources are hidden from sight
+# in the ".c-sources" directory?  Change where they're
+# put.
+c-sources-dir = "C-sources"
+# "objects-dir" and "jolt-sources-dir" can be similarly
+# specified.
+
+# You can also define your own settings.  These can be
+# used by "iff" (conditional compilation) statements in
+# the code, or they can be used in "if" statements here in
+# the build-settings file.
+use-tcc = true
+if use-tcc
+  c-compiler = "tcc"
+  linker = "tcc"</div>
+
+<p>
+The settings can also be modified by a "build-settings.local" file.  "build-settings" would be distributed with the program (checked into the Git repository, included in the tarball, etc.), but "build-settings.local" would allow local (possibly temporary) changes like enabling debugging.
+</p>
+
+<div class="code">my-program/
+  .gitignore   # Includes "build-settings.local" and "my-program".
+  build-settings
+  build-settings.local
+  my-program   # The built binary.
+  sources/
+    ...</div>
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+Title: Building Trylon Programs
+
+=====
+
+Hello World
+
+Here is the "hello world" program in Trylon.  It can also be found in the "tests" directory of the distribution.  Here are the contents of the "main" file:
+
+	trylon hello-world
+	
+	main: args
+		print-line: "Hello world!"
+		return 0
+
+The "trylon" line is not necessary, but it may help your editor highlight syntax.  Anything after the word "trylon" on that line is usually ignored, but often the name of the class defined in the file is put there.  But we're looking at the one case where it makes a difference: in your main "main" file, the word after "trylon" is used as the name of the resulting binary, if it isn't specified elsewhere.
+
+The rest of the file declares a function named "main:".  The "main:" function is, as one might expect, the main function of the program.  Every Trylon program needs to have one.
+
+To build this program, make a directory for your program, and put the code into a file named "main" in that directory:
+
+	hello-world/
+		main
+
+Go into that directory and type "trylon".  The code will be compiled into a program that's ready to run:
+
+	hello-world/
+		hello-world
+		main
+
+
+=====
+
+Larger Programs
+
+If you have more than one class in your program, you'll normally want each class to have its own file.  These can go directly in your program's directory:
+
+	my-program/
+		main
+		CodeView
+		HTMLView
+		Window
+
+But you can keep your top-level directory cleaner by putting your code into a "sources" directory:
+
+	my-program/
+		my-program
+		sources/
+			main
+			CodeView
+			HTMLView
+			Window
+		ReadMe
+
+A more complex example, showing how some classes are used as namespaces containing other classes:
+
+	my-program/
+		my-program
+		sources/
+			main
+			CodeView/
+				main
+				Line
+			HTMLView/
+				main
+				Document
+				Element
+				Node
+				Text
+
+=====
+
+Build Settings
+
+Your program's directory may also contain a "build-settings" file.  Here's an example:
+
+	# The program name.  (This overrides what the "trylon"
+	# line in "main" says.)
+	program = "my-program"
+
+	# If you ever need to debug your program in GDB, this will
+	# add some helpful things, like showObj_().
+	debugger = true
+
+	# As of this writing, this is needed if you want to use
+	# "perform:".  In the future, this will likely be on by
+	# default, and you'd turn it off if you don't need to send
+	# 'perform:' and want your program to be as small as
+	# possible.
+	support-perform = true
+
+	# A little optimization can be nice.  Note the "+=", which
+	# is supported by the "c-flags" and "link-flags" settings.
+	c-flags += "-O1"
+
+	# One of the more common uses for the "build-settings"
+	# file is to give the location of C libraries that are
+	# used.
+	c-flags += "-I/usr/include/cairo"
+	link-flags += "-lcairo"
+
+	# Don't like the way the C sources are hidden from sight
+	# in the ".c-sources" directory?  Change where they're
+	# put.
+	c-sources-dir = "C-sources"
+	# "objects-dir" and "jolt-sources-dir" can be similarly
+	# specified.
+
+	# You can also define your own settings.  These can be
+	# used by "iff" (conditional compilation) statements in
+	# the code, or they can be used in "if" statements here in
+	# the build-settings file.
+	use-tcc = true
+	if use-tcc
+		c-compiler = "tcc"
+		linker = "tcc"
+
+The settings can also be modified by a "build-settings.local" file.  "build-settings" would be distributed with the program (checked into the Git repository, included in the tarball, etc.), but "build-settings.local" would allow local (possibly temporary) changes like enabling debugging.
+
+	my-program/
+		.gitignore 	# Includes "build-settings.local" and "my-program".
+		build-settings
+		build-settings.local
+		my-program 	# The built binary.
+		sources/
+			...
+
+
