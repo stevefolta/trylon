@@ -85,7 +85,7 @@ Assignment in Trylon is designed to be easy to read (and type), but the rules be
 			total = total + massaged-value 	# Sets the object's "total" field.
 			grand-total = grand-total + massaged-value 	# Sets the shared variable.
 
-The basic idea is that an assignment will assign to a variable in the current scope, and if no such variable exists, a new local variable will be created.
+The basic idea is that an assignment will assign to a variable in the current scope, and if no such variable exists, a new local variable will be created.  The scope of the new local is the block in which it is assigned.
 
 Assignment can also be a shorthand for a function call:
 
@@ -110,5 +110,36 @@ If the function being set is a unary function, rather than a keyword function, t
 (Indeed, the compiler treats *all* assignments this way, even those to local variables.  So "foo = bar" can always be written as "foo: bar".)
 
 Assignments are expressions, so you can do things like "x = y = 0".
+
+
+======
+
+Conditional Compilation ("iff" Statements)
+
+The "iff" statement is used for conditional compilation:
+
+	iff debug
+		print-line: "Reached a certain point."
+
+In this case, "debug" is not an expression, but the name of a symbol.  If that symbol is defined in the build-settings, the block will be compiled.  If not (or if it's set to "false"), the block will be completely ignored by the compiler.
+
+You can't use an "else" block with an "iff" statement (not yet, anyway), but you can put a "!" before the symbol to reverse the sense of the test.
+
+	version = "1.0 "
+	iff development
+		version += "development"
+	iff !development
+		version += "release"
+
+A few symbols are defined automatically in the build-settings.  Most notably, the "sysname" (what you'd see if you typed "uname" at the shell) is defined.
+
+	display = nil
+	iff Linux
+		display = XlibDisplay new
+	iff Darwin
+		# Mac OSX calls itself Darwin, for the purposes of "uname".
+		display = CarbonDisplay new
+
+Also defined are "trylon-2" (to distinguish from Trylon 1), "targeting-c" or "targeting-jolt", depending on which backend you're using, and "in-jolt" if the compiler itself is actually running within Jolt.
 
 
