@@ -359,9 +359,7 @@ check-iff
 	require-eol
 
 	# If it doesn't exist, skip the block.
-	test-succeeded = 	--
-		((context lookup-function: name) != nil) || 	--
-		(build-settings has-symbol: name)
+	test-succeeded = build-settings has-symbol: name
 	if invert-sense
 		test-succeeded = !test-succeeded
 	if !test-succeeded
