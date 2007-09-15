@@ -200,6 +200,8 @@ parse-boolean: lexer name: declaration
 	on = (name == "true" || name == "on")
 	if on
 		(dictionary at: declaration) = declaration
+	else
+		dictionary remove: declaration
 	return on
 
 
