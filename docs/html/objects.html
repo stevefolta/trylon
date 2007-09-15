@@ -1,0 +1,205 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+
+<title> 
+Objects
+</title>
+
+<style type="text/css">
+body {
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+	margin-left: auto;
+	margin-right: auto;
+	width: 7in;
+	font-family: Bitstream Charter, Lucida Grande, Georgia, Times, serif;
+}
+
+h2 {
+	margin-top: 1.25em;
+	margin-bottom: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	font-size: 1.4em;
+}
+
+p {
+}
+
+div.entry {
+	border-bottom: solid 1px #cccccc;
+	margin-bottom: 1.75em;
+	padding-bottom: 1em;
+}
+
+div.entry-title {
+	margin-top: 1.25em;
+	font-family: Arial, Helvetical, sans-serif;
+	font-weight: bolder;
+	font-size: 1.025em;
+}
+
+div.entry-date {
+	margin-bottom: 1.05em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.titleless-entry-date {
+	margin-bottom: 0.5em;
+	font-style: italic;
+	font-size: x-small;
+	color: gray;
+}
+
+div.code {
+	margin-bottom: 1em;
+	font-family: Courier, monospace;
+	font-size: smaller;
+	margin-left: 2em;
+	margin-right: 2em;
+	white-space: pre;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h2>
+Objects
+</h2>
+
+<div class="entry">
+<div class="entry-title"> Classes and Prototypes </div>
+<p>
+A "class" specifies the structure and behavior of a set of objects, known as its "instances".  Each class has a special instance associated with it, known as its "prototype".  Giving the name of the class in an expression specifies the class's prototype object.
+</p>
+
+<p>
+This means that, although the terminology of "classes" and "instances" is used, Trylon 2 acts like a prototype-based system, in that there is no special class object for each class, and no distinction between "class" and "instance" functions, or "class" and "instance" fields.  If you prefer to think in terms of "prototypes", then just think of the term "class" as a synonym for "clone family".
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Functions, Fields, and Shared Fields </div>
+<p>
+An object may have functions and fields.  Fields defined in Trylon always have getter and setter functions defined; that is, they are "public".
+</p>
+
+<p>
+There is also such a thing as a "shared field", whose value is shared by all instances of a class, much like a "static member variable" in C++, or a "class variable" in Smalltalk.
+</p>
+
+<div class="code">class MyClass
+  field my-field
+
+  my-shared-field = 'foo'   # A shared field.
+
+  create: value
+    # Each instance has a separate value for "my-field".
+    my-field = value
+
+  bar
+    return my-shared-field + " " + value string</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Classes Act As Namespaces </div>
+<p>
+In Trylon, classes also can act as namespaces (a.k.a. packages).  One class may be "contained" in another (as a shared field); functions in the child class have access to functions in the parent class.
+</p>
+
+<div class="code">class WindowSystem
+  class Event
+    create: raw-event
+      #...
+
+  class Window
+    next-event
+      # Notice that it knows the name "Event":
+      return Event new: get-raw-event</div>
+
+<p>
+There is a top-level namespace called "Main", which acts as a global namespace for all Trylon objects.  There is a namespace called "Standard" which contains some common classes.  One of these is "Object", from which all prototypes descend.  You can access the members of "Standard" without having to specify it explicitly.
+</p>
+
+<p>
+If you're using the Fonc/Jolt/Id backend, there are a few differences from the above.  The main namespace is called "Trylon" instead of "Main".  Also, a namespace called "Pepsi" (actually "Standard Pepsi") allows access to Pepsi's namespace.  And a namespace called "Posix" contains some prototypes that access types from the Posix C API.
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Creating Objects </div>
+<p>
+As in Smalltalk, one creates a new object by sending a message to a class.  Or rather, to an instance of the class, usually the class's prototype.  Consider this code for initializing an object:
+</p>
+
+<div class="code">class MyClass
+  fields c-name body
+
+  new: name
+    new-object = MyClass raw-new
+    new-object c-name = mangle-name: name
+    new-object body = List new
+    return new-object</div>
+
+<p>
+It seems to be natural to write an initialization function that is called on the new object itself, instead of doing everything by operating on the object from the "outside".  Such a function is much like a "constructor" in C++:
+</p>
+
+<div class="code">class MyClass
+  fields c-name body
+
+  create: name
+    c-name = mangle-name: name
+    body = List new
+
+  new: name
+    new-object = MyClass raw-new
+    new-object create: name
+    return new-object</div>
+
+<p>
+But it's annoying and pointless to keep writing pairs of functions like this, especially since the "new" functions all look about the same.  So in Trylon, anytime you define a function whose name begins with "create", the compiler will automatically generate the corresponding "new" function.  Here are some examples of "create" functions:
+</p>
+
+<div class="code">class MyPoint
+  fields x y
+
+  create
+    x = 0
+    y = 0
+
+  create: x y: y
+    this x = x
+    this y = y
+
+  create-x: x y: y
+    this x = y
+    this y = 0
+
+  create-x: x
+    this x = x
+    this y = 0
+
+test-point
+  point = MyPoint new
+  point = MyPoint new: 10 y: 20
+  point = MyPoint new-x: 10 y: 20
+  point = MyPoint new-x: 10</div>
+
+</div>
+
+
+
+</body>
+</html>

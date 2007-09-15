@@ -118,21 +118,7 @@ for item in collection
   print-line: item string</div>
 
 <p>
-Similarly, the syntax of a block is usually determined by its owning line, but the first word of a block may indicate that the block is in a different syntax:
-</p>
-
-<div class="code">print-line: string
-  coke
-  (send (quote print:) StdOut string)
-
-usage =
-  text
-  You may be wondering how to use this program.
-
-  ... and someday there'll be instructions here on how to do it.</div>
-
-<p>
-[*Not yet implemented*: See the "Implementation Quirks" section for an explanation of how the above two examples would currently be done.]
+The syntax of a block is usually determined by its owning line.
 </p>
 
 </div>
@@ -140,10 +126,10 @@ usage =
 <div class="entry">
 <div class="entry-title"> The Two Syntaxes </div>
 <p>
-Trylon has two block-level syntaxes.  One is the "prototype" syntax, defining methods and other elements of a prototype:
+Trylon has two block-level syntaxes.  One is the "class" syntax, defining methods and other elements of a class:
 </p>
 
-<div class="code">superclass SuperProto
+<div class="code">superclass SuperClass
 fields name collection
 
 help-text = "Help text goes here."   # A "shared field".
@@ -155,12 +141,12 @@ for-each: block
   for item in collection
     block value: item
 
-proto SubProto
-  # Another prototype in the "namespace" of the current proto.
+class SubProto
+  # Another class in the "namespace" of the current class.
   fields name value</div>
 
 <p>
-Lines in the "prototype" syntax are function declarations (with their associated code blocks), shared-field declarations (using "="), or special forms like "fields" or "proto".
+Lines in the "class" syntax are function declarations (with their associated code blocks), shared-field declarations (using "="), or special forms like "fields" or "class".
 </p>
 
 <p>
@@ -178,12 +164,16 @@ The other is the "method" syntax, for code within a method:
 Lines within the "method" syntax are either expressions, assignments (technically, assignments are also expressions, and if the name being assigned to doesn't exist in an outer scope, a local is auto-declared in the current block), and special forms like "if", "while", "for", etc.
 </p>
 
+<p>
+(Technically, there's a third syntax, for the cases in a "switch" statement.)
+</p>
+
 </div>
 
 <div class="entry">
-<div class="entry-title"> Prototypes in the Filesystem </div>
+<div class="entry-title"> Classes in the Filesystem </div>
 <p>
-Most prototypes will have a file in the filesystem with the source code to define it.  Since prototypes may also act as namespaces for other prototypes, a prototype may also be specified by a directory, with files (or directories) for its sub-prototypes and (optionally) a file called "main" with source code for defining methods, fields, etc.
+Most classes will have a file in the filesystem with the source code to define it.  Since classes may also act as namespaces for other classes, a class may also be specified by a directory, with files (or directories) for its sub-classes and (optionally) a file called "main" with source code for defining methods, fields, etc.
 </p>
 
 <p>
@@ -209,24 +199,24 @@ A typical project will live in a directory, with its sources in a subdirectory c
 Note that this could have all been defined within one file ("sources/main"), if that were more convenient:
 </p>
 
-<div class="code">trylid main
+<div class="code">trylon main
 
-proto Screen
+class Screen
   # ...
 
-proto Window
+class Window
   # ...
 
-proto XWindows
-  proto Screen
+class XWindows
+  class Screen
     # ...
-  proto Window
+  class Window
     # ...
 
-proto Carbon
-  proto Screen
+class Carbon
+  class Screen
     # ...
-  proto Window
+  class Window
     # ...</div>
 
 </div>
