@@ -1,0 +1,144 @@
+trylon Expressions
+
+
+##### Fundamentals ####
+
+extend Compiler TrylonExpression
+	interpreted
+		virtual
+	
+
+extend Compiler Send
+	interpreted
+		name = Symbol intern: name
+		num-args = arguments num-items
+		obj = object interpreted
+		args = Tuple new: num-args
+		index = 0
+		for arg in arguments
+			args at: index put: arg interpreted
+			index += 1
+		result = nil
+		switch num-args
+			0
+				result = object perform: name
+			1
+				result = object perform: name with: (args at: 0)
+			2
+				result = object perform: name with: (args at: 0) with: (args at: 1)
+			3
+				result = 	--
+					object 	--
+						perform: name --
+						with: (args at: 0) with: (args at: 1) with: (args at: 2)
+			4
+				result = 	--
+					object 	--
+						perform: name --
+						with: (args at: 0) with: (args at: 1) 	--
+						with: (args at: 2) with: (args at: 3)
+		return result
+
+
+extend Compiler FunctionCall
+	interpreted
+		# ...
+
+
+extend Compiler SuperCall
+	interpreted
+		# ...
+
+
+
+##### Literals #####
+
+extend Compiler IntLiteral
+	interpreted
+		return value
+	
+
+extend Compiler FloatLiteral
+	interpreted
+		return value
+	
+
+extend Compiler StringLiteral
+	interpreted
+		return value
+
+
+extend Compiler SymbolLiteral
+	interpreted
+		return Symbol intern: name
+
+
+extend Compiler LiteralNil
+	interpreted
+		return nil
+
+
+extend Compiler BoolLiteral
+	interpreted
+		return value
+
+
+extend Compiler CharacterLiteral
+	interpreted
+		return char
+	
+
+extend Compiler DictLiteral
+	interpreted
+		result = Dictionary new
+		for entry in dict pairs
+			result at: entry name put: entry value interpreted
+		return result
+	
+
+##### Short-circuits #####
+
+extend Compiler ShortCircuitAnd
+	interpreted
+		result = expr1 interpreted
+		if result
+			result = expr2 interpreted
+		return result
+
+
+extend Compiler ShortCircuitOr
+	interpreted
+		result = expr1 interpreted
+		if !result
+			result = expr2 interpreted
+		return result
+
+
+extend Compiler ShortCircuitNot
+	interpreted
+		return !(expr interpreted)
+
+
+extend Compiler NilTest
+	interpreted
+		result = (object interpreted == nil)
+		if is-nil
+			result = !result
+		return result
+
+
+
+##### Tuples #####
+
+extend Compiler TupleExpression
+	interpreted
+		size = members num-items
+		tuple = Tuple new: size
+		index = 0
+		for member in members
+			tuple at: index put: member interpreted
+			index += 1
+		return tuple
+
+
+
