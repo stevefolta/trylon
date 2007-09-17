@@ -45,7 +45,7 @@ extend Compiler TrylonFunction
 	
 
 
-##### Object structure
+# Object structure.
 
 extend Compiler FieldGetter
 	emit-c-call: arguments builder: builder
@@ -273,7 +273,7 @@ extend Compiler PrimitiveFunction
 
 
 
-##### Inside a method
+# Inside a method.
 
 extend Compiler ThisFunction
 	emit-c-call: arguments builder: builder
