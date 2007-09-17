@@ -51,8 +51,8 @@ extend Compiler FieldGetter
 	emit-c-call: arguments builder: builder
 		# Don't be confused!  (I was!)  This is not a class's method accessing its
 		# own field.  It will only be used when a method accesses a field of an
-		# enclosing namespace.  That means accessing the the field of the
-		# namespace's prototype.
+		# enclosing namespace.  That means accessing the field of the namespace's
+		# prototype.
 		builder using-class: on-proto
 		proto-access = "Proto_(" + on-proto c-name + ")"
 		return 	--

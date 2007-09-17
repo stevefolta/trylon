@@ -42,7 +42,11 @@ extend Compiler Send
 
 extend Compiler FunctionCall
 	interpreted
-		# ...
+		# We already got the function in prepare-to-emit.
+		if function == nil
+			throw MessageException new: "There is no \"" + name + "\" function."
+		
+		return function interpret-call-with: arguments
 
 
 extend Compiler SuperCall
