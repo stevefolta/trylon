@@ -1,0 +1,6 @@
+trylon hello-world
+
+main: arguments
+	print-line: "Hello world!"
+	return 0
+

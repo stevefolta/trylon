@@ -1,0 +1,23 @@
+trylon Font
+
+fields primitive-font display ascent descent line-height
+
+
+create: name display: display
+close
+width-of: string
+width-of-utf8: string
+
+
+destroy
+	close
+
+iff debugger
+	debug-write
+		print-line: class name
+
+
+# Copyright 2007 Steve Folta
+# See the License file.
+
+

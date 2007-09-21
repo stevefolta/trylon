@@ -1,0 +1,63 @@
+trylon Color
+
+extend Xft Color
+	c-preamble
+		#include <X11/Xlib.h>
+		#include <X11/Xft/Xft.h>
+
+		UsingMethod_(primitive_display)
+
+
+	c-fn create: name display: display
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, display));
+		int screen = DefaultScreen(xdisplay);
+		char* nameStr = CString_(name);
+		XftColor* xftColor = (XftColor*) Allocate_(sizeof(XftColor));
+
+		Field_(display) = display;
+		Field_(primitive_color) = BuildBytePtr_(xftColor);
+		XftColorAllocName(
+			xdisplay, DefaultVisual(xdisplay, screen),
+			DefaultColormap(xdisplay, screen), nameStr,
+			xftColor);
+		return nil;
+
+
+	c-fn create: red green: green blue: blue alpha: alpha display: display
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, display));
+		int screen = DefaultScreen(xdisplay);
+		XftColor* xftColor = (XftColor*) Allocate_(sizeof(XftColor));
+		XRenderColor color;
+
+		Field_(display) = display;
+		Field_(primitive_color) = BuildBytePtr_(xftColor);
+		color.red = IntValue_(red);
+		color.green = IntValue_(green);
+		color.blue = IntValue_(blue);
+		color.alpha = IntValue_(alpha);
+		XftColorAllocValue(
+			xdisplay, DefaultVisual(xdisplay, screen),
+			DefaultColormap(xdisplay, screen), &color,
+			xftColor);
+		return nil;
+
+
+	c-fn close
+		if (Field_(primitive_color) == nil)
+			return nil;
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, Field_(display)));
+		int screen = DefaultScreen(xdisplay);
+		XftColor* xftColor = (XftColor*) BytePtrValue_(Field_(primitive_color));
+		XftColorFree(
+			xdisplay, DefaultVisual(xdisplay, screen),
+			DefaultColormap(xdisplay, screen), xftColor);
+		Field_(primitive_color) = nil;
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

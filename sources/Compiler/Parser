@@ -295,8 +295,12 @@ parse-proto-contents: the-proto
 					consume-token
 
 		else if name == "trylon" || name == "trylon-class" || name == "trylid"
-			# Should be followed by the name; maybe we should check that, but
-			# for now we're just ignoring the rest of the line.
+			consume-token
+			# Likely followed by the name; grab that if possible.
+			if current-token == 'name'
+				the-proto source-name = current-token text
+				consume-token
+			# Ignore the rest of the line.
 			while current-token != 'eol'
 				consume-token
 			consume-token
@@ -355,9 +359,7 @@ check-iff
 	require-eol
 
 	# If it doesn't exist, skip the block.
-	test-succeeded = 	--
-		((context lookup-function: name) != nil) || 	--
-		(build-settings has-symbol: name)
+	test-succeeded = build-settings has-symbol: name
 	if invert-sense
 		test-succeeded = !test-succeeded
 	if !test-succeeded

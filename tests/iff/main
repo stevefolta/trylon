@@ -1,0 +1,11 @@
+trylon iff-test
+
+
+main: arguments
+	iff true-setting
+		print-line: "\"true-setting\" is true."
+	iff false-setting
+		print-line: "\"false-setting\" is true."
+	iff undefined-setting
+		print-line: "Error: \"undefined-setting\" is true."
+

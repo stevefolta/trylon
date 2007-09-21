@@ -76,22 +76,34 @@ Objects
 </h2>
 
 <div class="entry">
+<div class="entry-title"> Classes and Prototypes </div>
+<p>
+A "class" specifies the structure and behavior of a set of objects, known as its "instances".  Each class has a special instance associated with it, known as its "prototype".  Giving the name of the class in an expression specifies the class's prototype object.
+</p>
+
+<p>
+This means that, although the terminology of "classes" and "instances" is used, Trylon 2 acts like a prototype-based system, in that there is no special class object for each class, and no distinction between "class" and "instance" functions, or "class" and "instance" fields.  If you prefer to think in terms of "prototypes", then just think of the term "class" as a synonym for "clone family".
+</p>
+
+</div>
+
+<div class="entry">
 <div class="entry-title"> Functions, Fields, and Shared Fields </div>
 <p>
-An object may have functions and fields, just like any normal Fonc object.  But fields defined in Trylid always have getter and setter functions defined; that is, they are "public".
+An object may have functions and fields.  Fields defined in Trylon always have getter and setter functions defined; that is, they are "public".
 </p>
 
 <p>
-There is also such a thing as a "shared field", whose value is shared by the prototype and all its clones, much like a "class variable" in class-oriented object-oriented systems.
+There is also such a thing as a "shared field", whose value is shared by all instances of a class, much like a "static member variable" in C++, or a "class variable" in Smalltalk.
 </p>
 
-<div class="code">proto MyProto
+<div class="code">class MyClass
   field my-field
 
   my-shared-field = 'foo'   # A shared field.
 
   create: value
-    # Each clone has a separate value for "my-field".
+    # Each instance has a separate value for "my-field".
     my-field = value
 
   bar
@@ -100,24 +112,90 @@ There is also such a thing as a "shared field", whose value is shared by the pro
 </div>
 
 <div class="entry">
-<div class="entry-title"> Prototypes Act as Classes and as Namespaces </div>
+<div class="entry-title"> Classes Act As Namespaces </div>
 <p>
-In a prototype-based system like Fonc, objects act as both instances and as classes.  In Trylid, they also can act as namespaces (a.k.a. packages).  One prototype may be "contained" in another (as a shared field); functions in the child prototype have access to functions in the parent prototype.
+In Trylon, classes also can act as namespaces (a.k.a. packages).  One class may be "contained" in another (as a shared field); functions in the child class have access to functions in the parent class.
 </p>
 
-<div class="code">proto WindowSystem
-  proto Event
+<div class="code">class WindowSystem
+  class Event
     create: raw-event
       #...
 
-  proto Window
+  class Window
     next-event
       # Notice that it knows the name "Event":
       return Event new: get-raw-event</div>
 
 <p>
-There is a top-level namespace called "Trylid", which acts as a global namespace for all Trylid objects.  There is a namespace called "Standard" which contains some common classes.  [Currently, in "Standard", there is a prototype called "Object", from which all Trylid prototypes descend.  In the future, the main Fonc "Object" prototype may be used instead, but it still will likely appear in "Standard", not "Trylid".]  You can access the members of "Standard" without having to specify it explicitly.  A namespace called "Pepsi" (actually "Standard Pepsi") allows access to Pepsi's namespace.  And a namespace called "Posix" contains some prototypes that access types from the Posix C API.
+There is a top-level namespace called "Main", which acts as a global namespace for all Trylon objects.  There is a namespace called "Standard" which contains some common classes.  One of these is "Object", from which all prototypes descend.  You can access the members of "Standard" without having to specify it explicitly.
 </p>
+
+<p>
+If you're using the Fonc/Jolt/Id backend, there are a few differences from the above.  The main namespace is called "Trylon" instead of "Main".  Also, a namespace called "Pepsi" (actually "Standard Pepsi") allows access to Pepsi's namespace.  And a namespace called "Posix" contains some prototypes that access types from the Posix C API.
+</p>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Creating Objects </div>
+<p>
+As in Smalltalk, one creates a new object by sending a message to a class.  Or rather, to an instance of the class, usually the class's prototype.  Consider this code for initializing an object:
+</p>
+
+<div class="code">class MyClass
+  fields c-name body
+
+  new: name
+    new-object = MyClass raw-new
+    new-object c-name = mangle-name: name
+    new-object body = List new
+    return new-object</div>
+
+<p>
+It seems to be natural to write an initialization function that is called on the new object itself, instead of doing everything by operating on the object from the "outside".  Such a function is much like a "constructor" in C++:
+</p>
+
+<div class="code">class MyClass
+  fields c-name body
+
+  create: name
+    c-name = mangle-name: name
+    body = List new
+
+  new: name
+    new-object = MyClass raw-new
+    new-object create: name
+    return new-object</div>
+
+<p>
+But it's annoying and pointless to keep writing pairs of functions like this, especially since the "new" functions all look about the same.  So in Trylon, anytime you define a function whose name begins with "create", the compiler will automatically generate the corresponding "new" function.  Here are some examples of "create" functions:
+</p>
+
+<div class="code">class MyPoint
+  fields x y
+
+  create
+    x = 0
+    y = 0
+
+  create: x y: y
+    this x = x
+    this y = y
+
+  create-x: x y: y
+    this x = y
+    this y = 0
+
+  create-x: x
+    this x = x
+    this y = 0
+
+test-point
+  point = MyPoint new
+  point = MyPoint new: 10 y: 20
+  point = MyPoint new-x: 10 y: 20
+  point = MyPoint new-x: 10</div>
 
 </div>
 

@@ -1,0 +1,18 @@
+trylon-class Page
+
+fields title entries
+
+
+create
+	entries = List new
+	title = ""
+
+
+add-section: section
+	entries append: section
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

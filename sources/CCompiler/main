@@ -6,6 +6,16 @@ emit-c: compiler
 	library-path = compiler find-library-path
 	recompile-all = false
 
+	# Figure out the program name.
+	# Normally it's set in build-settings, but if not, use the "trylon" line from
+	# "main".
+	program-name = build-settings program-name
+	if program-name == nil || program-name is-empty
+		program-name = compiler main-proto source-name
+		if program-name == nil || program-name is-empty
+			# Have to default to something...
+			program-name = "program-binary"
+
 	# Create sources/objects directories.
 	directory = FileDirectory new: "."
 	if !(directory entry-is-directory: build-settings c-sources-dir)
@@ -64,7 +74,7 @@ emit-c: compiler
 	status-reporter report: "Linking..."
 	args = List new
 	args append: "-o"
-	args append: build-settings program-name
+	args append: program-name
 	for object-file in objects
 		args append: object-file
 	for flag in build-settings link-flags

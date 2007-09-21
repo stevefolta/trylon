@@ -10,7 +10,7 @@ create
 
 insert: value at: key
 	if root
-		insert-result := root insert: value at: key
+		insert-result = root insert: value at: key
 		if insert-result
 			root = insert-result
 			num-items += 1
@@ -26,7 +26,7 @@ at: key put: value
 
 
 at: key
-	node := root
+	node = root
 	while node
 		if key < node key
 			node = node left
@@ -41,7 +41,7 @@ remove: key 	# Returns the old value, if there was one.
 	if root == nil
 		return nil
 	
-	context := RemoveContext new: key
+	context = RemoveContext new: key
 	root = root remove: context
 	
 	if context item-found
@@ -50,7 +50,7 @@ remove: key 	# Returns the old value, if there was one.
 
 
 contains: key
-	node := root
+	node = root
 	while node
 		if key < node key
 			node = node left
@@ -122,7 +122,7 @@ class Node
 	insert: new-value at: new-key
 		if new-key < key
 			if left
-				insert-result := left insert: new-value at: new-key
+				insert-result = left insert: new-value at: new-key
 				if insert-result
 					left = insert-result
 				else
@@ -132,7 +132,7 @@ class Node
 		
 		else if key < new-key
 			if right
-				insert-result := right insert: new-value at: new-key
+				insert-result = right insert: new-value at: new-key
 				if insert-result
 					right = insert-result
 				else
@@ -145,7 +145,7 @@ class Node
 			value = new-value
 			return nil
 		
-		new-top := skew
+		new-top = skew
 		new-top = new-top split
 		return new-top
 	
@@ -185,7 +185,7 @@ class Node
 				level -= 1
 				if right && right level > level
 					right level = level
-				new-top := skew
+				new-top = skew
 				if new-top right
 					new-top right = new-top right skew
 				if new-top right && new-top right right
@@ -199,7 +199,7 @@ class Node
 	
 	
 	skew
-		new-top := this
+		new-top = this
 		
 		if left && left level == level
 			# Rotate with left.
@@ -211,7 +211,7 @@ class Node
 	
 	
 	split
-		new-top := this
+		new-top = this
 		
 		if right && right right && right right level == level
 			# Rotate with right.
@@ -237,7 +237,7 @@ class Node
 #####
 
 class RemoveContext
-	fields name item-found delete-node last-node deleted-value
+	fields key item-found delete-node last-node deleted-value
 	
 	create: key
 		this key = key
@@ -259,7 +259,7 @@ class Iterator
 		if stack-top == nil
 			return
 		
-		right := stack-top node right
+		right = stack-top node right
 		pop
 		push-tree: right
 	
@@ -272,7 +272,7 @@ class Iterator
 			node = node left
 	
 	push: node
-		stack-element := StackElement new: node
+		stack-element = StackElement new: node
 		stack-element next = stack-top
 		stack-top = stack-element
 	
@@ -322,7 +322,7 @@ class KeyValuePairsIterator
 	current-item
 		if stack-top == nil
 			return nil
-		node := stack-top node
+		node = stack-top node
 		return Pair new: node
 	
 	class Pair

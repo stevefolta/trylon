@@ -192,7 +192,7 @@ UsingClass_(Node__Dictionary__Standard)
 	static struct object d##dictIndex##_##nodeIndex##__level_ = 	\
 		{ StdClassRef_(Int), (obj_) (level) }; 	\
 	static struct Standard__DictNode__internal_ d##dictIndex##_##nodeIndex##_ = 	\
-		{ StdClassRef_(Dictionary__Node), key, value, left, right, 	\
+		{ StdClassRef_(Node__Dictionary), key, value, left, right, 	\
 			&d##dictIndex##_##nodeIndex##__level_ };
 #define Dict_(index)	((obj_) &d##index##_)
 #define DictNode_(dictIndex, nodeIndex)	(&d##dictIndex##_##nodeIndex##_)

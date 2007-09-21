@@ -1,4 +1,4 @@
-trylon SymbolTest
+trylon symbols-test
 
 main: args
 	Symbol intern: "foo"

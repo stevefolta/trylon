@@ -1,0 +1,71 @@
+trylon Draw
+
+extend Xft Draw
+	c-preamble
+		#include <X11/Xlib.h>
+		#include <X11/Xft/Xft.h>
+
+		UsingMethod_(primitive_draw)
+		#define Preamble_ 	\
+			if (Field_(primitive_draw) == nil) 	\
+				return nil; 	\
+			XftDraw* xftdraw = (XftDraw*) BytePtrValue_(Field_(primitive_draw));
+
+	c-fn create: display drawable: drawable
+		UsingMethod_(primitive_display)
+		Display* xdisplay =
+			(Display*) BytePtrValue_(Call_(primitive_display, display));
+		int screen = DefaultScreen(xdisplay);
+		Drawable drawableID;
+		UsingMethod_(display_co_) UsingMethod_(id)
+
+		Field_(display) = display;
+		drawableID = IntValue_(Call_(id, drawable));
+		XftDraw* draw =
+			XftDrawCreate(
+				xdisplay, drawableID,
+				DefaultVisual(xdisplay, screen),
+				DefaultColormap(xdisplay, screen));
+		if (draw)
+			Field_(primitive_draw) = BuildBytePtr_(draw);
+
+		return nil;
+
+	c-fn close
+		Preamble_
+		XftDrawDestroy(xftdraw);
+		Field_(primitive_draw) = nil;
+
+	c-fn draw-string: string color: color font: font x: x y: y
+		Preamble_
+		UsingMethod_(primitive_color) UsingMethod_(primitive_font)
+		char* start = StringStart_(string);
+		XftColor* primitive_color =
+			(XftColor*) BytePtrValue_(Call_(primitive_color, color));
+		XftFont* primitive_font =
+			(XftFont*) BytePtrValue_(Call_(primitive_font, font));
+		XftDrawString8(
+			xftdraw, primitive_color, primitive_font,
+			IntValue_(x), IntValue_(y),
+			(XftChar8*) start, StringStopper_(string) - start);
+		return nil;
+
+	c-fn draw-string-utf8: string color: color font: font x: x y: y
+		Preamble_
+		UsingMethod_(primitive_color) UsingMethod_(primitive_font)
+		char* start = StringStart_(string);
+		XftColor* primitive_color =
+			(XftColor*) BytePtrValue_(Call_(primitive_color, color));
+		XftFont* primitive_font =
+			(XftFont*) BytePtrValue_(Call_(primitive_font, font));
+		XftDrawStringUtf8(
+			xftdraw, primitive_color, primitive_font,
+			IntValue_(x), IntValue_(y),
+			(XftChar8*) start, StringStopper_(string) - start);
+		return nil;
+
+
+
+# Copyright 2007 Steve Folta
+# See the License file.
+

@@ -1,0 +1,18 @@
+trylon Color
+
+fields primitive-color display
+
+
+create: name display: display
+create: red green: green blue: blue alpha: alpha display: display
+close
+
+destroy
+	close
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+
+

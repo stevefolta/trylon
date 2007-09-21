@@ -1,0 +1,28 @@
+trylon-class Paragraph
+
+field lines
+
+
+fn create
+	lines = List new
+
+
+fn add-line: line
+	lines append: line
+
+
+fn add-blank-line
+	# This doesn't happen to a Paragraph (only to a Code).
+
+
+fn emit
+	print-line: "<p>"
+	for line in lines
+		print-line: line
+	print-line: "</p>"
+	print-line
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

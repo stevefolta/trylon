@@ -1,0 +1,31 @@
+trylon Interval
+
+fields start stop value
+
+create: start to: stop
+	this start = start
+	this stop = stop
+	value = start
+
+create: stop
+	this start = 0
+	this stop = stop
+	value = start
+
+is-done
+	return value >= stop
+
+current-item
+	return value
+
+go-forward
+	value += 1
+
+iterator
+	return this
+
+
+
+# Copyright 2005-2007 Steve Folta
+# See the License file.
+

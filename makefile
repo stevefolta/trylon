@@ -16,7 +16,8 @@ install:
 	cp -r library $(PREFIX)/lib/trylon
 
 clean:
-	rm -rf .c-sources .objects .jolt-sources .jolt-sources-self
+	rm -rf \
+		.c-sources .objects .jolt-sources .jolt-sources-self .c-sources-2 .objects-2
 
 
 # Tarball creation.

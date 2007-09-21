@@ -70,6 +70,16 @@ c-fn arc-negative-x: x y: y radius: radius 	--
 		cairo, DoubleVal(x), DoubleVal(y), DoubleVal(radius),
 		DoubleVal(start_angle), DoubleVal(end_angle));
 
+c-fn current-point
+	Preamble_
+	UsingClass_(Point__Standard)
+	extern obj_ new_co_y_co___Point__Standard(obj_, obj_, obj_);
+	double x, y;
+	cairo_get_current_point(cairo, &x, &y);
+	return
+		new_co_y_co___Point__Standard(
+			Proto_(Point__Standard), BuildFloat_(x), BuildFloat_(y));
+
 c-fn source-rgb: tuple
 	Preamble_
 	cairo_set_source_rgb(
@@ -93,6 +103,14 @@ c-fn red: red green: green blue: blue alpha: alpha
 	Preamble_
 	cairo_set_source_rgba(
 		cairo, DoubleVal(red), DoubleVal(green), DoubleVal(blue), DoubleVal(alpha));
+
+c-fn line-width: width
+	Preamble_
+	cairo_set_line_width(cairo, DoubleVal(width));
+
+c-fn line-width
+	Preamble_
+	return BuildFloat_(cairo_get_line_width(cairo));
 
 c-fn fill
 	Preamble_

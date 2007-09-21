@@ -28,10 +28,6 @@ extend Standard String
 	_bytes
 		return start _ptr
 
-	size
-		coke
-			[SmallInteger value_: (- [[self stopper] _ptr] [[self start] _ptr])]
-
 	_stringValue
 		coke
 			(let ((start [[self start] _ptr])
