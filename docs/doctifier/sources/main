@@ -77,7 +77,9 @@ parse-source: source
 			if header-name == "title" || header-name == "Title"
 				page title = header-value
 		else
-			break
+			# The first line without a "field name" is taken to be the title.
+			if page title == nil || page title is-empty
+				page title = line
 	
 	# Read the entries.
 	section = nil
