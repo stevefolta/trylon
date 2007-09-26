@@ -9,19 +9,19 @@ fn > arg (Int)
 fn <= arg (Int)
 fn >= arg (Int)
 
-fn + arg (Int) -> Int
-fn - arg (Int) -> Int
-fn * arg (Int) -> Int
-fn / arg (Int) -> Int
-fn % arg (Int) -> Int
-fn unary-minus -> Int
+fn + arg (Int)
+fn - arg (Int)
+fn * arg (Int)
+fn / arg (Int)
+fn % arg (Int)
+fn unary-minus
 
-fn | arg (Int) -> Int
-fn & arg (Int) -> Int
-fn ^ arg (Int) -> Int
-fn ~ -> Int
-fn << arg (Int) -> Int
-fn >> arg (Int) -> Int
+fn | arg (Int)
+fn & arg (Int)
+fn ^ arg (Int)
+fn ~
+fn << arg (Int)
+fn >> arg (Int)
 
 fn string
 fn char-string

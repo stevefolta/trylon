@@ -321,12 +321,19 @@ parse-primary-expression
 		# Non-object function call.
 		name = ""
 		arguments = List new
-		while words peek ends-with: ":"
+		loop
+			# Check for a keyword.
+			next-word = words peek
+			if next-word == nil || !(next-word ends-with: ":")
+				break
+
+			# Parse the argument.
 			name += words next
 			arg = parse-binary-expression
 			if arg == nil
 				parse-error: "Missing argument (\"" + name + "\")."
 			arguments append: arg
+
 		return FunctionCall new: name arguments: arguments context: context
 	
 	else if is-number: word

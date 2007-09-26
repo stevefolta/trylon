@@ -128,7 +128,6 @@ parse-function: initial-name is-primitive: is-primitive
 			on-proto: context body: body is-primitive: is-primitive
 	if method-context
 		new-function method-context = method-context
-		method-context function = new-function
 	return new-function
 
 
