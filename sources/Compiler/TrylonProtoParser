@@ -26,19 +26,69 @@ parse-line: line
 		return
 	switch words peek
 		"proto", "class"
-			#...
+			words next
+			parse-member-proto
 		"fn", "function", "class-fn"
 			words next
 			parse-function
 		"field", "fields"
 			#...
+		"superclass"
+			# ...
 		"extend"
-			#...
+			# ...
+		"iff"
+			# ...
 		"trylid", "trylon"
-			#...
+			# ...
+		"c-preamble"
+			# ...
+		"c-fn"
+			words next
+			parse-function: words next is-primitive: true
+		"#"
+			# A comment, just skip it.
 		else
-			#...
+			name = words next
+			if !(words is-done) && (words peek == "=")
+				# Declaring a shared variable.
+				# Get the initial value.
+				words next
+				parser = TrylonExpressionParser new: words line: line context: context
+				initial-value = parser parse-expression
 
+				# Add it.
+				field = CompiledField new: name type: nil
+				field initial-value = initial-value
+				proto add-shared-field: field
+
+			else
+				# Declaring a function.
+				parse-function: name
+
+
+parse-member-proto
+	name = words next
+	if name == nil
+		parse-error: "Missing class name."
+	if !is-name: name
+		parse-error: "\"" + name + "\" is not a valid class name."
+
+	report: "Parsing " + name + "..."
+	indent
+
+	# Create (or get) the proto.
+	proto = context add-proto: name
+
+	# Read the contents (if any).
+	parse-proto-contents: line block into: proto
+	
+	unindent
+
+
+parse-proto-contents: block into: proto
+	parser = TrylonProtoParser new: block into: proto context: proto
+	parser parse
 
 
 parse-function
@@ -189,6 +239,16 @@ parse-error: message token: token
 parse-error: message
 	parse-error: message token: words peek
 
+report: message
+	iff report-parsing
+		if status-reporter
+			status-reporter report: message
+indent
+	if status-reporter
+		status-reporter indent
+unindent
+	if status-reporter
+		status-reporter unindent
 
 is-name: name
 	return TrylonExpressionParser is-name: name
