@@ -1,4 +1,4 @@
-trylon TrylidProtoParser
+trylon TrylonProtoParser
 
 fields lines proto context
 fields line words 	# Only valid during 'parse-line:'.
@@ -116,7 +116,7 @@ parse-function: initial-name is-primitive: is-primitive
 	else
 		if line block
 			method-context = MethodContext new: arguments parent: context
-			parser = TrylidCodeParser new: line block in: method-context
+			parser = TrylonCodeParser new: line block in: method-context
 			body = parser parse
 		else
 			body = nil
@@ -192,7 +192,7 @@ parse-error: message
 
 
 is-name: name
-	return TrylidExpressionParser is-name: name
+	return TrylonExpressionParser is-name: name
 
 
 # Copyright 2007 Steve Folta.  See the License file.

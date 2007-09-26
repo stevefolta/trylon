@@ -1,4 +1,4 @@
-trylon TrylidExpressionParser
+trylon TrylonExpressionParser
 
 fields words line context
 

@@ -16,7 +16,7 @@ parse-into: switch-statement
 			continue
 
 		# Gather the values.
-		parser = TrylidExpressionParser new: words line: line context: context
+		parser = TrylonExpressionParser new: words line: line context: context
 		values = List new
 		values-comment = nil
 		while !words is-empty
@@ -44,7 +44,7 @@ parse-into: switch-statement
 			throw ParseException new: "Extra words at end of line." in: line
 
 		# Parse the body.
-		body = (TrylidCodeParser new: line body in: context) parse
+		body = (TrylonCodeParser new: line body in: context) parse
 
 		# Add the SwitchClause.
 		clause = 	--

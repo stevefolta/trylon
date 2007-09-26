@@ -46,7 +46,7 @@ lookup-function: name visited-protos: visited-protos
 		if (directory contains: name) && !(directory entry-is-directory: name)
 			proto = add-proto: name
 			lines = (LinesLexer new: (directory at: name) contents) lex
-			parser = TrylidProtoParser new: lines into: proto context: this
+			parser = TrylonProtoParser new: lines into: proto context: this
 			parser parse
 			return functions at: name
 
@@ -196,7 +196,7 @@ add-directory: directory
 
 	if directory contains: "main"
 		lines = (LinesLexer new: (directory at: "main") contents) lex
-		parser = TrylidProtoParser new: lines into: this context: this
+		parser = TrylonProtoParser new: lines into: this context: this
 		parser parse
 
 
@@ -253,7 +253,7 @@ setup-main: main-directory library-directory: library-directory
 	for directory in directories
 		if directory contains: "main"
 			lines = (LinesLexer new: (directory at: "main") contents) lex
-			parser = TrylidProtoParser new: lines into: this context: this
+			parser = TrylonProtoParser new: lines into: this context: this
 			parser parse
 	
 	# Load up standard protos.

@@ -29,7 +29,7 @@ compile-file: file as: name into: parent-proto
 	status-reporter = VT100StatusReporter new
 	proto = parent-proto add-proto: name
 	lines = (LinesLexer new: file contents) lex
-	parser = TrylidProtoParser new: lines into: proto context: parent-proto
+	parser = TrylonProtoParser new: lines into: proto context: parent-proto
 	parser parse
 	return proto
 

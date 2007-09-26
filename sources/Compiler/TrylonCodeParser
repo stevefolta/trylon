@@ -1,4 +1,4 @@
-trylon TrylidCodeParser
+trylon TrylonCodeParser
 
 fields lines context
 fields else-target
@@ -68,7 +68,7 @@ parse-line: line
 	# Otherwise, it's an expression.
 	# It could be an assignment with a block on the RHS, so we give the block too.
 	expression = 	--
-		(TrylidExpressionParser new: words line: line context: cur-context) 	--
+		(TrylonExpressionParser new: words line: line context: cur-context) 	--
 			parse-expression
 	comment = get-comment: words
 	return ExpressionStatement new: expression comment: comment
@@ -91,7 +91,7 @@ get-comment: words
 
 parse-expression: words
 	expression = 	--
-		(TrylidExpressionParser new: words line: cur-line context: cur-context) 	--
+		(TrylonExpressionParser new: words line: cur-line context: cur-context) 	--
 			parse-expression
 	if expression == nil
 		error: "Missing expression."
@@ -99,7 +99,7 @@ parse-expression: words
 
 parse-optional-expression: words
 	return 	--
-		(TrylidExpressionParser new: words line: cur-line context: cur-context) 	--
+		(TrylonExpressionParser new: words line: cur-line context: cur-context) 	--
 			parse-expression
 
 
@@ -243,8 +243,8 @@ class CatchParser
 	create
 
 	parse: words line: line parser: parser
-		# Ignore words.  In Trylon, these would specify the type to catch.  But
-		# Trylid catches all types always.
+		# Ignore words.  In Trylon 1, these would specify the type to catch.  But
+		# Trylon 2 catches all types always.
 		while (!words is-empty) && (words peek != "#")
 			words next
 		comment = parser get-comment: words
