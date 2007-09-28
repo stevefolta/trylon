@@ -94,12 +94,22 @@ parse-next-word
 			p += 1
 		return String from: word-start to: p
 	else if c == `(` || c == `)` || c == `[` || c == `]` || 	--
-	        c == `{` || c == `}` || c == `,` || c == `!` || c == `-`
+	        c == `{` || c == `}` || c == `,` || c == `!`
 		p += 1
 		return String from: word-start to: p
+	else if c == `-`
+		p += 1
+		# A minus is usually its own token, even at the front of a "word".  But
+		# there are a couple of two-character tokens that start with a minus ("-="
+		# and "->").
+		if p < stopper
+			c = p deref-char
+			if c == `=` || c == `>`
+				p += 1
+		return String from: word-start to: p
 	
-	# A string/symbol?
-	else if c == `"` || c == `'`
+	# A string/symbol/character literal?
+	else if c == `"` || c == `'` || c == `\``
 		delimiter = c
 		builder = nil
 		p += 1

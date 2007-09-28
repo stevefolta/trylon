@@ -343,7 +343,8 @@ parse-primary-expression
 
 	else if word starts-with: "\`"
 		words next
-		return CharacterLiteral new: (word substr: 1 length: word length - 2)
+		character = (word substr: 1) first-character
+		return CharacterLiteral new: character
 	
 	else if word == "("
 		words next
