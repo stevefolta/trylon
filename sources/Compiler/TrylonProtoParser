@@ -32,7 +32,10 @@ parse-line: line
 			words next
 			parse-function
 		"field", "fields"
-			#...
+			words next
+			for field-name in words
+				field = CompiledField new: field-name
+				proto add-field: field
 		"superclass"
 			# ...
 		"extend"

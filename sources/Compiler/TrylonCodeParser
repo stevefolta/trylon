@@ -140,6 +140,7 @@ class ElseParser
 			if comment
 				# "statement" will be a Block.
 				statement prepend: (Comment new: comment)
+			statement = BlockStatement new: statement
 		parser attach-else: statement line: line
 		parser else-target = statement 	# In case it's an "if" statement.
 		return nil
@@ -287,7 +288,7 @@ class IffParser
 		if inverted
 			test-succeeded = !test-succeeded
 		if test-succeeded
-			return parser parse-block: line block
+			return BlockStatement new: (parser parse-block: line block)
 		return nil
 
 
