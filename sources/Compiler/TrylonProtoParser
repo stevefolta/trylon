@@ -46,7 +46,7 @@ parse-line: line
 			# ...
 		"c-preamble"
 			# ...
-		"c-fn"
+		"primitive-fn", "c-fn"
 			words next
 			parse-function: words next is-primitive: true
 		"#"
