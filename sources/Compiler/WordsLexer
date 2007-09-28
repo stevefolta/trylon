@@ -65,6 +65,9 @@ is-done
 go-forward
 	next
 
+iterator
+	return this
+
 
 # ===== Private
 
@@ -193,6 +196,7 @@ parse-escaped-char-into: builder
 			utf8-encode: value into: builder
 		else
 			escaped-char = p deref-char
+			p += 1
 	if escaped-char
 		builder add-char: escaped-char
 
