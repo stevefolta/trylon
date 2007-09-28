@@ -344,7 +344,7 @@ dump-expr: expr level: level
 test-words-lexer: filename
 	try
 		for line in (File new: filename) contents lines
-			lexer = Compiler WordsLexer new: line
+			lexer = Compiler TrylonWordsLexer new: line
 			while !lexer is-done
 				print-line: lexer next
 	catch Exception

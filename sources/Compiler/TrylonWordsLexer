@@ -1,4 +1,4 @@
-trylon WordsLexer
+trylon TrylonWordsLexer
 
 
 create: string
@@ -40,7 +40,7 @@ require-eol
 
 
 class-fn parse-char-escape-from: start to: stopper
-	lexer = WordsLexer new: start to: stopper
+	lexer = TrylonWordsLexer new: start to: stopper
 	c = start deref-char
 	if c == 'u' || c == 'U'
 		num-digits = 4
