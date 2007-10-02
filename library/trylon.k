@@ -119,7 +119,7 @@
 	(lambda (path)
 		;; There's not an easy way to check for the existence of a directory at
 		;; this point.  So we'll look for a file in the library directory.
-		(define file [File openIfPresent: [path , '"/Posix/jmp_buf.so"]])
+		(define file [File openIfPresent: [path , '"/IdPosix/jmp_buf.so"]])
 		(if file
 			(begin
 				[file close]
@@ -300,7 +300,7 @@
 
 (define load-trylon-posix-proto
 	(lambda (name)
-		(define file-name [[(find-trylon-library) , '"/Posix/"] , [name asString]])
+		(define file-name [[(find-trylon-library) , '"/IdPosix/"] , [name asString]])
 		[Object _import: [file-name _stringValue] ""]
 		(define proto (import [name _stringValue]))
 		[[(trylon-proto Posix) _vtable]
