@@ -37,9 +37,12 @@ parse-line: line
 				field = CompiledField new: field-name
 				proto add-field: field
 		"superclass"
-			# ...
+			words next
+			superclass = parse-type-spec
+			proto make-subclass-of: superclass
 		"extend"
-			# ...
+			words next
+			parse-extension
 		"iff"
 			# ...
 		"trylid", "trylon"
@@ -184,6 +187,22 @@ parse-function: initial-name is-primitive: is-primitive
 	return new-function
 
 
+parse-extension
+	# The prototype to extend.
+	extended-proto = parse-proto-spec
+	words require-eol
+
+	report: "Parsing " + extended-proto name + "..."
+	indent
+
+	parser = 	--
+		TrylonProtoParser 	--
+			new: line block into: extended-proto context: extended-proto
+	parser parse
+
+	unindent
+
+
 parse-arg-type
 	arg-type = nil
 	if !(words is-done) && words peek == "("
@@ -214,7 +233,7 @@ parse-type-spec
 parse-proto-spec
 	type = nil
 	cur-context = context
-	while is-name: words peek
+	while !(words is-empty) && (is-name: words peek)
 		# Find the prototype.
 		name = words next
 		if type == nil
