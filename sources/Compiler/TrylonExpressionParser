@@ -356,6 +356,7 @@ parse-primary-expression
 		return expr
 
 	else if word == "nil"
+		words next
 		return LiteralNil new
 	
 	else
