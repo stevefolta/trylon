@@ -221,7 +221,7 @@ setup-main: main-directory library-directory: library-directory
 		standard-proto get-subproto: "JoltImplementation"
 
 		# Set up Posix.
-		posix-directory = library-directory at: "Posix"
+		posix-directory = library-directory at: "IdPosix"
 		posix-proto = 	--
 			JoltCompiler PosixProto 	--
 				new: "Posix" parent: this directory: posix-directory
