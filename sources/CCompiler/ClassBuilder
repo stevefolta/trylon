@@ -18,7 +18,7 @@ emit: force-compile
 	build-settings = compiler build-settings
 
 	# Emit the C code.
-	status-reporter report: "Emitting C for " + proto name + "..."
+	status-reporter report: "Emitting C for " + proto full-name + "..."
 	c-file-name = 	--
 		build-settings c-sources-dir + "/" + proto c-name + ".c"
 	stream = ExistingFileStream new: c-file-name

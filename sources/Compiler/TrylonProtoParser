@@ -84,10 +84,10 @@ parse-member-proto
 	indent
 
 	# Create (or get) the proto.
-	proto = context add-proto: name
+	member-proto = context add-proto: name
 
 	# Read the contents (if any).
-	parse-proto-contents: line block into: proto
+	parse-proto-contents: line block into: member-proto
 	
 	unindent
 
@@ -195,10 +195,7 @@ parse-extension
 	report: "Parsing " + extended-proto name + "..."
 	indent
 
-	parser = 	--
-		TrylonProtoParser 	--
-			new: line block into: extended-proto context: extended-proto
-	parser parse
+	parse-proto-contents: line block into: extended-proto
 
 	unindent
 
