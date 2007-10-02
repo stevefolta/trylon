@@ -8,7 +8,7 @@ create
 	last-cell = nil
 
 append: object
-	cell := Cell new: object
+	cell = Cell new: object
 	if last-cell != nil
 		last-cell next = cell
 	last-cell = cell
@@ -16,7 +16,7 @@ append: object
 		first-cell = cell
 
 prepend: object
-	cell := Cell new: object
+	cell = Cell new: object
 	cell next = first-cell
 	first-cell = cell
 
@@ -27,8 +27,8 @@ is-empty
 	return (first-cell == nil)
 
 count
-	num-items := 0
-	cell := first-cell
+	num-items = 0
+	cell = first-cell
 	while cell
 		num-items += 1
 		cell = cell next
@@ -48,7 +48,7 @@ head
 	return first-item
 
 tail
-	tail-list := List new
+	tail-list = List new
 	if first-cell
 		tail-list first-cell = first-cell next
 	else
@@ -65,7 +65,7 @@ pop-front
 	if first-cell == nil
 		return nil
 	
-	object := first-cell object
+	object = first-cell object
 	
 	if first-cell == last-cell
 		first-cell = nil
@@ -77,8 +77,8 @@ pop-front
 
 
 remove: object
-	cell := first-cell
-	prev-cell := nil
+	cell = first-cell
+	prev-cell = nil
 	while cell
 		if cell object == object
 			# Unlink the cell.
@@ -96,7 +96,7 @@ remove: object
 
 
 contains: object
-	cell := first-cell
+	cell = first-cell
 	while cell
 		if cell object same-as: object
 			return true
@@ -105,11 +105,11 @@ contains: object
 
 
 insert: new-object before: before-object
-	cell := first-cell
-	prev-cell := nil
+	cell = first-cell
+	prev-cell = nil
 	while cell
 		if cell object same-as: before-object
-			new-cell := Cell new: new-object
+			new-cell = Cell new: new-object
 			new-cell next = cell
 			if prev-cell
 				prev-cell next = new-cell
@@ -121,7 +121,7 @@ insert: new-object before: before-object
 
 
 replace: old-object with: new-object
-	cell := first-cell
+	cell = first-cell
 	while cell
 		if cell object same-as: old-object
 			cell object = new-object
