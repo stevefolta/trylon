@@ -30,7 +30,7 @@ parse-line: line
 			parse-member-proto
 		"fn", "function", "class-fn"
 			words next
-			parse-function
+			proto add-function: parse-function
 		"field", "fields"
 			words next
 			for field-name in words
@@ -51,11 +51,15 @@ parse-line: line
 			# ...
 		"primitive-fn", "c-fn"
 			words next
-			parse-function: words next is-primitive: true
+			function = parse-function: words next is-primitive: true
+			proto add-function: function
 		"#"
 			# A comment, just skip it.
 		else
 			name = words next
+			if name starts-with: "#"
+				# A comment, skip it.
+				return
 			if !(words is-done) && (words peek == "=")
 				# Declaring a shared variable.
 				# Get the initial value.
@@ -70,7 +74,7 @@ parse-line: line
 
 			else
 				# Declaring a function.
-				parse-function: name
+				proto add-function: (parse-function: name)
 
 
 parse-member-proto

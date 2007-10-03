@@ -64,6 +64,10 @@ parse-line: line
 	if syntax
 		words next
 		return syntax parse: words line: line parser: this
+
+	# Handle "#" that isn't a standalone word.
+	if words peek starts-with: "#"
+		return Comment new: words remainder
 	
 	# Otherwise, it's an expression.
 	# It could be an assignment with a block on the RHS, so we give the block too.
