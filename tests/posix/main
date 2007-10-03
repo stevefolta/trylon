@@ -1,0 +1,13 @@
+trylon posix-test
+
+main: args
+	fd = Posix open: "main" flags: 'O_RDONLY'
+	print-line: "fd = " + fd string
+	if fd == -1
+		errno = Posix errno
+		err-string = Posix strerror: errno
+		print-line: "errno = " + errno string + " (" + err-string + ")"
+		return 1
+	
+	Posix close-fd: fd
+
