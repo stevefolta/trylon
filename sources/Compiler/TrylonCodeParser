@@ -217,6 +217,8 @@ class ReturnParser
 
 	parse: words line: line parser: parser
 		value = parser parse-optional-expression: words
+		if value == nil
+			value = LiteralNil new
 		comment = parser get-comment: words
 		return ReturnStatement new: value comment: comment
 
@@ -286,9 +288,7 @@ class IffParser
 			parser error: "\"iff\" statement is missing its word."
 		name = words next
 		parser get-comment: words
-		test-succeeded = 	--
-			((parser cur-context lookup-function: name) != nil) || 	--
-			(build-settings has-symbol: name)
+		test-succeeded = (build-settings has-symbol: name)
 		if inverted
 			test-succeeded = !test-succeeded
 		if test-succeeded

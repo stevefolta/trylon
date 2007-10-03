@@ -44,7 +44,7 @@ parse-line: line
 			words next
 			parse-extension
 		"iff"
-			# ...
+			parse-iff
 		"trylid", "trylon"
 			# ...
 		"c-preamble"
@@ -202,6 +202,23 @@ parse-extension
 	parse-proto-contents: line block into: extended-proto
 
 	unindent
+
+
+parse-iff
+	words next 	# Get past the "iff".
+	inverted = false
+	if words peek == "!"
+		inverted = true
+		words next
+	if words is-empty
+		parse-error: "\"iff\" statement is missing its word."
+	name = words next
+	words require-eol
+	test-succeeded = (build-settings has-symbol: name)
+	if inverted
+		test-succeeded = !test-succeeded
+	if test-succeeded
+		parse-block: line block
 
 
 parse-arg-type

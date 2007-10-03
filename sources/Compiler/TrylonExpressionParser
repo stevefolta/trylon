@@ -379,15 +379,17 @@ parse-super-call
 	name = nil
 	arguments = List new
 
+	if words is-done
+		parse-error: "Invalid \"super\" call."
 	word = words peek
-	if word == "name"
+	if is-name: word
 		name = word
 		words next
 
 	else if word ends-with: ":"
 		# Get the arguments.
 		name = ""
-		while words peek ends-with: ":"
+		while !(words is-done) && (words peek ends-with: ":")
 			name += words next
 			arg = parse-binary-expression
 			if arg == nil
@@ -440,9 +442,12 @@ class-fn is-name: word
 		"==", "!=", "<", ">", "<=", ">=", 	--
 		"&&", "||", 	--
 		"!", "~", 	--
-		"(", ")", "[", "]", "{", "}"
+		"(", ")", "[", "]", "{", "}", 	--
+		"#"
 			return false
 	if (word ends-with: "=") || (word ends-with: ":")
+		return false
+	if word starts-with: "#"
 		return false
 	first-char = word first-character
 	if first-char == `"` || first-char == `'` || first-char == `\``

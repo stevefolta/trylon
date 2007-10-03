@@ -11,7 +11,7 @@ create: body comment: comment
 
 attach-else: statement line: line
 	else-clause = CatchClause new: body parent comment: nil
-	statement parent = this 	# "statement" will be a Block.
+	statement parent = else-clause 	# "statement" will be a Block.
 	else-clause body = statement
 
 
