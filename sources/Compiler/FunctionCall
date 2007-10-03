@@ -13,6 +13,8 @@ create: name arguments: arguments context: context
 
 prepare-to-emit
 	function = context lookup-function-autodeclaring: name
+	if function == nil
+		throw MessageException new: "There is no \"" + name + "\" function."
 
 	for arg in arguments
 		arg prepare-to-emit
