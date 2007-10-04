@@ -9,5 +9,13 @@ main: args
 		print-line: "errno = " + errno string + " (" + err-string + ")"
 		return 1
 	
+	fds = Posix FDSet new
+	fds set: fd
+	result = 	--
+		Posix select: fd + 1 reads: fds writes: nil exceptions: nil timeout: nil
+	print-line: "select result = " + result string
+	if fds at: fd
+		print-line: "The fd can read without blocking."
+
 	Posix close-fd: fd
 
