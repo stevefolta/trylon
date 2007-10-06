@@ -12,46 +12,56 @@ parse-into: switch-statement
 		# Blank line or comment?
 		words = line words
 		first-word = words peek
-		if first-word == nil || first-word == "#"
+		if first-word == nil || (first-word starts-with: "#")
 			continue
 
-		# Gather the values.
-		parser = TrylonExpressionParser new: words line: line context: context
-		values = List new
+		# Handle "else".
+		values = nil
 		values-comment = nil
-		while !words is-empty
-			# Comment? 
-			if words peek == "#"
-				words next
-				values-comment = words remainder
-				words = nil
-				break
+		if first-word == "else"
+			words next
+			words require-eol
 
-			# Get a value.
-			expr = parser parse-expression
-			if expr == nil
-				break
-			values append: expr
+		else
+			# Gather the values.
+			parser = TrylonExpressionParser new: words line: line context: context
+			values = List new
+			while !words is-empty
+				# Comment? 
+				if words peek == "#"
+					words next
+					values-comment = words remainder
+					words = nil
+					break
 
-			# Allow (but don't require) commas between values.
-			if words peek == ","
-				words next
+				# Get a value.
+				expr = parser parse-expression
+				if expr == nil
+					break
+				values append: expr
 
-		# There should always be values here, but check anyway.
-		if values is-empty
-			continue
-		if words && !words is-empty
-			throw ParseException new: "Extra words at end of line." in: line
+				# Allow (but don't require) commas between values.
+				if !words is-empty && words peek == ","
+					words next
+
+			# There should always be values here, but check anyway.
+			if values is-empty
+				continue
+			if words && !words is-empty
+				throw ParseException new: "Extra words at end of line." in: line
 
 		# Parse the body.
-		body = (TrylonCodeParser new: line body in: context) parse
+		body = (TrylonCodeParser new: line block in: context) parse
 
 		# Add the SwitchClause.
 		clause = 	--
 			SwitchClause 	--
 				new: values body: body 	--
 				pre-clause-comments: nil value-comment: values-comment
-		switch-statement add-clause: clause
+		if values
+			switch-statement add-clause: clause
+		else
+			switch-statement else-clause = clause
 
 
 

@@ -14,10 +14,10 @@ parse-expression
 	if expr == nil
 		return nil
 	
-	if !(words is-done) && words peek == ','
+	if !(words is-done) && words peek == ","
 		tuple = TupleExpression new
 		tuple add-member: expr
-		while words peek == ','
+		while !words is-done && words peek == ","
 			words next
 			member = parse-keyword-expression
 			if member == nil
@@ -443,7 +443,7 @@ class-fn is-name: word
 		"&&", "||", 	--
 		"!", "~", 	--
 		"(", ")", "[", "]", "{", "}", 	--
-		"#"
+		"#", ","
 			return false
 	if (word ends-with: "=") || (word ends-with: ":")
 		return false
