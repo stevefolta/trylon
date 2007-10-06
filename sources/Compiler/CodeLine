@@ -23,6 +23,12 @@ flattened-block
 	return lines
 
 
+flattened-text
+	result = StringBuilder new
+	for line in flattened-block
+		result += line
+	return result string
+
 
 # ===== Private
 

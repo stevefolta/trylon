@@ -94,7 +94,7 @@ parse-next-word
 			p += 1
 		return String from: word-start to: p
 	else if c == `(` || c == `)` || c == `[` || c == `]` || 	--
-	        c == `{` || c == `}` || c == `,` || c == `!`
+	        c == `{` || c == `}` || c == `,` || c == `!` || c == `~`
 		p += 1
 		return String from: word-start to: p
 	else if c == `-`

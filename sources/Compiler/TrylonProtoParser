@@ -172,7 +172,7 @@ parse-function: initial-name is-primitive: is-primitive
 	body = nil
 	method-context = nil
 	if is-primitive
-		body = line block
+		body = line flattened-text
 	else
 		if line block
 			method-context = MethodContext new: arguments parent: context
