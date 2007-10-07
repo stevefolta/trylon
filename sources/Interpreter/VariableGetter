@@ -1,0 +1,11 @@
+trylon VariableGetter
+
+fields name dict
+
+create: name in: dict
+	this name = name
+	this dict = dict
+
+interpret-call-with: arguments
+	return dict at: name
+

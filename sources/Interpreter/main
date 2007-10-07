@@ -37,4 +37,5 @@ interpret-send-of: name to: object with: arguments
 references
 	Expressions
 	Functions
+	InterpreterContext
 
