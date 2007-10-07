@@ -1,0 +1,45 @@
+Debugging Trylon Programs
+
+Using GDB
+
+Because Trylon programs are compiled using an intermediate C step, you can use GDB on them.  (I recommend CGDB, a nice Curses-based front-end to GDB.)  The C code will be a little ugly, but it should be fairly easy to read.  (As of this writing, the "-g" flag is automatically passed to the C compiler, so you don't have to add a 'c-flags += "-g"' line to your build-settings.)  You'll likely want to put a breakpoint on the SendMessageNotUnderstood_() function in Trylon_.c.
+
+In addition, you should put a "debugging = true" line in your build-settings.local file.  This will allow you to use the showObj_() function to inspect objects.  For instance:
+
+	(gdb) p showObj_(this_)
+
+When stepping into a call, you'll notice that you'll end in the Dispatch_() function.  Don't forget about GDB's "f" command, which will get you out of it quickly.  In CGDB, you'll quickly become accustomed to the "sfs" idiom.
+
+=====
+
+Idiomatic Trylon Errors
+
+The compiler will warn you about messages that are sent but never defined.  Often this indicates a typo.
+
+There are a couple of types of errors, related to autodeclaration, that are fairly rare, but can be hard to find when they do occur.  One is thinking you're auto-declaring a local variable, when you're actually accessing a variable in an outer scope.
+
+	MyPackage/
+		main
+			trylon MyPackage
+			
+			name = nil
+
+		MyClass
+			trylon MyClass
+
+			bar: stuff
+				name = stuff first-item
+				if name == "bar"
+					name = "baz"
+
+(Hopefully it's obvious that "MyPackage" is a directory, and "main" and "MyClass" are files, with their contents shown indented.)  In this example, it's likely that the author of "bar:" meant for "name" to be a local variable, but instead "MyPackage name" is being accessed and set.  (Older versions of Trylon used "foo := bar" as a syntax for explicitly declaring a local variable.  In the early days of the language, it didn't have auto-declaration.  The compiler still accepts this, but it's not considered idiomatic Trylon anymore.)
+
+Another, even subtler, error, occurs when you make a typo on the send of a function with one argument.  Consider "foo = bar".  The compiler turns this into "foo: bar", looks up "foo:", and autodeclares a local named "foo" if "foo:" doesn't exist in the current scope.  So suppose you meant to call "print-line:", but instead wrote this:
+
+	print-lin: "Hello world!"
+
+The compiler wouldn't generate a warning about the use of an undeclared function called "print-lin:".  Instead, it's as if you wrote:
+
+	print-lin = "Hello world!"
+
+
