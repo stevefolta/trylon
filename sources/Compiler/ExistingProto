@@ -76,8 +76,12 @@ parent
 	if proto responds-to: '.parent-context'
 		parent-context = proto .parent-context
 		existing-proto = ExistingProto new: parent-context
-		if parent-context == Trylon
-			existing-proto is-main = true
+		iff targeting-jolt
+			if parent-context == Trylon
+				existing-proto is-main = true
+		iff !targeting-jolt
+			if parent-context == Main
+				existing-proto is-main = true
 		return existing-proto
 	return nil
 
@@ -164,23 +168,5 @@ get-proto: name
 	return nil
 
 
-translate: compiler
-	stream = Pepsi WriteStream on: (Expression new: new-functions count)
-	stream nextPut: 'begin'
-
-	# ... We may need to add loaders for any subprotos, to deal with
-	# dependencies.
-
-	# Add the functions.
-	for function in new-functions values
-		if function is-translatable
-			function prepare-to-emit
-			stream nextPut: function
-	
-	return compiler translateExpression: stream contents
-
-
-access
-	return Expression with: 'quote' with: proto
-
+# Copyright 2007 Steve Folta.  See the License file.
 
