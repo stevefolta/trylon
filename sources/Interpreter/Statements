@@ -76,8 +76,15 @@ extend Compiler LoopStatement
 
 extend Compiler WhileStatement
 	interpreted
-		# *** Coming Soon.  Need to handle breaks and continues.
-		uninterpretable: "while"
+		try
+			while condition interpreted
+				try
+					body interpreted
+				else
+					if exception != Interpreter Statements Continue
+		else
+			if exception != Interpreter Statements Break
+				throw exception
 
 extend Compiler ForStatement
 	interpreted

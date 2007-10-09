@@ -1,15 +1,27 @@
+# Declaration, expression.
 message = "Hello world!"
 Standard print-line: message
 
-if 3 < 2
+# "if".
+if 2 < 3
 	Standard print-line: "Yeh."
 else
 	Standard print-line: "Nah."
 
+# "loop"
 i = 0
 loop
 	Standard print-line: i string
 	if i >= 3
 		break
 	i += 1
+Standard print-line: "-----"
+
+# "while"
+i = 0
+while i < 3
+	Standard print-line: i string
+	i += 1
+Standard print-line: "-----"
+
 
