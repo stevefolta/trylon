@@ -24,4 +24,12 @@ while i < 3
 	i += 1
 Standard print-line: "-----"
 
+# "for"
+for char in "abc" characters
+	if char == `b`
+		continue
+	Standard print-line: char char-string
+Standard print-line: "-----"
+
+
 
