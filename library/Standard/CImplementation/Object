@@ -17,6 +17,9 @@ extend Standard Object
 	c-fn .proto
 		return this_->class_->proto;
 	
+	c-fn .parent-context
+		return this_->class_->parentContext;
+
 	c-fn .superclass
 		return this_->class_->superclass;
 	
