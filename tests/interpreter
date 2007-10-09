@@ -1,2 +1,3 @@
-Standard print-line: "Hello world!"
+message = "Hello world!"
+Standard print-line: message
 

@@ -71,11 +71,11 @@ extend Compiler SetArgumentFunction
 
 extend Compiler LocalGetter
 	interpret-call-with: arguments
-		# ...
+		return local initial-value
 
 extend Compiler LocalSetter
 	interpret-call-with: arguments
-		# ...
+		local initial-value = arguments first-item interpreted
 
 extend Compiler FunctionOnThis
 	interpret-call-with: arguments

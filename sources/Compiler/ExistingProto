@@ -37,6 +37,8 @@ lookup-function: name
 		if !(cur-proto responds-to: '.parent-context')
 			break
 		cur-proto = cur-proto .parent-context
+		if cur-proto == nil
+			break
 		# Is it directly visible?
 		if cur-proto responds-to: name-selector
 			existing-proto = ExistingProto new: cur-proto

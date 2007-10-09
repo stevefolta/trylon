@@ -14,7 +14,8 @@ lookup-function: name
 	is-setter = false
 	if name ends-with: ":"
 		var-name = name substr: 0 length: name length - 1
-		return VariableSetter new: var-name in: variables
+		if variables contains: var-name
+			return VariableSetter new: var-name in: variables
 	else if variables contains: name
 		return VariableGetter new: name in: variables
 	
@@ -28,7 +29,7 @@ lookup-function-autodeclaring: name
 		return function
 	
 	# If it wasn't found, and it's a setter, autodeclare a local.
-	if (name index-of: `:`) == name length - 1
+	if name ends-with: ":"
 		var-name = name substr: 0 length: name length - 1
 		variables at: var-name put: nil
 		return VariableSetter new: var-name in: variables
