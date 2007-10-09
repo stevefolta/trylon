@@ -1,5 +1,12 @@
 trylon Interpreter
 
+interpret: code
+	context = InterpreterContext new: (Compiler ExistingProto new: Main)
+	parser = Compiler Parser new: code context: context
+	parse-tree = parser parse-code
+	return parse-tree interpreted
+
+
 # Helper.
 
 interpret-send-of: name to: object with: arguments
@@ -37,5 +44,6 @@ interpret-send-of: name to: object with: arguments
 references
 	Expressions
 	Functions
+	Statements
 	InterpreterContext
 

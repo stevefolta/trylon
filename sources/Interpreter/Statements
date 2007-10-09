@@ -1,0 +1,104 @@
+trylon Statements
+
+extend Compiler Statement
+	interpreted
+		virtual
+
+	uninterpretable: name
+		throw MessageException new: "Can't interpret a \"" + name + "\" statement."
+
+
+extend Compiler ExpressionStatement
+	interpreted
+		return expression interpreted
+
+extend Compiler EmptyStatement
+	interpreted
+		return nil
+
+
+extend Compiler BlankLine
+	interpreted
+		return nil
+
+
+extend Compiler Comment
+	interpreted
+		return nil
+
+
+extend Compiler BlockStatement
+	interpreted
+		return block interpreted
+
+extend Compiler Block
+	interpreted
+		for statement in statements
+			statement interpreted
+		return nil
+
+
+extend Compiler ReturnStatement
+	interpreted
+		uninterpretable: "return"
+
+
+extend Compiler IfStatement
+	interpreted
+		if condition interpreted
+			return body interpreted
+		else if else-block
+			return else-block interpreted
+		return nil
+
+
+extend Compiler LoopStatement
+	interpreted
+		# *** Coming Soon.  Need to handle breaks and continues.
+		uninterpretable: "loop"
+
+extend Compiler WhileStatement
+	interpreted
+		# *** Coming Soon.  Need to handle breaks and continues.
+		uninterpretable: "while"
+
+extend Compiler ForStatement
+	interpreted
+		# *** Coming Soon.  Need to handle breaks and continues.
+		uninterpretable: "for"
+
+extend Compiler BreakStatement
+	interpreted
+		# *** Coming Soon.  Need to handle breaks and continues.
+		uninterpretable: "break"
+
+extend Compiler ContinueStatement
+	interpreted
+		# *** Coming Soon.  Need to handle breaks and continues.
+		uninterpretable: "continue"
+
+
+extend Compiler TryStatement
+	interpreted
+		try
+			body interpreted
+		else
+			if else-clause
+				else-clause interpreted
+
+extend Compiler CatchClause
+	interpreted
+		return body interpreted
+
+extend Compiler ThrowStatement
+	interpreted
+		throw value interpreted
+
+
+extend Compiler SwitchStatement
+	interpreted
+		# Coming Soon.
+		uninterpretable: "switch"
+
+
+
