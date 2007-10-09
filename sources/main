@@ -44,6 +44,10 @@ main: arguments
 			for arg in arguments tail tail
 				test-lines-lexer: arg
 
+		else if !file-names is-empty
+			for file-name in file-names
+				Interpreter interpret: (File contents-of: file-name)
+
 		else
 			return-value = Compiler compile: compile-symbols
 	
@@ -290,7 +294,7 @@ iff !targeting-jolt
 extend String
 	intern
 		iff !targeting-jolt
-			return InternedString new: this
+			return Symbol intern: this
 		iff targeting-jolt
 			return this asSymbol
 
