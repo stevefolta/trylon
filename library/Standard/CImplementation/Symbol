@@ -56,7 +56,7 @@ class BuiltInSymbols
 			else if (Call_(_lt_, name, symbol))
 				end = symbol;
 			else
-				start = symbol;
+				start = symbol + 1;
 			}
 		return nil;
 
