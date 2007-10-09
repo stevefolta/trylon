@@ -1,3 +1,5 @@
+#!/usr/bin/env trylon
+
 # Declaration, expression.
 message = "Hello world!"
 Standard print-line: message
