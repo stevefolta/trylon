@@ -1,3 +1,15 @@
 message = "Hello world!"
 Standard print-line: message
 
+if 3 < 2
+	Standard print-line: "Yeh."
+else
+	Standard print-line: "Nah."
+
+i = 0
+loop
+	Standard print-line: i string
+	if i >= 3
+		break
+	i += 1
+

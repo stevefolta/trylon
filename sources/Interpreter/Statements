@@ -52,10 +52,27 @@ extend Compiler IfStatement
 		return nil
 
 
+class Break
+	superclass Exception
+	message
+		return "break"
+class Continue
+	superclass Exception
+	message
+		return "continue"
+
 extend Compiler LoopStatement
 	interpreted
-		# *** Coming Soon.  Need to handle breaks and continues.
-		uninterpretable: "loop"
+		try
+			loop
+				try
+					body interpreted
+				else
+					if exception != Interpreter Statements Continue
+						throw exception
+		else
+			if exception != Interpreter Statements Break
+				throw exception
 
 extend Compiler WhileStatement
 	interpreted
@@ -69,13 +86,11 @@ extend Compiler ForStatement
 
 extend Compiler BreakStatement
 	interpreted
-		# *** Coming Soon.  Need to handle breaks and continues.
-		uninterpretable: "break"
+		throw Interpreter Statements Break
 
 extend Compiler ContinueStatement
 	interpreted
-		# *** Coming Soon.  Need to handle breaks and continues.
-		uninterpretable: "continue"
+		throw Interpreter Statements Continue
 
 
 extend Compiler TryStatement
