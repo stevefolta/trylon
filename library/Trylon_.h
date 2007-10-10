@@ -11,6 +11,7 @@ struct ClassInfo {
 	int 	classNum;
 	int 	size;
 	obj_	proto, parentContext, superclass;
+	obj_	usedContexts;
 	obj_	name;
 	obj_	addedFields; 	/* Only if "debugger" is on. */
 };
