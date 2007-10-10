@@ -16,42 +16,52 @@ create: proto
 lookup-function: name
 	name-selector = name intern
 
-	# Does the proto know it?
-	if proto responds-to: name-selector
-		first-char = name at: 0
-		if (first-char >= `A`) && (first-char <= `Z`)
-			existing-proto = 	--
-				ExistingProto new: name proto: (proto perform: name-selector)
-			return ProtoFunction new: existing-proto
-		return PrimitiveFunction new: name on-proto: this
-
 	# Are we adding it?
 	function = new-functions at: name
 	if function
 		return function
 	
-	# Check the context.
+	# Check the context, starting here.
 	cur-proto = proto
 	loop
+		# Is it directly visible?
+		function = function-for: name-selector in: cur-proto
+		if function
+			return function
+
+		# Is it visible due to being in a "used" context?
+		if cur-proto responds-to: '.used-contexts'
+			for context in cur-proto .used-contexts
+				function = function-for: name-selector in: context
+				if function
+					return function
+
 		# Go up a level.
 		if !(cur-proto responds-to: '.parent-context')
 			break
 		cur-proto = cur-proto .parent-context
 		if cur-proto == nil
 			break
-		# Is it directly visible?
-		if cur-proto responds-to: name-selector
-			existing-proto = ExistingProto new: cur-proto
-			return PrimitiveFunction new: name on-proto: existing-proto
-		# Is it visible due to being in a "used" context?
-		if cur-proto responds-to: '.used-contexts'
-			for context in cur-proto .used-contexts
-				if context responds-to: name-selector
-					existing-proto = ExistingProto new: context
-					return PrimitiveFunction new: name on-proto: existing-proto
-					
 	
 	return nil
+
+function-for: selector in: proto
+	if !(proto responds-to: selector)
+		return nil
+	
+	# Is it a ProtoFunction?
+	if (selector index-of: `:`) < 0
+		# A little dangerous: we're going to actually make the call to see if we
+		# get a proto.
+		result = proto perform: selector
+		if result .proto same-as: result
+			existing-proto = ExistingProto new: selector string proto: result
+			return ProtoFunction new: existing-proto
+
+	existing-proto = this
+	if proto != this
+		existing-proto = ExistingProto new: selector string proto: proto
+	return PrimitiveFunction new: selector string on-proto: existing-proto
 
 
 lookup-function: name visited-protos: visited-protos

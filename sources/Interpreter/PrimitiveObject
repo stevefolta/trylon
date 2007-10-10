@@ -1,0 +1,12 @@
+trylon PrimitiveObject
+superclass Compiler TrylonExpression
+
+fields object
+
+
+create: object
+	this object = object
+
+interpreted
+	return object
+

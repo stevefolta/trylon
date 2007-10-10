@@ -2,7 +2,7 @@
 
 # Declaration, expression.
 message = "Hello world!"
-Standard print-line: message
+print-line: message
 
 # "if".
 if 2 < 3
