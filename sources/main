@@ -294,7 +294,10 @@ iff !targeting-jolt
 extend String
 	intern
 		iff !targeting-jolt
-			return Symbol intern: this
+			if build-settings targeting-jolt
+				return InternedString new: this
+			else
+				return Symbol intern: this
 		iff targeting-jolt
 			return this asSymbol
 

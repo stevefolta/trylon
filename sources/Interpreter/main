@@ -11,14 +11,21 @@ interpret: code
 	parse-tree = parser parse-code
 	compiler = this
 	parse-tree prepare-to-emit
+	result = parse-tree interpreted
 	compiler = nil
-	return parse-tree interpreted
+	return result
 
 
 # As a type of compiler.
 
 calling-selector: selector
 	# Nothing to do.
+
+build-settings
+	if .build-settings == nil
+		.build-settings = Compiler BuildSettings new
+	return .build-settings
+field .build-settings
 
 
 # Helper.

@@ -50,7 +50,8 @@ function-for: selector in: proto
 		return nil
 	
 	# Is it a ProtoFunction?
-	if (selector index-of: `:`) < 0
+	function-name = selector string
+	if (function-name index-of: `:`) < 0
 		# A little dangerous: we're going to actually make the call to see if we
 		# get a proto.
 		result = proto perform: selector
@@ -60,8 +61,8 @@ function-for: selector in: proto
 
 	existing-proto = this
 	if proto != this
-		existing-proto = ExistingProto new: selector string proto: proto
-	return PrimitiveFunction new: selector string on-proto: existing-proto
+		existing-proto = ExistingProto new: function-name proto: proto
+	return PrimitiveFunction new: function-name on-proto: existing-proto
 
 
 lookup-function: name visited-protos: visited-protos
