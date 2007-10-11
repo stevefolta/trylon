@@ -39,6 +39,8 @@ compile-dir: dir as: name into: parent-proto
 
 
 compile-program: compile-symbols
+	start-ms = System milliseconds
+
 	# Read the settings.
 	for setting in compile-symbols
 		switch setting
@@ -94,7 +96,12 @@ compile-program: compile-symbols
 	if build-settings targeting-c
 		CCompiler emit-c: this
 
-	status-reporter report: "Done."
+	# Report.
+	iff time-compilation
+		elapsed-time = System milliseconds - start-ms
+		status-reporter report: "Compiled in " + elapsed-time string + "ms."
+	iff !time-compilation
+		status-reporter report: "Done."
 	status-reporter show-warnings
 
 
