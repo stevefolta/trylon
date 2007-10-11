@@ -146,7 +146,7 @@ iff !targeting-jolt
 
 			if num-items == 2 && (this at: 0) == 'quote'
 				value = this at: 1
-				if (value is-a: InternedString)
+				if (value is-a: Symbol)
 					c = value first-character
 				  if (c < `A`) || (c >= `{`) || (c == `[`) || (c == `]`)
 						# Special-case non-alpha symbols.
@@ -277,27 +277,11 @@ iff targeting-jolt
 				stream write: value string
 
 
-iff !targeting-jolt
-	class InternedString
-		field string
-
-		create: string
-			this string = string
-
-		fn == string
-			return this string == string
-
-		fn first-character
-			return string first-character
-
 
 extend String
 	intern
 		iff !targeting-jolt
-			if build-settings targeting-jolt
-				return InternedString new: this
-			else
-				return Symbol intern: this
+			return Symbol intern: this
 		iff targeting-jolt
 			return this asSymbol
 
