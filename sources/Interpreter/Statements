@@ -111,16 +111,23 @@ extend Compiler ContinueStatement
 
 
 extend Compiler TryStatement
+	cur-interpreted-exception = nil
+
 	interpreted
 		try
 			body interpreted
 		else
 			if else-clause
+				cur-interpreted-exception = exception
 				else-clause interpreted
 
 extend Compiler CatchClause
 	interpreted
 		return body interpreted
+
+extend Compiler CaughtExceptionFunction
+	interpret-call-with: arguments
+		return TryStatement cur-interpreted-exception
 
 extend Compiler ThrowStatement
 	interpreted

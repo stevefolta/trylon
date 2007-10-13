@@ -83,8 +83,4 @@ extend Compiler FunctionOnThis
 	interpret-call-with: arguments
 		# ...
 
-extend Compiler CaughtExceptionFunction
-	interpret-call-with: arguments
-		# ...
-
 
