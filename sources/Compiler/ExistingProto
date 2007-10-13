@@ -55,7 +55,7 @@ function-for: selector in: proto
 		# A little dangerous: we're going to actually make the call to see if we
 		# get a proto.
 		result = proto perform: selector
-		if result .proto same-as: result
+		if result && (result .proto same-as: result)
 			existing-proto = ExistingProto new: selector string proto: result
 			return ProtoFunction new: existing-proto
 
