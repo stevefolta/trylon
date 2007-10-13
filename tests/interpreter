@@ -32,6 +32,20 @@ for char in "abc" characters
 		continue
 	Standard print-line: char char-string
 Standard print-line: "-----"
+print-line
+
+# Files.
+for file in ("interpreter", "tests/interpreter")
+	try
+		contents = File contents-of: file
+		line-number = 1
+		for line in contents lines
+			print: line-number string
+			print: ": "
+			print-line: line
+			line-number += 1
+	else
+		print-line: exception message
 
 
 
