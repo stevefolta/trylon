@@ -1,4 +1,4 @@
-Welcome to Trylon 2!  Sorry, the documentation isn't ready yet.
+Welcome to Trylon 2!
 
 Trylon 2 is the next iteration of the Trylon language, changed based on lessons
 learned while doing Trylid:
@@ -22,6 +22,8 @@ that's automatically included.  In most cases, the build-settings file can be
 as simple as:
 
 	program = "my-program-name"
+
+In fact, you don't need even that.  Saying "trylon my-program-name" at the top of your main "main" file is sufficient.  So you can get rid of the build-settings file altogether for simpler programs.
 
 How to use it?  Depends how you got it.  If as a tarball, I think you can type
 "make" to build the compiler, and then "trylon" to try self-compiling.  If you
