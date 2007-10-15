@@ -138,6 +138,7 @@ UsingClass_(Symbol__Standard)
 UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
+UsingClass_(True__Standard)
 
 
 
@@ -201,7 +202,7 @@ UsingClass_(Node__Dictionary__Standard)
 
 /* Expressions */
 
-#define true_	(&Object__Standard)
+#define true_	(&True__Standard)
 #define Not_(object)	(object ? nil : true_)
 #define Bool_(value)	(value ? true_ : nil)
 
