@@ -6,7 +6,7 @@ endif
 all: trylon
 
 trylon:
-	(cd library/Posix && make)
+	(cd library/IdPosix && make)
 	$(CC) -o trylon .c-sources/*.c -lgc -lm
 
 install:
