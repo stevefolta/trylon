@@ -6,8 +6,12 @@ endif
 all: trylon
 
 trylon:
-	(cd library/IdPosix && make)
 	$(CC) -o trylon .c-sources/*.c -lgc -lm
+
+.PHONY: jolt-backend install clean
+
+jolt-backend:
+	(cd library/IdPosix && make)
 
 install:
 	install -d $(PREFIX)/bin
