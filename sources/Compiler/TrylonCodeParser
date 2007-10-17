@@ -256,6 +256,7 @@ class CatchParser
 			words next
 		comment = parser get-comment: words
 		body = parser parse-block: line block
+		body = BlockStatement new: body
 		parser attach-else: body line: line
 		return nil
 
