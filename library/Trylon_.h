@@ -38,11 +38,7 @@ struct RDTableEntry_ {
 
 extern struct RDTableEntry_ dispatchTable_[];
 
-extern fn_ptr_ Dispatch_(selector_ selector, obj_ object)
-#ifdef __GNUC__
-	__attribute__((fastcall))
-#endif
-	;
+extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 extern obj_ RespondsTo_(obj_ object, selector_ selector);
 
 #ifdef SUPPORT_PERFORM_

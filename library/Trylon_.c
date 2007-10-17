@@ -17,9 +17,6 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 }
 
 
-#ifdef __GNUC__
-	__attribute__((fastcall))
-#endif
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
 	struct RDTableEntry_* entry =
