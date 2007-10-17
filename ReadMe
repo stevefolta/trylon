@@ -1,31 +1,37 @@
-Welcome to Trylon 2!  Sorry, the documentation isn't ready yet.
+Trylon ReadMe
+=============
 
-Trylon 2 is the next iteration of the Trylon language, changed based on lessons
-learned while doing Trylid:
+Installation
+------------
 
-- Each class now has prototype object associated with it.  Naming the class in
-an expression names that prototype object.  There is no more distinction
-between packages and classes; it's all classes now, and you can use a directory
-to define a class.
+You must have the Boehm-Demers-Wieser garbage collector installed as "libgc".
+This has different package names on different distributions, such as "boehm-gc"
+(Gentoo), "libgc-dev" (Debian/Ubuntu, or so I'm told), or simply "gc" (Fink).
 
-- "nil" is the only falsy value, which makes tests quicker.
+You won't be able to build Trylon from the Git repository.  You must start with the tarball: <http://somefancy.com/trylon/trylon.tgz>.
 
-- Catch clauses don't specify a type, 'cause I've found you don't care about
-the type often enough.  Why incur those "is-a:" calls?  It's just as easy to
-add them to the source when needed.
+To install Trylon from the tarball, do this:
 
-In fact, the Trylon 2 compiler is derived from the Trylid compiler; a C backend
-was added.
+	make
+	make jolt-backend 	# Optional.  Only do this if you have Jolt installed.
+	make install
 
-Additionally, you no longer need the "boilerplate" in your build-settings file;
-that's automatically included.  In most cases, the build-settings file can be
-as simple as:
+The "make install" will install /usr/bin/trylon and /usr/lib/trylon.  If you
+want to install it elsewhere, you can use PREFIX:
 
-	program = "my-program-name"
+	make PREFIX=/opt install
 
-How to use it?  Depends how you got it.  If as a tarball, I think you can type
-"make" to build the compiler, and then "trylon" to try self-compiling.  If you
-got it from Git, you'll need a Trylon compiler already built (the Trylon 1
-compiler is fine); see <http://somefancy.com/trylon>.
+The Trylon compiler will look for its library in a few standard places
+(/usr/lib, /usr/local/lib, /opt/lib, even $HOME/trylon), but if install it
+somewhere else, you will need to set the $TRYLON_LIBRARY environment variable
+to tell it where it is.
+
+
+Contacts
+--------
+
+The Trylon web site is at <http://somefancy.com/trylon>.  You can contact me by
+email at "steve@folta.net".
+
 
 

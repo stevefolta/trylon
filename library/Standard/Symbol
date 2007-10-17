@@ -11,6 +11,9 @@ fn != arg
 print-string
 	return "'" + this + "'"
 
+debug-string
+	return print-string
+
 
 
 # Copyright 2007 Steve Folta.  See the License file.

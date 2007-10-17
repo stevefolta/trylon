@@ -1,0 +1,143 @@
+trylon Statements
+
+extend Compiler Statement
+	interpreted
+		virtual
+
+	uninterpretable: name
+		throw MessageException new: "Can't interpret a \"" + name + "\" statement."
+
+
+extend Compiler ExpressionStatement
+	interpreted
+		return expression interpreted
+
+extend Compiler EmptyStatement
+	interpreted
+		return nil
+
+
+extend Compiler BlankLine
+	interpreted
+		return nil
+
+
+extend Compiler Comment
+	interpreted
+		return nil
+
+
+extend Compiler BlockStatement
+	interpreted
+		return block interpreted
+
+extend Compiler Block
+	interpreted
+		for statement in statements
+			statement interpreted
+		return nil
+
+
+extend Compiler ReturnStatement
+	interpreted
+		uninterpretable: "return"
+
+
+extend Compiler IfStatement
+	interpreted
+		if condition interpreted
+			return body interpreted
+		else if else-block
+			return else-block interpreted
+		return nil
+
+
+class Break
+	superclass Exception
+	message
+		return "break"
+class Continue
+	superclass Exception
+	message
+		return "continue"
+
+extend Compiler LoopStatement
+	interpreted
+		try
+			loop
+				try
+					body interpreted
+				else
+					if exception != Interpreter Statements Continue
+						throw exception
+		else
+			if exception != Interpreter Statements Break
+				throw exception
+
+extend Compiler WhileStatement
+	interpreted
+		try
+			while condition interpreted
+				try
+					body interpreted
+				else
+					if exception != Interpreter Statements Continue
+						throw exception
+		else
+			if exception != Interpreter Statements Break
+				throw exception
+
+extend Compiler ForStatement
+	interpreted
+		try
+			for item in collection interpreted
+				local initial-value = item
+				try
+					body interpreted
+				else
+					if exception != Interpreter Statements Continue
+						throw exception
+		else
+			if exception != Interpreter Statements Break
+				throw exception
+
+extend Compiler BreakStatement
+	interpreted
+		throw Interpreter Statements Break
+
+extend Compiler ContinueStatement
+	interpreted
+		throw Interpreter Statements Continue
+
+
+extend Compiler TryStatement
+	cur-interpreted-exception = nil
+
+	interpreted
+		try
+			body interpreted
+		else
+			if else-clause
+				cur-interpreted-exception = exception
+				else-clause interpreted
+
+extend Compiler CatchClause
+	interpreted
+		return body interpreted
+
+extend Compiler CaughtExceptionFunction
+	interpret-call-with: arguments
+		return TryStatement cur-interpreted-exception
+
+extend Compiler ThrowStatement
+	interpreted
+		throw value interpreted
+
+
+extend Compiler SwitchStatement
+	interpreted
+		# Coming Soon.
+		uninterpretable: "switch"
+
+
+

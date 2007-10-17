@@ -34,6 +34,9 @@ fn ...
 	etc.
 
 
+references
+	iff targeting-c
+		True
 
 
 # Copyright 2007 Steve Folta.  See the License file.

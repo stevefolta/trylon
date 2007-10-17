@@ -34,6 +34,9 @@ count
 		cell = cell next
 	return num-items
 
+num-items
+	return count
+
 first-item
 	if first-cell == nil
 		return nil

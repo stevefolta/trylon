@@ -1,5 +1,6 @@
 program = "trylon"
 debugging = true
+support-perform = true
 
 iff !targeting-jolt
 	# Trylon 1 boilerplate.

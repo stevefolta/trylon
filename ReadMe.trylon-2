@@ -1,0 +1,35 @@
+Welcome to Trylon 2!
+
+Trylon 2 is the next iteration of the Trylon language, changed based on lessons
+learned while doing Trylid:
+
+- Each class now has prototype object associated with it.  Naming the class in
+an expression names that prototype object.  There is no more distinction
+between packages and classes; it's all classes now, and you can use a directory
+to define a class.
+
+- "nil" is the only falsy value, which makes tests quicker.
+
+- Catch clauses don't specify a type, 'cause I've found you don't care about
+the type often enough.  Why incur those "is-a:" calls?  It's just as easy to
+add them to the source when needed.
+
+In fact, the Trylon 2 compiler is derived from the Trylid compiler; a C backend
+was added.
+
+Additionally, you no longer need the "boilerplate" in your build-settings file;
+that's automatically included.  In most cases, the build-settings file can be
+as simple as:
+
+	program = "my-program-name"
+
+In fact, you don't need even that.  Saying "trylon my-program-name" at the top
+of your main "main" file is sufficient.  So you can get rid of the
+build-settings file altogether for simpler programs.
+
+How to use it?  Depends how you got it.  If as a tarball, you can type "make"
+to build the compiler, and then "trylon" to try self-compiling.  If you got it
+from Git, you'll need a Trylon compiler already built (the Trylon 1 compiler is
+fine); see <http://somefancy.com/trylon>.
+
+

@@ -255,6 +255,7 @@ lowercase
 
 int
 float
+intern
 
 
 # ===== Debugging

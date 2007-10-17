@@ -1,0 +1,8 @@
+trylon True
+
+string
+	return "true"
+
+debug-write
+	print-line: "true"
+

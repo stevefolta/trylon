@@ -1,0 +1,86 @@
+trylon Functions
+
+extend Compiler TrylonFunction
+	interpret-call-with: arguments
+		virtual
+	
+	# Helper.
+	interpret-proto-send-of: name to: proto with: arguments
+		proto-expression = Interpreter PrimitiveObject new: proto proto
+		return 	--
+			Interpreter interpret-send-of: name to: proto-expression with: arguments
+
+
+# Object structure.
+
+extend Compiler FieldGetter
+	interpret-call-with: arguments
+		return interpret-proto-send-of: field name to: on-proto with: arguments
+
+extend Compiler FieldSetter
+	interpret-call-with: arguments
+		return interpret-proto-send-of: field name + ":" to: on-proto with: arguments
+
+extend Compiler SharedFieldGetter
+	interpret-call-with: arguments
+		return interpret-proto-send-of: field name to: on-proto with: arguments
+
+extend Compiler SharedFieldSetter
+	interpret-call-with: arguments
+		return interpret-proto-send-of: field name + ":" to: on-proto with: arguments
+
+extend Compiler CompiledFunction
+	interpret-call-with: arguments
+		return interpret-proto-send-of: name to: on-proto with: arguments
+
+extend Compiler ProtoFunction
+	interpret-call-with: arguments
+		return proto proto
+
+extend Compiler NewFunction
+	interpret-call-with: arguments
+		return interpret-proto-send-of: name to: on-proto with: arguments
+
+extend Compiler NilFunction
+	interpret-call-with: arguments
+		return nil
+
+extend Compiler BoolLiteralFunction
+	interpret-call-with: arguments
+		return value
+
+extend Compiler PrimitiveFunction
+	interpret-call-with: arguments
+		return interpret-proto-send-of: name to: on-proto with: arguments
+
+
+# Inside a method.
+
+# None of these are actually used.  At least not yet.  You can interpret
+# expressions, but you can't add new methods yet.
+
+extend Compiler ThisFunction
+	interpret-call-with: arguments
+		# ...
+
+extend Compiler ArgumentFunction
+	interpret-call-with: arguments
+		# ...
+
+extend Compiler SetArgumentFunction
+	interpret-call-with: arguments
+		# ...
+
+extend Compiler LocalGetter
+	interpret-call-with: arguments
+		return local initial-value
+
+extend Compiler LocalSetter
+	interpret-call-with: arguments
+		local initial-value = arguments first-item interpreted
+
+extend Compiler FunctionOnThis
+	interpret-call-with: arguments
+		# ...
+
+

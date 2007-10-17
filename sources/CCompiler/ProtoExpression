@@ -1,0 +1,20 @@
+trylon ProtoExpression
+
+superclass Compiler TrylonExpression
+fields proto
+
+
+create: proto
+	this proto = proto
+
+prepare-to-emit
+
+is-literal
+	return true
+
+emit-code: builder
+	return CCompiler LiteralResult new: this
+
+access
+	return "Proto_(" + proto c-name + ")"
+

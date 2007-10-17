@@ -55,6 +55,17 @@ emit-on: stream
 		tuple emit-code: this
 		stream write-line: tuple forward-declaration
 		added-fields-access = tuple access
+	
+	# Used protos.
+	used-contexts-access = "nil"
+	if proto uses-protos && !proto uses-protos is-empty
+		tuple = Compiler TupleExpression new
+		for used-proto in proto uses-protos
+			stream write-all: ("UsingClass_(", used-proto c-name, ")\n")
+			tuple add-member: (ProtoExpression new: used-proto)
+		tuple emit-code: this
+		stream write-line: tuple forward-declaration
+		used-contexts-access = tuple access
 
 	# Class info.
 	compiler using-symbol: proto name
@@ -81,6 +92,8 @@ emit-on: stream
 	stream write: parent-context-ref
 	stream write: ", "
 	stream write: superclass-ref
+	stream write: ", "
+	stream write: used-contexts-access
 	stream write: ", Sym_("
 	stream write: mangled-name
 	stream write: ") ,"

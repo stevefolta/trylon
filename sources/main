@@ -44,6 +44,10 @@ main: arguments
 			for arg in arguments tail tail
 				test-lines-lexer: arg
 
+		else if !file-names is-empty
+			for file-name in file-names
+				Interpreter interpret: (File contents-of: file-name)
+
 		else
 			return-value = Compiler compile: compile-symbols
 	
@@ -142,7 +146,7 @@ iff !targeting-jolt
 
 			if num-items == 2 && (this at: 0) == 'quote'
 				value = this at: 1
-				if (value is-a: InternedString)
+				if (value is-a: Symbol)
 					c = value first-character
 				  if (c < `A`) || (c >= `{`) || (c == `[`) || (c == `]`)
 						# Special-case non-alpha symbols.
@@ -273,27 +277,6 @@ iff targeting-jolt
 				stream write: value string
 
 
-iff !targeting-jolt
-	class InternedString
-		field string
-
-		create: string
-			this string = string
-
-		fn == string
-			return this string == string
-
-		fn first-character
-			return string first-character
-
-
-extend String
-	intern
-		iff !targeting-jolt
-			return InternedString new: this
-		iff targeting-jolt
-			return this asSymbol
-
 
 # Test.
 
@@ -374,6 +357,7 @@ references
 	# the extensions came too late.
 	CCompiler
 	JoltCompiler
+	Interpreter
 
 
 

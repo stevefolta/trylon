@@ -604,6 +604,23 @@ skip-block
 				break
 
 
+parse-code
+	# For the interpreter.
+	saved-context = context
+	block = Block new: context
+	context = block
+
+	while current-token != 'eof'
+		statement = parse-statement
+		if statement == nil
+			parse-error: "Statement expected."
+
+		block append: statement
+
+	context = saved-context
+	return block
+
+
 parse-statement
 	if current-token == 'name'
 		name = current-token text

@@ -1,0 +1,15 @@
+trylon VariableSetter
+
+fields name dict
+
+
+create: name in: dict
+	this name = name
+	this dict = dict
+
+interpret-call-with: arguments
+	value = arguments first-item
+	dict at: name put: value
+	return value
+
+

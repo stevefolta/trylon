@@ -10,4 +10,7 @@ extend Standard String
 	
 	c-fn float
 		return BuildFloat_(strtod(CString_(this_), nil));
+	
+	intern
+		return Symbol intern: this
 

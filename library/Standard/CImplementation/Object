@@ -17,11 +17,17 @@ extend Standard Object
 	c-fn .proto
 		return this_->class_->proto;
 	
+	c-fn .parent-context
+		return this_->class_->parentContext;
+
 	c-fn .superclass
 		return this_->class_->superclass;
 	
 	c-fn .proto-name
 		return this_->class_->name;
+	
+	c-fn .used-contexts
+		return this_->class_->usedContexts;
 
 	c-fn .object-size
 		return BuildInt_(sizeof(classref_) + this_->class_->size);

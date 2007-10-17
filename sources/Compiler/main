@@ -5,14 +5,8 @@ trylon Compiler
 
 
 compile: compile-symbols
-	start-ms = nil
-	iff time-compilation
-		start-ms = System milliseconds
 	compiler = Compiler new
 	compiler compile-program: compile-symbols
-	iff time-compilation
-		elapsed-time = System milliseconds - start-ms
-		print-line: "Compilation took " + elapsed-time string + "ms."
 	return compiler return-value
 
 compile
