@@ -373,8 +373,9 @@ emit-symbols
 		if !include-selectors && !(symbol used-as-symbol)
 			continue
 		name = symbol name
+		escaped-name = CCompiler escape-string-for-c: name
 		stream write-all: 	--
-			("DefineSymbolData_(", (mangle-name: name), ", \"", name, "\")\n")
+			("DefineSymbolData_(", (mangle-name: name), ", \"", escaped-name, "\")\n")
 	stream write-line
 	first-symbol-name = nil
 	last-symbol-name = nil
