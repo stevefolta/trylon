@@ -179,10 +179,7 @@ parse-equality-expression
 			expression-expected-after: word
 		# Special-case "== nil" and "!= nil".
 		if expr2 is-a: LiteralNil
-			message = "isNil"
-			if word == "!="
-				message = "notNil"
-			expr = Send new: message object: expr arguments: List new
+			expr = NilTest new: expr is-nil: (word == "==")
 		else
 			expr = make-binop-call: word with: expr and: expr2
 
