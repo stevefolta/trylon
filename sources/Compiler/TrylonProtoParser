@@ -34,6 +34,8 @@ parse-line: line
 		"field", "fields"
 			words next
 			for field-name in words
+				if field-name starts-with: "#"
+					break
 				field = CompiledField new: field-name
 				proto add-field: field
 		"superclass"
