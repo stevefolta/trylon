@@ -12,6 +12,47 @@ To optimize field access, "MethodContext lookup-function:" would need to explici
 
 =====
 
+New Parser Bug
+	[2007.10.19]
+
+Current crash is due to a problem with precedence.  Need to separate assignments from other binops:
+
+	foo = quux bar: baz
+
+currently parses as:
+
+	(foo = quux) bar: baz
+
+The old parser doesn't have that problem, but at the expense of not being clean about its syntax.  It ought to be fixed before the Trylon 2 release (assuming we don't switch to the new parser).
+
+New precedence:
+
+	,
+	=, +=, etc.
+	||
+	&&
+	!
+	keyword:
+	|
+	^
+	&
+	==, !=
+	<, >, <=, >=
+	<<, >>
+	+, -
+	*, /, %
+	unary+, unary-, ~ 	[Used to have !.]
+	unary send
+	primary
+
+Tests:
+
+	foo: bar && !bar: baz
+	foo: x | 0x03
+
+
+=====
+
 To Do
 	[live]
 
