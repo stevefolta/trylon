@@ -174,8 +174,8 @@ get-subproto: name
 			return add-proto: name directory: (directory at: name)
 		else if directory contains: name
 			proto = add-proto: name
-			parser = Parser new: (directory at: name) contents context: this
-			parser parse-proto-file: proto
+			lines = (LinesLexer new: (directory at: name) contents) lex
+			TrylonProtoParser parse-proto-contents: lines into: proto
 			return proto
 	
 	return nil
@@ -232,10 +232,8 @@ setup-main: main-directory library-directory: library-directory
 		pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
 		proto-function = ProtoFunction new: pepsi-proto
 		standard-proto functions at: "Pepsi" put: proto-function
-		parser = 	--
-			Parser new: (standard-directory at: "Pepsi") contents 	--
-				context: standard-proto
-		parser parse-proto-file: pepsi-proto
+		lines = (LinesLexer new: (standard-directory at: "Pepsi") contents) lex
+		TrylonProtoParser parse-proto-contents: lines into: pepsi-proto
 		compiler proto-queue append: pepsi-proto
 	
 	# Targeting C.

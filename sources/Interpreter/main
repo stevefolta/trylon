@@ -7,8 +7,9 @@ interpret: code
 	iff targeting-jolt
 		main-context = Trylon
 	context = Compiler ExistingProto new: main-context
-	parser = Compiler Parser new: code context: context
-	parse-tree = parser parse-code
+	lines = (Compiler LinesLexer new: code) lex
+	parser = Compiler TrylonCodeParser new: lines in: context
+	parse-tree = parser parse
 	compiler = this
 	parse-tree prepare-to-emit
 	result = parse-tree interpreted
