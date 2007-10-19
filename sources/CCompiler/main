@@ -221,6 +221,57 @@ string-literal-length: string
 	
 	return length
 
+
+escape-string-for-c: string
+	result = StringBuilder new
+	run-start = string start
+	p = run-start
+	stopper = string stopper
+	while p < stopper
+		c = p deref-char
+		if c < ` ` || c > `~` || c == `"` || c == `\\`
+			# Finish off the current run.
+			result += String new: run-start to: p
+			p += 1
+			run-start = p
+
+			# Add the escaped character.
+			result += "\\"
+			escape-string = nil
+			switch c
+				`\n`
+					escape-string = "n"
+				`\t`
+					escape-string = "t"
+				`\r`
+					escape-string = "r"
+				`\b`
+					escape-string = "b"
+				`"`, `\\`
+					escape-string = c char-string
+				else
+					escape-string = "x"
+					digit = c >> 4
+					if digit > 9
+						escape-string += (digit - 0x0A + `A`) char-string
+					else
+						escape-string += (digit + `0`) char-string
+					digit = c & 0x0F
+					if digit > 9
+						escape-string += (digit - 0x0A + `A`) char-string
+					else
+						escape-string += (digit + `0`) char-string
+			result += escape-string
+
+		else
+			# Unescaped character -- just add it to the run.
+			p += 1
+
+	# Finish off the last run and return.
+	result += String new: run-start to: p
+	return result string
+
+
 extend Compiler
 	mangle-name: name
 		return CCompiler mangle-name: name

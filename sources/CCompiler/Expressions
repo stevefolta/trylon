@@ -121,8 +121,9 @@ extend Compiler StringLiteral
 		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
+		escaped-string = CCompiler escape-string-for-c: value string
 		stream write-all: 	--
-			("\tDefineString_(", index string, ", \"", value string, "\")\n")
+			("\tDefineString_(", index string, ", \"", escaped-string, "\")\n")
 	
 	access
 		return "Str_(" + index string + ")"
