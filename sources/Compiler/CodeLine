@@ -23,10 +23,11 @@ flattened-block
 	return lines
 
 
-flattened-text
+flattened-block-text
 	result = StringBuilder new
 	for line in flattened-block
 		result += line
+		result += "\n"
 	return result string
 
 
