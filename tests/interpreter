@@ -47,5 +47,8 @@ for file in ("interpreter", "tests/interpreter")
 	else
 		print-line: exception message
 
+# We can get to the compiler.  But what could we do with it?
+Compiler
+
 
 

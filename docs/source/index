@@ -1,0 +1,34 @@
+Trylon
+
+
+What is Trylon?
+
+Trylon is a computer language.  It is basically a cross between Python and Smalltalk.  It uses indentation for <a href="code-structure.html">program structure</a>, like Python, and it uses Smalltalk's <a href="expressions.html">expression syntax</a> (but with precedence).  Its <a href="objects.html">objects</a> are dynamically typed, but its programs are statically compiled (via C).
+
+======
+
+What is Trylon 2?
+
+Trylon 2 improves on the original Trylon by having a better, simpler object system.  See the <a href="objects.html">objects</a> doc.
+
+Other smaller improvements have also been made: "try"/"else", for instance.  And there is a backend for Jolt (from the Trylid project), and an experimental interpreter.
+
+======
+
+Getting Trylon
+
+Trylon is available as a <a href="trylon.tgz">tarball</a> which should compile on Unixy systems (but you'll need to have the Boehm-Demers-Weiser garbage collector package installed).
+
+======
+
+Documentation
+
+	<a href="objects.html">Objects</a>
+	<a href="code-structure.html">Code Structure</a>
+	<a href="statements.html">Statements</a>
+	<a href="expressions.html">Expressions</a>
+	<a href="building.html">Building Trylon Programs</a>
+	<a href="debugging.html">Debugging</a>
+
+
+
