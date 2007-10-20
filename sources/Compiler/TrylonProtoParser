@@ -15,8 +15,9 @@ parse
 
 
 parse-block: lines
-	for line in lines
-		parse-line: line
+	if lines
+		for line in lines
+			parse-line: line
 
 
 parse-line: line
