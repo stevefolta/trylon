@@ -13,6 +13,9 @@ extend Compiler Statement
 		if comment
 			line += " \t/* " + comment + " */"
 		return line
+	
+	is-self-blocking
+		return false
 
 
 extend Compiler ExpressionStatement
@@ -41,6 +44,9 @@ extend Compiler Comment
 extend Compiler BlockStatement
 	emit-code: builder
 		block emit-code: builder
+	
+	is-self-blocking
+		return true
 
 extend Compiler Block
 	emit-code: builder
@@ -86,7 +92,13 @@ extend Compiler IfStatement
 				statement emit-code: builder
 		if else-block
 			builder add-line: (add-comment: "else" comment: else-comment)
-			else-block emit-code: builder
+			adjusted-else-block = else-block
+			if !(else-block is-self-blocking)
+				adjusted-else-block = Block new: nil
+				# The context is irrelevant; we've already resolved the functions.
+				adjusted-else-block append: else-block
+				adjusted-else-block = BlockStatement new: adjusted-else-block
+			adjusted-else-block emit-code: builder
 
 
 extend Compiler LoopStatement
