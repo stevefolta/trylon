@@ -47,8 +47,12 @@ parse-line: line
 			parse-extension
 		"iff"
 			parse-iff
-		"trylid", "trylon"
-			# ...
+		"trylon", "trylid"
+			words next
+			# Likely followed by the name; grab that if possible.
+			if !(words is-empty) && (is-name: words peek)
+				proto source-name = words next
+			# Ignore the rest of the line.
 		"c-preamble"
 			if !(build-settings targeting-c)
 				parse-error: "c-preamble not allowed when not targeting C."
