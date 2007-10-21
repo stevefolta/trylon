@@ -144,7 +144,7 @@ Note that names can contain hyphens (although they can't start or end with a hyp
 <div class="entry">
 <div class="entry-title"> Operators </div>
 <p>
-Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual (that is, C-style) rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
+Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  However, there are some subtle differences from the C precedence rules (see below).  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
 </p>
 
 <p>
@@ -178,6 +178,42 @@ print-line: "Hello"</div>
 
 <p>
 These would be message sends to the namespace prototype in which they are defined.  For instance "print-line" would be the same as "Standard print-line".
+</p>
+
+<p>
+"Super" sends are also available:
+</p>
+
+<div class="code">super create: name</div>
+
+</div>
+
+<div class="entry">
+<div class="entry-title"> Precedence </div>
+<p>
+Precedence is as follows:
+</p>
+
+<div class="code">,
+=, +=, etc.
+||
+&&
+!
+keyword: send
+|
+^
+&
+==, !=
+<, >, <=, >=
+<<, >>
++, -
+*, /, %
+unary+, unary-, ~   [Used to have !.]
+unary send
+primary</div>
+
+<p>
+"Primaries" include literals, names by themselves, keyword sends with implicit receivers, and parenthesized expressions.
 </p>
 
 </div>
