@@ -201,6 +201,33 @@ Assignments are expressions, so you can do things like "x = y = 0".
 </div>
 
 <div class="entry">
+<div class="entry-title"> The "for" Statement </div>
+<p>
+A "for" statement can iterate over any collection that responds to the "iterate" message with an iterator object that responds to the "is-done", "current-item", and "go-forward" messages.  So this:
+</p>
+
+<div class="code">for item in collection
+  print: item string</div>
+
+<p>
+is roughly equivalent to this:
+</p>
+
+<div class="code">iterator = collection iterator
+while !iterator is-done
+  item = iterator current-item
+
+  print: item string
+
+  iterator go-forward</div>
+
+<p>
+(I say "roughly" because the "continue" statement would work correctly in a real "for" loop, and because the "iterator" variable isn't visible.)
+</p>
+
+</div>
+
+<div class="entry">
 <div class="entry-title"> Conditional Compilation ("iff" Statements) </div>
 <p>
 The "iff" statement is used for conditional compilation:

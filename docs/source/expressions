@@ -107,7 +107,7 @@ Precedence is as follows:
 	<<, >>
 	+, -
 	*, /, %
-	unary+, unary-, ~ 	[Used to have !.]
+	unary+, unary-, ~
 	unary send
 	primary
 
