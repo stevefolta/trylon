@@ -27,7 +27,7 @@ extend Standard FileDirectory
 		return BuildInt_(numEntries);
 
 	c-fn contains: name
-		#ifndef MAC_OSX
+		#ifndef __APPLE__
 			/* Build the path string. */
 			obj_ entryPath = Call_(_pl_, Call_(_pl_, Field_(path), Str_(slash)), name);
 			char* entryPathStr = CString_(entryPath);
@@ -37,7 +37,7 @@ extend Standard FileDirectory
 			int result = stat(entryPathStr, &statBuf);
 			return Bool_(result != -1);
 
-		#else 	/* MAC_OSX */
+		#else 	/* __APPLE__ */
 			/* The stupid Mac OSX filesystem is case-insensitive, so simply doing 
 			 * a stat() won't tell us if a file with that (case-sensitive) name 
 			 * really exists.  stat() doesn't give us the filename, so we need to 
@@ -66,7 +66,7 @@ extend Standard FileDirectory
 			closedir(directory);
 			return Bool_(found);
 			
-		#endif 	/* MAC_OSX */
+		#endif 	/* __APPLE__ */
 
 	c-fn entry-is-directory: name
 		/* Build the path string. */
@@ -77,18 +77,18 @@ extend Standard FileDirectory
 		struct stat statBuf;
 		int result = stat(entryPathStr, &statBuf);
 
-		#ifndef MAC_OSX
+		#ifndef __APPLE__
 
 			return Bool_(result != -1 && S_ISDIR(statBuf.st_mode));
 
-		#else 	/* MAC_OSX */
+		#else 	/* __APPLE__ */
 
 			if (result == -1 || !S_ISDIR(statBuf.st_mode))
 				return nil;
 
 			/* The stupid Mac OSX filesystem is case-insensitive, so simply doing a
 			 * stat() won't tell us if a directory with that (case-sensitive) name
-			 * really exists.  At this point we know that if the entry is a file, but
+			 * really exists.  At this point we know that the entry is a file, but
 			 * not if it really has that (case-sensitive) name.  stat() doesn't give
 			 * us the filename, so we need to look through the whole directory. */
 
@@ -117,7 +117,7 @@ extend Standard FileDirectory
 			return Bool_(found);
 			}
 
-		#endif 	/* MAC_OSX */
+		#endif 	/* __APPLE__ */
 
 	c-fn create-subdirectory: name
 		/* Build the path string. */
