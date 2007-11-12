@@ -2,11 +2,14 @@ ifndef PREFIX
 	PREFIX := /usr
 endif
 
+ifeq "$(shell uname)" "Darwin"
+	PLATFORM_FLAGS = -DMAC_OSX -DOSX_FINK -I/sw/include -L/sw/lib
+endif
 
 all: trylon
 
 trylon:
-	$(CC) -o trylon .c-sources/*.c -lgc -lm
+	$(CC) -o trylon .c-sources/*.c -lgc -lm $(PLATFORM_FLAGS)
 
 .PHONY: jolt-backend install clean
 
