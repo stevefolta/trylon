@@ -86,10 +86,10 @@ extend Standard System
 
 	c-fn run-program: name arguments: arguments
 		UsingMethod_(iterator) UsingMethod_(is_done) UsingMethod_(current_item)
-		UsingMethod_(go_forward) UsingMethod_(count)
+		UsingMethod_(go_forward) UsingMethod_(num_items)
 
 		/* Build the argv[] array. */
-		int numArgs = IntValue_(Call_(count, arguments));
+		int numArgs = IntValue_(Call_(num_items, arguments));
 		char** args = (char**) Allocate_((numArgs + 2) * sizeof(char*));
 		args[0] = CString_(name);
 		int argNum = 1;
