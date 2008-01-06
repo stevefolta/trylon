@@ -15,6 +15,9 @@ entry-is-directory: name
 create-subdirectory: name
 
 
+num-items
+	count
+
 iterator
 	# Currently returns the names, not the entries themselves.  This may be 
 	# changed in the future, so use "names" instead.

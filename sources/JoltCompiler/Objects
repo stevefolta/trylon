@@ -175,5 +175,28 @@ extend Compiler CompiledProto
 
 
 
+iff targeting-jolt
+	extend Compiler ExistingProto
+		translate: compiler
+			stream = Pepsi WriteStream on: (Expression new: new-functions count)
+			stream nextPut: 'begin'
+
+			# ... We may need to add loaders for any subprotos, to deal with
+			# dependencies.
+
+			# Add the functions.
+			for function in new-functions values
+				if function is-translatable
+					function prepare-to-emit
+					stream nextPut: function
+			
+			return compiler translateExpression: stream contents
+
+
+		access
+			return Expression with: 'quote' with: proto
+
+
+
 # Copyright 2007 Steve Folta.  See the License file.
 

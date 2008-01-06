@@ -9,6 +9,8 @@ same-as: object
 .object-size
 
 
+# Non-primitive functions.
+
 is-a: proto
 	cur-proto = .proto
 	while cur-proto

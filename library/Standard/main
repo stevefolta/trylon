@@ -1,6 +1,8 @@
 trylon Standard
 
 
+# Output.
+
 fn print: string
 
 print-line: line
@@ -9,6 +11,17 @@ print-line: line
 
 print-line
 	print: "\n"
+
+send: message
+	send-chunk: message
+	print-line
+
+send-chunk: message
+	for item in message
+		print: item string
+
+end-message
+	print-line
 
 
 # Pseudo-declarations
@@ -34,6 +47,9 @@ fn ...
 	etc.
 
 
+references
+	iff targeting-c
+		True
 
 
 # Copyright 2007 Steve Folta.  See the License file.

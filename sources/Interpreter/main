@@ -1,0 +1,69 @@
+trylon Interpreter
+
+interpret: code
+	main-context = nil
+	iff !targeting-jolt
+		main-context = Main
+	iff targeting-jolt
+		main-context = Trylon
+	context = Compiler ExistingProto new: main-context
+	parser = Compiler Parser new: code context: context
+	parse-tree = parser parse-code
+	compiler = this
+	parse-tree prepare-to-emit
+	result = parse-tree interpreted
+	compiler = nil
+	return result
+
+
+# As a type of compiler.
+
+calling-selector: selector
+	# Nothing to do.
+
+build-settings
+	if .build-settings == nil
+		.build-settings = Compiler BuildSettings new
+	return .build-settings
+field .build-settings
+
+
+# Helper.
+
+interpret-send-of: name to: object with: arguments
+	name = name intern
+	num-args = arguments num-items
+	obj = object interpreted
+	args = Tuple new: num-args
+	index = 0
+	for arg in arguments
+		args at: index put: arg interpreted
+		index += 1
+	result = nil
+	switch num-args
+		0
+			result = obj perform: name
+		1
+			result = obj perform: name with: (args at: 0)
+		2
+			result = obj perform: name with: (args at: 0) with: (args at: 1)
+		3
+			result = 	--
+				obj 	--
+					perform: name --
+					with: (args at: 0) with: (args at: 1) with: (args at: 2)
+		4
+			result = 	--
+				obj 	--
+					perform: name --
+					with: (args at: 0) with: (args at: 1) 	--
+					with: (args at: 2) with: (args at: 3)
+	return result
+
+
+
+references
+	Expressions
+	Functions
+	Statements
+

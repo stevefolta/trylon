@@ -11,6 +11,7 @@ struct ClassInfo {
 	int 	classNum;
 	int 	size;
 	obj_	proto, parentContext, superclass;
+	obj_	usedContexts;
 	obj_	name;
 	obj_	addedFields; 	/* Only if "debugger" is on. */
 };
@@ -37,11 +38,7 @@ struct RDTableEntry_ {
 
 extern struct RDTableEntry_ dispatchTable_[];
 
-extern fn_ptr_ Dispatch_(selector_ selector, obj_ object)
-#ifdef __GNUC__
-	__attribute__((fastcall))
-#endif
-	;
+extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 extern obj_ RespondsTo_(obj_ object, selector_ selector);
 
 #ifdef SUPPORT_PERFORM_
@@ -137,6 +134,7 @@ UsingClass_(Symbol__Standard)
 UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
+UsingClass_(True__Standard)
 
 
 
@@ -200,7 +198,7 @@ UsingClass_(Node__Dictionary__Standard)
 
 /* Expressions */
 
-#define true_	(&Object__Standard)
+#define true_	(&True__Standard)
 #define Not_(object)	(object ? nil : true_)
 #define Bool_(value)	(value ? true_ : nil)
 
