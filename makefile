@@ -3,7 +3,11 @@ ifndef PREFIX
 endif
 
 ifeq "$(shell uname)" "Darwin"
-	PLATFORM_FLAGS = -DMAC_OSX -DOSX_FINK -I/sw/include -L/sw/lib
+	PLATFORM_FLAGS = -DMAC_OSX
+	# Assume the MacPorts version of the Boehm GC is installed.
+	PLATFORM_FLAGS += -I/opt/local/include -L/opt/local/lib
+	# Use this if you're using Fink:
+	# PLATFORM_FLAGS += -DOSX_FINK -I/sw/include -L/sw/lib
 endif
 
 all: trylon
