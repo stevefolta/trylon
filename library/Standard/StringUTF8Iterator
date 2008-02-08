@@ -2,17 +2,17 @@ trylon StringUTF8Iterator
 superclass Iterator
 
 
-fields start stopper string cached-char
+fields start-ptr stopper string cached-char
 
 
 create: string
 	this string = string
-	this start = string start
+	this start-ptr = string start
 	this stopper = string stopper
 
 
 create: start to: stopper string: string
-	this start = start
+	this start-ptr = start
 	this stopper = stopper
 	this string = string
 
@@ -22,14 +22,13 @@ copy
 
 
 is-done
-	return cached-char == nil && start >= stopper
+	return cached-char == nil && start-ptr >= stopper
 
 
 current-item
-	# return start deref-char
 	if cached-char == nil
-		c = start deref-char & 0xFF
-		start += 1
+		c = start-ptr deref-char & 0xFF
+		start-ptr += 1
 		if c < 0x80
 			cached-char = c
 		else
@@ -47,10 +46,10 @@ current-item
 				extension-bytes = 3
 				cached-char = c & 0x03
 			while extension-bytes > 0
-				if start >= stopper
+				if start-ptr >= stopper
 					error: 'Invalid UTF-8 string.'
-				c = start deref-char
-				start += 1
+				c = start-ptr deref-char
+				start-ptr += 1
 				if (c & 0xC0) != 0x80
 					error: 'Invalid UTF-8 string.'
 				cached-char <<= 6
@@ -68,15 +67,22 @@ go-forward
 
 back-up
 	if cached-char
-		back-up-start
+		back-up-start-ptr
 		cached-char = nil
-	back-up-start
+	back-up-start-ptr
 
-back-up-start
-	while start > string start
-		start -= 1
-		if start deref-char < 0xC0
+back-up-start-ptr
+	while start-ptr > string start
+		start-ptr -= 1
+		if (start-ptr deref-char & 0xFF) >= 0xC0
 			break
+
+
+start
+	if cached-char
+		back-up-start-ptr
+		cached-char = nil
+	return start-ptr
 
 
 skip: num-chars
@@ -89,9 +95,8 @@ remainder
 	return String new: start to: stopper
 
 
-# What was this used for?  Do we need it?
-# fn > other
-# 	return (this start > other start)
+fn > other
+	return (this start > other start)
 
 
 iterator
