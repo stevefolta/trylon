@@ -1,6 +1,6 @@
 trylon hello-world
 
 main: arguments
-	print-line: "Hello world!"
+	send: "Hello world!"
 	return 0
 

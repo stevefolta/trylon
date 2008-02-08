@@ -2,7 +2,7 @@ program = "trylon"
 debugging = true
 support-perform = true
 
-iff !targeting-jolt
+iff !trylon-2
 	# Trylon 1 boilerplate.
 	c-flags += "-g"
 	link-flags += "-lgc" "-ldl" "-lm"

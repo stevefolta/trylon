@@ -82,7 +82,7 @@ void PopException_()
 }
 
 
-static void FinalizeObject_(GC_PTR obj, GC_PTR clientData)
+static void FinalizeObject_(void* obj, void* clientData)
 {
 	UsingMethod_(destroy);
 	Call_(destroy, (obj_) obj);
@@ -92,7 +92,7 @@ static void FinalizeObject_(GC_PTR obj, GC_PTR clientData)
 void RegisterFinalizer_(obj_ object)
 {
 	GC_finalization_proc oldProc;
-	GC_PTR oldData;
+	void* oldData;
 	GC_REGISTER_FINALIZER(object, &FinalizeObject_, NULL, &oldProc, &oldData);
 }
 
@@ -243,6 +243,8 @@ int main(int argc, char* argv[])
 	extern obj_ new__List__Standard(obj_ this_);
 	UsingMethod_(append_co_)
 	UsingClass_(Main) UsingClass_(List__Standard)
+
+	GC_INIT();
 
 	// Build the list of args.
 	args = new__List__Standard(Proto_(List__Standard));

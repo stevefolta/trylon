@@ -6,8 +6,15 @@ c-flags += "-g"
 link-flags += "-lgc" "-ldl" "-lm"
 
 if Darwin
-	# Currently, we assume that Fink was used to install the BDW GC.
-	c-flags += "-DMAC_OSX" "-DOSX_FINK"
-	c-flags += "-I/sw/include"
-	link-flags += "-L/sw/lib"
+	c-flags += "-DMAC_OSX"
+	# Prefer the MacPorts version of the Boehm GC, if available.
+	c-flags += "-I/opt/local/include"
+	link-flags += "-L/opt/local/lib"
+	# Otherwise, try the Fink version.
+	# Uncomment the next line if you use the Boehm GC from Fink:
+	# fink = true
+	if fink
+		c-flags += "-DOSX_FINK"
+		c-flags += "-I/sw/include"
+		link-flags += "-L/sw/lib"
 

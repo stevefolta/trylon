@@ -56,7 +56,7 @@ Note that names can contain hyphens (although they can't start or end with a hyp
 
 Operators
 
-Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  The usual (that is, C-style) rules of precedence apply.  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
+Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  However, there are some subtle differences from the C precedence rules (see below).  The || and && short-circuit operators are also available, as are the assignment operators (+=, -=, etc.).
 
 There is a comma operator, but it's not used as it is in C.  Instead, it is used to create "Tuples", which are essentially a form of array:
 
@@ -81,6 +81,37 @@ For functions in the current scope (that is, in the current namespace and its en
 	print-line: "Hello"
 
 These would be message sends to the namespace prototype in which they are defined.  For instance "print-line" would be the same as "Standard print-line".
+
+"Super" sends are also available:
+
+	super create: name
+
+
+=====
+
+Precedence
+
+Precedence is as follows:
+
+	,
+	=, +=, etc.
+	||
+	&&
+	!
+	keyword: send
+	|
+	^
+	&
+	==, !=
+	<, >, <=, >=
+	<<, >>
+	+, -
+	*, /, %
+	unary+, unary-, ~
+	unary send
+	primary
+
+"Primaries" include literals, names by themselves, keyword sends with implicit receivers, and parenthesized expressions.
 
 
 =====

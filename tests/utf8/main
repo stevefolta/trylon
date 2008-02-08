@@ -1,0 +1,43 @@
+trylon utf8-test
+
+main: args
+	try
+		test-utf8
+	catch
+		send: exception message
+	return 0
+
+
+test-utf8
+	test-string = "¶ µ abc ©"
+	for c in test-string characters
+		send: (c char-string, " = ", c string)
+	test-bad-utf8: "\x80" type: "starts with 0x80"
+	test-bad-utf8: "\xC0" type: "0xC0"
+	test-bad-utf8: "\xFE" type: "0xFE"
+	test-bad-utf8: "\xC2" type: "short two-byte"
+	test-bad-utf8: "\xC2 " type: "bad two-byte"
+	test-bad-utf8: "\xE0\x80" type: "short three-byte"
+
+	# Back-up test.
+	iterator = test-string characters
+	c = iterator next
+	send: (c char-string, " = ", c string)
+	send: "Backing up..."
+	iterator back-up
+	c = iterator next
+	send: (c char-string, " = ", c string)
+
+
+test-bad-utf8: string type: type
+	try
+		for c in string characters
+			# Should fail.
+		send: ("Bad UTF-8 (", type, ") not detected!")
+	catch
+		if exception message == 'Invalid UTF-8 string.'
+			send: ("Bad UTF-8 string (", type, ") detected correctly.")
+		else
+			throw exception
+
+

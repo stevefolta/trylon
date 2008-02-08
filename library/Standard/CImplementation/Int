@@ -72,9 +72,27 @@ extend Standard Int
 		return BuildString_(str);
 	
 	c-fn char-string
-		char str[4];
-		str[0] = Val;
-		str[1] = 0;
+		char str[5];
+		unsigned long c = (unsigned long) Val;
+		char* p = str;
+		if (c < 0x0080)
+			*p++ = c;
+		else if (c < 0x0800) {
+			*p++ = (c >> 6) | 0xC0;
+			*p++ = (c & 0x3F) | 0x80;
+			}
+		else if (c < 0x00010000) {
+			*p++ = (c >> 12) | 0xE0;
+			*p++ = ((c >> 6) & 0x3F) | 0x80;
+			*p++ = (c & 0x3F) | 0x80;
+			}
+		else if (c < 0x00110000) {
+			*p++ = (c >> 18) | 0xF0;
+			*p++ = ((c >> 12) & 0x3F) | 0x80;
+			*p++ = ((c >> 6) & 0x3F) | 0x80;
+			*p++ = (c & 0x3F) | 0x80;
+			}
+		*p++ = 0;
 		return BuildString_(str);
 	
 	c-fn float

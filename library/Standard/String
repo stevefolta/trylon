@@ -207,11 +207,16 @@ print-string
 copy
 	return String new: start to: stopper
 
-iterator
-	return StringIterator new: this
+# Note: you must use 'characters' to iterate over the characters of a string in
+# a "for" loop.  Eg., "for c in string characters", not "for c in string".
+# Otherwise, Object's 'iterator' method is used, which returns a
+# SingleObjectIterator.
 
 characters
-	return StringIterator new: this
+	return StringUTF8Iterator new: this
+
+bytes
+	return StringBytesIterator new: this
 
 lines
 	return LinesIterator new: this

@@ -1,0 +1,108 @@
+trylon StringUTF8Iterator
+superclass Iterator
+
+
+fields start-ptr stopper string cached-char
+
+
+create: string
+	this string = string
+	this start-ptr = string start
+	this stopper = string stopper
+
+
+create: start to: stopper string: string
+	this start-ptr = start
+	this stopper = stopper
+	this string = string
+
+
+copy
+	return StringUTF8Iterator new: start to: stopper string: string
+
+
+is-done
+	return cached-char == nil && start-ptr >= stopper
+
+
+current-item
+	if cached-char == nil
+		c = start-ptr deref-char & 0xFF
+		start-ptr += 1
+		if c < 0x80
+			cached-char = c
+		else
+			extension-bytes = 0
+			if c < 0xC2
+				error: 'Invalid UTF-8 string.'
+			else if c < 0xE0
+				# We handle the shorter cases first, expecting them to be more common.
+				extension-bytes = 1
+				cached-char = c & 0x1F
+			else if c < 0xF0
+				extension-bytes = 2
+				cached-char = c & 0x0F
+			else if c > 0xF0
+				extension-bytes = 3
+				cached-char = c & 0x03
+			while extension-bytes > 0
+				if start-ptr >= stopper
+					error: 'Invalid UTF-8 string.'
+				c = start-ptr deref-char
+				start-ptr += 1
+				if (c & 0xC0) != 0x80
+					error: 'Invalid UTF-8 string.'
+				cached-char <<= 6
+				cached-char |= c & 0x3F
+				extension-bytes -= 1
+
+	return cached-char
+
+
+go-forward
+	if cached-char == nil
+		current-item 	# Loads up the next character into cached-char.
+	cached-char = nil
+
+
+back-up
+	if cached-char
+		back-up-start-ptr
+		cached-char = nil
+	back-up-start-ptr
+
+back-up-start-ptr
+	while start-ptr > string start
+		start-ptr -= 1
+		if (start-ptr deref-char & 0xFF) >= 0xC0
+			break
+
+
+start
+	if cached-char
+		back-up-start-ptr
+		cached-char = nil
+	return start-ptr
+
+
+skip: num-chars
+	while num-chars > 0
+		go-forward
+		num-chars -= 1
+
+
+remainder
+	return String new: start to: stopper
+
+
+fn > other
+	return (this start > other start)
+
+
+iterator
+	return this
+
+
+
+# Copyright 2008 Steve Folta.  See the License file.
+

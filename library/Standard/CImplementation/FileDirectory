@@ -88,7 +88,7 @@ extend Standard FileDirectory
 
 			/* The stupid Mac OSX filesystem is case-insensitive, so simply doing a
 			 * stat() won't tell us if a directory with that (case-sensitive) name
-			 * really exists.  At this point we know that if the entry is a file, but
+			 * really exists.  At this point we know that the entry is a file, but
 			 * not if it really has that (case-sensitive) name.  stat() doesn't give
 			 * us the filename, so we need to look through the whole directory. */
 
