@@ -1,0 +1,15 @@
+trylon utf8-test
+
+main: args
+	try
+		test-utf8
+	catch
+		send: exception message
+	return 0
+
+
+test-utf8
+	test-string = "¶ µ abc ©"
+	for c in test-string characters
+		send: (c char-string, " = ", c string)
+

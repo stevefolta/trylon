@@ -7,7 +7,7 @@ eof-char = 0
 
 create: text
 	eof-char = 0 char
-	p = text characters
+	p = text bytes
 	indent-stack = IntStack new
 	indent-stack push: 0
 	at-line-start = true
@@ -468,7 +468,7 @@ class-fn parse-character-escape: p
 
 
 class-fn character-constant-value: text
-	p = text characters
+	p = text bytes
 	if p current-item == `\\`
 		p go-forward 	# Skip `\`.
 		return parse-character-escape: p
@@ -477,7 +477,7 @@ class-fn character-constant-value: text
 
 class-fn unescape-string: string
 	result = nil
-	p = string characters
+	p = string bytes
 	section-start = string start
 	while !p is-done
 		if p current-item == `\\`

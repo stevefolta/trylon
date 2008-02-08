@@ -1,0 +1,103 @@
+trylon StringUTF8Iterator
+superclass Iterator
+
+
+fields start stopper string cached-char
+
+
+create: string
+	this string = string
+	this start = string start
+	this stopper = string stopper
+
+
+create: start to: stopper string: string
+	this start = start
+	this stopper = stopper
+	this string = string
+
+
+copy
+	return StringUTF8Iterator new: start to: stopper string: string
+
+
+is-done
+	return cached-char == nil && start >= stopper
+
+
+current-item
+	# return start deref-char
+	if cached-char == nil
+		c = start deref-char & 0xFF
+		start += 1
+		if c < 0x80
+			cached-char = c
+		else
+			extension-bytes = 0
+			if c < 0xC2
+				error: 'Invalid UTF-8 string.'
+			else if c < 0xE0
+				# We handle the shorter cases first, expecting them to be more common.
+				extension-bytes = 1
+				cached-char = c & 0x1F
+			else if c < 0xF0
+				extension-bytes = 2
+				cached-char = c & 0x0F
+			else if c > 0xF0
+				extension-bytes = 3
+				cached-char = c & 0x03
+			while extension-bytes > 0
+				if start >= stopper
+					error: 'Invalid UTF-8 string.'
+				c = start deref-char
+				start += 1
+				if (c & 0xC0) != 0x80
+					error: 'Invalid UTF-8 string.'
+				cached-char <<= 6
+				cached-char |= c & 0x3F
+				extension-bytes -= 1
+
+	return cached-char
+
+
+go-forward
+	if cached-char == nil
+		current-item 	# Loads up the next character into cached-char.
+	cached-char = nil
+
+
+back-up
+	if cached-char
+		back-up-start
+		cached-char = nil
+	back-up-start
+
+back-up-start
+	while start > string start
+		start -= 1
+		if start deref-char < 0xC0
+			break
+
+
+skip: num-chars
+	while num-chars > 0
+		go-forward
+		num-chars -= 1
+
+
+remainder
+	return String new: start to: stopper
+
+
+# What was this used for?  Do we need it?
+# fn > other
+# 	return (this start > other start)
+
+
+iterator
+	return this
+
+
+
+# Copyright 2008 Steve Folta.  See the License file.
+

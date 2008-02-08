@@ -213,7 +213,10 @@ copy
 # SingleObjectIterator.
 
 characters
-	return StringIterator new: this
+	return StringUTF8Iterator new: this
+
+bytes
+	return StringBytesIterator new: this
 
 lines
 	return LinesIterator new: this
