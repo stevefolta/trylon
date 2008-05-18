@@ -6,9 +6,12 @@ Installation
 
 You must have the Boehm-Demers-Wieser garbage collector installed as "libgc".
 This has different package names on different distributions, such as "boehm-gc"
-(Gentoo), "libgc-dev" (Debian/Ubuntu, or so I'm told), or simply "gc" (Fink).
+(Gentoo), "libgc-dev" (Debian/Ubuntu, or so I'm told), "boehmgc" (MacPorts), or
+simply "gc" (Fink).
 
-You won't be able to build Trylon from the Git repository.  You must start with the tarball: <http://somefancy.com/trylon/trylon.tgz>.
+You won't be able to build Trylon from the 'master' branch of Git repository.
+You must start with the tarball: <http://somefancy.com/trylon/trylon.tgz>; or
+from the 'with-c-sources' branch of the Git repository.
 
 To install Trylon from the tarball, do this:
 

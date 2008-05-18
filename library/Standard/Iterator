@@ -8,6 +8,11 @@ go-forward
 	virtual
 
 
+next
+	result = current-item
+	go-forward
+	return result
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 
