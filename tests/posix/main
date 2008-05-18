@@ -18,4 +18,31 @@ main: args
 		print-line: "The fd can read without blocking."
 
 	Posix close-fd: fd
+	print-line
+
+	print-flag: 'O_RDONLY'
+	print-flag: 'O_WRONLY'
+	print-flag: 'O_RDWR'
+	print-flag: 'O_APPEND'
+	print-flag: 'O_ASYNC'
+	print-flag: 'O_CREAT'
+	print-flag: 'O_DIRECT'
+	print-flag: 'O_DIRECTORY'
+	print-flag: 'O_EXCL'
+	print-flag: 'O_LARGEFILE'
+	print-flag: 'O_NOATIME'
+	print-flag: 'O_NOCTTY'
+	print-flag: 'O_NOFOLLOW'
+	print-flag: 'O_NONBLOCK'
+	print-flag: 'O_NDELAY'
+	print-flag: 'O_SYNC'
+	print-flag: 'O_TRUNC'
+
+
+print-flag: symbol
+	print: symbol
+	print: " = "
+	print: (Posix value-for-flag: symbol)
+	print-line
+
 

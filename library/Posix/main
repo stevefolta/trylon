@@ -61,47 +61,36 @@ c-fn value-for-flag: flag
 	UsingSym_(O_ul_SYNC)
 	UsingSym_(O_ul_TRUNC)
 
-	int intFlags = 0;
-	if (flag == Sym_(O_ul_RDONLY))
-		intFlags = O_RDONLY;
-	else if (flag == Sym_(O_ul_WRONLY))
-		intFlags = O_WRONLY;
-	else if (flag == Sym_(O_ul_RDWR))
-		intFlags = O_RDWR;
-	else if (flag == Sym_(O_ul_APPEND))
-		intFlags = O_APPEND;
-	else if (flag == Sym_(O_ul_ASYNC))
-		intFlags = O_ASYNC;
-	else if (flag == Sym_(O_ul_CREAT))
-		intFlags = O_CREAT;
-	else if (flag == Sym_(O_ul_EXCL))
-		intFlags = O_EXCL;
-	else if (flag == Sym_(O_ul_NOCTTY))
-		intFlags = O_NOCTTY;
-	else if (flag == Sym_(O_ul_NONBLOCK))
-		intFlags = O_NONBLOCK;
-	else if (flag == Sym_(O_ul_NDELAY))
-		intFlags = O_NDELAY;
-	else if (flag == Sym_(O_ul_SYNC))
-		intFlags = O_SYNC;
-	else if (flag == Sym_(O_ul_TRUNC))
-		intFlags = O_TRUNC;
-	#ifdef __USE_GNU
-		else if (flag == Sym_(O_ul_DIRECT))
-			intFlags = O_DIRECT;
-		else if (flag == Sym_(O_ul_DIRECTORY))
-			intFlags = O_DIRECTORY;
-		else if (flag == Sym_(O_ul_NOFOLLOW))
-			intFlags = O_NOFOLLOW;
-		else if (flag == Sym_(O_ul_NOATIME))
-			intFlags = O_NOATIME;
-	#endif
-	#ifdef __USE_LARGEFILE64
-		else if (flag == Sym_(O_ul_LARGEFILE))
-			intFlags = O_LARGEFILE;
-	#endif
-	
-	return BuildInt_(intFlags);
+	static const EnumDictEntry_ flagsDict[] = {
+		{ Sym_(O_ul_APPEND), O_APPEND },
+		{ Sym_(O_ul_ASYNC), O_ASYNC },
+		{ Sym_(O_ul_CREAT), O_CREAT },
+		#ifdef __USE_GNU
+			{ Sym_(O_ul_DIRECT), O_DIRECT },
+			{ Sym_(O_ul_DIRECTORY), O_DIRECTORY },
+		#endif
+		{ Sym_(O_ul_EXCL), O_EXCL },
+		#ifdef __USE_LARGEFILE64
+			{ Sym_(O_ul_LARGEFILE), O_LARGEFILE },
+		#endif
+		{ Sym_(O_ul_NDELAY), O_NDELAY },
+		#ifdef __USE_GNU
+			{ Sym_(O_ul_NOATIME), O_NOATIME },
+		#endif
+		{ Sym_(O_ul_NOCTTY), O_NOCTTY },
+		#ifdef __USE_GNU
+			{ Sym_(O_ul_NOFOLLOW), O_NOFOLLOW },
+		#endif
+		{ Sym_(O_ul_NONBLOCK), O_NONBLOCK },
+		{ Sym_(O_ul_RDONLY), O_RDONLY },
+		{ Sym_(O_ul_RDWR), O_RDWR },
+		{ Sym_(O_ul_SYNC), O_SYNC },
+		{ Sym_(O_ul_TRUNC), O_TRUNC },
+		{ Sym_(O_ul_WRONLY), O_WRONLY }
+		};
+	int intFlag =
+		SymToEnum_(flag, flagsDict, sizeof(flagsDict) / sizeof(EnumDictEntry_), 0);
+	return BuildInt_(intFlag);
 
 
 references
