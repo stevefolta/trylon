@@ -41,18 +41,8 @@ lookup-function: name visited-protos: visited-protos
 		return function
 	
 	# If not, see if it's in one of our directories.
-	for directory in directories
-		# A file?
-		if (directory contains: name) && !(directory entry-is-directory: name)
-			proto = add-proto: name
-			lines = (LinesLexer new: (directory at: name) contents) lex
-			TrylonProtoParser parse-proto-contents: lines into: proto
-			return functions at: name
-
-		# A directory?
-		if directory entry-is-directory: name
-			add-proto: name directory: (directory at: name)
-			return functions at: name
+	if load-subproto: name
+		return functions at: name
 	
 	# Check the parent.
 	if parent
@@ -169,6 +159,14 @@ get-subproto: name
 		return function proto
 	
 	# Look for it.
+	subproto = load-subproto: name
+	if subproto
+		return subproto
+	
+	return nil
+
+
+load-subproto: name
 	for directory in directories
 		if directory entry-is-directory: name
 			return add-proto: name directory: (directory at: name)
@@ -177,7 +175,7 @@ get-subproto: name
 			lines = (LinesLexer new: (directory at: name) contents) lex
 			TrylonProtoParser parse-proto-contents: lines into: proto
 			return proto
-	
+
 	return nil
 
 
