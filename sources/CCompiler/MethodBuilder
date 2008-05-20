@@ -111,6 +111,13 @@ cur-loop-index
 emit: stream
 	stream write-line: "{"
 
+	# External declarations.
+	# Includes symbol declarations, so declare these before Tuples/Dicts.
+	if !extern-declarations is-empty
+		for declaration in extern-declarations
+			stream write: "\t"
+			stream write-line: declaration
+	
 	# Declarations.
 	temporaries emit-declarations-on: stream
 	# loops emit-declarations-on: stream 	# Not needed.
@@ -141,12 +148,6 @@ emit: stream
 				 on-proto c-name, ") ")
 		stream write-line
 
-	# External declarations.
-	if !extern-declarations is-empty
-		for declaration in extern-declarations
-			stream write: "\t"
-			stream write-line: declaration
-	
 	# Used classes.
 	for used-class in used-classes values
 		stream write: "\tUsingClass_("

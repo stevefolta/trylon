@@ -1,0 +1,13 @@
+trylon tuple-literal-test
+
+main: args
+	# This didn't work until 2008.5.18:
+	tuple = ('foo', 'bar', 'baz')
+	for value in tuple
+		print-line: value
+	# This always did:
+	tuple = (1, 2, "three")
+	for value in tuple
+		print-line: value
+
+
