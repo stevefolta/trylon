@@ -298,6 +298,15 @@ extern void* AllocNonPtr_(int numBytes);
 extern obj_ CloneObj_(obj_ object);
 extern obj_ CloneObjExtra_(obj_ object, int numExtraFields);
 
+/* EnumDicts must be stored in alphabetical order. */
+typedef struct EnumDictEntry_ {
+	obj_	symbol;
+	int 	value;
+} EnumDictEntry_;
+extern int SymToEnum_(
+	obj_ symbol, const EnumDictEntry_* dict, int dictSize, int notFoundValue);
+extern obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize);
+
 
 
 /*

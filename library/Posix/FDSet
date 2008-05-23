@@ -1,0 +1,61 @@
+trylon FDSet
+
+fields primitive-set
+
+c-fn create
+	Field_(primitive_set) = BuildBytePtr_(AllocNonPtr_(sizeof(fd_set)));
+
+c-fn zero
+	FD_ZERO(the_fd_set);
+
+c-fn at: fd
+	return Bool_(FD_ISSET(IntValue_(fd), the_fd_set));
+
+c-fn set: fd
+	FD_SET(IntValue_(fd), the_fd_set);
+
+c-fn clear: fd
+	FD_CLR(IntValue_(fd), the_fd_set);
+
+at: fd put: value
+	if value
+		set: fd
+	else
+		clear: fd
+
+
+extend Posix
+	c-fn select: num-fds 	--
+			reads: read-fds writes: write-fds exceptions: exception-fds 	--
+			timeout: timeout
+		#define SetPtr_(set) 	\
+			(set ? (fd_set*) BytePtrValue_(Call_(primitive_set, set)) : nil)
+		UsingMethod_(primitive_timeout) UsingMethod_(primitive_set)
+		struct timeval* the_timeout = nil;
+		if (timeout) {
+			the_timeout =
+				(struct timeval*) BytePtrValue_(Call_(primitive_timeout, timeout));
+			}
+		int result = 
+			select(
+				IntValue_(num_fds),
+				SetPtr_(read_fds), SetPtr_(write_fds), SetPtr_(exception_fds),
+				the_timeout);
+		return BuildInt_(result);
+
+
+# Private.
+
+c-preamble
+	#include <sys/select.h>
+	#include <sys/time.h>
+	#include <sys/types.h>
+	#include <unistd.h>
+
+	#define the_fd_set	((fd_set*) BytePtrValue_(Field_(primitive_set)))
+
+
+primitive-timeout
+	# Just declaring this selector here in case Timeval is never used.
+
+

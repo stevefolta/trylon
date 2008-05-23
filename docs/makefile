@@ -11,7 +11,6 @@ ifndef DOCTIFIER
 endif
 
 HTML_PAGES := $(addprefix html/,$(addsuffix .html,$(PAGES)))
-HTML_PAGES += website/index.html
 
 
 .PHONY: all
@@ -20,9 +19,6 @@ all: $(DOCTIFIER) $(HTML_PAGES)
 
 
 html/%.html: %
-	$(DOCTIFIER) template: source/template $< > $@
-
-website/%.html: website/%
 	$(DOCTIFIER) template: source/template $< > $@
 
 doctifier/doctifier:
