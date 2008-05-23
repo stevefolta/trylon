@@ -84,9 +84,9 @@ obj_ create_co_block_co___CodeLine__Compiler(obj_ this_, obj_ text, obj_ block)
 
 obj_ flattened_block__CodeLine__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	UsingMethod_(add_to_flattened_lines_co_) UsingMethod_(block) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -145,10 +145,10 @@ obj_ text_co___CodeLine__Compiler(obj_ this_, obj_ value)
 
 obj_ words__CodeLine__Compiler(obj_ this_)
 {
+	extern obj_ new_co___WordsLexer__Compiler(obj_ this_, obj_ string);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(text)
-	extern obj_ new_co___WordsLexer__Compiler(obj_ this_, obj_ string);
 	UsingClass_(WordsLexer__Compiler)
 
 		{

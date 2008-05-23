@@ -13,8 +13,8 @@ struct object Exception__Standard =
 
 obj_ message__Exception__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

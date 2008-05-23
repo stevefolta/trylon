@@ -13,9 +13,9 @@ struct object Context__Compiler =
 
 obj_ add_class_co___Context__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	DefineString_(0, "Internal error: bad \"Context add-class\" call.")
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -31,9 +31,9 @@ obj_ add_class_co___Context__Compiler(obj_ this_, obj_ name)
 
 obj_ add_field_co___Context__Compiler(obj_ this_, obj_ field)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	DefineString_(0, "Internal error: bad \"Context add-field\" call.")
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -49,9 +49,9 @@ obj_ add_field_co___Context__Compiler(obj_ this_, obj_ field)
 
 obj_ add_function_co___Context__Compiler(obj_ this_, obj_ function)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	DefineString_(0, "Internal error: bad \"Context add-function\" call.")
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -67,9 +67,9 @@ obj_ add_function_co___Context__Compiler(obj_ this_, obj_ function)
 
 obj_ add_package_co_directory_co___Context__Compiler(obj_ this_, obj_ name, obj_ FileDirectory)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	DefineString_(0, "Interanl error: bad \"Context add-package\" call.")
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -97,9 +97,9 @@ obj_ enclosing_method_context__Context__Compiler(obj_ this_)
 
 obj_ get_subproto_co___Context__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	DefineString_(0, "Internal error: bad \"Context get-subproto\" call.")
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -131,8 +131,8 @@ obj_ lookup_function_autodeclaring_co___Context__Compiler(obj_ this_, obj_ name)
 
 obj_ lookup_function_co___Context__Compiler(obj_ this_, obj_ name)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

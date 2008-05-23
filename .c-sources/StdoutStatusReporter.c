@@ -16,10 +16,10 @@ struct object StdoutStatusReporter =
 
 obj_ create__StdoutStatusReporter(obj_ this_)
 {
+	obj_ create__StatusReporter(obj_);
 	obj_ t0_;
 	DefineInt_(0, 0)
 	UsingMethod_(indent_level_co_)
-	obj_ create__StatusReporter(obj_);
 
 		{
 		t0_ = create__StatusReporter(this_);
@@ -74,6 +74,8 @@ obj_ new__StdoutStatusReporter(obj_ this_)
 
 obj_ report_co___StdoutStatusReporter(obj_ this_, obj_ message)
 {
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 20)
@@ -81,8 +83,6 @@ obj_ report_co___StdoutStatusReporter(obj_ this_, obj_ message)
 	DefineInt_(2, 0)
 	DefineString_(0, "                    ")
 	UsingMethod_(_gt_) UsingMethod_(indent_level) UsingMethod_(substr_co_length_co_)
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{

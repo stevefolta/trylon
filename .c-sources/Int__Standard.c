@@ -161,12 +161,12 @@ return BuildString_(str);
 
 obj_ debug_write__Int__Standard(obj_ this_)
 {
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Int: ")
 	UsingMethod_(_pl_) UsingMethod_(string)
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{

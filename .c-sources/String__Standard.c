@@ -77,6 +77,7 @@ obj_ _nt__eq___String__Standard(obj_ this_, obj_ arg)
 
 obj_ _pl___String__Standard(obj_ this_, obj_ arg)
 {
+	extern obj_ new_co___String__Standard(obj_ this_, obj_ length);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -84,7 +85,6 @@ obj_ _pl___String__Standard(obj_ this_, obj_ arg)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(_pl_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(length) UsingMethod_(start) UsingMethod_(stopper_co_)
-	extern obj_ new_co___String__Standard(obj_ this_, obj_ length);
 	UsingClass_(String__Standard)
 
 		{
@@ -454,8 +454,8 @@ obj_ at_co___String__Standard(obj_ this_, obj_ index)
 
 obj_ bytes__String__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ new_co___StringBytesIterator__Standard(obj_ this_, obj_ string);
+	obj_ t0_;
 	UsingClass_(StringBytesIterator__Standard)
 
 		{
@@ -469,8 +469,8 @@ obj_ bytes__String__Standard(obj_ this_)
 
 obj_ characters__String__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ new_co___StringUTF8Iterator__Standard(obj_ this_, obj_ string);
+	obj_ t0_;
 	UsingClass_(StringUTF8Iterator__Standard)
 
 		{
@@ -501,11 +501,11 @@ obj_ contains_co___String__Standard(obj_ this_, obj_ other)
 
 obj_ copy__String__Standard(obj_ this_)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(start) UsingMethod_(stopper)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -521,10 +521,10 @@ obj_ copy__String__Standard(obj_ this_)
 
 obj_ create_co___String__Standard(obj_ this_, obj_ length)
 {
+	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(start) UsingMethod_(start_co_) UsingMethod_(stopper_co_)
-	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -591,10 +591,10 @@ obj_ debug_string__String__Standard(obj_ this_)
 
 obj_ debug_write__String__Standard(obj_ this_)
 {
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(debug_string)
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{
@@ -653,8 +653,8 @@ return BuildFloat_(strtod(CString_(this_), nil));
 
 obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper)
 {
-	obj_ t0_;
 	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	obj_ t0_;
 	UsingClass_(String__Standard)
 
 		{
@@ -755,8 +755,8 @@ return BuildInt_(strtoul(CString_(this_), nil, 0));
 
 obj_ intern__String__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name);
+	obj_ t0_;
 	UsingClass_(Symbol__Standard)
 
 		{
@@ -874,8 +874,8 @@ obj_ length__String__Standard(obj_ this_)
 
 obj_ lines__String__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ new_co___LinesIterator__Standard(obj_ this_, obj_ string);
+	obj_ t0_;
 	UsingClass_(LinesIterator__Standard)
 
 		{
@@ -890,6 +890,8 @@ obj_ lines__String__Standard(obj_ this_)
 
 obj_ lowercase__String__Standard(obj_ this_)
 {
+	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 65)
@@ -900,8 +902,6 @@ obj_ lowercase__String__Standard(obj_ this_)
 	DefineInt_(5, 1)
 	DefineInt_(6, 1)
 	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_lt__eq_) UsingMethod_(_gt__eq_) UsingMethod_(char_at_co_put_co_) UsingMethod_(deref_char) UsingMethod_(length) UsingMethod_(start) UsingMethod_(stopper) UsingMethod_(stopper_co_)
-	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 	UsingClass_(BytePtr__Standard)
 
@@ -1073,13 +1073,13 @@ obj_ string__String__Standard(obj_ this_)
 
 obj_ substr_co___String__Standard(obj_ this_, obj_ from)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	DefineString_(0, "")
 	UsingMethod_(_pl_) UsingMethod_(_gt_) UsingMethod_(length) UsingMethod_(start) UsingMethod_(stopper)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -1102,11 +1102,11 @@ obj_ substr_co___String__Standard(obj_ this_, obj_ from)
 
 obj_ substr_co_length_co___String__Standard(obj_ this_, obj_ from, obj_ length)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "")
 	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_gt_) UsingMethod_(length) UsingMethod_(start)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{

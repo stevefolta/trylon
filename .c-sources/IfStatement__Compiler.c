@@ -205,6 +205,13 @@ obj_ interpreted__IfStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__IfStatement__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(begin)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(comment)
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(if)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -218,13 +225,6 @@ obj_ jolt_expression__IfStatement__Compiler(obj_ this_)
 	DefineInt_(5, 1)
 	DefineInt_(6, 1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(condition) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(else_block) UsingMethod_(else_comment) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(pre_else_comments)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(begin)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(if)
 	UsingClass_(Expression)
 
 		{
@@ -367,13 +367,13 @@ obj_ prepare_to_emit__IfStatement__Compiler(obj_ this_)
 
 obj_ translate_co___IfStatement__Compiler(obj_ this_, obj_ compiler)
 {
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(if)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(else_block) UsingMethod_(translateExpression_co_)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(if)
 	UsingClass_(Expression)
 
 		{

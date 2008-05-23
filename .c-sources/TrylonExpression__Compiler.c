@@ -13,8 +13,8 @@ struct object TrylonExpression__Compiler =
 
 obj_ emit_code_co___TrylonExpression__Compiler(obj_ this_, obj_ builder)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -27,8 +27,8 @@ obj_ emit_code_co___TrylonExpression__Compiler(obj_ this_, obj_ builder)
 
 obj_ interpreted__TrylonExpression__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -55,8 +55,8 @@ obj_ is_literal__TrylonExpression__Compiler(obj_ this_)
 
 obj_ jolt_expression__TrylonExpression__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -70,8 +70,8 @@ obj_ jolt_expression__TrylonExpression__Compiler(obj_ this_)
 
 obj_ prepare_to_emit__TrylonExpression__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

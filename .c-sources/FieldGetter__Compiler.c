@@ -16,6 +16,7 @@ struct object FieldGetter__Compiler =
 
 obj_ c_name__FieldGetter__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -25,7 +26,6 @@ obj_ c_name__FieldGetter__Compiler(obj_ this_)
 	obj_ t6_;
 	DefineString_(0, "__")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(field) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -81,6 +81,7 @@ obj_ create_co_on_proto_co___FieldGetter__Compiler(obj_ this_, obj_ field, obj_ 
 
 obj_ emit_c_call_co_builder_co___FieldGetter__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -88,7 +89,6 @@ obj_ emit_c_call_co_builder_co___FieldGetter__Compiler(obj_ this_, obj_ argument
 	DefineString_(0, "Proto_(")
 	DefineString_(1, ")")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(field) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(using_class_co_)
-	extern obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder);
 	UsingClass_(CCompiler)
 
 		{
@@ -116,6 +116,7 @@ obj_ emit_c_call_co_builder_co___FieldGetter__Compiler(obj_ this_, obj_ argument
 
 obj_ emit_c_function_on_co___FieldGetter__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -127,7 +128,6 @@ obj_ emit_c_function_on_co___FieldGetter__Compiler(obj_ this_, obj_ stream)
 	DefineString_(2, ");\n")
 	DefineString_(3, "}\n")
 	UsingMethod_(_pl_) UsingMethod_(c_signature) UsingMethod_(field) UsingMethod_(name) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -151,6 +151,10 @@ obj_ emit_c_function_on_co___FieldGetter__Compiler(obj_ this_, obj_ stream)
 
 obj_ emit_call_co___FieldGetter__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -159,10 +163,6 @@ obj_ emit_call_co___FieldGetter__Compiler(obj_ this_, obj_ arguments)
 	obj_ t5_;
 	obj_ t6_;
 	UsingMethod_(access) UsingMethod_(field) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

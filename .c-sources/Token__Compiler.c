@@ -60,10 +60,10 @@ obj_ create_co___Token__Compiler(obj_ this_, obj_ type)
 
 obj_ create_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(text_co_) UsingMethod_(type_co_)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -120,13 +120,13 @@ obj_ new_co_text_co___Token__Compiler(obj_ this_, obj_ type, obj_ text)
 
 obj_ string__Token__Compiler(obj_ this_)
 {
+	UsingSym_(name)
+	UsingSym_(keyword)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(_eq__eq_) UsingMethod_(string) UsingMethod_(text) UsingMethod_(type)
-	UsingSym_(name)
-	UsingSym_(keyword)
 
 		{
 		t0_ = Call_(type, this_);

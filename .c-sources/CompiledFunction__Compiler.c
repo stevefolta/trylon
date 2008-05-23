@@ -47,6 +47,7 @@ obj_ body_co___CompiledFunction__Compiler(obj_ this_, obj_ value)
 
 obj_ c_name__CompiledFunction__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -55,7 +56,6 @@ obj_ c_name__CompiledFunction__Compiler(obj_ this_)
 	obj_ t5_;
 	DefineString_(0, "__")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -129,13 +129,13 @@ obj_ emit_c_call_co_builder_co___CompiledFunction__Compiler(obj_ this_, obj_ arg
 
 obj_ emit_c_function_on_co___CompiledFunction__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___MethodBuilder__CCompiler(obj_ this_, obj_ function);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "{")
 	DefineString_(1, "}")
 	DefineString_(2, "{\n\treturn nil;\n}\n")
 	UsingMethod_(body) UsingMethod_(c_signature) UsingMethod_(emit_code_co_) UsingMethod_(emit_co_) UsingMethod_(is_primitive) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ new_co___MethodBuilder__CCompiler(obj_ this_, obj_ function);
 	UsingClass_(MethodBuilder__CCompiler)
 
 		{
@@ -176,6 +176,10 @@ obj_ emit_c_function_on_co___CompiledFunction__Compiler(obj_ this_, obj_ stream)
 
 obj_ emit_call_co___CompiledFunction__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -187,10 +191,6 @@ obj_ emit_call_co___CompiledFunction__Compiler(obj_ this_, obj_ arguments)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -225,6 +225,10 @@ obj_ emit_call_co___CompiledFunction__Compiler(obj_ this_, obj_ arguments)
 
 obj_ emit_code__CompiledFunction__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(define_send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -236,10 +240,6 @@ obj_ emit_code__CompiledFunction__Compiler(obj_ this_)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(define_send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -443,6 +443,10 @@ obj_ return_type_co___CompiledFunction__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_call_co_compiler_co___CompiledFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -454,10 +458,6 @@ obj_ translate_call_co_compiler_co___CompiledFunction__Compiler(obj_ this_, obj_
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -492,6 +492,10 @@ obj_ translate_call_co_compiler_co___CompiledFunction__Compiler(obj_ this_, obj_
 
 obj_ translate_co___CompiledFunction__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(define_send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -503,10 +507,6 @@ obj_ translate_co___CompiledFunction__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(define_send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

@@ -35,9 +35,9 @@ obj_ create__NilFunction__Compiler(obj_ this_)
 
 obj_ emit_c_call_co_builder_co___NilFunction__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ new_co___NameResult__CCompiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	DefineString_(0, "nil")
-	extern obj_ new_co___NameResult__CCompiler(obj_ this_, obj_ name);
 	UsingClass_(NameResult__CCompiler)
 
 		{

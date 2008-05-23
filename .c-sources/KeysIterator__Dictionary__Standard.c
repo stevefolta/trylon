@@ -15,8 +15,8 @@ struct object KeysIterator__Dictionary__Standard =
 
 obj_ create_co___KeysIterator__Dictionary__Standard(obj_ this_, obj_ root)
 {
-	obj_ t0_;
 	obj_ create_co___Iterator__Dictionary__Standard(obj_, obj_);
+	obj_ t0_;
 
 		{
 		t0_ = create_co___Iterator__Dictionary__Standard(this_, root);

@@ -63,9 +63,9 @@ obj_ interpreted__BlankLine__Compiler(obj_ this_)
 
 obj_ jolt_expression__BlankLine__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ with_co___Expression(obj_ this_, obj_ value);
 	UsingSym_(blank_line)
+	obj_ t0_;
 	UsingClass_(Expression)
 
 		{

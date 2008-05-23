@@ -13,8 +13,8 @@ struct object ExpressionResult__CCompiler =
 
 obj_ access__ExpressionResult__CCompiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

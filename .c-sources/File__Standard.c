@@ -48,11 +48,11 @@ obj_ OutStream__File__Standard__accessor_(obj_ this_)
 
 obj_ contents__File__Standard(obj_ this_)
 {
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_pl_) UsingMethod_(close) UsingMethod_(read_buffer_co_length_co_) UsingMethod_(size) UsingMethod_(stream)
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 	UsingClass_(BytePtr__Standard)
 
@@ -124,10 +124,10 @@ obj_ new_co___File__Standard(obj_ this_, obj_ path)
 
 obj_ output_stream__File__Standard(obj_ this_)
 {
+	extern obj_ new_co___OutStream__File__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(path)
-	extern obj_ new_co___OutStream__File__Standard(obj_ this_, obj_ path);
 	UsingClass_(OutStream__File__Standard)
 
 		{
@@ -175,10 +175,10 @@ return BuildInt_(buf.st_size);
 
 obj_ stream__File__Standard(obj_ this_)
 {
+	extern obj_ new_co___InStream__File__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(path)
-	extern obj_ new_co___InStream__File__Standard(obj_ this_, obj_ path);
 	UsingClass_(InStream__File__Standard)
 
 		{

@@ -146,6 +146,11 @@ obj_ Temporary__CCompiler__accessor_(obj_ this_)
 
 obj_ compile_c_file_co_force_compile_co___CCompiler(obj_ this_, obj_ name, obj_ force_compile)
 {
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -163,11 +168,6 @@ obj_ compile_c_file_co_force_compile_co___CCompiler(obj_ this_, obj_ name, obj_ 
 	DefineString_(8, "C compilation failed.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(build_settings) UsingMethod_(c_compiler) UsingMethod_(c_flags) UsingMethod_(c_sources_dir) UsingMethod_(current_item) UsingMethod_(exists) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(objects_dir) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(File__Standard)
 	UsingClass_(System__Standard)
 	UsingClass_(MessageException__Standard)
@@ -236,6 +236,22 @@ obj_ compile_c_file_co_force_compile_co___CCompiler(obj_ this_, obj_ name, obj_ 
 
 obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ new__ClassNumberer__CCompiler(obj_ this_);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new_co___ClassBuilder__CCompiler(obj_ this_, obj_ proto);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments);
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -257,22 +273,6 @@ obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 	DefineString_(13, "'")
 	DefineString_(14, "' is called but never defined.")
 	UsingMethod_(_pl_) UsingMethod_(all_protos) UsingMethod_(append_co_) UsingMethod_(build_settings) UsingMethod_(c_sources_dir) UsingMethod_(called) UsingMethod_(close) UsingMethod_(compile_c_file_co_force_compile_co_) UsingMethod_(contents) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(declared) UsingMethod_(emit_dispatch_table_co_) UsingMethod_(emit_settings_co_) UsingMethod_(emit_symbols) UsingMethod_(emit_co_) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_library_path) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(link_flags) UsingMethod_(linker) UsingMethod_(main_proto) UsingMethod_(name) UsingMethod_(number_classes_co_) UsingMethod_(object_file_name) UsingMethod_(objects_dir) UsingMethod_(program_name) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_) UsingMethod_(source_name) UsingMethod_(standard_object_proto) UsingMethod_(symbols) UsingMethod_(unindent) UsingMethod_(values) UsingMethod_(warn_co_) UsingMethod_(write_co_)
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new__ClassNumberer__CCompiler(obj_ this_);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new_co___ClassBuilder__CCompiler(obj_ this_, obj_ proto);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments);
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(File__Standard)
 	UsingClass_(System__Standard)
@@ -484,6 +484,22 @@ obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 
 obj_ emit_dispatch_table_co___CCompiler(obj_ this_, obj_ main_package)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__DispatchRowSet__CCompiler(obj_ this_);
+	extern obj_ new_co___DispatchRow__CCompiler(obj_ this_, obj_ symbol_info);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__ExpandoArray__CCompiler(obj_ this_);
+	extern obj_ new__ExpandoBitmap__CCompiler(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -514,22 +530,6 @@ obj_ emit_dispatch_table_co___CCompiler(obj_ this_, obj_ main_package)
 	DefineString_(17, " */\n")
 	UsingMethod_(_pl_) UsingMethod_(_dv_) UsingMethod_(add_co_) UsingMethod_(c_name) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(current_item) UsingMethod_(declared) UsingMethod_(emit_all_function_declarations_co_) UsingMethod_(fit_into_co_used_offsets_co_) UsingMethod_(float_) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(mangle_name_co_) UsingMethod_(name) UsingMethod_(num_items) UsingMethod_(report_co_) UsingMethod_(root_proto_co_) UsingMethod_(selector) UsingMethod_(setup_dispatch_row_co_inherited_function_co_) UsingMethod_(string) UsingMethod_(support_perform) UsingMethod_(symbols) UsingMethod_(unindent) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__DispatchRowSet__CCompiler(obj_ this_);
-	extern obj_ new_co___DispatchRow__CCompiler(obj_ this_, obj_ symbol_info);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__ExpandoArray__CCompiler(obj_ this_);
-	extern obj_ new__ExpandoBitmap__CCompiler(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	UsingClass_(File__Standard)
 	UsingClass_(Main)
 	UsingClass_(ExpandoBitmap__CCompiler)
@@ -693,6 +693,8 @@ obj_ emit_dispatch_table_co___CCompiler(obj_ this_, obj_ main_package)
 
 obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, " = Call_(")
@@ -700,8 +702,6 @@ obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ n
 	DefineString_(2, ", ")
 	DefineString_(3, ");")
 	UsingMethod_(access) UsingMethod_(add_line_co_) UsingMethod_(add_co_) UsingMethod_(append_co_) UsingMethod_(calling_method_co_) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(get_temporary) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(mangle_name_co_) UsingMethod_(string)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 	UsingClass_(StringBuilder__Standard)
 
@@ -747,6 +747,8 @@ obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ n
 
 obj_ emit_settings_co___CCompiler(obj_ this_, obj_ build_settings)
 {
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -755,8 +757,6 @@ obj_ emit_settings_co___CCompiler(obj_ this_, obj_ build_settings)
 	DefineString_(1, "#define SUPPORT_PERFORM_")
 	DefineString_(2, "#define DEBUGGER_")
 	UsingMethod_(_pl_) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(debugger) UsingMethod_(is_changed) UsingMethod_(support_perform) UsingMethod_(write_line) UsingMethod_(write_line_co_)
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	UsingClass_(File__Standard)
 	UsingClass_(ExistingFileStream__Standard)
 
@@ -793,6 +793,15 @@ obj_ emit_settings_co___CCompiler(obj_ this_, obj_ build_settings)
 
 obj_ emit_symbols__CCompiler(obj_ this_)
 {
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -820,15 +829,6 @@ obj_ emit_symbols__CCompiler(obj_ this_)
 	DefineString_(15, "struct Standard__Symbol__internal* lastSymbol_ = nil;\n")
 	UsingMethod_(_pl_) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(include_selector_symbols) UsingMethod_(index) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(mangle_name_co_) UsingMethod_(name) UsingMethod_(string) UsingMethod_(support_perform) UsingMethod_(symbols) UsingMethod_(used_as_symbol) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	UsingClass_(File__Standard)
 	UsingClass_(Main)
 	UsingClass_(ExistingFileStream__Standard)
@@ -960,6 +960,8 @@ obj_ emit_symbols__CCompiler(obj_ this_)
 
 obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1040,8 +1042,6 @@ obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name)
 	DefineString_(41, "_")
 	DefineString_(42, "_")
 	UsingMethod_(_an_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(deref_char) UsingMethod_(int_) UsingMethod_(start) UsingMethod_(stopper) UsingMethod_(string)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -1385,6 +1385,10 @@ obj_ references__CCompiler(obj_ this_)
 
 obj_ report_run_program_co_arguments_co___CCompiler(obj_ this_, obj_ program, obj_ args)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1392,10 +1396,6 @@ obj_ report_run_program_co_arguments_co___CCompiler(obj_ this_, obj_ program, ob
 	DefineString_(1, " ")
 	UsingMethod_(_pl_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_verbose) UsingMethod_(iterator) UsingMethod_(report_co_) UsingMethod_(string) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(Main)
 	UsingClass_(StringBuilder__Standard)
 
@@ -1438,10 +1438,10 @@ obj_ report_run_program_co_arguments_co___CCompiler(obj_ this_, obj_ program, ob
 
 obj_ report_co___CCompiler(obj_ this_, obj_ message)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(report_co_)
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(Main)
 
 		{

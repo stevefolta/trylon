@@ -552,10 +552,10 @@ obj_ WordsLexer__Compiler__accessor_(obj_ this_)
 
 obj_ compile__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(compile_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -570,10 +570,10 @@ obj_ compile__Compiler(obj_ this_)
 
 obj_ compile_co___Compiler(obj_ this_, obj_ compile_symbols)
 {
+	extern obj_ new__Compiler__Compiler(obj_ this_);
 	obj_ t0_;
 	UsingMethod_(compile_program_co_) UsingMethod_(return_value)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new__Compiler__Compiler(obj_ this_);
 	UsingClass_(Compiler__Compiler)
 
 		{
@@ -590,8 +590,8 @@ obj_ compile_co___Compiler(obj_ this_, obj_ compile_symbols)
 
 obj_ mangle_name_co___Compiler(obj_ this_, obj_ name)
 {
-	obj_ t0_;
 	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
+	obj_ t0_;
 	UsingClass_(CCompiler)
 
 		{

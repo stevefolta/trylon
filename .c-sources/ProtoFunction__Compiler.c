@@ -37,13 +37,13 @@ obj_ access__ProtoFunction__Compiler(obj_ this_)
 
 obj_ c_name__ProtoFunction__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "__")
 	DefineString_(1, "__accessor_")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -110,10 +110,10 @@ obj_ create_co___ProtoFunction__Compiler(obj_ this_, obj_ proto)
 
 obj_ emit_c_call_co_builder_co___ProtoFunction__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(proto) UsingMethod_(using_class_co_)
-	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	UsingClass_(LiteralResult__CCompiler)
 
 		{
@@ -182,6 +182,9 @@ obj_ emit_call_co___ProtoFunction__Compiler(obj_ this_, obj_ arguments)
 
 obj_ emit_code__ProtoFunction__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(install_proto_loader)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -190,9 +193,6 @@ obj_ emit_code__ProtoFunction__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(is_main) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto) UsingMethod_(push_front_co_)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(install_proto_loader)
 	UsingClass_(List__Standard)
 	UsingClass_(Expression)
 

@@ -234,6 +234,42 @@ obj_ CloneObjExtra_(obj_ object, int numExtraFields)
 }
 
 
+int SymToEnum_(
+	obj_ symbol, const EnumDictEntry_* dict, int dictSize, int notFoundValue)
+{
+	/* The dictionary is sorted by symbol name, and the symbol objects are sorted
+	   in memory, so we can use a binary search. */
+	unsigned int low = 0;
+	unsigned int high = dictSize - 1;
+	while (low <= high) {
+		unsigned int mid = (low + high) / 2;
+		const EnumDictEntry_* entry = &dict[mid];
+		if (entry->symbol > symbol)
+			high = mid - 1;
+		else if (entry->symbol < symbol)
+			low = mid + 1;
+		else
+			return entry->value;
+		}
+
+	/* Not found. */
+	return notFoundValue;
+}
+
+
+obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize)
+{
+	/* Linear search. */
+	const EnumDictEntry_* entry = dict;
+	const EnumDictEntry_* stopper = &dict[dictSize];
+	for (; entry < stopper; ++entry) {
+		if (entry->value == value)
+			return entry->symbol;
+		}
+	return nil;
+}
+
+
 
 int main(int argc, char* argv[])
 {

@@ -30,6 +30,7 @@ obj_ create_co___LocalSetter__Compiler(obj_ this_, obj_ local)
 
 obj_ emit_c_call_co_builder_co___LocalSetter__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -38,7 +39,6 @@ obj_ emit_c_call_co_builder_co___LocalSetter__Compiler(obj_ this_, obj_ argument
 	DefineString_(0, " = ")
 	DefineString_(1, ";")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_line_co_) UsingMethod_(emit_code_co_) UsingMethod_(first_item) UsingMethod_(local) UsingMethod_(name)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -65,6 +65,8 @@ obj_ emit_c_call_co_builder_co___LocalSetter__Compiler(obj_ this_, obj_ argument
 
 obj_ emit_call_co___LocalSetter__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(set)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -72,8 +74,6 @@ obj_ emit_call_co___LocalSetter__Compiler(obj_ this_, obj_ arguments)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(local) UsingMethod_(name)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(set)
 	UsingClass_(Expression)
 
 		{
@@ -134,14 +134,14 @@ obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local)
 
 obj_ translate_call_co_compiler_co___LocalSetter__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(set)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(local) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(set)
 	UsingClass_(Expression)
 
 		{

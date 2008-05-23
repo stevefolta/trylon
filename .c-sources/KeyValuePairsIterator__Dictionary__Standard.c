@@ -22,8 +22,8 @@ obj_ Pair__KeyValuePairsIterator__Dictionary__Standard__accessor_(obj_ this_)
 
 obj_ create_co___KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ root)
 {
-	obj_ t0_;
 	obj_ create_co___Iterator__Dictionary__Standard(obj_, obj_);
+	obj_ t0_;
 
 		{
 		t0_ = create_co___Iterator__Dictionary__Standard(this_, root);
@@ -35,10 +35,10 @@ obj_ create_co___KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ ro
 
 obj_ current_item__KeyValuePairsIterator__Dictionary__Standard(obj_ this_)
 {
+	extern obj_ new_co___Pair__KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ node);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(node) UsingMethod_(stack_top)
-	extern obj_ new_co___Pair__KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ node);
 	UsingClass_(Pair__KeyValuePairsIterator__Dictionary__Standard)
 
 		{

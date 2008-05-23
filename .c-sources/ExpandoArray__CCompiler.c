@@ -112,6 +112,8 @@ obj_ create__ExpandoArray__CCompiler(obj_ this_)
 
 obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 {
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -122,8 +124,6 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 	DefineInt_(3, 0)
 	DefineInt_(4, 4)
 	UsingMethod_(_st_) UsingMethod_(block_size_co_) UsingMethod_(blocks) UsingMethod_(blocks_co_) UsingMethod_(num_blocks) UsingMethod_(num_blocks_co_) UsingMethod_(num_items_co_) UsingMethod_(ptr_at_co_put_co_)
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -147,6 +147,8 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 
 obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 {
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -156,8 +158,6 @@ obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 	DefineInt_(2, 4)
 	DefineInt_(3, 1)
 	UsingMethod_(_st_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(block_size) UsingMethod_(blocks) UsingMethod_(blocks_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(num_blocks) UsingMethod_(num_blocks_co_) UsingMethod_(ptr_at_co_put_co_)
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -201,8 +201,8 @@ obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 
 obj_ iterator__ExpandoArray__CCompiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ new_co___Iterator__ExpandoArray__CCompiler(obj_ this_, obj_ array);
+	obj_ t0_;
 	UsingClass_(Iterator__ExpandoArray__CCompiler)
 
 		{

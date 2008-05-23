@@ -29,6 +29,8 @@ obj_ create_co___SymbolLiteral__Compiler(obj_ this_, obj_ name)
 
 obj_ emit_code_co___SymbolLiteral__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
+	extern obj_ new_co_is_constant_co___NameResult__CCompiler(obj_ this_, obj_ name, obj_ is_constant);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -38,8 +40,6 @@ obj_ emit_code_co___SymbolLiteral__Compiler(obj_ this_, obj_ builder)
 	DefineString_(3, ")")
 	UsingMethod_(_pl_) UsingMethod_(add_extern_declaration_co_) UsingMethod_(name) UsingMethod_(using_symbol_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
-	extern obj_ new_co_is_constant_co___NameResult__CCompiler(obj_ this_, obj_ name, obj_ is_constant);
 	UsingClass_(Compiler)
 	UsingClass_(NameResult__CCompiler)
 
@@ -58,6 +58,34 @@ obj_ emit_code_co___SymbolLiteral__Compiler(obj_ this_, obj_ builder)
 		t2_ = new_co_is_constant_co___NameResult__CCompiler(Proto_(NameResult__CCompiler), t1_, true_);
 		return t2_;
 		
+		}
+	return nil;
+}
+
+
+obj_ emit_declaration_co___SymbolLiteral__Compiler(obj_ this_, obj_ stream)
+{
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	obj_ t0_;
+	obj_ t1_;
+	DefineInt_(0, 3)
+	DefineString_(0, "\tUsingSym_(")
+	DefineString_(1, "\")\n")
+	UsingMethod_(name) UsingMethod_(write_all_co_)
+	UsingClass_(Compiler)
+
+		{
+		obj_ mangled_name;
+		t0_ = Call_(name, this_);
+		t1_ = mangle_name_co___Compiler(Proto_(Compiler), t0_);
+		mangled_name = t1_;
+		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(0));
+		t0_->fields[1] = Str_(0);
+		t0_->fields[2] = mangled_name;
+		t0_->fields[3] = Str_(1);
+		t1_ = Call_(write_all_co_, stream, t0_);
+		
 		
 		}
 	return nil;
@@ -66,10 +94,10 @@ obj_ emit_code_co___SymbolLiteral__Compiler(obj_ this_, obj_ builder)
 
 obj_ interpreted__SymbolLiteral__Compiler(obj_ this_)
 {
+	extern obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(name)
-	extern obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name);
 	UsingClass_(Symbol__Standard)
 
 		{
@@ -96,12 +124,12 @@ obj_ is_literal__SymbolLiteral__Compiler(obj_ this_)
 
 obj_ jolt_expression__SymbolLiteral__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(intern) UsingMethod_(name)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

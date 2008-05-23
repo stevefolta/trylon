@@ -19,11 +19,11 @@ struct object LambdaBlock__Compiler =
 
 obj_ add_argument_co___LambdaBlock__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(arguments) UsingMethod_(at_co_put_co_)
-	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
 	UsingClass_(CompiledField__Compiler)
 
 		{
@@ -52,11 +52,11 @@ obj_ arguments_co___LambdaBlock__Compiler(obj_ this_, obj_ value)
 
 obj_ create_co___LambdaBlock__Compiler(obj_ this_, obj_ parent)
 {
+	obj_ create_co___Block__Compiler(obj_, obj_);
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(arguments_co_)
-	obj_ create_co___Block__Compiler(obj_, obj_);
-	extern obj_ new__Dictionary__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 
 		{
@@ -84,15 +84,15 @@ obj_ is_lambda__LambdaBlock__Compiler(obj_ this_)
 
 obj_ jolt_expression__LambdaBlock__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(lambda)
+	obj_ jolt_expression__Block__Compiler(obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 0)
 	UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(lambda)
-	obj_ jolt_expression__Block__Compiler(obj_);
 	UsingClass_(Expression)
 
 		{
@@ -124,6 +124,9 @@ obj_ jolt_expression__LambdaBlock__Compiler(obj_ this_)
 
 obj_ lookup_function_co___LambdaBlock__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg);
+	extern obj_ new_co___ArgumentFunction__Compiler(obj_ this_, obj_ arg);
+	obj_ lookup_function_co___Block__Compiler(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -131,9 +134,6 @@ obj_ lookup_function_co___LambdaBlock__Compiler(obj_ this_, obj_ name)
 	DefineInt_(1, 1)
 	DefineString_(0, ":")
 	UsingMethod_(_) UsingMethod_(arguments) UsingMethod_(at_co_) UsingMethod_(ends_with_co_) UsingMethod_(length) UsingMethod_(substr_co_length_co_)
-	extern obj_ new_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg);
-	extern obj_ new_co___ArgumentFunction__Compiler(obj_ this_, obj_ arg);
-	obj_ lookup_function_co___Block__Compiler(obj_, obj_);
 	UsingClass_(SetArgumentFunction__Compiler)
 	UsingClass_(ArgumentFunction__Compiler)
 

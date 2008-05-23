@@ -109,12 +109,12 @@ memcpy(BytePtrValue_(this_), BytePtrValue_(source), IntValue_(length));
 
 obj_ debug_write__BytePtr__Standard(obj_ this_)
 {
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "BytePtr: ")
 	UsingMethod_(_pl_) UsingMethod_(string)
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{
@@ -161,8 +161,8 @@ obj_ int_at_co_put_co___BytePtr__Standard(obj_ this_, obj_ index, obj_ value)
 
 obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size)
 {
-	obj_ t0_;
 	extern obj_ allocate_bytes_non_ptr_co___Implementation__Standard(obj_ this_, obj_ num_bytes);
+	obj_ t0_;
 	UsingClass_(Implementation__Standard)
 
 		{
@@ -177,8 +177,8 @@ obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size)
 
 obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size)
 {
-	obj_ t0_;
 	extern obj_ allocate_bytes_co___Implementation__Standard(obj_ this_, obj_ num_bytes);
+	obj_ t0_;
 	UsingClass_(Implementation__Standard)
 
 		{

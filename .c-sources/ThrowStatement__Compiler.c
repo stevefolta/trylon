@@ -76,12 +76,12 @@ obj_ interpreted__ThrowStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__ThrowStatement__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(throw)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(jolt_expression) UsingMethod_(value)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(throw)
 	UsingClass_(Expression)
 
 		{
@@ -124,11 +124,11 @@ obj_ prepare_to_emit__ThrowStatement__Compiler(obj_ this_)
 
 obj_ translate_co___ThrowStatement__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(throw)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(translateExpression_co_) UsingMethod_(value)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(throw)
 	UsingClass_(Expression)
 
 		{

@@ -149,14 +149,14 @@ obj_ interpreted__ShortCircuitOr__Compiler(obj_ this_)
 
 obj_ jolt_expression__ShortCircuitOr__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(or)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(expr1) UsingMethod_(expr2) UsingMethod_(jolt_expression)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(or)
 	UsingClass_(Expression)
 
 		{
@@ -203,12 +203,12 @@ obj_ prepare_to_emit__ShortCircuitOr__Compiler(obj_ this_)
 
 obj_ translate_co___ShortCircuitOr__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(or)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(expr1) UsingMethod_(expr2) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(or)
 	UsingClass_(Expression)
 
 		{

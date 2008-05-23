@@ -117,8 +117,8 @@ obj_ compiler_co___Main(obj_ this_, obj_ value)
 
 obj_ debug_co___Main(obj_ this_, obj_ message)
 {
-	obj_ t0_;
 	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -133,6 +133,10 @@ obj_ debug_co___Main(obj_ this_, obj_ message)
 
 obj_ dump_expr_co_level_co___Main(obj_ this_, obj_ expr, obj_ level)
 {
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -146,10 +150,6 @@ obj_ dump_expr_co_level_co___Main(obj_ this_, obj_ expr, obj_ level)
 	DefineString_(3, "\"")
 	DefineString_(4, "\"")
 	UsingMethod_(_pl_) UsingMethod_(current_item) UsingMethod_(dump_expr_co_level_co_) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(num_items) UsingMethod_(string) UsingMethod_(substr_co_length_co_)
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(String__Standard)
 	UsingClass_(Expression)
 	UsingClass_(Standard)
@@ -196,15 +196,15 @@ obj_ dump_expr_co_level_co___Main(obj_ this_, obj_ expr, obj_ level)
 
 obj_ dump_lines_co_level_co___Main(obj_ this_, obj_ lines, obj_ level)
 {
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 1)
 	DefineString_(0, "> ")
 	UsingMethod_(_pl_) UsingMethod_(block) UsingMethod_(current_item) UsingMethod_(dump_lines_co_level_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(string) UsingMethod_(text)
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{
@@ -233,13 +233,6 @@ obj_ dump_lines_co_level_co___Main(obj_ this_, obj_ lines, obj_ level)
 
 obj_ lex_test_co___Main(obj_ this_, obj_ filename)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, ": ")
-	DefineString_(1, "Error: ")
-	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(contents) UsingMethod_(is_empty) UsingMethod_(message) UsingMethod_(next_token) UsingMethod_(text) UsingMethod_(type)
 	extern obj_ new_co___Lexer__Compiler(obj_ this_, obj_ text);
 	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
@@ -248,6 +241,13 @@ obj_ lex_test_co___Main(obj_ this_, obj_ filename)
 	extern obj_ print_line__Standard(obj_ this_);
 	UsingSym_(eof)
 	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	DefineString_(0, ": ")
+	DefineString_(1, "Error: ")
+	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(contents) UsingMethod_(is_empty) UsingMethod_(message) UsingMethod_(next_token) UsingMethod_(text) UsingMethod_(type)
 	UsingClass_(File__Standard)
 	UsingClass_(Standard)
 	UsingClass_(Lexer__Compiler)
@@ -351,6 +351,13 @@ obj_ log_co___Main(obj_ this_, obj_ message)
 
 obj_ main_co___Main(obj_ this_, obj_ arguments)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ interpret_co___Interpreter(obj_ this_, obj_ code);
+	extern obj_ contents_of_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ compile_co___Compiler(obj_ this_, obj_ compile_symbols);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -367,13 +374,6 @@ obj_ main_co___Main(obj_ this_, obj_ arguments)
 	DefineString_(7, "--target-jolt")
 	DefineString_(8, "Unknown option: ")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(lex_test_co_) UsingMethod_(message) UsingMethod_(starts_with_co_) UsingMethod_(substr_co_) UsingMethod_(tail) UsingMethod_(test_coke_lexer_co_) UsingMethod_(test_lines_lexer_co_) UsingMethod_(test_words_lexer_co_)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ interpret_co___Interpreter(obj_ this_, obj_ code);
-	extern obj_ contents_of_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ compile_co___Compiler(obj_ this_, obj_ compile_symbols);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Compiler)
 	UsingClass_(File__Standard)
 	UsingClass_(MessageException__Standard)
@@ -586,17 +586,17 @@ obj_ status_reporter__Main(obj_ this_)
 
 obj_ test_coke_lexer_co___Main(obj_ this_, obj_ filename)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___CokeLexer__Compiler(obj_ this_, obj_ lines);
+	extern obj_ print_line__Standard(obj_ this_);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 0)
 	DefineString_(0, "Error: ")
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(dump_expr_co_level_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(message) UsingMethod_(next_expr)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___CokeLexer__Compiler(obj_ this_, obj_ lines);
-	extern obj_ print_line__Standard(obj_ this_);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(File__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Standard)
@@ -650,15 +650,15 @@ obj_ test_coke_lexer_co___Main(obj_ this_, obj_ filename)
 
 obj_ test_lines_lexer_co___Main(obj_ this_, obj_ filename)
 {
+	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 0)
 	DefineString_(0, "Error: ")
 	UsingMethod_(_pl_) UsingMethod_(contents) UsingMethod_(dump_lines_co_level_co_) UsingMethod_(lex) UsingMethod_(message)
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(File__Standard)
 	UsingClass_(Standard)
 	UsingClass_(LinesLexer__Compiler)
@@ -691,15 +691,15 @@ obj_ test_lines_lexer_co___Main(obj_ this_, obj_ filename)
 
 obj_ test_words_lexer_co___Main(obj_ this_, obj_ filename)
 {
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___WordsLexer__Compiler(obj_ this_, obj_ string);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Error: ")
 	UsingMethod_(_pl_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(message) UsingMethod_(next)
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___WordsLexer__Compiler(obj_ this_, obj_ string);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(File__Standard)
 	UsingClass_(Standard)
 	UsingClass_(WordsLexer__Compiler)

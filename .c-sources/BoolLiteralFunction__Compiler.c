@@ -53,13 +53,13 @@ obj_ create_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value)
 
 obj_ emit_c_call_co_builder_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ new_co___NameResult__CCompiler(obj_ this_, obj_ name);
+	extern obj_ new_co___NameResult__CCompiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "true_")
 	DefineString_(1, "nil")
 	UsingMethod_(value)
-	extern obj_ new_co___NameResult__CCompiler(obj_ this_, obj_ name);
-	extern obj_ new_co___NameResult__CCompiler(obj_ this_, obj_ name);
 	UsingClass_(NameResult__CCompiler)
 
 		{
@@ -82,10 +82,10 @@ obj_ emit_c_call_co_builder_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ 
 
 obj_ emit_call_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ arguments)
 {
-	obj_ t0_;
-	UsingMethod_(value)
 	UsingSym_(true)
 	UsingSym_(false)
+	obj_ t0_;
+	UsingMethod_(value)
 
 		{
 		t0_ = Call_(value, this_);

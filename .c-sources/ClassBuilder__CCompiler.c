@@ -50,15 +50,15 @@ obj_ add_extern_declaration_co___ClassBuilder__CCompiler(obj_ this_, obj_ declar
 
 obj_ create_co___ClassBuilder__CCompiler(obj_ this_, obj_ proto)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(dict_literals_co_) UsingMethod_(extern_declarations_co_) UsingMethod_(float_literals_co_) UsingMethod_(int_literals_co_) UsingMethod_(proto_co_) UsingMethod_(string_literals_co_) UsingMethod_(tuple_literals_co_)
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(dict_literals_co_) UsingMethod_(extern_declarations_co_) UsingMethod_(float_literals_co_) UsingMethod_(int_literals_co_) UsingMethod_(proto_co_) UsingMethod_(string_literals_co_) UsingMethod_(tuple_literals_co_)
 	UsingClass_(List__Standard)
 	UsingClass_(IndexedResources__CCompiler)
 
@@ -98,6 +98,19 @@ obj_ dict_literals_co___ClassBuilder__CCompiler(obj_ this_, obj_ value)
 
 obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 {
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ new__TupleExpression__Compiler(obj_ this_);
+	extern obj_ new_co___SymbolLiteral__Compiler(obj_ this_, obj_ name);
+	extern obj_ new__TupleExpression__Compiler(obj_ this_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___ProtoExpression__CCompiler(obj_ this_, obj_ proto);
+	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -158,19 +171,6 @@ obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 	DefineString_(41, ")\n")
 	UsingMethod_(_st_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt_) UsingMethod_(access) UsingMethod_(add_member_co_) UsingMethod_(c_name) UsingMethod_(c_preamble) UsingMethod_(class_num) UsingMethod_(current_item) UsingMethod_(debugger) UsingMethod_(dict_literals) UsingMethod_(emit_c_function_on_co_) UsingMethod_(emit_code_co_) UsingMethod_(emit_declarations_on_co_) UsingMethod_(emit_field_indices_co_) UsingMethod_(extern_declarations) UsingMethod_(fields) UsingMethod_(float_literals) UsingMethod_(forward_declaration) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(initial_value) UsingMethod_(initial_value_result) UsingMethod_(initial_value_result_co_) UsingMethod_(int_literals) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto) UsingMethod_(shared_fields) UsingMethod_(string) UsingMethod_(string_literals) UsingMethod_(superclass) UsingMethod_(total_num_fields) UsingMethod_(tuple_literals) UsingMethod_(uses_protos) UsingMethod_(using_symbol_co_) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new__TupleExpression__Compiler(obj_ this_);
-	extern obj_ new_co___SymbolLiteral__Compiler(obj_ this_, obj_ name);
-	extern obj_ new__TupleExpression__Compiler(obj_ this_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___ProtoExpression__CCompiler(obj_ this_, obj_ proto);
-	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
 	UsingClass_(Main)
 	UsingClass_(TupleExpression__Compiler)
 	UsingClass_(SymbolLiteral__Compiler)
@@ -464,6 +464,13 @@ obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 
 obj_ emit_co___ClassBuilder__CCompiler(obj_ this_, obj_ force_compile)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -482,13 +489,6 @@ obj_ emit_co___ClassBuilder__CCompiler(obj_ this_, obj_ force_compile)
 	DefineString_(8, "C compilation failed.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(build_settings) UsingMethod_(c_compiler) UsingMethod_(c_flags) UsingMethod_(c_name) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(current_item) UsingMethod_(emit_on_co_) UsingMethod_(exists) UsingMethod_(go_forward) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(object_file_name) UsingMethod_(proto) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(File__Standard)
 	UsingClass_(System__Standard)
 	UsingClass_(MessageException__Standard)
@@ -675,6 +675,10 @@ obj_ proto_co___ClassBuilder__CCompiler(obj_ this_, obj_ value)
 
 obj_ report_run_program_co_arguments_co___ClassBuilder__CCompiler(obj_ this_, obj_ program, obj_ args)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -682,10 +686,6 @@ obj_ report_run_program_co_arguments_co___ClassBuilder__CCompiler(obj_ this_, ob
 	DefineString_(1, " ")
 	UsingMethod_(_pl_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_verbose) UsingMethod_(iterator) UsingMethod_(report_co_) UsingMethod_(string) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(Main)
 	UsingClass_(StringBuilder__Standard)
 

@@ -18,13 +18,13 @@ struct object Parser__Compiler =
 
 obj_ at_name_co___Parser__Compiler(obj_ this_, obj_ name)
 {
+	UsingSym_(name)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(_eq__eq_) UsingMethod_(current_token) UsingMethod_(text)
-	UsingSym_(name)
 
 		{
 		t0_ = Call_(current_token, this_);
@@ -45,13 +45,13 @@ obj_ at_name_co___Parser__Compiler(obj_ this_, obj_ name)
 
 obj_ check_iff__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_nt_)
+	UsingSym_(name)
+	extern obj_ build_settings__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "Illegal \"iff\".")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(has_symbol_co_) UsingMethod_(parse_error_co_) UsingMethod_(require_eol) UsingMethod_(skip_block) UsingMethod_(text)
-	UsingSym_(_nt_)
-	UsingSym_(name)
-	extern obj_ build_settings__Main(obj_ this_);
 	UsingClass_(Main)
 
 		{
@@ -152,11 +152,11 @@ obj_ context_co___Parser__Compiler(obj_ this_, obj_ value)
 
 obj_ create_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context)
 {
+	extern obj_ new_co___Lexer__Compiler(obj_ this_, obj_ text);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(context_co_) UsingMethod_(current_token_co_) UsingMethod_(lexer) UsingMethod_(lexer_co_) UsingMethod_(next_token) UsingMethod_(next_token_co_)
-	extern obj_ new_co___Lexer__Compiler(obj_ this_, obj_ text);
 	UsingClass_(Lexer__Compiler)
 
 		{
@@ -181,12 +181,12 @@ obj_ create_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ conte
 
 obj_ current_block__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Internal error: Current context isn't a block.")
 	UsingMethod_(context) UsingMethod_(is_a_co_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(Block__Compiler)
 
@@ -244,17 +244,17 @@ obj_ expression_expected_after_co___Parser__Compiler(obj_ this_, obj_ after)
 
 obj_ get_subblock__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(eol)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(indent)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Internal: tried to get an subblock when there was a third-token.")
 	DefineString_(1, "Internal: No eol before a subblock.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(current_token_co_) UsingMethod_(first_subblock_line) UsingMethod_(lexer) UsingMethod_(next_token) UsingMethod_(next_token_co_) UsingMethod_(subblock_line) UsingMethod_(third_token)
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(eol)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(indent)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(StringBuilder__Standard)
 
@@ -330,11 +330,11 @@ obj_ get_subblock__Parser__Compiler(obj_ this_)
 
 obj_ indent__Parser__Compiler(obj_ this_)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(indent)
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(Main)
 
 		{
@@ -364,10 +364,10 @@ obj_ lexer_co___Parser__Compiler(obj_ this_, obj_ value)
 
 obj_ make_binop_call_co_with_co_and_co___Parser__Compiler(obj_ this_, obj_ name, obj_ object, obj_ argument)
 {
-	obj_ t0_;
-	UsingMethod_(append_co_)
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
+	obj_ t0_;
+	UsingMethod_(append_co_)
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 
@@ -409,11 +409,11 @@ obj_ next_token_co___Parser__Compiler(obj_ this_, obj_ value)
 
 obj_ parse_additive_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_pl_)
+	UsingSym_(_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_multiplicative_expression) UsingMethod_(type)
-	UsingSym_(_pl_)
-	UsingSym_(_)
 
 		{
 		obj_ expr, token;
@@ -466,12 +466,12 @@ obj_ parse_additive_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_and_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_an_)
+	UsingSym_(_an_)
+	UsingSym_(_an_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_equality_expression)
-	UsingSym_(_an_)
-	UsingSym_(_an_)
-	UsingSym_(_an_)
 
 		{
 		obj_ expr;
@@ -514,15 +514,15 @@ obj_ parse_and_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_arg_type__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_in_)
+	UsingSym_(_dx_)
+	UsingSym_(_40_)
+	UsingSym_(_41_)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "Missing \"]\".")
 	DefineString_(1, "Missing \")\".")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_type_spec)
-	UsingSym_(_in_)
-	UsingSym_(_dx_)
-	UsingSym_(_40_)
-	UsingSym_(_41_)
 
 		{
 		obj_ arg_type;
@@ -571,6 +571,19 @@ obj_ parse_arg_type__Parser__Compiler(obj_ this_)
 
 obj_ parse_assignment_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_eq_)
+	UsingSym_(_pl__eq_)
+	UsingSym_(__eq_)
+	UsingSym_(_st__eq_)
+	UsingSym_(_dv__eq_)
+	UsingSym_(_pc__eq_)
+	UsingSym_(_gt__gt__eq_)
+	UsingSym_(_lt__lt__eq_)
+	UsingSym_(_an__eq_)
+	UsingSym_(_or__eq_)
+	UsingSym_(_xr__eq_)
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -586,19 +599,6 @@ obj_ parse_assignment_expression__Parser__Compiler(obj_ this_)
 	DefineString_(0, "Illegal assignment.")
 	DefineString_(1, "Illegal assignment.")
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(convert_to_setter_call_co_) UsingMethod_(copy) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(is_a_co_) UsingMethod_(length) UsingMethod_(parse_assignment_expression) UsingMethod_(parse_dict_literal_expression) UsingMethod_(parse_error_co_) UsingMethod_(parse_logical_or_expression) UsingMethod_(string) UsingMethod_(substr_co_length_co_) UsingMethod_(type)
-	UsingSym_(_eq_)
-	UsingSym_(_pl__eq_)
-	UsingSym_(__eq_)
-	UsingSym_(_st__eq_)
-	UsingSym_(_dv__eq_)
-	UsingSym_(_pc__eq_)
-	UsingSym_(_gt__gt__eq_)
-	UsingSym_(_lt__lt__eq_)
-	UsingSym_(_an__eq_)
-	UsingSym_(_or__eq_)
-	UsingSym_(_xr__eq_)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	UsingClass_(List__Standard)
 	UsingClass_(FunctionCall__Compiler)
 	UsingClass_(Send__Compiler)
@@ -765,15 +765,15 @@ obj_ parse_block__Parser__Compiler(obj_ this_)
 
 obj_ parse_block_co___Parser__Compiler(obj_ this_, obj_ is_lambda)
 {
-	obj_ t0_;
-	obj_ t1_;
-	DefineString_(0, "Statement expected.")
-	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_token) UsingMethod_(parent) UsingMethod_(parse_error_co_) UsingMethod_(parse_statement)
 	extern obj_ new_co___LambdaBlock__Compiler(obj_ this_, obj_ parent);
 	extern obj_ new_co___Block__Compiler(obj_ this_, obj_ parent);
 	UsingSym_(eol)
 	UsingSym_(indent)
 	UsingSym_(unindent)
+	obj_ t0_;
+	obj_ t1_;
+	DefineString_(0, "Statement expected.")
+	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_token) UsingMethod_(parent) UsingMethod_(parse_error_co_) UsingMethod_(parse_statement)
 	UsingClass_(LambdaBlock__Compiler)
 	UsingClass_(Block__Compiler)
 
@@ -851,9 +851,9 @@ obj_ parse_block_co___Parser__Compiler(obj_ this_, obj_ is_lambda)
 
 obj_ parse_break_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___BreakStatement__Compiler(obj_ this_, obj_ comment);
 	obj_ t0_;
 	UsingMethod_(consume_token) UsingMethod_(require_eol)
-	extern obj_ new_co___BreakStatement__Compiler(obj_ this_, obj_ comment);
 	UsingClass_(BreakStatement__Compiler)
 
 		{
@@ -874,12 +874,12 @@ obj_ parse_break_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_code__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Block__Compiler(obj_ this_, obj_ parent);
+	UsingSym_(eof)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "Statement expected.")
 	UsingMethod_(_nt__eq_) UsingMethod_(append_co_) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_statement)
-	extern obj_ new_co___Block__Compiler(obj_ this_, obj_ parent);
-	UsingSym_(eof)
 	UsingClass_(Block__Compiler)
 
 		{
@@ -923,11 +923,11 @@ obj_ parse_code__Parser__Compiler(obj_ this_)
 
 obj_ parse_coke_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___CokeStatement__Compiler(obj_ this_, obj_ lines);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(consume_token) UsingMethod_(get_subblock) UsingMethod_(substrings)
-	extern obj_ new_co___CokeStatement__Compiler(obj_ this_, obj_ lines);
 	UsingClass_(CokeStatement__Compiler)
 
 		{
@@ -946,9 +946,9 @@ obj_ parse_coke_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_continue_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___ContinueStatement__Compiler(obj_ this_, obj_ comment);
 	obj_ t0_;
 	UsingMethod_(consume_token) UsingMethod_(require_eol)
-	extern obj_ new_co___ContinueStatement__Compiler(obj_ this_, obj_ comment);
 	UsingClass_(ContinueStatement__Compiler)
 
 		{
@@ -969,15 +969,6 @@ obj_ parse_continue_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_declaration__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, "Missing \"]\".")
-	DefineString_(1, "Missing \")\".")
-	DefineString_(2, "\"=\" or \":=\" expected.")
-	DefineString_(3, ":")
-	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(add_local_co_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_block) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_type_spec) UsingMethod_(require_eol) UsingMethod_(text)
 	UsingSym_(_in_)
 	UsingSym_(_dx_)
 	UsingSym_(_40_)
@@ -988,6 +979,15 @@ obj_ parse_declaration__Parser__Compiler(obj_ this_)
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expression, obj_ comment);
 	extern obj_ new_co_arguments_co_context_co___FunctionCall__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ context);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	DefineString_(0, "Missing \"]\".")
+	DefineString_(1, "Missing \")\".")
+	DefineString_(2, "\"=\" or \":=\" expected.")
+	DefineString_(3, ":")
+	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(add_local_co_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_block) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_type_spec) UsingMethod_(require_eol) UsingMethod_(text)
 	UsingClass_(List__Standard)
 	UsingClass_(ExpressionStatement__Compiler)
 	UsingClass_(FunctionCall__Compiler)
@@ -1081,15 +1081,6 @@ obj_ parse_declaration__Parser__Compiler(obj_ this_)
 
 obj_ parse_dict_literal_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, "Missing '=' in dictionary literal.")
-	DefineString_(1, "Missing value for \"")
-	DefineString_(2, "\" in dictionary literal.")
-	DefineString_(3, "Syntax error in dictionary literal.")
-	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(next_token) UsingMethod_(parse_assignment_expression) UsingMethod_(parse_dict_literal_expression) UsingMethod_(parse_error_co_) UsingMethod_(require_eol) UsingMethod_(return_token_co_) UsingMethod_(text)
 	UsingSym_(eol)
 	UsingSym_(indent)
 	extern obj_ new__DictLiteral__Compiler(obj_ this_);
@@ -1100,6 +1091,15 @@ obj_ parse_dict_literal_expression__Parser__Compiler(obj_ this_)
 	UsingSym_(_eq_)
 	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
 	UsingSym_(eol)
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	DefineString_(0, "Missing '=' in dictionary literal.")
+	DefineString_(1, "Missing value for \"")
+	DefineString_(2, "\" in dictionary literal.")
+	DefineString_(3, "Syntax error in dictionary literal.")
+	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(next_token) UsingMethod_(parse_assignment_expression) UsingMethod_(parse_dict_literal_expression) UsingMethod_(parse_error_co_) UsingMethod_(require_eol) UsingMethod_(return_token_co_) UsingMethod_(text)
 	UsingClass_(DictLiteral__Compiler)
 	UsingClass_(Token__Compiler)
 
@@ -1199,13 +1199,13 @@ obj_ parse_dict_literal_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_equality_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(is_a_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_relational_expression) UsingMethod_(type)
 	UsingSym_(_eq__eq_)
 	UsingSym_(_nt__eq_)
 	extern obj_ new_co_is_nil_co___NilTest__Compiler(obj_ this_, obj_ object, obj_ is_nil);
 	UsingSym_(_eq__eq_)
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(is_a_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_relational_expression) UsingMethod_(type)
 	UsingClass_(NilTest__Compiler)
 	UsingClass_(LiteralNil__Compiler)
 
@@ -1271,10 +1271,10 @@ obj_ parse_equality_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_error_co___Parser__Compiler(obj_ this_, obj_ message)
 {
+	extern obj_ new_co_token_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ token);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(current_token)
-	extern obj_ new_co_token_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ token);
 	UsingClass_(ParseException__Compiler)
 
 		{
@@ -1289,12 +1289,12 @@ obj_ parse_error_co___Parser__Compiler(obj_ this_, obj_ message)
 
 obj_ parse_exclusive_or_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_xr_)
+	UsingSym_(_xr_)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "^")
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_and_expression)
-	UsingSym_(_xr_)
-	UsingSym_(_xr_)
 
 		{
 		obj_ expr;
@@ -1337,13 +1337,13 @@ obj_ parse_exclusive_or_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_44_)
+	extern obj_ new__TupleExpression__Compiler(obj_ this_);
+	UsingSym_(_44_)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "Missing expression in tuple.")
 	UsingMethod_(_eq__eq_) UsingMethod_(add_member_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_assignment_expression) UsingMethod_(parse_error_co_)
-	UsingSym_(_44_)
-	extern obj_ new__TupleExpression__Compiler(obj_ this_);
-	UsingSym_(_44_)
 	UsingClass_(TupleExpression__Compiler)
 
 		{
@@ -1396,9 +1396,9 @@ obj_ parse_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_expression_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expression, obj_ comment);
 	obj_ t0_;
 	UsingMethod_(parse_expression) UsingMethod_(require_eol)
-	extern obj_ new_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expression, obj_ comment);
 	UsingClass_(ExpressionStatement__Compiler)
 
 		{
@@ -1418,6 +1418,9 @@ obj_ parse_expression_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_extension__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(eol)
+	UsingSym_(indent)
+	UsingSym_(unindent)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1428,9 +1431,6 @@ obj_ parse_extension__Parser__Compiler(obj_ this_)
 	DefineString_(3, "...")
 	DefineString_(4, "Illegal prototype entry.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_name_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(indent) UsingMethod_(name) UsingMethod_(parse_error_co_) UsingMethod_(parse_proto_contents_co_) UsingMethod_(parse_proto_spec) UsingMethod_(report_co_) UsingMethod_(require_eol) UsingMethod_(unindent)
-	UsingSym_(eol)
-	UsingSym_(indent)
-	UsingSym_(unindent)
 
 		{
 		obj_ type;
@@ -1491,14 +1491,6 @@ obj_ parse_extension__Parser__Compiler(obj_ this_)
 
 obj_ parse_fields__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, "Field name needed.")
-	DefineString_(1, "Missing \"]\".")
-	DefineString_(2, "Missing \")\".")
-	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_type_spec) UsingMethod_(require_eol) UsingMethod_(text)
 	extern obj_ new__List__Standard(obj_ this_);
 	UsingSym_(eol)
 	UsingSym_(comment)
@@ -1508,6 +1500,14 @@ obj_ parse_fields__Parser__Compiler(obj_ this_)
 	UsingSym_(_40_)
 	UsingSym_(_41_)
 	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	DefineString_(0, "Field name needed.")
+	DefineString_(1, "Missing \"]\".")
+	DefineString_(2, "Missing \")\".")
+	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_type_spec) UsingMethod_(require_eol) UsingMethod_(text)
 	UsingClass_(List__Standard)
 	UsingClass_(CompiledField__Compiler)
 
@@ -1598,6 +1598,13 @@ obj_ parse_fields__Parser__Compiler(obj_ this_)
 
 obj_ parse_for_statement__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(name)
+	UsingSym_(_in_)
+	UsingSym_(_dx_)
+	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
+	UsingSym_(name)
+	extern obj_ new_co_parent_co___ForContext__Compiler(obj_ this_, obj_ local, obj_ parent);
+	extern obj_ new_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ this_, obj_ local, obj_ collection, obj_ body, obj_ comment);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1609,13 +1616,6 @@ obj_ parse_for_statement__Parser__Compiler(obj_ this_)
 	DefineString_(3, "\"in\" expected.")
 	DefineString_(4, "Missing collection in \"for\" statement.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_token) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_type_spec) UsingMethod_(require_eol) UsingMethod_(text)
-	UsingSym_(name)
-	UsingSym_(_in_)
-	UsingSym_(_dx_)
-	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
-	UsingSym_(name)
-	extern obj_ new_co_parent_co___ForContext__Compiler(obj_ this_, obj_ local, obj_ parent);
-	extern obj_ new_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ this_, obj_ local, obj_ collection, obj_ body, obj_ comment);
 	UsingClass_(ForContext__Compiler)
 	UsingClass_(CompiledField__Compiler)
 	UsingClass_(ForStatement__Compiler)
@@ -1703,6 +1703,21 @@ obj_ parse_for_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_function_co___Parser__Compiler(obj_ this_, obj_ at_declarator)
 {
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	UsingSym_(name)
+	UsingSym_(_tw_)
+	UsingSym_(name)
+	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
+	UsingSym_(name)
+	UsingSym_(keyword)
+	UsingSym_(keyword)
+	UsingSym_(name)
+	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
+	UsingSym_(__gt_)
+	extern obj_ new_co_parent_co___MethodContext__Compiler(obj_ this_, obj_ arguments, obj_ parent);
+	extern obj_ new_co_arguments_co_return_type_co_on_proto_co_body_co_is_primitive_co___CompiledFunction__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ return_type, obj_ on_proto, obj_ body, obj_ is_primitive);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1721,21 +1736,6 @@ obj_ parse_function_co___Parser__Compiler(obj_ this_, obj_ at_declarator)
 	DefineString_(6, "Parsing ")
 	DefineString_(7, "...")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_token) UsingMethod_(get_subblock) UsingMethod_(length) UsingMethod_(method_context_co_) UsingMethod_(parse_arg_type) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_type_spec) UsingMethod_(report_co_) UsingMethod_(require_eol) UsingMethod_(starts_with_co_) UsingMethod_(string) UsingMethod_(substr_co_length_co_) UsingMethod_(targeting_c) UsingMethod_(text) UsingMethod_(type)
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	UsingSym_(name)
-	UsingSym_(_tw_)
-	UsingSym_(name)
-	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
-	UsingSym_(name)
-	UsingSym_(keyword)
-	UsingSym_(keyword)
-	UsingSym_(name)
-	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
-	UsingSym_(__gt_)
-	extern obj_ new_co_parent_co___MethodContext__Compiler(obj_ this_, obj_ arguments, obj_ parent);
-	extern obj_ new_co_arguments_co_return_type_co_on_proto_co_body_co_is_primitive_co___CompiledFunction__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ return_type, obj_ on_proto, obj_ body, obj_ is_primitive);
 	UsingClass_(List__Standard)
 	UsingClass_(Main)
 	UsingClass_(CompiledFunction__Compiler)
@@ -1930,6 +1930,10 @@ obj_ parse_function_co___Parser__Compiler(obj_ this_, obj_ at_declarator)
 
 obj_ parse_if_statement__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(name)
+	UsingSym_(name)
+	extern obj_ new_co___Block__Compiler(obj_ this_, obj_ parent);
+	extern obj_ new_co_body_co_else_block_co_comment_co_else_comment_co_pre_else_comments_co___IfStatement__Compiler(obj_ this_, obj_ condition, obj_ body, obj_ else_block, obj_ comment, obj_ else_comment, obj_ pre_else_comments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1939,10 +1943,6 @@ obj_ parse_if_statement__Parser__Compiler(obj_ this_)
 	DefineString_(1, "else")
 	DefineString_(2, "if")
 	UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_token) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_if_statement) UsingMethod_(parse_inter_prong_comments) UsingMethod_(require_eol) UsingMethod_(text)
-	UsingSym_(name)
-	UsingSym_(name)
-	extern obj_ new_co___Block__Compiler(obj_ this_, obj_ parent);
-	extern obj_ new_co_body_co_else_block_co_comment_co_else_comment_co_pre_else_comments_co___IfStatement__Compiler(obj_ this_, obj_ condition, obj_ body, obj_ else_block, obj_ comment, obj_ else_comment, obj_ pre_else_comments);
 	UsingClass_(IfStatement__Compiler)
 	UsingClass_(Block__Compiler)
 
@@ -2020,12 +2020,12 @@ obj_ parse_if_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_iff_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___BlockStatement__Compiler(obj_ this_, obj_ block);
+	extern obj_ new__EmptyStatement__Compiler(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(check_iff) UsingMethod_(parse_block)
-	extern obj_ new_co___BlockStatement__Compiler(obj_ this_, obj_ block);
-	extern obj_ new__EmptyStatement__Compiler(obj_ this_);
 	UsingClass_(BlockStatement__Compiler)
 	UsingClass_(EmptyStatement__Compiler)
 
@@ -2051,12 +2051,12 @@ obj_ parse_iff_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_inclusive_or_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_or_)
+	UsingSym_(_or_)
+	UsingSym_(_or_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_exclusive_or_expression)
-	UsingSym_(_or_)
-	UsingSym_(_or_)
-	UsingSym_(_or_)
 
 		{
 		obj_ expr;
@@ -2099,16 +2099,16 @@ obj_ parse_inclusive_or_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_inter_prong_comments__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(require_eol)
 	UsingSym_(eol)
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new__BlankLine__Compiler(obj_ this_);
 	UsingSym_(comment)
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new_co___Comment__Compiler(obj_ this_, obj_ text);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(require_eol)
 	UsingClass_(List__Standard)
 	UsingClass_(Comment__Compiler)
 	UsingClass_(BlankLine__Compiler)
@@ -2167,6 +2167,10 @@ obj_ parse_inter_prong_comments__Parser__Compiler(obj_ this_)
 
 obj_ parse_keyword_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(keyword)
+	extern obj_ new__List__Standard(obj_ this_);
+	UsingSym_(keyword)
+	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -2174,10 +2178,6 @@ obj_ parse_keyword_expression__Parser__Compiler(obj_ this_)
 	DefineString_(1, "Missing argument (\"")
 	DefineString_(2, "\").")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(text)
-	UsingSym_(keyword)
-	extern obj_ new__List__Standard(obj_ this_);
-	UsingSym_(keyword)
-	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 
@@ -2251,12 +2251,12 @@ obj_ parse_keyword_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_logical_and_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_not_expression)
 	UsingSym_(_an__an_)
 	UsingSym_(_an__an_)
 	extern obj_ new_co_with_co___ShortCircuitAnd__Compiler(obj_ this_, obj_ expr1, obj_ expr2);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_not_expression)
 	UsingClass_(ShortCircuitAnd__Compiler)
 
 		{
@@ -2300,12 +2300,12 @@ obj_ parse_logical_and_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_logical_or_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_logical_and_expression)
 	UsingSym_(_or__or_)
 	UsingSym_(_or__or_)
 	extern obj_ new_co_with_co___ShortCircuitOr__Compiler(obj_ this_, obj_ expr1, obj_ expr2);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_logical_and_expression)
 	UsingClass_(ShortCircuitOr__Compiler)
 
 		{
@@ -2349,9 +2349,9 @@ obj_ parse_logical_or_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_loop_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co_comment_co___LoopStatement__Compiler(obj_ this_, obj_ body, obj_ comment);
 	obj_ t0_;
 	UsingMethod_(consume_token) UsingMethod_(parse_block) UsingMethod_(require_eol)
-	extern obj_ new_co_comment_co___LoopStatement__Compiler(obj_ this_, obj_ body, obj_ comment);
 	UsingClass_(LoopStatement__Compiler)
 
 		{
@@ -2374,6 +2374,10 @@ obj_ parse_loop_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_member_proto__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(name)
+	UsingSym_(eol)
+	UsingSym_(indent)
+	UsingSym_(unindent)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -2386,10 +2390,6 @@ obj_ parse_member_proto__Parser__Compiler(obj_ this_)
 	DefineString_(5, "...")
 	DefineString_(6, "Unindent required at end of proto.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(add_proto_co_) UsingMethod_(at_name_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_token) UsingMethod_(indent) UsingMethod_(parse_error_co_) UsingMethod_(parse_proto_contents_co_) UsingMethod_(report_co_) UsingMethod_(require_eol) UsingMethod_(text) UsingMethod_(unindent)
-	UsingSym_(name)
-	UsingSym_(eol)
-	UsingSym_(indent)
-	UsingSym_(unindent)
 
 		{
 		obj_ proto_name, the_proto;
@@ -2466,13 +2466,13 @@ obj_ parse_member_proto__Parser__Compiler(obj_ this_)
 
 obj_ parse_multiplicative_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_st_)
+	UsingSym_(_dv_)
+	UsingSym_(_pc_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_unary_expression) UsingMethod_(type)
-	UsingSym_(_st_)
-	UsingSym_(_dv_)
-	UsingSym_(_pc_)
 
 		{
 		obj_ expr, token;
@@ -2529,12 +2529,12 @@ obj_ parse_multiplicative_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_not_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_keyword_expression) UsingMethod_(parse_not_expression)
 	UsingSym_(_nt_)
 	UsingSym_(_nt_)
 	extern obj_ new_co___ShortCircuitNot__Compiler(obj_ this_, obj_ expr);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_keyword_expression) UsingMethod_(parse_not_expression)
 	UsingClass_(ShortCircuitNot__Compiler)
 
 		{
@@ -2573,12 +2573,12 @@ obj_ parse_not_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_postfix_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_primary_expression) UsingMethod_(text)
 	UsingSym_(name)
 	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_primary_expression) UsingMethod_(text)
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 
@@ -2621,20 +2621,6 @@ obj_ parse_postfix_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_primary_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	DefineString_(0, "super")
-	DefineString_(1, "nil")
-	DefineString_(2, "true")
-	DefineString_(3, "false")
-	DefineString_(4, "")
-	DefineString_(5, "Missing argument (\"")
-	DefineString_(6, "\").")
-	DefineString_(7, "')' expected.")
-	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(parse_super_call) UsingMethod_(parse_text_literal) UsingMethod_(text) UsingMethod_(type)
 	UsingSym_(name)
 	extern obj_ new__LiteralNil__Compiler(obj_ this_);
 	extern obj_ new_co___BoolLiteral__Compiler(obj_ this_, obj_ value);
@@ -2660,6 +2646,20 @@ obj_ parse_primary_expression__Parser__Compiler(obj_ this_)
 	UsingSym_(_40_)
 	UsingSym_(_40_)
 	UsingSym_(_41_)
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	DefineString_(0, "super")
+	DefineString_(1, "nil")
+	DefineString_(2, "true")
+	DefineString_(3, "false")
+	DefineString_(4, "")
+	DefineString_(5, "Missing argument (\"")
+	DefineString_(6, "\").")
+	DefineString_(7, "')' expected.")
+	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(parse_super_call) UsingMethod_(parse_text_literal) UsingMethod_(text) UsingMethod_(type)
 	UsingClass_(List__Standard)
 	UsingClass_(CharacterLiteral__Compiler)
 	UsingClass_(BoolLiteral__Compiler)
@@ -2890,6 +2890,15 @@ obj_ parse_primary_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_proto_contents_co___Parser__Compiler(obj_ this_, obj_ the_proto)
 {
+	UsingSym_(eol)
+	UsingSym_(comment)
+	UsingSym_(keyword)
+	UsingSym_(name)
+	UsingSym_(indent)
+	UsingSym_(unindent)
+	UsingSym_(name)
+	UsingSym_(eol)
+	extern obj_ build_settings__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -2928,15 +2937,6 @@ obj_ parse_proto_contents_co___Parser__Compiler(obj_ this_, obj_ the_proto)
 	DefineString_(29, "c-preamble")
 	DefineString_(30, "c-preamble not allowed when not targeting C.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_field_co_) UsingMethod_(add_function_co_) UsingMethod_(add_shared_field_co_) UsingMethod_(c_preamble_co_) UsingMethod_(check_iff) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_item) UsingMethod_(current_token) UsingMethod_(get_subblock) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(make_subclass_of_co_) UsingMethod_(parse_error_co_) UsingMethod_(parse_extension) UsingMethod_(parse_fields) UsingMethod_(parse_function_co_) UsingMethod_(parse_member_proto) UsingMethod_(parse_proto_contents_co_) UsingMethod_(parse_proto_member_co_) UsingMethod_(parse_type_spec) UsingMethod_(source_name_co_) UsingMethod_(string) UsingMethod_(targeting_c) UsingMethod_(text)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	UsingSym_(keyword)
-	UsingSym_(name)
-	UsingSym_(indent)
-	UsingSym_(unindent)
-	UsingSym_(name)
-	UsingSym_(eol)
-	extern obj_ build_settings__Main(obj_ this_);
 	UsingClass_(Main)
 
 		{
@@ -3228,6 +3228,7 @@ obj_ parse_proto_contents_co___Parser__Compiler(obj_ this_, obj_ the_proto)
 
 obj_ parse_proto_file_co___Parser__Compiler(obj_ this_, obj_ proto)
 {
+	UsingSym_(eof)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -3236,7 +3237,6 @@ obj_ parse_proto_file_co___Parser__Compiler(obj_ this_, obj_ proto)
 	DefineString_(1, "...")
 	DefineString_(2, "Extra stuff in prototype.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(current_token) UsingMethod_(indent) UsingMethod_(name) UsingMethod_(parse_error_co_) UsingMethod_(parse_proto_contents_co_) UsingMethod_(report_co_) UsingMethod_(unindent)
-	UsingSym_(eof)
 
 		{
 		t0_ = Call_(name, proto);
@@ -3263,18 +3263,6 @@ obj_ parse_proto_file_co___Parser__Compiler(obj_ this_, obj_ proto)
 
 obj_ parse_proto_literal_primary__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	DefineString_(0, "true")
-	DefineString_(1, "false")
-	DefineString_(2, "nil")
-	DefineString_(3, "Illegal initial value for a prototype field.")
-	UsingMethod_(_eq__eq_) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_text_literal) UsingMethod_(text) UsingMethod_(type)
 	UsingSym_(string_literal)
 	extern obj_ new_co___StringLiteral__Compiler(obj_ this_, obj_ value);
 	UsingSym_(text_literal_start)
@@ -3291,6 +3279,18 @@ obj_ parse_proto_literal_primary__Parser__Compiler(obj_ this_)
 	extern obj_ new_co___BoolLiteral__Compiler(obj_ this_, obj_ value);
 	extern obj_ new_co___BoolLiteral__Compiler(obj_ this_, obj_ value);
 	extern obj_ new__LiteralNil__Compiler(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	obj_ t5_;
+	obj_ t6_;
+	DefineString_(0, "true")
+	DefineString_(1, "false")
+	DefineString_(2, "nil")
+	DefineString_(3, "Illegal initial value for a prototype field.")
+	UsingMethod_(_eq__eq_) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_text_literal) UsingMethod_(text) UsingMethod_(type)
 	UsingClass_(CharacterLiteral__Compiler)
 	UsingClass_(BoolLiteral__Compiler)
 	UsingClass_(LiteralNil__Compiler)
@@ -3421,17 +3421,17 @@ obj_ parse_proto_literal_primary__Parser__Compiler(obj_ this_)
 
 obj_ parse_proto_literal_tuple__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_44_)
+	extern obj_ new__TupleExpression__Compiler(obj_ this_);
+	UsingSym_(_44_)
+	UsingSym_(_40_)
+	UsingSym_(_41_)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "Missing value in literal tuple.")
 	DefineString_(1, "Missing expression after '(' in literal.")
 	DefineString_(2, "Missing ')' in literal.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_member_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_proto_literal_primary) UsingMethod_(parse_proto_literal_tuple)
-	UsingSym_(_44_)
-	extern obj_ new__TupleExpression__Compiler(obj_ this_);
-	UsingSym_(_44_)
-	UsingSym_(_40_)
-	UsingSym_(_41_)
 	UsingClass_(TupleExpression__Compiler)
 
 		{
@@ -3504,6 +3504,8 @@ obj_ parse_proto_literal_tuple__Parser__Compiler(obj_ this_)
 
 obj_ parse_proto_literal_value__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(eol)
+	UsingSym_(indent)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -3511,8 +3513,6 @@ obj_ parse_proto_literal_value__Parser__Compiler(obj_ this_)
 	DefineString_(0, "Bad Dictionary literal declaration.")
 	DefineString_(1, "Syntax error in prototype field initial value.")
 	UsingMethod_(_eq__eq_) UsingMethod_(current_token) UsingMethod_(next_token) UsingMethod_(parse_dict_literal_expression) UsingMethod_(parse_error_co_) UsingMethod_(parse_proto_literal_tuple)
-	UsingSym_(eol)
-	UsingSym_(indent)
 
 		{
 		obj_ value;
@@ -3557,6 +3557,15 @@ obj_ parse_proto_literal_value__Parser__Compiler(obj_ this_)
 
 obj_ parse_proto_member_co___Parser__Compiler(obj_ this_, obj_ proto)
 {
+	UsingSym_(_eq_)
+	UsingSym_(_co__eq_)
+	UsingSym_(_40_)
+	UsingSym_(keyword)
+	UsingSym_(_40_)
+	UsingSym_(_41_)
+	UsingSym_(_eq_)
+	UsingSym_(_co__eq_)
+	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -3567,15 +3576,6 @@ obj_ parse_proto_member_co___Parser__Compiler(obj_ this_, obj_ proto)
 	DefineString_(1, "\")\" expected.")
 	DefineString_(2, "\"=\" expected.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_function_co_) UsingMethod_(add_shared_field_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(initial_value_co_) UsingMethod_(next_token) UsingMethod_(parse_error_co_) UsingMethod_(parse_function_co_) UsingMethod_(parse_proto_literal_value) UsingMethod_(parse_type_spec) UsingMethod_(text)
-	UsingSym_(_eq_)
-	UsingSym_(_co__eq_)
-	UsingSym_(_40_)
-	UsingSym_(keyword)
-	UsingSym_(_40_)
-	UsingSym_(_41_)
-	UsingSym_(_eq_)
-	UsingSym_(_co__eq_)
-	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
 	UsingClass_(CompiledField__Compiler)
 
 		{
@@ -3671,6 +3671,7 @@ obj_ parse_proto_member_co___Parser__Compiler(obj_ this_, obj_ proto)
 
 obj_ parse_proto_spec__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(name)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -3678,7 +3679,6 @@ obj_ parse_proto_spec__Parser__Compiler(obj_ this_)
 	DefineString_(1, "Unknown prototype.")
 	DefineString_(2, "Missing the type in a type specifier.")
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_token) UsingMethod_(get_subproto_co_) UsingMethod_(is_a_co_) UsingMethod_(lookup_function_co_) UsingMethod_(parse_error_co_) UsingMethod_(proto) UsingMethod_(text)
-	UsingSym_(name)
 	UsingClass_(ProtoFunction__Compiler)
 
 		{
@@ -3752,15 +3752,15 @@ obj_ parse_proto_spec__Parser__Compiler(obj_ this_)
 
 obj_ parse_relational_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_lt_)
+	UsingSym_(_gt_)
+	UsingSym_(_lt__eq_)
+	UsingSym_(_gt__eq_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_shift_expression) UsingMethod_(type)
-	UsingSym_(_lt_)
-	UsingSym_(_gt_)
-	UsingSym_(_lt__eq_)
-	UsingSym_(_gt__eq_)
 
 		{
 		obj_ expr, token;
@@ -3821,15 +3821,15 @@ obj_ parse_relational_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_return_statement__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(eol)
+	UsingSym_(comment)
+	extern obj_ new__LiteralNil__Compiler(obj_ this_);
+	extern obj_ new_co_comment_co___ReturnStatement__Compiler(obj_ this_, obj_ value, obj_ comment);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_expression) UsingMethod_(require_eol)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	extern obj_ new__LiteralNil__Compiler(obj_ this_);
-	extern obj_ new_co_comment_co___ReturnStatement__Compiler(obj_ this_, obj_ value, obj_ comment);
 	UsingClass_(LiteralNil__Compiler)
 	UsingClass_(ReturnStatement__Compiler)
 
@@ -3870,11 +3870,11 @@ obj_ parse_return_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_shift_expression__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(_lt__lt_)
+	UsingSym_(_gt__gt_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(make_binop_call_co_with_co_and_co_) UsingMethod_(parse_additive_expression) UsingMethod_(type)
-	UsingSym_(_lt__lt_)
-	UsingSym_(_gt__gt_)
 
 		{
 		obj_ expr, token;
@@ -3927,6 +3927,14 @@ obj_ parse_shift_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_statement__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(name)
+	UsingSym_(_co__eq_)
+	UsingSym_(_in_)
+	UsingSym_(_40_)
+	UsingSym_(eol)
+	extern obj_ new__BlankLine__Compiler(obj_ this_);
+	UsingSym_(comment)
+	extern obj_ new_co___Comment__Compiler(obj_ this_, obj_ text);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -3947,14 +3955,6 @@ obj_ parse_statement__Parser__Compiler(obj_ this_)
 	DefineString_(10, "throw")
 	DefineString_(11, "coke")
 	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(next_token) UsingMethod_(parse_break_statement) UsingMethod_(parse_coke_statement) UsingMethod_(parse_continue_statement) UsingMethod_(parse_declaration) UsingMethod_(parse_expression_statement) UsingMethod_(parse_for_statement) UsingMethod_(parse_if_statement) UsingMethod_(parse_iff_statement) UsingMethod_(parse_loop_statement) UsingMethod_(parse_return_statement) UsingMethod_(parse_switch_statement) UsingMethod_(parse_throw_statement) UsingMethod_(parse_try_statement) UsingMethod_(parse_while_statement) UsingMethod_(require_eol) UsingMethod_(text)
-	UsingSym_(name)
-	UsingSym_(_co__eq_)
-	UsingSym_(_in_)
-	UsingSym_(_40_)
-	UsingSym_(eol)
-	extern obj_ new__BlankLine__Compiler(obj_ this_);
-	UsingSym_(comment)
-	extern obj_ new_co___Comment__Compiler(obj_ this_, obj_ text);
 	UsingClass_(Comment__Compiler)
 	UsingClass_(BlankLine__Compiler)
 
@@ -4134,6 +4134,11 @@ obj_ parse_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_super_call__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	UsingSym_(name)
+	UsingSym_(keyword)
+	UsingSym_(keyword)
+	extern obj_ new_co_arguments_co___SuperCall__Compiler(obj_ this_, obj_ name, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -4149,11 +4154,6 @@ obj_ parse_super_call__Parser__Compiler(obj_ this_)
 	DefineString_(6, "Illegal super call.")
 	DefineString_(7, "Internal error: no proto for super call.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(current_token) UsingMethod_(enclosing_method_context) UsingMethod_(is_a_co_) UsingMethod_(is_empty) UsingMethod_(parent) UsingMethod_(parse_error_co_) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(parse_unary_expression) UsingMethod_(text) UsingMethod_(type)
-	extern obj_ new__List__Standard(obj_ this_);
-	UsingSym_(name)
-	UsingSym_(keyword)
-	UsingSym_(keyword)
-	extern obj_ new_co_arguments_co___SuperCall__Compiler(obj_ this_, obj_ name, obj_ arguments);
 	UsingClass_(List__Standard)
 	UsingClass_(SuperCall__Compiler)
 	UsingClass_(CompiledProto__Compiler)
@@ -4284,15 +4284,6 @@ obj_ parse_super_call__Parser__Compiler(obj_ this_)
 
 obj_ parse_switch_statement__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	DefineString_(0, "Missing expression in \"switch\" statement.")
-	DefineString_(1, "else")
-	DefineString_(2, "Missing value in switch clause.")
-	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_clause_co_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(else_clause_co_) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_inter_prong_comments) UsingMethod_(parse_keyword_expression) UsingMethod_(post_clauses_comments_co_) UsingMethod_(require_eol) UsingMethod_(text)
 	extern obj_ new_co_value_comment_co___SwitchStatement__Compiler(obj_ this_, obj_ expression, obj_ value_comment);
 	UsingSym_(eol)
 	UsingSym_(indent)
@@ -4302,6 +4293,15 @@ obj_ parse_switch_statement__Parser__Compiler(obj_ this_)
 	extern obj_ new__List__Standard(obj_ this_);
 	UsingSym_(_44_)
 	extern obj_ new_co_body_co_pre_clause_comments_co_value_comment_co___SwitchClause__Compiler(obj_ this_, obj_ values, obj_ body, obj_ pre_clause_comments, obj_ value_comment);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	DefineString_(0, "Missing expression in \"switch\" statement.")
+	DefineString_(1, "else")
+	DefineString_(2, "Missing value in switch clause.")
+	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_clause_co_) UsingMethod_(append_co_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(else_clause_co_) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_inter_prong_comments) UsingMethod_(parse_keyword_expression) UsingMethod_(post_clauses_comments_co_) UsingMethod_(require_eol) UsingMethod_(text)
 	UsingClass_(List__Standard)
 	UsingClass_(SwitchClause__Compiler)
 	UsingClass_(SwitchStatement__Compiler)
@@ -4428,15 +4428,15 @@ obj_ parse_switch_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_text_literal__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(eol)
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ new_co___StringLiteral__Compiler(obj_ this_, obj_ value);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "\n")
 	DefineString_(1, "\\n\\\n")
 	UsingMethod_(_pl_) UsingMethod_(consume_token) UsingMethod_(current_item) UsingMethod_(current_token) UsingMethod_(get_subblock) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(prepend_co_) UsingMethod_(return_token_co_) UsingMethod_(string) UsingMethod_(text)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(eol)
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ new_co___StringLiteral__Compiler(obj_ this_, obj_ value);
 	UsingClass_(StringLiteral__Compiler)
 	UsingClass_(Token__Compiler)
 	UsingClass_(StringBuilder__Standard)
@@ -4485,9 +4485,9 @@ obj_ parse_text_literal__Parser__Compiler(obj_ this_)
 
 obj_ parse_throw_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co_comment_co___ThrowStatement__Compiler(obj_ this_, obj_ value, obj_ comment);
 	obj_ t0_;
 	UsingMethod_(consume_token) UsingMethod_(parse_expression) UsingMethod_(require_eol)
-	extern obj_ new_co_comment_co___ThrowStatement__Compiler(obj_ this_, obj_ value, obj_ comment);
 	UsingClass_(ThrowStatement__Compiler)
 
 		{
@@ -4511,6 +4511,11 @@ obj_ parse_throw_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_try_statement__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(name)
+	UsingSym_(eol)
+	UsingSym_(comment)
+	extern obj_ new_co_comment_co___CatchClause__Compiler(obj_ this_, obj_ parent, obj_ comment);
+	extern obj_ new_co_comment_co___TryStatement__Compiler(obj_ this_, obj_ body, obj_ comment);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -4523,11 +4528,6 @@ obj_ parse_try_statement__Parser__Compiler(obj_ this_)
 	DefineString_(1, "else")
 	DefineString_(2, "Trylon doesn't allow multiple \"catch\" clauses.")
 	UsingMethod_(_nt__eq_) UsingMethod_(body_co_) UsingMethod_(consume_token) UsingMethod_(context) UsingMethod_(context_co_) UsingMethod_(current_token) UsingMethod_(else_clause_co_) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_inter_prong_comments) UsingMethod_(parse_type_spec) UsingMethod_(require_eol) UsingMethod_(text)
-	UsingSym_(name)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	extern obj_ new_co_comment_co___CatchClause__Compiler(obj_ this_, obj_ parent, obj_ comment);
-	extern obj_ new_co_comment_co___TryStatement__Compiler(obj_ this_, obj_ body, obj_ comment);
 	UsingClass_(CatchClause__Compiler)
 	UsingClass_(TryStatement__Compiler)
 
@@ -4624,11 +4624,11 @@ obj_ parse_try_statement__Parser__Compiler(obj_ this_)
 
 obj_ parse_type_spec__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co_token_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ token);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "A type specifier was given, but is not a prototype.")
 	UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(parse_proto_spec)
-	extern obj_ new_co_token_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ token);
 	UsingClass_(ParseException__Compiler)
 	UsingClass_(CompiledProto__Compiler)
 
@@ -4658,13 +4658,6 @@ obj_ parse_type_spec__Parser__Compiler(obj_ this_)
 
 obj_ parse_unary_expression__Parser__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	DefineString_(0, "unary-plus")
-	DefineString_(1, "unary-minus")
-	DefineString_(2, "~")
-	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_postfix_expression) UsingMethod_(parse_unary_expression) UsingMethod_(type)
 	UsingSym_(_pl_)
 	UsingSym_(_)
 	UsingSym_(_tw_)
@@ -4672,6 +4665,13 @@ obj_ parse_unary_expression__Parser__Compiler(obj_ this_)
 	UsingSym_(_)
 	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	DefineString_(0, "unary-plus")
+	DefineString_(1, "unary-minus")
+	DefineString_(2, "~")
+	UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(expression_expected_after_co_) UsingMethod_(parse_postfix_expression) UsingMethod_(parse_unary_expression) UsingMethod_(type)
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 
@@ -4741,10 +4741,10 @@ obj_ parse_unary_expression__Parser__Compiler(obj_ this_)
 
 obj_ parse_while_statement__Parser__Compiler(obj_ this_)
 {
+	extern obj_ new_co_body_co_comment_co___WhileStatement__Compiler(obj_ this_, obj_ condition, obj_ body, obj_ comment);
 	obj_ t0_;
 	DefineString_(0, "Missing condition in a \"while\" statement.")
 	UsingMethod_(consume_token) UsingMethod_(parse_block) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(require_eol)
-	extern obj_ new_co_body_co_comment_co___WhileStatement__Compiler(obj_ this_, obj_ condition, obj_ body, obj_ comment);
 	UsingClass_(WhileStatement__Compiler)
 
 		{
@@ -4787,12 +4787,12 @@ obj_ report_co___Parser__Compiler(obj_ this_, obj_ message)
 
 obj_ require_eol__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(comment)
+	UsingSym_(eol)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "End-of-line required.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(parse_error_co_) UsingMethod_(text)
-	UsingSym_(comment)
-	UsingSym_(eol)
 
 		{
 		obj_ comment;
@@ -4826,12 +4826,12 @@ obj_ require_eol__Parser__Compiler(obj_ this_)
 
 obj_ return_token_co___Parser__Compiler(obj_ this_, obj_ token)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Tried to return too many tokens.")
 	UsingMethod_(current_token) UsingMethod_(current_token_co_) UsingMethod_(next_token) UsingMethod_(next_token_co_) UsingMethod_(third_token) UsingMethod_(third_token_co_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -4856,6 +4856,9 @@ obj_ return_token_co___Parser__Compiler(obj_ this_, obj_ token)
 
 obj_ skip_block__Parser__Compiler(obj_ this_)
 {
+	UsingSym_(indent)
+	UsingSym_(indent)
+	UsingSym_(unindent)
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 1)
@@ -4863,9 +4866,6 @@ obj_ skip_block__Parser__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 0)
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(consume_token) UsingMethod_(current_token) UsingMethod_(type)
-	UsingSym_(indent)
-	UsingSym_(indent)
-	UsingSym_(unindent)
 
 		{
 		obj_ level;
@@ -4930,11 +4930,11 @@ obj_ third_token_co___Parser__Compiler(obj_ this_, obj_ value)
 
 obj_ unindent__Parser__Compiler(obj_ this_)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(unindent)
-	extern obj_ status_reporter__Main(obj_ this_);
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(Main)
 
 		{

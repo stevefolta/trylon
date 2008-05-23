@@ -29,10 +29,10 @@ obj_ Iterator__List__Standard__accessor_(obj_ this_)
 
 obj_ append_co___List__Standard(obj_ this_, obj_ object)
 {
+	extern obj_ new_co___Cell__List__Standard(obj_ this_, obj_ object);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(first_cell) UsingMethod_(first_cell_co_) UsingMethod_(last_cell) UsingMethod_(last_cell_co_) UsingMethod_(next_co_)
-	extern obj_ new_co___Cell__List__Standard(obj_ this_, obj_ object);
 	UsingClass_(Cell__List__Standard)
 
 		{
@@ -202,10 +202,10 @@ obj_ head__List__Standard(obj_ this_)
 
 obj_ insert_co_before_co___List__Standard(obj_ this_, obj_ new_object, obj_ before_object)
 {
+	extern obj_ new_co___Cell__List__Standard(obj_ this_, obj_ object);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(first_cell) UsingMethod_(first_cell_co_) UsingMethod_(next) UsingMethod_(next_co_) UsingMethod_(object) UsingMethod_(same_as_co_)
-	extern obj_ new_co___Cell__List__Standard(obj_ this_, obj_ object);
 	UsingClass_(Cell__List__Standard)
 
 		{
@@ -266,10 +266,10 @@ obj_ is_empty__List__Standard(obj_ this_)
 
 obj_ iterator__List__Standard(obj_ this_)
 {
+	extern obj_ new_co___Iterator__List__Standard(obj_ this_, obj_ cell);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(first_cell)
-	extern obj_ new_co___Iterator__List__Standard(obj_ this_, obj_ cell);
 	UsingClass_(Iterator__List__Standard)
 
 		{
@@ -385,10 +385,10 @@ obj_ pop_front__List__Standard(obj_ this_)
 
 obj_ prepend_co___List__Standard(obj_ this_, obj_ object)
 {
+	extern obj_ new_co___Cell__List__Standard(obj_ this_, obj_ object);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(first_cell) UsingMethod_(first_cell_co_) UsingMethod_(next_co_)
-	extern obj_ new_co___Cell__List__Standard(obj_ this_, obj_ object);
 	UsingClass_(Cell__List__Standard)
 
 		{
@@ -506,11 +506,11 @@ obj_ replace_co_with_co___List__Standard(obj_ this_, obj_ old_object, obj_ new_o
 
 obj_ tail__List__Standard(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(first_cell) UsingMethod_(first_cell_co_) UsingMethod_(last_cell) UsingMethod_(last_cell_co_) UsingMethod_(next)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{

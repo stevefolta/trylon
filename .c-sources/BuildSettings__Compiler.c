@@ -67,6 +67,12 @@ obj_ c_sources_dir_co___BuildSettings__Compiler(obj_ this_, obj_ value)
 
 obj_ create__BuildSettings__Compiler(obj_ this_)
 {
+	extern obj_ new__Dictionary__Standard(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	UsingSym_(C)
+	extern obj_ sysname__System__Standard(obj_ this_);
+	extern obj_ _dt_target_language__Implementation__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "")
@@ -83,12 +89,6 @@ obj_ create__BuildSettings__Compiler(obj_ this_)
 	DefineString_(11, "in-jolt")
 	DefineString_(12, "true")
 	UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(c_compiler_co_) UsingMethod_(c_flags_co_) UsingMethod_(c_sources_dir_co_) UsingMethod_(dictionary) UsingMethod_(dictionary_co_) UsingMethod_(is_empty) UsingMethod_(is_verbose_co_) UsingMethod_(jolt_sources_dir_co_) UsingMethod_(link_flags_co_) UsingMethod_(linker_co_) UsingMethod_(objects_dir_co_) UsingMethod_(program_name_co_) UsingMethod_(target_co_)
-	extern obj_ new__Dictionary__Standard(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	UsingSym_(C)
-	extern obj_ sysname__System__Standard(obj_ this_);
-	extern obj_ _dt_target_language__Implementation__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(Implementation__Standard)
 	UsingClass_(System__Standard)
@@ -278,6 +278,9 @@ obj_ load__BuildSettings__Compiler(obj_ this_)
 
 obj_ load_from_co___BuildSettings__Compiler(obj_ this_, obj_ file_name)
 {
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___Lexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -286,9 +289,6 @@ obj_ load_from_co___BuildSettings__Compiler(obj_ this_, obj_ file_name)
 	DefineString_(0, "Error in \"")
 	DefineString_(1, "\": ")
 	UsingMethod_(_pl_) UsingMethod_(contents) UsingMethod_(exists) UsingMethod_(message) UsingMethod_(parse_block_co_)
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___Lexer__Compiler(obj_ this_, obj_ text);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(File__Standard)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(Lexer__Compiler)
@@ -353,6 +353,16 @@ obj_ objects_dir_co___BuildSettings__Compiler(obj_ this_, obj_ value)
 
 obj_ parse_block_co___BuildSettings__Compiler(obj_ this_, obj_ lexer)
 {
+	UsingSym_(eol)
+	UsingSym_(comment)
+	UsingSym_(name)
+	UsingSym_(keyword)
+	UsingSym_(keyword)
+	UsingSym_(C)
+	UsingSym_(Jolt)
+	UsingSym_(indent)
+	UsingSym_(eof)
+	UsingSym_(unindent)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -375,16 +385,6 @@ obj_ parse_block_co___BuildSettings__Compiler(obj_ this_, obj_ lexer)
 	DefineString_(14, "if")
 	DefineString_(15, "iff")
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(c_compiler_co_) UsingMethod_(c_flags) UsingMethod_(c_sources_dir_co_) UsingMethod_(debugger_co_) UsingMethod_(include_selector_symbols_co_) UsingMethod_(is_verbose_co_) UsingMethod_(jolt_sources_dir_co_) UsingMethod_(length) UsingMethod_(link_flags) UsingMethod_(linker_co_) UsingMethod_(next_token) UsingMethod_(objects_dir_co_) UsingMethod_(parse_block_co_) UsingMethod_(parse_boolean_co_name_co_) UsingMethod_(parse_flags_co_into_co_name_co_) UsingMethod_(parse_if_co_) UsingMethod_(parse_name_co_name_co_) UsingMethod_(program_name_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(support_perform_co_) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(targeting_c_co_) UsingMethod_(targeting_jolt) UsingMethod_(targeting_jolt_co_) UsingMethod_(text) UsingMethod_(type)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	UsingSym_(name)
-	UsingSym_(keyword)
-	UsingSym_(keyword)
-	UsingSym_(C)
-	UsingSym_(Jolt)
-	UsingSym_(indent)
-	UsingSym_(eof)
-	UsingSym_(unindent)
 
 		{
 		while (1) {
@@ -621,6 +621,13 @@ obj_ parse_block_co___BuildSettings__Compiler(obj_ this_, obj_ lexer)
 
 obj_ parse_boolean_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ lexer, obj_ declaration)
 {
+	UsingSym_(_eq_)
+	UsingSym_(eol)
+	UsingSym_(comment)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(comment)
+	UsingSym_(eol)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -633,13 +640,6 @@ obj_ parse_boolean_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ lexer, 
 	DefineString_(4, "true")
 	DefineString_(5, "on")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(dictionary) UsingMethod_(next_token) UsingMethod_(remove_co_) UsingMethod_(text)
-	UsingSym_(_eq_)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(comment)
-	UsingSym_(eol)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -713,6 +713,10 @@ obj_ parse_boolean_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ lexer, 
 
 obj_ parse_flags_co_into_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ lexer, obj_ flags, obj_ declaration)
 {
+	UsingSym_(_pl__eq_)
+	UsingSym_(eol)
+	UsingSym_(comment)
+	UsingSym_(_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -720,10 +724,6 @@ obj_ parse_flags_co_into_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ l
 	DefineString_(1, "-")
 	DefineString_(2, "")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(is_empty) UsingMethod_(next_token) UsingMethod_(text) UsingMethod_(type)
-	UsingSym_(_pl__eq_)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	UsingSym_(_)
 
 		{
 		obj_ flag, have_started;
@@ -803,6 +803,17 @@ obj_ parse_flags_co_into_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ l
 
 obj_ parse_if_co___BuildSettings__Compiler(obj_ this_, obj_ lexer)
 {
+	UsingSym_(_nt_)
+	UsingSym_(comment)
+	UsingSym_(eol)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(comment)
+	UsingSym_(eol)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(indent)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(indent)
+	UsingSym_(unindent)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -816,17 +827,6 @@ obj_ parse_if_co___BuildSettings__Compiler(obj_ this_, obj_ lexer)
 	DefineString_(2, "Extra tokens in \"if\" statement.")
 	DefineString_(3, "Missing block in \"if\" statement.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_) UsingMethod_(dictionary) UsingMethod_(is_empty) UsingMethod_(next_token) UsingMethod_(parse_block_co_) UsingMethod_(text)
-	UsingSym_(_nt_)
-	UsingSym_(comment)
-	UsingSym_(eol)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(comment)
-	UsingSym_(eol)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(indent)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(indent)
-	UsingSym_(unindent)
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -944,6 +944,13 @@ obj_ parse_if_co___BuildSettings__Compiler(obj_ this_, obj_ lexer)
 
 obj_ parse_name_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ lexer, obj_ declaration)
 {
+	UsingSym_(_eq_)
+	UsingSym_(eol)
+	UsingSym_(comment)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(comment)
+	UsingSym_(eol)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -953,13 +960,6 @@ obj_ parse_name_co_name_co___BuildSettings__Compiler(obj_ this_, obj_ lexer, obj
 	DefineString_(2, "Extra tokens in \"")
 	DefineString_(3, "\" declaration.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(next_token) UsingMethod_(text)
-	UsingSym_(_eq_)
-	UsingSym_(eol)
-	UsingSym_(comment)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(comment)
-	UsingSym_(eol)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -1043,6 +1043,8 @@ obj_ support_perform_co___BuildSettings__Compiler(obj_ this_, obj_ value)
 
 obj_ target_co___BuildSettings__Compiler(obj_ this_, obj_ target)
 {
+	UsingSym_(C)
+	UsingSym_(Jolt)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "targeting-c")
@@ -1052,8 +1054,6 @@ obj_ target_co___BuildSettings__Compiler(obj_ this_, obj_ target)
 	DefineString_(4, "true")
 	DefineString_(5, "targeting-c")
 	UsingMethod_(at_co_put_co_) UsingMethod_(dictionary) UsingMethod_(targeting_c_co_) UsingMethod_(targeting_jolt_co_)
-	UsingSym_(C)
-	UsingSym_(Jolt)
 
 		{
 		Switch_(target)

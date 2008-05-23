@@ -13,8 +13,8 @@ struct object Iterator__Standard =
 
 obj_ current_item__Iterator__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -26,8 +26,8 @@ obj_ current_item__Iterator__Standard(obj_ this_)
 
 obj_ go_forward__Iterator__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -41,8 +41,8 @@ obj_ go_forward__Iterator__Standard(obj_ this_)
 
 obj_ is_done__Iterator__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

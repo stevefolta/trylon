@@ -17,12 +17,12 @@ struct object DispatchRow__CCompiler =
 
 obj_ append_co_function_co___DispatchRow__CCompiler(obj_ this_, obj_ class_num, obj_ function)
 {
+	extern obj_ new_co_function_co___DispatchRowEntry__CCompiler(obj_ this_, obj_ class_num, obj_ function);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 1)
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(entries) UsingMethod_(num_entries) UsingMethod_(num_entries_co_)
-	extern obj_ new_co_function_co___DispatchRowEntry__CCompiler(obj_ this_, obj_ class_num, obj_ function);
 	UsingClass_(DispatchRowEntry__CCompiler)
 
 		{
@@ -41,11 +41,11 @@ obj_ append_co_function_co___DispatchRow__CCompiler(obj_ this_, obj_ class_num, 
 
 obj_ create_co___DispatchRow__CCompiler(obj_ this_, obj_ symbol_info)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 0)
 	UsingMethod_(entries_co_) UsingMethod_(num_entries_co_) UsingMethod_(symbol_info_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -75,6 +75,7 @@ obj_ entries_co___DispatchRow__CCompiler(obj_ this_, obj_ value)
 
 obj_ fit_into_co_used_offsets_co___DispatchRow__CCompiler(obj_ this_, obj_ dispatch_table, obj_ used_offsets)
 {
+	extern obj_ new_co_selector_co___DispatchTableEntry__CCompiler(obj_ this_, obj_ function, obj_ selector);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -83,7 +84,6 @@ obj_ fit_into_co_used_offsets_co___DispatchRow__CCompiler(obj_ this_, obj_ dispa
 	DefineInt_(0, 0)
 	DefineInt_(1, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(class_num) UsingMethod_(current_item) UsingMethod_(entries) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(next_clear_from_co_) UsingMethod_(selector_co_) UsingMethod_(symbol_info)
-	extern obj_ new_co_selector_co___DispatchTableEntry__CCompiler(obj_ this_, obj_ function, obj_ selector);
 	UsingClass_(DispatchTableEntry__CCompiler)
 
 		{

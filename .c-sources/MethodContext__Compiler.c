@@ -57,6 +57,10 @@ obj_ enclosing_method_context__MethodContext__Compiler(obj_ this_)
 
 obj_ lookup_function_co___MethodContext__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new__ThisFunction__Compiler(obj_ this_);
+	extern obj_ new_co___ArgumentFunction__Compiler(obj_ this_, obj_ arg);
+	extern obj_ new_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg);
+	extern obj_ new_co_on_proto_co___FunctionOnThis__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -66,10 +70,6 @@ obj_ lookup_function_co___MethodContext__Compiler(obj_ this_, obj_ name)
 	DefineString_(0, "this")
 	DefineString_(1, ":")
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(arguments) UsingMethod_(current_item) UsingMethod_(ends_with_co_) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(length) UsingMethod_(lookup_function_co_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(substr_co_length_co_)
-	extern obj_ new__ThisFunction__Compiler(obj_ this_);
-	extern obj_ new_co___ArgumentFunction__Compiler(obj_ this_, obj_ arg);
-	extern obj_ new_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg);
-	extern obj_ new_co_on_proto_co___FunctionOnThis__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	UsingClass_(FunctionOnThis__Compiler)
 	UsingClass_(SetArgumentFunction__Compiler)
 	UsingClass_(ArgumentFunction__Compiler)

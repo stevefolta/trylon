@@ -66,9 +66,9 @@ obj_ add_comment_co_comment_co___Statement__Compiler(obj_ this_, obj_ line, obj_
 
 obj_ attach_else_co_line_co___Statement__Compiler(obj_ this_, obj_ statement, obj_ line)
 {
+	extern obj_ new_co_in_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ line);
 	obj_ t0_;
 	DefineString_(0, "Illegal \"else\".")
-	extern obj_ new_co_in_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ line);
 	UsingClass_(ParseException__Compiler)
 
 		{
@@ -97,8 +97,8 @@ obj_ comment_co___Statement__Compiler(obj_ this_, obj_ value)
 
 obj_ emit_code_co___Statement__Compiler(obj_ this_, obj_ builder)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -122,8 +122,8 @@ obj_ ignored_for_else__Statement__Compiler(obj_ this_)
 
 obj_ interpreted__Statement__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -136,8 +136,8 @@ obj_ interpreted__Statement__Compiler(obj_ this_)
 
 obj_ jolt_expression__Statement__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -180,13 +180,13 @@ obj_ translate_co___Statement__Compiler(obj_ this_, obj_ compiler)
 
 obj_ uninterpretable_co___Statement__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Can't interpret a \"")
 	DefineString_(1, "\" statement.")
 	UsingMethod_(_pl_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{

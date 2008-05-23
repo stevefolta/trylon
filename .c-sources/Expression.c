@@ -45,10 +45,10 @@ obj_ at_co_put_co___Expression(obj_ this_, obj_ index, obj_ value)
 
 obj_ create_co___Expression(obj_ this_, obj_ num_items)
 {
+	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(tuple_co_)
-	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	UsingClass_(Tuple__Standard)
 
 		{
@@ -106,6 +106,9 @@ obj_ emit_value_co_on_co___Expression(obj_ this_, obj_ value, obj_ stream)
 
 obj_ emit_co___Expression(obj_ this_, obj_ stream)
 {
+	UsingSym_(quote)
+	UsingSym_(send)
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -143,9 +146,6 @@ obj_ emit_co___Expression(obj_ this_, obj_ stream)
 	DefineString_(8, " ")
 	DefineString_(9, ")")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(at_co_) UsingMethod_(current_item) UsingMethod_(emit_value_co_on_co_) UsingMethod_(first_character) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(num_items) UsingMethod_(string) UsingMethod_(tuple) UsingMethod_(write_co_)
-	UsingSym_(quote)
-	UsingSym_(send)
-	UsingSym_(quote)
 	UsingClass_(Symbol__Standard)
 	UsingClass_(Expression)
 
@@ -327,11 +327,11 @@ obj_ tuple_co___Expression(obj_ this_, obj_ value)
 
 obj_ with_co___Expression(obj_ this_, obj_ value)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	DefineInt_(0, 1)
 	DefineInt_(1, 0)
 	UsingMethod_(at_co_put_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	UsingClass_(Expression)
 
 		{
@@ -348,12 +348,12 @@ obj_ with_co___Expression(obj_ this_, obj_ value)
 
 obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	DefineInt_(0, 2)
 	DefineInt_(1, 0)
 	DefineInt_(2, 1)
 	UsingMethod_(at_co_put_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	UsingClass_(Expression)
 
 		{
@@ -371,13 +371,13 @@ obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2)
 
 obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	DefineInt_(0, 3)
 	DefineInt_(1, 0)
 	DefineInt_(2, 1)
 	DefineInt_(3, 2)
 	UsingMethod_(at_co_put_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	UsingClass_(Expression)
 
 		{
@@ -396,6 +396,7 @@ obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2
 
 obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	DefineInt_(0, 4)
 	DefineInt_(1, 0)
@@ -403,7 +404,6 @@ obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_
 	DefineInt_(3, 2)
 	DefineInt_(4, 3)
 	UsingMethod_(at_co_put_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	UsingClass_(Expression)
 
 		{
@@ -423,6 +423,7 @@ obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_
 
 obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	DefineInt_(0, 5)
 	DefineInt_(1, 0)
@@ -431,7 +432,6 @@ obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value
 	DefineInt_(4, 3)
 	DefineInt_(5, 4)
 	UsingMethod_(at_co_put_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	UsingClass_(Expression)
 
 		{

@@ -84,16 +84,16 @@ obj_ interpreted__ExpressionStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__ExpressionStatement__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(comment)
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(begin)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(comment) UsingMethod_(expression) UsingMethod_(jolt_expression)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(begin)
 	UsingClass_(Expression)
 
 		{

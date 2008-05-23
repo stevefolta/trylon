@@ -18,12 +18,12 @@ DeclareSharedField_(cur_interpreted_exception, TryStatement__Compiler, nil)
 
 obj_ attach_else_co_line_co___TryStatement__Compiler(obj_ this_, obj_ statement, obj_ line)
 {
+	extern obj_ new_co_comment_co___CatchClause__Compiler(obj_ this_, obj_ parent, obj_ comment);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(body) UsingMethod_(body_co_) UsingMethod_(else_clause) UsingMethod_(else_clause_co_) UsingMethod_(parent) UsingMethod_(parent_co_)
-	extern obj_ new_co_comment_co___CatchClause__Compiler(obj_ this_, obj_ parent, obj_ comment);
 	UsingClass_(CatchClause__Compiler)
 
 		{
@@ -155,13 +155,13 @@ obj_ interpreted__TryStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__TryStatement__Compiler(obj_ this_)
 {
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(catch)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(jolt_expression)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(catch)
 	UsingClass_(Expression)
 
 		{
@@ -223,12 +223,12 @@ obj_ prepare_to_emit__TryStatement__Compiler(obj_ this_)
 
 obj_ translate_co___TryStatement__Compiler(obj_ this_, obj_ compiler)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(translateExpression_co_)
 	UsingSym_(nil)
 	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
 	UsingSym_(catch)
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(translateExpression_co_)
 	UsingClass_(Expression)
 
 		{

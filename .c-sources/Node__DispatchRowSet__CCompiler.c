@@ -34,13 +34,13 @@ obj_ create_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row)
 
 obj_ insert_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ new_row)
 {
+	extern obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row);
+	extern obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(_gt_) UsingMethod_(insert_co_) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(num_entries) UsingMethod_(right) UsingMethod_(right_co_) UsingMethod_(row) UsingMethod_(skew) UsingMethod_(split)
-	extern obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row);
-	extern obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row);
 	UsingClass_(Node__DispatchRowSet__CCompiler)
 
 		{

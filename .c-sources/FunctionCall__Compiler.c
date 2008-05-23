@@ -78,12 +78,12 @@ obj_ convert_to_setter_call_co___FunctionCall__Compiler(obj_ this_, obj_ value)
 
 obj_ copy__FunctionCall__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co_arguments_co_context_co___FunctionCall__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co_arguments_co_context_co___FunctionCall__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ context);
 	UsingClass_(List__Standard)
 	UsingClass_(FunctionCall__Compiler)
 
@@ -127,6 +127,7 @@ obj_ create_co_arguments_co_context_co___FunctionCall__Compiler(obj_ this_, obj_
 
 obj_ emit_code_co___FunctionCall__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -137,7 +138,6 @@ obj_ emit_code_co___FunctionCall__Compiler(obj_ this_, obj_ builder)
 	DefineString_(0, "There is no \"")
 	DefineString_(1, "\" function.")
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(emit_c_call_co_builder_co_) UsingMethod_(function) UsingMethod_(name)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -179,6 +179,7 @@ obj_ function_co___FunctionCall__Compiler(obj_ this_, obj_ value)
 
 obj_ interpreted__FunctionCall__Compiler(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -189,7 +190,6 @@ obj_ interpreted__FunctionCall__Compiler(obj_ this_)
 	DefineString_(0, "There is no \"")
 	DefineString_(1, "\" function.")
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(function) UsingMethod_(interpret_call_with_co_) UsingMethod_(name)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -218,6 +218,7 @@ obj_ interpreted__FunctionCall__Compiler(obj_ this_)
 
 obj_ jolt_expression__FunctionCall__Compiler(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -228,7 +229,6 @@ obj_ jolt_expression__FunctionCall__Compiler(obj_ this_)
 	DefineString_(0, "There is no \"")
 	DefineString_(1, "\" function.")
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(emit_call_co_) UsingMethod_(function) UsingMethod_(name)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -305,6 +305,7 @@ obj_ prepare_to_emit__FunctionCall__Compiler(obj_ this_)
 
 obj_ translate_co___FunctionCall__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -315,7 +316,6 @@ obj_ translate_co___FunctionCall__Compiler(obj_ this_, obj_ compiler)
 	DefineString_(0, "There is no \"")
 	DefineString_(1, "\" function.")
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(context) UsingMethod_(function) UsingMethod_(function_co_) UsingMethod_(lookup_function_autodeclaring_co_) UsingMethod_(name) UsingMethod_(translate_call_co_compiler_co_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{

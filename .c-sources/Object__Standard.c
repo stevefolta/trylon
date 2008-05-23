@@ -109,6 +109,9 @@ obj_ debug_string__Object__Standard(obj_ this_)
 
 obj_ debug_write__Object__Standard(obj_ this_)
 {
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -126,9 +129,6 @@ obj_ debug_write__Object__Standard(obj_ this_)
 	DefineString_(1, "  (")
 	DefineString_(2, ") ")
 	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_dt_object_size) UsingMethod_(_dt_proto_name) UsingMethod_(_dv_) UsingMethod_(_lt_) UsingMethod_(debug_string) UsingMethod_(object_at_co_) UsingMethod_(object_ptr) UsingMethod_(string)
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{
@@ -222,8 +222,8 @@ obj_ is_a_co___Object__Standard(obj_ this_, obj_ proto)
 
 obj_ iterator__Object__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ new_co___SingleObjectIterator__Standard(obj_ this_, obj_ object);
+	obj_ t0_;
 	UsingClass_(SingleObjectIterator__Standard)
 
 		{

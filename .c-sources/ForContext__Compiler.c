@@ -63,6 +63,8 @@ obj_ local_co___ForContext__Compiler(obj_ this_, obj_ value)
 
 obj_ lookup_function_co___ForContext__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___LocalGetter__Compiler(obj_ this_, obj_ local);
+	extern obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -71,8 +73,6 @@ obj_ lookup_function_co___ForContext__Compiler(obj_ this_, obj_ name)
 	obj_ t5_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(local) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(parent)
-	extern obj_ new_co___LocalGetter__Compiler(obj_ this_, obj_ local);
-	extern obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local);
 	UsingClass_(LocalSetter__Compiler)
 	UsingClass_(LocalGetter__Compiler)
 

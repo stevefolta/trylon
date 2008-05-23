@@ -50,8 +50,8 @@ obj_ create_co___ProtoExpression__CCompiler(obj_ this_, obj_ proto)
 
 obj_ emit_code_co___ProtoExpression__CCompiler(obj_ this_, obj_ builder)
 {
-	obj_ t0_;
 	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
+	obj_ t0_;
 	UsingClass_(LiteralResult__CCompiler)
 
 		{

@@ -33,11 +33,11 @@ obj_ create_co_on_proto_co___FunctionOnThis__Compiler(obj_ this_, obj_ name, obj
 
 obj_ emit_c_call_co_builder_co___FunctionOnThis__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "this_")
 	UsingMethod_(name)
-	extern obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder);
 	UsingClass_(CCompiler)
 
 		{
@@ -53,6 +53,11 @@ obj_ emit_c_call_co_builder_co___FunctionOnThis__Compiler(obj_ this_, obj_ argum
 
 obj_ emit_call_co___FunctionOnThis__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
+	UsingSym_(self)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -64,11 +69,6 @@ obj_ emit_call_co___FunctionOnThis__Compiler(obj_ this_, obj_ arguments)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	UsingSym_(self)
 	UsingClass_(Expression)
 
 		{
@@ -149,6 +149,11 @@ obj_ on_proto_co___FunctionOnThis__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_call_co_compiler_co___FunctionOnThis__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
+	UsingSym_(self)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -160,11 +165,6 @@ obj_ translate_call_co_compiler_co___FunctionOnThis__Compiler(obj_ this_, obj_ a
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	UsingSym_(self)
 	UsingClass_(Expression)
 
 		{

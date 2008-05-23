@@ -14,10 +14,10 @@ struct object StatusReporter =
 
 obj_ create__StatusReporter(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(warnings_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -31,8 +31,8 @@ obj_ create__StatusReporter(obj_ this_)
 
 obj_ indent__StatusReporter(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -54,8 +54,8 @@ obj_ new__StatusReporter(obj_ this_)
 
 obj_ report_co___StatusReporter(obj_ this_, obj_ message)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -68,13 +68,13 @@ obj_ report_co___StatusReporter(obj_ this_, obj_ message)
 
 obj_ show_warnings__StatusReporter(obj_ this_)
 {
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "\nWarning:")
 	UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(warnings)
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{
@@ -101,8 +101,8 @@ obj_ show_warnings__StatusReporter(obj_ this_)
 
 obj_ unindent__StatusReporter(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

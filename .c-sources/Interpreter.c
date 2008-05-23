@@ -55,10 +55,10 @@ obj_ Statements__Interpreter__accessor_(obj_ this_)
 
 obj_ build_settings__Interpreter(obj_ this_)
 {
+	extern obj_ new__BuildSettings__Compiler(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_dt_build_settings) UsingMethod_(_dt_build_settings_co_)
-	extern obj_ new__BuildSettings__Compiler(obj_ this_);
 	UsingClass_(BuildSettings__Compiler)
 
 		{
@@ -89,6 +89,7 @@ obj_ calling_selector_co___Interpreter(obj_ this_, obj_ selector)
 
 obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj_ object, obj_ arguments)
 {
+	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -112,7 +113,6 @@ obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj
 	DefineInt_(15, 2)
 	DefineInt_(16, 3)
 	UsingMethod_(_pl_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(interpreted) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(num_items) UsingMethod_(perform_co_) UsingMethod_(perform_co_with_co_) UsingMethod_(perform_co_with_co_with_co_) UsingMethod_(perform_co_with_co_with_co_with_co_) UsingMethod_(perform_co_with_co_with_co_with_co_with_co_)
-	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	UsingClass_(Tuple__Standard)
 
 		{
@@ -183,11 +183,11 @@ obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj
 
 obj_ interpret_co___Interpreter(obj_ this_, obj_ code)
 {
+	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	obj_ t0_;
 	UsingMethod_(interpreted) UsingMethod_(parse_code) UsingMethod_(prepare_to_emit)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	UsingClass_(Main)
 	UsingClass_(Parser__Compiler)
 	UsingClass_(ExistingProto__Compiler)

@@ -61,10 +61,10 @@ obj_ calling_selector_co___Compiler__Compiler(obj_ this_, obj_ name)
 
 obj_ compile_dir_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ dir, obj_ name, obj_ parent_proto)
 {
+	extern obj_ new__VT100StatusReporter(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(add_proto_co_directory_co_) UsingMethod_(status_reporter_co_)
-	extern obj_ new__VT100StatusReporter(obj_ this_);
 	UsingClass_(VT100StatusReporter)
 
 		{
@@ -84,11 +84,11 @@ obj_ compile_dir_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ dir, obj
 
 obj_ compile_file_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ file, obj_ name, obj_ parent_proto)
 {
+	extern obj_ new__VT100StatusReporter(obj_ this_);
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(add_proto_co_) UsingMethod_(contents) UsingMethod_(parse_proto_file_co_) UsingMethod_(status_reporter_co_)
-	extern obj_ new__VT100StatusReporter(obj_ this_);
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	UsingClass_(Parser__Compiler)
 	UsingClass_(VT100StatusReporter)
 
@@ -111,6 +111,17 @@ obj_ compile_file_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ file, o
 
 obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 {
+	extern obj_ milliseconds__System__Standard(obj_ this_);
+	UsingSym_(C)
+	UsingSym_(Jolt)
+	extern obj_ new__StdoutStatusReporter(obj_ this_);
+	extern obj_ new__VT100StatusReporter(obj_ this_);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
+	extern obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler);
+	extern obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -132,17 +143,6 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	DefineString_(14, "Done.")
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_library_path) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_root_object_co_) UsingMethod_(is_verbose) UsingMethod_(is_verbose_co_) UsingMethod_(iterator) UsingMethod_(load) UsingMethod_(main_proto) UsingMethod_(main_proto_co_) UsingMethod_(prepare_to_emit) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(root_proto_co_) UsingMethod_(setup_main_co_library_directory_co_) UsingMethod_(show_warnings) UsingMethod_(status_reporter) UsingMethod_(status_reporter_co_) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ milliseconds__System__Standard(obj_ this_);
-	UsingSym_(C)
-	UsingSym_(Jolt)
-	extern obj_ new__StdoutStatusReporter(obj_ this_);
-	extern obj_ new__VT100StatusReporter(obj_ this_);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
-	extern obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler);
-	extern obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler);
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(System__Standard)
 	UsingClass_(MessageException__Standard)
@@ -295,12 +295,12 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 
 obj_ create__Compiler__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(build_settings_co_) UsingMethod_(proto_queue_co_) UsingMethod_(successful_co_) UsingMethod_(symbols_co_)
 	extern obj_ new__BuildSettings__Compiler(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new__Dictionary__Standard(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(build_settings_co_) UsingMethod_(proto_queue_co_) UsingMethod_(successful_co_) UsingMethod_(symbols_co_)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(BuildSettings__Compiler)
@@ -337,6 +337,11 @@ obj_ declaring_selector_co___Compiler__Compiler(obj_ this_, obj_ name)
 
 obj_ find_library_path__Compiler__Compiler(obj_ this_)
 {
+	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
+	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -356,11 +361,6 @@ obj_ find_library_path__Compiler__Compiler(obj_ this_)
 	DefineString_(12, "/trylon")
 static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), Int_(0), Str_(7), Str_(8), Str_(9), Str_(10) };
 	UsingMethod_(_pl_) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator)
-	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
-	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(System__Standard)
 	UsingClass_(Tuple__Standard)
@@ -512,6 +512,9 @@ obj_ return_value__Compiler__Compiler(obj_ this_)
 
 obj_ root_proto_co___Compiler__Compiler(obj_ this_, obj_ main_proto)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -521,9 +524,6 @@ obj_ root_proto_co___Compiler__Compiler(obj_ this_, obj_ main_proto)
 	DefineString_(3, "Standard Object is missing!")
 	DefineString_(4, "Standard Object is not a prototype!")
 	UsingMethod_(get_subproto_co_) UsingMethod_(is_a_co_) UsingMethod_(lookup_function_co_) UsingMethod_(proto)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(ProtoFunction__Compiler)
 
@@ -607,10 +607,10 @@ obj_ successful_co___Compiler__Compiler(obj_ this_, obj_ value)
 
 obj_ symbol_info_for_co___Compiler__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___SymbolInfo__Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(string) UsingMethod_(symbols)
-	extern obj_ new_co___SymbolInfo__Compiler(obj_ this_, obj_ name);
 	UsingClass_(SymbolInfo__Compiler)
 
 		{

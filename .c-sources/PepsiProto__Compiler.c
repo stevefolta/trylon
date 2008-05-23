@@ -30,8 +30,8 @@ struct object PepsiProto__Compiler =
 
 obj_ create_co_parent_co___PepsiProto__Compiler(obj_ this_, obj_ name, obj_ parent)
 {
-	obj_ t0_;
 	obj_ create_co_parent_co___CompiledProto__Compiler(obj_, obj_, obj_);
+	obj_ t0_;
 
 		{
 		t0_ = create_co_parent_co___CompiledProto__Compiler(this_, name, parent);
@@ -44,8 +44,8 @@ obj_ create_co_parent_co___PepsiProto__Compiler(obj_ this_, obj_ name, obj_ pare
 
 obj_ get_subproto_co___PepsiProto__Compiler(obj_ this_, obj_ name)
 {
-	obj_ t0_;
 	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
+	obj_ t0_;
 	UsingClass_(CompiledProto__Compiler)
 
 		{

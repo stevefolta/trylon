@@ -33,6 +33,7 @@ obj_ create_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg)
 
 obj_ emit_c_call_co_builder_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -41,7 +42,6 @@ obj_ emit_c_call_co_builder_co___SetArgumentFunction__Compiler(obj_ this_, obj_ 
 	DefineString_(0, " = ")
 	DefineString_(1, ";")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_line_co_) UsingMethod_(emit_code_co_) UsingMethod_(first_item) UsingMethod_(name)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -67,14 +67,14 @@ obj_ emit_c_call_co_builder_co___SetArgumentFunction__Compiler(obj_ this_, obj_ 
 
 obj_ emit_call_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(set)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(set)
 	UsingClass_(Expression)
 
 		{
@@ -125,13 +125,13 @@ obj_ new_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg)
 
 obj_ translate_call_co_compiler_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(set)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(set)
 	UsingClass_(Expression)
 
 		{

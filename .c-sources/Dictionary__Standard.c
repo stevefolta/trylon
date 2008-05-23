@@ -193,13 +193,13 @@ obj_ create__Dictionary__Standard(obj_ this_)
 
 obj_ insert_co_at_co___Dictionary__Standard(obj_ this_, obj_ value, obj_ key)
 {
+	extern obj_ new_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 1)
 	DefineInt_(1, 1)
 	UsingMethod_(_pl_) UsingMethod_(insert_co_at_co_) UsingMethod_(num_items) UsingMethod_(num_items_co_) UsingMethod_(root) UsingMethod_(root_co_)
-	extern obj_ new_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value);
 	UsingClass_(Node__Dictionary__Standard)
 
 		{
@@ -257,10 +257,10 @@ obj_ is_empty__Dictionary__Standard(obj_ this_)
 
 obj_ keys__Dictionary__Standard(obj_ this_)
 {
+	extern obj_ new_co___KeysIterator__Dictionary__Standard(obj_ this_, obj_ root);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(root)
-	extern obj_ new_co___KeysIterator__Dictionary__Standard(obj_ this_, obj_ root);
 	UsingClass_(KeysIterator__Dictionary__Standard)
 
 		{
@@ -296,10 +296,10 @@ obj_ num_items_co___Dictionary__Standard(obj_ this_, obj_ value)
 
 obj_ pairs__Dictionary__Standard(obj_ this_)
 {
+	extern obj_ new_co___KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ root);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(root)
-	extern obj_ new_co___KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ root);
 	UsingClass_(KeyValuePairsIterator__Dictionary__Standard)
 
 		{
@@ -315,12 +315,12 @@ obj_ pairs__Dictionary__Standard(obj_ this_)
 
 obj_ remove_co___Dictionary__Standard(obj_ this_, obj_ key)
 {
+	extern obj_ new_co___RemoveContext__Dictionary__Standard(obj_ this_, obj_ key);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 1)
 	UsingMethod_(_) UsingMethod_(deleted_value) UsingMethod_(item_found) UsingMethod_(num_items) UsingMethod_(num_items_co_) UsingMethod_(remove_co_) UsingMethod_(root) UsingMethod_(root_co_)
-	extern obj_ new_co___RemoveContext__Dictionary__Standard(obj_ this_, obj_ key);
 	UsingClass_(RemoveContext__Dictionary__Standard)
 
 		{
@@ -369,10 +369,10 @@ obj_ root_co___Dictionary__Standard(obj_ this_, obj_ value)
 
 obj_ values__Dictionary__Standard(obj_ this_)
 {
+	extern obj_ new_co___ValuesIterator__Dictionary__Standard(obj_ this_, obj_ root);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(root)
-	extern obj_ new_co___ValuesIterator__Dictionary__Standard(obj_ this_, obj_ root);
 	UsingClass_(ValuesIterator__Dictionary__Standard)
 
 		{

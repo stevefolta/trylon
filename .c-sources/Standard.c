@@ -240,8 +240,8 @@ obj_ end_message__Standard(obj_ this_)
 
 obj_ error_co___Standard(obj_ this_, obj_ message)
 {
-	obj_ t0_;
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	obj_ t0_;
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -359,9 +359,9 @@ obj_ send_co___Standard(obj_ this_, obj_ message)
 
 obj_ virtual__Standard(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	DefineString_(0, "Attempt to call a virtual function!")
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{

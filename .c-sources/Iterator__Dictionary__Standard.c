@@ -141,10 +141,10 @@ obj_ push_tree_co___Iterator__Dictionary__Standard(obj_ this_, obj_ node)
 
 obj_ push_co___Iterator__Dictionary__Standard(obj_ this_, obj_ node)
 {
+	extern obj_ new_co___StackElement__Iterator__Dictionary__Standard(obj_ this_, obj_ node);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(next_co_) UsingMethod_(stack_top) UsingMethod_(stack_top_co_)
-	extern obj_ new_co___StackElement__Iterator__Dictionary__Standard(obj_ this_, obj_ node);
 	UsingClass_(StackElement__Iterator__Dictionary__Standard)
 
 		{

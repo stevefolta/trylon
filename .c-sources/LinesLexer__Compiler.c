@@ -21,6 +21,9 @@ struct object LinesLexer__Compiler =
 
 obj_ create_co___LinesLexer__Compiler(obj_ this_, obj_ text)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -30,9 +33,6 @@ obj_ create_co___LinesLexer__Compiler(obj_ this_, obj_ text)
 	DefineInt_(2, 0)
 	DefineInt_(3, 0)
 	UsingMethod_(cur_indentation_co_) UsingMethod_(cur_lines_co_) UsingMethod_(had_indent_problem_co_) UsingMethod_(indent_stack) UsingMethod_(indent_stack_co_) UsingMethod_(lines) UsingMethod_(lines_co_) UsingMethod_(p_co_) UsingMethod_(pending_blank_lines_co_) UsingMethod_(push_front_co_) UsingMethod_(start) UsingMethod_(stopper) UsingMethod_(stopper_co_)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	UsingClass_(List__Standard)
 
 		{
@@ -116,6 +116,14 @@ obj_ indent_stack_co___LinesLexer__Compiler(obj_ this_, obj_ value)
 
 obj_ lex__LinesLexer__Compiler(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text);
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -153,14 +161,6 @@ obj_ lex__LinesLexer__Compiler(obj_ this_)
 	DefineString_(3, "--")
 	DefineString_(4, " ")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt_) UsingMethod_(_gt__eq_) UsingMethod_(append_co_) UsingMethod_(block_co_) UsingMethod_(cur_indentation) UsingMethod_(cur_indentation_co_) UsingMethod_(cur_lines) UsingMethod_(cur_lines_co_) UsingMethod_(deref_char) UsingMethod_(ends_with_co_) UsingMethod_(first) UsingMethod_(head) UsingMethod_(indent_stack) UsingMethod_(is_empty) UsingMethod_(last_item) UsingMethod_(length) UsingMethod_(lines) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(pending_blank_lines) UsingMethod_(pending_blank_lines_co_) UsingMethod_(pop_front) UsingMethod_(push_front_co_) UsingMethod_(second) UsingMethod_(stopper) UsingMethod_(substr_co_length_co_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text);
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(String__Standard)

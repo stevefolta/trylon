@@ -37,11 +37,11 @@ obj_ create_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ 
 
 obj_ insert_co_at_co___Node__Dictionary__Standard(obj_ this_, obj_ new_value, obj_ new_key)
 {
+	extern obj_ new_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value);
+	extern obj_ new_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_lt_) UsingMethod_(insert_co_at_co_) UsingMethod_(key) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(right) UsingMethod_(right_co_) UsingMethod_(skew) UsingMethod_(split) UsingMethod_(value_co_)
-	extern obj_ new_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value);
-	extern obj_ new_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value);
 	UsingClass_(Node__Dictionary__Standard)
 
 		{

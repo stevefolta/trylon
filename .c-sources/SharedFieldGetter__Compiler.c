@@ -16,6 +16,7 @@ struct object SharedFieldGetter__Compiler =
 
 obj_ access__SharedFieldGetter__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -29,7 +30,6 @@ obj_ access__SharedFieldGetter__Compiler(obj_ this_)
 	DefineString_(1, ", ")
 	DefineString_(2, ")")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(field) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -51,6 +51,7 @@ obj_ access__SharedFieldGetter__Compiler(obj_ this_)
 
 obj_ c_name__SharedFieldGetter__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -60,7 +61,6 @@ obj_ c_name__SharedFieldGetter__Compiler(obj_ this_)
 	obj_ t6_;
 	DefineString_(0, "__")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(field) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -116,11 +116,11 @@ obj_ create_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field,
 
 obj_ emit_c_call_co_builder_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(field) UsingMethod_(on_proto) UsingMethod_(using_shared_field_co_on_proto_co_)
-	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	UsingClass_(LiteralResult__CCompiler)
 
 		{
@@ -137,6 +137,7 @@ obj_ emit_c_call_co_builder_co___SharedFieldGetter__Compiler(obj_ this_, obj_ ar
 
 obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -146,7 +147,6 @@ obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream
 	DefineString_(2, ";\n")
 	DefineString_(3, "}\n")
 	UsingMethod_(access) UsingMethod_(c_signature) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 
 		{
 		t0_ = Call_(c_signature, this_);
@@ -169,6 +169,10 @@ obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream
 
 obj_ emit_call_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -177,10 +181,6 @@ obj_ emit_call_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments)
 	obj_ t5_;
 	obj_ t6_;
 	UsingMethod_(access) UsingMethod_(field) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -200,6 +200,9 @@ obj_ emit_call_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments)
 
 obj_ emit_code__SharedFieldGetter__Compiler(obj_ this_)
 {
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(add_shared_field)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -207,9 +210,6 @@ obj_ emit_code__SharedFieldGetter__Compiler(obj_ this_)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(access) UsingMethod_(field) UsingMethod_(initial_value) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_shared_field)
 	UsingClass_(Expression)
 
 		{
@@ -332,6 +332,9 @@ obj_ on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_co___SharedFieldGetter__Compiler(obj_ this_, obj_ compiler)
 {
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(add_shared_field)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -339,9 +342,6 @@ obj_ translate_co___SharedFieldGetter__Compiler(obj_ this_, obj_ compiler)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(access) UsingMethod_(field) UsingMethod_(initial_value) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_shared_field)
 	UsingClass_(Expression)
 
 		{

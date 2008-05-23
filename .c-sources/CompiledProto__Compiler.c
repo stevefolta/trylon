@@ -42,6 +42,11 @@ obj_ _dt_c_name_co___CompiledProto__Compiler(obj_ this_, obj_ value)
 
 obj_ access__CompiledProto__Compiler(obj_ this_)
 {
+	UsingSym_(Trylon)
+	UsingSym_(trylon_root_object)
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(trylon_proto)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -50,11 +55,6 @@ obj_ access__CompiledProto__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(is_main) UsingMethod_(is_root_object) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(push_front_co_)
-	UsingSym_(Trylon)
-	UsingSym_(trylon_root_object)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_proto)
 	UsingClass_(List__Standard)
 	UsingClass_(Expression)
 
@@ -117,13 +117,13 @@ obj_ access__CompiledProto__Compiler(obj_ this_)
 
 obj_ add_directory_co___CompiledProto__Compiler(obj_ this_, obj_ directory)
 {
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "main")
 	DefineString_(1, "main")
 	UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(directories) UsingMethod_(parse_proto_file_co_)
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	UsingClass_(Parser__Compiler)
 
 		{
@@ -149,14 +149,14 @@ obj_ add_directory_co___CompiledProto__Compiler(obj_ this_, obj_ directory)
 
 obj_ add_field_co___CompiledProto__Compiler(obj_ this_, obj_ field)
 {
+	extern obj_ new_co_on_proto_co___FieldGetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
+	extern obj_ new_co_on_proto_co___FieldSetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(add_function_co_function_co_) UsingMethod_(append_co_) UsingMethod_(fields) UsingMethod_(name)
-	extern obj_ new_co_on_proto_co___FieldGetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
-	extern obj_ new_co_on_proto_co___FieldSetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
 	UsingClass_(FieldSetter__Compiler)
 	UsingClass_(FieldGetter__Compiler)
 
@@ -179,6 +179,8 @@ obj_ add_field_co___CompiledProto__Compiler(obj_ this_, obj_ field)
 
 obj_ add_function_co___CompiledProto__Compiler(obj_ this_, obj_ function)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co_on_proto_co___NewFunction__Compiler(obj_ this_, obj_ creator, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -195,8 +197,6 @@ obj_ add_function_co___CompiledProto__Compiler(obj_ this_, obj_ function)
 	DefineString_(5, "create-")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(declaring_selector_co_) UsingMethod_(functions) UsingMethod_(has_code) UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(starts_with_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co_on_proto_co___NewFunction__Compiler(obj_ this_, obj_ creator, obj_ on_proto);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(NewFunction__Compiler)
 	UsingClass_(CompiledFunction__Compiler)
@@ -301,6 +301,9 @@ obj_ add_proto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 
 obj_ add_proto_co_directory_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ directory)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -314,9 +317,6 @@ obj_ add_proto_co_directory_co___CompiledProto__Compiler(obj_ this_, obj_ name, 
 	DefineString_(4, "...")
 	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(add_function_co_function_co_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(proto) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(CompiledProto__Compiler)
@@ -374,14 +374,14 @@ obj_ add_proto_co_directory_co___CompiledProto__Compiler(obj_ this_, obj_ name, 
 
 obj_ add_shared_field_co___CompiledProto__Compiler(obj_ this_, obj_ field)
 {
+	extern obj_ new_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
+	extern obj_ new_co_on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(add_function_co_function_co_) UsingMethod_(at_co_put_co_) UsingMethod_(name) UsingMethod_(shared_fields)
-	extern obj_ new_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
-	extern obj_ new_co_on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
 	UsingClass_(SharedFieldSetter__Compiler)
 	UsingClass_(SharedFieldGetter__Compiler)
 
@@ -405,6 +405,7 @@ obj_ add_shared_field_co___CompiledProto__Compiler(obj_ this_, obj_ field)
 
 obj_ c_name__CompiledProto__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -413,7 +414,6 @@ obj_ c_name__CompiledProto__Compiler(obj_ this_)
 	obj_ t5_;
 	DefineString_(0, "__")
 	UsingMethod_(_pl_) UsingMethod_(_dt_c_name) UsingMethod_(_dt_c_name_co_) UsingMethod_(c_name) UsingMethod_(is_main) UsingMethod_(name) UsingMethod_(parent)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -476,11 +476,6 @@ obj_ class_num_co___CompiledProto__Compiler(obj_ this_, obj_ value)
 
 obj_ create_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent)
 {
-	obj_ t0_;
-	obj_ t1_;
-	DefineString_(0, ".proto")
-	DefineString_(1, ".superclass")
-	UsingMethod_(add_function_co_) UsingMethod_(directories_co_) UsingMethod_(fields_co_) UsingMethod_(functions_co_) UsingMethod_(is_main_co_) UsingMethod_(is_root_object_co_) UsingMethod_(name_co_) UsingMethod_(parent_co_) UsingMethod_(shared_fields_co_) UsingMethod_(subclasses_co_) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos_co_)
 	extern obj_ new__Dictionary__Standard(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new__Dictionary__Standard(obj_ this_);
@@ -490,6 +485,11 @@ obj_ create_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ p
 	extern obj_ build_settings__Main(obj_ this_);
 	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
+	obj_ t0_;
+	obj_ t1_;
+	DefineString_(0, ".proto")
+	DefineString_(1, ".superclass")
+	UsingMethod_(add_function_co_) UsingMethod_(directories_co_) UsingMethod_(fields_co_) UsingMethod_(functions_co_) UsingMethod_(is_main_co_) UsingMethod_(is_root_object_co_) UsingMethod_(name_co_) UsingMethod_(parent_co_) UsingMethod_(shared_fields_co_) UsingMethod_(subclasses_co_) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos_co_)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Main)
@@ -632,6 +632,7 @@ obj_ emit_code__CompiledProto__Compiler(obj_ this_)
 
 obj_ emit_field_indices_co___CompiledProto__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -641,7 +642,6 @@ obj_ emit_field_indices_co___CompiledProto__Compiler(obj_ this_, obj_ stream)
 	DefineString_(1, "__fld_\t(")
 	DefineString_(2, ")")
 	UsingMethod_(_pl_) UsingMethod_(current_item) UsingMethod_(emit_field_indices_co_) UsingMethod_(fields) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(string) UsingMethod_(superclass) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -683,6 +683,16 @@ obj_ emit_field_indices_co___CompiledProto__Compiler(obj_ this_, obj_ stream)
 
 obj_ emit_jolt_file__CompiledProto__Compiler(obj_ this_)
 {
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
+	UsingSym_(define_trylon_proto)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(trylon_tuple)
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(add_constant_field)
+	UsingSym_(_dt_used_contexts)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -700,16 +710,6 @@ obj_ emit_jolt_file__CompiledProto__Compiler(obj_ this_)
 	DefineString_(1, ".k")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(close) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(emit_code) UsingMethod_(emit_co_) UsingMethod_(fields) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(jolt_sources_dir) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(status_reporter) UsingMethod_(superclass) UsingMethod_(uses_protos) UsingMethod_(values) UsingMethod_(write_line)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
-	UsingSym_(define_trylon_proto)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_tuple)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_constant_field)
-	UsingSym_(_dt_used_contexts)
 	UsingClass_(File__Standard)
 	UsingClass_(Expression)
 	UsingClass_(ProtoFunction__Compiler)
@@ -1008,11 +1008,11 @@ obj_ get_proto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 
 obj_ get_subproto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(add_proto_co_) UsingMethod_(add_proto_co_directory_co_) UsingMethod_(at_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(entry_is_directory_co_) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(parse_proto_file_co_) UsingMethod_(proto)
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(Parser__Compiler)
 
@@ -1099,10 +1099,10 @@ obj_ is_root_object_co___CompiledProto__Compiler(obj_ this_, obj_ value)
 
 obj_ lookup_function_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new__ObjectMap__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(lookup_function_co_visited_protos_co_)
-	extern obj_ new__ObjectMap__Standard(obj_ this_);
 	UsingClass_(ObjectMap__Standard)
 
 		{
@@ -1118,11 +1118,11 @@ obj_ lookup_function_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 
 obj_ lookup_function_co_visited_protos_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ visited_protos)
 {
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(add_proto_co_) UsingMethod_(add_proto_co_directory_co_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(entry_is_directory_co_) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lookup_function_co_visited_protos_co_) UsingMethod_(parent) UsingMethod_(parse_proto_file_co_) UsingMethod_(uses_protos)
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
 	UsingClass_(Parser__Compiler)
 
 		{
@@ -1414,6 +1414,18 @@ obj_ setup_dispatch_row_co_inherited_function_co___CompiledProto__Compiler(obj_ 
 
 obj_ setup_main_co_library_directory_co___CompiledProto__Compiler(obj_ this_, obj_ main_directory, obj_ library_directory)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ new_co_parent_co_directory_co___PosixProto__JoltCompiler(obj_ this_, obj_ name, obj_ parent, obj_ directory);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
+	extern obj_ new_co_parent_co___PepsiProto__Compiler(obj_ this_, obj_ name, obj_ parent);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
+	extern obj_ new__NilFunction__Compiler(obj_ this_);
+	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
+	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
+	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -1445,18 +1457,6 @@ obj_ setup_main_co_library_directory_co___CompiledProto__Compiler(obj_ this_, ob
 static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), Int_(0), Str_(16), Str_(17), Str_(18), Str_(19), Str_(20), Str_(21), Str_(22) };
 	UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(functions) UsingMethod_(get_subproto_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_main_co_) UsingMethod_(iterator) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(parse_proto_file_co_) UsingMethod_(proto_queue) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new_co_parent_co_directory_co___PosixProto__JoltCompiler(obj_ this_, obj_ name, obj_ parent, obj_ directory);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_parent_co___PepsiProto__Compiler(obj_ this_, obj_ name, obj_ parent);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
-	extern obj_ new__NilFunction__Compiler(obj_ this_);
-	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
-	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
-	extern obj_ new_co_context_co___Parser__Compiler(obj_ this_, obj_ source, obj_ context);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(Tuple__Standard)
 	UsingClass_(Main)

@@ -15,11 +15,11 @@ struct object LocalGetter__Compiler =
 
 obj_ access__LocalGetter__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(local) UsingMethod_(name)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -51,8 +51,8 @@ obj_ create_co___LocalGetter__Compiler(obj_ this_, obj_ local)
 
 obj_ emit_c_call_co_builder_co___LocalGetter__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
-	obj_ t0_;
 	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
+	obj_ t0_;
 	UsingClass_(LiteralResult__CCompiler)
 
 		{

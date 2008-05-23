@@ -110,12 +110,12 @@ obj_ cached_char_co___StringUTF8Iterator__Standard(obj_ this_, obj_ value)
 
 obj_ copy__StringUTF8Iterator__Standard(obj_ this_)
 {
+	extern obj_ new_co_to_co_string_co___StringUTF8Iterator__Standard(obj_ this_, obj_ start, obj_ stopper, obj_ string);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(start) UsingMethod_(stopper) UsingMethod_(string)
-	extern obj_ new_co_to_co_string_co___StringUTF8Iterator__Standard(obj_ this_, obj_ start, obj_ stopper, obj_ string);
 	UsingClass_(StringUTF8Iterator__Standard)
 
 		{
@@ -168,6 +168,12 @@ obj_ create_co_to_co_string_co___StringUTF8Iterator__Standard(obj_ this_, obj_ s
 
 obj_ current_item__StringUTF8Iterator__Standard(obj_ this_)
 {
+	extern obj_ error_co___Standard(obj_ this_, obj_ message);
+	UsingSym_(Invalid__UTF_8__string_dt_)
+	extern obj_ error_co___Standard(obj_ this_, obj_ message);
+	UsingSym_(Invalid__UTF_8__string_dt_)
+	extern obj_ error_co___Standard(obj_ this_, obj_ message);
+	UsingSym_(Invalid__UTF_8__string_dt_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -194,12 +200,6 @@ obj_ current_item__StringUTF8Iterator__Standard(obj_ this_)
 	DefineInt_(19, 63)
 	DefineInt_(20, 1)
 	UsingMethod_(_nt__eq_) UsingMethod_(_an_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_lt__lt_) UsingMethod_(_gt_) UsingMethod_(_gt__eq_) UsingMethod_(cached_char) UsingMethod_(cached_char_co_) UsingMethod_(deref_char) UsingMethod_(start_ptr) UsingMethod_(start_ptr_co_) UsingMethod_(stopper) UsingMethod_(_or_)
-	extern obj_ error_co___Standard(obj_ this_, obj_ message);
-	UsingSym_(Invalid__UTF_8__string_dt_)
-	extern obj_ error_co___Standard(obj_ this_, obj_ message);
-	UsingSym_(Invalid__UTF_8__string_dt_)
-	extern obj_ error_co___Standard(obj_ this_, obj_ message);
-	UsingSym_(Invalid__UTF_8__string_dt_)
 	UsingClass_(Standard)
 
 		{
@@ -389,11 +389,11 @@ obj_ new_co_to_co_string_co___StringUTF8Iterator__Standard(obj_ this_, obj_ star
 
 obj_ remainder__StringUTF8Iterator__Standard(obj_ this_)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(start) UsingMethod_(stopper)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{

@@ -17,11 +17,11 @@ struct object Block__Compiler =
 
 obj_ add_local_co___Block__Compiler(obj_ this_, obj_ local)
 {
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(at_co_put_co_) UsingMethod_(locals) UsingMethod_(locals_co_) UsingMethod_(name)
-	extern obj_ new__Dictionary__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 
 		{
@@ -60,10 +60,10 @@ obj_ append_co___Block__Compiler(obj_ this_, obj_ statement)
 
 obj_ create_co___Block__Compiler(obj_ this_, obj_ parent)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(locals_co_) UsingMethod_(parent_co_) UsingMethod_(statements_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -81,6 +81,8 @@ obj_ create_co___Block__Compiler(obj_ this_, obj_ parent)
 
 obj_ emit_code_co___Block__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -91,8 +93,6 @@ obj_ emit_code_co___Block__Compiler(obj_ this_, obj_ builder)
 	DefineString_(3, ";")
 	DefineString_(4, "}")
 	UsingMethod_(_pl_) UsingMethod_(add_line_co_) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(locals) UsingMethod_(name) UsingMethod_(statements) UsingMethod_(string) UsingMethod_(unindent) UsingMethod_(values)
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 	UsingClass_(StringBuilder__Standard)
 
@@ -226,6 +226,14 @@ obj_ is_lambda__Block__Compiler(obj_ this_)
 
 obj_ jolt_expression__Block__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(begin)
+	UsingSym_(nil)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(begin)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(trylon_block)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -240,14 +248,6 @@ obj_ jolt_expression__Block__Compiler(obj_ this_)
 	DefineInt_(6, 0)
 	DefineInt_(7, 1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(first_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(locals) UsingMethod_(name) UsingMethod_(statements) UsingMethod_(values)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(begin)
-	UsingSym_(nil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(begin)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(trylon_block)
 	UsingClass_(Expression)
 
 		{
@@ -338,6 +338,8 @@ obj_ locals_co___Block__Compiler(obj_ this_, obj_ value)
 
 obj_ lookup_function_autodeclaring_co___Block__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
+	extern obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -347,8 +349,6 @@ obj_ lookup_function_autodeclaring_co___Block__Compiler(obj_ this_, obj_ name)
 	DefineInt_(2, 0)
 	DefineInt_(3, 1)
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(add_local_co_) UsingMethod_(index_of_co_) UsingMethod_(length) UsingMethod_(lookup_function_co_) UsingMethod_(substr_co_length_co_)
-	extern obj_ new_co_type_co___CompiledField__Compiler(obj_ this_, obj_ name, obj_ type);
-	extern obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local);
 	UsingClass_(LocalSetter__Compiler)
 	UsingClass_(CompiledField__Compiler)
 
@@ -389,6 +389,8 @@ obj_ lookup_function_autodeclaring_co___Block__Compiler(obj_ this_, obj_ name)
 
 obj_ lookup_function_co___Block__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local);
+	extern obj_ new_co___LocalGetter__Compiler(obj_ this_, obj_ local);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -397,8 +399,6 @@ obj_ lookup_function_co___Block__Compiler(obj_ this_, obj_ name)
 	DefineInt_(1, 1)
 	DefineString_(0, ":")
 	UsingMethod_(_) UsingMethod_(at_co_) UsingMethod_(ends_with_co_) UsingMethod_(length) UsingMethod_(locals) UsingMethod_(lookup_function_co_) UsingMethod_(parent) UsingMethod_(substr_co_length_co_)
-	extern obj_ new_co___LocalSetter__Compiler(obj_ this_, obj_ local);
-	extern obj_ new_co___LocalGetter__Compiler(obj_ this_, obj_ local);
 	UsingClass_(LocalSetter__Compiler)
 	UsingClass_(LocalGetter__Compiler)
 
@@ -523,6 +523,12 @@ obj_ statements_co___Block__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_co___Block__Compiler(obj_ this_, obj_ compiler)
 {
+	UsingSym_(nil)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(begin)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(trylon_block)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -536,12 +542,6 @@ obj_ translate_co___Block__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(6, 0)
 	DefineInt_(7, 1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(first_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(locals) UsingMethod_(name) UsingMethod_(statements) UsingMethod_(translate_co_) UsingMethod_(values)
-	UsingSym_(nil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(begin)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(trylon_block)
 	UsingClass_(Expression)
 
 		{

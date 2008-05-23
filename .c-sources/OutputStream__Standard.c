@@ -82,8 +82,8 @@ obj_ write_all_co___OutputStream__Standard(obj_ this_, obj_ collection)
 
 obj_ write_buffer_co_length_co___OutputStream__Standard(obj_ this_, obj_ buffer, obj_ length)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

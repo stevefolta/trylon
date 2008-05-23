@@ -20,13 +20,13 @@ DeclareSharedField_(max_indent_level, VT100StatusReporter, Int_(0))
 
 obj_ back_up_one_line__VT100StatusReporter(obj_ this_)
 {
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
 	obj_ t0_;
 	DefineString_(0, "\e[A")
 	DefineString_(1, "\r")
 	DefineString_(2, "\e[2K")
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
 	UsingClass_(Standard)
 
 		{
@@ -48,6 +48,8 @@ obj_ back_up_one_line__VT100StatusReporter(obj_ this_)
 
 obj_ create__VT100StatusReporter(obj_ this_)
 {
+	obj_ create__StatusReporter(obj_);
+	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -58,8 +60,6 @@ obj_ create__VT100StatusReporter(obj_ this_)
 	DefineInt_(3, 0)
 	DefineInt_(4, 1)
 	UsingMethod_(_pl_) UsingMethod_(_lt__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(have_line) UsingMethod_(have_line_co_) UsingMethod_(indent_level_co_) UsingMethod_(last_displayed_indent_level_co_) UsingMethod_(max_indent_level)
-	obj_ create__StatusReporter(obj_);
-	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	UsingClass_(Tuple__Standard)
 
 		{
@@ -174,6 +174,8 @@ obj_ new__VT100StatusReporter(obj_ this_)
 
 obj_ report_co___VT100StatusReporter(obj_ this_, obj_ message)
 {
+	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -183,8 +185,6 @@ obj_ report_co___VT100StatusReporter(obj_ this_, obj_ message)
 	DefineInt_(3, 80)
 	DefineString_(0, "                    ")
 	UsingMethod_(_) UsingMethod_(_gt_) UsingMethod_(_gt__eq_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(back_up_one_line) UsingMethod_(have_line) UsingMethod_(indent_level) UsingMethod_(last_displayed_indent_level) UsingMethod_(last_displayed_indent_level_co_) UsingMethod_(max_indent_level) UsingMethod_(substr_co_length_co_)
-	extern obj_ print_co___Standard(obj_ this_, obj_ strObj);
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{

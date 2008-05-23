@@ -122,13 +122,13 @@ obj_ capacity_co___SmallStringBuilder__Compiler(obj_ this_, obj_ value)
 
 obj_ create__SmallStringBuilder__Compiler(obj_ this_)
 {
+	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 16)
 	DefineInt_(1, 0)
 	UsingMethod_(buffer_co_) UsingMethod_(capacity) UsingMethod_(capacity_co_) UsingMethod_(size_co_)
-	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -145,12 +145,12 @@ obj_ create__SmallStringBuilder__Compiler(obj_ this_)
 
 obj_ create_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper)
 {
+	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 2)
 	UsingMethod_(_st_) UsingMethod_(_) UsingMethod_(buffer) UsingMethod_(buffer_co_) UsingMethod_(capacity) UsingMethod_(capacity_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(size) UsingMethod_(size_co_)
-	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -173,8 +173,8 @@ obj_ create_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_
 
 obj_ from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper)
 {
-	obj_ t0_;
 	extern obj_ new_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper);
+	obj_ t0_;
 	UsingClass_(SmallStringBuilder__Compiler)
 
 		{
@@ -188,13 +188,13 @@ obj_ from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ s
 
 obj_ grow_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ new_size)
 {
+	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 2)
 	DefineInt_(1, 2)
 	UsingMethod_(_st_) UsingMethod_(_lt_) UsingMethod_(buffer) UsingMethod_(buffer_co_) UsingMethod_(capacity) UsingMethod_(capacity_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(size)
-	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -261,13 +261,13 @@ obj_ size_co___SmallStringBuilder__Compiler(obj_ this_, obj_ value)
 
 obj_ string__SmallStringBuilder__Compiler(obj_ this_)
 {
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(_pl_) UsingMethod_(buffer) UsingMethod_(size)
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{

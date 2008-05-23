@@ -30,6 +30,11 @@ obj_ create_co___CokeStatement__Compiler(obj_ this_, obj_ lines)
 
 obj_ jolt_expression__CokeStatement__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___CokeLexer__Compiler(obj_ this_, obj_ lines);
+	UsingSym_(nil)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(begin)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -41,11 +46,6 @@ obj_ jolt_expression__CokeStatement__Compiler(obj_ this_)
 	DefineInt_(4, 1)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(first_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(next_expr)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___CokeLexer__Compiler(obj_ this_, obj_ lines);
-	UsingSym_(nil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(begin)
 	UsingClass_(List__Standard)
 	UsingClass_(Expression)
 	UsingClass_(CokeLexer__Compiler)

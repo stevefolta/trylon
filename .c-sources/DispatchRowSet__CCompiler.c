@@ -28,11 +28,11 @@ obj_ Node__DispatchRowSet__CCompiler__accessor_(obj_ this_)
 
 obj_ add_co___DispatchRowSet__CCompiler(obj_ this_, obj_ row)
 {
+	extern obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(insert_co_) UsingMethod_(root) UsingMethod_(root_co_)
-	extern obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row);
 	UsingClass_(Node__DispatchRowSet__CCompiler)
 
 		{
@@ -71,10 +71,10 @@ obj_ create__DispatchRowSet__CCompiler(obj_ this_)
 
 obj_ iterator__DispatchRowSet__CCompiler(obj_ this_)
 {
+	extern obj_ new_co___Iterator__DispatchRowSet__CCompiler(obj_ this_, obj_ root);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(root)
-	extern obj_ new_co___Iterator__DispatchRowSet__CCompiler(obj_ this_, obj_ root);
 	UsingClass_(Iterator__DispatchRowSet__CCompiler)
 
 		{

@@ -56,10 +56,10 @@ obj_ add_member_co___TupleExpression__Compiler(obj_ this_, obj_ member)
 
 obj_ create__TupleExpression__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(members_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -74,6 +74,11 @@ obj_ create__TupleExpression__Compiler(obj_ this_)
 
 obj_ emit_code_co___TupleExpression__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new_co___IntLiteral__Compiler(obj_ this_, obj_ value);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___IntLiteral__Compiler(obj_ this_, obj_ value);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -96,11 +101,6 @@ obj_ emit_code_co___TupleExpression__Compiler(obj_ this_, obj_ builder)
 	DefineString_(7, ";")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_extern_declaration_co_) UsingMethod_(add_line_co_) UsingMethod_(add_co_) UsingMethod_(append_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(get_standard_class_co_) UsingMethod_(get_temporary) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(is_literal) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(results) UsingMethod_(results_co_) UsingMethod_(size_result) UsingMethod_(size_result_co_) UsingMethod_(string) UsingMethod_(supports_only_literals) UsingMethod_(tuple_literals) UsingMethod_(using_proto_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___IntLiteral__Compiler(obj_ this_, obj_ value);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___IntLiteral__Compiler(obj_ this_, obj_ value);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(IntLiteral__Compiler)
@@ -204,6 +204,10 @@ obj_ emit_code_co___TupleExpression__Compiler(obj_ this_, obj_ builder)
 
 obj_ emit_declaration_co___TupleExpression__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -219,10 +223,6 @@ obj_ emit_declaration_co___TupleExpression__Compiler(obj_ this_, obj_ stream)
 	DefineString_(4, ", ")
 	DefineString_(5, " };\n")
 	UsingMethod_(access) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(results) UsingMethod_(size_result) UsingMethod_(string) UsingMethod_(write_all_co_) UsingMethod_(write_co_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -302,13 +302,13 @@ obj_ index_co___TupleExpression__Compiler(obj_ this_, obj_ value)
 
 obj_ interpreted__TupleExpression__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 0)
 	DefineInt_(1, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(interpreted) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(num_items)
-	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
 	UsingClass_(Tuple__Standard)
 
 		{
@@ -366,6 +366,8 @@ obj_ is_literal__TupleExpression__Compiler(obj_ this_)
 
 obj_ jolt_expression__TupleExpression__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(trylon_tuple)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -375,8 +377,6 @@ obj_ jolt_expression__TupleExpression__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(members)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_tuple)
 	UsingClass_(Expression)
 
 		{
@@ -477,6 +477,8 @@ obj_ size_result_co___TupleExpression__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_co___TupleExpression__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(trylon_tuple)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -486,8 +488,6 @@ obj_ translate_co___TupleExpression__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(2, 1)
 	DefineInt_(3, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(translateExpression_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_tuple)
 	UsingClass_(Expression)
 
 		{

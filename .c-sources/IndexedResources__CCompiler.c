@@ -37,11 +37,11 @@ obj_ add_co___IndexedResources__CCompiler(obj_ this_, obj_ resource)
 
 obj_ create__IndexedResources__CCompiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 0)
 	UsingMethod_(next_index_co_) UsingMethod_(resources_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{

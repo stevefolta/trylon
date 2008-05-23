@@ -134,12 +134,12 @@ obj_ bitmap_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ value)
 
 obj_ create__ExpandoBitmap__CCompiler(obj_ this_)
 {
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 64)
 	UsingMethod_(bitmap_co_) UsingMethod_(growth_increment) UsingMethod_(growth_increment_co_) UsingMethod_(num_bytes) UsingMethod_(num_bytes_co_)
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{
@@ -158,11 +158,11 @@ obj_ create__ExpandoBitmap__CCompiler(obj_ this_)
 
 obj_ expand_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ needed_num_bytes)
 {
+	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(bitmap) UsingMethod_(bitmap_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(growth_increment) UsingMethod_(num_bytes) UsingMethod_(num_bytes_co_)
-	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	UsingClass_(BytePtr__Standard)
 
 		{

@@ -80,6 +80,9 @@ obj_ dict_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
 
 obj_ emit_declaration_on_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ stream)
 {
+	UsingSym_(nil)
+	UsingSym_(nil)
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -103,9 +106,6 @@ obj_ emit_declaration_on_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj
 	DefineString_(6, ", ")
 	DefineString_(7, ")\n")
 	UsingMethod_(access) UsingMethod_(dict) UsingMethod_(emit_declaration_on_co_) UsingMethod_(index) UsingMethod_(key) UsingMethod_(left) UsingMethod_(level) UsingMethod_(node_index) UsingMethod_(right) UsingMethod_(string) UsingMethod_(value) UsingMethod_(write_all_co_)
-	UsingSym_(nil)
-	UsingSym_(nil)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 
 		{
 		obj_ left_access, right_access;

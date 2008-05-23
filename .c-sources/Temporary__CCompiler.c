@@ -50,6 +50,7 @@ obj_ create_co___Temporary__CCompiler(obj_ this_, obj_ index)
 
 obj_ emit_declaration_co___Temporary__CCompiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -57,7 +58,6 @@ obj_ emit_declaration_co___Temporary__CCompiler(obj_ this_, obj_ stream)
 	DefineString_(0, "\tobj_ ")
 	DefineString_(1, ";\n")
 	UsingMethod_(name) UsingMethod_(write_all_co_)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 
 		{
 		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(0));

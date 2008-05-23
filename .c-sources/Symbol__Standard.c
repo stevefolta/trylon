@@ -132,13 +132,13 @@ obj_ intern__Symbol__Standard(obj_ this_)
 
 obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name)
 {
+	extern obj_ new__BuiltInSymbols__Symbol__CImplementation__Standard(obj_ this_);
+	extern obj_ new__Dictionary__Standard(obj_ this_);
+	extern obj_ new_co_to_co___Symbol__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(built_in_table) UsingMethod_(built_in_table_co_) UsingMethod_(dynamic_table) UsingMethod_(dynamic_table_co_) UsingMethod_(start) UsingMethod_(stopper)
-	extern obj_ new__BuiltInSymbols__Symbol__CImplementation__Standard(obj_ this_);
-	extern obj_ new__Dictionary__Standard(obj_ this_);
-	extern obj_ new_co_to_co___Symbol__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(BuiltInSymbols__Symbol__CImplementation__Standard)
 	UsingClass_(Symbol__Standard)

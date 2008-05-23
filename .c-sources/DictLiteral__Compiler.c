@@ -64,14 +64,14 @@ obj_ at_co_put_co___DictLiteral__Compiler(obj_ this_, obj_ key, obj_ value)
 
 obj_ build_results_co_builder_co___DictLiteral__Compiler(obj_ this_, obj_ node, obj_ builder)
 {
+	extern obj_ new_co_in_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ node_index, obj_ dict);
+	extern obj_ new_co___StringLiteral__Compiler(obj_ this_, obj_ value);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	DefineInt_(0, 1)
 	UsingMethod_(_pl_) UsingMethod_(build_results_co_builder_co_) UsingMethod_(emit_code_co_) UsingMethod_(key) UsingMethod_(key_co_) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(level) UsingMethod_(level_co_) UsingMethod_(next_node_index) UsingMethod_(next_node_index_co_) UsingMethod_(right) UsingMethod_(right_co_) UsingMethod_(value) UsingMethod_(value_co_)
-	extern obj_ new_co_in_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ node_index, obj_ dict);
-	extern obj_ new_co___StringLiteral__Compiler(obj_ this_, obj_ value);
 	UsingClass_(StringLiteral__Compiler)
 	UsingClass_(ResultsNode__DictLiteral__Compiler)
 
@@ -118,10 +118,10 @@ obj_ build_results_co_builder_co___DictLiteral__Compiler(obj_ this_, obj_ node, 
 
 obj_ create__DictLiteral__Compiler(obj_ this_)
 {
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(dict_co_)
-	extern obj_ new__Dictionary__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 
 		{
@@ -149,6 +149,7 @@ obj_ dict_co___DictLiteral__Compiler(obj_ this_, obj_ value)
 
 obj_ emit_code_co___DictLiteral__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -157,7 +158,6 @@ obj_ emit_code_co___DictLiteral__Compiler(obj_ this_, obj_ builder)
 	DefineString_(0, "Dictionary")
 	UsingMethod_(add_co_) UsingMethod_(build_results_co_builder_co_) UsingMethod_(dict) UsingMethod_(dict_literals) UsingMethod_(get_standard_class_co_) UsingMethod_(next_node_index_co_) UsingMethod_(results_co_) UsingMethod_(root) UsingMethod_(using_proto_co_)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	UsingClass_(LiteralResult__CCompiler)
 
 		{
@@ -183,6 +183,7 @@ obj_ emit_code_co___DictLiteral__Compiler(obj_ this_, obj_ builder)
 
 obj_ emit_declaration_co___DictLiteral__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -198,7 +199,6 @@ obj_ emit_declaration_co___DictLiteral__Compiler(obj_ this_, obj_ stream)
 	DefineString_(2, ", ")
 	DefineString_(3, ")\n")
 	UsingMethod_(access) UsingMethod_(dict) UsingMethod_(emit_declaration_on_co_) UsingMethod_(index) UsingMethod_(num_items) UsingMethod_(results) UsingMethod_(string) UsingMethod_(write_all_co_)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 
 		{
 		t0_ = Call_(results, this_);
@@ -227,6 +227,9 @@ obj_ emit_declaration_co___DictLiteral__Compiler(obj_ this_, obj_ stream)
 
 obj_ emit_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 {
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
+	UsingSym_(trylon_dict_node)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -236,9 +239,6 @@ obj_ emit_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 	obj_ t6_;
 	obj_ t7_;
 	UsingMethod_(emit_node_co_) UsingMethod_(jolt_expression) UsingMethod_(key) UsingMethod_(left) UsingMethod_(right) UsingMethod_(value)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
-	UsingSym_(trylon_dict_node)
 	UsingClass_(Expression)
 
 		{
@@ -277,12 +277,12 @@ obj_ index_co___DictLiteral__Compiler(obj_ this_, obj_ value)
 
 obj_ interpreted__DictLiteral__Compiler(obj_ this_)
 {
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(at_co_put_co_) UsingMethod_(current_item) UsingMethod_(dict) UsingMethod_(go_forward) UsingMethod_(interpreted) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(pairs) UsingMethod_(value)
-	extern obj_ new__Dictionary__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 
 		{
@@ -320,6 +320,8 @@ obj_ is_literal__DictLiteral__Compiler(obj_ this_)
 
 obj_ jolt_expression__DictLiteral__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(trylon_dict)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -327,8 +329,6 @@ obj_ jolt_expression__DictLiteral__Compiler(obj_ this_)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(dict) UsingMethod_(emit_node_co_) UsingMethod_(num_items) UsingMethod_(root)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(trylon_dict)
 	UsingClass_(Expression)
 
 		{
@@ -432,6 +432,9 @@ obj_ results_co___DictLiteral__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 {
+	UsingSym_(nil)
+	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
+	UsingSym_(trylon_dict_node)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -440,9 +443,6 @@ obj_ translate_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 	obj_ t5_;
 	obj_ t6_;
 	UsingMethod_(emit_node_co_) UsingMethod_(key) UsingMethod_(left) UsingMethod_(right) UsingMethod_(value)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
-	UsingSym_(trylon_dict_node)
 	UsingClass_(Expression)
 
 		{
@@ -469,6 +469,8 @@ obj_ translate_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 
 obj_ translate_co___DictLiteral__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(trylon_dict)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -476,8 +478,6 @@ obj_ translate_co___DictLiteral__Compiler(obj_ this_, obj_ compiler)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(dict) UsingMethod_(num_items) UsingMethod_(root) UsingMethod_(translate_node_co_) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(trylon_dict)
 	UsingClass_(Expression)
 
 		{

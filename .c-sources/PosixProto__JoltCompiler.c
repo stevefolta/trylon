@@ -37,6 +37,8 @@ obj_ PosixProtoFunction__PosixProto__JoltCompiler__accessor_(obj_ this_)
 
 obj_ create_co_parent_co_directory_co___PosixProto__JoltCompiler(obj_ this_, obj_ name, obj_ parent, obj_ directory)
 {
+	obj_ create_co_parent_co___CompiledProto__Compiler(obj_, obj_, obj_);
+	extern obj_ new_co___PosixProtoFunction__PosixProto__JoltCompiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -44,8 +46,6 @@ obj_ create_co_parent_co_directory_co___PosixProto__JoltCompiler(obj_ this_, obj
 	DefineInt_(1, 3)
 	DefineString_(0, ".so")
 	UsingMethod_(_) UsingMethod_(add_directory_co_) UsingMethod_(at_co_put_co_) UsingMethod_(current_item) UsingMethod_(ends_with_co_) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(length) UsingMethod_(names) UsingMethod_(substr_co_length_co_)
-	obj_ create_co_parent_co___CompiledProto__Compiler(obj_, obj_, obj_);
-	extern obj_ new_co___PosixProtoFunction__PosixProto__JoltCompiler(obj_ this_, obj_ name);
 	UsingClass_(PosixProtoFunction__PosixProto__JoltCompiler)
 
 		{

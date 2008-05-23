@@ -68,9 +68,9 @@ obj_ interpreted__ContinueStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__ContinueStatement__Compiler(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ with_co___Expression(obj_ this_, obj_ value);
 	UsingSym_(fixed_continue)
+	obj_ t0_;
 	UsingClass_(Expression)
 
 		{

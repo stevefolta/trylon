@@ -74,16 +74,16 @@ obj_ interpreted__ReturnStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__ReturnStatement__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(comment) UsingMethod_(jolt_expression) UsingMethod_(value)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
 	UsingSym_(fixed_return)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
 	UsingSym_(comment)
 	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
 	UsingSym_(begin)
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	UsingMethod_(comment) UsingMethod_(jolt_expression) UsingMethod_(value)
 	UsingClass_(Expression)
 
 		{
@@ -140,11 +140,11 @@ obj_ prepare_to_emit__ReturnStatement__Compiler(obj_ this_)
 
 obj_ translate_co___ReturnStatement__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(fixed_return)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(translateExpression_co_) UsingMethod_(value)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(fixed_return)
 	UsingClass_(Expression)
 
 		{

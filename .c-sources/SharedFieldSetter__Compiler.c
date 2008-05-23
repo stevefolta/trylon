@@ -16,6 +16,7 @@ struct object SharedFieldSetter__Compiler =
 
 obj_ c_name__SharedFieldSetter__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -24,7 +25,6 @@ obj_ c_name__SharedFieldSetter__Compiler(obj_ this_)
 	obj_ t5_;
 	DefineString_(0, "__")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -79,6 +79,7 @@ obj_ create_co_on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ field,
 
 obj_ emit_c_call_co_builder_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -97,7 +98,6 @@ obj_ emit_c_call_co_builder_co___SharedFieldSetter__Compiler(obj_ this_, obj_ ar
 	DefineString_(2, ", ")
 	DefineString_(3, ");")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_line_co_) UsingMethod_(c_name) UsingMethod_(emit_code_co_) UsingMethod_(field) UsingMethod_(first_item) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(using_shared_field_co_on_proto_co_)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -130,6 +130,8 @@ obj_ emit_c_call_co_builder_co___SharedFieldSetter__Compiler(obj_ this_, obj_ ar
 
 obj_ emit_c_function_on_co___SharedFieldSetter__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -145,8 +147,6 @@ obj_ emit_c_function_on_co___SharedFieldSetter__Compiler(obj_ this_, obj_ stream
 	DefineString_(4, "\treturn value;\n")
 	DefineString_(5, "}\n")
 	UsingMethod_(c_name) UsingMethod_(c_signature) UsingMethod_(field) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -177,6 +177,10 @@ obj_ emit_c_function_on_co___SharedFieldSetter__Compiler(obj_ this_, obj_ stream
 
 obj_ emit_call_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments)
 {
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -189,10 +193,6 @@ obj_ emit_call_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments)
 	obj_ t9_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(field) UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -294,6 +294,10 @@ obj_ on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_call_co_compiler_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -305,10 +309,6 @@ obj_ translate_call_co_compiler_co___SharedFieldSetter__Compiler(obj_ this_, obj
 	obj_ t8_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(field) UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

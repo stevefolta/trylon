@@ -29,11 +29,11 @@ obj_ create_co___BoolLiteral__Compiler(obj_ this_, obj_ value)
 
 obj_ emit_code_co___BoolLiteral__Compiler(obj_ this_, obj_ builder)
 {
-	obj_ t0_;
-	UsingMethod_(value)
 	UsingSym_(true_ul_)
 	UsingSym_(nil)
 	extern obj_ new_co_is_constant_co___NameResult__CCompiler(obj_ this_, obj_ name, obj_ is_constant);
+	obj_ t0_;
+	UsingMethod_(value)
 	UsingClass_(NameResult__CCompiler)
 
 		{
@@ -85,10 +85,10 @@ obj_ is_literal__BoolLiteral__Compiler(obj_ this_)
 
 obj_ jolt_expression__BoolLiteral__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	UsingMethod_(value)
 	UsingSym_(true)
 	UsingSym_(false)
+	obj_ t0_;
+	UsingMethod_(value)
 
 		{
 		t0_ = Call_(value, this_);

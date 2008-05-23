@@ -63,12 +63,12 @@ obj_ back_up__StringBytesIterator__Standard(obj_ this_)
 
 obj_ copy__StringBytesIterator__Standard(obj_ this_)
 {
+	extern obj_ new_co_to_co_string_co___StringBytesIterator__Standard(obj_ this_, obj_ start, obj_ stopper, obj_ string);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(start) UsingMethod_(stopper) UsingMethod_(string)
-	extern obj_ new_co_to_co_string_co___StringBytesIterator__Standard(obj_ this_, obj_ start, obj_ stopper, obj_ string);
 	UsingClass_(StringBytesIterator__Standard)
 
 		{
@@ -207,11 +207,11 @@ obj_ new_co_to_co_string_co___StringBytesIterator__Standard(obj_ this_, obj_ sta
 
 obj_ remainder__StringBytesIterator__Standard(obj_ this_)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(start) UsingMethod_(stopper)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{

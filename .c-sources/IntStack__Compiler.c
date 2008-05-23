@@ -81,11 +81,11 @@ obj_ pop__IntStack__Compiler(obj_ this_)
 
 obj_ push_co___IntStack__Compiler(obj_ this_, obj_ value)
 {
+	extern obj_ new_co_next_co___Cell__IntStack__Compiler(obj_ this_, obj_ value, obj_ next);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(top_cell) UsingMethod_(top_cell_co_)
-	extern obj_ new_co_next_co___Cell__IntStack__Compiler(obj_ this_, obj_ value, obj_ next);
 	UsingClass_(Cell__IntStack__Compiler)
 
 		{

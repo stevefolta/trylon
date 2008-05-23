@@ -132,11 +132,6 @@ obj_ code_co___MethodBuilder__CCompiler(obj_ this_, obj_ value)
 
 obj_ create_co___MethodBuilder__CCompiler(obj_ this_, obj_ function)
 {
-	obj_ t0_;
-	obj_ t1_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 1)
-	UsingMethod_(code_co_) UsingMethod_(dict_literals_co_) UsingMethod_(extern_declarations_co_) UsingMethod_(float_literals_co_) UsingMethod_(function_co_) UsingMethod_(indent_level_co_) UsingMethod_(int_literals_co_) UsingMethod_(loop_stack_co_) UsingMethod_(loops_co_) UsingMethod_(next_temporary_num_co_) UsingMethod_(string_literals_co_) UsingMethod_(temporaries_co_) UsingMethod_(tuple_literals_co_) UsingMethod_(used_classes_co_) UsingMethod_(used_selectors_co_) UsingMethod_(used_shared_fields_co_)
 	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
 	extern obj_ new__IndexedResources__CCompiler(obj_ this_);
@@ -150,6 +145,11 @@ obj_ create_co___MethodBuilder__CCompiler(obj_ this_, obj_ function)
 	extern obj_ new__Dictionary__Standard(obj_ this_);
 	extern obj_ new__ObjectMap__Standard(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	DefineInt_(0, 0)
+	DefineInt_(1, 1)
+	UsingMethod_(code_co_) UsingMethod_(dict_literals_co_) UsingMethod_(extern_declarations_co_) UsingMethod_(float_literals_co_) UsingMethod_(function_co_) UsingMethod_(indent_level_co_) UsingMethod_(int_literals_co_) UsingMethod_(loop_stack_co_) UsingMethod_(loops_co_) UsingMethod_(next_temporary_num_co_) UsingMethod_(string_literals_co_) UsingMethod_(temporaries_co_) UsingMethod_(tuple_literals_co_) UsingMethod_(used_classes_co_) UsingMethod_(used_selectors_co_) UsingMethod_(used_shared_fields_co_)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(StringBuilder__Standard)
@@ -225,6 +225,10 @@ obj_ dict_literals_co___MethodBuilder__CCompiler(obj_ this_, obj_ value)
 
 obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -234,27 +238,39 @@ obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 	DefineInt_(1, 5)
 	DefineString_(0, "{")
 	DefineString_(1, "\t")
-	DefineString_(2, " ")
-	DefineString_(3, "UsingMethod_(")
-	DefineString_(4, ")")
-	DefineString_(5, "\tUsingSharedField_(")
-	DefineString_(6, ", ")
-	DefineString_(7, ") ")
-	DefineString_(8, "\t")
+	DefineString_(2, "\t")
+	DefineString_(3, " ")
+	DefineString_(4, "UsingMethod_(")
+	DefineString_(5, ")")
+	DefineString_(6, "\tUsingSharedField_(")
+	DefineString_(7, ", ")
+	DefineString_(8, ") ")
 	DefineString_(9, "\tUsingClass_(")
 	DefineString_(10, ")")
 	DefineString_(11, "\treturn nil;")
 	DefineString_(12, "}")
 	UsingMethod_(at_co_) UsingMethod_(c_name) UsingMethod_(code) UsingMethod_(current_item) UsingMethod_(dict_literals) UsingMethod_(emit_declarations_on_co_) UsingMethod_(extern_declarations) UsingMethod_(float_literals) UsingMethod_(go_forward) UsingMethod_(int_literals) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(keys) UsingMethod_(name) UsingMethod_(string) UsingMethod_(string_literals) UsingMethod_(temporaries) UsingMethod_(tuple_literals) UsingMethod_(used_classes) UsingMethod_(used_selectors) UsingMethod_(used_shared_fields) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
 	UsingClass_(CCompiler)
 
 		{
 		t0_ = Call_(write_line_co_, stream, Str_(0));
 		
+		/* External declarations. */
+		/* Includes symbol declarations, so declare these before Tuples/Dicts. */
+		t0_ = Call_(extern_declarations, this_);
+		t1_ = Call_(is_empty, t0_);
+		t2_ = Not_(t1_);
+		if (t2_)
+			{
+			t0_ = Call_(extern_declarations, this_);
+			ForStart_(0, t0_, declaration)
+				{
+				t0_ = Call_(write_co_, stream, Str_(1));
+				t0_ = Call_(write_line_co_, stream, declaration);
+				
+				}
+			ForEnd_(0)
+			}
 		/* Declarations. */
 		t0_ = Call_(temporaries, this_);
 		t1_ = Call_(emit_declarations_on_co_, t0_, stream);
@@ -277,28 +293,28 @@ obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 		if (t2_)
 			{
 			obj_ done_one;
-			t0_ = Call_(write_co_, stream, Str_(1));
+			t0_ = Call_(write_co_, stream, Str_(2));
 			done_one = nil;
 			t0_ = Call_(used_selectors, this_);
 			t1_ = Call_(keys, t0_);
-			ForStart_(0, t1_, name)
+			ForStart_(1, t1_, name)
 				{
 				if (done_one)
 					{
-					t0_ = Call_(write_co_, stream, Str_(2));
+					t0_ = Call_(write_co_, stream, Str_(3));
 					}
 				else
 					{
 					done_one = true_;
 					}
 				t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(0));
-				t0_->fields[1] = Str_(3);
+				t0_->fields[1] = Str_(4);
 				t1_ = mangle_name_co___CCompiler(Proto_(CCompiler), name);
 				t0_->fields[2] = t1_;
-				t0_->fields[3] = Str_(4);
+				t0_->fields[3] = Str_(5);
 				t2_ = Call_(write_all_co_, stream, t0_);
 				}
-			ForEnd_(0)
+			ForEnd_(1)
 			t0_ = Call_(write_line, stream);
 			
 			}
@@ -310,41 +326,26 @@ obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 			{
 			t0_ = Call_(used_shared_fields, this_);
 			t1_ = Call_(keys, t0_);
-			ForStart_(1, t1_, field)
+			ForStart_(2, t1_, field)
 				{
 				obj_ on_proto;
 				t0_ = Call_(used_shared_fields, this_);
 				t1_ = Call_(at_co_, t0_, field);
 				on_proto = t1_;
 				t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(1));
-				t0_->fields[1] = Str_(5);
+				t0_->fields[1] = Str_(6);
 				t1_ = Call_(name, field);
 				t2_ = mangle_name_co___CCompiler(Proto_(CCompiler), t1_);
 				t0_->fields[2] = t2_;
-				t0_->fields[3] = Str_(6);
+				t0_->fields[3] = Str_(7);
 				t3_ = Call_(c_name, on_proto);
 				t0_->fields[4] = t3_;
-				t0_->fields[5] = Str_(7);
+				t0_->fields[5] = Str_(8);
 				t4_ = Call_(write_all_co_, stream, t0_);
 				}
-			ForEnd_(1)
+			ForEnd_(2)
 			t0_ = Call_(write_line, stream);
 			
-			}
-		/* External declarations. */
-		t0_ = Call_(extern_declarations, this_);
-		t1_ = Call_(is_empty, t0_);
-		t2_ = Not_(t1_);
-		if (t2_)
-			{
-			t0_ = Call_(extern_declarations, this_);
-			ForStart_(2, t0_, declaration)
-				{
-				t0_ = Call_(write_co_, stream, Str_(8));
-				t0_ = Call_(write_line_co_, stream, declaration);
-				
-				}
-			ForEnd_(2)
 			}
 		/* Used classes. */
 		t0_ = Call_(used_classes, this_);
@@ -430,6 +431,7 @@ obj_ function_co___MethodBuilder__CCompiler(obj_ this_, obj_ value)
 
 obj_ get_temporary__MethodBuilder__CCompiler(obj_ this_)
 {
+	extern obj_ new_co___Temporary__CCompiler(obj_ this_, obj_ index);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -437,7 +439,6 @@ obj_ get_temporary__MethodBuilder__CCompiler(obj_ this_)
 	DefineInt_(0, 1)
 	DefineInt_(1, 1)
 	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_gt_) UsingMethod_(add_co_) UsingMethod_(next_index) UsingMethod_(next_temporary_num) UsingMethod_(next_temporary_num_co_) UsingMethod_(temporaries)
-	extern obj_ new_co___Temporary__CCompiler(obj_ this_, obj_ index);
 	UsingClass_(Temporary__CCompiler)
 
 		{

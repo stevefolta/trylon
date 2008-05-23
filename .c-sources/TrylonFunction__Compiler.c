@@ -13,6 +13,8 @@ struct object TrylonFunction__Compiler =
 
 obj_ c_signature_co_arguments_co___TrylonFunction__Compiler(obj_ this_, obj_ c_name, obj_ arguments)
 {
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -21,8 +23,6 @@ obj_ c_signature_co_arguments_co___TrylonFunction__Compiler(obj_ this_, obj_ c_n
 	DefineString_(2, ", obj_ ")
 	DefineString_(3, ")")
 	UsingMethod_(_pl_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(string)
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 	UsingClass_(StringBuilder__Standard)
 
@@ -58,8 +58,8 @@ obj_ c_signature_co_arguments_co___TrylonFunction__Compiler(obj_ this_, obj_ c_n
 
 obj_ emit_c_call_co_builder_co___TrylonFunction__Compiler(obj_ this_, obj_ arguments, obj_ builder)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -84,8 +84,8 @@ obj_ emit_c_function_on_co___TrylonFunction__Compiler(obj_ this_, obj_ stream)
 
 obj_ emit_call_co___TrylonFunction__Compiler(obj_ this_, obj_ arguments)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -110,6 +110,8 @@ obj_ emit_code__TrylonFunction__Compiler(obj_ this_)
 
 obj_ emit_proto_send_co_arguments_co_builder_co___TrylonFunction__Compiler(obj_ this_, obj_ proto, obj_ arguments, obj_ builder)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -122,8 +124,6 @@ obj_ emit_proto_send_co_arguments_co_builder_co___TrylonFunction__Compiler(obj_ 
 	DefineString_(5, ", ")
 	DefineString_(6, ");")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_extern_declaration_co_) UsingMethod_(add_line_co_) UsingMethod_(add_co_) UsingMethod_(append_co_) UsingMethod_(c_name) UsingMethod_(c_signature) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(get_temporary) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(string) UsingMethod_(using_class_co_)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 	UsingClass_(StringBuilder__Standard)
 
@@ -193,8 +193,8 @@ obj_ has_code__TrylonFunction__Compiler(obj_ this_)
 
 obj_ interpret_call_with_co___TrylonFunction__Compiler(obj_ this_, obj_ arguments)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{
@@ -207,11 +207,11 @@ obj_ interpret_call_with_co___TrylonFunction__Compiler(obj_ this_, obj_ argument
 
 obj_ interpret_proto_send_of_co_to_co_with_co___TrylonFunction__Compiler(obj_ this_, obj_ name, obj_ proto, obj_ arguments)
 {
+	extern obj_ new_co___PrimitiveObject__Interpreter(obj_ this_, obj_ object);
+	extern obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(proto)
-	extern obj_ new_co___PrimitiveObject__Interpreter(obj_ this_, obj_ object);
-	extern obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	UsingClass_(Interpreter)
 	UsingClass_(PrimitiveObject__Interpreter)
 

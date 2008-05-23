@@ -120,6 +120,12 @@ obj_ is_nil_co___NilTest__Compiler(obj_ this_, obj_ value)
 
 obj_ jolt_expression__NilTest__Compiler(obj_ this_)
 {
+	UsingSym_(isNil)
+	UsingSym_(notNil)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -128,12 +134,6 @@ obj_ jolt_expression__NilTest__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 2)
 	UsingMethod_(at_co_put_co_) UsingMethod_(is_nil) UsingMethod_(jolt_expression) UsingMethod_(object)
-	UsingSym_(isNil)
-	UsingSym_(notNil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -201,6 +201,12 @@ obj_ prepare_to_emit__NilTest__Compiler(obj_ this_)
 
 obj_ translate_co___NilTest__Compiler(obj_ this_, obj_ compiler)
 {
+	UsingSym_(isNil)
+	UsingSym_(notNil)
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 3)
@@ -208,12 +214,6 @@ obj_ translate_co___NilTest__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(2, 1)
 	DefineInt_(3, 2)
 	UsingMethod_(at_co_put_co_) UsingMethod_(is_nil) UsingMethod_(object) UsingMethod_(translateExpression_co_)
-	UsingSym_(isNil)
-	UsingSym_(notNil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

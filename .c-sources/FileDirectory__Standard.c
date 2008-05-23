@@ -31,6 +31,8 @@ obj_ Iterator__FileDirectory__Standard__accessor_(obj_ this_)
 
 obj_ at_co___FileDirectory__Standard(obj_ this_, obj_ name)
 {
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -38,8 +40,6 @@ obj_ at_co___FileDirectory__Standard(obj_ this_, obj_ name)
 	DefineString_(1, "/")
 	DefineString_(2, "/")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(entry_is_directory_co_) UsingMethod_(path)
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(File__Standard)
 
@@ -228,10 +228,10 @@ int result = stat(entryPathStr, &statBuf);
 
 obj_ iterator__FileDirectory__Standard(obj_ this_)
 {
+	extern obj_ new_co___Iterator__FileDirectory__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(path)
-	extern obj_ new_co___Iterator__FileDirectory__Standard(obj_ this_, obj_ path);
 	UsingClass_(Iterator__FileDirectory__Standard)
 
 		{
@@ -249,10 +249,10 @@ obj_ iterator__FileDirectory__Standard(obj_ this_)
 
 obj_ names__FileDirectory__Standard(obj_ this_)
 {
+	extern obj_ new_co___Iterator__FileDirectory__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(path)
-	extern obj_ new_co___Iterator__FileDirectory__Standard(obj_ this_, obj_ path);
 	UsingClass_(Iterator__FileDirectory__Standard)
 
 		{

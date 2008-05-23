@@ -62,6 +62,7 @@ obj_ create_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ th
 
 obj_ emit_code_co___ForStatement__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -83,7 +84,6 @@ obj_ emit_code_co___ForStatement__Compiler(obj_ this_, obj_ builder)
 	DefineString_(8, "ForEnd_(")
 	DefineString_(9, ")")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_line_co_) UsingMethod_(body) UsingMethod_(calling_method_co_) UsingMethod_(collection) UsingMethod_(cur_loop_index) UsingMethod_(emit_code_co_) UsingMethod_(end_loop) UsingMethod_(local) UsingMethod_(name) UsingMethod_(reset_temporaries) UsingMethod_(start_loop_co_) UsingMethod_(string)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -196,6 +196,8 @@ obj_ interpreted__ForStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__ForStatement__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(trylon_for)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -205,8 +207,6 @@ obj_ jolt_expression__ForStatement__Compiler(obj_ this_)
 	obj_ t6_;
 	obj_ t7_;
 	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(local) UsingMethod_(name)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(trylon_for)
 	UsingClass_(Expression)
 
 		{
@@ -269,6 +269,8 @@ obj_ prepare_to_emit__ForStatement__Compiler(obj_ this_)
 
 obj_ translate_co___ForStatement__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
+	UsingSym_(trylon_for)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -276,8 +278,6 @@ obj_ translate_co___ForStatement__Compiler(obj_ this_, obj_ compiler)
 	obj_ t4_;
 	obj_ t5_;
 	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(intern) UsingMethod_(local) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(trylon_for)
 	UsingClass_(Expression)
 
 		{

@@ -13,9 +13,9 @@ struct object True__Standard =
 
 obj_ debug_write__True__Standard(obj_ this_)
 {
+	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	obj_ t0_;
 	DefineString_(0, "true")
-	extern obj_ print_line_co___Standard(obj_ this_, obj_ line);
 	UsingClass_(Standard)
 
 		{

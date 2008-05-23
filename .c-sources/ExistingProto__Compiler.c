@@ -18,13 +18,13 @@ struct object ExistingProto__Compiler =
 
 obj_ add_field_co___ExistingProto__Compiler(obj_ this_, obj_ field)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, ":")
 	DefineString_(1, "You can't add fields to pre-existing objects.")
 	UsingMethod_(_pl_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -57,6 +57,7 @@ obj_ add_field_co___ExistingProto__Compiler(obj_ this_, obj_ field)
 
 obj_ add_function_co___ExistingProto__Compiler(obj_ this_, obj_ function)
 {
+	extern obj_ new_co_on_proto_co___NewFunction__Compiler(obj_ this_, obj_ creator, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -65,7 +66,6 @@ obj_ add_function_co___ExistingProto__Compiler(obj_ this_, obj_ function)
 	DefineString_(1, "create:")
 	DefineString_(2, "create-")
 	UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(new_functions) UsingMethod_(starts_with_co_)
-	extern obj_ new_co_on_proto_co___NewFunction__Compiler(obj_ this_, obj_ creator, obj_ on_proto);
 	UsingClass_(NewFunction__Compiler)
 	UsingClass_(CompiledFunction__Compiler)
 
@@ -141,6 +141,9 @@ obj_ add_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name)
 
 obj_ add_proto_co_directory_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ directory)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -154,9 +157,6 @@ obj_ add_proto_co_directory_co___ExistingProto__Compiler(obj_ this_, obj_ name, 
 	DefineString_(4, "...")
 	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(at_co_put_co_) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name) UsingMethod_(new_functions) UsingMethod_(proto) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(CompiledProto__Compiler)
@@ -212,6 +212,8 @@ obj_ add_proto_co_directory_co___ExistingProto__Compiler(obj_ this_, obj_ name, 
 
 obj_ add_shared_field_co___ExistingProto__Compiler(obj_ this_, obj_ field)
 {
+	extern obj_ new_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
+	extern obj_ new_co_on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -219,8 +221,6 @@ obj_ add_shared_field_co___ExistingProto__Compiler(obj_ this_, obj_ field)
 	obj_ t4_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(name) UsingMethod_(new_functions)
-	extern obj_ new_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
-	extern obj_ new_co_on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ field, obj_ on_proto);
 	UsingClass_(SharedFieldSetter__Compiler)
 	UsingClass_(SharedFieldGetter__Compiler)
 
@@ -259,10 +259,10 @@ obj_ create_co___ExistingProto__Compiler(obj_ this_, obj_ proto)
 
 obj_ create_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto)
 {
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(name_co_) UsingMethod_(new_functions_co_) UsingMethod_(proto_co_)
-	extern obj_ new__Dictionary__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 
 		{
@@ -278,16 +278,16 @@ obj_ create_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ pr
 
 obj_ function_for_co_in_co___ExistingProto__Compiler(obj_ this_, obj_ selector, obj_ proto)
 {
+	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
+	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
+	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 58)
 	DefineInt_(1, 0)
 	UsingMethod_(_nt__eq_) UsingMethod_(_dt_proto) UsingMethod_(_lt_) UsingMethod_(index_of_co_) UsingMethod_(perform_co_) UsingMethod_(responds_to_co_) UsingMethod_(same_as_co_) UsingMethod_(string)
-	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
-	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	UsingClass_(PrimitiveFunction__Compiler)
 	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(ExistingProto__Compiler)
@@ -428,11 +428,11 @@ obj_ is_main_co___ExistingProto__Compiler(obj_ this_, obj_ value)
 
 obj_ lookup_function_co___ExistingProto__Compiler(obj_ this_, obj_ name)
 {
+	UsingSym_(_dt_used_contexts)
+	UsingSym_(_dt_parent_context)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_dt_parent_context) UsingMethod_(_dt_used_contexts) UsingMethod_(at_co_) UsingMethod_(current_item) UsingMethod_(function_for_co_in_co_) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(new_functions) UsingMethod_(proto) UsingMethod_(responds_to_co_)
-	UsingSym_(_dt_used_contexts)
-	UsingSym_(_dt_parent_context)
 
 		{
 		obj_ cur_proto, function, name_selector;
@@ -520,6 +520,9 @@ obj_ lookup_function_co_visited_protos_co___ExistingProto__Compiler(obj_ this_, 
 
 obj_ lookup_instance_function_co___ExistingProto__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
+	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -529,9 +532,6 @@ obj_ lookup_instance_function_co___ExistingProto__Compiler(obj_ this_, obj_ name
 	DefineInt_(1, 65)
 	DefineInt_(2, 90)
 	UsingMethod_(_lt__eq_) UsingMethod_(_gt__eq_) UsingMethod_(at_co_) UsingMethod_(intern) UsingMethod_(new_functions) UsingMethod_(perform_co_) UsingMethod_(proto) UsingMethod_(responds_to_co_)
-	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	UsingClass_(PrimitiveFunction__Compiler)
 	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(ExistingProto__Compiler)
@@ -629,11 +629,11 @@ obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto
 
 obj_ parent__ExistingProto__Compiler(obj_ this_)
 {
+	UsingSym_(_dt_parent_context)
+	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_dt_parent_context) UsingMethod_(_eq__eq_) UsingMethod_(is_main_co_) UsingMethod_(proto) UsingMethod_(responds_to_co_)
-	UsingSym_(_dt_parent_context)
-	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
 	UsingClass_(Main)
 	UsingClass_(ExistingProto__Compiler)
 

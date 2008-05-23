@@ -124,12 +124,12 @@ obj_ jolt_expression__CatchClause__Compiler(obj_ this_)
 
 obj_ lookup_function_co___CatchClause__Compiler(obj_ this_, obj_ name)
 {
+	extern obj_ new__CaughtExceptionFunction__Compiler(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "exception")
 	UsingMethod_(_eq__eq_) UsingMethod_(lookup_function_co_) UsingMethod_(parent)
-	extern obj_ new__CaughtExceptionFunction__Compiler(obj_ this_);
 	UsingClass_(CaughtExceptionFunction__Compiler)
 
 		{

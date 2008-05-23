@@ -65,12 +65,12 @@ obj_ convert_to_setter_call_co___Send__Compiler(obj_ this_, obj_ value)
 
 obj_ copy__Send__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(object)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 
@@ -114,13 +114,13 @@ obj_ create_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, ob
 
 obj_ emit_code_co___Send__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(emit_c_call_co_builder_co_) UsingMethod_(emit_code_co_) UsingMethod_(name) UsingMethod_(object) UsingMethod_(proto_result_function)
-	extern obj_ emit_send_co_to_string_co_with_co_builder_co___CCompiler(obj_ this_, obj_ name, obj_ receiver, obj_ arguments, obj_ builder);
 	UsingClass_(CCompiler)
 
 		{
@@ -154,12 +154,12 @@ obj_ emit_code_co___Send__Compiler(obj_ this_, obj_ builder)
 
 obj_ interpreted__Send__Compiler(obj_ this_)
 {
+	extern obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(arguments) UsingMethod_(name) UsingMethod_(object)
-	extern obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	UsingClass_(Interpreter)
 
 		{
@@ -177,6 +177,10 @@ obj_ interpreted__Send__Compiler(obj_ this_)
 
 obj_ jolt_expression__Send__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -188,10 +192,6 @@ obj_ jolt_expression__Send__Compiler(obj_ this_)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(object)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{
@@ -356,6 +356,10 @@ obj_ proto_result_function_co___Send__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_co___Send__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -367,10 +371,6 @@ obj_ translate_co___Send__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(object) UsingMethod_(translateExpression_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

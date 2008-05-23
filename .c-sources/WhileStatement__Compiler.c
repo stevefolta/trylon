@@ -176,6 +176,8 @@ obj_ interpreted__WhileStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__WhileStatement__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(while)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -187,8 +189,6 @@ obj_ jolt_expression__WhileStatement__Compiler(obj_ this_)
 	DefineInt_(4, 2)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(comment) UsingMethod_(condition) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(jolt_expression)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(while)
 	UsingClass_(Expression)
 
 		{
@@ -260,12 +260,12 @@ obj_ prepare_to_emit__WhileStatement__Compiler(obj_ this_)
 
 obj_ translate_co___WhileStatement__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
+	UsingSym_(while)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(while)
 	UsingClass_(Expression)
 
 		{

@@ -23,9 +23,9 @@ obj_ create__LiteralNil__Compiler(obj_ this_)
 
 obj_ emit_code_co___LiteralNil__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new_co_is_constant_co___NameResult__CCompiler(obj_ this_, obj_ name, obj_ is_constant);
 	obj_ t0_;
 	DefineString_(0, "nil")
-	extern obj_ new_co_is_constant_co___NameResult__CCompiler(obj_ this_, obj_ name, obj_ is_constant);
 	UsingClass_(NameResult__CCompiler)
 
 		{
@@ -97,11 +97,11 @@ obj_ prepare_to_emit__LiteralNil__Compiler(obj_ this_)
 
 obj_ translate_co___LiteralNil__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

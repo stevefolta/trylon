@@ -67,12 +67,12 @@ obj_ character_constant_value_co___Lexer__Compiler(obj_ this_, obj_ text)
 
 obj_ create_co___Lexer__Compiler(obj_ this_, obj_ text)
 {
+	extern obj_ new__IntStack__Compiler(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 0)
 	DefineInt_(1, 0)
 	UsingMethod_(at_line_start_co_) UsingMethod_(bytes) UsingMethod_(char_) UsingMethod_(eof_char_co_) UsingMethod_(indent_stack) UsingMethod_(indent_stack_co_) UsingMethod_(p_co_) UsingMethod_(push_co_) UsingMethod_(unindents_pending_co_)
-	extern obj_ new__IntStack__Compiler(obj_ this_);
 	UsingClass_(IntStack__Compiler)
 
 		{
@@ -136,6 +136,7 @@ obj_ eof_char_co___Lexer__Compiler(obj_ this_, obj_ value)
 
 obj_ first_subblock_line__Lexer__Compiler(obj_ this_)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -143,7 +144,6 @@ obj_ first_subblock_line__Lexer__Compiler(obj_ this_)
 	DefineInt_(0, 10)
 	DefineInt_(1, 13)
 	UsingMethod_(_nt__eq_) UsingMethod_(at_line_start_co_) UsingMethod_(cur_char) UsingMethod_(eof_char) UsingMethod_(go_forward) UsingMethod_(p) UsingMethod_(start)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -214,6 +214,102 @@ obj_ new_co___Lexer__Compiler(obj_ this_, obj_ text)
 
 obj_ next_token__Lexer__Compiler(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(unindent)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(eol)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(indent)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(unindent)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(eof)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(eol)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(__eq_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(__gt_)
+	UsingSym_(float_literal)
+	UsingSym_(int_literal)
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_)
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	UsingSym_(comment)
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	UsingSym_(text_literal_start)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	UsingSym_(string_literal)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	UsingSym_(symbol_literal)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	UsingSym_(character_literal)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_40_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_41_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_123_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_125_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_in_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_dx_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_44_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_59_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_tw_)
+	UsingSym_(_pl_)
+	UsingSym_(_pl__eq_)
+	UsingSym_(_eq_)
+	UsingSym_(_eq__eq_)
+	UsingSym_(_st_)
+	UsingSym_(_st__eq_)
+	UsingSym_(_dv_)
+	UsingSym_(_dv__eq_)
+	UsingSym_(_pc_)
+	UsingSym_(_pc__eq_)
+	UsingSym_(_xr_)
+	UsingSym_(_xr__eq_)
+	UsingSym_(_nt_)
+	UsingSym_(_nt__eq_)
+	UsingSym_(_co_)
+	UsingSym_(_co__eq_)
+	UsingSym_(_lt_)
+	UsingSym_(_lt__lt__eq_)
+	UsingSym_(_lt__lt_)
+	UsingSym_(_lt__eq_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_gt_)
+	UsingSym_(_gt__gt__eq_)
+	UsingSym_(_gt__gt_)
+	UsingSym_(_gt__eq_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_an_)
+	UsingSym_(_an__an_)
+	UsingSym_(_an__eq_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(_or_)
+	UsingSym_(_or__or_)
+	UsingSym_(_or__eq_)
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(name)
+	UsingSym_(keyword)
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	UsingSym_(int_literal)
+	UsingSym_(float_literal)
+	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	UsingSym_(eof)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -337,102 +433,6 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 	DefineString_(4, "Unknown character: \"")
 	DefineString_(5, "\"")
 	UsingMethod_(_nt__eq_) UsingMethod_(_an_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(_gt_) UsingMethod_(_gt__eq_) UsingMethod_(at_line_start) UsingMethod_(at_line_start_co_) UsingMethod_(cur_char) UsingMethod_(eof_char) UsingMethod_(go_forward) UsingMethod_(indent_stack) UsingMethod_(is_empty) UsingMethod_(p) UsingMethod_(pop) UsingMethod_(possibly_equals_token_co_or_co_) UsingMethod_(push_co_) UsingMethod_(start) UsingMethod_(string) UsingMethod_(top) UsingMethod_(unindent_to) UsingMethod_(unindent_to_co_) UsingMethod_(unindents_pending) UsingMethod_(unindents_pending_co_)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(unindent)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(eol)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(indent)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(unindent)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(eof)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(eol)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(__eq_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(__gt_)
-	UsingSym_(float_literal)
-	UsingSym_(int_literal)
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_)
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	UsingSym_(comment)
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	UsingSym_(text_literal_start)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	UsingSym_(string_literal)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	UsingSym_(symbol_literal)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	UsingSym_(character_literal)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_40_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_41_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_123_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_125_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_in_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_dx_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_44_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_59_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_tw_)
-	UsingSym_(_pl_)
-	UsingSym_(_pl__eq_)
-	UsingSym_(_eq_)
-	UsingSym_(_eq__eq_)
-	UsingSym_(_st_)
-	UsingSym_(_st__eq_)
-	UsingSym_(_dv_)
-	UsingSym_(_dv__eq_)
-	UsingSym_(_pc_)
-	UsingSym_(_pc__eq_)
-	UsingSym_(_xr_)
-	UsingSym_(_xr__eq_)
-	UsingSym_(_nt_)
-	UsingSym_(_nt__eq_)
-	UsingSym_(_co_)
-	UsingSym_(_co__eq_)
-	UsingSym_(_lt_)
-	UsingSym_(_lt__lt__eq_)
-	UsingSym_(_lt__lt_)
-	UsingSym_(_lt__eq_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_gt_)
-	UsingSym_(_gt__gt__eq_)
-	UsingSym_(_gt__gt_)
-	UsingSym_(_gt__eq_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_an_)
-	UsingSym_(_an__an_)
-	UsingSym_(_an__eq_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(_or_)
-	UsingSym_(_or__or_)
-	UsingSym_(_or__eq_)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(name)
-	UsingSym_(keyword)
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	UsingSym_(int_literal)
-	UsingSym_(float_literal)
-	extern obj_ new_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start, obj_ end);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	UsingSym_(eof)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(Token__Compiler)
 
@@ -1766,12 +1766,12 @@ obj_ parse_character_escape_co___Lexer__Compiler(obj_ this_, obj_ p)
 
 obj_ possibly_equals_token_co_or_co___Lexer__Compiler(obj_ this_, obj_ without_equals, obj_ with_equals)
 {
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
+	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 61)
 	UsingMethod_(_eq__eq_) UsingMethod_(cur_char) UsingMethod_(go_forward) UsingMethod_(p)
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
-	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
 	UsingClass_(Token__Compiler)
 
 		{
@@ -1798,10 +1798,10 @@ obj_ possibly_equals_token_co_or_co___Lexer__Compiler(obj_ this_, obj_ without_e
 
 obj_ report_co___Lexer__Compiler(obj_ this_, obj_ message)
 {
+	extern obj_ status_reporter__Main(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(report_co_)
-	extern obj_ status_reporter__Main(obj_ this_);
 	UsingClass_(Main)
 
 		{
@@ -1919,14 +1919,14 @@ obj_ subblock_line__Lexer__Compiler(obj_ this_)
 
 obj_ unescape_string_co___Lexer__Compiler(obj_ this_, obj_ string)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	DefineInt_(0, 92)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(bytes) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(parse_character_escape_co_) UsingMethod_(start) UsingMethod_(string)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{

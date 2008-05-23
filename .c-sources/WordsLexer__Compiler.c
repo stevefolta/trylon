@@ -199,6 +199,12 @@ obj_ p_co___WordsLexer__Compiler(obj_ this_, obj_ value)
 
 obj_ parse_char_escape_from_co_to_co___WordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper)
 {
+	extern obj_ new_co_to_co___WordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper);
+	UsingSym_(u)
+	UsingSym_(U)
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	extern obj_ new__SmallStringBuilder__Compiler(obj_ this_);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -209,12 +215,6 @@ obj_ parse_char_escape_from_co_to_co___WordsLexer__Compiler(obj_ this_, obj_ sta
 	DefineInt_(3, 2)
 	DefineInt_(4, 2)
 	UsingMethod_(_eq__eq_) UsingMethod_(deref_char) UsingMethod_(first_character) UsingMethod_(p) UsingMethod_(parse_escaped_char_into_co_) UsingMethod_(parse_hex_co_) UsingMethod_(string)
-	extern obj_ new_co_to_co___WordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper);
-	UsingSym_(u)
-	UsingSym_(U)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new__SmallStringBuilder__Compiler(obj_ this_);
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	UsingClass_(WordsLexer__Compiler)
 	UsingClass_(SmallStringBuilder__Compiler)
 
@@ -610,6 +610,12 @@ obj_ parse_hex_co___WordsLexer__Compiler(obj_ this_, obj_ max_digits)
 
 obj_ parse_next_word__WordsLexer__Compiler(obj_ this_)
 {
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -648,12 +654,6 @@ obj_ parse_next_word__WordsLexer__Compiler(obj_ this_)
 	DefineInt_(26, 33)
 	DefineString_(0, "Unterminated quote.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(add_from_co_to_co_) UsingMethod_(deref_char) UsingMethod_(is_whitespace) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(parse_escaped_char_into_co_) UsingMethod_(stopper) UsingMethod_(string)
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(String__Standard)
 	UsingClass_(SmallStringBuilder__Compiler)
@@ -903,11 +903,11 @@ obj_ peek__WordsLexer__Compiler(obj_ this_)
 
 obj_ remainder__WordsLexer__Compiler(obj_ this_)
 {
+	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(p) UsingMethod_(stopper)
-	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -937,6 +937,7 @@ obj_ stopper_co___WordsLexer__Compiler(obj_ this_, obj_ value)
 
 obj_ utf8_encode_co_into_co___WordsLexer__Compiler(obj_ this_, obj_ char_, obj_ builder)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 127)
@@ -950,7 +951,6 @@ obj_ utf8_encode_co_into_co___WordsLexer__Compiler(obj_ this_, obj_ char_, obj_ 
 	DefineInt_(8, 128)
 	DefineInt_(9, 128)
 	UsingMethod_(_an_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__gt_) UsingMethod_(add_char_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(push_front_co_) UsingMethod_(_or_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{

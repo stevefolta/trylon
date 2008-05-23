@@ -14,10 +14,10 @@ struct object Iterator__DispatchRowSet__CCompiler =
 
 obj_ create_co___Iterator__DispatchRowSet__CCompiler(obj_ this_, obj_ root)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(push_tree_co_) UsingMethod_(stack_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{

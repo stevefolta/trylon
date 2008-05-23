@@ -32,6 +32,9 @@ obj_ create_co___CokeLexer__Compiler(obj_ this_, obj_ lines)
 
 obj_ lex_list__CokeLexer__Compiler(obj_ this_)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	obj_ t0_;
 	obj_ t1_;
 	DefineInt_(0, 0)
@@ -40,9 +43,6 @@ obj_ lex_list__CokeLexer__Compiler(obj_ this_)
 	DefineInt_(3, 1)
 	DefineString_(0, "Unterminated list in Coke code.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(next_char) UsingMethod_(next_expr) UsingMethod_(peek_non_whitespace_char)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Expression)
@@ -146,6 +146,13 @@ obj_ lex_number_co___CokeLexer__Compiler(obj_ this_, obj_ c)
 
 obj_ lex_send__CokeLexer__Compiler(obj_ this_)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(send)
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -160,13 +167,6 @@ obj_ lex_send__CokeLexer__Compiler(obj_ this_)
 	DefineString_(0, "Bad send in Coke code.")
 	DefineString_(1, "Unterminated send in Coke code.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(next_char) UsingMethod_(next_expr) UsingMethod_(peek_non_whitespace_char)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Expression)
@@ -245,13 +245,13 @@ obj_ lex_send__CokeLexer__Compiler(obj_ this_)
 
 obj_ lex_string__CokeLexer__Compiler(obj_ this_)
 {
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineInt_(0, 34)
 	DefineInt_(1, 1)
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(next_char) UsingMethod_(p)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(String__Standard)
 
 		{
@@ -390,6 +390,12 @@ obj_ next_char__CokeLexer__Compiler(obj_ this_)
 
 obj_ next_expr__CokeLexer__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	UsingSym_(_)
+	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -421,12 +427,6 @@ obj_ next_expr__CokeLexer__Compiler(obj_ this_)
 	DefineString_(0, "Extra \")\" in Coke code.")
 	DefineString_(1, "Extra \"]\" in Coke code.")
 	UsingMethod_(_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(intern) UsingMethod_(lex_list) UsingMethod_(lex_number_co_) UsingMethod_(lex_send) UsingMethod_(lex_string) UsingMethod_(next_char) UsingMethod_(next_expr) UsingMethod_(next_non_whitespace_char) UsingMethod_(p) UsingMethod_(peek_char) UsingMethod_(unary_minus)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	UsingSym_(_)
-	extern obj_ new_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	UsingClass_(MessageException__Standard)
 	UsingClass_(String__Standard)
 	UsingClass_(Expression)

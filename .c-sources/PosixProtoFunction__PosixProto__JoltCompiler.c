@@ -28,16 +28,6 @@ obj_ create_co___PosixProtoFunction__PosixProto__JoltCompiler(obj_ this_, obj_ n
 
 obj_ emit_code__PosixProtoFunction__PosixProto__JoltCompiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineInt_(0, 4)
-	DefineInt_(1, 0)
-	DefineInt_(2, 1)
-	DefineInt_(3, 2)
-	DefineInt_(4, 3)
-	UsingMethod_(at_co_put_co_) UsingMethod_(intern) UsingMethod_(name)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
 	UsingSym_(load_trylon_posix_proto)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
@@ -49,6 +39,16 @@ obj_ emit_code__PosixProtoFunction__PosixProto__JoltCompiler(obj_ this_)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
 	UsingSym_(trylon_proto)
 	UsingSym_(Posix)
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	DefineInt_(0, 4)
+	DefineInt_(1, 0)
+	DefineInt_(2, 1)
+	DefineInt_(3, 2)
+	DefineInt_(4, 3)
+	UsingMethod_(at_co_put_co_) UsingMethod_(intern) UsingMethod_(name)
 	UsingClass_(Expression)
 
 		{

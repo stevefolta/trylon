@@ -55,17 +55,6 @@ obj_ Statements__JoltCompiler__accessor_(obj_ this_)
 
 obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, ".")
-	DefineString_(1, "Emitting code...")
-	DefineString_(2, "Emitting load.k...")
-	DefineString_(3, "/load.k")
-	DefineString_(4, "(load-trylon-proto ")
-	DefineString_(5, ")")
-	UsingMethod_(_pl_) UsingMethod_(all_protos) UsingMethod_(build_settings) UsingMethod_(close) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(emit_code) UsingMethod_(entry_is_directory_co_) UsingMethod_(full_name) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_sources_dir) UsingMethod_(report_co_) UsingMethod_(unindent) UsingMethod_(write_line) UsingMethod_(write_co_)
 	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
 	extern obj_ build_settings__Main(obj_ this_);
 	extern obj_ build_settings__Main(obj_ this_);
@@ -77,6 +66,17 @@ obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler)
 	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
 	extern obj_ status_reporter__Main(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	DefineString_(0, ".")
+	DefineString_(1, "Emitting code...")
+	DefineString_(2, "Emitting load.k...")
+	DefineString_(3, "/load.k")
+	DefineString_(4, "(load-trylon-proto ")
+	DefineString_(5, ")")
+	UsingMethod_(_pl_) UsingMethod_(all_protos) UsingMethod_(build_settings) UsingMethod_(close) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(emit_code) UsingMethod_(entry_is_directory_co_) UsingMethod_(full_name) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_sources_dir) UsingMethod_(report_co_) UsingMethod_(unindent) UsingMethod_(write_line) UsingMethod_(write_co_)
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(File__Standard)
 	UsingClass_(Main)

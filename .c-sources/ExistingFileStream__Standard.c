@@ -89,12 +89,12 @@ obj_ contents_co___ExistingFileStream__Standard(obj_ this_, obj_ value)
 
 obj_ create_co___ExistingFileStream__Standard(obj_ this_, obj_ file)
 {
+	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "")
 	DefineString_(1, "")
 	UsingMethod_(contents) UsingMethod_(contents_co_) UsingMethod_(exists) UsingMethod_(file_co_) UsingMethod_(is_a_co_) UsingMethod_(matches_so_far_co_) UsingMethod_(output_stream_co_) UsingMethod_(remaining_contents_co_)
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
 	UsingClass_(File__Standard)
 	UsingClass_(String__Standard)
 
@@ -218,6 +218,7 @@ obj_ remaining_contents_co___ExistingFileStream__Standard(obj_ this_, obj_ value
 
 obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ buffer, obj_ length)
 {
+	extern obj_ new_co_length_co___String__Standard(obj_ this_, obj_ start, obj_ length);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -229,7 +230,6 @@ obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ b
 	DefineString_(0, "")
 	DefineString_(1, "")
 	UsingMethod_(_nt__eq_) UsingMethod_(_) UsingMethod_(contents) UsingMethod_(contents_co_) UsingMethod_(file) UsingMethod_(length) UsingMethod_(matches_so_far) UsingMethod_(matches_so_far_co_) UsingMethod_(output_stream) UsingMethod_(output_stream_co_) UsingMethod_(remaining_contents) UsingMethod_(remaining_contents_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(write_buffer_co_length_co_) UsingMethod_(write_co_)
-	extern obj_ new_co_length_co___String__Standard(obj_ this_, obj_ start, obj_ length);
 	UsingClass_(String__Standard)
 
 		{

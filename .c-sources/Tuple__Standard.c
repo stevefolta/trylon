@@ -21,6 +21,7 @@ obj_ Iterator__Tuple__Standard__accessor_(obj_ this_)
 
 obj_ at_co___Tuple__Standard(obj_ this_, obj_ index)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -29,7 +30,6 @@ obj_ at_co___Tuple__Standard(obj_ this_, obj_ index)
 	DefineInt_(1, 2)
 	DefineString_(0, "Bad tuple index.")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt__eq_) UsingMethod_(num_items) UsingMethod_(object_at_co_) UsingMethod_(object_ptr)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -58,6 +58,7 @@ obj_ at_co___Tuple__Standard(obj_ this_, obj_ index)
 
 obj_ at_co_put_co___Tuple__Standard(obj_ this_, obj_ index, obj_ value)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -66,7 +67,6 @@ obj_ at_co_put_co___Tuple__Standard(obj_ this_, obj_ index, obj_ value)
 	DefineInt_(1, 2)
 	DefineString_(0, "Bad tuple index.")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt__eq_) UsingMethod_(num_items) UsingMethod_(object_at_co_put_co_) UsingMethod_(object_ptr)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -135,8 +135,8 @@ obj_ first__Tuple__Standard(obj_ this_)
 
 obj_ iterator__Tuple__Standard(obj_ this_)
 {
-	obj_ t0_;
 	extern obj_ new_co___Iterator__Tuple__Standard(obj_ this_, obj_ tuple);
+	obj_ t0_;
 	UsingClass_(Iterator__Tuple__Standard)
 
 		{
@@ -150,9 +150,9 @@ obj_ iterator__Tuple__Standard(obj_ this_)
 
 obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items)
 {
+	extern obj_ allocate_object_co_with_extra_slots_co___Implementation__Standard(obj_ this_, obj_ proto, obj_ num_extra_slots);
 	obj_ t0_;
 	UsingMethod_(num_items_co_)
-	extern obj_ allocate_object_co_with_extra_slots_co___Implementation__Standard(obj_ this_, obj_ proto, obj_ num_extra_slots);
 	UsingClass_(Implementation__Standard)
 	UsingClass_(Tuple__Standard)
 

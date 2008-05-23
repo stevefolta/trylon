@@ -49,10 +49,10 @@ obj_ clauses_co___SwitchStatement__Compiler(obj_ this_, obj_ value)
 
 obj_ create_co_value_comment_co___SwitchStatement__Compiler(obj_ this_, obj_ expression, obj_ value_comment)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(clauses_co_) UsingMethod_(expression_co_) UsingMethod_(value_comment_co_)
-	extern obj_ new__List__Standard(obj_ this_);
 	UsingClass_(List__Standard)
 
 		{
@@ -175,6 +175,9 @@ obj_ interpreted__SwitchStatement__Compiler(obj_ this_)
 
 obj_ jolt_expression__SwitchStatement__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(switch)
+	UsingSym_(nil)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -184,9 +187,6 @@ obj_ jolt_expression__SwitchStatement__Compiler(obj_ this_)
 	DefineInt_(3, 2)
 	DefineInt_(4, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(clauses) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(else_clause) UsingMethod_(expression) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(switch)
-	UsingSym_(nil)
 	UsingClass_(Expression)
 
 		{
@@ -283,6 +283,9 @@ obj_ prepare_to_emit__SwitchStatement__Compiler(obj_ this_)
 
 obj_ translate_co___SwitchStatement__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(switch)
+	UsingSym_(nil)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -292,9 +295,6 @@ obj_ translate_co___SwitchStatement__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(3, 2)
 	DefineInt_(4, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(clauses) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(else_clause) UsingMethod_(expression) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(translate_jolt_expression)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(switch)
-	UsingSym_(nil)
 	UsingClass_(Expression)
 
 		{

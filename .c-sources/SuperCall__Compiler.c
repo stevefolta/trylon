@@ -44,6 +44,11 @@ obj_ create_co_arguments_co___SuperCall__Compiler(obj_ this_, obj_ name, obj_ ar
 
 obj_ emit_code_co___SuperCall__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -61,11 +66,6 @@ obj_ emit_code_co___SuperCall__Compiler(obj_ this_, obj_ builder)
 	DefineString_(8, ", ")
 	DefineString_(9, ");")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_extern_declaration_co_) UsingMethod_(add_line_co_) UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(c_name) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(function) UsingMethod_(get_temporary) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(string) UsingMethod_(superclass)
-	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	UsingClass_(Compiler)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
@@ -171,6 +171,9 @@ obj_ interpreted__SuperCall__Compiler(obj_ this_)
 
 obj_ jolt_expression__SuperCall__Compiler(obj_ this_)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(super_send)
+	UsingSym_(self)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -182,9 +185,6 @@ obj_ jolt_expression__SuperCall__Compiler(obj_ this_)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(super_send)
-	UsingSym_(self)
 	UsingClass_(Expression)
 
 		{
@@ -260,6 +260,9 @@ obj_ prepare_to_emit__SuperCall__Compiler(obj_ this_)
 
 obj_ translate_co___SuperCall__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
+	UsingSym_(super_send)
+	UsingSym_(self)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -271,9 +274,6 @@ obj_ translate_co___SuperCall__Compiler(obj_ this_, obj_ compiler)
 	DefineInt_(4, 3)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(translateExpression_co_) UsingMethod_(translateSymbol_co_)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(super_send)
-	UsingSym_(self)
 	UsingClass_(Expression)
 
 		{

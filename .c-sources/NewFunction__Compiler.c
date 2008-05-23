@@ -17,6 +17,7 @@ struct object NewFunction__Compiler =
 
 obj_ c_name__NewFunction__Compiler(obj_ this_)
 {
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -25,7 +26,6 @@ obj_ c_name__NewFunction__Compiler(obj_ this_)
 	obj_ t5_;
 	DefineString_(0, "__")
 	UsingMethod_(_pl_) UsingMethod_(c_name) UsingMethod_(name) UsingMethod_(on_proto)
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 
 		{
@@ -123,6 +123,9 @@ obj_ emit_c_call_co_builder_co___NewFunction__Compiler(obj_ this_, obj_ argument
 
 obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
+	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -144,9 +147,6 @@ obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 	DefineString_(10, "\treturn obj;\n")
 	DefineString_(11, "}\n\n\n")
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(c_name) UsingMethod_(c_signature) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
-	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
 	UsingClass_(Compiler)
 	UsingClass_(List__Standard)
 
@@ -202,18 +202,6 @@ obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 
 obj_ emit_call_co___NewFunction__Compiler(obj_ this_, obj_ arguments)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	DefineInt_(0, 3)
-	DefineInt_(1, 0)
-	DefineInt_(2, 1)
-	DefineInt_(3, 2)
-	DefineInt_(4, 3)
-	DefineInt_(5, 1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
 	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
 	UsingSym_(send)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
@@ -230,6 +218,18 @@ obj_ emit_call_co___NewFunction__Compiler(obj_ this_, obj_ arguments)
 	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
 	UsingSym_(let)
 	UsingSym_(new_object)
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	DefineInt_(0, 3)
+	DefineInt_(1, 0)
+	DefineInt_(2, 1)
+	DefineInt_(3, 2)
+	DefineInt_(4, 3)
+	DefineInt_(5, 1)
+	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
 	UsingClass_(Expression)
 
 		{
@@ -272,24 +272,6 @@ obj_ emit_call_co___NewFunction__Compiler(obj_ this_, obj_ arguments)
 
 obj_ emit_code__NewFunction__Compiler(obj_ this_)
 {
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	DefineInt_(0, 3)
-	DefineInt_(1, 0)
-	DefineInt_(2, 1)
-	DefineInt_(3, 2)
-	DefineInt_(4, 3)
-	DefineInt_(5, 1)
-	DefineInt_(6, 4)
-	DefineInt_(7, 0)
-	DefineInt_(8, 1)
-	DefineInt_(9, 2)
-	DefineInt_(10, 3)
-	DefineInt_(11, 1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto)
 	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
 	UsingSym_(send)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
@@ -310,6 +292,24 @@ obj_ emit_code__NewFunction__Compiler(obj_ this_)
 	UsingSym_(define_send)
 	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
 	UsingSym_(quote)
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	DefineInt_(0, 3)
+	DefineInt_(1, 0)
+	DefineInt_(2, 1)
+	DefineInt_(3, 2)
+	DefineInt_(4, 3)
+	DefineInt_(5, 1)
+	DefineInt_(6, 4)
+	DefineInt_(7, 0)
+	DefineInt_(8, 1)
+	DefineInt_(9, 2)
+	DefineInt_(10, 3)
+	DefineInt_(11, 1)
+	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto)
 	UsingClass_(Expression)
 
 		{
@@ -451,13 +451,13 @@ obj_ on_proto_co___NewFunction__Compiler(obj_ this_, obj_ value)
 
 obj_ translate_call_co_compiler_co___NewFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
 {
+	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
 	UsingMethod_(access) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translate_co_)
-	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
 	UsingClass_(Send__Compiler)
 
 		{

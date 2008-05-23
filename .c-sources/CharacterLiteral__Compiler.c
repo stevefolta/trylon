@@ -66,10 +66,10 @@ obj_ create_co___CharacterLiteral__Compiler(obj_ this_, obj_ char_)
 
 obj_ emit_code_co___CharacterLiteral__Compiler(obj_ this_, obj_ builder)
 {
+	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(add_co_) UsingMethod_(int_literals)
-	extern obj_ new_co___LiteralResult__CCompiler(obj_ this_, obj_ expression);
 	UsingClass_(LiteralResult__CCompiler)
 
 		{
@@ -85,6 +85,7 @@ obj_ emit_code_co___CharacterLiteral__Compiler(obj_ this_, obj_ builder)
 
 obj_ emit_declaration_co___CharacterLiteral__Compiler(obj_ this_, obj_ stream)
 {
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -94,7 +95,6 @@ obj_ emit_declaration_co___CharacterLiteral__Compiler(obj_ this_, obj_ stream)
 	DefineString_(1, ", ")
 	DefineString_(2, ")\n")
 	UsingMethod_(char_) UsingMethod_(index) UsingMethod_(string) UsingMethod_(write_all_co_)
-	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 
 		{
 		obj_ char_string;
@@ -160,12 +160,12 @@ obj_ is_literal__CharacterLiteral__Compiler(obj_ this_)
 
 obj_ jolt_expression__CharacterLiteral__Compiler(obj_ this_)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(trylon_char_literal)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(char_) UsingMethod_(int_)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(trylon_char_literal)
 	UsingClass_(Expression)
 
 		{
@@ -204,12 +204,12 @@ obj_ prepare_to_emit__CharacterLiteral__Compiler(obj_ this_)
 
 obj_ translate_co___CharacterLiteral__Compiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
+	UsingSym_(quote)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(char_) UsingMethod_(translateExpression_co_)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
 	UsingClass_(Expression)
 
 		{

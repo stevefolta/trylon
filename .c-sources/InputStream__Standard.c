@@ -13,8 +13,8 @@ struct object InputStream__Standard =
 
 obj_ read_buffer_co_length_co___InputStream__Standard(obj_ this_, obj_ buffer, obj_ length)
 {
-	obj_ t0_;
 	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
 	UsingClass_(Standard)
 
 		{

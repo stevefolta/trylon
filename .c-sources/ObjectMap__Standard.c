@@ -86,10 +86,10 @@ obj_ count__ObjectMap__Standard(obj_ this_)
 
 obj_ create__ObjectMap__Standard(obj_ this_)
 {
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(dictionary_co_)
-	extern obj_ new__Dictionary__Standard(obj_ this_);
 	UsingClass_(Dictionary__Standard)
 
 		{
@@ -151,11 +151,11 @@ obj_ is_empty__ObjectMap__Standard(obj_ this_)
 
 obj_ keys__ObjectMap__Standard(obj_ this_)
 {
+	extern obj_ new_co___Iterator__ObjectMap__Standard(obj_ this_, obj_ iterator);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(dictionary) UsingMethod_(keys)
-	extern obj_ new_co___Iterator__ObjectMap__Standard(obj_ this_, obj_ iterator);
 	UsingClass_(Iterator__ObjectMap__Standard)
 
 		{
