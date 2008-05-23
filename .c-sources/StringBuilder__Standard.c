@@ -140,8 +140,7 @@ obj_ string__StringBuilder__Standard(obj_ this_)
 	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(length) UsingMethod_(length_co_) UsingMethod_(start) UsingMethod_(substrings) UsingMethod_(substrings_co_)
+	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(length) UsingMethod_(start) UsingMethod_(substrings) UsingMethod_(substrings_co_)
 	UsingClass_(List__Standard)
 	UsingClass_(String__Standard)
 	UsingClass_(BytePtr__Standard)
@@ -156,14 +155,13 @@ obj_ string__StringBuilder__Standard(obj_ this_)
 		t0_ = Call_(substrings, this_);
 		ForStart_(0, t0_, string)
 			{
+			obj_ length;
 			t0_ = Call_(length, string);
-			t1_ = Call_(length_co_, this_, t0_);
+			length = t0_;
 			t0_ = Call_(start, string);
-			t1_ = Call_(length, this_);
-			t2_ = Call_(copy_from_co_length_co_, ptr, t0_, t1_);
-			t0_ = Call_(length, this_);
-			t1_ = Call_(_pl_, ptr, t0_);
-			ptr = t1_;
+			t1_ = Call_(copy_from_co_length_co_, ptr, t0_, length);
+			t0_ = Call_(_pl_, ptr, length);
+			ptr = t0_;
 			}
 		ForEnd_(0)
 		t0_ = new_co_to_co___String__Standard(Proto_(String__Standard), bytes, ptr);
