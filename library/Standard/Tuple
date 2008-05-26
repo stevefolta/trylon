@@ -3,8 +3,7 @@ trylon Tuple
 field num-items
 
 new: num-items
-	tuple (Tuple) := --
-		Implementation allocate-object: Tuple with-extra-slots: num-items
+	tuple = Implementation allocate-object: Tuple with-extra-slots: num-items
 	tuple num-items = num-items
 	return tuple
 
@@ -41,8 +40,8 @@ third
 	return this at: 2
 
 string
-	result := "("
-	have-item := false
+	result = "("
+	have-item = false
 	for item in this
 		if have-item
 			result += ", "

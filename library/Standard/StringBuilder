@@ -24,13 +24,13 @@ prepend: string
 
 string
 	# Build the consolidated string.
-	bytes := BytePtr new: length
-	ptr := bytes
+	bytes = BytePtr new: length
+	ptr = bytes
 	for string in substrings
 		length := string length
 		ptr copy-from: string start length: length
 		ptr += length
-	string := String new: bytes to: ptr
+	string = String new: bytes to: ptr
 	
 	# Install it here, in case more strings are added later.
 	substrings = List new
