@@ -27,7 +27,7 @@ string
 	bytes = BytePtr new: length
 	ptr = bytes
 	for string in substrings
-		length = string length
+		length := string length
 		ptr copy-from: string start length: length
 		ptr += length
 	string = String new: bytes to: ptr
