@@ -66,6 +66,9 @@ parse-assignment-expression
 		setter convert-to-setter-call: call
 		expr = setter
 	
+	else if word == ":=" 	# someday, maybe: '|| word == "("'
+		expr = parse-declaration: expr
+	
 	return expr
 
 
@@ -421,6 +424,43 @@ parse-super-call
 		parse-error: "Internal error: no proto for super call."
 	
 	return SuperCall new: name arguments: arguments
+
+
+parse-declaration: lhs
+	if !(lhs is-a: FunctionCall) || lhs arguments num-items != 0
+		parse-error: "Illegal declaration."
+	name = lhs name
+
+	# Type.
+	type = nil
+	iff not-now
+		# Not supporting this syntax currently; parse-type-spec would have to be
+		# written, or made visible (it's pretty much the same as "TrylonProtoParser
+		# parse-proto-spec").
+		if words peek == "("
+			words next
+			type = parse-type-spec
+			if words peek != ")"
+				parse-error: "Missing \")\"."
+			words next
+	
+	# ':='
+	if words peek != ":=" && words peek != "="
+		parse-error: "\"=\" or \":=\" expected."
+	words next
+
+	# Initial value.
+	initial-value = parse-expression
+
+	# Add the local to the block.
+	if !(context is-a: Block)
+		throw MessageException new: "Internal error: Current context isn't a block."
+	context add-local: (CompiledField new: name type: type)
+
+	# Set to the initial value.
+	arguments = List new
+	arguments append: initial-value
+	return FunctionCall new: name + ":" arguments: arguments context: context
 
 
 

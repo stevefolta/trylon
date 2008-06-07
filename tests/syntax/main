@@ -1,0 +1,29 @@
+trylon syntax-test
+
+main: args
+	try
+		# Declaration.
+		var = 'outer'
+		if true
+			var := 'inner'
+			check: var against: 'inner' title: "Declaration (inner)"
+		check: var against: 'outer' title: "Declaration"
+
+	catch
+		send: exception message
+	
+	return 0
+
+
+check: value against: expected-value title: title
+	if value == expected-value
+		print-line: title + " test succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
+test: succeeded title: title
+	if succeeded
+		print-line: title + " test succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
