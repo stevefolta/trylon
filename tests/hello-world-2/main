@@ -1,0 +1,17 @@
+trylon hello-world
+
+class Hailer
+	field whom
+
+	create: whom
+		this whom = whom
+	
+	hail
+		send: ("Hello, ", whom, "!")
+
+
+main: arguments
+	hailer = Hailer new: "world"
+	hailer hail
+	return 0
+

@@ -7,6 +7,38 @@ Trylon is a computer language.  It is basically a cross between Python and Small
 
 ======
 
+What does it look like?
+
+A simple "Hello World":
+
+	trylon hello-world
+
+	main: arguments
+		send: "Hello world!"
+		return 0
+
+A more object-oriented "Hello World":
+
+	trylon hello-world
+
+	class Hailer
+		field whom
+
+		create: whom
+			this whom = whom
+		
+		hail
+			send: ("Hello, ", whom, "!")
+
+
+	main: arguments
+		hailer = Hailer new: "world"
+		hailer hail
+		return 0
+
+
+======
+
 What is Trylon 2?
 
 Trylon 2 improves on the original Trylon by having a better, simpler object system.  See the <a href="objects.html">objects</a> doc.
