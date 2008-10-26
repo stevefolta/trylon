@@ -43,7 +43,9 @@ obj_ RespondsTo_(obj_ object, selector_ selector)
 
 obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
 {
-	obj_ object = (obj_) GC_MALLOC(sizeof(classref_) + classInfo->size);
+	obj_ object =
+		(obj_) GC_MALLOC(
+			sizeof(classref_) + classInfo->numSlots * sizeof(obj_));
 	object->class_ = classInfo;
 	return object;
 }
@@ -229,7 +231,8 @@ obj_ CloneObj_(obj_ object)
 obj_ CloneObjExtra_(obj_ object, int numExtraFields)
 {
 	size_t size =
-		sizeof(classref_) + object->class_->size + numExtraFields * sizeof(obj_);
+		sizeof(classref_) +
+		(object->class_->numSlots + numExtraFields) * sizeof(obj_);
 	obj_ newObject = (obj_) GC_MALLOC(size);
 	newObject->class_ = object->class_;
 	return newObject;

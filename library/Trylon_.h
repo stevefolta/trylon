@@ -9,7 +9,7 @@ typedef struct ClassInfo* classref_;
 
 struct ClassInfo {
 	int 	classNum;
-	int 	size;
+	int 	numSlots;
 	obj_	proto, parentContext, superclass;
 	obj_	usedContexts;
 	obj_	name;
