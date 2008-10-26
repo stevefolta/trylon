@@ -241,19 +241,19 @@ typedef struct ExceptionCatcher_ {
 extern void PushException_(ExceptionCatcher_* catcher);
 extern void Throw_(obj_ object);
 extern void PopException_();
+extern obj_ currentException_;
 
 #define Try_	\
 	{	\
 	ExceptionCatcher_ __catcher;	\
-	obj_ exception; 	\
 	PushException_(&__catcher); 	\
-	exception = (obj_) setjmp(__catcher.jumpBuf); 	\
-	if (exception == nil)	{ 	\
+	if (setjmp(__catcher.jumpBuf) == 0)	{ 	\
 
 #define TryElse_ 	\
 		PopException_(); 	\
 		} 	\
 	else { 	\
+		obj_ exception = currentException_; 	\
 		PopException_();
 
 #define EndTry_ 	\

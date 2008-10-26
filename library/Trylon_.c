@@ -50,6 +50,7 @@ obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
 
 
 static ExceptionCatcher_* currentExceptionCatcher = NULL;
+obj_ currentException_ = NULL;
 
 void PushException_(ExceptionCatcher_* catcher)
 {
@@ -66,7 +67,8 @@ void Throw_(obj_ object)
 		exit(1);
 		}
 
-	longjmp(currentExceptionCatcher->jumpBuf, (int) object);
+	currentException_ = object;
+	longjmp(currentExceptionCatcher->jumpBuf, 1);
 }
 
 
