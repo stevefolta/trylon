@@ -1,0 +1,15 @@
+trylon readline-test
+
+main: args
+	Readline using-history
+	Readline read-history: ".readline-test-history"
+	send: "Use EOF (^D) to exit.\n"
+	loop
+		line = Readline readline: "> "
+		if line == nil
+			break
+		send: line
+		if !(line is-empty)
+			Readline add-history: line
+	Readline write-history: ".readline-test-history"
+
