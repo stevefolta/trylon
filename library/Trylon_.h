@@ -77,6 +77,8 @@ extern obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo);
 #define AllocObj_(className) 	\
 	(AllocObjFromClassInfo_(&className##__classInfo_))
 
+extern void RegisterFinalizer_(obj_ object);
+
 
 /* Standard objects */
 
