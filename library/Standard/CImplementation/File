@@ -42,8 +42,10 @@ extend Standard File InStream
 		Field_(_dt_file) = (obj_) result;
 	
 	c-fn close
-		if (Field_(_dt_file))
+		if (Field_(_dt_file)) {
 			fclose((FILE*) Field_(_dt_file));
+			Field_(_dt_file) = nil;
+			}
 
 	c-fn read-buffer: buffer length: length
 		return
@@ -73,8 +75,10 @@ extend Standard File OutStream
 		Field_(_dt_file) = (obj_) result;
 
 	c-fn close
-		if (Field_(_dt_file))
+		if (Field_(_dt_file)) {
 			fclose((FILE*) Field_(_dt_file));
+			Field_(_dt_file) = nil;
+			}
 
 	c-fn write-buffer: buffer length: length
 		return

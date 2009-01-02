@@ -84,6 +84,41 @@ Trylon is a computer language.  It is basically a cross between Python and Small
 </div>
 
 <div class="entry">
+<div class="entry-title"> What does it look like? </div>
+<p>
+A simple "Hello World":
+</p>
+
+<div class="code">trylon hello-world
+
+main: arguments
+  send: "Hello world!"
+  return 0</div>
+
+<p>
+A more object-oriented "Hello World":
+</p>
+
+<div class="code">trylon hello-world
+
+class Hailer
+  field whom
+
+  create: whom
+    this whom = whom
+
+  hail
+    send: ("Hello, ", whom, "!")
+
+
+main: arguments
+  hailer = Hailer new: "world"
+  hailer hail
+  return 0</div>
+
+</div>
+
+<div class="entry">
 <div class="entry-title"> What is Trylon 2? </div>
 <p>
 Trylon 2 improves on the original Trylon by having a better, simpler object system.  See the <a href="objects.html">objects</a> doc.
@@ -99,6 +134,10 @@ Other smaller improvements have also been made: "try"/"else", for instance.  And
 <div class="entry-title"> Getting Trylon </div>
 <p>
 Trylon is available as a <a href="trylon.tgz">tarball</a> which should compile on Unixy systems (but you'll need to have the Boehm-Demers-Weiser garbage collector package installed).
+</p>
+
+<p>
+Alternately, you can get it with Git: "git clone git://repo.or.cz/trylon.git".  Then checkout the 'with-c-sources' branch and "make".
 </p>
 
 </div>

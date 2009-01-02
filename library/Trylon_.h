@@ -9,7 +9,7 @@ typedef struct ClassInfo* classref_;
 
 struct ClassInfo {
 	int 	classNum;
-	int 	size;
+	int 	numSlots;
 	obj_	proto, parentContext, superclass;
 	obj_	usedContexts;
 	obj_	name;
@@ -76,6 +76,8 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 extern obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo);
 #define AllocObj_(className) 	\
 	(AllocObjFromClassInfo_(&className##__classInfo_))
+
+extern void RegisterFinalizer_(obj_ object);
 
 
 /* Standard objects */
@@ -241,19 +243,19 @@ typedef struct ExceptionCatcher_ {
 extern void PushException_(ExceptionCatcher_* catcher);
 extern void Throw_(obj_ object);
 extern void PopException_();
+extern obj_ currentException_;
 
 #define Try_	\
 	{	\
 	ExceptionCatcher_ __catcher;	\
-	obj_ exception; 	\
 	PushException_(&__catcher); 	\
-	exception = (obj_) setjmp(__catcher.jumpBuf); 	\
-	if (exception == nil)	{ 	\
+	if (setjmp(__catcher.jumpBuf) == 0)	{ 	\
 
 #define TryElse_ 	\
 		PopException_(); 	\
 		} 	\
 	else { 	\
+		obj_ exception = currentException_; 	\
 		PopException_();
 
 #define EndTry_ 	\

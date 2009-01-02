@@ -85,7 +85,7 @@ emit-on: stream
 	stream write: "__classInfo_ = \n\t{ "
 	stream write: proto class-num string
 	stream write: ", "
-	stream write: (proto total-num-fields * 4) string
+	stream write: proto total-num-fields string
 	stream write: ", "
 	stream write-all: ("Proto_(", proto c-name, ")")
 	stream write: ", "

@@ -4,7 +4,7 @@ superclass Context
 fields name parent functions fields shared-fields superclass directories
 fields uses-protos subclasses
 fields source-name 	# The name given in the "trylon" line.
-fields is-main is-root-object
+fields is-main is-root-object has-destroy
 
 
 create: name parent: parent
@@ -18,6 +18,7 @@ create: name parent: parent
 	subclasses = List new
 	is-main = false
 	is-root-object = false
+	has-destroy = false
 
 	# Will be added by Jolt code:
 	if build-settings targeting-jolt
@@ -112,6 +113,10 @@ add-function: function
 		new-function = NewFunction new: function on-proto: this
 		(functions at: new-function name) = new-function
 		compiler declaring-selector: new-function name
+	
+	# "destroy" functions mean a finalizer is needed.
+	if function-name == "destroy"
+		has-destroy = true
 
 
 add-function: name function: function
@@ -270,6 +275,14 @@ ensure-superclasses: object-proto
 			proto = function proto
 			if proto != this
 				proto ensure-superclasses: object-proto
+
+
+needs-finalizer
+	if has-destroy
+		return true
+	if superclass
+		return superclass needs-finalizer
+	return false
 
 
 prepare-to-emit
