@@ -23,6 +23,6 @@ class BenchObject
 		if n < 2
 			return 2 	# Call to nfibs + call to <
 		else
-			# 6 = nfibs, <, -, -, +, +
-			return (nfibs: n - 1) + (nfibs: n - 2) + 6
+			# 7 sends: <, -, nfibs, -, nfibs, +, +
+			return (nfibs: n - 1) + (nfibs: n - 2) + 7
 
