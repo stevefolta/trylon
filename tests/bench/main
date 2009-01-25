@@ -30,4 +30,23 @@ class BenchObject
 			# 6 sends, not counting the calls to nfibs: (they'll count themselves):
 			# nfibs: (this one), <, -, -, +, +
 			return (nfibs: n - 1) + (nfibs: n - 2) + 6
+	
+	# Special version that circumvents boxing of Ints.
+	iff targeting-c
+		c-fn cnfibs: n
+			UsingMethod_(_ul_cnfibs_co_)
+
+			return BuildInt_((int) Call_(_ul_cnfibs_co_, this_, IntValue_(n)));
+
+		c-fn _cnfibs: n
+			UsingMethod_(_ul_cnfibs_co_)
+
+			if ((int) n < 2)
+				return (obj_) 1;
+			else {
+				return (obj_) (
+					(int) Call_(_ul_cnfibs_co_, this_, (int) n - 1) +
+					(int) Call_(_ul_cnfibs_co_, this_, (int) n - 2) +
+					1);
+				}
 
