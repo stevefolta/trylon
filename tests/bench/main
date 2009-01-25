@@ -1,12 +1,35 @@
 trylon Bench
 
 main: args
+	# Parse arguments.
+	circumvent-boxing = false
+	level = 33
+	args pop-front
+	while args num-items > 0
+		arg = args pop-front
+		if arg == "circumvent-boxing"
+			circumvent-boxing = true
+		else if arg == "level:"
+			arg = args pop-front
+			if arg != nil
+				level = arg int
+
+	# Run the benchmark.
 	bench = BenchObject new
 	start-time = System milliseconds
-	num-sends = bench nfibs: 33
+	num-sends = 0
+	iff targeting-c
+		if circumvent-boxing
+			num-sends = bench cnfibs: level
+		else
+			num-sends = bench nfibs: level
+	iff !targeting-c
+		num-sends = bench nfibs: level
 	time = System milliseconds - start-time
-	print-line: "nfibs: 33 = " + num-sends string
-	print-line: time string + " milliseconds"
+
+	# Report the results.
+	send: ("nfibs: ", level, " => ", num-sends, " sends.")
+	send: (time, " milliseconds.")
 	sends-per-second = num-sends float / (time float / 1000.0)
 	if sends-per-second > 1000000.0
 		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
