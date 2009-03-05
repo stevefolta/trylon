@@ -24,4 +24,5 @@ references
 	File
 	FileDirectory
 	Implementation
+	GarbageCollector
 

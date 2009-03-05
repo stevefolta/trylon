@@ -220,8 +220,10 @@ extend Compiler NewFunction
 		arg-names = List new
 		for arg in creator arguments
 			arg-names append: (mangle-name: arg name)
+
 		# Signature.
 		stream write-line: c-signature
+
 		# Body
 		proto-name = on-proto c-name
 		stream write: "{\n"
@@ -232,6 +234,8 @@ extend Compiler NewFunction
 			stream write: ", "
 			stream write: arg-name
 		stream write: ");\n"
+		if on-proto needs-finalizer
+			stream write: "\tRegisterFinalizer_(obj);\n"
 		stream write: "\treturn obj;\n"
 		stream write: "}\n\n\n"
 	

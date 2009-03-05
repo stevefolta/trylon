@@ -3,8 +3,7 @@ trylon Tuple
 field num-items
 
 new: num-items
-	tuple = --
-		Implementation allocate-object: Tuple with-extra-slots: num-items
+	tuple = Implementation allocate-object: Tuple with-extra-slots: num-items
 	tuple num-items = num-items
 	return tuple
 

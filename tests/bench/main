@@ -1,14 +1,41 @@
 trylon Bench
 
 main: args
+	# Parse arguments.
+	circumvent-boxing = false
+	level = 33
+	args pop-front
+	while args num-items > 0
+		arg = args pop-front
+		if arg == "circumvent-boxing"
+			circumvent-boxing = true
+		else if arg == "level:"
+			arg = args pop-front
+			if arg != nil
+				level = arg int
+
+	# Run the benchmark.
 	bench = BenchObject new
 	start-time = System milliseconds
-	result = bench nfibs: 35
+	num-sends = 0
+	iff targeting-c
+		if circumvent-boxing
+			num-sends = bench cnfibs: level
+		else
+			num-sends = bench nfibs: level
+	iff !targeting-c
+		num-sends = bench nfibs: level
 	time = System milliseconds - start-time
-	print-line: "nfibs: 35 = " + result string
-	print-line: time string + " milliseconds"
-	print-line: 	--
-		(result float / (time float / 1000.0)) string + " sends per second."
+
+	# Report the results.
+	send: ("nfibs: ", level, " => ", num-sends, " sends.")
+	send: (time, " milliseconds.")
+	sends-per-second = num-sends float / (time float / 1000.0)
+	if sends-per-second > 1000000.0
+		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
+	else
+		send: (sends-per-second, " sends per second.")
+	return 0
 
 
 class BenchObject
@@ -16,9 +43,33 @@ class BenchObject
 		# Nothing to do.
 
 	nfibs: n
+		# We're returning the total number of sends, including the
+		# currently-executing send of 'nfibs:'.
+
 		if n < 2
-			return 2 	# Call to nfibs + call to <
+			# 2 sends: nfibs: (this one), <
+			return 2
 		else
-			# 6 = nfibs, <, -, -, +, +
+			# 6 sends, not counting the calls to nfibs: (they'll count themselves):
+			# nfibs: (this one), <, -, -, +, +
 			return (nfibs: n - 1) + (nfibs: n - 2) + 6
+	
+	# Special version that circumvents boxing of Ints.
+	iff targeting-c
+		c-fn cnfibs: n
+			UsingMethod_(_ul_cnfibs_co_)
+
+			return BuildInt_((int) Call_(_ul_cnfibs_co_, this_, IntValue_(n)));
+
+		c-fn _cnfibs: n
+			UsingMethod_(_ul_cnfibs_co_)
+
+			if ((int) n < 2)
+				return (obj_) 1;
+			else {
+				return (obj_) (
+					(int) Call_(_ul_cnfibs_co_, this_, (int) n - 1) +
+					(int) Call_(_ul_cnfibs_co_, this_, (int) n - 2) +
+					1);
+				}
 

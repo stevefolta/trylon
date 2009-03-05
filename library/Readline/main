@@ -1,0 +1,54 @@
+trylon Readline
+
+
+c-preamble
+	#include <stdio.h>
+	#include <readline/readline.h>
+
+c-fn readline: prompt
+	UsingClass_(MallocedString__Readline);
+	extern obj_ new_co___MallocedString__Readline(obj_, obj_);
+	char* cPrompt = (prompt ? CString_(prompt) : nil);
+	char* rawResult = readline(cPrompt);
+	if (rawResult == nil)
+		return nil;
+	return
+		new_co___MallocedString__Readline(
+			Proto_(MallocedString__Readline), (obj_) rawResult);
+
+
+c-fn using-history
+	using_history();
+
+c-fn stifle-history: size
+	stifle_history(IntValue_(size));
+c-fn unstifle-history
+	unstifle_history();
+
+c-fn add-history: line
+	return BuildInt_(add_history(CString_(line)));
+
+c-fn read-history: path
+	return BuildInt_(read_history(CString_(path)));
+c-fn write-history: path
+	return BuildInt_(write_history(CString_(path)));
+
+
+class MallocedString
+	superclass String
+	field c-string
+
+	c-preamble
+		#include <string.h>
+		#include <stdlib.h>
+
+	c-fn create: c-string-in_
+		UsingMethod_(create_co_length_co_)
+		obj_ length = BuildInt_(strlen((const char*) c_string_in_ul_));
+		Field_(c_string) = c_string_in_ul_;
+		Call_(create_co_length_co_, this_, BuildBytePtr_(c_string_in_ul_), length);
+
+	c-fn destroy
+		free(Field_(c_string));
+	
+

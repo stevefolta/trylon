@@ -9,6 +9,17 @@ Classes can see "my-field" (which is correct), but the codegen is a field access
 
 To optimize field access, "MethodContext lookup-function:" would need to explicitly check fields before checking for function calls on "this".  But that's not semantically safe, as a subclass could override the getter and/or setter.
 
+=====
+
+64-Bit
+	[2008.10.25]
+
+Can't use setjmp()/longjmp() to pass the exception object, as they only pass an "int", not a "long".  This is easily fixed by only passing 1 there, and using a global to hold the exception value.  That's not thread-safe, but our exception chain isn't thread-safe currently either.
+
+ClassInfo stores size in bytes, rt number of fields.  That doesn't work when the generated C code is moved between 32 and 64 bit platforms.
+
+Int should go to 64-bit on 64-bit platforms... but that probably won't be necessary to make it work.
+
 
 =====
 

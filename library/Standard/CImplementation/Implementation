@@ -8,6 +8,9 @@ extend Standard Implementation
 	c-fn allocate-bytes-non-ptr: num-bytes
 		return BuildBytePtr_(AllocNonPtr_(IntValue_(num_bytes)));
 
+	c-fn ptr-size
+		return BuildInt_(sizeof(obj_));
+
 	.target-language
 		return "C"
 
