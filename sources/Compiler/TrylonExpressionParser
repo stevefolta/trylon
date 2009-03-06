@@ -308,10 +308,39 @@ parse-postfix-expression
 	if expr == nil
 		return nil
 	
-	while !(words is-done) && (is-name: words peek)
-		# A unary object call.
-		name = words next
-		expr = Send new: name object: expr arguments: List new
+	while !(words is-done)
+		next-word = words peek
+		if is-name: next-word
+			# A unary object call.
+			name = words next
+			expr = Send new: name object: expr arguments: List new
+
+		else if next-word == "("
+			# A C-style function call, which becomes a "call:" send.
+			# Parse the argument list as a tuple.
+			words next 	# Skip "("
+			tuple = TupleExpression new
+			while !(words is-done)
+				if words peek == ")"
+					words next
+					break
+				tuple-member = parse-assignment-expression
+				if tuple-member == nil
+					parse-error: "Missing expression in tuple."
+				tuple add-member: tuple-member
+				next-word = words next
+				if next-word == nil
+					parse-error: "Missing \",\" or \")\" in tuple."
+				else if next-word == ")"
+					break
+				else if next-word != ","
+					parse-error: "Missing \",\" or \")\" in tuple."
+			args = List new
+			args append: tuple
+			expr = Send new: "call:" object: expr arguments: args
+
+		else
+			break
 	
 	return expr
 

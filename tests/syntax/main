@@ -9,6 +9,11 @@ main: args
 			check: var against: 'inner' title: "Declaration (inner)"
 		check: var against: 'outer' title: "Declaration"
 
+		# C-style calls.
+		check: function() against: 0 title: "C-style function calls (nullary)"
+		check: function("foo") against: 1 title: "C-style function calls (unary)"
+		check: function("foo", "bar") against: 2 title: "C-style function calls (2 args)"
+
 	catch
 		send: exception message
 	
@@ -26,4 +31,10 @@ test: succeeded title: title
 		print-line: title + " test succeeded."
 	else
 		throw MessageException new: "*** " + title + " test failed. ***"
+
+
+class function
+	call: args
+		return args num-items
+
 
