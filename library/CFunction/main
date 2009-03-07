@@ -1,0 +1,97 @@
+trylon CFunction
+
+
+call: args
+	virtual
+
+call
+	return call: (Tuple new: 0)
+
+
+# Internals.
+
+c-preamble
+	#include <ffi.h>
+	#include <dlfcn.h>
+
+	/* Stupid GNU <dlfcn.h> does not always define RTLD_DEFAULT. */
+	#ifndef RTLD_DEFAULT
+		#define RTLD_DEFAULT	nil
+	#endif
+
+	void CallFFI_(obj_ fn_name, obj_ args, ffi_type* result_type, void* result)
+	{
+		UsingMethod_(num_items) UsingMethod_(iterator)
+		UsingMethod_(is_done) UsingMethod_(current_item) UsingMethod_(go_forward)
+		UsingMethod_(is_a_co_)
+		UsingMethod_(function_not_found_co_) UsingMethod_(bad_arg_type_co_) UsingMethod_(ffi_error)
+
+		typedef union {
+			void* 	ptrValue;
+			int   	intValue;
+			double	doubleValue;
+		} Value;
+
+		ffi_cif cif;
+		ffi_status status;
+
+		/* Find the function */
+		void* fn = dlsym(RTLD_DEFAULT, CString_(fn_name));
+		if (fn == nil)
+			Call_(function_not_found_co_, Proto_(CFunction), fn_name);
+
+		/* Gather the arguments */
+		int num_args = IntValue_(Call_(num_items, args));
+		ffi_type** types = Allocate_(num_args * sizeof(ffi_type));
+		Value* values = Allocate_(num_args * sizeof(Value));
+		Value** value_ptrs = Allocate_(num_args * sizeof(Value*));
+		int index = 0;
+		ForStart_(argsLoop, args, arg)
+			if (arg == nil) {
+				values[index].ptrValue = nil;
+				types[index] = &ffi_type_pointer;
+				}
+			else if (Call_(is_a_co_, arg, Proto_(String__Standard))) {
+				values[index].ptrValue = CString_(arg);
+				types[index] = &ffi_type_pointer;
+				}
+			else if (Call_(is_a_co_, arg, Proto_(Int__Standard))) {
+				values[index].intValue = IntValue_(arg);
+				types[index] = &ffi_type_sint;
+				}
+			else if (Call_(is_a_co_, arg, Proto_(Float__Standard))) {
+				values[index].doubleValue = FloatValue_(arg);
+				types[index] = &ffi_type_double;
+				}
+			else if (Call_(is_a_co_, arg, Proto_(BytePtr__Standard))) {
+				values[index].ptrValue = BytePtrValue_(arg);
+				types[index] = &ffi_type_pointer;
+				}
+			else
+				Call_(bad_arg_type_co_, Proto_(CFunction), arg);
+			value_ptrs[index] = &values[index];
+			index += 1;
+			ForEnd_(argsLoop)
+
+		/* Prepare the ffi_cif */
+		status = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, num_args, result_type, types);
+		if (status != FFI_OK)
+			Call_(ffi_error, Proto_(CFunction));
+
+		/* Make the call */
+		ffi_call(&cif, fn, result, (void**) value_ptrs);
+	}
+
+
+function-not-found: fn-name
+	message = "Couldn't find the C function \"" + fn-name + "\"."
+	throw MessageException new: message
+
+bad-arg-type: arg
+	message = "Can't use type \"" + arg .proto-name + "\" in a C function call."
+	throw MessageException new: message
+
+ffi-error
+	throw MessageException new: "FFI error."
+
+

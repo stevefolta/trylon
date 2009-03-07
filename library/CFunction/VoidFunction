@@ -1,0 +1,13 @@
+trylon VoidFunction
+
+c-fn call: name with: args
+	ffi_arg result;
+	CallFFI_(name, args, &ffi_type_void, &result);
+
+
+c-preamble
+	#include <ffi.h>
+
+	extern void CallFFI_(obj_ fn_name, obj_ args, ffi_type* result_type, void* result);
+
+

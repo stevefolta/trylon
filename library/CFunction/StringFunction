@@ -1,0 +1,14 @@
+trylon StringFunction
+
+c-fn call: name with: args
+	char* result;
+	CallFFI_(name, args, &ffi_type_pointer, &result);
+	return BuildString_(result);
+
+
+c-preamble
+	#include <ffi.h>
+
+	extern void CallFFI_(obj_ fn_name, obj_ args, ffi_type* result_type, void* result);
+
+

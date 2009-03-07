@@ -1,0 +1,37 @@
+trylon ffi-test
+
+class PseudoPosix
+	class printf
+		superclass CFunction IntFunction
+		call: args
+			return call: "printf" with: args
+
+	class strdup
+		superclass CFunction StringFunction
+		call: args
+			return call: "strdup" with: args
+	
+	class cos
+		superclass CFunction DoubleFunction
+		call: args
+			return call: "cos" with: args
+
+
+main: args
+	len = PseudoPosix printf("Value: %d.\n", 12345)
+	check: len against: 14 title: "printf() return value"
+	check: PseudoPosix strdup("foo") against: "foo" title: "strdup() return value"
+	check: PseudoPosix cos(0.0) against: 1.0 title: "cos() return value"
+	return 0
+
+
+check: value against: expected-value title: title
+	test: value == expected-value title: title
+
+test: succeeded title: title
+	if succeeded
+		print-line: title + ": succeeded."
+	else
+		throw MessageException new: "*** " + title + ": FAILED. ***"
+
+

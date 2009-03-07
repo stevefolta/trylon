@@ -1,0 +1,15 @@
+trylon DoubleFunction
+
+c-fn call: name with: args
+	double result;
+	CallFFI_(name, args, &ffi_type_double, &result);
+	return BuildFloat_(result);
+
+
+c-preamble
+	#include <ffi.h>
+
+	extern void CallFFI_(obj_ fn_name, obj_ args, ffi_type* result_type, void* result);
+
+
+
