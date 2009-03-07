@@ -338,7 +338,10 @@ parse-primary-expression
 	
 	else if is-number: word
 		words next
-		return IntLiteral new: word
+		if word contains: "."
+			return FloatLiteral new: word
+		else
+			return IntLiteral new: word
 	
 	else if word starts-with: "\""
 		words next
