@@ -14,10 +14,7 @@ c-preamble
 	#include <ffi.h>
 	#include <dlfcn.h>
 
-	/* Stupid GNU <dlfcn.h> does not always define RTLD_DEFAULT. */
-	#ifndef RTLD_DEFAULT
-		#define RTLD_DEFAULT	nil
-	#endif
+	static void* programHandle = nil;
 
 	void CallFFI_(obj_ fn_name, obj_ args, ffi_type* result_type, void* result)
 	{
@@ -35,8 +32,12 @@ c-preamble
 		ffi_cif cif;
 		ffi_status status;
 
+		/* Open the program if that has not been done yet. */
+		if (programHandle == nil)
+			programHandle = dlopen(nil, RTLD_NOW);
+
 		/* Find the function */
-		void* fn = dlsym(RTLD_DEFAULT, CString_(fn_name));
+		void* fn = dlsym(programHandle, CString_(fn_name));
 		if (fn == nil)
 			Call_(function_not_found_co_, Proto_(CFunction), fn_name);
 
