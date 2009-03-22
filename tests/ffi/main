@@ -26,10 +26,18 @@ class PseudoPosix
 		check: cos(0.0) against: 1.0 title: "cos() return value"
 		sin = CFunction DoubleFunction new: "sin"
 		check: sin(0.0) against: 0.0 title: "sin() return value"
+		iff test-builtin-functions
+			# MUST have "-rdynamic" in the link-flags for this to work.
+			builtin-function = CFunction IntFunction new: "builtin_function"
+			check: builtin-function() against: 23456 title: "builtin_function()"
 
 
 main: args
-	PseudoPosix test
+	try
+		PseudoPosix test
+	else
+		send: exception message
+		return 1
 	return 0
 
 
@@ -41,5 +49,12 @@ test: succeeded title: title
 		print-line: title + ": succeeded."
 	else
 		throw MessageException new: "*** " + title + ": FAILED. ***"
+
+
+c-preamble
+	int builtin_function()
+	{
+		return 23456;
+	}
 
 
