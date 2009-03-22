@@ -5,6 +5,20 @@ c-fn call: name with: args
 	CallFFI_(name, args, &ffi_type_void, &result);
 
 
+new: name
+	return NamedFunction new: name
+
+class NamedFunction
+	superclass VoidFunction
+	fields name
+
+	create: name
+		this name = name
+	
+	call: args
+		call: name with: args
+
+
 c-preamble
 	#include <ffi.h>
 

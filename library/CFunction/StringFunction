@@ -6,6 +6,21 @@ c-fn call: name with: args
 	return BuildString_(result);
 
 
+new: name
+	return NamedFunction new: name
+
+class NamedFunction
+	superclass StringFunction
+	fields name
+
+	create: name
+		this name = name
+	
+	call: args
+		call: name with: args
+
+
+
 c-preamble
 	#include <ffi.h>
 
