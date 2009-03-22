@@ -17,7 +17,7 @@ class NamedFunction
 		this name = name
 	
 	call: args
-		call: name with: args
+		return call: name with: args
 
 
 
