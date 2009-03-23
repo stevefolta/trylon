@@ -30,6 +30,10 @@ open: path flags: flags
 c-fn close-fd: fd
 	return BuildInt_(close(IntValue_(fd)));
 
+stdin-fd = 0
+stdout-fd = 1
+stderr-fd = 2
+
 
 
 # Private.
