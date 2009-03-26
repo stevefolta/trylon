@@ -262,6 +262,10 @@ setup-main: main-directory library-directory: library-directory
 	# Self.
 	functions at: name put: (ProtoFunction new: this)
 
+	# Add the library-dirs.
+	for directory in build-settings library-dirs
+		add-directory: (FileDirectory new: directory)
+
 
 ensure-superclasses: object-proto
 	if superclass == nil && object-proto != this
