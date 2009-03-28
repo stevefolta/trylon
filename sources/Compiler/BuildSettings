@@ -37,9 +37,15 @@ has-symbol: name
 
 
 load
+	# Load global build-settings first.
 	library-path = compiler find-library-path
 	if library-path
 		load-from: library-path + "/build-settings"
+	# Then user's semi-global build-settings.
+	home-path = System environment-variable-named: "HOME"
+	if home-path && !(home-path is-empty)
+		load-from: home-path + "/.trylon-build-settings"
+	# The project-specific build-settings.
 	load-from: "build-settings.local"
 	load-from: "build-settings"
 
