@@ -1,0 +1,82 @@
+trylon NewBuildSettings
+
+load-lines: lines
+	for line in lines
+		load-line: line
+
+
+load-line: line
+	line = line words
+	first-word = line next
+
+	# Comments and blank lines.
+	if first-word == nil || first-word starts-with: "#"
+		# Nothing to do.
+
+	# "if" is the only special form.
+	else if first-word == "if" || first-word == "iff"
+		# Get the symbol and the sense.
+		reverse-sense = false
+		line next
+		symbol = line next
+		if symbol starts-with: "!"
+			reverse-sense = true
+			if symbol == "!"
+				# "if ! foo"
+				symbol = line next
+			else
+				# "if !foo"
+				symbol = symbol substr: 1
+		line require-eol
+
+		# Test it.
+		value = dictionary at: symbol
+		if value == nil
+			value = ""
+		test-succeeded = !value is-empty
+		if reverse-sense
+			test-succeeded = !test-succeeded
+
+		# Do, or do not.
+		if test-succeeded
+			load-lines: line 
+
+	# Anything else is a sort of assignment expression.
+	else
+		# Name and flavor.
+		name = first-word
+		appending = false
+		if name ends-with: ":"
+			name = name substr: 0 length: name length - 1
+		else
+			operator = line next
+			if operator == "+="
+				appending = true
+			else if operator != "="
+				error: "'=' or '+=' expected" in: line
+
+		# Get the value, as a string.
+		value = line next
+		if value == nil
+			error: "value expected" in: line
+		else if value == "false" || value == "nil"
+			value = nil
+		else if value starts-with: "\""
+			value = value substr: 0 length: value length - 1
+
+		# Appending to a list.
+		if appending
+			if value == nil
+				return
+			old-value = dictionary at: name
+			if old-value == nil
+				# Just use the new value.
+			else if old-value is-a: List
+				old-value append: value
+				value = old-value
+
+		# Setting a value.
+		else
+			dictionary at: name put: value
+
+
