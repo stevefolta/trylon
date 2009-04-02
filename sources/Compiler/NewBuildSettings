@@ -1,5 +1,91 @@
 trylon NewBuildSettings
 
+fields dictionary
+
+
+create
+	dictionary = Dictionary new
+	dictionary at: "c-flags" put: List new
+	dictionary at: "link-flags" put: List new
+	dictionary at: "library-dirs" put: List new
+	dictionary at: "c-compiler" put: "gcc"
+	dictionary at: "linker" put: "gcc"
+	dictionary at: "c-sources-dir" put: ".jolt-sources"
+	dictionary at: "objects-dir" put: ".objects"
+	dictionary at: "jolt-sources-dir" put: ".jolt-sources"
+	dictionary at: "target" put: "C"
+
+	sysname = System sysname
+	if !sysname is-empty
+		dictionary at: sysname put: sysname
+	(dictionary at: "in-trylid") = "true"
+	(dictionary at: "trylon-2") = "true"
+	if Implementation .target-language == "Coke"
+		(dictionary at: "in-jolt") = "true"
+
+
+has-symbol: name
+	return (dictionary at: name) != nil
+
+program-name
+	return dictionary at: "program-name"
+c-flags
+	return dictionary at: "c-flags"
+link-flags
+	return dictionary at: "link-flags"
+c-compiler
+	return dictionary at: "c-compiler"
+linker
+	return dictionary at: "linker"
+library-dirs
+	return dictionary at: "library-dirs"
+jolt-sources-dir
+	return dictionary at: "jolt-sources-dir"
+c-sources-dir
+	return dictionary at: "c-sources-dir"
+objects-dir
+	return dictionary at: "objects-dir"
+is-verbose
+	return dictionary at: "is-verbose"
+targeting-c
+	return dictionary at: "targeting-c"
+targeting-jolt
+	return dictionary at: "targeting-jolt"
+debugger
+	return dictionary at: "debugger"
+include-selector-symbols
+	return dictionary at: "include-selector-symbols"
+support-perform
+	return dictionary at: "support-perform"
+
+
+load
+	# Load global build-settings first.
+	library-path = compiler find-library-path
+	if library-path
+		load-from: library-path + "/build-settings"
+	# Then user's semi-global build-settings.
+	home-path = System environment-variable-named: "HOME"
+	if home-path && !(home-path is-empty)
+		load-from: home-path + "/.trylon-build-settings"
+	# The project-specific build-settings.
+	load-from: "build-settings.local"
+	load-from: "build-settings"
+
+
+load-from: file-name
+	file = File new: file-name
+	if !file exists
+		return
+	
+	try
+		load-lines: (LinesLexer read: file contents)
+	catch Exception
+		throw 	--
+			MessageException new: 	--
+				"Error in \"" + file-name + "\": " + exception message
+
+
 load-lines: lines
 	for line in lines
 		load-line: line

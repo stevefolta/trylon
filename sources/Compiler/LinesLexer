@@ -7,6 +7,10 @@ fields cur-lines cur-indentation 	# Caching top of indent-stack.
 fields had-indent-problem
 
 
+read: text
+	return (LinesLexer new: text) lex
+
+
 create: text
 	p = text start
 	stopper = text stopper
