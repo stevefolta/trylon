@@ -13,7 +13,7 @@ create
 	dictionary at: "c-sources-dir" put: ".jolt-sources"
 	dictionary at: "objects-dir" put: ".objects"
 	dictionary at: "jolt-sources-dir" put: ".jolt-sources"
-	dictionary at: "target" put: "C"
+	target: 'C'
 
 	sysname = System sysname
 	if !sysname is-empty
@@ -28,7 +28,8 @@ has-symbol: name
 	return (dictionary at: name) != nil
 
 program-name
-	return dictionary at: "program-name"
+	# Note!: This one uses a different name.
+	return dictionary at: "program"
 c-flags
 	return dictionary at: "c-flags"
 link-flags
@@ -47,6 +48,8 @@ objects-dir
 	return dictionary at: "objects-dir"
 is-verbose
 	return dictionary at: "is-verbose"
+is-verbose: new-value
+	dictionary at: "is-verbose" put: new-value
 targeting-c
 	return dictionary at: "targeting-c"
 targeting-jolt
@@ -57,6 +60,16 @@ include-selector-symbols
 	return dictionary at: "include-selector-symbols"
 support-perform
 	return dictionary at: "support-perform"
+
+
+target: target
+	switch target
+		'C'
+			dictionary at: "targeting-c" put: "true"
+			dictionary at: "targeting-jolt" put: nil
+		'Jolt'
+			dictionary at: "targeting-jolt" put: "true"
+			dictionary at: "targeting-c" put: nil
 
 
 load
@@ -103,8 +116,9 @@ load-line: line
 	else if first-word == "if" || first-word == "iff"
 		# Get the symbol and the sense.
 		reverse-sense = false
-		line next
 		symbol = line next
+		if symbol == nil || symbol starts-with: "#"
+			error: "\"if\" line needs a condition" in: line
 		if symbol starts-with: "!"
 			reverse-sense = true
 			if symbol == "!"
@@ -133,7 +147,7 @@ load-line: line
 		name = first-word
 		appending = false
 		if name ends-with: ":"
-			name = name substr: 0 length: name length - 1
+			name = name substr: 0 length: name length - 2
 		else
 			operator = line next
 			if operator == "+="
@@ -143,15 +157,13 @@ load-line: line
 
 		# Get the value, as a string.
 		value = line next
-		if value == nil
+		if value == nil || value starts-with: "#"
 			error: "value expected" in: line
-		else if value == "false" || value == "nil"
-			value = nil
-		else if value starts-with: "\""
-			value = value substr: 0 length: value length - 1
+		value = resolve-value: value
 
 		# Appending to a list.
 		if appending
+			# Append the first value.
 			if value == nil
 				return
 			old-value = dictionary at: name
@@ -160,9 +172,45 @@ load-line: line
 			else if old-value is-a: List
 				old-value append: value
 				value = old-value
+			else
+				value = List with: old-value and: value
+			dictionary at: name put: value
 
 		# Setting a value.
 		else
 			dictionary at: name put: value
+
+		# Append any more values we find on the line.
+		loop
+			value = line next
+			if value == nil || value starts-with: "#"
+				break
+			value = resolve-value: value
+			old-value = dictionary at: name
+			if old-value && old-value is-a: List
+				old-value append: value
+				value = old-value
+			else
+				value = List with: old-value and: value
+			dictionary at: name put: value
+
+		# Special-case 'targeting-c' and 'targeting-jolt', which are mutually
+		# exclusive.
+		if name == "targeting-c" && dictionary at: name
+			target = 'C'
+		else if name == "targeting-jolt" && dictionary at: name
+			target = 'Jolt'
+
+
+resolve-value: value
+	if value == nil || value == "false" || value == "nil"
+		return nil
+	else if value starts-with: "\"" || value starts-with: "'"
+		return value substr: 1 length: value length - 2
+	return value
+
+
+error: message in: line
+	throw MessageException new: message
 
 
