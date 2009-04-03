@@ -1,4 +1,4 @@
-link-flags += -lffi
+link-flags += "-lffi"
 link-flags += "-rdynamic"
 
 test-builtin-functions = true
