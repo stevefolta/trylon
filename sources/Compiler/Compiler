@@ -14,7 +14,7 @@ fields status-reporter
 
 create
 	this successful = true
-	this build-settings = NewBuildSettings new
+	this build-settings = BuildSettings new
 	proto-queue = List new
 	symbols = Dictionary new
 
