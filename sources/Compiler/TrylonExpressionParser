@@ -339,6 +339,16 @@ parse-postfix-expression
 			args append: tuple
 			expr = Send new: "call:" object: expr arguments: args
 
+		else if next-word == "["
+			# "[]" is syntactic sugar for 'at:'.
+			words next 	# Skip "["
+			index = parse-expression
+			if index == nil
+				parse-error: "Missing expression inside []."
+			if words next != "]"
+				parse-error: "Missing closing \"]\"."
+			expr = Send new: "at:" object: expr arguments: (List with: index)
+
 		else
 			break
 	

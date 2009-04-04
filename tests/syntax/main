@@ -14,6 +14,14 @@ main: args
 		check: function("foo") against: 1 title: "C-style function calls (unary)"
 		check: function("foo", "bar") against: 2 title: "C-style function calls (2 args)"
 
+		# [].
+		check: ("zero", "one", "two")[2] against: "two" title: "[] (Tuple)"
+		dict = Dictionary new
+		dict["foo"] = "foom"
+		dict["bar"] = "barm"
+		dict["baz"] = "bazm"
+		check: dict["bar"] against: "barm" title: "[] (Dictionary)"
+
 	catch
 		send: exception message
 	
@@ -22,7 +30,7 @@ main: args
 
 check: value against: expected-value title: title
 	if value == expected-value
-		print-line: title + " test succeeded."
+		print-line: title + ": succeeded."
 	else
 		throw MessageException new: "*** " + title + " test failed. ***"
 
