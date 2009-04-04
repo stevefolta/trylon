@@ -24,8 +24,6 @@ main: args
 
 	catch
 		send: exception message
-	
-	return 0
 
 
 check: value against: expected-value title: title

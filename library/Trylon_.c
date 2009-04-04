@@ -296,7 +296,9 @@ int main(int argc, char* argv[])
 	result = main_co___Main(Proto_(Main), args);
 
 	// Return the result.
-	if (result && result->class_ == StdClassRef_(Int))
+	if (result == nil)
+		return 0;
+	else if (result->class_ == StdClassRef_(Int))
 		return IntValue_(result);
 	else
 		return 1;
