@@ -70,6 +70,12 @@ emit-c: compiler
 	recompile = (emit-symbols || recompile-all)
 	objects append: (compile-c-file: "symbols_" force-compile: recompile)
 
+	# Emit the ints.
+	if build-settings shared-ints
+		status-reporter report: "Emitting ints..."
+		recompile = (emit-ints || recompile-all)
+		objects append: (compile-c-file: "ints_" force-compile: recompile)
+
 	# Link.
 	status-reporter report: "Linking..."
 	args = List new
@@ -87,22 +93,6 @@ emit-c: compiler
 		if symbol-info called && !(symbol-info declared)
 			status-reporter warn: 	--
 				"'" + symbol-info name + "' is called but never defined."
-
-
-emit-settings: build-settings
-	stream = 	--
-		ExistingFileStream new: 	--
-			(File new: build-settings c-sources-dir + "/settings_.h")
-
-	if build-settings support-perform
-		stream write-line: "#define SUPPORT_PERFORM_"
-	if build-settings debugger
-		stream write-line: "#define DEBUGGER_"
-	
-	stream write-line
-	is-changed = stream is-changed
-	stream close
-	return is-changed
 
 
 mangle-name: name
@@ -279,6 +269,24 @@ extend Compiler
 
 # Program building.
 
+emit-settings: build-settings
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/settings_.h")
+
+	if build-settings support-perform
+		stream write-line: "#define SUPPORT_PERFORM_"
+	if build-settings debugger
+		stream write-line: "#define DEBUGGER_"
+	if build-settings shared-ints
+		stream write-line: "#define SHARED_INTS_"
+	
+	stream write-line
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
 emit-dispatch-table: main-package
 	status-reporter report: "Building dispatch table..."
 	status-reporter indent
@@ -407,6 +415,22 @@ emit-symbols
 		# No symbols at all.
 		stream write-line: "struct Standard__Symbol__internal* firstSymbol_ = nil;\n"
 		stream write-line: "struct Standard__Symbol__internal* lastSymbol_ = nil;\n"
+	stream write-line
+
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+emit-ints
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/ints_.c")
+	stream send: "#include \"Trylon_.h\""
+	stream write-line
+
+	for value in compiler ints values
+		stream send: ("DefineInt_(", value, ")")
 	stream write-line
 
 	is-changed = stream is-changed

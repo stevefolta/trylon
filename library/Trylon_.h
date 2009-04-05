@@ -142,8 +142,15 @@ UsingClass_(True__Standard)
 
 /* Literals */
 
-#define DefineInt_(index, value) \
-	static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
+#ifdef SHARED_INTS_
+	#define UsingInt_(value) 	\
+		extern struct object i##value##_;
+	#define DefineInt_(value) \
+		struct object i##value##_ = { StdClassRef_(Int), (obj_) (value) };
+#else
+	#define DefineInt_(index, value) \
+		static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
+#endif
 #define Int_(index)	(&i##index##_)
 
 #define DefineFloat_(index, value) 	\

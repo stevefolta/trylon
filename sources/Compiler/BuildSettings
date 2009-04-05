@@ -60,6 +60,8 @@ include-selector-symbols
 	return dictionary at: "include-selector-symbols"
 support-perform
 	return dictionary at: "support-perform"
+shared-ints
+	return dictionary at: "shared-ints"
 
 
 target: target

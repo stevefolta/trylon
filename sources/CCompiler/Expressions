@@ -82,14 +82,22 @@ extend Compiler IntLiteral
 		return true
 
 	emit-code: builder
+		if build-settings shared-ints
+			compiler using-int: value
 		builder int-literals add: this
 		return CCompiler LiteralResult new: this
 
 	emit-declaration: stream
-		stream write-all: ("\tDefineInt_(", index string, ", ", value string, ")\n")
+		if build-settings shared-ints
+			stream send: ("\tUsingInt_(", value string, ")")
+		else
+			stream send: ("\tDefineInt_(", index string, ", ", value string, ")")
 	
 	access
-		return "Int_(" + index string + ")"
+		if build-settings shared-ints
+			return "Int_(" + value string + ")"
+		else
+			return "Int_(" + index string + ")"
 	
 
 extend Compiler FloatLiteral
@@ -175,6 +183,8 @@ extend Compiler CharacterLiteral
 		return true
 
 	emit-code: builder
+		if build-settings shared-ints
+			compiler using-int: char
 		builder int-literals add: this
 		return CCompiler LiteralResult new: this
 	
@@ -185,10 +195,16 @@ extend Compiler CharacterLiteral
 			char-string = char int string
 		iff trylon-2
 			char-string = char string
-		stream write-all: ("\tDefineInt_(", index string, ", ", char-string, ")\n")
+		if build-settings shared-ints
+			stream send: ("\tUsingInt_(", char-string, ")")
+		else
+			stream send: ("\tDefineInt_(", index string, ", ", char-string, ")")
 	
 	access
-		return "Int_(" + index string + ")"
+		if build-settings shared-ints
+			return "Int_(" + char string + ")"
+		else
+			return "Int_(" + index string + ")"
 	
 
 extend Compiler DictLiteral
