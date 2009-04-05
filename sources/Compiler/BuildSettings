@@ -10,7 +10,7 @@ create
 	dictionary at: "library-dirs" put: List new
 	dictionary at: "c-compiler" put: "gcc"
 	dictionary at: "linker" put: "gcc"
-	dictionary at: "c-sources-dir" put: ".jolt-sources"
+	dictionary at: "c-sources-dir" put: ".c-sources"
 	dictionary at: "objects-dir" put: ".objects"
 	dictionary at: "jolt-sources-dir" put: ".jolt-sources"
 	target: 'C'
