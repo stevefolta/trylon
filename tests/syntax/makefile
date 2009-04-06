@@ -3,7 +3,7 @@
 PROGRAM := syntax-test
 
 
-SOURCES := main $(wildcard sources/*)
+SOURCES := $(wildcard main) $(wildcard sources/*) $(wildcard build-settings) $(wildcard build-settings.local)
 
 
 all: runnit

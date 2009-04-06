@@ -8,7 +8,7 @@ trylon Compiler
 # "Compiler Compiler" to someday be hoisted into "Compiler".)
 
 fields successful build-settings
-fields proto-queue main-proto symbols
+fields proto-queue main-proto symbols ints
 fields status-reporter
 
 
@@ -17,6 +17,7 @@ create
 	this build-settings = BuildSettings new
 	proto-queue = List new
 	symbols = Dictionary new
+	ints = Dictionary new
 
 
 return-value
@@ -124,6 +125,10 @@ calling-selector: name
 
 using-symbol: name
 	(symbol-info-for: name) used-as-symbol = true
+
+using-int: value
+	if build-settings shared-ints
+		ints at: value put: value
 
 symbol-info-for: name
 	name = name string
