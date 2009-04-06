@@ -42,8 +42,12 @@ extend Compiler SuperCall
 		if superclass == nil
 			throw MessageException new: 	--
 				"Attempt to do a super call on a class with no superclass."
-		# FIXME: Ask the function directly, so it works with shared-field-accessors.
-		fn-name = (mangle-name: name) + "__" + superclass c-name
+		super-fn = superclass lookup-instance-function: name
+		if super-fn == nil
+			throw MessageException new: 	--
+				"Attempt to do a super call of '" + name + 	--
+				"', which is not defined in any superclass."
+		fn-name = (superclass lookup-instance-function: name) c-name
 
 		# Declare it.
 		declaration = StringBuilder new

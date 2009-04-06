@@ -22,6 +22,9 @@ main: args
 		dict["baz"] = "bazm"
 		check: dict["bar"] against: "barm" title: "[] (Dictionary)"
 
+		# "super" call is field.
+		check: OverridingFieldClass new value against: "foo augmented" title: "Super call on field"
+
 	catch
 		send: exception message
 
@@ -42,5 +45,20 @@ test: succeeded title: title
 class function
 	call: args
 		return args num-items
+
+
+class FieldedClass
+	field value
+
+	create
+		value = "foo"
+
+class OverridingFieldClass
+	superclass FieldedClass
+
+	create
+		super create
+	value
+		return super value + " augmented"
 
 
