@@ -62,6 +62,8 @@ support-perform
 	return dictionary at: "support-perform"
 shared-ints
 	return dictionary at: "shared-ints"
+shared-field-accessors
+	return dictionary at: "shared-field-accessors"
 
 
 target: target

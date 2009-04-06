@@ -63,16 +63,27 @@ extend Compiler CompiledProto
 			total += superclass total-num-fields
 		return total
 
+
 	number-classes: numberer
 		# Depth-first.
 		for subclass in subclasses
 			subclass number-classes: numberer
 		
 		class-num = numberer next-number
+	
+
+	assign-field-indices
+		index = 0
+		if superclass
+			index = superclass total-num-fields
+		for field in fields
+			field index = index
+			index += 1
 
 
 extend Compiler CompiledField
-	field initial-value-result
+	field initial-value-result 	# For shared fields.
+	field index 	# For instance fields when 'shared-field-accessors' is on.
 
 
 # Copyright 2007 Steve Folta

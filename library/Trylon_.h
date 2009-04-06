@@ -67,6 +67,21 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 #define UsingSharedField_(name, className) 	\
 	extern obj_ name##__##className##__storage_;
 
+#define DefineFieldAccessors_(index) 	\
+	obj_ FieldGetter##index##_(obj_ this_) 	\
+	{ 	\
+		return this_->fields[index]; 	\
+	} 	\
+	\
+	obj_ FieldSetter##index##_(obj_ this_, obj_ value) 	\
+	{ 	\
+		this_->fields[index] = value; 	\
+		return value; 	\
+	}
+#define DeclareFieldAccessors_(index) 	\
+	extern obj_ FieldGetter##index##_(obj_ this_); 	\
+	extern obj_ FieldSetter##index##_(obj_ this_, obj_ value);
+
 #define UsingClass_(className) 	\
 	extern struct ClassInfo className##__classInfo_;	 \
 	extern struct object className;

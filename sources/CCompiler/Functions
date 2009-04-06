@@ -60,6 +60,8 @@ extend Compiler FieldGetter
 				to-string: proto-access with: arguments builder: builder
 	
 	emit-c-function-on: stream
+		if build-settings shared-field-accessors
+			return
 		stream write-line: c-signature
 		stream write: "{\n"
 		stream write: "\treturn Field_(" + (mangle-name: field name) + ");\n"
@@ -71,7 +73,10 @@ extend Compiler FieldGetter
 		return "obj_ " + c-name + "(obj_ this_)"
 	
 	c-name
-		return (mangle-name: field name) + "__" + on-proto c-name
+		if build-settings shared-field-accessors
+			return "FieldGetter" + field index string + "_"
+		else
+			return (mangle-name: field name) + "__" + on-proto c-name
 
 
 extend Compiler FieldSetter
@@ -84,6 +89,8 @@ extend Compiler FieldSetter
 				to-string: proto-access with: arguments builder: builder
 	
 	emit-c-function-on: stream
+		if build-settings shared-field-accessors
+			return
 		stream write-line: c-signature
 		stream write: "{\n"
 		stream write-all: ("\tField_(", (mangle-name: field name), ") = value;\n")
@@ -96,7 +103,10 @@ extend Compiler FieldSetter
 		return "obj_ " + c-name + "(obj_ this_, obj_ value)"
 	
 	c-name
-		return (mangle-name: name) + "__" + on-proto c-name
+		if build-settings shared-field-accessors
+			return "FieldSetter" + field index string + "_"
+		else
+			return (mangle-name: name) + "__" + on-proto c-name
 
 
 extend Compiler SharedFieldGetter

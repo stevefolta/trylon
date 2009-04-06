@@ -27,6 +27,11 @@ emit-c: compiler
 	object-class = compiler standard-object-proto
 	object-class number-classes: ClassNumberer new
 
+	# Assign field indices.
+	if build-settings shared-field-accessors
+		for proto in compiler all-protos
+			proto assign-field-indices
+
 	# Emit the settings.
 	settings-changed = emit-settings: build-settings
 	if settings-changed
@@ -53,10 +58,14 @@ emit-c: compiler
 	# Emit the classes and packages.
 	status-reporter report: "Emitting code..."
 	status-reporter indent
+	max-num-fields = 0
 	for proto in compiler all-protos
 		builder = ClassBuilder new: proto
 		builder emit: recompile-all
 		objects append: builder object-file-name
+		num-fields = proto total-num-fields
+		if num-fields > max-num-fields
+			max-num-fields = num-fields
 	status-reporter unindent
 
 	# Emit the dispatch table.
@@ -75,6 +84,12 @@ emit-c: compiler
 		status-reporter report: "Emitting ints..."
 		recompile = (emit-ints || recompile-all)
 		objects append: (compile-c-file: "ints_" force-compile: recompile)
+
+	# Emit the field accessors.
+	if build-settings shared-field-accessors
+		status-reporter report: "Emitting field accessors..."
+		recompile = (emit-field-accessors: max-num-fields || recompile-all)
+		objects append: (compile-c-file: "field-accessors_" force-compile: recompile)
 
 	# Link.
 	status-reporter report: "Linking..."
@@ -280,6 +295,8 @@ emit-settings: build-settings
 		stream write-line: "#define DEBUGGER_"
 	if build-settings shared-ints
 		stream write-line: "#define SHARED_INTS_"
+	if build-settings shared-field-accessors
+		stream write-line: "#define SHARED_FIELD_ACCESSORS_"
 	
 	stream write-line
 	is-changed = stream is-changed
@@ -431,6 +448,22 @@ emit-ints
 
 	for value in compiler ints values
 		stream send: ("DefineInt_(", value, ")")
+	stream write-line
+
+	is-changed = stream is-changed
+	stream close
+	return is-changed
+
+
+emit-field-accessors: max-num-fields
+	stream = 	--
+		ExistingFileStream new: 	--
+			(File new: build-settings c-sources-dir + "/field-accessors_.c")
+	stream send: "#include \"Trylon_.h\""
+	stream write-line
+
+	for index in Interval new: max-num-fields
+		stream send: ("DefineFieldAccessors_(", index, ")")
 	stream write-line
 
 	is-changed = stream is-changed
