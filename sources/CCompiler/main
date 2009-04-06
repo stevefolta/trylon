@@ -447,7 +447,12 @@ emit-ints
 	stream write-line
 
 	for value in compiler ints values
-		stream send: ("DefineInt_(", value, ")")
+		name = nil
+		if value < 0
+			name = "m" + (-value) string
+		else
+			name = value string
+		stream send: ("DefineInt_(", name, ", ", value, ")")
 	stream write-line
 
 	is-changed = stream is-changed

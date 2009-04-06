@@ -94,15 +94,21 @@ extend Compiler IntLiteral
 
 	emit-declaration: stream
 		if build-settings shared-ints
-			stream send: ("\tUsingInt_(", value string, ")")
+			stream send: ("\tUsingInt_(", value-name, ")")
 		else
 			stream send: ("\tDefineInt_(", index string, ", ", value string, ")")
 	
 	access
 		if build-settings shared-ints
-			return "Int_(" + value string + ")"
+			return "Int_(" + value-name + ")"
 		else
 			return "Int_(" + index string + ")"
+	
+	value-name
+		if value < 0
+			return "m" + (-value) string
+		else
+			return value string
 	
 
 extend Compiler FloatLiteral
