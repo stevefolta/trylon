@@ -1,5 +1,6 @@
 trylon StringFunction
 
+
 c-fn call: name with: args
 	char* result;
 	CallFFI_(name, args, &ffi_type_pointer, &result);

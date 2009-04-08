@@ -2,6 +2,11 @@ program = "trylon"
 debugging = true
 support-perform = true
 
+
+
+
+# Archaic stuff.
+
 iff !trylon-2
 	# Trylon 1 boilerplate.
 	c-flags += "-g"
@@ -11,9 +16,6 @@ iff !trylon-2
 		c-flags += "-DMAC_OSX" "-DOSX_FINK" "-I/sw/include"
 		link-flags += "-L/sw/lib"
 
-
-
-# Trylid settings.
 
 iff in-jolt
 	jolt-sources-dir = ".jolt-sources-self"

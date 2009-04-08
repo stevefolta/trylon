@@ -1,5 +1,6 @@
 trylon IntFunction
 
+
 c-fn call: name with: args
 	ffi_sarg result;
 	CallFFI_(name, args, &ffi_type_sint, &result);

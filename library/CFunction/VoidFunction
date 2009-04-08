@@ -1,5 +1,6 @@
 trylon VoidFunction
 
+
 c-fn call: name with: args
 	ffi_arg result;
 	CallFFI_(name, args, &ffi_type_void, &result);

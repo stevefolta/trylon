@@ -1,5 +1,6 @@
 trylon BytePtrFunction
 
+
 c-fn call: name with: args
 	void* result;
 	CallFFI_(name, args, &ffi_type_pointer, &result);
