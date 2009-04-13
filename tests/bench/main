@@ -1,4 +1,5 @@
-trylon Bench
+trylon bench
+
 
 main: args
 	# Parse arguments.

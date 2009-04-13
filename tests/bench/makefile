@@ -3,7 +3,7 @@
 PROGRAM := bench
 
 
-SOURCES := main $(wildcard sources/*)
+SOURCES := main $(wildcard sources/*) $(wildcard build-settings) $(wildcard build-settings.local)
 
 
 all: runnit
