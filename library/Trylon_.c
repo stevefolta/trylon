@@ -19,6 +19,11 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
 

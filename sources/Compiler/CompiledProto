@@ -244,7 +244,8 @@ setup-main: main-directory library-directory: library-directory
 		standard-proto get-subproto: "CImplementation"
 
 	# Add "nil", "true", and "false" to Standard.
-	standard-proto functions at: "nil" put: NilFunction new
+	if !build-settings["nil-object"]
+		standard-proto functions at: "nil" put: NilFunction new
 	standard-proto functions at: "true" put: (BoolLiteralFunction new: true)
 	standard-proto functions at: "false" put: (BoolLiteralFunction new: false)
 
@@ -258,6 +259,8 @@ setup-main: main-directory library-directory: library-directory
 	std-protos = ("BytePtr", "Int", "String", "Float", "Symbol", "Tuple", "List")
 	for proto-name in std-protos
 		standard-proto lookup-function: proto-name
+	if build-settings["nil-object"]
+		standard-proto lookup-function: "nil"
 	
 	# Self.
 	functions at: name put: (ProtoFunction new: this)

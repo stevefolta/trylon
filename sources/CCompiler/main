@@ -290,13 +290,15 @@ emit-settings: build-settings
 			(File new: build-settings c-sources-dir + "/settings_.h")
 
 	if build-settings support-perform
-		stream write-line: "#define SUPPORT_PERFORM_"
+		stream send: "#define SUPPORT_PERFORM_"
 	if build-settings debugger
-		stream write-line: "#define DEBUGGER_"
+		stream send: "#define DEBUGGER_"
 	if build-settings shared-ints
-		stream write-line: "#define SHARED_INTS_"
+		stream send: "#define SHARED_INTS_"
 	if build-settings shared-field-accessors
-		stream write-line: "#define SHARED_FIELD_ACCESSORS_"
+		stream send: "#define SHARED_FIELD_ACCESSORS_"
+	if build-settings["nil-object"]
+		stream send: "#define NIL_OBJECT_"
 	
 	stream write-line
 	is-changed = stream is-changed

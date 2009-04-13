@@ -66,6 +66,10 @@ shared-field-accessors
 	return dictionary at: "shared-field-accessors"
 
 
+at: key
+	return dictionary at: key
+
+
 target: target
 	switch target
 		'C'

@@ -1,0 +1,15 @@
+trylon nil
+
+
+message-not-understood
+	# This is the weak form of "message-not-understood" that is currently
+	# implemented.
+	throw MessageException new: "Attempt to use 'nil'."
+
+
+message-not-understood: selector with: arguments
+	# This is the better form that will hopefully be available soonish...
+	throw MessageException new: 	--
+		"Attempt to call '" + selector string + "' on 'nil'."
+
+
