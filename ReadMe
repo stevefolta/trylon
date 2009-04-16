@@ -1,6 +1,38 @@
 Trylon ReadMe
 =============
 
+What Is Trylon?
+---------------
+
+Trylon is a computer language.  Code in it looks like a cross between Python
+and Smalltalk -- indentation is significant, expressions are like Smalltalk
+(but with operator precedence).  It is object-oriented and garbage collected
+and it compiles down to binaries via C.
+
+
+What Does It Look Like?
+-----------------------
+
+Hello world:
+
+	trylon hello-world
+
+	main: arguments
+		send: "Hello world!"
+
+Or, using a new class:
+
+	trylon hello-world
+
+	class Halloer
+		say-it
+			send: "Hello!"
+	
+	main: arguments
+		halloer = Halloer new
+		halloer say-it
+
+
 Installation
 ------------
 
