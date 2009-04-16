@@ -27,6 +27,18 @@ emit-label-ref: label
 	ref offset = offset
 	refs append: ref
 
+class Loop
+	fields continue-label break-label
+
+start-loop-continue: continue-label break: break-label
+	loop = Loop new
+	loop continue-label = continue-label
+	loop break-label = break-label
+	loop-stack push: loop
+
+end-loop
+	loop-stack pop
+
 
 # Compilation.
 
@@ -51,6 +63,18 @@ compile-if: stmt
 	end define: offset
 
 
+compile-loop: stmt
+	start = Label new
+	start define: offset
+	end = Label new
+	start-loop-continue: start break: end
+	stmt body compile: this
+	emit: jmp
+	emit-label-ref start
+	end define: offset
+	end-loop
+
+
 compile-while: stmt
 	start = Label new
 	start define: offset
@@ -60,9 +84,44 @@ compile-while: stmt
 		# Could do nothing if the condition registers are already set.
 	emit: je
 	emit-label-ref: end
+	start-loop-continue: start break: end
 	stmt body compile: this
 	emit: jmp
 	emit-label-ref: start
 	end define: offset
+	end-loop
+
+
+compile-for: stmt
+	# Emit the creation of the iterator.
+	# ...
+
+	# Start the loop.
+	again = Label new
+	end = Label new
+	start-loop-continue: again break: end
+
+	# The test.
+	test = Label new
+	test define: offset
+	done-result = emit-send-of: 'is-done' to: iterator-result with: empty
+	emit-test: done-result
+	emit: jne
+	emit-label-ref: end
+
+	# The body.
+	value-result = emit-send-of: 'current-item' to: iterator-result with: empty
+	emit-move-to: local from: value-result
+	stmt body compile: this
+
+	# Go around again.
+	again define: offset
+	emit-send-of: 'go-forward' to: iterator-result with: empty
+	emit: jmp
+	emit-label-ref: test
+
+	# End the loop.
+	end define: offset
+	end-loop
 
 

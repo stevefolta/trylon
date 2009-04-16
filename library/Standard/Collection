@@ -1,0 +1,9 @@
+trylon Collection
+
+iterator
+	virtual
+num-items
+	virtual
+is-empty
+	return num-items > 0
+
