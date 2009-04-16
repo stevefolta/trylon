@@ -1,6 +1,7 @@
 trylon MethodBuilder
 
 fields refs out-ptr buffer-limit buffers
+fields dispatch-fn
 
 buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
@@ -10,6 +11,8 @@ create
 	refs = List new
 	buffers = List new
 	grow
+
+	dispatch-fn = dispatch-fn-addr
 
 
 # Low-level emission.
@@ -72,6 +75,22 @@ start-loop-continue: continue-label break: break-label
 
 end-loop
 	loop-stack pop
+
+
+emit-send-of: symbol to: object-result with: args
+	temp = new-temporary
+	emit-push: object-result
+	for arg-result in args
+		emit-push: arg-result
+	emit-push-int: symbol selector
+	dispatch-result = emit-c-call: dispatch-fn with: args
+	emit-push: object-result
+	emit-indirect-call: dispatch-result
+	emit-move-to-temp: temp from: CallResult
+
+
+c-fn dispatch-fn-addr
+	return BuildBytePtr_(&Dispatch_);
 
 
 # Compilation.
