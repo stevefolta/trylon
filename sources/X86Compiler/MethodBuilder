@@ -1,0 +1,68 @@
+trylon MethodBuilder
+
+fields refs out-ptr
+
+
+# Low-level emission.
+
+emit: opcode
+	out-ptr put-byte: opcode
+	out-ptr += 1
+	offset += 1 	# Separate from out-ptr.
+	if out-ptr >= buffer-limit
+		grow
+
+class Label
+	fields offset
+
+	define: offset
+		this offset = offset
+
+class LabelRef
+	fields label offset
+
+emit-label-ref: label
+	ref = LabelRef new
+	ref label = label
+	ref offset = offset
+	refs append: ref
+
+
+# Compilation.
+
+compile-if: stmt
+	stmt condition compile: this
+	emit: jne
+	end = Label new
+	emit-label-ref: end
+	stmt body compile: this
+	if stmt else-block
+		# End the body by jumping past the else-branch
+		final-end = Label new
+		emit: jmp
+		emit-label-ref: final-end
+
+		# "end" currently means the end of the "if" branch; the conditional needs
+		# to jump there.
+		end define
+
+		# Repurpose "end", so "final-end" is defined correctly.
+		end = final-end
+	end define: offset
+
+
+compile-while: stmt
+	start = Label new
+	start define: offset
+	end = Label new
+	condition-result = stmt condition compile: this
+	emit-test: condition-result
+		# Could do nothing if the condition registers are already set.
+	emit: je
+	emit-label-ref: end
+	stmt body compile: this
+	emit: jmp
+	emit-label-ref: start
+	end define: offset
+
+
