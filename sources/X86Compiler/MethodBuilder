@@ -1,9 +1,22 @@
 trylon MethodBuilder
 
-fields refs out-ptr
+fields refs out-ptr buffer-limit buffers
+
+buffer-size = 512
+buffer-slop-space = 32	# Enough space for the longest instruction.
+
+
+create
+	refs = List new
+	buffers = List new
+	grow
 
 
 # Low-level emission.
+
+# Code will be emitted into buffers, kept in a list.  At the end, the final
+# code block is allocated (with the exact size) and the buffers are copied into
+# it.  Only then are label-refs patched.
 
 emit: opcode
 	out-ptr put-byte: opcode
@@ -11,6 +24,25 @@ emit: opcode
 	offset += 1 	# Separate from out-ptr.
 	if out-ptr >= buffer-limit
 		grow
+
+class Buffer
+	fields ptr used-size
+	
+	create
+		ptr = BytePtr new: buffer-size
+
+grow
+	# Finish the current buffer.
+	buffer = buffers last-item
+	if buffer
+		buffer used-size = out-ptr - buffer ptr
+
+	# Start a new buffer.
+	buffer = Buffer new
+	buffers append: buffer
+	out-ptr = buffer ptr
+	buffer-limit = out-ptr + buffer-size - buffer-slop-space
+
 
 class Label
 	fields offset
@@ -21,11 +53,13 @@ class Label
 class LabelRef
 	fields label offset
 
+
 emit-label-ref: label
 	ref = LabelRef new
 	ref label = label
 	ref offset = offset
 	refs append: ref
+
 
 class Loop
 	fields continue-label break-label
