@@ -14,6 +14,10 @@ prepare-to-emit
 		arg prepare-to-emit
 
 
+compile: builder
+	return builder compile-super-call: this
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

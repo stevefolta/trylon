@@ -13,7 +13,11 @@ prepare-to-emit
 	value prepare-to-emit
 
 
+compile: builder
+	return builder compile-return: this
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

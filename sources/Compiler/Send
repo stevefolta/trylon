@@ -32,6 +32,10 @@ prepare-to-emit
 		proto-result-function = function proto lookup-function: name
 
 
+compile: builder
+	return builder compile-send: this
+
+
 convert-to-setter-call: value
 	if name ends-with: ":"
 		name += "put:"
@@ -49,5 +53,5 @@ copy
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

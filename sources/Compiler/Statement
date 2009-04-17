@@ -6,6 +6,9 @@ fields comment
 prepare-to-emit
 	# Default: nothing to do.
 
+compile: builder
+	virtual
+
 
 ignored-for-else
 	return false
@@ -15,5 +18,5 @@ attach-else: statement line: line
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

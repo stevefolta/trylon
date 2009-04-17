@@ -109,7 +109,23 @@ c-fn dispatch-fn-addr
 	return BuildBytePtr_(&Dispatch_);
 
 
-# Compilation.
+# Statement compilation.
+
+compile-block: block
+	# TODO: Handle locals.
+	for stmt in block statments
+		stmt compile: this
+
+compile-block-statement: stmt
+	return compile-block: stmt block
+
+
+compile-comment: stmt
+	# Nothing to do.
+
+compile-blank-line: stmt
+	# Nothing to do.
+
 
 compile-if: stmt
 	stmt condition compile: this
@@ -193,4 +209,84 @@ compile-for: stmt
 	end define: offset
 	end-loop
 
+
+compile-return: stmt
+	# ...
+
+
+compile-try: stmt
+	# ...
+
+
+compile-throw: stmt
+	# ...
+
+
+compile-switch: stmt
+	# ...
+
+
+# Expression compilation.
+
+compile-send: send
+	object-result = send object compile: this
+	return emit-send-of: send name intern to: object-result with: send arguments
+
+
+compile-super-call: super-call
+	# ...
+
+
+compile-function-call: call
+	# ...
+
+
+compile-literal: value
+	literals append: value
+	return LiteralResult new: value
+
+compile-int-literal: literal
+	return compile-literal: literal value
+
+compile-char-literal: literal
+	return compile-literal: literal value
+
+compile-bool-literal: literal
+	# ...
+
+compile-float-literal: literal
+	return compile-literal: literal value
+
+compile-string-literal: literal
+	return compile-literal: literal value
+
+compile-symbol-literal: literal
+	return compile-literal: literal name intern
+
+compile-literal-nil: literal
+	# ...
+
+compile-dict-literal: literal
+	# ...
+
+
+compile-tuple-expression: expr
+	# ...
+
+
+compile-short-circuit-and: expr
+	# ...
+
+compile-short-circuit-or: expr
+	# ...
+
+compile-short-circuit-not: expr
+	# ...
+
+compile-nil-test: expr
+	# ...
+
+
+
+# Copyright 2009 Steve Folta.  See the License file.
 
