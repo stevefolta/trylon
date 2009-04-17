@@ -56,12 +56,18 @@ class Label
 class LabelRef
 	fields label offset
 
-
 emit-label-ref: label
 	ref = LabelRef new
 	ref label = label
 	ref offset = offset
 	refs append: ref
+
+
+stash: result
+	# If the result is already safely on the stack, simply return it.  If not,
+	# stash it in a temporary.
+	# ...
+	return result
 
 
 class Loop
@@ -77,16 +83,26 @@ end-loop
 	loop-stack pop
 
 
+push-args: args
+	reversed-args = List new
+	for arg in args
+		reversed-args push-back: arg
+	for arg in reversed-args
+		result = arg compile: this
+		emit-push: result
+
+
 emit-send-of: symbol to: object-result with: args
-	temp = new-temporary
+	object-result = stash: object-result
+	push-args: args
 	emit-push: object-result
-	for arg-result in args
-		emit-push: arg-result
+	emit-push: object-result
 	emit-push-int: symbol selector
-	dispatch-result = emit-c-call: dispatch-fn with: args
-	emit-push: object-result
+	dispatch-result = emit-call: dispatch-fn
+	emit-pop-args: 2
 	emit-indirect-call: dispatch-result
-	emit-move-to-temp: temp from: CallResult
+	emit-pop-args: args num-items + 1
+	return CallResult
 
 
 c-fn dispatch-fn-addr
