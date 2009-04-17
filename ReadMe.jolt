@@ -1,6 +1,10 @@
 THIS DOCUMENT IS OUT-OF-DATE!  It describes Trylid, an old compiler for compiling Trylon 2 programs on top of Jolt/Id/Fonc.
 
-The Trylon 2 compiler also has this capability.  It's just not documented yet.
+The Trylon 2 compiler also has this capability.  It's just not documented yet.  And it hasn't been maintained for a while.
+
+You'll need to do this to get set up:
+
+	make jolt-backend
 
 Running "trylon --target-jolt" will generate Jolt into the ".jolt-sources" directory (or as set by "jolt-sources" in the build settings).  For the compiler itself, running "jolt start.k" will self-compile, and "jolt command-line.k" will run the command line.
 
