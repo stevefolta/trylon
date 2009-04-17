@@ -48,7 +48,6 @@ from the 'with-c-sources' branch of the Git repository.
 To install Trylon from the tarball, do this:
 
 	make
-	make jolt-backend 	# Optional.  Only do this if you have Jolt installed.
 	make install
 
 The "make install" will install /usr/bin/trylon and /usr/lib/trylon.  If you
