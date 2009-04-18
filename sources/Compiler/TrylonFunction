@@ -4,10 +4,13 @@ trylon TrylonFunction
 prepare-to-emit
 	# Default: nothing to do.
 
+compile-call: builder
+	virtual
+
 has-code
 	return true
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

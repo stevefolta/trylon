@@ -288,5 +288,64 @@ compile-nil-test: expr
 
 
 
+# Function call compilation.
+
+compile-this-call: func
+	# ...
+
+compile-argument-call: func
+	# ...
+
+compile-set-argument-call: func
+	# ...
+
+compile-local-getter-call: func
+	# ...
+
+compile-local-setter-call: func
+	# ...
+
+
+compile-field-getter-call: func
+	# ...
+
+compile-field-setter-call: func
+	# ...
+
+compile-shared-field-getter-call: func
+	# ...
+
+compile-shared-field-setter-call: func
+	# ...
+
+
+compile-compiled-function-call: func
+	# ...
+
+
+compile-function-on-this-call: func
+	# ...
+
+
+compile-proto-call: func
+	# ...
+
+
+compile-caught-exception-call: func
+	# ...
+
+
+compile-nil-call: func
+	# Using "xor eax,eax".
+	emit: 0x31
+	emit: 0xC0
+	return CallResult
+
+
+compile-bool-literal-call: func
+	# ...
+
+
+
 # Copyright 2009 Steve Folta.  See the License file.
 

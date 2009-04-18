@@ -8,6 +8,9 @@ create: local
 	this local = local
 
 
+compile-call: builder
+	return builder compile-local-getter-call: this
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

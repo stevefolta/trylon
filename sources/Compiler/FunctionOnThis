@@ -9,7 +9,11 @@ create: name on-proto: on-proto
 	this on-proto = on-proto
 
 
+compile-call: builder
+	return builder compile-function-on-this-call: this
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 
