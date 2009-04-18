@@ -7,13 +7,23 @@ buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
 word-size = 4
 
+literals = nil
+
 
 create
+	init
 	refs = List new
 	buffers = List new
 	grow
 
 	dispatch-fn = dispatch-fn-addr
+
+
+init
+	if literals
+		return
+	
+	literals = List new
 
 
 emit-method
@@ -113,10 +123,39 @@ emit-label-ref: label
 	emit-word: 0
 
 
+emit-push: result
+	if result is-eax
+		emit: 0x50 	# "push eax"
+	else if result is-literal
+		emit: 0x68	# "push imm32"
+		emit-ptr: result ptr
+	else
+		emit: 0xFF 	# "push r/m32"
+		mod-rm = result mod-rm
+		mod-rm |= 6 << 3
+		emit: mod-rm
+		disp8 = result disp8
+		if disp8
+			emit: disp8
+		disp32 = result disp32
+		if disp32
+			emit-word: disp32
+
+
 stash: result
 	# If the result is already safely on the stack, simply return it.  If not,
 	# stash it in a temporary.
-	# ...
+	if result is-eax
+		temp = get-temporary
+		emit: 0x89 	# "mov r/m32, eax"
+		emit: result mod-rm
+		disp8 = result disp8
+		if disp8
+			emit: disp8
+		disp32 = result disp32
+		if disp32
+			emit-word: disp32
+		result = temp
 	return result
 
 
@@ -316,10 +355,11 @@ compile-super-call: super-call
 
 
 compile-function-call: call
-	# ...
+	return call compile-call: this
 
 
 compile-literal: value
+	# We keep all literals in the "literals" list so the GC won't throw them out.
 	literals append: value
 	return LiteralResult new: value
 
@@ -330,7 +370,8 @@ compile-char-literal: literal
 	return compile-literal: literal value
 
 compile-bool-literal: literal
-	# ...
+	# Don't need to keep these on the list.
+	return LiteralResult new: literal value
 
 compile-float-literal: literal
 	return compile-literal: literal value
@@ -339,17 +380,37 @@ compile-string-literal: literal
 	return compile-literal: literal value
 
 compile-symbol-literal: literal
-	return compile-literal: literal name intern
+	# Don't need to keep these on the list.
+	return LiteralResult new: literal name intern
 
 compile-literal-nil: literal
-	# ...
+	# Don't need to keep this on the list.
+	return LiteralResult new: nil
 
 compile-dict-literal: literal
-	# ...
+	dict = Dictionary new
+	for pair in literal dict pairs
+		# We know the result will be a LiteralResult.
+		value-result = pair value compile: this
+		dict at: pair name put: value-result value
+	return compile-literal: dict
 
 
 compile-tuple-expression: expr
-	# ...
+	# Create the tuple.
+	args = Tuple new: 1
+	args at: 0 put: (IntLiteral new: expr members num-items)
+	tuple-obj-result = LiteralResult new: Tuple
+	tuple = emit-send-of: 'new:' to: tuple-obj-result with: args
+	tuple = stash: tuple
+
+	# Add the members.
+	index = 0
+	for member in expr members
+		emit-send-of: 'at:put:' to: tuple with: (index-literal, member)
+		index += 1
+
+	return tuple
 
 
 compile-short-circuit-and: expr
