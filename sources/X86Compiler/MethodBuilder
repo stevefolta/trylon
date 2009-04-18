@@ -5,6 +5,7 @@ fields dispatch-fn
 
 buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
+word-size = 4
 
 
 create
@@ -22,9 +23,23 @@ create
 # it.  Only then are label-refs patched.
 
 emit: opcode
-	out-ptr put-byte: opcode
+	out-put byte-at: 0 put: opcode
 	out-ptr += 1
 	offset += 1 	# Separate from out-ptr.
+	if out-ptr >= buffer-limit
+		grow
+
+emit-word: word
+	out-ptr int-at: 0 put: word
+	out-ptr += word-size
+	offset += word-size
+	if out-ptr >= buffer-limit
+		grow
+
+emit-ptr: ptr
+	out-ptr ptr-at: 0 put: ptr
+	out-ptr += word-size
+	offset += word-size
 	if out-ptr >= buffer-limit
 		grow
 
@@ -61,6 +76,7 @@ emit-label-ref: label
 	ref label = label
 	ref offset = offset
 	refs append: ref
+	emit-word: 0
 
 
 stash: result
@@ -93,20 +109,48 @@ push-args: args
 
 
 emit-send-of: symbol to: object-result with: args
+	# Push method args.
 	object-result = stash: object-result
 	push-args: args
 	emit-push: object-result
+
+	# Call Dispatch_().
 	emit-push: object-result
-	emit-push-int: symbol selector
-	dispatch-result = emit-call: dispatch-fn
+	# "push selector"
+	emit: 0x68
+	emit-word: symbol selector
+	# "mov eax, dispatch-fn"
+	emit: 0xB8
+	emit-ptr: dispatch-fn
+	# "call [eax]"
+	emit: 0xFF
+	emit: 0x10
 	emit-pop-args: 2
-	emit-indirect-call: dispatch-result
+
+	# Call the method.
+	# "call [eax]"
+	emit: 0xFF
+	emit: 0x10
 	emit-pop-args: args num-items + 1
 	return CallResult
 
 
 c-fn dispatch-fn-addr
 	return BuildBytePtr_(&Dispatch_);
+
+
+emit-pop-args: num-args
+	num-bytes = num-args * word-size
+	if num-bytes < 127
+		# More compact 8-bit form.
+		emit: 0x83
+		emit: 0xC4
+		emit: num-bytes
+	else
+		emit: 0x81
+		emit: 0xC4
+		emit-word: num-bytes
+
 
 
 # Statement compilation.
