@@ -16,6 +16,37 @@ create
 	dispatch-fn = dispatch-fn-addr
 
 
+emit-method
+	# Emit the preamble.
+	emit: 0x55 	# "push ebp"
+	emit: 0x89 	# "mov ebp, esp"
+	emit: 0xE5
+	emit: 0x81 	# "sub esp, num-locals * 4"
+	emit: 0xEC
+	frame-size-offset = offset
+	emit-word: 0 	# Will be patched later.
+
+	# Emit the body of the code.
+	body compile: this
+
+	# Emit the postamble.
+	emit: 0xC9 	# "leave"
+	emit: 0xC3 	# "ret"
+
+	# Complete the last buffer.
+	buffer = buffers last-item
+	buffer used-size = out-ptr - buffer ptr
+
+	# Build the final code.
+	# ...
+
+	# Patch the frame size.
+	(code + frame-size-offset) int-at: 0 put: num-locals * 4
+
+	# Patch the labels.
+	# ...
+
+
 # Low-level emission.
 
 # Code will be emitted into buffers, kept in a list.  At the end, the final
@@ -23,7 +54,7 @@ create
 # it.  Only then are label-refs patched.
 
 emit: opcode
-	out-put byte-at: 0 put: opcode
+	out-ptr byte-at: 0 put: opcode
 	out-ptr += 1
 	offset += 1 	# Separate from out-ptr.
 	if out-ptr >= buffer-limit
@@ -48,6 +79,9 @@ class Buffer
 	
 	create
 		ptr = BytePtr new: buffer-size
+	
+	create: size
+		ptr = BytePtr new: size
 
 grow
 	# Finish the current buffer.
