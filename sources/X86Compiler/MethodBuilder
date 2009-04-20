@@ -37,6 +37,13 @@ emit-method
 	cur-num-locals = 0
 	num-locals = 0
 
+	# Set up arguments.
+	argument-indices = Dictionary new
+	index = 1 	# Index 0 is "this".
+	for arg in arguments
+		argument-indices at: arg name put: index
+		index += 1
+
 	# Emit the preamble.
 	emit: 0x55 	# "push ebp"
 	emit: (0x89, 0xE5) 	# "mov ebp, esp"
@@ -509,13 +516,23 @@ compile-nil-test: expr
 # Function call compilation.
 
 compile-this-call: func
-	# ...
+	return ArgumentResult new: 0
 
 compile-argument-call: func
-	# ...
+	return ArgumentResult new: argument-indices[func name]
 
 compile-set-argument-call: func with: arguments
-	# ...
+	index = argument-indices[func name]
+	value-result = arguments first-item compile: this
+	arg-result = ArgumentResult new: index
+	if !value-result is-eax
+		# "mov eax, value-result"
+		emit: 0x8B
+		emit-opcode-extensions-for: value-result
+	# "mov arg, eax"
+	emit: 0x89
+	emit-opcode-extensions-for: arg-result
+	return arg-result
 
 compile-local-getter-call: func
 	return LocalResult new: func local compile-info index
@@ -525,12 +542,12 @@ compile-local-setter-call: func with: arguments
 	value-result = arguments first-item compile: this
 	local-result = LocalResult new: index
 	if !value-result is-eax
-		# "mov eax, result"
+		# "mov eax, value-result"
 		emit: 0x8B
-		emit-opcode-extensions-for: result
-		# "mov local, eax"
-		emit: 0x89
-		emit-opcode-extensions-for: local-result
+		emit-opcode-extensions-for: value-result
+	# "mov local, eax"
+	emit: 0x89
+	emit-opcode-extensions-for: local-result
 	return local-result
 
 
