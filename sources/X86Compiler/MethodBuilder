@@ -2,7 +2,7 @@ trylon MethodBuilder
 
 fields refs out-ptr buffer-limit buffers
 fields dispatch-fn
-fields postamble-label
+fields postamble-label cur-num-locals num-locals
 
 buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
@@ -29,6 +29,8 @@ init
 
 emit-method
 	postamble-label = Label new
+	cur-num-locals = 0
+	num-locals = 0
 
 	# Emit the preamble.
 	emit: 0x55 	# "push ebp"
@@ -198,6 +200,24 @@ stash: result
 	return result
 
 
+class Local
+	fields index
+
+	create: index
+		this index = index
+
+new-local
+	local = Local new: cur-num-locals
+	cur-num-locals += 1
+	if cur-num-locals > num-locals
+		num-locals = cur-num-locals
+	return local
+
+get-temporary
+	# A temporary is no different from any other local.
+	return new-local
+
+
 class Loop
 	fields continue-label break-label
 
@@ -268,9 +288,18 @@ emit-pop-args: num-args
 # Statement compilation.
 
 compile-block: block
-	# TODO: Handle locals.
+	# Set up locals.
+	exterior-num-locals = cur-num-locals
+	if block locals
+		for local in block locals
+			local compile-info = new-local
+
+	# Body.
 	for stmt in block statments
 		stmt compile: this
+	
+	# Clean up locals.
+	cur-num-locals = exterior-num-locals
 
 compile-block-statement: stmt
 	return compile-block: stmt block
@@ -478,7 +507,7 @@ compile-set-argument-call: func
 	# ...
 
 compile-local-getter-call: func
-	# ...
+	return LocalResult new: func local compile-info index
 
 compile-local-setter-call: func
 	# ...
