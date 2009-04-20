@@ -4,24 +4,22 @@ superclass Result
 fields offset
 
 create: local
-	# Is this correct, or does the offset need an offset?  Or a negation?
-	offset = local compile-info index * word-size
+	offset = -(local compile-info index + 1) * word-size
 
 
 mod-rm
-	if offset > 127
-		# ...
+	if offset < -127
+		return 0xB5
 	else
 		return 0x75
 
-
 disp8
-	if offset <= 127
+	if offset >= -127
 		return offset
 	return nil
 
 disp32
-	if offset > 127
+	if offset < -127
 		return offset
 	return nil
 
