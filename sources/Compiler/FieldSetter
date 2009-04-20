@@ -13,8 +13,8 @@ name
 	return field name + ":"
 
 
-compile-call: builder
-	return builder compile-field-setter-call: this
+compile-call: builder with: arguments
+	return builder compile-field-setter-call: this with: arguments
 
 
 # Copyright 2007-2009 Steve Folta.  See the License file.

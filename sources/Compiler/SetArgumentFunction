@@ -8,8 +8,8 @@ create: arg
 	this name = arg name
 
 
-compile-call: builder
-	return builder compile-set-argument-call: this
+compile-call: builder with: arguments
+	return builder compile-set-argument-call: this with: arguments
 
 
 

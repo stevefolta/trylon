@@ -14,7 +14,7 @@ name
 	return field name
 
 
-compile-call: builder
+compile-call: builder with: arguments
 	return builder compile-field-getter-call: this
 
 

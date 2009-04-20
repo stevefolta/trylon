@@ -9,7 +9,7 @@ name
 	return "nil"
 
 
-compile-call: builder
+compile-call: builder with: arguments
 	return builder compile-nil-call: this
 
 

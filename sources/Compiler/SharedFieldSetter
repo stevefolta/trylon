@@ -13,8 +13,8 @@ name
 	return field name + ":"
 
 
-compile-call: builder
-	return builder compile-shared-field-setter-call: this
+compile-call: builder with: arguments
+	return builder compile-shared-field-setter-call: this with: arguments
 
 
 

@@ -11,6 +11,11 @@ word-size = 4
 literals = nil
 
 
+# NOTE:
+# When assembly language is used in the comments, Intel-style syntax is used:
+# 	mov dest, src
+
+
 create
 	init
 	refs = List new
@@ -100,6 +105,17 @@ emit-ptr: ptr
 	if out-ptr >= buffer-limit
 		grow
 
+emit-opcode-extensions-for: result
+	emit: result mod-rm
+	disp8 = result disp8
+	if disp8
+		emit: disp8
+	disp32 = result disp32
+	if disp32
+		emit-word: disp32
+	result = temp
+
+
 class Buffer
 	fields ptr used-size
 	
@@ -188,14 +204,9 @@ stash: result
 	# stash it in a temporary.
 	if result is-eax
 		temp = get-temporary
-		emit: 0x89 	# "mov r/m32, eax"
-		emit: result mod-rm
-		disp8 = result disp8
-		if disp8
-			emit: disp8
-		disp32 = result disp32
-		if disp32
-			emit-word: disp32
+		# "mov temp, eax"
+		emit: 0x89
+		emit-opcode-extensions-for: temp
 		result = temp
 	return result
 
@@ -423,7 +434,7 @@ compile-super-call: super-call
 
 
 compile-function-call: call
-	return call compile-call: this
+	return call function compile-call: this with: call arguments
 
 
 compile-literal: value
@@ -503,34 +514,44 @@ compile-this-call: func
 compile-argument-call: func
 	# ...
 
-compile-set-argument-call: func
+compile-set-argument-call: func with: arguments
 	# ...
 
 compile-local-getter-call: func
 	return LocalResult new: func local compile-info index
 
-compile-local-setter-call: func
-	# ...
+compile-local-setter-call: func with: arguments
+	index = func local compile-info index
+	value-result = arguments first-item compile: this
+	local-result = LocalResult new: index
+	if !value-result is-eax
+		# "mov eax, result"
+		emit: 0x8B
+		emit-opcode-extensions-for: result
+		# "mov local, eax"
+		emit: 0x89
+		emit-opcode-extensions-for: local-result
+	return local-result
 
 
 compile-field-getter-call: func
 	# ...
 
-compile-field-setter-call: func
+compile-field-setter-call: func with: arguments
 	# ...
 
 compile-shared-field-getter-call: func
 	# ...
 
-compile-shared-field-setter-call: func
+compile-shared-field-setter-call: func with: arguments
 	# ...
 
 
-compile-compiled-function-call: func
+compile-compiled-function-call: func with: arguments
 	# ...
 
 
-compile-function-on-this-call: func
+compile-function-on-this-call: func with: arguments
 	# ...
 
 

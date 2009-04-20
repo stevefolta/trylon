@@ -8,7 +8,7 @@ create: local
 	this local = local
 
 
-compile-call: builder
+compile-call: builder with: arguments
 	return builder compile-local-getter-call: this
 
 

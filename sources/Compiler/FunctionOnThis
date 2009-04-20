@@ -9,8 +9,8 @@ create: name on-proto: on-proto
 	this on-proto = on-proto
 
 
-compile-call: builder
-	return builder compile-function-on-this-call: this
+compile-call: builder with: arguments
+	return builder compile-function-on-this-call: this with: arguments
 
 
 
