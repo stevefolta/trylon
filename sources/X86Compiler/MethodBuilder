@@ -32,10 +32,8 @@ emit-method
 
 	# Emit the preamble.
 	emit: 0x55 	# "push ebp"
-	emit: 0x89 	# "mov ebp, esp"
-	emit: 0xE5
-	emit: 0x81 	# "sub esp, num-locals * 4"
-	emit: 0xEC
+	emit: (0x89, 0xE5) 	# "mov ebp, esp"
+	emit: (0x81, 0xEC) 	# "sub esp, num-locals * 4"
 	frame-size-offset = offset
 	emit-word: 0 	# Will be patched later.
 
@@ -51,14 +49,25 @@ emit-method
 	buffer = buffers last-item
 	buffer used-size = out-ptr - buffer ptr
 
-	# Build the final code.
-	# ...
+	# Assemble the buffers into the final code.
+	code-size = 0
+	for buffer in buffers
+		code-size += buffer used-size
+	code = BytePtr new: code-size
+	dest = code
+	for buffer in buffers
+		dest copy-from: buffer ptr length: buffer used-size
 
 	# Patch the frame size.
+	# This is not done as a label since it's not relocated, only patched.
 	(code + frame-size-offset) int-at: 0 put: num-locals * 4
 
 	# Patch the labels.
-	# ...
+	for ref in refs
+		target = ref label offset
+		if target == nil
+			error: "Undefined label."
+		(code + ref offset) int-at: 0 put: code + target
 
 
 # Low-level emission.
