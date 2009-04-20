@@ -2,6 +2,7 @@ trylon MethodBuilder
 
 fields refs out-ptr buffer-limit buffers
 fields dispatch-fn
+fields postamble-label
 
 buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
@@ -27,6 +28,8 @@ init
 
 
 emit-method
+	postamble-label = Label new
+
 	# Emit the preamble.
 	emit: 0x55 	# "push ebp"
 	emit: 0x89 	# "mov ebp, esp"
@@ -40,6 +43,7 @@ emit-method
 	body compile: this
 
 	# Emit the postamble.
+	postamble-label define: offset
 	emit: 0xC9 	# "leave"
 	emit: 0xC3 	# "ret"
 
@@ -63,12 +67,13 @@ emit-method
 # code block is allocated (with the exact size) and the buffers are copied into
 # it.  Only then are label-refs patched.
 
-emit: opcode
-	out-ptr byte-at: 0 put: opcode
-	out-ptr += 1
-	offset += 1 	# Separate from out-ptr.
-	if out-ptr >= buffer-limit
-		grow
+emit: opcodes
+	for opcode in opcodes
+		out-ptr byte-at: 0 put: opcode
+		out-ptr += 1
+		offset += 1 	# Separate from out-ptr.
+		if out-ptr >= buffer-limit
+			grow
 
 emit-word: word
 	out-ptr int-at: 0 put: word
@@ -140,6 +145,31 @@ emit-push: result
 		disp32 = result disp32
 		if disp32
 			emit-word: disp32
+
+
+emit-jmp: label
+	emit: 0xB8 	# "mov eax, label"
+	emit-label-ref: label
+	emit: 0xFF 	# "jmp eax"
+	emit: 0x20
+
+jmp-length
+	return 3 + word-size
+
+emit-cond-jmp: cond to: label
+	# Doesn't seem to be a good conditional jump with an absolute target.
+	# Simulate it using the the relative jump we do have.
+	# Emit the opcode -- opposite to our condition.
+	switch cond
+		'z'
+			emit: 0x75 	# "jnz"
+		'nz'
+			emit: 0x74 	# "jz"
+		else
+			error: "Unknown opcode: " + cond string + "."
+	emit: jmp-length
+	# Emit the real, absolutely-addressed jump.
+	emit-jmp: label
 
 
 stash: result
@@ -246,15 +276,13 @@ compile-blank-line: stmt
 
 compile-if: stmt
 	stmt condition compile: this
-	emit: jne
 	end = Label new
-	emit-label-ref: end
+	emit-cond-jmp: 'ne' to: end
 	stmt body compile: this
 	if stmt else-block
 		# End the body by jumping past the else-branch
 		final-end = Label new
-		emit: jmp
-		emit-label-ref: final-end
+		emit-jmp: final-end
 
 		# "end" currently means the end of the "if" branch; the conditional needs
 		# to jump there.
@@ -271,25 +299,29 @@ compile-loop: stmt
 	end = Label new
 	start-loop-continue: start break: end
 	stmt body compile: this
-	emit: jmp
-	emit-label-ref start
+	emit-jmp: label
 	end define: offset
 	end-loop
 
 
 compile-while: stmt
+	# "start:"
 	start = Label new
 	start define: offset
 	end = Label new
+	# condition
 	condition-result = stmt condition compile: this
 	emit-test: condition-result
-		# Could do nothing if the condition registers are already set.
-	emit: je
-	emit-label-ref: end
+	# "jne body"
+	emit: (0x75, jmp-length)
+	# "jmp end"
+	emit-jmp: end
+	# "body:"
 	start-loop-continue: start break: end
 	stmt body compile: this
-	emit: jmp
-	emit-label-ref: start
+	# "jmp start"
+	emit-jmp: start
+	# "end:"
 	end define: offset
 	end-loop
 
@@ -308,8 +340,7 @@ compile-for: stmt
 	test define: offset
 	done-result = emit-send-of: 'is-done' to: iterator-result with: empty
 	emit-test: done-result
-	emit: jne
-	emit-label-ref: end
+	emit-cond-jmp: 'ne' to: end
 
 	# The body.
 	value-result = emit-send-of: 'current-item' to: iterator-result with: empty
@@ -319,8 +350,7 @@ compile-for: stmt
 	# Go around again.
 	again define: offset
 	emit-send-of: 'go-forward' to: iterator-result with: empty
-	emit: jmp
-	emit-label-ref: test
+	emit-jmp: test
 
 	# End the loop.
 	end define: offset
