@@ -4,7 +4,7 @@ UsingSym_(JoltCompiler)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(JoltCompiler)
 struct ClassInfo JoltCompiler__classInfo_ = 
-	{ 66, 0, Proto_(JoltCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(JoltCompiler) ,nil };
+	{ 68, 0, Proto_(JoltCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(JoltCompiler) ,nil };
 struct object JoltCompiler = 
 	{ &JoltCompiler__classInfo_, {} };
 
@@ -77,10 +77,10 @@ obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler)
 	DefineString_(4, "(load-trylon-proto ")
 	DefineString_(5, ")")
 	UsingMethod_(_pl_) UsingMethod_(all_protos) UsingMethod_(build_settings) UsingMethod_(close) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(emit_code) UsingMethod_(entry_is_directory_co_) UsingMethod_(full_name) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_sources_dir) UsingMethod_(report_co_) UsingMethod_(unindent) UsingMethod_(write_line) UsingMethod_(write_co_)
+	UsingClass_(ExistingFileStream__Standard)
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(File__Standard)
 	UsingClass_(Main)
-	UsingClass_(ExistingFileStream__Standard)
 
 		{
 		obj_ directory, file, path, stream;
@@ -149,10 +149,10 @@ obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler)
 
 obj_ references__JoltCompiler(obj_ this_)
 {
+	UsingClass_(Expressions__JoltCompiler)
+	UsingClass_(Functions__JoltCompiler)
 	UsingClass_(Objects__JoltCompiler)
 	UsingClass_(Statements__JoltCompiler)
-	UsingClass_(Functions__JoltCompiler)
-	UsingClass_(Expressions__JoltCompiler)
 
 		{
 		

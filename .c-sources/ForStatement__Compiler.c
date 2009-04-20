@@ -4,7 +4,7 @@ UsingSym_(ForStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ForStatement__Compiler)
 struct ClassInfo ForStatement__Compiler__classInfo_ = 
-	{ 134, 20, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement) ,nil };
+	{ 136, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement) ,nil };
 struct object ForStatement__Compiler = 
 	{ &ForStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -150,8 +150,8 @@ obj_ interpreted__ForStatement__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_nt__eq_) UsingMethod_(body) UsingMethod_(collection) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(initial_value_co_) UsingMethod_(interpreted) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(local)
-	UsingClass_(Continue__Statements__Interpreter)
 	UsingClass_(Break__Statements__Interpreter)
+	UsingClass_(Continue__Statements__Interpreter)
 
 		{
 		Try_

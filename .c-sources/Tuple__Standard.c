@@ -4,7 +4,7 @@ UsingSym_(Tuple)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Tuple__Standard)
 struct ClassInfo Tuple__Standard__classInfo_ = 
-	{ 23, 4, Proto_(Tuple__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Tuple) ,nil };
+	{ 23, 1, Proto_(Tuple__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Tuple) ,nil };
 struct object Tuple__Standard = 
 	{ &Tuple__Standard__classInfo_, {nil} };
 

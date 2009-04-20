@@ -4,7 +4,7 @@ UsingSym_(SwitchStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(SwitchStatement__Compiler)
 struct ClassInfo SwitchStatement__Compiler__classInfo_ = 
-	{ 139, 24, Proto_(SwitchStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(SwitchStatement) ,nil };
+	{ 141, 6, Proto_(SwitchStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(SwitchStatement) ,nil };
 struct object SwitchStatement__Compiler = 
 	{ &SwitchStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 

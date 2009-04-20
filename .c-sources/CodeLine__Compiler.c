@@ -4,7 +4,7 @@ UsingSym_(CodeLine)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CodeLine__Compiler)
 struct ClassInfo CodeLine__Compiler__classInfo_ = 
-	{ 163, 8, Proto_(CodeLine__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CodeLine) ,nil };
+	{ 165, 2, Proto_(CodeLine__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CodeLine) ,nil };
 struct object CodeLine__Compiler = 
 	{ &CodeLine__Compiler__classInfo_, {nil, nil} };
 

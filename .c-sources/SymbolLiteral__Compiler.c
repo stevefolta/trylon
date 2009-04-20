@@ -4,7 +4,7 @@ UsingSym_(SymbolLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(SymbolLiteral__Compiler)
 struct ClassInfo SymbolLiteral__Compiler__classInfo_ = 
-	{ 90, 4, Proto_(SymbolLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SymbolLiteral) ,nil };
+	{ 92, 1, Proto_(SymbolLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SymbolLiteral) ,nil };
 struct object SymbolLiteral__Compiler = 
 	{ &SymbolLiteral__Compiler__classInfo_, {nil} };
 

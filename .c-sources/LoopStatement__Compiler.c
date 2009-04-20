@@ -4,7 +4,7 @@ UsingSym_(LoopStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(LoopStatement__Compiler)
 struct ClassInfo LoopStatement__Compiler__classInfo_ = 
-	{ 132, 12, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement) ,nil };
+	{ 134, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement) ,nil };
 struct object LoopStatement__Compiler = 
 	{ &LoopStatement__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -94,8 +94,8 @@ obj_ interpreted__LoopStatement__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_nt__eq_) UsingMethod_(body) UsingMethod_(interpreted)
-	UsingClass_(Continue__Statements__Interpreter)
 	UsingClass_(Break__Statements__Interpreter)
+	UsingClass_(Continue__Statements__Interpreter)
 
 		{
 		Try_

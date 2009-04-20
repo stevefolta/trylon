@@ -4,7 +4,7 @@ UsingSym_(LambdaExpression)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(LambdaExpression__Compiler)
 struct ClassInfo LambdaExpression__Compiler__classInfo_ = 
-	{ 100, 4, Proto_(LambdaExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LambdaExpression) ,nil };
+	{ 102, 1, Proto_(LambdaExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LambdaExpression) ,nil };
 struct object LambdaExpression__Compiler = 
 	{ &LambdaExpression__Compiler__classInfo_, {nil} };
 

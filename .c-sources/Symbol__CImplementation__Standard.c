@@ -4,7 +4,7 @@ UsingSym_(Symbol)UsingClass_(CImplementation__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Symbol__CImplementation__Standard)
 struct ClassInfo Symbol__CImplementation__Standard__classInfo_ = 
-	{ 34, 0, Proto_(Symbol__CImplementation__Standard), Proto_(CImplementation__Standard), Proto_(Object__Standard), nil, Sym_(Symbol) ,nil };
+	{ 35, 0, Proto_(Symbol__CImplementation__Standard), Proto_(CImplementation__Standard), Proto_(Object__Standard), nil, Sym_(Symbol) ,nil };
 struct object Symbol__CImplementation__Standard = 
 	{ &Symbol__CImplementation__Standard__classInfo_, {} };
 

@@ -4,7 +4,7 @@ UsingSym_(ExpandoBitmap)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpandoBitmap__CCompiler)
 struct ClassInfo ExpandoBitmap__CCompiler__classInfo_ = 
-	{ 150, 12, Proto_(ExpandoBitmap__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoBitmap) ,nil };
+	{ 152, 3, Proto_(ExpandoBitmap__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoBitmap) ,nil };
 struct object ExpandoBitmap__CCompiler = 
 	{ &ExpandoBitmap__CCompiler__classInfo_, {nil, nil, nil} };
 

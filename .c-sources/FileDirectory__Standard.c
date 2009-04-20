@@ -4,7 +4,7 @@ UsingSym_(FileDirectory)UsingClass_(Standard)
 UsingClass_(FileDirectoryEntry__Standard)
 UsingClass_(FileDirectory__Standard)
 struct ClassInfo FileDirectory__Standard__classInfo_ = 
-	{ 47, 4, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory) ,nil };
+	{ 48, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory) ,nil };
 struct object FileDirectory__Standard = 
 	{ &FileDirectory__Standard__classInfo_, {nil} };
 

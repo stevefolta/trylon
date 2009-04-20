@@ -4,7 +4,7 @@ UsingSym_(ArgumentFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(ArgumentFunction__Compiler)
 struct ClassInfo ArgumentFunction__Compiler__classInfo_ = 
-	{ 116, 4, Proto_(ArgumentFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ArgumentFunction) ,nil };
+	{ 118, 1, Proto_(ArgumentFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ArgumentFunction) ,nil };
 struct object ArgumentFunction__Compiler = 
 	{ &ArgumentFunction__Compiler__classInfo_, {nil} };
 

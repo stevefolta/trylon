@@ -4,7 +4,7 @@ UsingSym_(CCompiler)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(CCompiler)
 struct ClassInfo CCompiler__classInfo_ = 
-	{ 64, 0, Proto_(CCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(CCompiler) ,nil };
+	{ 66, 0, Proto_(CCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(CCompiler) ,nil };
 struct object CCompiler = 
 	{ &CCompiler__classInfo_, {} };
 
@@ -169,10 +169,10 @@ obj_ compile_c_file_co_force_compile_co___CCompiler(obj_ this_, obj_ name, obj_ 
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(build_settings) UsingMethod_(c_compiler) UsingMethod_(c_flags) UsingMethod_(c_sources_dir) UsingMethod_(current_item) UsingMethod_(exists) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(objects_dir) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(File__Standard)
-	UsingClass_(System__Standard)
-	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Main)
+	UsingClass_(MessageException__Standard)
+	UsingClass_(System__Standard)
 
 		{
 		obj_ build_settings, object_file_name;
@@ -273,14 +273,14 @@ obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 	DefineString_(13, "'")
 	DefineString_(14, "' is called but never defined.")
 	UsingMethod_(_pl_) UsingMethod_(all_protos) UsingMethod_(append_co_) UsingMethod_(build_settings) UsingMethod_(c_sources_dir) UsingMethod_(called) UsingMethod_(close) UsingMethod_(compile_c_file_co_force_compile_co_) UsingMethod_(contents) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(declared) UsingMethod_(emit_dispatch_table_co_) UsingMethod_(emit_settings_co_) UsingMethod_(emit_symbols) UsingMethod_(emit_co_) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_library_path) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(link_flags) UsingMethod_(linker) UsingMethod_(main_proto) UsingMethod_(name) UsingMethod_(number_classes_co_) UsingMethod_(object_file_name) UsingMethod_(objects_dir) UsingMethod_(program_name) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_) UsingMethod_(source_name) UsingMethod_(standard_object_proto) UsingMethod_(symbols) UsingMethod_(unindent) UsingMethod_(values) UsingMethod_(warn_co_) UsingMethod_(write_co_)
+	UsingClass_(ClassBuilder__CCompiler)
+	UsingClass_(ClassNumberer__CCompiler)
+	UsingClass_(ExistingFileStream__Standard)
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(File__Standard)
-	UsingClass_(System__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Main)
-	UsingClass_(ClassBuilder__CCompiler)
-	UsingClass_(ExistingFileStream__Standard)
-	UsingClass_(ClassNumberer__CCompiler)
+	UsingClass_(System__Standard)
 
 		{
 		obj_ args, build_settings, c_file_name, compile_trylon_c, contents, directory, library_path, object_class, objects, program_name, recompile, recompile_all, settings_changed, stream;
@@ -530,13 +530,13 @@ obj_ emit_dispatch_table_co___CCompiler(obj_ this_, obj_ main_package)
 	DefineString_(17, " */\n")
 	UsingMethod_(_pl_) UsingMethod_(_dv_) UsingMethod_(add_co_) UsingMethod_(c_name) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(current_item) UsingMethod_(declared) UsingMethod_(emit_all_function_declarations_co_) UsingMethod_(fit_into_co_used_offsets_co_) UsingMethod_(float_) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(mangle_name_co_) UsingMethod_(name) UsingMethod_(num_items) UsingMethod_(report_co_) UsingMethod_(root_proto_co_) UsingMethod_(selector) UsingMethod_(setup_dispatch_row_co_inherited_function_co_) UsingMethod_(string) UsingMethod_(support_perform) UsingMethod_(symbols) UsingMethod_(unindent) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(DispatchRowSet__CCompiler)
+	UsingClass_(DispatchRow__CCompiler)
+	UsingClass_(ExistingFileStream__Standard)
+	UsingClass_(ExpandoArray__CCompiler)
+	UsingClass_(ExpandoBitmap__CCompiler)
 	UsingClass_(File__Standard)
 	UsingClass_(Main)
-	UsingClass_(ExpandoBitmap__CCompiler)
-	UsingClass_(ExpandoArray__CCompiler)
-	UsingClass_(DispatchRow__CCompiler)
-	UsingClass_(DispatchRowSet__CCompiler)
-	UsingClass_(ExistingFileStream__Standard)
 
 		{
 		obj_ dispatch_table, fill_rate, is_changed, num_filled, object_class, rows, stream, used_offsets;
@@ -757,8 +757,8 @@ obj_ emit_settings_co___CCompiler(obj_ this_, obj_ build_settings)
 	DefineString_(1, "#define SUPPORT_PERFORM_")
 	DefineString_(2, "#define DEBUGGER_")
 	UsingMethod_(_pl_) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(debugger) UsingMethod_(is_changed) UsingMethod_(support_perform) UsingMethod_(write_line) UsingMethod_(write_line_co_)
-	UsingClass_(File__Standard)
 	UsingClass_(ExistingFileStream__Standard)
+	UsingClass_(File__Standard)
 
 		{
 		obj_ is_changed, stream;
@@ -829,9 +829,9 @@ obj_ emit_symbols__CCompiler(obj_ this_)
 	DefineString_(15, "struct Standard__Symbol__internal* lastSymbol_ = nil;\n")
 	UsingMethod_(_pl_) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(include_selector_symbols) UsingMethod_(index) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(mangle_name_co_) UsingMethod_(name) UsingMethod_(string) UsingMethod_(support_perform) UsingMethod_(symbols) UsingMethod_(used_as_symbol) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(ExistingFileStream__Standard)
 	UsingClass_(File__Standard)
 	UsingClass_(Main)
-	UsingClass_(ExistingFileStream__Standard)
 
 		{
 		obj_ first_symbol_name, include_selectors, is_changed, last_symbol_name, stream;
@@ -1368,10 +1368,10 @@ obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name)
 
 obj_ references__CCompiler(obj_ this_)
 {
+	UsingClass_(Expressions__CCompiler)
+	UsingClass_(Functions__CCompiler)
 	UsingClass_(Objects__CCompiler)
 	UsingClass_(Statements__CCompiler)
-	UsingClass_(Functions__CCompiler)
-	UsingClass_(Expressions__CCompiler)
 
 		{
 		

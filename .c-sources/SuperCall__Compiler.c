@@ -4,7 +4,7 @@ UsingSym_(SuperCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(SuperCall__Compiler)
 struct ClassInfo SuperCall__Compiler__classInfo_ = 
-	{ 86, 8, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall) ,nil };
+	{ 88, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall) ,nil };
 struct object SuperCall__Compiler = 
 	{ &SuperCall__Compiler__classInfo_, {nil, nil} };
 
@@ -67,8 +67,8 @@ obj_ emit_code_co___SuperCall__Compiler(obj_ this_, obj_ builder)
 	DefineString_(9, ");")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_extern_declaration_co_) UsingMethod_(add_line_co_) UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(c_name) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(function) UsingMethod_(get_temporary) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(string) UsingMethod_(superclass)
 	UsingClass_(Compiler)
-	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
+	UsingClass_(MessageException__Standard)
 	UsingClass_(StringBuilder__Standard)
 
 		{

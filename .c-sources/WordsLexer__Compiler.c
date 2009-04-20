@@ -4,7 +4,7 @@ UsingSym_(WordsLexer)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(WordsLexer__Compiler)
 struct ClassInfo WordsLexer__Compiler__classInfo_ = 
-	{ 62, 12, Proto_(WordsLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(WordsLexer) ,nil };
+	{ 64, 3, Proto_(WordsLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(WordsLexer) ,nil };
 struct object WordsLexer__Compiler = 
 	{ &WordsLexer__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -215,8 +215,8 @@ obj_ parse_char_escape_from_co_to_co___WordsLexer__Compiler(obj_ this_, obj_ sta
 	DefineInt_(3, 2)
 	DefineInt_(4, 2)
 	UsingMethod_(_eq__eq_) UsingMethod_(deref_char) UsingMethod_(first_character) UsingMethod_(p) UsingMethod_(parse_escaped_char_into_co_) UsingMethod_(parse_hex_co_) UsingMethod_(string)
-	UsingClass_(WordsLexer__Compiler)
 	UsingClass_(SmallStringBuilder__Compiler)
+	UsingClass_(WordsLexer__Compiler)
 
 		{
 		obj_ c, lexer;
@@ -655,8 +655,8 @@ obj_ parse_next_word__WordsLexer__Compiler(obj_ this_)
 	DefineString_(0, "Unterminated quote.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(add_from_co_to_co_) UsingMethod_(deref_char) UsingMethod_(is_whitespace) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(parse_escaped_char_into_co_) UsingMethod_(stopper) UsingMethod_(string)
 	UsingClass_(MessageException__Standard)
-	UsingClass_(String__Standard)
 	UsingClass_(SmallStringBuilder__Compiler)
+	UsingClass_(String__Standard)
 
 		{
 		obj_ c, word_start;

@@ -4,7 +4,7 @@ UsingSym_(BlockStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BlockStatement__Compiler)
 struct ClassInfo BlockStatement__Compiler__classInfo_ = 
-	{ 129, 8, Proto_(BlockStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlockStatement) ,nil };
+	{ 131, 2, Proto_(BlockStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlockStatement) ,nil };
 struct object BlockStatement__Compiler = 
 	{ &BlockStatement__Compiler__classInfo_, {nil, nil} };
 

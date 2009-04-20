@@ -4,7 +4,7 @@ UsingSym_(IfStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(IfStatement__Compiler)
 struct ClassInfo IfStatement__Compiler__classInfo_ = 
-	{ 131, 24, Proto_(IfStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(IfStatement) ,nil };
+	{ 133, 6, Proto_(IfStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(IfStatement) ,nil };
 struct object IfStatement__Compiler = 
 	{ &IfStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 

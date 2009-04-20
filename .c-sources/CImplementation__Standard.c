@@ -39,6 +39,13 @@ obj_ Float__CImplementation__Standard__accessor_(obj_ this_)
 }
 
 
+obj_ GarbageCollector__CImplementation__Standard__accessor_(obj_ this_)
+{
+	UsingClass_(GarbageCollector__CImplementation__Standard)
+	return Proto_(GarbageCollector__CImplementation__Standard);
+}
+
+
 obj_ Implementation__CImplementation__Standard__accessor_(obj_ this_)
 {
 	UsingClass_(Implementation__CImplementation__Standard)
@@ -83,16 +90,17 @@ obj_ System__CImplementation__Standard__accessor_(obj_ this_)
 
 obj_ references__CImplementation__Standard(obj_ this_)
 {
-	UsingClass_(Implementation__CImplementation__Standard)
+	UsingClass_(BytePtr__CImplementation__Standard)
 	UsingClass_(FileDirectory__CImplementation__Standard)
 	UsingClass_(File__CImplementation__Standard)
-	UsingClass_(System__CImplementation__Standard)
 	UsingClass_(Float__CImplementation__Standard)
-	UsingClass_(Symbol__CImplementation__Standard)
-	UsingClass_(String__CImplementation__Standard)
-	UsingClass_(BytePtr__CImplementation__Standard)
+	UsingClass_(GarbageCollector__CImplementation__Standard)
+	UsingClass_(Implementation__CImplementation__Standard)
 	UsingClass_(Int__CImplementation__Standard)
 	UsingClass_(Object__CImplementation__Standard)
+	UsingClass_(String__CImplementation__Standard)
+	UsingClass_(Symbol__CImplementation__Standard)
+	UsingClass_(System__CImplementation__Standard)
 
 		{
 		

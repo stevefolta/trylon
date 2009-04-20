@@ -4,7 +4,7 @@ UsingSym_(Expression)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(Expression)
 struct ClassInfo Expression__classInfo_ = 
-	{ 24, 4, Proto_(Expression), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Expression) ,nil };
+	{ 24, 1, Proto_(Expression), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Expression) ,nil };
 struct object Expression = 
 	{ &Expression__classInfo_, {nil} };
 
@@ -68,9 +68,9 @@ obj_ emit_value_co_on_co___Expression(obj_ this_, obj_ value, obj_ stream)
 	DefineString_(0, "\"")
 	DefineString_(1, "\"")
 	UsingMethod_(emit_co_) UsingMethod_(is_a_co_) UsingMethod_(string) UsingMethod_(write_co_)
-	UsingClass_(Symbol__Standard)
-	UsingClass_(String__Standard)
 	UsingClass_(Expression)
+	UsingClass_(String__Standard)
+	UsingClass_(Symbol__Standard)
 
 		{
 		t0_ = Call_(is_a_co_, value, Proto_(String__Standard));
@@ -146,8 +146,8 @@ obj_ emit_co___Expression(obj_ this_, obj_ stream)
 	DefineString_(8, " ")
 	DefineString_(9, ")")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(at_co_) UsingMethod_(current_item) UsingMethod_(emit_value_co_on_co_) UsingMethod_(first_character) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(num_items) UsingMethod_(string) UsingMethod_(tuple) UsingMethod_(write_co_)
-	UsingClass_(Symbol__Standard)
 	UsingClass_(Expression)
+	UsingClass_(Symbol__Standard)
 
 		{
 		obj_ done_one, reporter;

@@ -4,7 +4,7 @@ UsingSym_(MessageException)UsingClass_(Standard)
 UsingClass_(Exception__Standard)
 UsingClass_(MessageException__Standard)
 struct ClassInfo MessageException__Standard__classInfo_ = 
-	{ 3, 4, Proto_(MessageException__Standard), Proto_(Standard), Proto_(Exception__Standard), nil, Sym_(MessageException) ,nil };
+	{ 3, 1, Proto_(MessageException__Standard), Proto_(Standard), Proto_(Exception__Standard), nil, Sym_(MessageException) ,nil };
 struct object MessageException__Standard = 
 	{ &MessageException__Standard__classInfo_, {nil} };
 

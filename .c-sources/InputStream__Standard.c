@@ -4,7 +4,7 @@ UsingSym_(InputStream)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(InputStream__Standard)
 struct ClassInfo InputStream__Standard__classInfo_ = 
-	{ 51, 0, Proto_(InputStream__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(InputStream) ,nil };
+	{ 53, 0, Proto_(InputStream__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(InputStream) ,nil };
 struct object InputStream__Standard = 
 	{ &InputStream__Standard__classInfo_, {} };
 

@@ -4,7 +4,7 @@ UsingSym_(OutStream)UsingClass_(File__Standard)
 UsingClass_(OutputStream__Standard)
 UsingClass_(OutStream__File__Standard)
 struct ClassInfo OutStream__File__Standard__classInfo_ = 
-	{ 53, 4, Proto_(OutStream__File__Standard), Proto_(File__Standard), Proto_(OutputStream__Standard), nil, Sym_(OutStream) ,nil };
+	{ 55, 1, Proto_(OutStream__File__Standard), Proto_(File__Standard), Proto_(OutputStream__Standard), nil, Sym_(OutStream) ,nil };
 struct object OutStream__File__Standard = 
 	{ &OutStream__File__Standard__classInfo_, {nil} };
 
@@ -30,8 +30,10 @@ obj_ _dt_file_co___OutStream__File__Standard(obj_ this_, obj_ value)
 
 obj_ close__OutStream__File__Standard(obj_ this_)
 {
-if (Field_(_dt_file))
+if (Field_(_dt_file)) {
 	fclose((FILE*) Field_(_dt_file));
+	Field_(_dt_file) = nil;
+	}
 
 }
 
@@ -71,6 +73,7 @@ obj_ new_co___OutStream__File__Standard(obj_ this_, obj_ path)
 	UsingClass_(OutStream__File__Standard)
 	obj_ obj = AllocObj_(OutStream__File__Standard);
 	create_co___OutStream__File__Standard(obj, path);
+	RegisterFinalizer_(obj);
 	return obj;
 }
 

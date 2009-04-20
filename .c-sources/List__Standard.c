@@ -4,7 +4,7 @@ UsingSym_(List)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(List__Standard)
 struct ClassInfo List__Standard__classInfo_ = 
-	{ 19, 8, Proto_(List__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(List) ,nil };
+	{ 19, 2, Proto_(List__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(List) ,nil };
 struct object List__Standard = 
 	{ &List__Standard__classInfo_, {nil, nil} };
 
@@ -532,6 +532,66 @@ obj_ tail__List__Standard(obj_ this_)
 		t1_ = Call_(last_cell_co_, tail_list, t0_);
 		return tail_list;
 		
+		
+		}
+	return nil;
+}
+
+
+obj_ with_co___List__Standard(obj_ this_, obj_ value)
+{
+	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	UsingMethod_(append_co_)
+	UsingClass_(List__Standard)
+
+		{
+		obj_ list;
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		list = t0_;
+		t0_ = Call_(append_co_, list, value);
+		return list;
+		
+		}
+	return nil;
+}
+
+
+obj_ with_co_and_co___List__Standard(obj_ this_, obj_ value_1, obj_ value_2)
+{
+	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	UsingMethod_(append_co_)
+	UsingClass_(List__Standard)
+
+		{
+		obj_ list;
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		list = t0_;
+		t0_ = Call_(append_co_, list, value_1);
+		t0_ = Call_(append_co_, list, value_2);
+		return list;
+		
+		}
+	return nil;
+}
+
+
+obj_ with_co_and_co_and_co___List__Standard(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3)
+{
+	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	UsingMethod_(append_co_)
+	UsingClass_(List__Standard)
+
+		{
+		obj_ list;
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		list = t0_;
+		t0_ = Call_(append_co_, list, value_1);
+		t0_ = Call_(append_co_, list, value_2);
+		t0_ = Call_(append_co_, list, value_3);
+		return list;
 		
 		}
 	return nil;

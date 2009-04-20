@@ -4,7 +4,7 @@ UsingSym_(InStream)UsingClass_(File__Standard)
 UsingClass_(InputStream__Standard)
 UsingClass_(InStream__File__Standard)
 struct ClassInfo InStream__File__Standard__classInfo_ = 
-	{ 50, 4, Proto_(InStream__File__Standard), Proto_(File__Standard), Proto_(InputStream__Standard), nil, Sym_(InStream) ,nil };
+	{ 52, 1, Proto_(InStream__File__Standard), Proto_(File__Standard), Proto_(InputStream__Standard), nil, Sym_(InStream) ,nil };
 struct object InStream__File__Standard = 
 	{ &InStream__File__Standard__classInfo_, {nil} };
 
@@ -30,8 +30,10 @@ obj_ _dt_file_co___InStream__File__Standard(obj_ this_, obj_ value)
 
 obj_ close__InStream__File__Standard(obj_ this_)
 {
-if (Field_(_dt_file))
+if (Field_(_dt_file)) {
 	fclose((FILE*) Field_(_dt_file));
+	Field_(_dt_file) = nil;
+	}
 
 }
 
@@ -71,6 +73,7 @@ obj_ new_co___InStream__File__Standard(obj_ this_, obj_ path)
 	UsingClass_(InStream__File__Standard)
 	obj_ obj = AllocObj_(InStream__File__Standard);
 	create_co___InStream__File__Standard(obj, path);
+	RegisterFinalizer_(obj);
 	return obj;
 }
 

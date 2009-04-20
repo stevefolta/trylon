@@ -150,9 +150,9 @@ obj_ dump_expr_co_level_co___Main(obj_ this_, obj_ expr, obj_ level)
 	DefineString_(3, "\"")
 	DefineString_(4, "\"")
 	UsingMethod_(_pl_) UsingMethod_(current_item) UsingMethod_(dump_expr_co_level_co_) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(num_items) UsingMethod_(string) UsingMethod_(substr_co_length_co_)
-	UsingClass_(String__Standard)
 	UsingClass_(Expression)
 	UsingClass_(Standard)
+	UsingClass_(String__Standard)
 
 		{
 		t0_ = Call_(substr_co_length_co_, Str_(0), Int_(0), level);
@@ -249,8 +249,8 @@ obj_ lex_test_co___Main(obj_ this_, obj_ filename)
 	DefineString_(1, "Error: ")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(contents) UsingMethod_(is_empty) UsingMethod_(message) UsingMethod_(next_token) UsingMethod_(text) UsingMethod_(type)
 	UsingClass_(File__Standard)
-	UsingClass_(Standard)
 	UsingClass_(Lexer__Compiler)
+	UsingClass_(Standard)
 
 		{
 		Try_
@@ -376,10 +376,10 @@ obj_ main_co___Main(obj_ this_, obj_ arguments)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(lex_test_co_) UsingMethod_(message) UsingMethod_(starts_with_co_) UsingMethod_(substr_co_) UsingMethod_(tail) UsingMethod_(test_coke_lexer_co_) UsingMethod_(test_lines_lexer_co_) UsingMethod_(test_words_lexer_co_)
 	UsingClass_(Compiler)
 	UsingClass_(File__Standard)
-	UsingClass_(MessageException__Standard)
-	UsingClass_(List__Standard)
-	UsingClass_(Standard)
 	UsingClass_(Interpreter)
+	UsingClass_(List__Standard)
+	UsingClass_(MessageException__Standard)
+	UsingClass_(Standard)
 
 		{
 		obj_ return_value;
@@ -553,9 +553,9 @@ obj_ main_co___Main(obj_ this_, obj_ arguments)
 
 obj_ references__Main(obj_ this_)
 {
-	UsingClass_(JoltCompiler)
 	UsingClass_(CCompiler)
 	UsingClass_(Interpreter)
+	UsingClass_(JoltCompiler)
 
 		{
 		/* Make sure these get loaded up; the old Trylon 1 compiler didn't like if if */
@@ -597,10 +597,10 @@ obj_ test_coke_lexer_co___Main(obj_ this_, obj_ filename)
 	DefineInt_(0, 0)
 	DefineString_(0, "Error: ")
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(dump_expr_co_level_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(message) UsingMethod_(next_expr)
+	UsingClass_(CokeLexer__Compiler)
 	UsingClass_(File__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Standard)
-	UsingClass_(CokeLexer__Compiler)
 
 		{
 		Try_
@@ -660,8 +660,8 @@ obj_ test_lines_lexer_co___Main(obj_ this_, obj_ filename)
 	DefineString_(0, "Error: ")
 	UsingMethod_(_pl_) UsingMethod_(contents) UsingMethod_(dump_lines_co_level_co_) UsingMethod_(lex) UsingMethod_(message)
 	UsingClass_(File__Standard)
-	UsingClass_(Standard)
 	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(Standard)
 
 		{
 		Try_

@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(List__Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(Iterator__List__Standard)
 struct ClassInfo Iterator__List__Standard__classInfo_ = 
-	{ 13, 4, Proto_(Iterator__List__Standard), Proto_(List__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator) ,nil };
+	{ 13, 1, Proto_(Iterator__List__Standard), Proto_(List__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator) ,nil };
 struct object Iterator__List__Standard = 
 	{ &Iterator__List__Standard__classInfo_, {nil} };
 

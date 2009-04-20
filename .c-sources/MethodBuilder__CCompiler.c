@@ -4,7 +4,7 @@ UsingSym_(MethodBuilder)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(MethodBuilder__CCompiler)
 struct ClassInfo MethodBuilder__CCompiler__classInfo_ = 
-	{ 173, 64, Proto_(MethodBuilder__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder) ,nil };
+	{ 175, 16, Proto_(MethodBuilder__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder) ,nil };
 struct object MethodBuilder__CCompiler = 
 	{ &MethodBuilder__CCompiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -151,10 +151,10 @@ obj_ create_co___MethodBuilder__CCompiler(obj_ this_, obj_ function)
 	DefineInt_(1, 1)
 	UsingMethod_(code_co_) UsingMethod_(dict_literals_co_) UsingMethod_(extern_declarations_co_) UsingMethod_(float_literals_co_) UsingMethod_(function_co_) UsingMethod_(indent_level_co_) UsingMethod_(int_literals_co_) UsingMethod_(loop_stack_co_) UsingMethod_(loops_co_) UsingMethod_(next_temporary_num_co_) UsingMethod_(string_literals_co_) UsingMethod_(temporaries_co_) UsingMethod_(tuple_literals_co_) UsingMethod_(used_classes_co_) UsingMethod_(used_selectors_co_) UsingMethod_(used_shared_fields_co_)
 	UsingClass_(Dictionary__Standard)
-	UsingClass_(List__Standard)
-	UsingClass_(StringBuilder__Standard)
-	UsingClass_(ObjectMap__Standard)
 	UsingClass_(IndexedResources__CCompiler)
+	UsingClass_(List__Standard)
+	UsingClass_(ObjectMap__Standard)
+	UsingClass_(StringBuilder__Standard)
 
 		{
 		t0_ = Call_(function_co_, this_, function);
@@ -229,6 +229,7 @@ obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
 	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	extern obj_ mangle_name_co___CCompiler(obj_ this_, obj_ name);
+	extern obj_ new__Dictionary__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -249,10 +250,12 @@ obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 	DefineString_(10, ")")
 	DefineString_(11, "\treturn nil;")
 	DefineString_(12, "}")
-	UsingMethod_(at_co_) UsingMethod_(c_name) UsingMethod_(code) UsingMethod_(current_item) UsingMethod_(dict_literals) UsingMethod_(emit_declarations_on_co_) UsingMethod_(extern_declarations) UsingMethod_(float_literals) UsingMethod_(go_forward) UsingMethod_(int_literals) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(keys) UsingMethod_(name) UsingMethod_(string) UsingMethod_(string_literals) UsingMethod_(temporaries) UsingMethod_(tuple_literals) UsingMethod_(used_classes) UsingMethod_(used_selectors) UsingMethod_(used_shared_fields) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
+	UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(c_name) UsingMethod_(code) UsingMethod_(current_item) UsingMethod_(dict_literals) UsingMethod_(emit_declarations_on_co_) UsingMethod_(extern_declarations) UsingMethod_(float_literals) UsingMethod_(go_forward) UsingMethod_(int_literals) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(keys) UsingMethod_(name) UsingMethod_(string) UsingMethod_(string_literals) UsingMethod_(temporaries) UsingMethod_(tuple_literals) UsingMethod_(used_classes) UsingMethod_(used_selectors) UsingMethod_(used_shared_fields) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingClass_(CCompiler)
+	UsingClass_(Dictionary__Standard)
 
 		{
+		obj_ used_class_names;
 		t0_ = Call_(write_line_co_, stream, Str_(0));
 		
 		/* External declarations. */
@@ -348,17 +351,30 @@ obj_ emit_co___MethodBuilder__CCompiler(obj_ this_, obj_ stream)
 			
 			}
 		/* Used classes. */
+		/* Sort by C name, to avoid unnecessary recompilations of the C file. */
+		/* "used-classes" is an ObjectMap, so the sort key is the address of the class */
+		/* in memory.  That can be different on different runs. */
+		t0_ = new__Dictionary__Standard(Proto_(Dictionary__Standard));
+		used_class_names = t0_;
 		t0_ = Call_(used_classes, this_);
 		t1_ = Call_(values, t0_);
 		ForStart_(3, t1_, used_class)
 			{
-			t0_ = Call_(write_co_, stream, Str_(9));
+			obj_ c_name;
 			t0_ = Call_(c_name, used_class);
-			t1_ = Call_(write_co_, stream, t0_);
+			c_name = t0_;
+			t0_ = Call_(at_co_put_co_, used_class_names, c_name, c_name);
+			}
+		ForEnd_(3)
+		t0_ = Call_(keys, used_class_names);
+		ForStart_(4, t0_, class_name)
+			{
+			t0_ = Call_(write_co_, stream, Str_(9));
+			t0_ = Call_(write_co_, stream, class_name);
 			t0_ = Call_(write_line_co_, stream, Str_(10));
 			
 			}
-		ForEnd_(3)
+		ForEnd_(4)
 		/* ... */
 		
 		t0_ = Call_(write_line, stream);

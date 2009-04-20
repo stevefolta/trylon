@@ -4,7 +4,7 @@ UsingSym_(Cell)UsingClass_(IntStack__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Cell__IntStack__Compiler)
 struct ClassInfo Cell__IntStack__Compiler__classInfo_ = 
-	{ 69, 8, Proto_(Cell__IntStack__Compiler), Proto_(IntStack__Compiler), Proto_(Object__Standard), nil, Sym_(Cell) ,nil };
+	{ 71, 2, Proto_(Cell__IntStack__Compiler), Proto_(IntStack__Compiler), Proto_(Object__Standard), nil, Sym_(Cell) ,nil };
 struct object Cell__IntStack__Compiler = 
 	{ &Cell__IntStack__Compiler__classInfo_, {nil, nil} };
 

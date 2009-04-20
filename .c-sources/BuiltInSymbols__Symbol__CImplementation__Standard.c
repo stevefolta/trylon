@@ -4,7 +4,7 @@ UsingSym_(BuiltInSymbols)UsingClass_(Symbol__CImplementation__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(BuiltInSymbols__Symbol__CImplementation__Standard)
 struct ClassInfo BuiltInSymbols__Symbol__CImplementation__Standard__classInfo_ = 
-	{ 35, 0, Proto_(BuiltInSymbols__Symbol__CImplementation__Standard), Proto_(Symbol__CImplementation__Standard), Proto_(Object__Standard), nil, Sym_(BuiltInSymbols) ,nil };
+	{ 36, 0, Proto_(BuiltInSymbols__Symbol__CImplementation__Standard), Proto_(Symbol__CImplementation__Standard), Proto_(Object__Standard), nil, Sym_(BuiltInSymbols) ,nil };
 struct object BuiltInSymbols__Symbol__CImplementation__Standard = 
 	{ &BuiltInSymbols__Symbol__CImplementation__Standard__classInfo_, {} };
 

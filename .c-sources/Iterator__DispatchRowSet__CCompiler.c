@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(DispatchRowSet__CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(Iterator__DispatchRowSet__CCompiler)
 struct ClassInfo Iterator__DispatchRowSet__CCompiler__classInfo_ = 
-	{ 145, 4, Proto_(Iterator__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
+	{ 147, 1, Proto_(Iterator__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
 struct object Iterator__DispatchRowSet__CCompiler = 
 	{ &Iterator__DispatchRowSet__CCompiler__classInfo_, {nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(LocalSetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(LocalSetter__Compiler)
 struct ClassInfo LocalSetter__Compiler__classInfo_ = 
-	{ 119, 4, Proto_(LocalSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(LocalSetter) ,nil };
+	{ 121, 1, Proto_(LocalSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(LocalSetter) ,nil };
 struct object LocalSetter__Compiler = 
 	{ &LocalSetter__Compiler__classInfo_, {nil} };
 

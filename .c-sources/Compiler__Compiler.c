@@ -4,7 +4,7 @@ UsingSym_(Compiler)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Compiler__Compiler)
 struct ClassInfo Compiler__Compiler__classInfo_ = 
-	{ 67, 24, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler) ,nil };
+	{ 69, 6, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler) ,nil };
 struct object Compiler__Compiler = 
 	{ &Compiler__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 
@@ -143,14 +143,14 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	DefineString_(14, "Done.")
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_library_path) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_root_object_co_) UsingMethod_(is_verbose) UsingMethod_(is_verbose_co_) UsingMethod_(iterator) UsingMethod_(load) UsingMethod_(main_proto) UsingMethod_(main_proto_co_) UsingMethod_(prepare_to_emit) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(root_proto_co_) UsingMethod_(setup_main_co_library_directory_co_) UsingMethod_(show_warnings) UsingMethod_(status_reporter) UsingMethod_(status_reporter_co_) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
-	UsingClass_(FileDirectory__Standard)
-	UsingClass_(System__Standard)
-	UsingClass_(MessageException__Standard)
-	UsingClass_(JoltCompiler)
 	UsingClass_(CCompiler)
-	UsingClass_(StdoutStatusReporter)
-	UsingClass_(VT100StatusReporter)
 	UsingClass_(CompiledProto__Compiler)
+	UsingClass_(FileDirectory__Standard)
+	UsingClass_(JoltCompiler)
+	UsingClass_(MessageException__Standard)
+	UsingClass_(StdoutStatusReporter)
+	UsingClass_(System__Standard)
+	UsingClass_(VT100StatusReporter)
 
 		{
 		obj_ library_directory, library_path, main_directory, main_name, object_class, start_ms;
@@ -301,9 +301,9 @@ obj_ create__Compiler__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(build_settings_co_) UsingMethod_(proto_queue_co_) UsingMethod_(successful_co_) UsingMethod_(symbols_co_)
+	UsingClass_(BuildSettings__Compiler)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(List__Standard)
-	UsingClass_(BuildSettings__Compiler)
 
 		{
 		t0_ = Call_(successful_co_, this_, true_);

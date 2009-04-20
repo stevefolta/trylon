@@ -4,7 +4,7 @@ UsingSym_(Node)UsingClass_(Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Node__Dictionary__Standard)
 struct ClassInfo Node__Dictionary__Standard__classInfo_ = 
-	{ 44, 20, Proto_(Node__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Node) ,nil };
+	{ 45, 5, Proto_(Node__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Node) ,nil };
 struct object Node__Dictionary__Standard = 
 	{ &Node__Dictionary__Standard__classInfo_, {nil, nil, nil, nil, nil} };
 

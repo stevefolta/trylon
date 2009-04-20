@@ -4,7 +4,7 @@ UsingSym_(ContinueStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ContinueStatement__Compiler)
 struct ClassInfo ContinueStatement__Compiler__classInfo_ = 
-	{ 136, 4, Proto_(ContinueStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ContinueStatement) ,nil };
+	{ 138, 1, Proto_(ContinueStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ContinueStatement) ,nil };
 struct object ContinueStatement__Compiler = 
 	{ &ContinueStatement__Compiler__classInfo_, {nil} };
 

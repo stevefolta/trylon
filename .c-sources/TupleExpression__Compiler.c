@@ -4,7 +4,7 @@ UsingSym_(TupleExpression)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(TupleExpression__Compiler)
 struct ClassInfo TupleExpression__Compiler__classInfo_ = 
-	{ 99, 16, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression) ,nil };
+	{ 101, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression) ,nil };
 struct object TupleExpression__Compiler = 
 	{ &TupleExpression__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -101,10 +101,10 @@ obj_ emit_code_co___TupleExpression__Compiler(obj_ this_, obj_ builder)
 	DefineString_(7, ";")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(add_extern_declaration_co_) UsingMethod_(add_line_co_) UsingMethod_(add_co_) UsingMethod_(append_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(emit_code_co_) UsingMethod_(get_standard_class_co_) UsingMethod_(get_temporary) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(is_literal) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(results) UsingMethod_(results_co_) UsingMethod_(size_result) UsingMethod_(size_result_co_) UsingMethod_(string) UsingMethod_(supports_only_literals) UsingMethod_(tuple_literals) UsingMethod_(using_proto_co_)
 	UsingSharedField_(compiler, Main) 
-	UsingClass_(MessageException__Standard)
-	UsingClass_(List__Standard)
 	UsingClass_(IntLiteral__Compiler)
+	UsingClass_(List__Standard)
 	UsingClass_(LiteralResult__CCompiler)
+	UsingClass_(MessageException__Standard)
 
 		{
 		t0_ = Call_(is_literal, this_);

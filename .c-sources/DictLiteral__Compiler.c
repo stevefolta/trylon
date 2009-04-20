@@ -4,7 +4,7 @@ UsingSym_(DictLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(DictLiteral__Compiler)
 struct ClassInfo DictLiteral__Compiler__classInfo_ = 
-	{ 94, 16, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral) ,nil };
+	{ 96, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral) ,nil };
 struct object DictLiteral__Compiler = 
 	{ &DictLiteral__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -72,8 +72,8 @@ obj_ build_results_co_builder_co___DictLiteral__Compiler(obj_ this_, obj_ node, 
 	obj_ t3_;
 	DefineInt_(0, 1)
 	UsingMethod_(_pl_) UsingMethod_(build_results_co_builder_co_) UsingMethod_(emit_code_co_) UsingMethod_(key) UsingMethod_(key_co_) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(level) UsingMethod_(level_co_) UsingMethod_(next_node_index) UsingMethod_(next_node_index_co_) UsingMethod_(right) UsingMethod_(right_co_) UsingMethod_(value) UsingMethod_(value_co_)
-	UsingClass_(StringLiteral__Compiler)
 	UsingClass_(ResultsNode__DictLiteral__Compiler)
+	UsingClass_(StringLiteral__Compiler)
 
 		{
 		obj_ node_results;

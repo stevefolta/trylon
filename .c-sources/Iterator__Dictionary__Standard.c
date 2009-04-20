@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 struct ClassInfo Iterator__Dictionary__Standard__classInfo_ = 
-	{ 41, 4, Proto_(Iterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
+	{ 42, 1, Proto_(Iterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
 struct object Iterator__Dictionary__Standard = 
 	{ &Iterator__Dictionary__Standard__classInfo_, {nil} };
 

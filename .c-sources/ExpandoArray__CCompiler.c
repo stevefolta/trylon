@@ -4,7 +4,7 @@ UsingSym_(ExpandoArray)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpandoArray__CCompiler)
 struct ClassInfo ExpandoArray__CCompiler__classInfo_ = 
-	{ 148, 16, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray) ,nil };
+	{ 150, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray) ,nil };
 struct object ExpandoArray__CCompiler = 
 	{ &ExpandoArray__CCompiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -112,6 +112,7 @@ obj_ create__ExpandoArray__CCompiler(obj_ this_)
 
 obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 {
+	extern obj_ ptr_size__Implementation__Standard(obj_ this_);
 	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
@@ -120,24 +121,26 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 	obj_ t3_;
 	DefineInt_(0, 0)
 	DefineInt_(1, 1)
-	DefineInt_(2, 4)
-	DefineInt_(3, 0)
-	DefineInt_(4, 4)
+	DefineInt_(2, 0)
 	UsingMethod_(_st_) UsingMethod_(block_size_co_) UsingMethod_(blocks) UsingMethod_(blocks_co_) UsingMethod_(num_blocks) UsingMethod_(num_blocks_co_) UsingMethod_(num_items_co_) UsingMethod_(ptr_at_co_put_co_)
 	UsingClass_(BytePtr__Standard)
+	UsingClass_(Implementation__Standard)
 
 		{
+		obj_ ptr_size;
 		t0_ = Call_(block_size_co_, this_, block_size);
 		t0_ = Call_(num_items_co_, this_, Int_(0));
 		t0_ = Call_(num_blocks_co_, this_, Int_(1));
+		t0_ = ptr_size__Implementation__Standard(Proto_(Implementation__Standard));
+		ptr_size = t0_;
 		t0_ = Call_(num_blocks, this_);
-		t1_ = Call_(_st_, Int_(2), t0_);
+		t1_ = Call_(_st_, ptr_size, t0_);
 		t2_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t1_);
 		t3_ = Call_(blocks_co_, this_, t2_);
 		t0_ = Call_(blocks, this_);
-		t1_ = Call_(_st_, Int_(4), block_size);
+		t1_ = Call_(_st_, ptr_size, block_size);
 		t2_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t1_);
-		t3_ = Call_(ptr_at_co_put_co_, t0_, Int_(3), t2_);
+		t3_ = Call_(ptr_at_co_put_co_, t0_, Int_(2), t2_);
 		
 		
 		}
@@ -147,28 +150,29 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 
 obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 {
+	extern obj_ ptr_size__Implementation__Standard(obj_ this_);
 	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	extern obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 4)
-	DefineInt_(1, 4)
-	DefineInt_(2, 4)
-	DefineInt_(3, 1)
+	DefineInt_(0, 1)
 	UsingMethod_(_st_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(block_size) UsingMethod_(blocks) UsingMethod_(blocks_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(num_blocks) UsingMethod_(num_blocks_co_) UsingMethod_(ptr_at_co_put_co_)
 	UsingClass_(BytePtr__Standard)
+	UsingClass_(Implementation__Standard)
 
 		{
-		obj_ new_blocks, which_block;
+		obj_ new_blocks, ptr_size, which_block;
 		/* Copy the existing "blocks". */
-		t0_ = Call_(_st_, Int_(0), new_num_blocks);
+		t0_ = ptr_size__Implementation__Standard(Proto_(Implementation__Standard));
+		ptr_size = t0_;
+		t0_ = Call_(_st_, ptr_size, new_num_blocks);
 		t1_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t0_);
 		new_blocks = t1_;
 		t0_ = Call_(blocks, this_);
 		t1_ = Call_(num_blocks, this_);
-		t2_ = Call_(_st_, Int_(1), t1_);
+		t2_ = Call_(_st_, ptr_size, t1_);
 		t3_ = Call_(copy_from_co_length_co_, new_blocks, t0_, t2_);
 		
 		/* Add the new blocks. */
@@ -181,10 +185,10 @@ obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 				Break_(0)
 			{
 			t0_ = Call_(block_size, this_);
-			t1_ = Call_(_st_, Int_(2), t0_);
+			t1_ = Call_(_st_, ptr_size, t0_);
 			t2_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t1_);
 			t3_ = Call_(ptr_at_co_put_co_, new_blocks, which_block, t2_);
-			t0_ = Call_(_pl_, which_block, Int_(3));
+			t0_ = Call_(_pl_, which_block, Int_(0));
 			which_block = t0_;
 			
 			}

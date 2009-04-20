@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(ExpandoArray__CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(Iterator__ExpandoArray__CCompiler)
 struct ClassInfo Iterator__ExpandoArray__CCompiler__classInfo_ = 
-	{ 149, 8, Proto_(Iterator__ExpandoArray__CCompiler), Proto_(ExpandoArray__CCompiler), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
+	{ 151, 2, Proto_(Iterator__ExpandoArray__CCompiler), Proto_(ExpandoArray__CCompiler), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
 struct object Iterator__ExpandoArray__CCompiler = 
 	{ &Iterator__ExpandoArray__CCompiler__classInfo_, {nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(KeysIterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 UsingClass_(KeysIterator__Dictionary__Standard)
 struct ClassInfo KeysIterator__Dictionary__Standard__classInfo_ = 
-	{ 38, 4, Proto_(KeysIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeysIterator) ,nil };
+	{ 39, 1, Proto_(KeysIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeysIterator) ,nil };
 struct object KeysIterator__Dictionary__Standard = 
 	{ &KeysIterator__Dictionary__Standard__classInfo_, {nil} };
 

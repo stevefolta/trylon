@@ -4,7 +4,7 @@ UsingSym_(ClassBuilder)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ClassBuilder__CCompiler)
 struct ClassInfo ClassBuilder__CCompiler__classInfo_ = 
-	{ 143, 32, Proto_(ClassBuilder__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ClassBuilder) ,nil };
+	{ 145, 8, Proto_(ClassBuilder__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ClassBuilder) ,nil };
 struct object ClassBuilder__CCompiler = 
 	{ &ClassBuilder__CCompiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -59,8 +59,8 @@ obj_ create_co___ClassBuilder__CCompiler(obj_ this_, obj_ proto)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(dict_literals_co_) UsingMethod_(extern_declarations_co_) UsingMethod_(float_literals_co_) UsingMethod_(int_literals_co_) UsingMethod_(proto_co_) UsingMethod_(string_literals_co_) UsingMethod_(tuple_literals_co_)
-	UsingClass_(List__Standard)
 	UsingClass_(IndexedResources__CCompiler)
+	UsingClass_(List__Standard)
 
 		{
 		t0_ = Call_(proto_co_, this_, proto);
@@ -122,11 +122,10 @@ obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 	DefineInt_(2, 3)
 	DefineInt_(3, 3)
 	DefineInt_(4, 3)
-	DefineInt_(5, 4)
-	DefineInt_(6, 3)
+	DefineInt_(5, 3)
+	DefineInt_(6, 0)
 	DefineInt_(7, 0)
-	DefineInt_(8, 0)
-	DefineInt_(9, 1)
+	DefineInt_(8, 1)
 	DefineString_(0, "#include \"Trylon_.h\"")
 	DefineString_(1, "nil")
 	DefineString_(2, "nil")
@@ -169,14 +168,14 @@ obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 	DefineString_(39, ", ")
 	DefineString_(40, ", ")
 	DefineString_(41, ")\n")
-	UsingMethod_(_st_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt_) UsingMethod_(access) UsingMethod_(add_member_co_) UsingMethod_(c_name) UsingMethod_(c_preamble) UsingMethod_(class_num) UsingMethod_(current_item) UsingMethod_(debugger) UsingMethod_(dict_literals) UsingMethod_(emit_c_function_on_co_) UsingMethod_(emit_code_co_) UsingMethod_(emit_declarations_on_co_) UsingMethod_(emit_field_indices_co_) UsingMethod_(extern_declarations) UsingMethod_(fields) UsingMethod_(float_literals) UsingMethod_(forward_declaration) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(initial_value) UsingMethod_(initial_value_result) UsingMethod_(initial_value_result_co_) UsingMethod_(int_literals) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto) UsingMethod_(shared_fields) UsingMethod_(string) UsingMethod_(string_literals) UsingMethod_(superclass) UsingMethod_(total_num_fields) UsingMethod_(tuple_literals) UsingMethod_(uses_protos) UsingMethod_(using_symbol_co_) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
+	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt_) UsingMethod_(access) UsingMethod_(add_member_co_) UsingMethod_(c_name) UsingMethod_(c_preamble) UsingMethod_(class_num) UsingMethod_(current_item) UsingMethod_(debugger) UsingMethod_(dict_literals) UsingMethod_(emit_c_function_on_co_) UsingMethod_(emit_code_co_) UsingMethod_(emit_declarations_on_co_) UsingMethod_(emit_field_indices_co_) UsingMethod_(extern_declarations) UsingMethod_(fields) UsingMethod_(float_literals) UsingMethod_(forward_declaration) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(initial_value) UsingMethod_(initial_value_result) UsingMethod_(initial_value_result_co_) UsingMethod_(int_literals) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto) UsingMethod_(shared_fields) UsingMethod_(string) UsingMethod_(string_literals) UsingMethod_(superclass) UsingMethod_(total_num_fields) UsingMethod_(tuple_literals) UsingMethod_(uses_protos) UsingMethod_(using_symbol_co_) UsingMethod_(values) UsingMethod_(write_all_co_) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingSharedField_(compiler, Main) 
-	UsingClass_(Main)
-	UsingClass_(TupleExpression__Compiler)
-	UsingClass_(SymbolLiteral__Compiler)
 	UsingClass_(CCompiler)
 	UsingClass_(CompiledProto__Compiler)
+	UsingClass_(Main)
 	UsingClass_(ProtoExpression__CCompiler)
+	UsingClass_(SymbolLiteral__Compiler)
+	UsingClass_(TupleExpression__Compiler)
 
 		{
 		obj_ added_fields_access, i, mangled_name, num_fields, parent_context_ref, superclass_ref, used_contexts_access;
@@ -323,11 +322,10 @@ obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 		t0_ = Call_(write_co_, stream, Str_(21));
 		t0_ = Call_(proto, this_);
 		t1_ = Call_(total_num_fields, t0_);
-		t2_ = Call_(_st_, t1_, Int_(5));
-		t3_ = Call_(string, t2_);
-		t4_ = Call_(write_co_, stream, t3_);
+		t2_ = Call_(string, t1_);
+		t3_ = Call_(write_co_, stream, t2_);
 		t0_ = Call_(write_co_, stream, Str_(22));
-		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(6));
+		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(5));
 		t0_->fields[1] = Str_(23);
 		t1_ = Call_(proto, this_);
 		t2_ = Call_(c_name, t1_);
@@ -359,20 +357,20 @@ obj_ emit_on_co___ClassBuilder__CCompiler(obj_ this_, obj_ stream)
 		t0_ = Call_(proto, this_);
 		t1_ = Call_(total_num_fields, t0_);
 		num_fields = t1_;
-		i = Int_(7);
+		i = Int_(6);
 		while (1) {
 			ContinuePoint_(2)
 			t0_ = Call_(_lt_, i, num_fields);
 			if (!(t0_))
 				Break_(2)
 			{
-			t0_ = Call_(_gt_, i, Int_(8));
+			t0_ = Call_(_gt_, i, Int_(7));
 			if (t0_)
 				{
 				t0_ = Call_(write_co_, stream, Str_(34));
 				}
 			t0_ = Call_(write_co_, stream, Str_(35));
-			t0_ = Call_(_pl_, i, Int_(9));
+			t0_ = Call_(_pl_, i, Int_(8));
 			i = t0_;
 			}
 			}
@@ -489,12 +487,12 @@ obj_ emit_co___ClassBuilder__CCompiler(obj_ this_, obj_ force_compile)
 	DefineString_(8, "C compilation failed.")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(build_settings) UsingMethod_(c_compiler) UsingMethod_(c_flags) UsingMethod_(c_name) UsingMethod_(c_sources_dir) UsingMethod_(close) UsingMethod_(current_item) UsingMethod_(emit_on_co_) UsingMethod_(exists) UsingMethod_(go_forward) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(object_file_name) UsingMethod_(proto) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(ExistingFileStream__Standard)
 	UsingClass_(File__Standard)
-	UsingClass_(System__Standard)
-	UsingClass_(MessageException__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Main)
-	UsingClass_(ExistingFileStream__Standard)
+	UsingClass_(MessageException__Standard)
+	UsingClass_(System__Standard)
 
 		{
 		obj_ build_settings, c_file_name, need_recompile, stream;

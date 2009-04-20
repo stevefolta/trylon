@@ -9,7 +9,7 @@ typedef struct ClassInfo* classref_;
 
 struct ClassInfo {
 	int 	classNum;
-	int 	size;
+	int 	numSlots;
 	obj_	proto, parentContext, superclass;
 	obj_	usedContexts;
 	obj_	name;
@@ -67,6 +67,21 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 #define UsingSharedField_(name, className) 	\
 	extern obj_ name##__##className##__storage_;
 
+#define DefineFieldAccessors_(index) 	\
+	obj_ FieldGetter##index##_(obj_ this_) 	\
+	{ 	\
+		return this_->fields[index]; 	\
+	} 	\
+	\
+	obj_ FieldSetter##index##_(obj_ this_, obj_ value) 	\
+	{ 	\
+		this_->fields[index] = value; 	\
+		return value; 	\
+	}
+#define DeclareFieldAccessors_(index) 	\
+	extern obj_ FieldGetter##index##_(obj_ this_); 	\
+	extern obj_ FieldSetter##index##_(obj_ this_, obj_ value);
+
 #define UsingClass_(className) 	\
 	extern struct ClassInfo className##__classInfo_;	 \
 	extern struct object className;
@@ -76,6 +91,8 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 extern obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo);
 #define AllocObj_(className) 	\
 	(AllocObjFromClassInfo_(&className##__classInfo_))
+
+extern void RegisterFinalizer_(obj_ object);
 
 
 /* Standard objects */
@@ -135,13 +152,23 @@ UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
 UsingClass_(True__Standard)
+#ifdef NIL_OBJECT_
+UsingClass_(nil__Standard)
+#endif
 
 
 
 /* Literals */
 
-#define DefineInt_(index, value) \
-	static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
+#ifdef SHARED_INTS_
+	#define UsingInt_(value) 	\
+		extern struct object i##value##_;
+	#define DefineInt_(name, value) \
+		struct object i##name##_ = { StdClassRef_(Int), (obj_) (value) };
+#else
+	#define DefineInt_(index, value) \
+		static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
+#endif
 #define Int_(index)	(&i##index##_)
 
 #define DefineFloat_(index, value) 	\
@@ -241,19 +268,19 @@ typedef struct ExceptionCatcher_ {
 extern void PushException_(ExceptionCatcher_* catcher);
 extern void Throw_(obj_ object);
 extern void PopException_();
+extern obj_ currentException_;
 
 #define Try_	\
 	{	\
 	ExceptionCatcher_ __catcher;	\
-	obj_ exception; 	\
 	PushException_(&__catcher); 	\
-	exception = (obj_) setjmp(__catcher.jumpBuf); 	\
-	if (exception == nil)	{ 	\
+	if (setjmp(__catcher.jumpBuf) == 0)	{ 	\
 
 #define TryElse_ 	\
 		PopException_(); 	\
 		} 	\
 	else { 	\
+		obj_ exception = currentException_; 	\
 		PopException_();
 
 #define EndTry_ 	\

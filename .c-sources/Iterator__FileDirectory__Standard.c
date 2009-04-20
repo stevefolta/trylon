@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(FileDirectory__Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(Iterator__FileDirectory__Standard)
 struct ClassInfo Iterator__FileDirectory__Standard__classInfo_ = 
-	{ 14, 8, Proto_(Iterator__FileDirectory__Standard), Proto_(FileDirectory__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator) ,nil };
+	{ 14, 2, Proto_(Iterator__FileDirectory__Standard), Proto_(FileDirectory__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator) ,nil };
 struct object Iterator__FileDirectory__Standard = 
 	{ &Iterator__FileDirectory__Standard__classInfo_, {nil, nil} };
 

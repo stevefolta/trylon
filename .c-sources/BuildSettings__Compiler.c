@@ -4,7 +4,7 @@ UsingSym_(BuildSettings)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(BuildSettings__Compiler)
 struct ClassInfo BuildSettings__Compiler__classInfo_ = 
-	{ 71, 60, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings) ,nil };
+	{ 73, 15, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings) ,nil };
 struct object BuildSettings__Compiler = 
 	{ &BuildSettings__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -91,8 +91,8 @@ obj_ create__BuildSettings__Compiler(obj_ this_)
 	UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(c_compiler_co_) UsingMethod_(c_flags_co_) UsingMethod_(c_sources_dir_co_) UsingMethod_(dictionary) UsingMethod_(dictionary_co_) UsingMethod_(is_empty) UsingMethod_(is_verbose_co_) UsingMethod_(jolt_sources_dir_co_) UsingMethod_(link_flags_co_) UsingMethod_(linker_co_) UsingMethod_(objects_dir_co_) UsingMethod_(program_name_co_) UsingMethod_(target_co_)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(Implementation__Standard)
-	UsingClass_(System__Standard)
 	UsingClass_(List__Standard)
+	UsingClass_(System__Standard)
 
 		{
 		obj_ sysname;
@@ -290,8 +290,8 @@ obj_ load_from_co___BuildSettings__Compiler(obj_ this_, obj_ file_name)
 	DefineString_(1, "\": ")
 	UsingMethod_(_pl_) UsingMethod_(contents) UsingMethod_(exists) UsingMethod_(message) UsingMethod_(parse_block_co_)
 	UsingClass_(File__Standard)
-	UsingClass_(MessageException__Standard)
 	UsingClass_(Lexer__Compiler)
+	UsingClass_(MessageException__Standard)
 
 		{
 		obj_ file;

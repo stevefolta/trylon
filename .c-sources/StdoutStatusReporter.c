@@ -4,7 +4,7 @@ UsingSym_(StdoutStatusReporter)UsingClass_(Main)
 UsingClass_(StatusReporter)
 UsingClass_(StdoutStatusReporter)
 struct ClassInfo StdoutStatusReporter__classInfo_ = 
-	{ 166, 8, Proto_(StdoutStatusReporter), Proto_(Main), Proto_(StatusReporter), nil, Sym_(StdoutStatusReporter) ,nil };
+	{ 168, 2, Proto_(StdoutStatusReporter), Proto_(Main), Proto_(StatusReporter), nil, Sym_(StdoutStatusReporter) ,nil };
 struct object StdoutStatusReporter = 
 	{ &StdoutStatusReporter__classInfo_, {nil, nil} };
 

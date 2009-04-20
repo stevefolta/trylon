@@ -4,7 +4,7 @@ UsingSym_(Statements)UsingClass_(Interpreter)
 UsingClass_(Object__Standard)
 UsingClass_(Statements__Interpreter)
 struct ClassInfo Statements__Interpreter__classInfo_ = 
-	{ 124, 0, Proto_(Statements__Interpreter), Proto_(Interpreter), Proto_(Object__Standard), nil, Sym_(Statements) ,nil };
+	{ 126, 0, Proto_(Statements__Interpreter), Proto_(Interpreter), Proto_(Object__Standard), nil, Sym_(Statements) ,nil };
 struct object Statements__Interpreter = 
 	{ &Statements__Interpreter__classInfo_, {} };
 

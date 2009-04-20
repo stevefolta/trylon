@@ -4,7 +4,7 @@ UsingSym_(ForContext)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(ForContext__Compiler)
 struct ClassInfo ForContext__Compiler__classInfo_ = 
-	{ 79, 8, Proto_(ForContext__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(ForContext) ,nil };
+	{ 81, 2, Proto_(ForContext__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(ForContext) ,nil };
 struct object ForContext__Compiler = 
 	{ &ForContext__Compiler__classInfo_, {nil, nil} };
 
@@ -73,8 +73,8 @@ obj_ lookup_function_co___ForContext__Compiler(obj_ this_, obj_ name)
 	obj_ t5_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(local) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(parent)
-	UsingClass_(LocalSetter__Compiler)
 	UsingClass_(LocalGetter__Compiler)
+	UsingClass_(LocalSetter__Compiler)
 
 		{
 		t0_ = Call_(local, this_);

@@ -4,7 +4,7 @@ UsingSym_(ClassNumberer)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ClassNumberer__CCompiler)
 struct ClassInfo ClassNumberer__CCompiler__classInfo_ = 
-	{ 142, 4, Proto_(ClassNumberer__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ClassNumberer) ,nil };
+	{ 144, 1, Proto_(ClassNumberer__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ClassNumberer) ,nil };
 struct object ClassNumberer__CCompiler = 
 	{ &ClassNumberer__CCompiler__classInfo_, {nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(FunctionCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(FunctionCall__Compiler)
 struct ClassInfo FunctionCall__Compiler__classInfo_ = 
-	{ 85, 16, Proto_(FunctionCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FunctionCall) ,nil };
+	{ 87, 4, Proto_(FunctionCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FunctionCall) ,nil };
 struct object FunctionCall__Compiler = 
 	{ &FunctionCall__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -84,8 +84,8 @@ obj_ copy__FunctionCall__Compiler(obj_ this_)
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name)
-	UsingClass_(List__Standard)
 	UsingClass_(FunctionCall__Compiler)
+	UsingClass_(List__Standard)
 
 		{
 		obj_ copied_args;

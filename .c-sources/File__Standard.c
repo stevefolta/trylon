@@ -4,7 +4,7 @@ UsingSym_(File)UsingClass_(Standard)
 UsingClass_(FileDirectoryEntry__Standard)
 UsingClass_(File__Standard)
 struct ClassInfo File__Standard__classInfo_ = 
-	{ 46, 4, Proto_(File__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(File) ,nil };
+	{ 47, 1, Proto_(File__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(File) ,nil };
 struct object File__Standard = 
 	{ &File__Standard__classInfo_, {nil} };
 
@@ -53,8 +53,8 @@ obj_ contents__File__Standard(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_pl_) UsingMethod_(close) UsingMethod_(read_buffer_co_length_co_) UsingMethod_(size) UsingMethod_(stream)
-	UsingClass_(String__Standard)
 	UsingClass_(BytePtr__Standard)
+	UsingClass_(String__Standard)
 
 		{
 		obj_ size, storage, stream;
@@ -163,11 +163,10 @@ unlink(CString_(Field_(path)));
 
 obj_ size__File__Standard(obj_ this_)
 {
-DefineInt_(0, 0);
 struct stat buf;
 int error = stat(CString_(Field_(path)), &buf);
 if (error != 0)
-	return Int_(0);
+	return BuildInt_(0);
 return BuildInt_(buf.st_size);
 
 }

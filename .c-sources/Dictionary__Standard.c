@@ -4,7 +4,7 @@ UsingSym_(Dictionary)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Dictionary__Standard)
 struct ClassInfo Dictionary__Standard__classInfo_ = 
-	{ 37, 8, Proto_(Dictionary__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Dictionary) ,nil };
+	{ 38, 2, Proto_(Dictionary__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Dictionary) ,nil };
 struct object Dictionary__Standard = 
 	{ &Dictionary__Standard__classInfo_, {nil, nil} };
 

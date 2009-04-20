@@ -4,7 +4,7 @@ UsingSym_(ParseException)UsingClass_(Compiler)
 UsingClass_(Exception__Standard)
 UsingClass_(ParseException__Compiler)
 struct ClassInfo ParseException__Compiler__classInfo_ = 
-	{ 8, 12, Proto_(ParseException__Compiler), Proto_(Compiler), Proto_(Exception__Standard), nil, Sym_(ParseException) ,nil };
+	{ 8, 3, Proto_(ParseException__Compiler), Proto_(Compiler), Proto_(Exception__Standard), nil, Sym_(ParseException) ,nil };
 struct object ParseException__Compiler = 
 	{ &ParseException__Compiler__classInfo_, {nil, nil, nil} };
 

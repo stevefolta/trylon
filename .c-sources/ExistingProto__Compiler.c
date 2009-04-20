@@ -4,7 +4,7 @@ UsingSym_(ExistingProto)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(ExistingProto__Compiler)
 struct ClassInfo ExistingProto__Compiler__classInfo_ = 
-	{ 72, 16, Proto_(ExistingProto__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(ExistingProto) ,nil };
+	{ 74, 4, Proto_(ExistingProto__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(ExistingProto) ,nil };
 struct object ExistingProto__Compiler = 
 	{ &ExistingProto__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -66,8 +66,8 @@ obj_ add_function_co___ExistingProto__Compiler(obj_ this_, obj_ function)
 	DefineString_(1, "create:")
 	DefineString_(2, "create-")
 	UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(new_functions) UsingMethod_(starts_with_co_)
-	UsingClass_(NewFunction__Compiler)
 	UsingClass_(CompiledFunction__Compiler)
+	UsingClass_(NewFunction__Compiler)
 
 		{
 		obj_ function_name;
@@ -157,9 +157,9 @@ obj_ add_proto_co_directory_co___ExistingProto__Compiler(obj_ this_, obj_ name, 
 	DefineString_(4, "...")
 	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(at_co_put_co_) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name) UsingMethod_(new_functions) UsingMethod_(proto) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(CompiledProto__Compiler)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(ProtoFunction__Compiler)
-	UsingClass_(CompiledProto__Compiler)
 
 		{
 		obj_ existing_function, new_proto, proto_function, status_reporter;
@@ -221,8 +221,8 @@ obj_ add_shared_field_co___ExistingProto__Compiler(obj_ this_, obj_ field)
 	obj_ t4_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(name) UsingMethod_(new_functions)
-	UsingClass_(SharedFieldSetter__Compiler)
 	UsingClass_(SharedFieldGetter__Compiler)
+	UsingClass_(SharedFieldSetter__Compiler)
 
 		{
 		t0_ = Call_(new_functions, this_);
@@ -288,9 +288,9 @@ obj_ function_for_co_in_co___ExistingProto__Compiler(obj_ this_, obj_ selector, 
 	DefineInt_(0, 58)
 	DefineInt_(1, 0)
 	UsingMethod_(_nt__eq_) UsingMethod_(_dt_proto) UsingMethod_(_lt_) UsingMethod_(index_of_co_) UsingMethod_(perform_co_) UsingMethod_(responds_to_co_) UsingMethod_(same_as_co_) UsingMethod_(string)
+	UsingClass_(ExistingProto__Compiler)
 	UsingClass_(PrimitiveFunction__Compiler)
 	UsingClass_(ProtoFunction__Compiler)
-	UsingClass_(ExistingProto__Compiler)
 
 		{
 		obj_ existing_proto, function_name;
@@ -532,9 +532,9 @@ obj_ lookup_instance_function_co___ExistingProto__Compiler(obj_ this_, obj_ name
 	DefineInt_(1, 65)
 	DefineInt_(2, 90)
 	UsingMethod_(_lt__eq_) UsingMethod_(_gt__eq_) UsingMethod_(at_co_) UsingMethod_(intern) UsingMethod_(new_functions) UsingMethod_(perform_co_) UsingMethod_(proto) UsingMethod_(responds_to_co_)
+	UsingClass_(ExistingProto__Compiler)
 	UsingClass_(PrimitiveFunction__Compiler)
 	UsingClass_(ProtoFunction__Compiler)
-	UsingClass_(ExistingProto__Compiler)
 
 		{
 		obj_ function;
@@ -634,8 +634,8 @@ obj_ parent__ExistingProto__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_dt_parent_context) UsingMethod_(_eq__eq_) UsingMethod_(is_main_co_) UsingMethod_(proto) UsingMethod_(responds_to_co_)
-	UsingClass_(Main)
 	UsingClass_(ExistingProto__Compiler)
+	UsingClass_(Main)
 
 		{
 		t0_ = Call_(proto, this_);

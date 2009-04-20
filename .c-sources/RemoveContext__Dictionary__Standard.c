@@ -4,7 +4,7 @@ UsingSym_(RemoveContext)UsingClass_(Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(RemoveContext__Dictionary__Standard)
 struct ClassInfo RemoveContext__Dictionary__Standard__classInfo_ = 
-	{ 45, 20, Proto_(RemoveContext__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(RemoveContext) ,nil };
+	{ 46, 5, Proto_(RemoveContext__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(RemoveContext) ,nil };
 struct object RemoveContext__Dictionary__Standard = 
 	{ &RemoveContext__Dictionary__Standard__classInfo_, {nil, nil, nil, nil, nil} };
 

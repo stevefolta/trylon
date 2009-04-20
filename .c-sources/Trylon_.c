@@ -19,6 +19,11 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
 
@@ -43,13 +48,16 @@ obj_ RespondsTo_(obj_ object, selector_ selector)
 
 obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
 {
-	obj_ object = (obj_) GC_MALLOC(sizeof(classref_) + classInfo->size);
+	obj_ object =
+		(obj_) GC_MALLOC(
+			sizeof(classref_) + classInfo->numSlots * sizeof(obj_));
 	object->class_ = classInfo;
 	return object;
 }
 
 
 static ExceptionCatcher_* currentExceptionCatcher = NULL;
+obj_ currentException_ = NULL;
 
 void PushException_(ExceptionCatcher_* catcher)
 {
@@ -66,7 +74,8 @@ void Throw_(obj_ object)
 		exit(1);
 		}
 
-	longjmp(currentExceptionCatcher->jumpBuf, (int) object);
+	currentException_ = object;
+	longjmp(currentExceptionCatcher->jumpBuf, 1);
 }
 
 
@@ -227,7 +236,8 @@ obj_ CloneObj_(obj_ object)
 obj_ CloneObjExtra_(obj_ object, int numExtraFields)
 {
 	size_t size =
-		sizeof(classref_) + object->class_->size + numExtraFields * sizeof(obj_);
+		sizeof(classref_) +
+		(object->class_->numSlots + numExtraFields) * sizeof(obj_);
 	obj_ newObject = (obj_) GC_MALLOC(size);
 	newObject->class_ = object->class_;
 	return newObject;
@@ -291,7 +301,9 @@ int main(int argc, char* argv[])
 	result = main_co___Main(Proto_(Main), args);
 
 	// Return the result.
-	if (result && result->class_ == StdClassRef_(Int))
+	if (result == nil)
+		return 0;
+	else if (result->class_ == StdClassRef_(Int))
 		return IntValue_(result);
 	else
 		return 1;

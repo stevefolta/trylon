@@ -4,7 +4,7 @@ UsingSym_(MethodContext)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(MethodContext__Compiler)
 struct ClassInfo MethodContext__Compiler__classInfo_ = 
-	{ 80, 8, Proto_(MethodContext__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(MethodContext) ,nil };
+	{ 82, 2, Proto_(MethodContext__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(MethodContext) ,nil };
 struct object MethodContext__Compiler = 
 	{ &MethodContext__Compiler__classInfo_, {nil, nil} };
 
@@ -70,11 +70,11 @@ obj_ lookup_function_co___MethodContext__Compiler(obj_ this_, obj_ name)
 	DefineString_(0, "this")
 	DefineString_(1, ":")
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(arguments) UsingMethod_(current_item) UsingMethod_(ends_with_co_) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(length) UsingMethod_(lookup_function_co_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(substr_co_length_co_)
-	UsingClass_(FunctionOnThis__Compiler)
-	UsingClass_(SetArgumentFunction__Compiler)
 	UsingClass_(ArgumentFunction__Compiler)
-	UsingClass_(ThisFunction__Compiler)
+	UsingClass_(FunctionOnThis__Compiler)
 	UsingClass_(ProtoFunction__Compiler)
+	UsingClass_(SetArgumentFunction__Compiler)
+	UsingClass_(ThisFunction__Compiler)
 
 		{
 		obj_ found_function, is_setter, set_name;

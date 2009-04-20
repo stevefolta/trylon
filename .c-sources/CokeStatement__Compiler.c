@@ -4,7 +4,7 @@ UsingSym_(CokeStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(CokeStatement__Compiler)
 struct ClassInfo CokeStatement__Compiler__classInfo_ = 
-	{ 140, 8, Proto_(CokeStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(CokeStatement) ,nil };
+	{ 142, 2, Proto_(CokeStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(CokeStatement) ,nil };
 struct object CokeStatement__Compiler = 
 	{ &CokeStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -46,9 +46,9 @@ obj_ jolt_expression__CokeStatement__Compiler(obj_ this_)
 	DefineInt_(4, 1)
 	DefineInt_(5, 1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(first_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(next_expr)
-	UsingClass_(List__Standard)
-	UsingClass_(Expression)
 	UsingClass_(CokeLexer__Compiler)
+	UsingClass_(Expression)
+	UsingClass_(List__Standard)
 
 		{
 		obj_ exprs, lexer;

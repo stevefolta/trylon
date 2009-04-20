@@ -4,7 +4,7 @@ UsingSym_(LiteralResult)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(LiteralResult__CCompiler)
 struct ClassInfo LiteralResult__CCompiler__classInfo_ = 
-	{ 169, 4, Proto_(LiteralResult__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(LiteralResult) ,nil };
+	{ 171, 1, Proto_(LiteralResult__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(LiteralResult) ,nil };
 struct object LiteralResult__CCompiler = 
 	{ &LiteralResult__CCompiler__classInfo_, {nil} };
 

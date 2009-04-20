@@ -4,7 +4,7 @@ UsingSym_(LambdaBlock)UsingClass_(Compiler)
 UsingClass_(Block__Compiler)
 UsingClass_(LambdaBlock__Compiler)
 struct ClassInfo LambdaBlock__Compiler__classInfo_ = 
-	{ 73, 16, Proto_(LambdaBlock__Compiler), Proto_(Compiler), Proto_(Block__Compiler), nil, Sym_(LambdaBlock) ,nil };
+	{ 75, 4, Proto_(LambdaBlock__Compiler), Proto_(Compiler), Proto_(Block__Compiler), nil, Sym_(LambdaBlock) ,nil };
 struct object LambdaBlock__Compiler = 
 	{ &LambdaBlock__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -134,8 +134,8 @@ obj_ lookup_function_co___LambdaBlock__Compiler(obj_ this_, obj_ name)
 	DefineInt_(1, 1)
 	DefineString_(0, ":")
 	UsingMethod_(_) UsingMethod_(arguments) UsingMethod_(at_co_) UsingMethod_(ends_with_co_) UsingMethod_(length) UsingMethod_(substr_co_length_co_)
-	UsingClass_(SetArgumentFunction__Compiler)
 	UsingClass_(ArgumentFunction__Compiler)
+	UsingClass_(SetArgumentFunction__Compiler)
 
 		{
 		obj_ arg, arg_name, is_setter;

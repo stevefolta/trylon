@@ -4,7 +4,7 @@ UsingSym_(NewFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(NewFunction__Compiler)
 struct ClassInfo NewFunction__Compiler__classInfo_ = 
-	{ 111, 12, Proto_(NewFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NewFunction) ,nil };
+	{ 113, 3, Proto_(NewFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NewFunction) ,nil };
 struct object NewFunction__Compiler = 
 	{ &NewFunction__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -144,9 +144,10 @@ obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 	DefineString_(7, "(obj")
 	DefineString_(8, ", ")
 	DefineString_(9, ");\n")
-	DefineString_(10, "\treturn obj;\n")
-	DefineString_(11, "}\n\n\n")
-	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(c_name) UsingMethod_(c_signature) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
+	DefineString_(10, "\tRegisterFinalizer_(obj);\n")
+	DefineString_(11, "\treturn obj;\n")
+	DefineString_(12, "}\n\n\n")
+	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(arguments) UsingMethod_(c_name) UsingMethod_(c_signature) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(needs_finalizer) UsingMethod_(on_proto) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingClass_(Compiler)
 	UsingClass_(List__Standard)
 
@@ -161,11 +162,13 @@ obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 			t0_ = Call_(name, arg);
 			t1_ = mangle_name_co___Compiler(Proto_(Compiler), t0_);
 			t2_ = Call_(append_co_, arg_names, t1_);
+			
 			}
 		ForEnd_(0)
 		/* Signature. */
 		t0_ = Call_(c_signature, this_);
 		t1_ = Call_(write_line_co_, stream, t0_);
+		
 		/* Body */
 		t0_ = Call_(on_proto, this_);
 		t1_ = Call_(c_name, t0_);
@@ -192,8 +195,14 @@ obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 			}
 		ForEnd_(1)
 		t0_ = Call_(write_co_, stream, Str_(9));
-		t0_ = Call_(write_co_, stream, Str_(10));
+		t0_ = Call_(on_proto, this_);
+		t1_ = Call_(needs_finalizer, t0_);
+		if (t1_)
+			{
+			t0_ = Call_(write_co_, stream, Str_(10));
+			}
 		t0_ = Call_(write_co_, stream, Str_(11));
+		t0_ = Call_(write_co_, stream, Str_(12));
 		
 		}
 	return nil;

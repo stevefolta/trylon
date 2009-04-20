@@ -4,7 +4,7 @@ UsingSym_(StackElement)UsingClass_(Iterator__Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(StackElement__Iterator__Dictionary__Standard)
 struct ClassInfo StackElement__Iterator__Dictionary__Standard__classInfo_ = 
-	{ 42, 8, Proto_(StackElement__Iterator__Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(StackElement) ,nil };
+	{ 43, 2, Proto_(StackElement__Iterator__Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(StackElement) ,nil };
 struct object StackElement__Iterator__Dictionary__Standard = 
 	{ &StackElement__Iterator__Dictionary__Standard__classInfo_, {nil, nil} };
 

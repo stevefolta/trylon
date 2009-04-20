@@ -4,7 +4,7 @@ UsingSym_(StringBytesIterator)UsingClass_(Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(StringBytesIterator__Standard)
 struct ClassInfo StringBytesIterator__Standard__classInfo_ = 
-	{ 15, 12, Proto_(StringBytesIterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(StringBytesIterator) ,nil };
+	{ 15, 3, Proto_(StringBytesIterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(StringBytesIterator) ,nil };
 struct object StringBytesIterator__Standard = 
 	{ &StringBytesIterator__Standard__classInfo_, {nil, nil, nil} };
 

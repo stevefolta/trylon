@@ -4,7 +4,7 @@ UsingSym_(Cell)UsingClass_(List__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Cell__List__Standard)
 struct ClassInfo Cell__List__Standard__classInfo_ = 
-	{ 20, 8, Proto_(Cell__List__Standard), Proto_(List__Standard), Proto_(Object__Standard), nil, Sym_(Cell) ,nil };
+	{ 20, 2, Proto_(Cell__List__Standard), Proto_(List__Standard), Proto_(Object__Standard), nil, Sym_(Cell) ,nil };
 struct object Cell__List__Standard = 
 	{ &Cell__List__Standard__classInfo_, {nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(Block)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(Block__Compiler)
 struct ClassInfo Block__Compiler__classInfo_ = 
-	{ 74, 12, Proto_(Block__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(Block) ,nil };
+	{ 76, 3, Proto_(Block__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(Block) ,nil };
 struct object Block__Compiler = 
 	{ &Block__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -349,8 +349,8 @@ obj_ lookup_function_autodeclaring_co___Block__Compiler(obj_ this_, obj_ name)
 	DefineInt_(2, 0)
 	DefineInt_(3, 1)
 	UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(add_local_co_) UsingMethod_(index_of_co_) UsingMethod_(length) UsingMethod_(lookup_function_co_) UsingMethod_(substr_co_length_co_)
-	UsingClass_(LocalSetter__Compiler)
 	UsingClass_(CompiledField__Compiler)
+	UsingClass_(LocalSetter__Compiler)
 
 		{
 		obj_ function;
@@ -399,8 +399,8 @@ obj_ lookup_function_co___Block__Compiler(obj_ this_, obj_ name)
 	DefineInt_(1, 1)
 	DefineString_(0, ":")
 	UsingMethod_(_) UsingMethod_(at_co_) UsingMethod_(ends_with_co_) UsingMethod_(length) UsingMethod_(locals) UsingMethod_(lookup_function_co_) UsingMethod_(parent) UsingMethod_(substr_co_length_co_)
-	UsingClass_(LocalSetter__Compiler)
 	UsingClass_(LocalGetter__Compiler)
+	UsingClass_(LocalSetter__Compiler)
 
 		{
 		obj_ function;

@@ -4,7 +4,7 @@ UsingSym_(ObjectMap)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(ObjectMap__Standard)
 struct ClassInfo ObjectMap__Standard__classInfo_ = 
-	{ 177, 4, Proto_(ObjectMap__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(ObjectMap) ,nil };
+	{ 179, 1, Proto_(ObjectMap__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(ObjectMap) ,nil };
 struct object ObjectMap__Standard = 
 	{ &ObjectMap__Standard__classInfo_, {nil} };
 

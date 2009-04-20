@@ -4,9 +4,9 @@ UsingSym_(PosixProto)UsingClass_(JoltCompiler)
 UsingClass_(CompiledProto__Compiler)
 UsingClass_(PosixProto__JoltCompiler)
 struct ClassInfo PosixProto__JoltCompiler__classInfo_ = 
-	{ 76, 60, Proto_(PosixProto__JoltCompiler), Proto_(JoltCompiler), Proto_(CompiledProto__Compiler), nil, Sym_(PosixProto) ,nil };
+	{ 78, 16, Proto_(PosixProto__JoltCompiler), Proto_(JoltCompiler), Proto_(CompiledProto__Compiler), nil, Sym_(PosixProto) ,nil };
 struct object PosixProto__JoltCompiler = 
-	{ &PosixProto__JoltCompiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
+	{ &PosixProto__JoltCompiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
 
 
@@ -22,9 +22,10 @@ struct object PosixProto__JoltCompiler =
 #define source_name__fld_	(9)
 #define is_main__fld_	(10)
 #define is_root_object__fld_	(11)
-#define class_num__fld_	(12)
-#define c_preamble__fld_	(13)
-#define _dt_c_name__fld_	(14)
+#define has_destroy__fld_	(12)
+#define class_num__fld_	(13)
+#define c_preamble__fld_	(14)
+#define _dt_c_name__fld_	(15)
 
 
 

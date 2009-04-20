@@ -4,7 +4,7 @@ UsingSym_(StringBuilder)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(StringBuilder__Standard)
 struct ClassInfo StringBuilder__Standard__classInfo_ = 
-	{ 151, 8, Proto_(StringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(StringBuilder) ,nil };
+	{ 153, 2, Proto_(StringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(StringBuilder) ,nil };
 struct object StringBuilder__Standard = 
 	{ &StringBuilder__Standard__classInfo_, {nil, nil} };
 
@@ -141,9 +141,9 @@ obj_ string__StringBuilder__Standard(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(length) UsingMethod_(start) UsingMethod_(substrings) UsingMethod_(substrings_co_)
+	UsingClass_(BytePtr__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(String__Standard)
-	UsingClass_(BytePtr__Standard)
 
 		{
 		obj_ bytes, ptr, string;

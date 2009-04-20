@@ -4,7 +4,7 @@ UsingSym_(BreakStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BreakStatement__Compiler)
 struct ClassInfo BreakStatement__Compiler__classInfo_ = 
-	{ 135, 4, Proto_(BreakStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BreakStatement) ,nil };
+	{ 137, 1, Proto_(BreakStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BreakStatement) ,nil };
 struct object BreakStatement__Compiler = 
 	{ &BreakStatement__Compiler__classInfo_, {nil} };
 

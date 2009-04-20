@@ -3,7 +3,7 @@
 UsingSym_(Object)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 struct ClassInfo Object__Standard__classInfo_ = 
-	{ 179, 0, Proto_(Object__Standard), Proto_(Standard), nil, nil, Sym_(Object) ,nil };
+	{ 181, 0, Proto_(Object__Standard), Proto_(Standard), nil, nil, Sym_(Object) ,nil };
 struct object Object__Standard = 
 	{ &Object__Standard__classInfo_, {} };
 
@@ -37,7 +37,7 @@ return this_->class_->addedFields;
 
 obj_ _dt_object_size__Object__Standard(obj_ this_)
 {
-return BuildInt_(sizeof(classref_) + this_->class_->size);
+return BuildInt_(sizeof(classref_) + this_->class_->numSlots * sizeof(obj_));
 
 }
 

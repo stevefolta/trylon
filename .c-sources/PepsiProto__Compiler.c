@@ -4,9 +4,9 @@ UsingSym_(PepsiProto)UsingClass_(Compiler)
 UsingClass_(CompiledProto__Compiler)
 UsingClass_(PepsiProto__Compiler)
 struct ClassInfo PepsiProto__Compiler__classInfo_ = 
-	{ 77, 60, Proto_(PepsiProto__Compiler), Proto_(Compiler), Proto_(CompiledProto__Compiler), nil, Sym_(PepsiProto) ,nil };
+	{ 79, 16, Proto_(PepsiProto__Compiler), Proto_(Compiler), Proto_(CompiledProto__Compiler), nil, Sym_(PepsiProto) ,nil };
 struct object PepsiProto__Compiler = 
-	{ &PepsiProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
+	{ &PepsiProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
 
 
@@ -22,9 +22,10 @@ struct object PepsiProto__Compiler =
 #define source_name__fld_	(9)
 #define is_main__fld_	(10)
 #define is_root_object__fld_	(11)
-#define class_num__fld_	(12)
-#define c_preamble__fld_	(13)
-#define _dt_c_name__fld_	(14)
+#define has_destroy__fld_	(12)
+#define class_num__fld_	(13)
+#define c_preamble__fld_	(14)
+#define _dt_c_name__fld_	(15)
 
 
 

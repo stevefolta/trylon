@@ -4,7 +4,7 @@ UsingSym_(TrylonExpression)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(TrylonExpression__Compiler)
 struct ClassInfo TrylonExpression__Compiler__classInfo_ = 
-	{ 103, 0, Proto_(TrylonExpression__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonExpression) ,nil };
+	{ 105, 0, Proto_(TrylonExpression__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonExpression) ,nil };
 struct object TrylonExpression__Compiler = 
 	{ &TrylonExpression__Compiler__classInfo_, {} };
 

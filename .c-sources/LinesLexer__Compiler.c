@@ -4,7 +4,7 @@ UsingSym_(LinesLexer)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(LinesLexer__Compiler)
 struct ClassInfo LinesLexer__Compiler__classInfo_ = 
-	{ 61, 32, Proto_(LinesLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(LinesLexer) ,nil };
+	{ 63, 8, Proto_(LinesLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(LinesLexer) ,nil };
 struct object LinesLexer__Compiler = 
 	{ &LinesLexer__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -161,10 +161,10 @@ obj_ lex__LinesLexer__Compiler(obj_ this_)
 	DefineString_(3, "--")
 	DefineString_(4, " ")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt_) UsingMethod_(_gt__eq_) UsingMethod_(append_co_) UsingMethod_(block_co_) UsingMethod_(cur_indentation) UsingMethod_(cur_indentation_co_) UsingMethod_(cur_lines) UsingMethod_(cur_lines_co_) UsingMethod_(deref_char) UsingMethod_(ends_with_co_) UsingMethod_(first) UsingMethod_(head) UsingMethod_(indent_stack) UsingMethod_(is_empty) UsingMethod_(last_item) UsingMethod_(length) UsingMethod_(lines) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(pending_blank_lines) UsingMethod_(pending_blank_lines_co_) UsingMethod_(pop_front) UsingMethod_(push_front_co_) UsingMethod_(second) UsingMethod_(stopper) UsingMethod_(substr_co_length_co_)
-	UsingClass_(MessageException__Standard)
-	UsingClass_(List__Standard)
-	UsingClass_(String__Standard)
 	UsingClass_(CodeLine__Compiler)
+	UsingClass_(List__Standard)
+	UsingClass_(MessageException__Standard)
+	UsingClass_(String__Standard)
 
 		{
 		while (1) {

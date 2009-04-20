@@ -4,7 +4,7 @@ UsingSym_(WhileStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(WhileStatement__Compiler)
 struct ClassInfo WhileStatement__Compiler__classInfo_ = 
-	{ 133, 16, Proto_(WhileStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(WhileStatement) ,nil };
+	{ 135, 4, Proto_(WhileStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(WhileStatement) ,nil };
 struct object WhileStatement__Compiler = 
 	{ &WhileStatement__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -129,8 +129,8 @@ obj_ interpreted__WhileStatement__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(_nt__eq_) UsingMethod_(body) UsingMethod_(condition) UsingMethod_(interpreted)
-	UsingClass_(Continue__Statements__Interpreter)
 	UsingClass_(Break__Statements__Interpreter)
+	UsingClass_(Continue__Statements__Interpreter)
 
 		{
 		Try_

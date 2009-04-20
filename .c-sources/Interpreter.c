@@ -4,7 +4,7 @@ UsingSym_(Interpreter)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(Interpreter)
 struct ClassInfo Interpreter__classInfo_ = 
-	{ 63, 4, Proto_(Interpreter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Interpreter) ,nil };
+	{ 65, 1, Proto_(Interpreter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Interpreter) ,nil };
 struct object Interpreter = 
 	{ &Interpreter__classInfo_, {nil} };
 
@@ -188,9 +188,9 @@ obj_ interpret_co___Interpreter(obj_ this_, obj_ code)
 	obj_ t0_;
 	UsingMethod_(interpreted) UsingMethod_(parse_code) UsingMethod_(prepare_to_emit)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(ExistingProto__Compiler)
 	UsingClass_(Main)
 	UsingClass_(Parser__Compiler)
-	UsingClass_(ExistingProto__Compiler)
 
 		{
 		obj_ context, main_context, parse_tree, parser, result;
@@ -219,9 +219,9 @@ obj_ interpret_co___Interpreter(obj_ this_, obj_ code)
 
 obj_ references__Interpreter(obj_ this_)
 {
-	UsingClass_(Statements__Interpreter)
-	UsingClass_(Functions__Interpreter)
 	UsingClass_(Expressions__Interpreter)
+	UsingClass_(Functions__Interpreter)
+	UsingClass_(Statements__Interpreter)
 
 		{
 		

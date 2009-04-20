@@ -4,7 +4,7 @@ UsingSym_(Symbol)UsingClass_(Standard)
 UsingClass_(String__Standard)
 UsingClass_(Symbol__Standard)
 struct ClassInfo Symbol__Standard__classInfo_ = 
-	{ 21, 12, Proto_(Symbol__Standard), Proto_(Standard), Proto_(String__Standard), nil, Sym_(Symbol) ,nil };
+	{ 21, 3, Proto_(Symbol__Standard), Proto_(Standard), Proto_(String__Standard), nil, Sym_(Symbol) ,nil };
 struct object Symbol__Standard = 
 	{ &Symbol__Standard__classInfo_, {nil, nil, nil} };
 
@@ -139,8 +139,8 @@ obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name)
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(built_in_table) UsingMethod_(built_in_table_co_) UsingMethod_(dynamic_table) UsingMethod_(dynamic_table_co_) UsingMethod_(start) UsingMethod_(stopper)
-	UsingClass_(Dictionary__Standard)
 	UsingClass_(BuiltInSymbols__Symbol__CImplementation__Standard)
+	UsingClass_(Dictionary__Standard)
 	UsingClass_(Symbol__Standard)
 
 		{

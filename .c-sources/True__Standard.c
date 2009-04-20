@@ -4,7 +4,7 @@ UsingSym_(True)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(True__Standard)
 struct ClassInfo True__Standard__classInfo_ = 
-	{ 57, 0, Proto_(True__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(True) ,nil };
+	{ 59, 0, Proto_(True__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(True) ,nil };
 struct object True__Standard = 
 	{ &True__Standard__classInfo_, {} };
 

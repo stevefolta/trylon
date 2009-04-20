@@ -4,7 +4,7 @@ UsingSym_(FieldGetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(FieldGetter__Compiler)
 struct ClassInfo FieldGetter__Compiler__classInfo_ = 
-	{ 105, 8, Proto_(FieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(FieldGetter) ,nil };
+	{ 107, 2, Proto_(FieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(FieldGetter) ,nil };
 struct object FieldGetter__Compiler = 
 	{ &FieldGetter__Compiler__classInfo_, {nil, nil} };
 

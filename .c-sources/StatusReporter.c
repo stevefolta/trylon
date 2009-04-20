@@ -4,7 +4,7 @@ UsingSym_(StatusReporter)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(StatusReporter)
 struct ClassInfo StatusReporter__classInfo_ = 
-	{ 167, 4, Proto_(StatusReporter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(StatusReporter) ,nil };
+	{ 169, 1, Proto_(StatusReporter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(StatusReporter) ,nil };
 struct object StatusReporter = 
 	{ &StatusReporter__classInfo_, {nil} };
 

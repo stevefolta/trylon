@@ -4,9 +4,9 @@ UsingSym_(CompiledProto)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(CompiledProto__Compiler)
 struct ClassInfo CompiledProto__Compiler__classInfo_ = 
-	{ 78, 60, Proto_(CompiledProto__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(CompiledProto) ,nil };
+	{ 80, 16, Proto_(CompiledProto__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(CompiledProto) ,nil };
 struct object CompiledProto__Compiler = 
-	{ &CompiledProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
+	{ &CompiledProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
 
 
@@ -22,9 +22,10 @@ struct object CompiledProto__Compiler =
 #define source_name__fld_	(9)
 #define is_main__fld_	(10)
 #define is_root_object__fld_	(11)
-#define class_num__fld_	(12)
-#define c_preamble__fld_	(13)
-#define _dt_c_name__fld_	(14)
+#define has_destroy__fld_	(12)
+#define class_num__fld_	(13)
+#define c_preamble__fld_	(14)
+#define _dt_c_name__fld_	(15)
 
 
 obj_ _dt_c_name__CompiledProto__Compiler(obj_ this_)
@@ -55,8 +56,8 @@ obj_ access__CompiledProto__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(is_main) UsingMethod_(is_root_object) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(push_front_co_)
-	UsingClass_(List__Standard)
 	UsingClass_(Expression)
+	UsingClass_(List__Standard)
 
 		{
 		t0_ = Call_(is_main, this_);
@@ -157,8 +158,8 @@ obj_ add_field_co___CompiledProto__Compiler(obj_ this_, obj_ field)
 	obj_ t3_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(add_function_co_function_co_) UsingMethod_(append_co_) UsingMethod_(fields) UsingMethod_(name)
-	UsingClass_(FieldSetter__Compiler)
 	UsingClass_(FieldGetter__Compiler)
+	UsingClass_(FieldSetter__Compiler)
 
 		{
 		t0_ = Call_(fields, this_);
@@ -195,11 +196,12 @@ obj_ add_function_co___CompiledProto__Compiler(obj_ this_, obj_ function)
 	DefineString_(3, "create")
 	DefineString_(4, "create:")
 	DefineString_(5, "create-")
-	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(declaring_selector_co_) UsingMethod_(functions) UsingMethod_(has_code) UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(starts_with_co_)
+	DefineString_(6, "destroy")
+	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(declaring_selector_co_) UsingMethod_(functions) UsingMethod_(has_code) UsingMethod_(has_destroy_co_) UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(starts_with_co_)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(CompiledFunction__Compiler)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(NewFunction__Compiler)
-	UsingClass_(CompiledFunction__Compiler)
 
 		{
 		obj_ function_name;
@@ -259,6 +261,13 @@ obj_ add_function_co___CompiledProto__Compiler(obj_ this_, obj_ function)
 			t0_ = Call_(name, new_function);
 			t1_ = Call_(declaring_selector_co_, SharedField_(compiler, Main), t0_);
 			
+			}
+		/* "destroy" functions mean a finalizer is needed. */
+		t0_ = Call_(_eq__eq_, function_name, Str_(6));
+		if (t0_)
+			{
+			t0_ = Call_(has_destroy_co_, this_, true_);
+			
 			
 			}
 		}
@@ -317,9 +326,9 @@ obj_ add_proto_co_directory_co___CompiledProto__Compiler(obj_ this_, obj_ name, 
 	DefineString_(4, "...")
 	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(add_function_co_function_co_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(proto) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
+	UsingClass_(CompiledProto__Compiler)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(ProtoFunction__Compiler)
-	UsingClass_(CompiledProto__Compiler)
 
 		{
 		obj_ existing_function, new_proto, proto_function, status_reporter;
@@ -382,8 +391,8 @@ obj_ add_shared_field_co___CompiledProto__Compiler(obj_ this_, obj_ field)
 	obj_ t3_;
 	DefineString_(0, ":")
 	UsingMethod_(_pl_) UsingMethod_(add_function_co_function_co_) UsingMethod_(at_co_put_co_) UsingMethod_(name) UsingMethod_(shared_fields)
-	UsingClass_(SharedFieldSetter__Compiler)
 	UsingClass_(SharedFieldGetter__Compiler)
+	UsingClass_(SharedFieldSetter__Compiler)
 
 		{
 		t0_ = Call_(shared_fields, this_);
@@ -489,7 +498,7 @@ obj_ create_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ p
 	obj_ t1_;
 	DefineString_(0, ".proto")
 	DefineString_(1, ".superclass")
-	UsingMethod_(add_function_co_) UsingMethod_(directories_co_) UsingMethod_(fields_co_) UsingMethod_(functions_co_) UsingMethod_(is_main_co_) UsingMethod_(is_root_object_co_) UsingMethod_(name_co_) UsingMethod_(parent_co_) UsingMethod_(shared_fields_co_) UsingMethod_(subclasses_co_) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos_co_)
+	UsingMethod_(add_function_co_) UsingMethod_(directories_co_) UsingMethod_(fields_co_) UsingMethod_(functions_co_) UsingMethod_(has_destroy_co_) UsingMethod_(is_main_co_) UsingMethod_(is_root_object_co_) UsingMethod_(name_co_) UsingMethod_(parent_co_) UsingMethod_(shared_fields_co_) UsingMethod_(subclasses_co_) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos_co_)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(Main)
@@ -512,6 +521,7 @@ obj_ create_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ p
 		t1_ = Call_(subclasses_co_, this_, t0_);
 		t0_ = Call_(is_main_co_, this_, nil);
 		t0_ = Call_(is_root_object_co_, this_, nil);
+		t0_ = Call_(has_destroy_co_, this_, nil);
 		
 		/* Will be added by Jolt code: */
 		t0_ = build_settings__Main(Proto_(Main));
@@ -710,10 +720,10 @@ obj_ emit_jolt_file__CompiledProto__Compiler(obj_ this_)
 	DefineString_(1, ".k")
 	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(close) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(emit_code) UsingMethod_(emit_co_) UsingMethod_(fields) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(jolt_sources_dir) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(status_reporter) UsingMethod_(superclass) UsingMethod_(uses_protos) UsingMethod_(values) UsingMethod_(write_line)
 	UsingSharedField_(compiler, Main) 
-	UsingClass_(File__Standard)
-	UsingClass_(Expression)
-	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(ExistingFileStream__Standard)
+	UsingClass_(Expression)
+	UsingClass_(File__Standard)
+	UsingClass_(ProtoFunction__Compiler)
 
 		{
 		obj_ file, got_one, status_reporter, stream;
@@ -1013,8 +1023,8 @@ obj_ get_subproto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(add_proto_co_) UsingMethod_(add_proto_co_directory_co_) UsingMethod_(at_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(entry_is_directory_co_) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(parse_proto_file_co_) UsingMethod_(proto)
-	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(Parser__Compiler)
+	UsingClass_(ProtoFunction__Compiler)
 
 		{
 		obj_ function;
@@ -1068,6 +1078,19 @@ obj_ get_subproto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 		
 		}
 	return nil;
+}
+
+
+obj_ has_destroy__CompiledProto__Compiler(obj_ this_)
+{
+	return Field_(has_destroy);
+}
+
+
+obj_ has_destroy_co___CompiledProto__Compiler(obj_ this_, obj_ value)
+{
+	Field_(has_destroy) = value;
+	return value;
 }
 
 
@@ -1291,6 +1314,33 @@ obj_ name_co___CompiledProto__Compiler(obj_ this_, obj_ value)
 }
 
 
+obj_ needs_finalizer__CompiledProto__Compiler(obj_ this_)
+{
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(has_destroy) UsingMethod_(needs_finalizer) UsingMethod_(superclass)
+
+		{
+		t0_ = Call_(has_destroy, this_);
+		if (t0_)
+			{
+			return true_;
+			}
+		t0_ = Call_(superclass, this_);
+		if (t0_)
+			{
+			t0_ = Call_(superclass, this_);
+			t1_ = Call_(needs_finalizer, t0_);
+			return t1_;
+			}
+		return nil;
+		
+		
+		}
+	return nil;
+}
+
+
 obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent)
 {
 	UsingClass_(CompiledProto__Compiler)
@@ -1457,15 +1507,15 @@ obj_ setup_main_co_library_directory_co___CompiledProto__Compiler(obj_ this_, ob
 static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), Int_(0), Str_(16), Str_(17), Str_(18), Str_(19), Str_(20), Str_(21), Str_(22) };
 	UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(functions) UsingMethod_(get_subproto_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_main_co_) UsingMethod_(iterator) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(parse_proto_file_co_) UsingMethod_(proto_queue) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos)
 	UsingSharedField_(compiler, Main) 
-	UsingClass_(MessageException__Standard)
-	UsingClass_(Tuple__Standard)
-	UsingClass_(Main)
 	UsingClass_(BoolLiteralFunction__Compiler)
+	UsingClass_(Main)
+	UsingClass_(MessageException__Standard)
 	UsingClass_(NilFunction__Compiler)
-	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(Parser__Compiler)
 	UsingClass_(PepsiProto__Compiler)
 	UsingClass_(PosixProto__JoltCompiler)
+	UsingClass_(ProtoFunction__Compiler)
+	UsingClass_(Tuple__Standard)
 
 		{
 		obj_ standard_proto, std_protos;

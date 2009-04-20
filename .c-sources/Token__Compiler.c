@@ -4,7 +4,7 @@ UsingSym_(Token)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Token__Compiler)
 struct ClassInfo Token__Compiler__classInfo_ = 
-	{ 70, 8, Proto_(Token__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Token) ,nil };
+	{ 72, 2, Proto_(Token__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Token) ,nil };
 struct object Token__Compiler = 
 	{ &Token__Compiler__classInfo_, {nil, nil} };
 

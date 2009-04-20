@@ -4,7 +4,7 @@ UsingSym_(CatchClause)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(CatchClause__Compiler)
 struct ClassInfo CatchClause__Compiler__classInfo_ = 
-	{ 75, 16, Proto_(CatchClause__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(CatchClause) ,nil };
+	{ 77, 4, Proto_(CatchClause__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(CatchClause) ,nil };
 struct object CatchClause__Compiler = 
 	{ &CatchClause__Compiler__classInfo_, {nil, nil, nil, nil} };
 

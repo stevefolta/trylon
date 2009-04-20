@@ -4,7 +4,7 @@ UsingSym_(ThrowStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ThrowStatement__Compiler)
 struct ClassInfo ThrowStatement__Compiler__classInfo_ = 
-	{ 138, 8, Proto_(ThrowStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ThrowStatement) ,nil };
+	{ 140, 2, Proto_(ThrowStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ThrowStatement) ,nil };
 struct object ThrowStatement__Compiler = 
 	{ &ThrowStatement__Compiler__classInfo_, {nil, nil} };
 

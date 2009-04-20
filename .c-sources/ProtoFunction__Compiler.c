@@ -4,7 +4,7 @@ UsingSym_(ProtoFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(ProtoFunction__Compiler)
 struct ClassInfo ProtoFunction__Compiler__classInfo_ = 
-	{ 110, 4, Proto_(ProtoFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ProtoFunction) ,nil };
+	{ 112, 1, Proto_(ProtoFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ProtoFunction) ,nil };
 struct object ProtoFunction__Compiler = 
 	{ &ProtoFunction__Compiler__classInfo_, {nil} };
 
@@ -193,8 +193,8 @@ obj_ emit_code__ProtoFunction__Compiler(obj_ this_)
 	DefineInt_(2, 1)
 	DefineInt_(3, 1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(is_main) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto) UsingMethod_(push_front_co_)
-	UsingClass_(List__Standard)
 	UsingClass_(Expression)
+	UsingClass_(List__Standard)
 
 		{
 		obj_ expr, index, list, namespace_;

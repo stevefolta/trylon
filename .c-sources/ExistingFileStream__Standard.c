@@ -4,7 +4,7 @@ UsingSym_(ExistingFileStream)UsingClass_(Standard)
 UsingClass_(OutputStream__Standard)
 UsingClass_(ExistingFileStream__Standard)
 struct ClassInfo ExistingFileStream__Standard__classInfo_ = 
-	{ 54, 20, Proto_(ExistingFileStream__Standard), Proto_(Standard), Proto_(OutputStream__Standard), nil, Sym_(ExistingFileStream) ,nil };
+	{ 56, 5, Proto_(ExistingFileStream__Standard), Proto_(Standard), Proto_(OutputStream__Standard), nil, Sym_(ExistingFileStream) ,nil };
 struct object ExistingFileStream__Standard = 
 	{ &ExistingFileStream__Standard__classInfo_, {nil, nil, nil, nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(PosixProtoFunction)UsingClass_(PosixProto__JoltCompiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(PosixProtoFunction__PosixProto__JoltCompiler)
 struct ClassInfo PosixProtoFunction__PosixProto__JoltCompiler__classInfo_ = 
-	{ 122, 4, Proto_(PosixProtoFunction__PosixProto__JoltCompiler), Proto_(PosixProto__JoltCompiler), Proto_(TrylonFunction__Compiler), nil, Sym_(PosixProtoFunction) ,nil };
+	{ 124, 1, Proto_(PosixProtoFunction__PosixProto__JoltCompiler), Proto_(PosixProto__JoltCompiler), Proto_(TrylonFunction__Compiler), nil, Sym_(PosixProtoFunction) ,nil };
 struct object PosixProtoFunction__PosixProto__JoltCompiler = 
 	{ &PosixProtoFunction__PosixProto__JoltCompiler__classInfo_, {nil} };
 

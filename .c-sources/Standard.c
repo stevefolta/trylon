@@ -91,6 +91,13 @@ obj_ Float__Standard__accessor_(obj_ this_)
 }
 
 
+obj_ GarbageCollector__Standard__accessor_(obj_ this_)
+{
+	UsingClass_(GarbageCollector__Standard)
+	return Proto_(GarbageCollector__Standard);
+}
+
+
 obj_ Implementation__Standard__accessor_(obj_ this_)
 {
 	UsingClass_(Implementation__Standard)

@@ -4,7 +4,7 @@ UsingSym_(CokeLexer)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CokeLexer__Compiler)
 struct ClassInfo CokeLexer__Compiler__classInfo_ = 
-	{ 59, 16, Proto_(CokeLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CokeLexer) ,nil };
+	{ 61, 4, Proto_(CokeLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CokeLexer) ,nil };
 struct object CokeLexer__Compiler = 
 	{ &CokeLexer__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -43,9 +43,9 @@ obj_ lex_list__CokeLexer__Compiler(obj_ this_)
 	DefineInt_(3, 1)
 	DefineString_(0, "Unterminated list in Coke code.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(next_char) UsingMethod_(next_expr) UsingMethod_(peek_non_whitespace_char)
-	UsingClass_(MessageException__Standard)
-	UsingClass_(List__Standard)
 	UsingClass_(Expression)
+	UsingClass_(List__Standard)
+	UsingClass_(MessageException__Standard)
 
 		{
 		obj_ expr, index, list;
@@ -167,9 +167,9 @@ obj_ lex_send__CokeLexer__Compiler(obj_ this_)
 	DefineString_(0, "Bad send in Coke code.")
 	DefineString_(1, "Unterminated send in Coke code.")
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(next_char) UsingMethod_(next_expr) UsingMethod_(peek_non_whitespace_char)
-	UsingClass_(MessageException__Standard)
-	UsingClass_(List__Standard)
 	UsingClass_(Expression)
+	UsingClass_(List__Standard)
+	UsingClass_(MessageException__Standard)
 
 		{
 		obj_ args, expr, index, message, receiver;
@@ -427,9 +427,9 @@ obj_ next_expr__CokeLexer__Compiler(obj_ this_)
 	DefineString_(0, "Extra \")\" in Coke code.")
 	DefineString_(1, "Extra \"]\" in Coke code.")
 	UsingMethod_(_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(intern) UsingMethod_(lex_list) UsingMethod_(lex_number_co_) UsingMethod_(lex_send) UsingMethod_(lex_string) UsingMethod_(next_char) UsingMethod_(next_expr) UsingMethod_(next_non_whitespace_char) UsingMethod_(p) UsingMethod_(peek_char) UsingMethod_(unary_minus)
+	UsingClass_(Expression)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(String__Standard)
-	UsingClass_(Expression)
 
 		{
 		obj_ c;

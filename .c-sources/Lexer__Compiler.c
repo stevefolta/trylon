@@ -4,7 +4,7 @@ UsingSym_(Lexer)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Lexer__Compiler)
 struct ClassInfo Lexer__Compiler__classInfo_ = 
-	{ 60, 20, Proto_(Lexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Lexer) ,nil };
+	{ 62, 5, Proto_(Lexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Lexer) ,nil };
 struct object Lexer__Compiler = 
 	{ &Lexer__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(String)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(String__Standard)
 struct ClassInfo String__Standard__classInfo_ = 
-	{ 22, 8, Proto_(String__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(String) ,nil };
+	{ 22, 2, Proto_(String__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(String) ,nil };
 struct object String__Standard = 
 	{ &String__Standard__classInfo_, {nil, nil} };
 
@@ -763,6 +763,8 @@ obj_ intern__String__Standard(obj_ this_)
 		t0_ = intern_co___Symbol__Standard(Proto_(Symbol__Standard), this_);
 		return t0_;
 		
+		
+		
 		}
 	return nil;
 }
@@ -902,8 +904,8 @@ obj_ lowercase__String__Standard(obj_ this_)
 	DefineInt_(5, 1)
 	DefineInt_(6, 1)
 	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_lt__eq_) UsingMethod_(_gt__eq_) UsingMethod_(char_at_co_put_co_) UsingMethod_(deref_char) UsingMethod_(length) UsingMethod_(start) UsingMethod_(stopper) UsingMethod_(stopper_co_)
-	UsingClass_(String__Standard)
 	UsingClass_(BytePtr__Standard)
+	UsingClass_(String__Standard)
 
 		{
 		obj_ buffer, length, out_p, p;

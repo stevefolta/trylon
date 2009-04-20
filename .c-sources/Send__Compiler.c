@@ -4,7 +4,7 @@ UsingSym_(Send)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(Send__Compiler)
 struct ClassInfo Send__Compiler__classInfo_ = 
-	{ 84, 16, Proto_(Send__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(Send) ,nil };
+	{ 86, 4, Proto_(Send__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(Send) ,nil };
 struct object Send__Compiler = 
 	{ &Send__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -284,8 +284,8 @@ obj_ prepare_to_emit__Send__Compiler(obj_ this_)
 	obj_ t3_;
 	UsingMethod_(arguments) UsingMethod_(calling_selector_co_) UsingMethod_(current_item) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(object) UsingMethod_(prepare_to_emit) UsingMethod_(proto) UsingMethod_(proto_result_function) UsingMethod_(proto_result_function_co_)
 	UsingSharedField_(compiler, Main) 
-	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(FunctionCall__Compiler)
+	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(Send__Compiler)
 
 		{
