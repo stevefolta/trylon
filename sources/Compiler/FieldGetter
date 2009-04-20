@@ -15,7 +15,7 @@ name
 
 
 compile-call: builder with: arguments
-	return builder compile-field-getter-call: this
+	return compile-send-of: name to-proto: on-proto with: arguments using: builder
 
 
 

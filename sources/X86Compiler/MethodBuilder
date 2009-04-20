@@ -551,21 +551,20 @@ compile-local-setter-call: func with: arguments
 	return local-result
 
 
-compile-field-getter-call: func
-	# ...
-
-compile-field-setter-call: func with: arguments
-	# ...
-
 compile-shared-field-getter-call: func
-	# ...
+	# We could get more efficient here, but instead will just emit a send to the
+	# proto.
+	return 	--
+		func 	--
+			compile-send-of: func name to-proto: func on-proto with: empty using: this
 
 compile-shared-field-setter-call: func with: arguments
-	# ...
-
-
-compile-compiled-function-call: func with: arguments
-	# ...
+	# We could get more efficient here, but instead will just emit a send to the
+	# proto.
+	return 	--
+		func 	--
+			compile-send-of: func name to-proto: func on-proto 	--
+			with: arguments using: this
 
 
 compile-function-on-this-call: func with: arguments

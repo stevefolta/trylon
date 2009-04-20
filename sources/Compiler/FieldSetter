@@ -14,7 +14,7 @@ name
 
 
 compile-call: builder with: arguments
-	return builder compile-field-setter-call: this with: arguments
+	return compile-send-of: name to-proto: on-proto with: arguments using: builder
 
 
 # Copyright 2007-2009 Steve Folta.  See the License file.

@@ -27,7 +27,7 @@ prepare-to-emit
 
 
 compile: builder
-	return builder compile-compiled-function-call: this
+	return compile-send-of: name to-proto: on-proto with: arguments using: builder
 
 
 

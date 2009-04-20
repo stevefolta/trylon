@@ -11,6 +11,17 @@ has-code
 	return true
 
 
+# Helpers.
+
+compile-send-of: name to-proto: proto with: arguments using: builder
+	# Some types of functions (CompiledFunction, FieldGetter, FieldSetter) are
+	# mainly used for their structural properties, and when they appear in the
+	# AST, represent (somewhat unintuitively) a call to the prototype object that
+	# the function is defined on.  This is a helper for those types of functions.
+	proto-fn = ProtoFunction new: proto
+	send = Send new: name object: proto-fn arguments: arguments
+	return send compile: builder
+
 
 # Copyright 2007-2009 Steve Folta.  See the License file.
 
