@@ -763,8 +763,6 @@ obj_ intern__String__Standard(obj_ this_)
 		t0_ = intern_co___Symbol__Standard(Proto_(Symbol__Standard), this_);
 		return t0_;
 		
-		
-		
 		}
 	return nil;
 }

@@ -19,11 +19,6 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
-#ifdef NIL_OBJECT_
-	if (object == nil)
-		object = &nil__Standard;
-#endif
-
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
 
@@ -301,9 +296,7 @@ int main(int argc, char* argv[])
 	result = main_co___Main(Proto_(Main), args);
 
 	// Return the result.
-	if (result == nil)
-		return 0;
-	else if (result->class_ == StdClassRef_(Int))
+	if (result && result->class_ == StdClassRef_(Int))
 		return IntValue_(result);
 	else
 		return 1;

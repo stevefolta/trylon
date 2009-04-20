@@ -67,21 +67,6 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 #define UsingSharedField_(name, className) 	\
 	extern obj_ name##__##className##__storage_;
 
-#define DefineFieldAccessors_(index) 	\
-	obj_ FieldGetter##index##_(obj_ this_) 	\
-	{ 	\
-		return this_->fields[index]; 	\
-	} 	\
-	\
-	obj_ FieldSetter##index##_(obj_ this_, obj_ value) 	\
-	{ 	\
-		this_->fields[index] = value; 	\
-		return value; 	\
-	}
-#define DeclareFieldAccessors_(index) 	\
-	extern obj_ FieldGetter##index##_(obj_ this_); 	\
-	extern obj_ FieldSetter##index##_(obj_ this_, obj_ value);
-
 #define UsingClass_(className) 	\
 	extern struct ClassInfo className##__classInfo_;	 \
 	extern struct object className;
@@ -152,23 +137,13 @@ UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
 UsingClass_(True__Standard)
-#ifdef NIL_OBJECT_
-UsingClass_(nil__Standard)
-#endif
 
 
 
 /* Literals */
 
-#ifdef SHARED_INTS_
-	#define UsingInt_(value) 	\
-		extern struct object i##value##_;
-	#define DefineInt_(name, value) \
-		struct object i##name##_ = { StdClassRef_(Int), (obj_) (value) };
-#else
-	#define DefineInt_(index, value) \
-		static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
-#endif
+#define DefineInt_(index, value) \
+	static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
 #define Int_(index)	(&i##index##_)
 
 #define DefineFloat_(index, value) 	\

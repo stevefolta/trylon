@@ -163,10 +163,11 @@ unlink(CString_(Field_(path)));
 
 obj_ size__File__Standard(obj_ this_)
 {
+DefineInt_(0, 0);
 struct stat buf;
 int error = stat(CString_(Field_(path)), &buf);
 if (error != 0)
-	return BuildInt_(0);
+	return Int_(0);
 return BuildInt_(buf.st_size);
 
 }
