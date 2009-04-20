@@ -568,11 +568,15 @@ compile-shared-field-setter-call: func with: arguments
 
 
 compile-function-on-this-call: func with: arguments
-	# ...
+	this-result = ArgumentFunction new: 0
+	emit-send-of: func name intern to: this-result with: arguments
 
 
 compile-proto-call: func
-	# ...
+	if func is-a: ExistingFunction
+		return LiteralResult new: func proto
+	else
+		error: "Defining new classes is not yet supported in the X86 compiler."
 
 
 compile-caught-exception-call: func
@@ -587,7 +591,9 @@ compile-nil-call: func
 
 
 compile-bool-literal-call: func
-	# ...
+	if func value
+		return LiteralResult new: true
+	return LiteralResult new: false
 
 
 
