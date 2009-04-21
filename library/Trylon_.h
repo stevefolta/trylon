@@ -40,6 +40,9 @@ extern struct RDTableEntry_ dispatchTable_[];
 
 extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
 extern obj_ RespondsTo_(obj_ object, selector_ selector);
+#ifdef SUPPORT_NEW_METHODS_
+	extern fn_ptr_* MethodLocation_(obj_ object, selector_ selector);
+#endif
 
 #ifdef SUPPORT_PERFORM_
 	#define UsingMethod_(methodName)	UsingSym_(methodName)

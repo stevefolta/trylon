@@ -299,6 +299,8 @@ emit-settings: build-settings
 		stream send: "#define SHARED_FIELD_ACCESSORS_"
 	if build-settings["nil-object"]
 		stream send: "#define NIL_OBJECT_"
+	if build-settings["support-new-methods"]
+		stream send: "#define SUPPORT_NEW_METHODS_"
 	
 	stream write-line
 	is-changed = stream is-changed

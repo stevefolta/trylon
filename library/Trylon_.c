@@ -39,11 +39,35 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 
 obj_ RespondsTo_(obj_ object, selector_ selector)
 {
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
 
 	return Bool_(entry->selector == selector);
 }
+
+
+#ifdef SUPPORT_NEW_METHODS_
+fn_ptr_* MethodLocation_(obj_ object, selector_ selector)
+{
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
+	struct RDTableEntry_* entry =
+		&dispatchTable_[selector + ClassNumFor_(object)];
+
+	if (entry->selector == selector)
+		return &entry->method;
+
+	return nil;
+}
+#endif
 
 
 obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
