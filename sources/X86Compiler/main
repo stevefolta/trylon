@@ -1,0 +1,24 @@
+trylon X86Compiler
+
+word-size = 4
+
+
+replace-method: symbol on: object with: code
+	# ...
+	MethodBuilder
+
+c-fn replace-method: symbol on: object with-ptr: fn-ptr
+	struct Standard__Symbol__internal* sym =
+		(struct Standard__Symbol__internal*) symbol;
+	fn_ptr_* method_ptr = MethodLocation_(object, sym->selector);
+	if (method_ptr == nil) {
+		UsingMethod_(method_replacement_error_co_)
+		Call_(method_replacement_error_co_, this_, symbol);
+		}
+	*method_ptr = (fn_ptr_) BytePtrValue_(fn_ptr);
+	return nil;
+
+method-replacement-error: symbol
+	error: "Unable to replace method '" + symbol string + "'."
+
+

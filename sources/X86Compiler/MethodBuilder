@@ -1,12 +1,12 @@
 trylon MethodBuilder
 
-fields refs out-ptr buffer-limit buffers
+fields function
+fields refs out-ptr buffer-limit buffers offset
 fields dispatch-fn
-fields postamble-label cur-num-locals num-locals
+fields postamble-label cur-num-locals num-locals argument-indices loop-stack
 
 buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
-word-size = 4
 
 literals = nil
 
@@ -16,8 +16,9 @@ literals = nil
 # 	mov dest, src
 
 
-create
+create: function
 	init
+	this function = function
 	refs = List new
 	buffers = List new
 	grow
@@ -36,11 +37,13 @@ emit-method
 	postamble-label = Label new
 	cur-num-locals = 0
 	num-locals = 0
+	offset = 0
+	loop-stack = List new
 
 	# Set up arguments.
 	argument-indices = Dictionary new
 	index = 1 	# Index 0 is "this".
-	for arg in arguments
+	for arg in function arguments
 		argument-indices at: arg name put: index
 		index += 1
 
@@ -52,7 +55,7 @@ emit-method
 	emit-word: 0 	# Will be patched later.
 
 	# Emit the body of the code.
-	body compile: this
+	function body compile: this
 
 	# Emit the postamble.
 	postamble-label define: offset
@@ -120,7 +123,6 @@ emit-opcode-extensions-for: result
 	disp32 = result disp32
 	if disp32
 		emit-word: disp32
-	result = temp
 
 emit-opcode-extensions-for: result with: additional-opcode
 	mod-rm = result mod-rm
@@ -132,7 +134,6 @@ emit-opcode-extensions-for: result with: additional-opcode
 	disp32 = result disp32
 	if disp32
 		emit-word: disp32
-	result = temp
 
 
 class Buffer
@@ -229,6 +230,10 @@ stash: result
 	return result
 
 
+emit-move-to: dest from: src
+	# ...
+
+
 class Local
 	fields index
 
@@ -251,10 +256,10 @@ class Loop
 	fields continue-label break-label
 
 start-loop-continue: continue-label break: break-label
-	loop = Loop new
-	loop continue-label = continue-label
-	loop break-label = break-label
-	loop-stack push: loop
+	new-loop = Loop new
+	new-loop continue-label = continue-label
+	new-loop break-label = break-label
+	loop-stack push: new-loop
 
 end-loop
 	loop-stack pop
@@ -263,7 +268,7 @@ end-loop
 push-args: args
 	reversed-args = List new
 	for arg in args
-		reversed-args push-back: arg
+		reversed-args push-front: arg
 	for arg in reversed-args
 		result = arg compile: this
 		emit-push: result
@@ -324,7 +329,7 @@ compile-block: block
 			local compile-info = new-local
 
 	# Body.
-	for stmt in block statments
+	for stmt in block statements
 		stmt compile: this
 	
 	# Clean up locals.
@@ -353,7 +358,7 @@ compile-if: stmt
 
 		# "end" currently means the end of the "if" branch; the conditional needs
 		# to jump there.
-		end define
+		end define: offset
 
 		# Repurpose "end", so "final-end" is defined correctly.
 		end = final-end
@@ -366,7 +371,7 @@ compile-loop: stmt
 	end = Label new
 	start-loop-continue: start break: end
 	stmt body compile: this
-	emit-jmp: label
+	emit-jmp: start
 	end define: offset
 	end-loop
 
@@ -396,6 +401,8 @@ compile-while: stmt
 compile-for: stmt
 	# Emit the creation of the iterator.
 	# ...
+	iterator-result = nil 	# ***
+	local = nil 	# ***
 
 	# Start the loop.
 	again = Label new
@@ -496,7 +503,7 @@ compile-dict-literal: literal
 compile-tuple-expression: expr
 	# Create the tuple.
 	args = Tuple new: 1
-	args at: 0 put: (IntLiteral new: expr members num-items)
+	args at: 0 put: (Compiler IntLiteral new: expr members num-items)
 	tuple-obj-result = LiteralResult new: Tuple
 	tuple = emit-send-of: 'new:' to: tuple-obj-result with: args
 	tuple = stash: tuple
@@ -504,6 +511,7 @@ compile-tuple-expression: expr
 	# Add the members.
 	index = 0
 	for member in expr members
+		index-literal = Compiler IntLiteral new: index
 		emit-send-of: 'at:put:' to: tuple with: (index-literal, member)
 		index += 1
 
@@ -579,12 +587,12 @@ compile-shared-field-setter-call: func with: arguments
 
 
 compile-function-on-this-call: func with: arguments
-	this-result = ArgumentFunction new: 0
+	this-result = Compiler ArgumentFunction new: 0
 	emit-send-of: func name intern to: this-result with: arguments
 
 
 compile-proto-call: func
-	if func is-a: ExistingFunction
+	if func is-a: Compiler ExistingProto
 		return LiteralResult new: func proto
 	else
 		error: "Defining new classes is not yet supported in the X86 compiler."

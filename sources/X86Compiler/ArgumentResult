@@ -4,7 +4,7 @@ superclass Result
 fields offset
 
 create: index
-	offset = (argument compile-info index + 2) * word-size
+	offset = (index + 2) * word-size
 
 
 mod-rm

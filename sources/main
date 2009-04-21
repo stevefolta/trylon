@@ -358,6 +358,8 @@ references
 	CCompiler
 	JoltCompiler
 	Interpreter
+	iff support-new-methods
+		X86Compiler
 
 
 
