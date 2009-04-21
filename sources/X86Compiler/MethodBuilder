@@ -259,10 +259,10 @@ start-loop-continue: continue-label break: break-label
 	new-loop = Loop new
 	new-loop continue-label = continue-label
 	new-loop break-label = break-label
-	loop-stack push: new-loop
+	loop-stack push-front: new-loop
 
 end-loop
-	loop-stack pop
+	loop-stack pop-front
 
 
 push-args: args
@@ -337,6 +337,9 @@ compile-block: block
 
 compile-block-statement: stmt
 	return compile-block: stmt block
+
+compile-expression-statement: stmt
+	return stmt expression compile: this
 
 
 compile-comment: stmt
@@ -429,6 +432,13 @@ compile-for: stmt
 	# End the loop.
 	end define: offset
 	end-loop
+
+
+compile-continue: stmt
+	emit-jmp: loop-stack first-item continue-label
+
+compile-break: stmt
+	emit-jmp: loop-stack first-item break-label
 
 
 compile-return: stmt
