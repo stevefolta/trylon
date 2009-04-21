@@ -122,6 +122,18 @@ emit-opcode-extensions-for: result
 		emit-word: disp32
 	result = temp
 
+emit-opcode-extensions-for: result with: additional-opcode
+	mod-rm = result mod-rm
+	mod-rm |= additional-opcode << 3
+	emit: mod-rm
+	disp8 = result disp8
+	if disp8
+		emit: disp8
+	disp32 = result disp32
+	if disp32
+		emit-word: disp32
+	result = temp
+
 
 class Buffer
 	fields ptr used-size
@@ -170,15 +182,14 @@ emit-push: result
 		emit-ptr: result ptr
 	else
 		emit: 0xFF 	# "push r/m32"
-		mod-rm = result mod-rm
-		mod-rm |= 6 << 3
-		emit: mod-rm
-		disp8 = result disp8
-		if disp8
-			emit: disp8
-		disp32 = result disp32
-		if disp32
-			emit-word: disp32
+		emit-opcode-extensions-for: result with: 6
+
+
+emit-test: result
+	# "cmp result, 0"
+	emit: 0x83
+	emit-opcode-extensions-for: result with: 7
+	emit: 0
 
 
 emit-jmp: label
