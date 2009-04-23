@@ -59,6 +59,45 @@ interpret-send-of: name to: object with: arguments
 					perform: name --
 					with: (args at: 0) with: (args at: 1) 	--
 					with: (args at: 2) with: (args at: 3)
+		5
+			result = 	--
+				obj 	--
+					perform: name --
+					with: args[0] with: args[1] with: args[2] with: args[3] with: args[4]
+		6
+			result = 	--
+				obj 	--
+					perform: name --
+					with: args[0] with: args[1] with: args[2] with: args[3] 	--
+					with: args[4] with: args[5]
+		7
+			result = 	--
+				obj 	--
+					perform: name --
+					with: args[0] with: args[1] with: args[2] with: args[3] 	--
+					with: args[4] with: args[5] with: args[6]
+		8
+			result = 	--
+				obj 	--
+					perform: name --
+					with: args[0] with: args[1] with: args[2] with: args[3] 	--
+					with: args[4] with: args[5] with: args[6] with: args[7]
+		9
+			result = 	--
+				obj 	--
+					perform: name --
+					with: args[0] with: args[1] with: args[2] with: args[3] 	--
+					with: args[4] with: args[5] with: args[6] with: args[7] 	--
+					with: args[8]
+		10
+			result = 	--
+				obj 	--
+					perform: name --
+					with: args[0] with: args[1] with: args[2] with: args[3] 	--
+					with: args[4] with: args[5] with: args[6] with: args[7] 	--
+					with: args[8] with: args[9]
+		else
+			error: "Interpreter can't handle that many arguments ('" + name + "')."
 	return result
 
 

@@ -72,6 +72,56 @@ extend Standard Object
 			return
 				(*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2, arg_3, arg_4);
 	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
+				with: arg-5
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))
+					(this_, arg_1, arg_2, arg_3, arg_4, arg_5);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
+				with: arg-5 with: arg-6
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))
+					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
+				with: arg-5 with: arg-6 with: arg-7
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))
+					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
+				with: arg-5 with: arg-6 with: arg-7 with: arg-8
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))
+					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7, arg_8);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
+				with: arg-5 with: arg-6 with: arg-7 with: arg-8 with: arg-9
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))
+					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6,
+					 arg_7, arg_8, arg_9);
+	
+		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
+				with: arg-5 with: arg-6 with: arg-7 with: arg-8 with: arg-9 with: arg-10
+			struct Standard__Symbol__internal* symbol =
+				(struct Standard__Symbol__internal*) selector;
+			return
+				(*Dispatch_(symbol->selector, this_))
+					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6,
+					 arg_7, arg_8, arg_9, arg_10);
+	
 
 	iff debugger
 		.gather-field-names-into: tuple
