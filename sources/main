@@ -360,6 +360,8 @@ references
 	Interpreter
 	iff support-new-methods
 		X86Compiler
+		iff test-x86-compiler
+			X86Compiler test
 
 
 

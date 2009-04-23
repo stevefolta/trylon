@@ -1,6 +1,6 @@
 trylon MethodBuilder
 
-fields function
+fields function code-tree
 fields refs out-ptr buffer-limit buffers offset
 fields dispatch-fn
 fields postamble-label cur-num-locals num-locals argument-indices loop-stack
@@ -16,9 +16,10 @@ literals = nil
 # 	mov dest, src
 
 
-create: function
+create: function code: code-tree
 	init
 	this function = function
+	this code-tree = code-tree
 	refs = List new
 	buffers = List new
 	grow
@@ -55,7 +56,7 @@ emit-method
 	emit-word: 0 	# Will be patched later.
 
 	# Emit the body of the code.
-	function body compile: this
+	code-tree compile: this
 
 	# Emit the postamble.
 	postamble-label define: offset
@@ -85,6 +86,8 @@ emit-method
 		if target == nil
 			error: "Undefined label."
 		(code + ref offset) int-at: 0 put: code + target
+	
+	return code
 
 
 # Low-level emission.
@@ -161,16 +164,20 @@ grow
 class Label
 	fields offset
 
+	create
+
 	define: offset
 		this offset = offset
 
 class LabelRef
 	fields label offset
 
+	create: label at: offset
+		this label = label
+		this offset = offset
+
 emit-label-ref: label
-	ref = LabelRef new
-	ref label = label
-	ref offset = offset
+	ref = LabelRef new: label at: offset
 	refs append: ref
 	emit-word: 0
 
@@ -255,10 +262,12 @@ get-temporary
 class Loop
 	fields continue-label break-label
 
+	create-continue: continue-label break: break-label
+		this continue-label = continue-label
+		this break-label = break-label
+
 start-loop-continue: continue-label break: break-label
-	new-loop = Loop new
-	new-loop continue-label = continue-label
-	new-loop break-label = break-label
+	new-loop = Loop new-continue: continue-label break: break-label
 	loop-stack push-front: new-loop
 
 end-loop
@@ -606,6 +615,13 @@ compile-proto-call: func
 		return LiteralResult new: func proto
 	else
 		error: "Defining new classes is not yet supported in the X86 compiler."
+
+
+compile-primitive-function-call: func with: arguments
+	return 	--
+		func 	--
+			compile-send-of: func name to-proto: func on-proto 	--
+			with: arguments using: this
 
 
 compile-caught-exception-call: func

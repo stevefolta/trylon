@@ -3,6 +3,26 @@ trylon X86Compiler
 word-size = 4
 
 
+compile: function
+	# Parsing.
+	context = Compiler ExistingProto new: Main
+	lines = Compiler LinesLexer read: function body
+	parser = Compiler TrylonCodeParser new: lines in: context
+	parse-tree = parser parse
+
+	# Function resolution.
+	old-compiler = compiler
+	compiler = this
+	parse-tree prepare-to-emit
+
+	# Codegen.
+	method-builder = MethodBuilder new: function code: parse-tree
+	result = method-builder emit-method
+
+	compiler = old-compiler
+	return result
+
+
 replace-method: symbol on: object with: code
 	# ...
 	MethodBuilder
