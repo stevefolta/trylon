@@ -611,7 +611,7 @@ compile-function-on-this-call: func with: arguments
 
 
 compile-proto-call: func
-	if func is-a: Compiler ExistingProto
+	if func proto is-a: Compiler ExistingProto
 		return LiteralResult new: func proto
 	else
 		error: "Defining new classes is not yet supported in the X86 compiler."
