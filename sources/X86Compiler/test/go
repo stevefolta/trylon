@@ -11,5 +11,5 @@ send: "Built function."
 code = X86Compiler compile: function
 X86Compiler replace-method: 'say-it' on: X86Compiler test with-ptr: code
 
-X86Compiler test say-it
+X86Compiler test please-say-it
 
