@@ -42,3 +42,17 @@ method-replacement-error: symbol
 	error: "Unable to replace method '" + symbol string + "'."
 
 
+# As a Compiler.
+
+calling-selector: selector
+	# Nothing to do.
+
+build-settings
+	if .build-settings == nil
+		.build-settings = Compiler BuildSettings new
+	return .build-settings
+field .build-settings
+
+
+
+

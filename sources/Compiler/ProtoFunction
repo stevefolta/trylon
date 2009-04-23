@@ -12,7 +12,7 @@ name
 	return proto name
 
 
-compile: builder
+compile-call: builder with: arguments
 	return builder compile-proto-call: this
 
 
