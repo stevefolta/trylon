@@ -12,6 +12,8 @@ is-empty
 
 class Iterator
 	superclass Standard Iterator
+
+	create
 	is-done
 		return true
 	current-item
