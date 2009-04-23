@@ -1,6 +1,9 @@
 program = "trylon"
 debugging = true
+
+# Needed for Interpreter (and X86Compiler) to work.
 support-perform = true
+support-subprotos = true
 
 
 

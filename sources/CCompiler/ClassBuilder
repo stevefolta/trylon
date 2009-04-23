@@ -67,6 +67,24 @@ emit-on: stream
 		stream write-line: tuple forward-declaration
 		used-contexts-access = tuple access
 
+	# Subprotos.
+	subprotos-access = "nil"
+	if build-settings["support-subprotos"]
+		tuple = nil
+		for function in proto functions values
+			if !(function is-a: Compiler ProtoFunction)
+				continue
+			if tuple == nil
+				tuple = Compiler TupleExpression new
+			subproto = function proto
+			stream write-all: ("UsingClass_(", subproto c-name, ") ")
+			tuple add-member: (ProtoExpression new: subproto)
+		if tuple
+			stream write-line
+			tuple emit-code: this
+			stream write-line: tuple forward-declaration
+			subprotos-access = tuple access
+
 	# Class info.
 	compiler using-symbol: proto name
 	mangled-name = mangle-name: proto name
@@ -96,8 +114,10 @@ emit-on: stream
 	stream write: used-contexts-access
 	stream write: ", Sym_("
 	stream write: mangled-name
-	stream write: ") ,"
+	stream write: "), "
 	stream write: added-fields-access
+	stream write: ", "
+	stream write: subprotos-access
 	stream write: " };\n"
 
 	# Prototype.

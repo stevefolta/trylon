@@ -34,6 +34,10 @@ extend Standard Object
 	
 	c-fn .added-fields
 		return this_->class_->addedFields;
+	
+	iff support-subprotos
+		c-fn .subprotos
+			return this_->class_->subprotos;
 
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");

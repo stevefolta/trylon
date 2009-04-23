@@ -14,6 +14,7 @@ struct ClassInfo {
 	obj_	usedContexts;
 	obj_	name;
 	obj_	addedFields; 	/* Only if "debugger" is on. */
+	obj_	subprotos;
 };
 
 struct object {
