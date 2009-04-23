@@ -297,15 +297,15 @@ emit-send-of: symbol to: object-result with: args
 	# "mov eax, dispatch-fn"
 	emit: 0xB8
 	emit-ptr: dispatch-fn
-	# "call [eax]"
+	# "call eax"
 	emit: 0xFF
-	emit: 0x10
+	emit: 0xD0
 	emit-pop-args: 2
 
 	# Call the method.
-	# "call [eax]"
+	# "call eax"
 	emit: 0xFF
-	emit: 0x10
+	emit: 0xD0
 	emit-pop-args: args num-items + 1
 	return CallResult
 
