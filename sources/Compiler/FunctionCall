@@ -10,6 +10,14 @@ create: name arguments: arguments context: context
 	this arguments = arguments
 	this context = context
 
+create: function arguments: arguments
+	# Special for use by "in-process" functions like ExistingProto
+	# and PrimitiveFunction.
+	this function = function
+	this name = function name
+	this arguments = arguments
+	# "context" is not needed; we skip the "prepare-to-emit" phase.
+
 
 prepare-to-emit
 	function = context lookup-function-autodeclaring: name
