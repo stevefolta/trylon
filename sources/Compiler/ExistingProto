@@ -52,11 +52,15 @@ function-for: selector in: proto
 	# Is it a ProtoFunction?
 	function-name = selector string
 	if (function-name index-of: `:`) < 0
-		# A little dangerous: we're going to actually make the call to see if we
-		# get a proto.
-		result = proto perform: selector
-		if result && (result .proto same-as: result)
-			existing-proto = ExistingProto new: selector string proto: result
+		# 'support-subprotos' must be on!
+		found-subproto = nil
+		if proto .subprotos
+			for subproto in proto .subprotos
+				if subproto .proto-name == function-name
+					found-subproto = subproto
+					break
+		if found-subproto
+			existing-proto = ExistingProto new: function-name proto: found-subproto
 			return ProtoFunction new: existing-proto
 
 	existing-proto = this
