@@ -1,2 +1,5 @@
-send: "Hello world!"
+# send: "Hello world!"
+# send: ("Hello ", "world!")
+message = "Hello world!"
+send: message
 

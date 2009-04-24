@@ -237,22 +237,35 @@ stash: result
 	return result
 
 
+to-eax: result
+	if result is-eax
+		# Nothing to do.
+	else if result is-literal
+		# "mov eax, imm32"
+		emit: 0xB8
+		emit-ptr: result ptr
+	else
+		# "mov eax, r/m32"
+		emit: 0x8B
+		emit-opcode-extensions-for: result with: 0
+
+
 emit-move-to: dest from: src
-	# ...
+	to-eax: src
+	# "move r/m32, eax"
+	emit: 0x89
+	emit-opcode-extensions-for: dest with: 0
 
-
-class Local
-	fields index
-
-	create: index
-		this index = index
 
 new-local
-	local = Local new: cur-num-locals
+	# Allocate an index.
+	index = cur-num-locals
 	cur-num-locals += 1
 	if cur-num-locals > num-locals
 		num-locals = cur-num-locals
-	return local
+
+	# Create the local.
+	return LocalResult new: index
 
 get-temporary
 	# A temporary is no different from any other local.
@@ -334,7 +347,7 @@ compile-block: block
 	# Set up locals.
 	exterior-num-locals = cur-num-locals
 	if block locals
-		for local in block locals
+		for local in block locals values
 			local compile-info = new-local
 
 	# Body.
@@ -563,29 +576,16 @@ compile-set-argument-call: func with: arguments
 	index = argument-indices[func name]
 	value-result = arguments first-item compile: this
 	arg-result = ArgumentResult new: index
-	if !value-result is-eax
-		# "mov eax, value-result"
-		emit: 0x8B
-		emit-opcode-extensions-for: value-result
-	# "mov arg, eax"
-	emit: 0x89
-	emit-opcode-extensions-for: arg-result
+	emit-move-to: arg-result from: value-result
 	return arg-result
 
 compile-local-getter-call: func
-	return LocalResult new: func local compile-info index
+	return func local compile-info
 
 compile-local-setter-call: func with: arguments
-	index = func local compile-info index
 	value-result = arguments first-item compile: this
-	local-result = LocalResult new: index
-	if !value-result is-eax
-		# "mov eax, value-result"
-		emit: 0x8B
-		emit-opcode-extensions-for: value-result
-	# "mov local, eax"
-	emit: 0x89
-	emit-opcode-extensions-for: local-result
+	local-result = func local compile-info
+	emit-move-to: local-result from: value-result
 	return local-result
 
 

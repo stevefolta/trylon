@@ -9,9 +9,9 @@ create: index
 
 mod-rm
 	if offset > 127
-		return 0xB5
+		return 0x85
 	else
-		return 0x75
+		return 0x45
 
 disp8
 	if offset < 127
