@@ -1,0 +1,36 @@
+     1                                  bits 32
+     2                                  
+     3                                  ; NOTE: mov dst, src
+     4                                  
+     5 00000000 90                      nop
+     6 00000001 50                      push eax
+     7 00000002 8B450C                  mov eax,[ebp+12]
+     8 00000005 89450C                  mov [ebp+12], eax
+     9 00000008 FF750C                  push dword [ebp+12]
+    10 0000000B FF75F4                  push dword [ebp-12]
+    11 0000000E FFB500FFFFFF            push dword [ebp-256]
+    12 00000014 68452301FF              push 0xFF012345
+    13 00000019 B867452301              mov eax, 0x01234567
+    14 0000001E FF10                    call [eax]
+    15 00000020 FFD0                    call eax
+    16 00000022 C9                      leave
+    17 00000023 C3                      ret
+    18 00000024 31C0                    xor eax, eax
+    19 00000026 81C40C000000            add esp, 12
+    20 0000002C 83C40C                  add esp, byte 12
+    21 0000002F 83F800                  cmp eax, byte 0
+    22 00000032 837DF800                cmp dword [ebp-8], byte 0
+    23                                  
+    24 00000036 55                      push ebp
+    25 00000037 89E5                    mov ebp, esp
+    26 00000039 81EC0C000000            sub esp, dword 12
+    27                                  
+    28 0000003F 7407                    	jz foo
+    29 00000041 B867452301              	mov eax, 0x01234567
+    30 00000046 FF20                    	jmp [eax]
+    31                                  foo:
+    32 00000048 31C0                    	xor eax, eax
+    33                                  
+    34 0000004A 75FC                    jnz foo
+    35                                  
+    36                                  
