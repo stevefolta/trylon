@@ -25,9 +25,12 @@ push ebp
 mov ebp, esp
 sub esp, dword 12
 
+jmp eax
+jmp [eax]
+
 	jz foo
 	mov eax, 0x01234567
-	jmp [eax]
+	jmp eax
 foo:
 	xor eax, eax
 

@@ -3,3 +3,15 @@
 message = "Hello world!"
 send: message
 
+send: ""
+
+if Object
+	send: "\"if\" succeeded."
+else
+	send: "\"if\" failed."
+if nil
+	send: "Reverse \"if\" failed."
+else
+	send: "Reverse \"if\" succeeded."
+
+

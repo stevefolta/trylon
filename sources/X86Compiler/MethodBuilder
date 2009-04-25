@@ -194,6 +194,10 @@ emit-push: result
 
 
 emit-test: result
+	# Literals, at least, can't be accessed using r/m32, and must be moved into
+	# eax.
+	if result mod-rm == nil
+		result = to-eax: result
 	# "cmp result, 0"
 	emit: 0x83
 	emit-opcode-extensions-for: result with: 7
@@ -204,7 +208,7 @@ emit-jmp: label
 	emit: 0xB8 	# "mov eax, label"
 	emit-label-ref: label
 	emit: 0xFF 	# "jmp eax"
-	emit: 0x20
+	emit: 0xE0
 
 jmp-length
 	return 3 + word-size
@@ -248,6 +252,7 @@ to-eax: result
 		# "mov eax, r/m32"
 		emit: 0x8B
 		emit-opcode-extensions-for: result with: 0
+	return CallResult
 
 
 emit-move-to: dest from: src
@@ -372,9 +377,10 @@ compile-blank-line: stmt
 
 
 compile-if: stmt
-	stmt condition compile: this
+	condition-result = stmt condition compile: this
+	emit-test: condition-result
 	end = Label new
-	emit-cond-jmp: 'ne' to: end
+	emit-cond-jmp: 'z' to: end
 	stmt body compile: this
 	if stmt else-block
 		# End the body by jumping past the else-branch
@@ -387,6 +393,9 @@ compile-if: stmt
 
 		# Repurpose "end", so "final-end" is defined correctly.
 		end = final-end
+
+		# Emit the "else" clause.
+		stmt else-block compile: this
 	end define: offset
 
 
@@ -439,7 +448,7 @@ compile-for: stmt
 	test define: offset
 	done-result = emit-send-of: 'is-done' to: iterator-result with: empty
 	emit-test: done-result
-	emit-cond-jmp: 'ne' to: end
+	emit-cond-jmp: 'z' to: end
 
 	# The body.
 	value-result = emit-send-of: 'current-item' to: iterator-result with: empty

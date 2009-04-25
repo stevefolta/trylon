@@ -25,12 +25,15 @@
     25 00000037 89E5                    mov ebp, esp
     26 00000039 81EC0C000000            sub esp, dword 12
     27                                  
-    28 0000003F 7407                    	jz foo
-    29 00000041 B867452301              	mov eax, 0x01234567
-    30 00000046 FF20                    	jmp [eax]
-    31                                  foo:
-    32 00000048 31C0                    	xor eax, eax
-    33                                  
-    34 0000004A 75FC                    jnz foo
-    35                                  
+    28 0000003F FFE0                    jmp eax
+    29 00000041 FF20                    jmp [eax]
+    30                                  
+    31 00000043 7407                    	jz foo
+    32 00000045 B867452301              	mov eax, 0x01234567
+    33 0000004A FFE0                    	jmp eax
+    34                                  foo:
+    35 0000004C 31C0                    	xor eax, eax
     36                                  
+    37 0000004E 75FC                    jnz foo
+    38                                  
+    39                                  
