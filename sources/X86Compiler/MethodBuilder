@@ -222,13 +222,11 @@ emit-test: result
 
 
 emit-jmp: label
-	emit: 0xB8 	# "mov eax, label"
-	emit-label-ref: label
-	emit: 0xFF 	# "jmp eax"
-	emit: 0xE0
+	emit: 0xE9
+	emit-relative-label-ref: label
 
 jmp-length
-	return 3 + word-size
+	return 1 + word-size
 
 emit-cond-jmp: cond to: label
 	# Doesn't seem to be a good conditional jump with an absolute target.
