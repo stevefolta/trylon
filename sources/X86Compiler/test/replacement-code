@@ -7,15 +7,15 @@ send: ""
 
 # "if" statement.
 if Object
-	send: "\"if\" succeeded."
+	send: "\"if\":  succeeded."
 else
-	send: "\"if\" failed."
+	send: "\"if\":  FAILED."
 if nil
-	send: "Reverse \"if\" failed."
+	send: "Reverse \"if\":  FAILED."
 else
-	send: "Reverse \"if\" succeeded."
+	send: "Reverse \"if\":  succeeded."
 
-# "loop", "continue", "break"
+# "loop", "continue", "break".
 index = 0
 sum = 0
 loop
@@ -25,9 +25,15 @@ loop
 	if index == 3
 		continue
 	sum += index
-if sum == 12
-	send: "Loop succeeded."
-else
-	send: "Loop failed."
+test: sum against: 12 name: "\"loop\""
 
+# "while".
+index = 0
+sum = 0
+while index < 5
+	index += 1
+	if index == 3
+		continue
+	sum += index
+test: sum against: 12 name: "\"while\""
 

@@ -5,7 +5,8 @@ word-size = 4
 
 compile: function
 	# Parsing.
-	context = Compiler ExistingProto new: Main
+	context = 	--
+		Compiler MethodContext new: function arguments parent: function on-proto
 	lines = Compiler LinesLexer read: function body
 	parser = Compiler TrylonCodeParser new: lines in: context
 	parse-tree = parser parse

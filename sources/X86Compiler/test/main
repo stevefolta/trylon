@@ -1,8 +1,16 @@
 trylon test
 
+
 say-it
 	send: "Replacement failed."
 
 please-say-it
 	say-it
+
+
+test: value against: expected-value name: name
+	if value == expected-value
+		send: (name, ":  succeeded.")
+	else
+		send: (name, ":  FAILED.")
 

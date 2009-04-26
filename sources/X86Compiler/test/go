@@ -2,10 +2,11 @@
 
 body = File contents-of: "replacement-code"
 # send: "Read file."
+on-proto = Compiler ExistingProto new: X86Compiler test
 function = 	--
 	Compiler CompiledFunction 	--
 		new: "say-it" arguments: empty return-type: nil 	--
-		on-proto: X86Compiler test body: body is-primitive: nil
+		on-proto: on-proto body: body is-primitive: nil
 # send: "Built function."
 code = X86Compiler compile: function
 X86Compiler replace-method: 'say-it' on: X86Compiler test with-ptr: code

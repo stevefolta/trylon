@@ -617,7 +617,7 @@ compile-shared-field-setter-call: func with: arguments
 
 
 compile-function-on-this-call: func with: arguments
-	this-result = Compiler ArgumentFunction new: 0
+	this-result = ArgumentResult new: 0
 	emit-send-of: func name intern to: this-result with: arguments
 
 
