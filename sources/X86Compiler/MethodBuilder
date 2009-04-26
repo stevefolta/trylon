@@ -435,10 +435,19 @@ compile-while: stmt
 
 
 compile-for: stmt
+	# Set up the iterator and the local.
+	exterior-num-locals = cur-num-locals
+	iterator-result = new-local
+	local-result = new-local
+	stmt local compile-info = local-result
+
 	# Emit the creation of the iterator.
-	# ...
-	iterator-result = nil 	# ***
-	local = nil 	# ***
+	interior-num-locals = cur-num-locals
+	collection-result = stmt collection compile: this
+	iterator-call-result = 	--
+		emit-send-of: 'iterator' to: collection-result with: empty
+	emit-move-to: iterator-result from: iterator-call-result
+	cur-num-locals = interior-num-locals
 
 	# Start the loop.
 	again = Label new
@@ -450,11 +459,11 @@ compile-for: stmt
 	test define: offset
 	done-result = emit-send-of: 'is-done' to: iterator-result with: empty
 	emit-test: done-result
-	emit-cond-jmp: 'z' to: end
+	emit-cond-jmp: 'nz' to: end
 
 	# The body.
 	value-result = emit-send-of: 'current-item' to: iterator-result with: empty
-	emit-move-to: local from: value-result
+	emit-move-to: local-result from: value-result
 	stmt body compile: this
 
 	# Go around again.
@@ -465,6 +474,9 @@ compile-for: stmt
 	# End the loop.
 	end define: offset
 	end-loop
+
+	# Finish up.
+	cur-num-locals = exterior-num-locals
 
 
 compile-continue: stmt

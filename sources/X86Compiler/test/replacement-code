@@ -37,3 +37,14 @@ while index < 5
 	sum += index
 test: sum against: 12 name: "\"while\""
 
+# "for"
+sum = 0
+for value in (1, 10, 100, 1000, 10000, 100000)
+	if value == 10000
+		break
+	if value == 10
+		continue
+	sum += value
+test: sum against: 1101 name: "\"for\""
+
+
