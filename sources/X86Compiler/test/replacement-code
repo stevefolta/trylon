@@ -5,6 +5,7 @@ send: message
 
 send: ""
 
+# "if" statement.
 if Object
 	send: "\"if\" succeeded."
 else
@@ -13,5 +14,20 @@ if nil
 	send: "Reverse \"if\" failed."
 else
 	send: "Reverse \"if\" succeeded."
+
+# "loop", "continue", "break"
+index = 0
+sum = 0
+loop
+	index += 1
+	if index > 5
+		break
+	if index == 3
+		continue
+	sum += index
+if sum == 12
+	send: "Loop succeeded."
+else
+	send: "Loop failed."
 
 

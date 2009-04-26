@@ -74,7 +74,9 @@ emit-method
 	code = BytePtr new: code-size
 	dest = code
 	for buffer in buffers
-		dest copy-from: buffer ptr length: buffer used-size
+		buffer-size = buffer used-size
+		dest copy-from: buffer ptr length: buffer-size
+		dest += buffer-size
 
 	# Patch the frame size.
 	# This is not done as a label since it's not relocated, only patched.
