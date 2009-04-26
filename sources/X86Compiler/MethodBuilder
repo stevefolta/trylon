@@ -368,7 +368,10 @@ compile-block-statement: stmt
 	return compile-block: stmt block
 
 compile-expression-statement: stmt
-	return stmt expression compile: this
+	exterior-num-locals = cur-num-locals
+	result = stmt expression compile: this
+	cur-num-locals = exterior-num-locals
+	return result
 
 
 compile-comment: stmt
@@ -379,7 +382,9 @@ compile-blank-line: stmt
 
 
 compile-if: stmt
+	pre-cond-num-locals = cur-num-locals
 	condition-result = stmt condition compile: this
+	cur-num-locals = pre-cond-num-locals
 	emit-test: condition-result
 	end = Label new
 	emit-cond-jmp: 'z' to: end
@@ -418,8 +423,10 @@ compile-while: stmt
 	start define: offset
 	end = Label new
 	# condition
+	pre-cond-num-locals = cur-num-locals
 	condition-result = stmt condition compile: this
 	emit-test: condition-result
+	cur-num-locals = pre-cond-num-locals
 	# "jne body"
 	emit: (0x75, jmp-length)
 	# "jmp end"
