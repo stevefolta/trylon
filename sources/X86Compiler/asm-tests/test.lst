@@ -20,20 +20,22 @@
     20 0000002C 83C40C                  add esp, byte 12
     21 0000002F 83F800                  cmp eax, byte 0
     22 00000032 837DF800                cmp dword [ebp-8], byte 0
-    23                                  
-    24 00000036 55                      push ebp
-    25 00000037 89E5                    mov ebp, esp
-    26 00000039 81EC0C000000            sub esp, dword 12
-    27                                  
-    28 0000003F FFE0                    jmp eax
-    29 00000041 FF20                    jmp [eax]
-    30                                  
-    31 00000043 7407                    	jz foo
-    32 00000045 B867452301              	mov eax, 0x01234567
-    33 0000004A FFE0                    	jmp eax
-    34                                  foo:
-    35 0000004C 31C0                    	xor eax, eax
-    36                                  
-    37 0000004E 75FC                    jnz foo
+    23 00000036 8D450C                  lea eax, [ebp+12]
+    24                                  
+    25 00000039 55                      push ebp
+    26 0000003A 89E5                    mov ebp, esp
+    27 0000003C 81EC0C000000            sub esp, dword 12
+    28                                  
+    29 00000042 FFE0                    jmp eax
+    30 00000044 FF20                    jmp [eax]
+    31 00000046 E909000000              jmp dword foo
+    32                                  
+    33 0000004B 7407                    	jz foo
+    34 0000004D B867452301              	mov eax, 0x01234567
+    35 00000052 FFE0                    	jmp eax
+    36                                  foo:
+    37 00000054 31C0                    	xor eax, eax
     38                                  
-    39                                  
+    39 00000056 75FC                    jnz foo
+    40                                  
+    41                                  

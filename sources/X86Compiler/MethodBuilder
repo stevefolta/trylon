@@ -1,7 +1,7 @@
 trylon MethodBuilder
 
 fields function code-tree
-fields refs out-ptr buffer-limit buffers offset
+fields refs relative-refs out-ptr buffer-limit buffers offset
 fields dispatch-fn
 fields postamble-label cur-num-locals num-locals argument-indices loop-stack
 
@@ -21,6 +21,7 @@ create: function code: code-tree
 	this function = function
 	this code-tree = code-tree
 	refs = List new
+	relative-refs = List new
 	buffers = List new
 	grow
 
@@ -59,6 +60,8 @@ emit-method
 	code-tree compile: this
 
 	# Emit the postamble.
+	# The default return value is "nil".
+	compile-nil-call: nil
 	postamble-label define: offset
 	emit: 0xC9 	# "leave"
 	emit: 0xC3 	# "ret"
@@ -88,6 +91,13 @@ emit-method
 		if target == nil
 			error: "Undefined label."
 		(code + ref offset) int-at: 0 put: code + target
+	for ref in relative-refs
+		target = ref label offset
+		if target == nil
+			error: "Undefined label."
+		offset = ref offset
+		displacement = target - (offset + word-size)
+		(code + offset) int-at: 0 put: displacement
 	
 	return code
 
@@ -181,6 +191,11 @@ class LabelRef
 emit-label-ref: label
 	ref = LabelRef new: label at: offset
 	refs append: ref
+	emit-word: 0
+
+emit-relative-label-ref: label
+	ref = LabelRef new: label at: offset
+	relative-refs append: ref
 	emit-word: 0
 
 
@@ -494,7 +509,11 @@ compile-break: stmt
 
 
 compile-return: stmt
-	# ...
+	result = stmt value compile: this
+	to-eax: result
+	# "jmp postamble"
+	emit: 0xE9
+	emit-relative-label-ref: postamble-label
 
 
 compile-try: stmt

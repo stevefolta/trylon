@@ -20,6 +20,7 @@ add esp, 12
 add esp, byte 12
 cmp eax, byte 0
 cmp dword [ebp-8], byte 0
+lea eax, [ebp+12]
 
 push ebp
 mov ebp, esp
@@ -27,6 +28,7 @@ sub esp, dword 12
 
 jmp eax
 jmp [eax]
+jmp dword foo
 
 	jz foo
 	mov eax, 0x01234567

@@ -5,7 +5,9 @@ say-it
 	send: "Replacement failed."
 
 please-say-it
-	say-it
+	result = say-it
+	if result
+		send: ("Returned:  ", result)
 
 
 test: value against: expected-value name: name
