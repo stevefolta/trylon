@@ -16,3 +16,9 @@ test: value against: expected-value name: name
 	else
 		send: (name, ":  FAILED.")
 
+check: ok name: name
+	if ok
+		send: (name, ":  succeeded.")
+	else
+		send: (name, ":  FAILED.")
+

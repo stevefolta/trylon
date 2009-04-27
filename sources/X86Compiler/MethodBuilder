@@ -637,8 +637,22 @@ compile-short-circuit-not: expr
 	# ...
 
 compile-nil-test: expr
-	# ...
-
+	object-result = expr object compile: this
+	emit-test: object-result
+	if expr is-nil
+		# "jnz was_true"
+		emit: (0x75, 0x07)
+	else
+		# "jz was_true"
+		emit: (0x74, 0x07)
+	# "mov eax, True"
+	emit: 0xB8
+	emit-ptr: Standard True object-ptr
+	# "jmp test_complete"
+	emit: (0xEB, 0x02)
+	# "was_true: xor eax, eax"
+	emit: (0x31, 0xC0)
+	return CallResult
 
 
 # Function call compilation.

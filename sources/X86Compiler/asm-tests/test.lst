@@ -44,3 +44,10 @@
     44 0000005E 0F8500000000            	jnz near foo2
     45                                  foo2:
     46                                  
+    47 00000064 7507                    	jnz was_true
+    48 00000066 B867452301              	mov eax, 0x01234567
+    49 0000006B EB02                    	jmp short not_complete
+    50                                  was_true:
+    51 0000006D 31C0                    	xor eax, eax
+    52                                  not_complete:
+    53                                  

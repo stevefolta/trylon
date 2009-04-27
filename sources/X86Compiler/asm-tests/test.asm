@@ -44,3 +44,10 @@ foo1:
 	jnz near foo2
 foo2:
 
+	jnz was_true
+	mov eax, 0x01234567
+	jmp short not_complete
+was_true:
+	xor eax, eax
+not_complete:
+

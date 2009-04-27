@@ -73,4 +73,17 @@ switch "bleah"
 		result = 3
 test: result against: 0 name: "switch with no \"else\""
 
+# Nil tests.
+test-value = nil
+ok = nil
+if test-value == nil
+	ok = True
+check: ok name: "Nil test"
+test-value = True
+ok = nil
+if test-value != nil
+	ok = True
+check: ok name: "Reverse nil test"
+
+
 
