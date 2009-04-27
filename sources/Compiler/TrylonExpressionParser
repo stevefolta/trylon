@@ -407,6 +407,12 @@ parse-primary-expression
 	else if word == "nil"
 		words next
 		return LiteralNil new
+	else if word == "true"
+		words next
+		return BoolLiteral new: true
+	else if word == "false"
+		words next
+		return BoolLiteral new: false
 	
 	else
 		# Non-object function call.

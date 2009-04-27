@@ -6,11 +6,11 @@ send: message
 send: ""
 
 # "if" statement.
-if Object
+if true
 	send: "\"if\":  succeeded."
 else
 	send: "\"if\":  FAILED."
-if nil
+if false
 	send: "Reverse \"if\":  FAILED."
 else
 	send: "Reverse \"if\":  succeeded."
