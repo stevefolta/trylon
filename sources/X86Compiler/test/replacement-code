@@ -85,5 +85,8 @@ if test-value != nil
 	ok = True
 check: ok name: "Reverse nil test"
 
+# Short circuits.
+test: (!True) against: nil name: "!true"
+check: (!nil) name: "!false"
 
 

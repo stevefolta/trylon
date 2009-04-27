@@ -344,6 +344,24 @@ emit-pop-args: num-args
 		emit-word: num-bytes
 
 
+to-boolean: object-result reverse-sense: reverse-sense
+	emit-test: object-result
+	if reverse-sense
+		# "jnz result_false"
+		emit: (0x75, 0x07)
+	else
+		# "jz result_false"
+		emit: (0x74, 0x07)
+	# "mov eax, True"
+	emit: 0xB8
+	emit-ptr: Standard True object-ptr
+	# "jmp test_complete"
+	emit: (0xEB, 0x02)
+	# "result_false: xor eax, eax"
+	emit: (0x31, 0xC0)
+	return CallResult
+
+
 
 # Statement compilation.
 
@@ -634,25 +652,12 @@ compile-short-circuit-or: expr
 	# ...
 
 compile-short-circuit-not: expr
-	# ...
+	object-result = expr expr compile: this
+	return to-boolean: object-result reverse-sense: true
 
 compile-nil-test: expr
 	object-result = expr object compile: this
-	emit-test: object-result
-	if expr is-nil
-		# "jnz was_true"
-		emit: (0x75, 0x07)
-	else
-		# "jz was_true"
-		emit: (0x74, 0x07)
-	# "mov eax, True"
-	emit: 0xB8
-	emit-ptr: Standard True object-ptr
-	# "jmp test_complete"
-	emit: (0xEB, 0x02)
-	# "was_true: xor eax, eax"
-	emit: (0x31, 0xC0)
-	return CallResult
+	return to-boolean: object-result reverse-sense: expr is-nil
 
 
 # Function call compilation.
