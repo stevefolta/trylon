@@ -88,5 +88,10 @@ check: ok name: "Reverse nil test"
 # Short circuits.
 test: (!True) against: nil name: "!true"
 check: (!nil) name: "!false"
+test: (false-returner || 3) against: 3 name: "|| (false)"
+test: (3 || false-returner) against: 3 name: "|| (true)"
+check: (!(false-returner && true-returner)) name: "&& (false, true)"
+check: (!(3 && false-returner)) name: "&& (true, false)"
+test: (3 && 4) against: 4 name: "&& (true, true)"
 
 

@@ -646,10 +646,26 @@ compile-tuple-expression: expr
 
 
 compile-short-circuit-and: expr
-	# ...
+	end = Label new
+	first-result = expr expr1 compile: this
+	first-result = to-eax: first-result
+	emit-test: first-result
+	emit-cond-jmp: 'z' to: end
+	second-result = expr expr2 compile: this
+	to-eax: second-result
+	end define: offset
+	return CallResult
 
 compile-short-circuit-or: expr
-	# ...
+	end = Label new
+	first-result = expr expr1 compile: this
+	first-result = to-eax: first-result
+	emit-test: first-result
+	emit-cond-jmp: 'nz' to: end
+	second-result = expr expr2 compile: this
+	to-eax: second-result
+	end define: offset
+	return CallResult
 
 compile-short-circuit-not: expr
 	object-result = expr expr compile: this

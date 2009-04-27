@@ -22,3 +22,8 @@ check: ok name: name
 	else
 		send: (name, ":  FAILED.")
 
+true-returner
+	return true
+false-returner
+	return false
+
