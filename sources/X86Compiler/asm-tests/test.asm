@@ -38,4 +38,9 @@ foo:
 
 jnz foo
 
+; Stupid NASM doesn't accept "jz dword foo1"
+	jz near foo1
+foo1:
+	jnz near foo2
+foo2:
 

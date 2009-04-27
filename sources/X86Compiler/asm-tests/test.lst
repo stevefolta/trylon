@@ -38,4 +38,9 @@
     38                                  
     39 00000056 75FC                    jnz foo
     40                                  
-    41                                  
+    41                                  ; Stupid NASM doesn't accept "jz dword foo1"
+    42 00000058 0F8400000000            	jz near foo1
+    43                                  foo1:
+    44 0000005E 0F8500000000            	jnz near foo2
+    45                                  foo2:
+    46                                  

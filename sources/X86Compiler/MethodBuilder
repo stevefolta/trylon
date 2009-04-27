@@ -1,7 +1,7 @@
 trylon MethodBuilder
 
 fields function code-tree
-fields refs relative-refs out-ptr buffer-limit buffers offset
+fields refs out-ptr buffer-limit buffers offset
 fields dispatch-fn
 fields postamble-label cur-num-locals num-locals argument-indices loop-stack
 
@@ -21,7 +21,6 @@ create: function code: code-tree
 	this function = function
 	this code-tree = code-tree
 	refs = List new
-	relative-refs = List new
 	buffers = List new
 	grow
 
@@ -87,11 +86,6 @@ emit-method
 
 	# Patch the labels.
 	for ref in refs
-		target = ref label offset
-		if target == nil
-			error: "Undefined label."
-		(code + ref offset) int-at: 0 put: code + target
-	for ref in relative-refs
 		target = ref label offset
 		if target == nil
 			error: "Undefined label."
@@ -193,11 +187,6 @@ emit-label-ref: label
 	refs append: ref
 	emit-word: 0
 
-emit-relative-label-ref: label
-	ref = LabelRef new: label at: offset
-	relative-refs append: ref
-	emit-word: 0
-
 
 emit-push: result
 	if result is-eax
@@ -223,25 +212,20 @@ emit-test: result
 
 emit-jmp: label
 	emit: 0xE9
-	emit-relative-label-ref: label
+	emit-label-ref: label
 
 jmp-length
 	return 1 + word-size
 
 emit-cond-jmp: cond to: label
-	# Doesn't seem to be a good conditional jump with an absolute target.
-	# Simulate it using the the relative jump we do have.
-	# Emit the opcode -- opposite to our condition.
 	switch cond
 		'z'
-			emit: 0x75 	# "jnz"
+			emit: (0x0F, 0x84) 	# "jz"
 		'nz'
-			emit: 0x74 	# "jz"
+			emit: (0x0F, 0x85) 	# "jnz"
 		else
 			error: "Unknown opcode: " + cond string + "."
-	emit: jmp-length
-	# Emit the real, absolutely-addressed jump.
-	emit-jmp: label
+	emit-label-ref: label
 
 
 stash: result
@@ -511,7 +495,7 @@ compile-return: stmt
 	to-eax: result
 	# "jmp postamble"
 	emit: 0xE9
-	emit-relative-label-ref: postamble-label
+	emit-label-ref: postamble-label
 
 
 compile-try: stmt
