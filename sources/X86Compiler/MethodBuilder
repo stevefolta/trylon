@@ -582,7 +582,31 @@ compile-send: send
 
 
 compile-super-call: super-call
-	# ...
+	# Push method args.
+	object-result = compile-this-call: nil
+	push-args: super-call arguments
+	emit-push: object-result
+
+	# Get the superclass.
+	superclass-result = emit-send-of: '.superclass' to: object-result with: empty
+
+	# Call Dispatch_() on the superclass.
+	emit-push: superclass-result
+	# "push selector"
+	emit: 0x68
+	emit-word: super-call name intern selector
+	# "mov eax, dispatch-fn"
+	emit: 0xB8
+	emit-ptr: dispatch-fn
+	# "call eax"
+	emit: (0xFF, 0xD0)
+	emit-pop-args: 2
+
+	# Call the method.
+	# "call eax"
+	emit: (0xFF, 0xD0)
+	emit-pop-args: super-call arguments num-items + 1
+	return CallResult
 
 
 compile-function-call: call
