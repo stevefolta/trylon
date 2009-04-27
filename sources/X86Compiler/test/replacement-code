@@ -47,4 +47,30 @@ for value in (1, 10, 100, 1000, 10000, 100000)
 	sum += value
 test: sum against: 1101 name: "\"for\""
 
+# "switch"
+test-pairs = 	--
+	(("bar", 1), ("baz", 1), ("foo", 2), ("blatz", 2), ("grobnitz", 3), ("bleah", 4))
+for pair in test-pairs
+	result = 0
+	switch pair first
+		"bar", "baz"
+			result = 1
+		"foo", "blatz"
+			result = 2
+		"grobnitz"
+			result = 3
+		else
+			result = 4
+	test: result against: pair second name: "switch \"" + pair first + "\""
+# No "else" clause.
+result = 0
+switch "bleah"
+	"bar", "baz"
+		result = 1
+	"foo", "blatz"
+		result = 2
+	"grobnitz"
+		result = 3
+test: result against: 0 name: "switch with no \"else\""
+
 

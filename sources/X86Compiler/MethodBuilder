@@ -493,9 +493,7 @@ compile-break: stmt
 compile-return: stmt
 	result = stmt value compile: this
 	to-eax: result
-	# "jmp postamble"
-	emit: 0xE9
-	emit-label-ref: postamble-label
+	emit-jmp: postamble-label
 
 
 compile-try: stmt
@@ -507,7 +505,55 @@ compile-throw: stmt
 
 
 compile-switch: stmt
-	# ...
+	# Value.
+	exterior-num-locals = cur-num-locals
+	interior-num-locals = cur-num-locals
+	value-result = stmt expression compile: this
+	value-result = stash: value-result
+	cur-num-locals = interior-num-locals
+
+	# Set up labels.
+	next-clause = Label new
+	exit = Label new
+
+	# Clauses.
+	for clause in stmt clauses
+		next-clause define: offset
+		next-clause = Label new
+		clause-body = Label new
+		values-left = clause values num-items
+		# Tests.
+		for value in clause values
+			values-left -= 1
+			interior-num-locals = cur-num-locals
+			args = List with: value
+			test-result = emit-send-of: '==' to: value-result with: args
+			cur-num-locals = interior-num-locals
+			emit-test: test-result
+			if values-left == 0
+				# This is the last test.
+				emit-cond-jmp: 'z' to: next-clause
+				# Body follows immediately.
+			else
+				emit-cond-jmp: 'nz' to: clause-body
+				# Next test follows immediately.
+		# Body.
+		clause-body define: offset
+		clause body compile: this
+		emit-jmp: exit
+	
+	# "else" clause.
+	if stmt else-clause
+		next-clause define: offset
+		next-clause = nil 	# So it doesn't get redefined below.
+		stmt else-clause body compile: this
+	
+	# Exit.
+	if next-clause
+		next-clause define: offset
+	exit define: offset
+
+	cur-num-locals = exterior-num-locals
 
 
 # Expression compilation.
