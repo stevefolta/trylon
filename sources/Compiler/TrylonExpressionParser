@@ -107,7 +107,7 @@ parse-not-expression
 
 	if !(words is-done) && (words peek == "!")
 		words next
-		expr = parse-keyword-expression
+		expr = parse-not-expression
 		if expr == nil
 			expression-expected-after: "!"
 		expr = ShortCircuitNot new: expr
