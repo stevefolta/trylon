@@ -27,3 +27,31 @@ true-returner
 false-returner
 	return false
 
+
+time-nfibs
+	# Run the benchmark.
+	# We have to allocate the object; the CCompiler optimizes calls to protos so
+	# they're C function calls rather than sends.
+	bench = BenchObject new
+	level = 33
+	start-time = System milliseconds
+	num-sends = bench nfibs: level
+	time = System milliseconds - start-time
+
+	# Report the results.
+	send: ("nfibs: ", level, " => ", num-sends, " sends.")
+	send: (time, " milliseconds.")
+	sends-per-second = num-sends float / (time float / 1000.0)
+	if sends-per-second > 1000000.0
+		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
+	else
+		send: (sends-per-second, " sends per second.")
+
+
+class BenchObject
+	create
+		# Nothing to do.
+
+	nfibs: n
+		send: "nfibs not replaced."
+	
