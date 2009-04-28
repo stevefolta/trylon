@@ -1,15 +1,8 @@
 #!/usr/bin/env trylon
 
-body = File contents-of: "replacement-code"
-# send: "Read file."
-on-proto = Compiler ExistingProto new: X86Compiler test
-function = 	--
-	Compiler CompiledFunction 	--
-		new: "say-it" arguments: empty return-type: nil 	--
-		on-proto: on-proto body: body is-primitive: nil
-# send: "Built function."
-code = X86Compiler compile: function
-X86Compiler replace-method: 'say-it' on: X86Compiler test with-ptr: code
+source = File contents-of: "replacement-code"
+X86Compiler 	--
+	replace-method: 'say-it' on: X86Compiler test with: source arg-names: empty
 
 X86Compiler test please-say-it
 

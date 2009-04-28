@@ -4,16 +4,10 @@ word-size = 4
 
 
 compile: function
-	# Parsing.
-	context = 	--
-		Compiler MethodContext new: function arguments parent: function on-proto
-	lines = Compiler LinesLexer read: function body
-	parser = Compiler TrylonCodeParser new: lines in: context
-	parse-tree = parser parse
-
 	# Function resolution.
 	old-compiler = compiler
 	compiler = this
+	parse-tree = function body
 	parse-tree prepare-to-emit
 
 	# Codegen.
@@ -24,9 +18,28 @@ compile: function
 	return result
 
 
-replace-method: symbol on: object with: code
-	# ...
-	MethodBuilder
+replace-method: symbol on: object with: source arg-names: arg-names
+	on-proto = Compiler ExistingProto new: object .proto
+	arguments = List new
+	for name in arg-names
+		arguments append: (Compiler CompiledField new: name)
+
+	# Parse.
+	context = Compiler MethodContext new: arguments parent: on-proto
+	lines = Compiler LinesLexer read: source
+	parser = Compiler TrylonCodeParser new: lines in: context
+	parse-tree = parser parse
+
+	# Compile.
+	function = 	--
+		Compiler CompiledFunction 	--
+			new: symbol string arguments: arguments return-type: nil 	--
+			on-proto: on-proto body: parse-tree is-primitive: nil
+	machine-code = X86Compiler compile: function
+
+	# Replace the method.
+	replace-method: symbol on: object with-ptr: machine-code
+
 
 c-fn replace-method: symbol on: object with-ptr: fn-ptr
 	struct Standard__Symbol__internal* sym =
