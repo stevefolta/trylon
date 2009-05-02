@@ -113,8 +113,8 @@ load-lines: lines
 
 
 load-line: line
-	line = line words
-	first-word = line next
+	words = line words
+	first-word = words next
 
 	# Comments and blank lines.
 	if first-word == nil || first-word starts-with: "#"
@@ -124,18 +124,18 @@ load-line: line
 	else if first-word == "if" || first-word == "iff"
 		# Get the symbol and the sense.
 		reverse-sense = false
-		symbol = line next
+		symbol = words next
 		if symbol == nil || symbol starts-with: "#"
 			error: "\"if\" line needs a condition" in: line
 		if symbol starts-with: "!"
 			reverse-sense = true
 			if symbol == "!"
 				# "if ! foo"
-				symbol = line next
+				symbol = words next
 			else
 				# "if !foo"
 				symbol = symbol substr: 1
-		line require-eol
+		words require-eol
 
 		# Test it.
 		value = dictionary at: symbol
@@ -147,7 +147,7 @@ load-line: line
 
 		# Do, or do not.
 		if test-succeeded
-			load-lines: line 
+			load-lines: line block
 
 	# Anything else is a sort of assignment expression.
 	else
@@ -157,14 +157,14 @@ load-line: line
 		if name ends-with: ":"
 			name = name substr: 0 length: name length - 2
 		else
-			operator = line next
+			operator = words next
 			if operator == "+="
 				appending = true
 			else if operator != "="
 				error: "'=' or '+=' expected" in: line
 
 		# Get the value, as a string.
-		value = line next
+		value = words next
 		if value == nil || value starts-with: "#"
 			error: "value expected" in: line
 		value = resolve-value: value
@@ -190,7 +190,7 @@ load-line: line
 
 		# Append any more values we find on the line.
 		loop
-			value = line next
+			value = words next
 			if value == nil || value starts-with: "#"
 				break
 			value = resolve-value: value
