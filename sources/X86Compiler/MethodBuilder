@@ -81,6 +81,10 @@ emit-method
 		dest += buffer-size
 
 	# Patch the frame size.
+	# Mac OSX requires alignment to 16 bytes (4 slots).
+	iff Darwin
+		if num-locals % 4 != 0
+			num-locals += 4 - (num-locals % 4)
 	# This is not done as a label since it's not relocated, only patched.
 	(code + frame-size-offset) int-at: 0 put: num-locals * 4
 
