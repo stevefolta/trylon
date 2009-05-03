@@ -94,4 +94,12 @@ check: (!(false-returner && true-returner)) name: "&& (false, true)"
 check: (!(3 && false-returner)) name: "&& (true, false)"
 test: (3 && 4) against: 4 name: "&& (true, true)"
 
+# "super" sends.
+source = "return super value\n"
+X86Compiler 	--
+	replace-method: 'value' on: X86Compiler test SubClass 	--
+	with: source arg-names: empty
+sub-object = SubClass new
+test: sub-object value against: "super" name: "\"super\" send"
+
 

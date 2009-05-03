@@ -54,4 +54,17 @@ class BenchObject
 
 	nfibs: n
 		send: "nfibs not replaced."
-	
+
+
+class SuperClass
+	value
+		return "super"
+
+class SubClass
+	superclass SuperClass
+	create
+		# Nothing to do.
+	value
+		return "not replaced"
+
+
