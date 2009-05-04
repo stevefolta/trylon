@@ -22,7 +22,12 @@ class NamedFunction
 
 
 c-preamble
-	#include <ffi.h>
+	#ifdef MAC_OSX
+		#define MACOSX 	// Aargh!
+		#include <ffi/ffi.h>
+	#else
+		#include <ffi.h>
+	#endif
 
 	extern void CallFFI_(obj_ fn_name, obj_ args, ffi_type* result_type, void* result);
 

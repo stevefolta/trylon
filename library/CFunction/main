@@ -11,7 +11,12 @@ call
 # Internals.
 
 c-preamble
-	#include <ffi.h>
+	#ifdef MAC_OSX
+		#define MACOSX 	// Aargh!
+		#include <ffi/ffi.h>
+	#else
+		#include <ffi.h>
+	#endif
 	#include <dlfcn.h>
 
 	static void* programHandle = nil;
