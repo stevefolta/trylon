@@ -51,3 +51,7 @@
     51 0000006D 31C0                    	xor eax, eax
     52                                  not_complete:
     53                                  
+    54 0000006F B8[74000000]            mov eax, hello
+    55                                  
+    56 00000074 68656C6C6F              hello: db 'hello'
+    57                                  

@@ -3,7 +3,8 @@ trylon MethodBuilder
 fields function code-tree
 fields refs out-ptr buffer-limit buffers offset
 fields dispatch-fn
-fields postamble-label cur-num-locals num-locals argument-indices loop-stack
+fields postamble-label argument-indices
+fields cur-num-locals num-locals loop-stack cur-caught-exception
 
 buffer-size = 512
 buffer-slop-space = 32	# Enough space for the longest instruction.
@@ -231,6 +232,13 @@ emit-cond-jmp: cond to: label
 			error: "Unknown opcode: " + cond string + "."
 	emit-label-ref: label
 
+emit-c-call: addr
+	# "mov eax, addr"
+	emit: 0xB8
+	emit-ptr: addr
+	# "call eax"
+	emit: (0xFF, 0xD0)
+
 
 stash: result
 	# If the result is already safely on the stack, simply return it.  If not,
@@ -278,6 +286,16 @@ new-local
 get-temporary
 	# A temporary is no different from any other local.
 	return new-local
+
+allocate-stack-struct: size
+	num-slots = (size + 3) / 4
+	cur-num-locals += num-slots
+	if cur-num-locals > num-locals
+		num-locals = cur-num-locals
+
+	# We'll return it as a local.  Since the stack grows downward, we want to use
+	# the index of the *last* slot it occupies.
+	return LocalResult new: cur-num-locals - 1
 
 
 class Loop
@@ -333,6 +351,18 @@ emit-send-of: symbol to: object-result with: args
 
 c-fn dispatch-fn-addr
 	return BuildBytePtr_(&Dispatch_);
+c-fn push-exception-fn-addr
+	return BuildBytePtr_(&PushException_);
+c-fn pop-exception-fn-addr
+	return BuildBytePtr_(&PopException_);
+c-fn throw-fn-addr
+	return BuildBytePtr_(&Throw_);
+c-fn setjmp-fn-addr
+	return BuildBytePtr_(setjmp);
+c-fn current-exception-addr
+	return BuildBytePtr_(&currentException_);
+c-fn exception-catcher-size
+	return BuildInt_(sizeof(ExceptionCatcher_));
 
 
 emit-pop-args: num-args
@@ -519,11 +549,72 @@ compile-return: stmt
 
 
 compile-try: stmt
-	# ...
+	# Allocate the catcher.
+	catcher = allocate-stack-struct: exception-catcher-size
+
+	# Call PushException_().
+	# "lea eax, catcher"
+	emit: 0x8D
+	emit-opcode-extensions-for: catcher
+	# "push eax"
+	emit: 0x50
+	# "call PushException_()"
+	emit-c-call: push-exception-fn-addr
+	emit-pop-args: 1
+
+	# Call setjmp().
+	# "lea eax, catcher" -- we happen to know that the jmp_buf is at offset zero.
+	emit: 0x8D
+	emit-opcode-extensions-for: catcher
+	# "push eax"
+	emit: 0x50
+	# "call setjmp()"
+	emit-c-call: setjmp-fn-addr
+	emit-pop-args: 1
+
+	# Test setjmp() result.
+	catch-clause = Label new
+	emit-test: CallResult
+	emit-cond-jmp: 'nz' to: catch-clause
+
+	# Body.
+	stmt body compile: this
+	# Call PopException_().
+	emit-c-call: pop-exception-fn-addr
+	# "jmp end".
+	end = Label new
+	emit-jmp: end
+
+	# "else" clause.
+	catch-clause define: offset
+	if stmt else-clause
+		# Set up the "exception" local.
+		exterior-caught-exception = cur-caught-exception
+		cur-caught-exception = new-local
+		# Call PopException_().
+		emit-c-call: pop-exception-fn-addr
+		# "mov eax, currentException_"
+		emit: (0x8B, 0x05)
+		emit-ptr: current-exception-addr
+		# "mov exception, eax"
+		emit-move-to: cur-caught-exception from: CallResult
+		# "else" clause body.
+		stmt else-clause body compile: this
+		# Clean up.
+		cur-caught-exception = exterior-caught-exception
+	else
+		# No "else" clause.
+		# Still need to call PopException_().
+		emit-c-call: pop-exception-fn-addr
+
+	end define: offset
 
 
 compile-throw: stmt
-	# ...
+	value-result = stmt value compile: this
+	emit-push: value-result
+	emit-c-call: throw-fn-addr
+	emit-pop-args: 1
 
 
 compile-switch: stmt
@@ -765,7 +856,9 @@ compile-primitive-function-call: func with: arguments
 
 
 compile-caught-exception-call: func
-	# ...
+	if cur-caught-exception == nil
+		error: "Internal compiler error: no cur-caught-exception."
+	return cur-caught-exception
 
 
 compile-nil-call: func

@@ -51,3 +51,7 @@ was_true:
 	xor eax, eax
 not_complete:
 
+mov eax, hello
+
+hello: db 'hello'
+

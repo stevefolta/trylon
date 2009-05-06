@@ -102,4 +102,13 @@ X86Compiler 	--
 sub-object = SubClass new
 test: sub-object value against: "super" name: "\"super\" send"
 
+# "try"/"throw"
+result = ""
+try
+	throw MessageException new: "thrown"
+	result = "throw failed"
+else
+	result = exception message
+test: result against: "thrown" name: '"try"/"throw"'
+
 

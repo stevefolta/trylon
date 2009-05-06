@@ -5,7 +5,7 @@ superclass TrylonFunction
 create
 
 
-compile-call: builder
+compile-call: builder with: arguments
 	return builder compile-caught-exception-call: this
 
 
