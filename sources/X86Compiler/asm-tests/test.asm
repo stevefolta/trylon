@@ -55,3 +55,7 @@ mov eax, hello
 
 hello: db 'hello'
 
+and esp, byte -16
+sub esp, byte (3 * 4)
+add esp, byte -(3 * 4)
+

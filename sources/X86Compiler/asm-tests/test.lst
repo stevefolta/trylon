@@ -55,3 +55,7 @@
     55                                  
     56 00000074 68656C6C6F              hello: db 'hello'
     57                                  
+    58 00000079 83E4F0                  and esp, byte -16
+    59 0000007C 83EC0C                  sub esp, byte (3 * 4)
+    60 0000007F 83C4F4                  add esp, byte -(3 * 4)
+    61                                  
