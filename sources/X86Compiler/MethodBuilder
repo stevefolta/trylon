@@ -11,6 +11,10 @@ buffer-slop-space = 32	# Enough space for the longest instruction.
 
 literals = nil
 
+iff Darwin
+	alignment-slots = nil
+	fields stack-alignment
+
 
 # NOTE:
 # When assembly language is used in the comments, Intel-style syntax is used:
@@ -34,6 +38,9 @@ init
 	
 	literals = List new
 
+	iff Darwin
+		alignment-slots = 16 / word-size
+
 
 emit-method
 	postamble-label = Label new
@@ -55,6 +62,8 @@ emit-method
 	emit: (0x81, 0xEC) 	# "sub esp, num-locals * 4"
 	frame-size-offset = offset
 	emit-word: 0 	# Will be patched later.
+	iff Darwin
+		stack-alignment = 0
 
 	# Emit the body of the code.
 	code-tree compile: this
@@ -82,12 +91,17 @@ emit-method
 		dest += buffer-size
 
 	# Patch the frame size.
-	# Mac OSX requires alignment to 16 bytes (4 slots).
 	iff Darwin
-		if num-locals % 4 != 0
-			num-locals += 4 - (num-locals % 4)
+		# Mac OSX requires alignment to 16 bytes (4 slots).
+		# Because we don't know the total number of locals until we're done with
+		# codegen, we adjust it here so ESP is aligned at the start of codegen.
+		# The distance from the last known alignment point (the call) is the number
+		# of locals + the return address + the saved EBP.
+		alignment-delta = (num-locals + 2) % alignment-slots
+		if alignment-delta != 0
+			num-locals += alignment-slots - alignment-delta
 	# This is not done as a label since it's not relocated, only patched.
-	(code + frame-size-offset) int-at: 0 put: num-locals * 4
+	(code + frame-size-offset) int-at: 0 put: num-locals * word-size
 
 	# Patch the labels.
 	for ref in refs
@@ -313,17 +327,60 @@ end-loop
 	loop-stack pop-front
 
 
+iff Darwin
+	alignment-slots-needed: num-args
+		alignment-delta = (stack-alignment + num-args) % alignment-slots
+		if alignment-delta == 0
+			return 0
+		return alignment-slots - alignment-delta
+	
+	align-for-args: num-args
+		padding-slots = alignment-slots-needed: num-args
+		if padding-slots != 0
+			# Pad the stack so that it will be aligned when we're done pushing the
+			# args.
+			# "sub esp, padding-slots * word-size"
+			emit: (0x83, 0xEC, padding-slots * word-size)
+			stack-alignment += padding-slots
+
+
 push-args: args
+	iff Darwin
+		# We will also be pushing the receiver object as a "hidden" argument.
+		align-for-args: args num-items + 1
 	reversed-args = List new
 	for arg in args
 		reversed-args push-front: arg
 	for arg in reversed-args
 		result = arg compile: this
 		emit-push: result
+		iff Darwin
+			stack-alignment += 1
+
+
+emit-pop-args: num-args
+	num-bytes = num-args * word-size
+	if num-bytes < 127
+		# More compact 8-bit form.
+		emit: 0x83
+		emit: 0xC4
+		emit: num-bytes
+	else
+		emit: 0x81
+		emit: 0xC4
+		emit-word: num-bytes
+
+emit-pop-aligned-args: num-args
+	iff Darwin
+		num-args += alignment-slots-needed: num-args
+	emit-pop-args: num-args
 
 
 emit-send-of: symbol to: object-result with: args
 	# Push method args.
+	exterior-stack-alignment = nil
+	iff Darwin
+		exterior-stack-alignment = stack-alignment
 	object-result = stash: object-result
 	push-args: args
 	emit-push: object-result
@@ -345,7 +402,9 @@ emit-send-of: symbol to: object-result with: args
 	# "call eax"
 	emit: 0xFF
 	emit: 0xD0
-	emit-pop-args: args num-items + 1
+	iff Darwin
+		stack-alignment = exterior-stack-alignment
+	emit-pop-aligned-args: args num-items + 1
 	return CallResult
 
 
@@ -363,19 +422,6 @@ c-fn current-exception-addr
 	return BuildBytePtr_(&currentException_);
 c-fn exception-catcher-size
 	return BuildInt_(sizeof(ExceptionCatcher_));
-
-
-emit-pop-args: num-args
-	num-bytes = num-args * word-size
-	if num-bytes < 127
-		# More compact 8-bit form.
-		emit: 0x83
-		emit: 0xC4
-		emit: num-bytes
-	else
-		emit: 0x81
-		emit: 0xC4
-		emit-word: num-bytes
 
 
 to-boolean: object-result reverse-sense: reverse-sense
@@ -563,6 +609,8 @@ compile-try: stmt
 	emit-pop-args: 1
 
 	# Call setjmp().
+	iff Darwin
+		align-for-args: 1
 	# "lea eax, catcher" -- we happen to know that the jmp_buf is at offset zero.
 	emit: 0x8D
 	emit-opcode-extensions-for: catcher
@@ -570,7 +618,7 @@ compile-try: stmt
 	emit: 0x50
 	# "call setjmp()"
 	emit-c-call: setjmp-fn-addr
-	emit-pop-args: 1
+	emit-pop-aligned-args: 1
 
 	# Test setjmp() result.
 	catch-clause = Label new
@@ -612,9 +660,11 @@ compile-try: stmt
 
 compile-throw: stmt
 	value-result = stmt value compile: this
+	iff Darwin
+		align-for-args: 1
 	emit-push: value-result
 	emit-c-call: throw-fn-addr
-	emit-pop-args: 1
+	emit-pop-aligned-args: 1
 
 
 compile-switch: stmt
@@ -678,6 +728,9 @@ compile-send: send
 
 compile-super-call: super-call
 	# Push method args.
+	exterior-stack-alignment = nil
+	iff Darwin
+		exterior-stack-alignment = stack-alignment
 	object-result = compile-this-call: nil
 	push-args: super-call arguments
 	emit-push: object-result
@@ -700,7 +753,9 @@ compile-super-call: super-call
 	# Call the method.
 	# "call eax"
 	emit: (0xFF, 0xD0)
-	emit-pop-args: super-call arguments num-items + 1
+	iff Darwin
+		stack-alignment = exterior-stack-alignment
+	emit-pop-aligned-args: super-call arguments num-items + 1
 	return CallResult
 
 

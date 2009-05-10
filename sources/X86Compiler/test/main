@@ -27,6 +27,9 @@ true-returner
 false-returner
 	return false
 
+do: arg1 and: arg2
+	return arg2
+
 
 time-nfibs
 	# Run the benchmark.

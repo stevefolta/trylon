@@ -111,4 +111,8 @@ else
 	result = exception message
 test: result against: "thrown" name: '"try"/"throw"'
 
+# Calls as args.
+do: (send: "One") and: (do: (send: "Two") and: (send: "Three"))
+check: True name: "Calls as args"
+
 
