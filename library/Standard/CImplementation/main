@@ -25,4 +25,6 @@ references
 	FileDirectory
 	Implementation
 	GarbageCollector
+	iff class-objects
+		Class
 

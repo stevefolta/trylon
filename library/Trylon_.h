@@ -8,6 +8,9 @@ typedef struct object* obj_;
 typedef struct ClassInfo* classref_;
 
 struct ClassInfo {
+#ifdef CLASS_OBJECTS_
+	classref_	class_;
+#endif
 	int 	classNum;
 	int 	numSlots;
 	obj_	proto, parentContext, superclass;
@@ -158,6 +161,9 @@ UsingClass_(Node__Dictionary__Standard)
 UsingClass_(True__Standard)
 #ifdef NIL_OBJECT_
 UsingClass_(nil__Standard)
+#endif
+#ifdef CLASS_OBJECTS_
+UsingClass_(Class__CImplementation__Standard)
 #endif
 
 

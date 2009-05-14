@@ -39,6 +39,10 @@ extend Standard Object
 		c-fn .subprotos
 			return this_->class_->subprotos;
 
+	iff class-objects
+		c-fn .class
+			return (obj_) this_->class_;
+
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");
 		exit(1);

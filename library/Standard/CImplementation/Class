@@ -1,0 +1,26 @@
+trylon class
+
+
+c-preamble
+	#define classInfo ((struct ClassInfo*) this_)
+
+c-fn num-slots
+	return BuildInt_(classInfo->numSlots);
+c-fn class-num
+	return BuildInt_(classInfo->classNum);
+
+c-fn proto
+	return classInfo->proto;
+c-fn parent-context
+	return classInfo->parentContext;
+c-fn superclass
+	return classInfo->superclass;
+c-fn used-contexts
+	return classInfo->usedContexts;
+c-fn name
+	return classInfo->name;
+c-fn added-fields
+	return classInfo->addedFields;
+c-fn subprotos
+	return classInfo->subprotos;
+

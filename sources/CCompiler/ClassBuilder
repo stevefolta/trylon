@@ -101,6 +101,8 @@ emit-on: stream
 	stream write: "struct ClassInfo "
 	stream write: proto c-name
 	stream write: "__classInfo_ = \n\t{ "
+	if build-settings has-symbol: "class-objects"
+		stream write: "StdClassRef_(Class__CImplementation), "
 	stream write: proto class-num string
 	stream write: ", "
 	stream write: proto total-num-fields string

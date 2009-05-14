@@ -301,6 +301,8 @@ emit-settings: build-settings
 		stream send: "#define NIL_OBJECT_"
 	if build-settings["support-new-methods"]
 		stream send: "#define SUPPORT_NEW_METHODS_"
+	if build-settings["class-objects"]
+		stream send: "#define CLASS_OBJECTS_"
 	
 	stream write-line
 	is-changed = stream is-changed
