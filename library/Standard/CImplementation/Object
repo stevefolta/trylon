@@ -52,40 +52,77 @@ extend Standard Object
 		c-fn responds-to: selector
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
-			return RespondsTo_(this_, symbol->selector);
+			#ifdef SYMBOL_DISPATCH_
+				return RespondsTo_(this_, selector);
+			#else
+				return RespondsTo_(this_, symbol->selector);
+			#endif
 
 		c-fn perform: selector
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
-			return (*Dispatch_(symbol->selector, this_))(this_);
+			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
+				(*Dispatch_(symbol->selector, this_))
+				#endif
+					(this_);
 	
 		c-fn perform: selector with: arg-1
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
-			return (*Dispatch_(symbol->selector, this_))(this_, arg_1);
+			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
+				(*Dispatch_(symbol->selector, this_))
+				#endif
+					(this_, arg_1);
 	
 		c-fn perform: selector with: arg-1 with: arg-2
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
-			return (*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2);
+			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
+				(*Dispatch_(symbol->selector, this_))
+				#endif
+					(this_, arg_1, arg_2);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
-			return (*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2, arg_3);
+			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
+				(*Dispatch_(symbol->selector, this_))
+				#endif
+					(this_, arg_1, arg_2, arg_3);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
-				(*Dispatch_(symbol->selector, this_))(this_, arg_1, arg_2, arg_3, arg_4);
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
+				(*Dispatch_(symbol->selector, this_))
+				#endif
+					(this_, arg_1, arg_2, arg_3, arg_4);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
 				with: arg-5
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
 				(*Dispatch_(symbol->selector, this_))
+				#endif
 					(this_, arg_1, arg_2, arg_3, arg_4, arg_5);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
@@ -93,7 +130,11 @@ extend Standard Object
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
 				(*Dispatch_(symbol->selector, this_))
+				#endif
 					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
@@ -101,7 +142,11 @@ extend Standard Object
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
 				(*Dispatch_(symbol->selector, this_))
+				#endif
 					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
@@ -109,7 +154,11 @@ extend Standard Object
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
 				(*Dispatch_(symbol->selector, this_))
+				#endif
 					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7, arg_8);
 	
 		c-fn perform: selector with: arg-1 with: arg-2 with: arg-3 with: arg-4 	--
@@ -117,7 +166,11 @@ extend Standard Object
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
 				(*Dispatch_(symbol->selector, this_))
+				#endif
 					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6,
 					 arg_7, arg_8, arg_9);
 	
@@ -126,7 +179,11 @@ extend Standard Object
 			struct Standard__Symbol__internal* symbol =
 				(struct Standard__Symbol__internal*) selector;
 			return
+				#ifdef SYMBOL_DISPATCH_
+				(*Dispatch_(selector, this_))
+				#else
 				(*Dispatch_(symbol->selector, this_))
+				#endif
 					(this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6,
 					 arg_7, arg_8, arg_9, arg_10);
 	

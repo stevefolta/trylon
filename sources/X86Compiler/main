@@ -42,10 +42,14 @@ replace-method: symbol on: object with: source arg-names: arg-names
 
 
 c-fn replace-method: symbol on: object with-ptr: fn-ptr
-	struct Standard__Symbol__internal* sym =
-		(struct Standard__Symbol__internal*) symbol;
 	#ifdef SUPPORT_NEW_METHODS_
-		fn_ptr_* method_ptr = MethodLocation_(object, sym->selector);
+		#ifdef SYMBOL_DISPATCH_
+			fn_ptr_* method_ptr = MethodLocation_(object, symbol);
+		#else
+			struct Standard__Symbol__internal* sym =
+				(struct Standard__Symbol__internal*) symbol;
+			fn_ptr_* method_ptr = MethodLocation_(object, sym->selector);
+		#endif
 	#else
 		fn_ptr_* method_ptr = nil;
 	#endif

@@ -387,9 +387,14 @@ emit-send-of: symbol to: object-result with: args
 
 	# Call Dispatch_().
 	emit-push: object-result
-	# "push selector"
-	emit: 0x68
-	emit-word: symbol selector
+	iff symbol-dispatch
+		# "push symbol"
+		emit: 0x68
+		emit-ptr: symbol object-ptr
+	iff !symbol-dispatch
+		# "push selector"
+		emit: 0x68
+		emit-word: symbol selector
 	# "mov eax, dispatch-fn"
 	emit: 0xB8
 	emit-ptr: dispatch-fn
@@ -740,9 +745,14 @@ compile-super-call: super-call
 
 	# Call Dispatch_() on the superclass.
 	emit-push: superclass-result
-	# "push selector"
-	emit: 0x68
-	emit-word: super-call name intern selector
+	iff symbol-dispatch
+		# "push symbol"
+		emit: 0x68
+		emit-ptr: super-call name intern object-ptr
+	iff !symbol-dispatch
+		# "push selector"
+		emit: 0x68
+		emit-word: super-call name intern selector
 	# "mov eax, dispatch-fn"
 	emit: 0xB8
 	emit-ptr: dispatch-fn

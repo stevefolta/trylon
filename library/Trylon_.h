@@ -42,10 +42,18 @@ struct RDTableEntry_ {
 
 extern struct RDTableEntry_ dispatchTable_[];
 
-extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
-extern obj_ RespondsTo_(obj_ object, selector_ selector);
-#ifdef SUPPORT_NEW_METHODS_
-	extern fn_ptr_* MethodLocation_(obj_ object, selector_ selector);
+#ifdef SYMBOL_DISPATCH_
+	extern fn_ptr_ Dispatch_(obj_ symbol, obj_ object);
+	extern obj_ RespondsTo_(obj_ object, obj_ symbol);
+	#ifdef SUPPORT_NEW_METHODS_
+		extern fn_ptr_* MethodLocation_(obj_ object, obj_ symbol);
+	#endif
+#else
+	extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
+	extern obj_ RespondsTo_(obj_ object, selector_ selector);
+	#ifdef SUPPORT_NEW_METHODS_
+		extern fn_ptr_* MethodLocation_(obj_ object, selector_ selector);
+	#endif
 #endif
 
 #ifdef SUPPORT_PERFORM_
@@ -59,9 +67,15 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 	#define Selector_(fnName)	fnName##__selector_
 #endif
 
-#define Call_(fnName, object, args...) \
-	((*Dispatch_(Selector_(fnName), (obj_) (object))) \
-	 ((obj_) object, ##args))
+#ifdef SYMBOL_DISPATCH_
+	#define Call_(fnName, object, args...) \
+		((*Dispatch_(Sym_(fnName), (obj_) (object))) \
+	 	((obj_) object, ##args))
+#else
+	#define Call_(fnName, object, args...) \
+		((*Dispatch_(Selector_(fnName), (obj_) (object))) \
+	 	((obj_) object, ##args))
+#endif
 
 #define Field_(name)        	this_->fields[name##__fld_]
 #define FieldOf_(obj, name) 	obj->fields[name##__fld_]

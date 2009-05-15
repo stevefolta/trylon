@@ -303,6 +303,8 @@ emit-settings: build-settings
 		stream send: "#define SUPPORT_NEW_METHODS_"
 	if build-settings["class-objects"]
 		stream send: "#define CLASS_OBJECTS_"
+	if build-settings["symbol-dispatch"]
+		stream send: "#define SYMBOL_DISPATCH_"
 	
 	stream write-line
 	is-changed = stream is-changed

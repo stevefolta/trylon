@@ -1,4 +1,4 @@
-trylon NewBuildSettings
+trylon BuildSettings
 
 fields dictionary
 
@@ -92,6 +92,10 @@ load
 	# The project-specific build-settings.
 	load-from: "build-settings.local"
 	load-from: "build-settings"
+
+	# 'symbol-dispatch' requires 'support-perform'.
+	if dictionary["symbol-dispatch"]
+		dictionary["support-perform"] = true
 
 
 load-from: file-name
