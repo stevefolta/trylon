@@ -345,6 +345,9 @@ extern obj_ BuildStringStartStopper_(const char* start, const char* stopper);
 extern char* CString_(obj_ str);
 extern void* Allocate_(int numBytes);
 extern void* AllocNonPtr_(int numBytes);
+extern obj_ NewTuple_(int numItems);
+extern obj_ TupleAt_(obj_ tuple, int index);
+extern void TuplePut_(obj_ tuple, int index, obj_ value);
 
 extern obj_ CloneObj_(obj_ object);
 extern obj_ CloneObjExtra_(obj_ object, int numExtraFields);

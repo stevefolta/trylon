@@ -46,6 +46,10 @@ extend Standard Object
 	c-fn message-not-understood
 		fprintf(stderr, "Message not understood.\n");
 		exit(1);
+	
+	iff symbol-dispatch
+		message-not-understood: symbol arguments: args
+			error: "Message not understood: '" + symbol string + "'."
 
 	
 	iff support-perform

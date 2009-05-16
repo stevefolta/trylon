@@ -4,16 +4,66 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef SYMBOL_DISPATCH_
+	#include <stdarg.h>
+#endif
 #ifdef OSX_FINK
 	#include "gc.h"
 #else
 	#include "gc/gc.h"
 #endif
 
+
+#ifdef SYMBOL_DISPATCH_
+// Not thread-safe!  We'll need to move this to thread-local storage if we
+// support threads.
+static obj_ unhandledMessage = nil;
+#endif
+
 static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 {
+#ifdef SYMBOL_DISPATCH_
+
+	UsingMethod_(characters) UsingMethod_(iterator)
+	UsingMethod_(is_done) UsingMethod_(current_item) UsingMethod_(go_forward)
+	UsingMethod_(message_not_understood_co_arguments_co_);
+	int num_args = 0, which_arg;
+	char c;
+	va_list arg_list;
+	obj_ args_tuple;
+
+	// How many arguments are there?
+	// We can find out by counting the number of colons in the selector.
+	obj_ characters = Call_(characters, unhandledMessage);
+	ForStart_(1, characters, char_obj)
+		c = IntValue_(char_obj);
+		if (c == ':')
+			num_args += 1;
+		ForEnd_(1)
+	
+	// Gather the arguments into a tuple.
+	args_tuple = NewTuple_(num_args);
+	va_start(arg_list, object);
+	for (which_arg = 0; which_arg < num_args; ++which_arg) {
+		obj_ arg = va_arg(arg_list, obj_);
+		TuplePut_(args_tuple, which_arg, arg);
+		}
+	va_end(arg_list);
+
+	// Call 'message-not-understood:arguments:'.
+	return
+		Call_(
+			message_not_understood_co_arguments_co_,
+			object, unhandledMessage, args_tuple);
+
+#else 	// !SYMBOL_DISPATCH_
+
+	// If 'symbol-dispatch' isn't on, we don't have a good way of knowing what
+	// message was sent.
 	UsingMethod_(message_not_understood);
 	return Call_(message_not_understood, object);
+
+#endif
 }
 
 
@@ -39,8 +89,9 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 		return entry->method;
 
 	// Send message-not-understood:instead.
-	// *** Eventually, we want to actually specify *which* message wasn't
-	// *** understood, and also pass the arguments.
+#ifdef SYMBOL_DISPATCH_
+	unhandledMessage = symbol;
+#endif
 	return (fn_ptr_) &SendMessageNotUnderstood_;
 }
 
@@ -272,6 +323,25 @@ void* Allocate_(int numBytes)
 void* AllocNonPtr_(int numBytes)
 {
 	return GC_MALLOC_ATOMIC(numBytes);
+}
+
+
+obj_ NewTuple_(int numItems)
+{
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	return new_co___Tuple__Standard(Proto_(Tuple__Standard), BuildInt_(numItems));
+}
+
+
+obj_ TupleAt_(obj_ tuple, int index)
+{
+	return tuple->fields[index + 1];
+}
+
+
+void TuplePut_(obj_ tuple, int index, obj_ value)
+{
+	tuple->fields[index + 1] = value;
 }
 
 

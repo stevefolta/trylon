@@ -1,0 +1,9 @@
+trylon mni-test
+
+main: args
+	try
+		Object unknown-message: "foo"
+	else
+		send: ("Error: ", exception message)
+
+
