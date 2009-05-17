@@ -88,7 +88,7 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 	if (entry->selector == selector)
 		return entry->method;
 
-	// Send message-not-understood:instead.
+	// Send 'message-not-understood:arguments' instead.
 #ifdef SYMBOL_DISPATCH_
 	unhandledMessage = symbol;
 #endif

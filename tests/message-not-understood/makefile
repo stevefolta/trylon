@@ -1,6 +1,6 @@
 # Makefile for a Trylon program.
 
-PROGRAM := mni-test
+PROGRAM := mnu-test
 
 
 SOURCES := main $(wildcard sources/*) $(wildcard build-settings) $(wildcard build-settings.local)
