@@ -44,12 +44,18 @@ fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 		return entry->method;
 
 #if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
-	// Next, try the "newMethods" dictionary, if there is one.
+	// Next, try the "newMethods" dictionaries for this and all superclasses.
 	struct ClassInfo* classInfo = object->class_;
-	if (classInfo->newMethods) {
-		UsingMethod_(at_co_)
-		obj_ method_ptr = Call_(at_co_, classInfo->newMethods, selectorIn);
-		return (fn_ptr_) BytePtrValue_(method_ptr);
+	for (;;) {
+		if (classInfo->newMethods) {
+			UsingMethod_(at_co_)
+			obj_ method_ptr = Call_(at_co_, classInfo->newMethods, selectorIn);
+			if (method_ptr)
+				return (fn_ptr_) BytePtrValue_(method_ptr);
+			}
+		if (classInfo->superclass == nil)
+			break;
+		classInfo = classInfo->superclass->class_;
 		}
 #endif
 
@@ -60,6 +66,72 @@ fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 #endif
 	return (fn_ptr_) &SendMessageNotUnderstood_;
 }
+
+
+obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
+{
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
+#ifdef SYMBOL_DISPATCH_
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	selector_ selector = selectorIn;
+#endif
+
+	// First, try the dispatch table.
+	struct RDTableEntry_* entry =
+		&dispatchTable_[selector + ClassNumFor_(object)];
+	if (entry->selector == selector)
+		return true_;
+
+#if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
+	// Next, try the "newMethods" dictionaries for this and all superclasses.
+	struct ClassInfo* classInfo = object->class_;
+	for (;;) {
+		if (classInfo->newMethods) {
+			UsingMethod_(at_co_)
+			obj_ method_ptr = Call_(at_co_, classInfo->newMethods, selectorIn);
+			if (method_ptr)
+				return true_;
+			}
+		if (classInfo->superclass == nil)
+			break;
+		classInfo = classInfo->superclass->class_;
+		}
+#endif
+
+	return nil;
+}
+
+
+#ifdef SUPPORT_NEW_METHODS_
+fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ selectorIn)
+{
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
+#ifdef SYMBOL_DISPATCH_
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	selector_ selector = selectorIn;
+#endif
+
+	struct RDTableEntry_* entry =
+		&dispatchTable_[selector + ClassNumFor_(object)];
+
+	if (entry->selector == selector)
+		return &entry->method;
+
+	return nil;
+}
+#endif
 
 
 static obj_ SendMessageNotUnderstood_(obj_ object, ...)
@@ -107,53 +179,6 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 
 #endif
 }
-
-
-obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
-{
-#ifdef NIL_OBJECT_
-	if (object == nil)
-		object = &nil__Standard;
-#endif
-
-#ifdef SYMBOL_DISPATCH_
-	selector_ selector =
-		((struct Standard__Symbol__internal*) selectorIn)->selector;
-#else
-	selector_ selector = selectorIn;
-#endif
-
-	struct RDTableEntry_* entry =
-		&dispatchTable_[selector + ClassNumFor_(object)];
-
-	return Bool_(entry->selector == selector);
-}
-
-
-#ifdef SUPPORT_NEW_METHODS_
-fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ selectorIn)
-{
-#ifdef NIL_OBJECT_
-	if (object == nil)
-		object = &nil__Standard;
-#endif
-
-#ifdef SYMBOL_DISPATCH_
-	selector_ selector =
-		((struct Standard__Symbol__internal*) selectorIn)->selector;
-#else
-	selector_ selector = selectorIn;
-#endif
-
-	struct RDTableEntry_* entry =
-		&dispatchTable_[selector + ClassNumFor_(object)];
-
-	if (entry->selector == selector)
-		return &entry->method;
-
-	return nil;
-}
-#endif
 
 
 obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
