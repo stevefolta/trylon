@@ -31,10 +31,25 @@ iff support-new-methods
 	c-fn new-methods: dict
 		return classInfo->newMethods = dict;
 
-	add-new-method: name machine-code: code
-		name = name intern
+	install-method: name machine-code: code
+		selector = name intern
+
+		# If it's in the dispatch table, patch that.
+		table-entry-ptr = dispatch-table-entry-for: selector
+		if table-entry-ptr
+			table-entry-ptr deref-ptr = code
+			return
+
+		# Otherwise, add it to the "new-methods" dictionary.
 		if new-methods = nil
 			new-methods = Dictionary new
-		new-methods[name] = code
+		new-methods[selector] = code
+	
+
+	c-fn dispatch-table-entry-for: selector
+		fn_ptr_* entry_ptr = MethodLocation_(classInfo->proto, selector);
+		if (entry_ptr == nil)
+			return nil;
+		return BuildBytePtr_(entry_ptr);
 
 
