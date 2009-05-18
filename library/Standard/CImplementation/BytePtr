@@ -46,6 +46,15 @@ extend Standard BytePtr
 	c-fn as-object
 		return (obj_) BytePtrValue_(this_);
 
+	c-fn deref-ptr: new-value
+		*((byte_ptr_*) BytePtrValue_(this_)) = BytePtrValue_(new_value);
+		return new_value;
+	c-fn deref-int: new-value
+		*((int*) BytePtrValue_(this_)) = IntValue_(new_value);
+		return new_value;
+	c-fn deref-char: new-value
+		*BytePtrValue_(this_) = IntValue_(new_value);
+		return new_value;
 	c-fn ptr-at: index put: value
 		((byte_ptr_*) BytePtrValue_(this_))[IntValue_(index)] = BytePtrValue_(value);
 	c-fn object-at: index put: value
