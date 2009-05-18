@@ -37,12 +37,23 @@ fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 	int selector = selectorIn;
 #endif
 
+	// First, try to get it from the dispatch table.
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
-
 	if (entry->selector == selector)
 		return entry->method;
 
+#if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
+	// Next, try the "newMethods" dictionary, if there is one.
+	struct ClassInfo* classInfo = object->class_;
+	if (classInfo->newMethods) {
+		UsingMethod_(at_co_)
+		obj_ method_ptr = Call_(at_co_, classInfo->newMethods, selectorIn);
+		return (fn_ptr_) BytePtrValue_(method_ptr);
+		}
+#endif
+
+	// Message not understood.
 	// Send 'message-not-understood:arguments:' instead.
 #ifdef SYMBOL_DISPATCH_
 	unhandledMessage = selectorIn;

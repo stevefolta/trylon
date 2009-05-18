@@ -1,4 +1,4 @@
-trylon class
+trylon Class
 
 
 c-preamble
@@ -23,4 +23,18 @@ c-fn added-fields
 	return classInfo->addedFields;
 c-fn subprotos
 	return classInfo->subprotos;
+
+
+iff support-new-methods
+	c-fn new-methods
+		return classInfo->newMethods;
+	c-fn new-methods: dict
+		return classInfo->newMethods = dict;
+
+	add-new-method: name machine-code: code
+		name = name intern
+		if new-methods = nil
+			new-methods = Dictionary new
+		new-methods[name] = code
+
 
