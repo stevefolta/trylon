@@ -38,7 +38,7 @@ replace-method: symbol on: object with: source arg-names: arg-names
 	machine-code = X86Compiler compile: function
 
 	# Replace the method.
-	replace-method: symbol on: object with-ptr: machine-code
+	object .class install-method: symbol machine-code: machine-code
 
 
 c-fn replace-method: symbol on: object with-ptr: fn-ptr

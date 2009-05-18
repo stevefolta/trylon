@@ -1,10 +1,18 @@
 #!/usr/bin/env trylon
 
+# Replace an existing method.  The replacement code tests all the codegen.
 source = File contents-of: "replacement-code"
 X86Compiler 	--
 	replace-method: 'say-it' on: X86Compiler test with: source arg-names: empty
-
 X86Compiler test please-say-it
+
+# Test adding a new method.
+source = "return \"okay\"\n"
+X86Compiler --
+	replace-method: 'new-method-test' on: X86Compiler test 	--
+	with: source arg-names: empty
+X86Compiler test 	--
+	test: X86Compiler test new-method-test against: "okay" name: "New method"
 
 send: ""
 

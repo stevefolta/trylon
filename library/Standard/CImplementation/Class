@@ -41,7 +41,7 @@ iff support-new-methods
 			return
 
 		# Otherwise, add it to the "new-methods" dictionary.
-		if new-methods = nil
+		if new-methods == nil
 			new-methods = Dictionary new
 		new-methods[selector] = code
 	
