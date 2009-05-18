@@ -20,6 +20,37 @@
 static obj_ unhandledMessage = nil;
 #endif
 
+static obj_ SendMessageNotUnderstood_(obj_ object, ...);
+
+
+fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
+{
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+
+#ifdef SYMBOL_DISPATCH_
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	int selector = selectorIn;
+#endif
+
+	struct RDTableEntry_* entry =
+		&dispatchTable_[selector + ClassNumFor_(object)];
+
+	if (entry->selector == selector)
+		return entry->method;
+
+	// Send 'message-not-understood:arguments:' instead.
+#ifdef SYMBOL_DISPATCH_
+	unhandledMessage = selectorIn;
+#endif
+	return (fn_ptr_) &SendMessageNotUnderstood_;
+}
+
+
 static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 {
 #ifdef SYMBOL_DISPATCH_
@@ -67,11 +98,7 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 }
 
 
-#ifdef SYMBOL_DISPATCH_
-fn_ptr_ Dispatch_(obj_ symbol, obj_ object)
-#else
-fn_ptr_ Dispatch_(selector_ selector, obj_ object)
-#endif
+obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
 {
 #ifdef NIL_OBJECT_
 	if (object == nil)
@@ -79,36 +106,10 @@ fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 #endif
 
 #ifdef SYMBOL_DISPATCH_
-	selector_ selector = ((struct Standard__Symbol__internal*) symbol)->selector;
-#endif
-
-	struct RDTableEntry_* entry =
-		&dispatchTable_[selector + ClassNumFor_(object)];
-
-	if (entry->selector == selector)
-		return entry->method;
-
-	// Send 'message-not-understood:arguments' instead.
-#ifdef SYMBOL_DISPATCH_
-	unhandledMessage = symbol;
-#endif
-	return (fn_ptr_) &SendMessageNotUnderstood_;
-}
-
-
-#ifdef SYMBOL_DISPATCH_
-obj_ RespondsTo_(obj_ object, obj_ symbol)
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
 #else
-obj_ RespondsTo_(obj_ object, selector_ selector)
-#endif
-{
-#ifdef NIL_OBJECT_
-	if (object == nil)
-		object = &nil__Standard;
-#endif
-
-#ifdef SYMBOL_DISPATCH_
-	selector_ selector = ((struct Standard__Symbol__internal*) symbol)->selector;
+	selector_ selector = selectorIn;
 #endif
 
 	struct RDTableEntry_* entry =
@@ -119,11 +120,7 @@ obj_ RespondsTo_(obj_ object, selector_ selector)
 
 
 #ifdef SUPPORT_NEW_METHODS_
-#ifdef SYMBOL_DISPATCH_
-fn_ptr_* MethodLocation_(obj_ object, obj_ symbol)
-#else
-fn_ptr_* MethodLocation_(obj_ object, selector_ selector)
-#endif
+fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ selectorIn)
 {
 #ifdef NIL_OBJECT_
 	if (object == nil)
@@ -131,7 +128,10 @@ fn_ptr_* MethodLocation_(obj_ object, selector_ selector)
 #endif
 
 #ifdef SYMBOL_DISPATCH_
-	selector_ selector = ((struct Standard__Symbol__internal*) symbol)->selector;
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	selector_ selector = selectorIn;
 #endif
 
 	struct RDTableEntry_* entry =

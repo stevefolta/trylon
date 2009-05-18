@@ -18,6 +18,9 @@ struct ClassInfo {
 	obj_	name;
 	obj_	addedFields; 	/* Only if "debugger" is on. */
 	obj_	subprotos;
+#ifdef SUPPORT_NEW_METHODS_
+	obj_	newMethods;
+#endif
 };
 
 struct object {
@@ -34,6 +37,11 @@ typedef char* byte_ptr_;
 #define nil	(0)
 
 typedef int selector_;
+#ifdef SYMBOL_DISPATCH_
+	typedef obj_ dispatch_selector_;
+#else
+	typedef selector_ dispatch_selector_;
+#endif
 
 struct RDTableEntry_ {
 	fn_ptr_  	method;
@@ -42,18 +50,10 @@ struct RDTableEntry_ {
 
 extern struct RDTableEntry_ dispatchTable_[];
 
-#ifdef SYMBOL_DISPATCH_
-	extern fn_ptr_ Dispatch_(obj_ symbol, obj_ object);
-	extern obj_ RespondsTo_(obj_ object, obj_ symbol);
-	#ifdef SUPPORT_NEW_METHODS_
-		extern fn_ptr_* MethodLocation_(obj_ object, obj_ symbol);
-	#endif
-#else
-	extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
-	extern obj_ RespondsTo_(obj_ object, selector_ selector);
-	#ifdef SUPPORT_NEW_METHODS_
-		extern fn_ptr_* MethodLocation_(obj_ object, selector_ selector);
-	#endif
+extern fn_ptr_ Dispatch_(dispatch_selector_ symbol, obj_ object);
+extern obj_ RespondsTo_(obj_ object, dispatch_selector_ symbol);
+#ifdef SUPPORT_NEW_METHODS_
+	extern fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ symbol);
 #endif
 
 #ifdef SUPPORT_PERFORM_
