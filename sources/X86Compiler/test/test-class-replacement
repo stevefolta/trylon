@@ -1,5 +1,7 @@
 #!/usr/bin/env trylon
 
-X86Compiler reload: X86Compiler test from: "main-v2"
-X86Compiler test say-it
+test = X86Compiler test
+X86Compiler reload: test from: "main-v2"
+test say-it
+test new-method
 
