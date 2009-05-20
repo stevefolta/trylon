@@ -49,7 +49,9 @@ extend Standard Object
 	
 	iff symbol-dispatch
 		message-not-understood: symbol arguments: args
-			error: "Message not understood: '" + symbol string + "'."
+			error: 	--
+				"Message not understood: '" + symbol string + "' by " + 	--
+				this string + "."
 
 	
 	iff support-perform
