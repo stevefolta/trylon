@@ -15,6 +15,9 @@ name
 compile-call: builder with: arguments
 	return builder compile-proto-call: this
 
+build: builder
+	return builder build-proto-function: this
+
 
 
 

@@ -76,5 +76,6 @@ build-settings
 field .build-settings
 
 
-
+references
+	ExistingClassBuilder
 

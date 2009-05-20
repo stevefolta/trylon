@@ -16,6 +16,9 @@ name
 compile-call: builder with: arguments
 	return builder compile-shared-field-setter-call: this with: arguments
 
+build: builder
+	return builder build-shared-field-setter: this
+
 
 
 # Copyright 2007-2009 Steve Folta.  See the License file.

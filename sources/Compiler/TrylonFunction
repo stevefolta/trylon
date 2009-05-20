@@ -7,6 +7,10 @@ prepare-to-emit
 compile-call: builder with: arguments
 	virtual
 
+build: builder
+	# Not virtual, since there are more TrylonFunctions that do not get built
+	# into a class (eg. LocalGetter) than there are that do.
+
 has-code
 	return true
 

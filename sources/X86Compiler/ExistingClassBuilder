@@ -1,0 +1,34 @@
+trylon ExistingClassBuilder
+
+fields existing-class
+
+create: existing-class
+	this existing-class = existing-class
+
+
+build-compiled-function: function
+	symbol = function name intern
+	machine-code = X86Compiler compile: function
+	existing-class proto .class install-method: symbol machine-code: machine-code
+
+build-new-function: function
+	# ...
+
+build-proto-function: function
+	# ...
+
+build-field-getter: function
+	# ...
+
+build-field-setter: function
+	# ...
+
+build-shared-field-getter: function
+	# ...
+
+build-shared-field-setter: function
+	# ...
+
+build-primitive-function: function
+	# ...
+
