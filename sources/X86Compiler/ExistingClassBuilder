@@ -2,8 +2,19 @@ trylon ExistingClassBuilder
 
 fields existing-class
 
+
+build: existing-class
+	builder = ExistingClassBuilder new: existing-class
+	builder build
+
 create: existing-class
 	this existing-class = existing-class
+
+build
+	for function in existing-class new-functions values
+		function build: this
+	# Clear new-functions, just in case the existing-class gets used again.
+	existing-class new-functions clear
 
 
 build-compiled-function: function

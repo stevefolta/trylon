@@ -1,0 +1,5 @@
+#!/usr/bin/env trylon
+
+X86Compiler reload: X86Compiler test from: "main-v2"
+X86Compiler test say-it
+

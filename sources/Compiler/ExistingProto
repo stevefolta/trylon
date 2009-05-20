@@ -167,6 +167,10 @@ add-proto: name
 	return add-proto: name directory: nil
 
 
+source-name: name
+	# We don't care.
+
+
 get-subproto: name
 	# Has it been loaded already?
 	function = lookup-instance-function: name

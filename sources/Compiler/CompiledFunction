@@ -30,7 +30,7 @@ compile: builder
 	return compile-send-of: name to-proto: on-proto with: arguments using: builder
 
 build: builder
-	return build-compiled-function: this
+	return builder build-compiled-function: this
 
 
 

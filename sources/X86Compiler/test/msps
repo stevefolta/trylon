@@ -1,0 +1,11 @@
+#!/usr/bin/env trylon
+
+send: "Timing..."
+BenchObject = X86Compiler test BenchObject
+arg-names = List with: "n"
+source = File contents-of: "nfibs"
+X86Compiler 	--
+	replace-method: 'nfibs:' on: BenchObject with: source arg-names: arg-names
+X86Compiler test time-nfibs
+
+

@@ -3,6 +3,17 @@ trylon X86Compiler
 word-size = 4
 
 
+reload: proto from: file-path
+	# Read into an ExistingProto.
+	source = File contents-of: file-path
+	lines = Compiler LinesLexer read: source
+	existing-proto = Compiler ExistingProto new: proto
+	Compiler TrylonProtoParser parse-proto-contents: lines into: existing-proto
+
+	# Build the ExistingProto into the in-process class.
+	ExistingClassBuilder build: existing-proto
+
+
 compile: function
 	# Function resolution.
 	old-compiler = compiler

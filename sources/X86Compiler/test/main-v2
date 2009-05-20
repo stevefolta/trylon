@@ -1,0 +1,6 @@
+trylon test
+
+say-it
+	send: "'say-it' successfully replaced from \"main-v2\"."
+
+
