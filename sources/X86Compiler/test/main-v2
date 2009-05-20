@@ -7,3 +7,6 @@ new-method
 	send: "'new-method' successfully installed."
 
 
+class NewSubclass
+	create
+
