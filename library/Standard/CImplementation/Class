@@ -26,6 +26,18 @@ c-fn subprotos
 
 
 iff support-new-methods
+
+	c-fn create: name num-fields: num-fields 	--
+			parent: parent-context superclass: superclass
+		classInfo->classNum = -1;
+		classInfo->numSlots = IntValue_(num_fields);
+		classInfo->parentContext = parent_context;
+		classInfo->superclass = superclass;
+
+		/* Make the prototype. */
+		classInfo->proto = AllocObjFromClassInfo_(classInfo);
+
+
 	c-fn new-methods
 		return classInfo->newMethods;
 	c-fn new-methods: dict
