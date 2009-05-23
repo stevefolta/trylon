@@ -165,6 +165,38 @@ emit-field-setter: index
 	return assemble-buffers
 
 
+build-location-getter: ptr
+	return MethodBuilder new emit-location-getter: ptr
+
+emit-location-getter: ptr
+	# "mov eax, location"
+	emit: 0xB8
+	emit-ptr: ptr
+	# "mov eax, [eax]"
+	emit: (0x8B, 0x00)
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-location-setter: ptr
+	return MethodBuilder new emit-location-setter: ptr
+
+emit-location-setter: ptr
+	# "mov eax, [esp + word-size]" 	; eax <- new-value
+	emit: (0x8B, 0x44, 0x24, word-size)
+	# "mov edx, location"
+	emit: 0xBA
+	emit-ptr: ptr
+	# "mov [edx], eax"
+	emit: (0x89, 0x02)
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
 
 # Low-level emission.
 

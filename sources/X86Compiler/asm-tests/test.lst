@@ -73,4 +73,15 @@
     73 00000096 898200010000            mov [edx + 256], eax
     74 0000009C 8B8000010000            mov eax, [eax + 256]
     75                                  
-    76                                  
+    76                                  ; Location getter
+    77 000000A2 B878563412              mov eax, 0x12345678
+    78 000000A7 8B00                    mov eax, [eax]
+    79 000000A9 C3                      ret
+    80                                  
+    81                                  ; Location setter
+    82 000000AA 8B442404                mov eax, [esp + 4] 	; eax <- new-value
+    83 000000AE BAFFFFFFFF              mov edx, 0xFFFFFFFF
+    84 000000B3 8902                    mov [edx], eax
+    85 000000B5 C3                      ret
+    86                                  
+    87                                  

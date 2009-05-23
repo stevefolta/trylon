@@ -73,4 +73,15 @@ ret
 mov [edx + 256], eax
 mov eax, [eax + 256]
 
+; Location getter
+mov eax, 0x12345678
+mov eax, [eax]
+ret
+
+; Location setter
+mov eax, [esp + 4] 	; eax <- new-value
+mov edx, 0xFFFFFFFF
+mov [edx], eax
+ret
+
 
