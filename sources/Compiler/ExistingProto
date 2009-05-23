@@ -1,5 +1,5 @@
 trylon ExistingProto
-superclass Context
+superclass ClassContext
 
 fields name proto new-functions is-main
 

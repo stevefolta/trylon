@@ -1,0 +1,21 @@
+trylon ClassContext
+superclass Context
+
+
+add-function: function
+	virtual
+
+add-field: field
+	virtual
+
+add-shared-field: field
+	virtual
+
+add-class: name
+	virtual
+
+get-subproto: name
+	virtual
+
+
+# Copyright 2009 Steve Folta.  See the License file.
