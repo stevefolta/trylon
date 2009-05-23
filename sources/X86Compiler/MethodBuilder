@@ -31,6 +31,12 @@ create: function code: code-tree
 
 	dispatch-fn = dispatch-fn-addr
 
+create
+	# Because this class has all the code generation machinery (eg. the buffers
+	# list), we use it for generating non-CompiledFunctions too, eg. getters and
+	# setters.  This constructor is used for those types of functions only.
+	create: nil code: nil
+
 
 init
 	if literals
@@ -43,6 +49,9 @@ init
 
 
 emit-method
+	if code-tree == nil
+		error: "Internal error: called 'emit-method' for a non-CompiledFunction."
+
 	postamble-label = Label new
 	cur-num-locals = 0
 	num-locals = 0
@@ -75,20 +84,8 @@ emit-method
 	emit: 0xC9 	# "leave"
 	emit: 0xC3 	# "ret"
 
-	# Complete the last buffer.
-	buffer = buffers last-item
-	buffer used-size = out-ptr - buffer ptr
-
 	# Assemble the buffers into the final code.
-	code-size = 0
-	for buffer in buffers
-		code-size += buffer used-size
-	code = BytePtr new: code-size
-	dest = code
-	for buffer in buffers
-		buffer-size = buffer used-size
-		dest copy-from: buffer ptr length: buffer-size
-		dest += buffer-size
+	code = assemble-buffers
 
 	# Patch the frame size.
 	iff Darwin
@@ -113,6 +110,20 @@ emit-method
 		(code + offset) int-at: 0 put: displacement
 	
 	return code
+
+
+build-object-returner: object
+	return MethodBuilder new emit-object-returner: object
+
+emit-object-returner: object
+	# "mov eax, object"
+	emit: 0xB8
+	emit-ptr: object object-ptr
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
 
 
 # Low-level emission.
@@ -184,6 +195,25 @@ grow
 	buffers append: buffer
 	out-ptr = buffer ptr
 	buffer-limit = out-ptr + buffer-size - buffer-slop-space
+
+
+assemble-buffers
+	# Complete the last buffer.
+	buffer = buffers last-item
+	buffer used-size = out-ptr - buffer ptr
+
+	# Assemble the buffers into the final code.
+	code-size = 0
+	for buffer in buffers
+		code-size += buffer used-size
+	code = BytePtr new: code-size
+	dest = code
+	for buffer in buffers
+		buffer-size = buffer used-size
+		dest copy-from: buffer ptr length: buffer-size
+		dest += buffer-size
+	
+	return code
 
 
 class Label
