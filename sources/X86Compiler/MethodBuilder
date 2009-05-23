@@ -125,6 +125,46 @@ emit-object-returner: object
 	return assemble-buffers
 
 
+build-field-getter: index
+	return MethodBuilder new emit-field-getter: index
+
+emit-field-getter: index
+	# "mov eax, [esp + word-size]"	; eax <- object
+	emit: (0x8B, 0x44, 0x24, word-size)
+	# "mov eax, [eax + index * word-size]"
+	slot-offset = index * word-size
+	if slot-offset < 256
+		emit: (0x8B, 0x40, slot-offset)
+	else
+		emit: (0x8B, 0x80)
+		emit-word: slot-offset
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-field-setter: index
+	return MethodBuilder new emit-field-setter: index
+
+emit-field-setter: index
+	# "mov eax, [esp + 2 * word-size]" 	; eax <- new-value
+	emit: (0x8B, 0x44, 0x24, word-size * 2)
+	# "mov edx, [esp + word-size]" 	; edx <- object
+	emit: (0x8B, 0x54, 0x24, word-size)
+	# "mov [edx + index * word-size], eax"
+	slot-offset = index * word-size
+	if slot-offset < 256
+		emit: (0x89, 0x42, slot-offset)
+	else
+		emit: (0x89, 0x82)
+		emit-word: slot-offset
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
 
 # Low-level emission.
 

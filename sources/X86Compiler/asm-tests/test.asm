@@ -59,3 +59,18 @@ and esp, byte -16
 sub esp, byte (3 * 4)
 add esp, byte -(3 * 4)
 
+; Field getter
+mov	eax, [esp+4] 	; eax <- object
+mov eax, [eax + 4]
+ret
+
+; Field setter
+mov eax, [esp + 8]	; eax <- new-value
+mov edx, [esp + 4]	; edx <- object
+mov [edx + 4], eax
+ret
+
+mov [edx + 256], eax
+mov eax, [eax + 256]
+
+

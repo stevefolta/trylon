@@ -59,3 +59,18 @@
     59 0000007C 83EC0C                  sub esp, byte (3 * 4)
     60 0000007F 83C4F4                  add esp, byte -(3 * 4)
     61                                  
+    62                                  ; Field getter
+    63 00000082 8B442404                mov	eax, [esp+4] 	; eax <- object
+    64 00000086 8B4004                  mov eax, [eax + 4]
+    65 00000089 C3                      ret
+    66                                  
+    67                                  ; Field setter
+    68 0000008A 8B442408                mov eax, [esp + 8]	; eax <- new-value
+    69 0000008E 8B542404                mov edx, [esp + 4]	; edx <- object
+    70 00000092 894204                  mov [edx + 4], eax
+    71 00000095 C3                      ret
+    72                                  
+    73 00000096 898200010000            mov [edx + 256], eax
+    74 0000009C 8B8000010000            mov eax, [eax + 256]
+    75                                  
+    76                                  
