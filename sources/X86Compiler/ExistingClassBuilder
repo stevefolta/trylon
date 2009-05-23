@@ -11,16 +11,18 @@ create: existing-class
 	this existing-class = existing-class
 
 build
-	for function in existing-class new-functions values
-		function build: this
+	for function in existing-class newly-defined-functions
+		machine-code = function value build: this
+		if machine-code
+			symbol = function key intern
+			existing-class proto .class 	--
+				install-method: symbol machine-code: machine-code
 	# Clear new-functions, just in case the existing-class gets used again.
 	existing-class new-functions clear
 
 
 build-compiled-function: function
-	symbol = function name intern
-	machine-code = X86Compiler compile: function
-	existing-class proto .class install-method: symbol machine-code: machine-code
+	return X86Compiler compile: function
 
 build-new-function: function
 	# ...

@@ -189,5 +189,9 @@ get-proto: name
 	return nil
 
 
+newly-defined-functions
+	return new-functions pairs
+
+
 # Copyright 2007 Steve Folta.  See the License file.
 

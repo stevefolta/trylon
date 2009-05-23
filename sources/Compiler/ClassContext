@@ -17,5 +17,10 @@ add-class: name
 get-subproto: name
 	virtual
 
+newly-defined-functions
+	# Should return an iterator returning (key, value) pairs, like
+	# "Dictionary pairs".
+	virtual
+
 
 # Copyright 2009 Steve Folta.  See the License file.

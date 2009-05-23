@@ -296,6 +296,9 @@ prepare-to-emit
 		function prepare-to-emit
 
 
+newly-defined-functions
+	return functions pairs
+
 
 # Helpers
 
