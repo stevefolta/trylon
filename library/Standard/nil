@@ -7,9 +7,11 @@ message-not-understood
 	throw MessageException new: "Attempt to use 'nil'."
 
 
-message-not-understood: selector with: arguments
-	# This is the better form that will hopefully be available soonish...
+message-not-understood: selector arguments: arguments
 	throw MessageException new: 	--
 		"Attempt to call '" + selector string + "' on 'nil'."
 
+
+string
+	return "nil"
 
