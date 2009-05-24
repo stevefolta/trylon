@@ -6,6 +6,10 @@ X86Compiler reload: test from: "main-v2"
 test say-it
 test new-method
 
+test test: test new-shared-field against: "foo" name: "Shared field getter"
+test new-shared-field = "bar"
+test test: test new-shared-field against: "bar" name: "Shared field setter"
+
 # We don't expect this to work yet:
 # foo = test NewSubclass new
 

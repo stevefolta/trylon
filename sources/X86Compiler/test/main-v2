@@ -6,6 +6,8 @@ say-it
 new-method
 	send: "'new-method' successfully installed."
 
+new-shared-field = "foo"
+
 
 class NewSubclass
 	create

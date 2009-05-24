@@ -28,6 +28,7 @@ create: function code: code-tree
 	refs = List new
 	buffers = List new
 	grow
+	offset = 0
 
 	dispatch-fn = dispatch-fn-addr
 
@@ -55,7 +56,6 @@ emit-method
 	postamble-label = Label new
 	cur-num-locals = 0
 	num-locals = 0
-	offset = 0
 	loop-stack = List new
 
 	# Set up arguments.
@@ -184,8 +184,8 @@ build-location-setter: ptr
 	return MethodBuilder new emit-location-setter: ptr
 
 emit-location-setter: ptr
-	# "mov eax, [esp + word-size]" 	; eax <- new-value
-	emit: (0x8B, 0x44, 0x24, word-size)
+	# "mov eax, [esp + 2 * word-size]" 	; eax <- new-value
+	emit: (0x8B, 0x44, 0x24, 2 * word-size)
 	# "mov edx, location"
 	emit: 0xBA
 	emit-ptr: ptr
