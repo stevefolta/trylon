@@ -1,0 +1,29 @@
+trylon CompiledClassBuilder
+superclass ClassBuilder
+
+
+create: compiled-class
+	super create: compiled-class
+
+
+build
+	# Create the new class in the runtime.
+	compiled-class = class-context
+	parent-object = nil
+	if compiled-class parent
+		parent-object = build: compiled-class parent
+	superclass-object = nil
+	if compiled-class superclass
+		superclass-object = build: compiled-class superclass
+	class-info = 	--
+		CImplementation Class 	--
+			new: compiled-class name --
+			num-fields: compiled-class fields num-items 	--
+			parent: parent-object superclass: superclass-object
+
+	# Add in all the functions.
+	build-functions-into: class-info
+
+	return class-info proto
+
+
