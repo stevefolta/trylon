@@ -1,0 +1,70 @@
+trylon ClassBuilder
+
+fields class-context shared-fields
+
+# List of NewSharedFields, to keep them from getting GC'd.
+new-shared-fields = nil
+
+
+build: class-context
+	builder = nil
+	if class-context is-a: Compiler ExistingProto
+		builder = ExistingClassBuilder new: class-context
+	# else if class-context is-a: CompiledClass
+	# 	builder = CompiledClassBuilder new: class-context
+	else
+		error: "Internal error: unknown type of ClassContext."
+	builder build
+
+create: class-context
+	init
+	this class-context = class-context
+	shared-fields = Dictionary new
+
+init
+	if new-shared-fields
+		return
+	new-shared-fields = List new
+
+build
+	virtual
+
+
+build-compiled-function: function
+	return X86Compiler compile: function
+
+build-new-function: function
+	# ...
+
+build-proto-function: function
+	# ...
+
+build-field-getter: function
+	# ...
+
+build-field-setter: function
+	# ...
+
+build-shared-field-getter: function
+	shared-field = new-shared-field-for: function field
+	return MethodBuilder build-location-getter: shared-field value-ptr
+
+build-shared-field-setter: function
+	shared-field = new-shared-field-for: function field
+	return MethodBuilder build-location-setter: shared-field value-ptr
+
+new-shared-field-for: field
+	name = field name
+	shared-field = shared-fields[name]
+	if shared-field == nil
+		shared-field = NewSharedField new: name
+		if field initial-value
+			shared-field value = field initial-value interpreted
+		shared-fields[name] = shared-field
+		new-shared-fields append: shared-field
+	return shared-field
+
+build-primitive-function: function
+	# ...
+
+
