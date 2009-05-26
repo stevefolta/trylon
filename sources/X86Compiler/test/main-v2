@@ -9,6 +9,6 @@ new-method
 new-shared-field = "foo"
 
 
-class NewSubclass
-	create
+# class NewSubclass
+# 	create
 

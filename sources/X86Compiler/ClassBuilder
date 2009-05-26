@@ -14,7 +14,7 @@ build: class-context
 	# 	builder = CompiledClassBuilder new: class-context
 	else
 		error: "Internal error: unknown type of ClassContext."
-	builder build
+	return builder build
 
 create: class-context
 	init
@@ -29,6 +29,12 @@ init
 build
 	virtual
 
+build-functions-into: object
+	for function in class-context newly-defined-functions
+		machine-code = function value build: this
+		if machine-code
+			symbol = function key intern
+			object .class install-method: symbol machine-code: machine-code
 
 build-compiled-function: function
 	return X86Compiler compile: function
@@ -37,6 +43,9 @@ build-new-function: function
 	# ...
 
 build-proto-function: function
+	class-context = function proto
+	# Build the subproto first.
+	subproto = ClassBuilder build: class-context
 	# ...
 
 build-field-getter: function

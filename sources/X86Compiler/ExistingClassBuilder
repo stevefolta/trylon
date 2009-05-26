@@ -6,13 +6,11 @@ create: existing-class
 
 
 build
-	for function in class-context newly-defined-functions
-		machine-code = function value build: this
-		if machine-code
-			symbol = function key intern
-			class-context proto .class 	--
-				install-method: symbol machine-code: machine-code
+	build-functions-into: class-context proto
+
 	# Clear new-functions, just in case the existing-class gets used again.
 	class-context new-functions clear
+
+	return class-context proto
 
 
