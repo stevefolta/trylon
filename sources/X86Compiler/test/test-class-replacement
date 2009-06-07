@@ -13,3 +13,7 @@ test test: test new-shared-field against: "bar" name: "Shared field setter"
 # We don't expect this to work yet:
 # foo = test NewSubclass new
 
+# We *do* expect this to work, but it doesn't yet:
+# 	subclass-object = test NewSubclass raw-new
+# 	test test: subclass-object foo against: "bar" name: "De-novo subclass"
+

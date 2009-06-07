@@ -5,6 +5,12 @@ say-it
 
 new-method
 	send: "'new-method' successfully installed."
+	# Crashes, don't know why yet:
+	# 	subclass-object = NewSubclass raw-new
+	# 	test: subclass-object foo against: "bar" name: "De-novo subclass"
+	# Awaiting implementation of "X86Compiler ClassBuilder build-new-function:":
+	# 	subclass-object = NewSubclass new
+	# 	test: subclass-object value against: "baz" name: "De-novo subclass"
 
 new-shared-field = "foo"
 
@@ -14,4 +20,7 @@ class NewSubclass
 
 	create
 		value = "baz"
+	
+	foo
+		return "bar"
 

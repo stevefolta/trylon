@@ -27,15 +27,18 @@ c-fn subprotos
 
 iff support-new-methods
 
-	c-fn create: name num-fields: num-fields 	--
+	c-fn new: name num-fields: num-fields 	--
 			parent: parent-context superclass: superclass
-		classInfo->classNum = -1;
-		classInfo->numSlots = IntValue_(num_fields);
-		classInfo->parentContext = parent_context;
-		classInfo->superclass = superclass;
+		struct ClassInfo* newClass = Allocate_(sizeof(struct ClassInfo));
+		newClass->class_ = StdClassRef_(Class__CImplementation);
+		newClass->classNum = -1;
+		newClass->numSlots = IntValue_(num_fields);
+		newClass->parentContext = parent_context;
+		newClass->superclass = superclass;
+		newClass->name = name;
 
 		/* Make the prototype. */
-		classInfo->proto = AllocObjFromClassInfo_(classInfo);
+		newClass->proto = AllocObjFromClassInfo_(newClass);
 
 
 	c-fn new-methods

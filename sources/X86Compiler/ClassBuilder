@@ -7,6 +7,12 @@ new-shared-fields = nil
 
 
 build: class-context
+	return (builder-for: class-context) build
+
+live-proto-for: class-context
+	return (builder-for: class-context) live-proto
+
+builder-for: class-context
 	builder = nil
 	if class-context is-a: Compiler ExistingProto
 		builder = ExistingClassBuilder new: class-context
@@ -14,7 +20,8 @@ build: class-context
 		builder = CompiledClassBuilder new: class-context
 	else
 		error: "Internal error: unknown type of ClassContext."
-	return builder build
+	return builder
+
 
 create: class-context
 	init
@@ -27,6 +34,9 @@ init
 	new-shared-fields = List new
 
 build
+	virtual
+
+live-proto
 	virtual
 
 
@@ -46,10 +56,8 @@ build-new-function: function
 
 
 build-proto-function: function
-	class-context = function proto
-
 	# Build the subproto first.
-	subproto = ClassBuilder build: class-context
+	subproto = ClassBuilder build: function proto
 
 	# Make a method that returns it.
 	return MethodBuilder build-object-returner: subproto

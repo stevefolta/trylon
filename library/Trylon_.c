@@ -44,7 +44,8 @@ fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 		return entry->method;
 
 #if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
-	// Next, try the "newMethods" dictionaries for this and all superclasses.
+	// Next, try the "newMethods" dictionaries for this and all superclasses, and
+	// the dispatch tables of the superclasses too.
 	struct ClassInfo* classInfo = object->class_;
 	for (;;) {
 		if (classInfo->newMethods) {
@@ -56,6 +57,9 @@ fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 		if (classInfo->superclass == nil)
 			break;
 		classInfo = classInfo->superclass->class_;
+		entry = &dispatchTable_[selector + classInfo->classNum];
+		if (entry->selector == selector)
+			return entry->method;
 		}
 #endif
 
@@ -89,7 +93,8 @@ obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
 		return true_;
 
 #if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
-	// Next, try the "newMethods" dictionaries for this and all superclasses.
+	// Next, try the "newMethods" dictionaries for this and all superclasses, and
+	// the dispatch tables of the superclasses too.
 	struct ClassInfo* classInfo = object->class_;
 	for (;;) {
 		if (classInfo->newMethods) {
@@ -101,6 +106,9 @@ obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
 		if (classInfo->superclass == nil)
 			break;
 		classInfo = classInfo->superclass->class_;
+		entry = &dispatchTable_[selector + classInfo->classNum];
+		if (entry->selector == selector)
+			return true_;
 		}
 #endif
 

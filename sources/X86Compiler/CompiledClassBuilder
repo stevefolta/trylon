@@ -1,6 +1,8 @@
 trylon CompiledClassBuilder
 superclass ClassBuilder
 
+fields created-proto
+
 
 create: compiled-class
 	super create: compiled-class
@@ -8,22 +10,33 @@ create: compiled-class
 
 build
 	# Create the new class in the runtime.
-	compiled-class = class-context
-	parent-object = nil
-	if compiled-class parent
-		parent-object = build: compiled-class parent
-	superclass-object = nil
-	if compiled-class superclass
-		superclass-object = build: compiled-class superclass
-	class-info = 	--
-		CImplementation Class 	--
-			new: compiled-class name --
-			num-fields: compiled-class fields num-items 	--
-			parent: parent-object superclass: superclass-object
+	proto = live-proto
 
 	# Add in all the functions.
-	build-functions-into: class-info
+	build-functions-into: proto .class
 
-	return class-info proto
+	return proto
+
+
+live-proto
+	# Create it, if we haven't already.
+	if created-proto == nil
+		compiled-class = class-context
+		parent-object = nil
+		if compiled-class parent
+			parent-object = live-proto-for: compiled-class parent
+		superclass-object = nil
+		if compiled-class superclass
+			superclass-object = live-proto-for: compiled-class superclass
+		else
+			superclass-object = Object
+		class-info = 	--
+			CImplementation Class 	--
+				new: compiled-class name --
+				num-fields: compiled-class fields num-items 	--
+				parent: parent-object superclass: superclass-object
+		created-proto = class-info proto
+
+	return created-proto
 
 
