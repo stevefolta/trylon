@@ -37,9 +37,11 @@ time-nfibs
 	# they're C function calls rather than sends.
 	bench = BenchObject new
 	level = 33
+	start-gcs = System num-garbage-collections
 	start-time = System milliseconds
 	num-sends = bench nfibs: level
 	time = System milliseconds - start-time
+	num-gcs = System num-garbage-collections - start-gcs
 
 	# Report the results.
 	sends-per-second = num-sends float / (time float / 1000.0)
@@ -47,7 +49,7 @@ time-nfibs
 		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
 	else
 		send: (sends-per-second, " sends per second.")
-	send: ("(level ", level, ", ", num-sends, " sends, ", time, " ms.)")
+	send: ("(level ", level, ", ", num-sends, " sends, ", time, " ms, ", num-gcs, " GCs.)")
 
 
 class BenchObject
