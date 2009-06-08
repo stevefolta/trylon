@@ -33,6 +33,8 @@ extend Standard Symbol
 			return result
 
 		# Need to add it.
+		# Reallocate the string, since we don't know where it came from.
+		name = name reallocated
 		result = Symbol new: name start to: name stopper
 		dynamic-table at: name put: result
 		return result

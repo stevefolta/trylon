@@ -262,6 +262,14 @@ int
 float
 intern
 
+reallocated
+	size = this size
+	new-string = String new: size
+	new-start = new-string start
+	new-start copy-from: start length: size
+	new-string stopper = new-start + size
+	return new-string
+
 
 # ===== Debugging
 
