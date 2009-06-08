@@ -3,9 +3,13 @@ superclass ClassBuilder
 
 fields created-proto
 
+created-protos = nil 	# A List to keep them from being GC'd.
+
 
 create: compiled-class
 	super create: compiled-class
+	if created-protos == nil
+		created-protos = List new
 
 
 build
@@ -13,7 +17,7 @@ build
 	proto = live-proto
 
 	# Add in all the functions.
-	build-functions-into: proto .class
+	build-functions-into: proto
 
 	return proto
 
@@ -30,12 +34,16 @@ live-proto
 			superclass-object = live-proto-for: compiled-class superclass
 		else
 			superclass-object = Object
+		field-names = List new
+		for field in compiled-class fields
+			field-names append: field name intern
 		class-info = 	--
 			CImplementation Class 	--
-				new: compiled-class name --
-				num-fields: compiled-class fields num-items 	--
+				new: compiled-class name intern --
+				field-names: field-names 	--
 				parent: parent-object superclass: superclass-object
 		created-proto = class-info proto
+		created-protos append: created-proto
 
 	return created-proto
 

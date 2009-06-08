@@ -27,18 +27,44 @@ c-fn subprotos
 
 iff support-new-methods
 
-	c-fn new: name num-fields: num-fields 	--
+	c-fn new: name field-names: field-names 	--
 			parent: parent-context superclass: superclass
+		UsingMethod_(num_items)
+		UsingMethod_(iterator) UsingMethod_(is_done)
+		UsingMethod_(current_item) UsingMethod_(go_forward)
+
+		/* Count the total number of fields. */
+		int numAddedFields = 0;
+		if (field_names)
+			numAddedFields = IntValue_(Call_(num_items, field_names));
+		int totalFields = numAddedFields;
+		if (superclass)
+			totalFields += superclass->class_->numSlots;
+
+		/* Create the class. */
 		struct ClassInfo* newClass = Allocate_(sizeof(struct ClassInfo));
 		newClass->class_ = StdClassRef_(Class__CImplementation);
 		newClass->classNum = -1;
-		newClass->numSlots = IntValue_(num_fields);
+		newClass->numSlots = totalFields;
 		newClass->parentContext = parent_context;
 		newClass->superclass = superclass;
 		newClass->name = name;
 
+		/* Set up "addedFields". */
+		obj_ addedFields = NewTuple_(numAddedFields);
+		int whichField = 0;
+		if (field_names) {
+			ForStart_(1, field_names, fieldName)
+				TuplePut_(addedFields, whichField, fieldName);
+				whichField += 1;
+			ForEnd_(1)
+			}
+		newClass->addedFields = addedFields;
+
 		/* Make the prototype. */
 		newClass->proto = AllocObjFromClassInfo_(newClass);
+
+		return (obj_) newClass;
 
 
 	c-fn new-methods
