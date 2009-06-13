@@ -10,14 +10,14 @@ test test: test new-shared-field against: "foo" name: "Shared field getter"
 test new-shared-field = "bar"
 test test: test new-shared-field against: "bar" name: "Shared field setter"
 
-# We don't have "new" functions working yet, so circumvent that to test
-# subclass creation.
+# Early on, we didn't have "new" functions working yet, so this circumvents
+# that to test subclass creation.
 subclass-object = test NewSubclass raw-new
 test test: subclass-object foo against: "bar" name: "De-novo subclass"
 
-# We don't expect this to work yet:
+# Test "new" functions.
 it = test NewSubclass new
-test test: it foo against: "bar" name: "'new' function"
+test test: it value against: "baz" name: "'new' function"
 it = test NewSubclass new: "blargh"
-test test: it foo against: "bar" name: "'new:' function"
+test test: it value against: "blargh" name: "'new:' function"
 

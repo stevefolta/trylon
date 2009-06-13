@@ -43,6 +43,9 @@ build
 live-proto
 	virtual
 
+index-for-field: name
+	virtual
+
 
 build-functions-into: object
 	for function in class-context newly-defined-functions
@@ -68,10 +71,12 @@ build-proto-function: function
 
 
 build-field-getter: function
-	# ...
+	field-index = index-for-field: function name
+	return MethodBuilder build-field-getter: field-index
 
 build-field-setter: function
-	# ...
+	field-index = index-for-field: function field name
+	return MethodBuilder build-field-setter: field-index
 
 build-shared-field-getter: function
 	shared-field = new-shared-field-for: function field

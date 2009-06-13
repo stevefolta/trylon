@@ -30,6 +30,9 @@ false-returner
 do: arg1 and: arg2
 	return arg2
 
+debug-point
+	# A nice place to put a breakpoint when debugging.
+
 
 time-nfibs
 	# Run the benchmark.

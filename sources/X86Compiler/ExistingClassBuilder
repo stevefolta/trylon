@@ -17,3 +17,8 @@ build
 live-proto
 	return class-context proto
 
+
+index-for-field: name
+	error: "Adding new fields to existing classes isn't supported."
+
+

@@ -131,8 +131,8 @@ build-field-getter: index
 emit-field-getter: index
 	# "mov eax, [esp + word-size]"	; eax <- object
 	emit: (0x8B, 0x44, 0x24, word-size)
-	# "mov eax, [eax + index * word-size]"
-	slot-offset = index * word-size
+	# "mov eax, [eax + (index + 1) * word-size]"
+	slot-offset = (index + 1) * word-size
 	if slot-offset < 256
 		emit: (0x8B, 0x40, slot-offset)
 	else
@@ -152,8 +152,8 @@ emit-field-setter: index
 	emit: (0x8B, 0x44, 0x24, word-size * 2)
 	# "mov edx, [esp + word-size]" 	; edx <- object
 	emit: (0x8B, 0x54, 0x24, word-size)
-	# "mov [edx + index * word-size], eax"
-	slot-offset = index * word-size
+	# "mov [edx + (index + 1) * word-size], eax"
+	slot-offset = (index + 1) * word-size
 	if slot-offset < 256
 		emit: (0x89, 0x42, slot-offset)
 	else
