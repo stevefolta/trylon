@@ -18,10 +18,8 @@ builder-for: class-context
 
 	builder = nil
 	if class-context is-a: Compiler ExistingProto
-		send: ("ExistingClassBuilder for \"", class-context name, "\".")
 		builder = ExistingClassBuilder new: class-context
 	else if class-context is-a: Compiler CompiledProto
-		send: ("CompiledClassBuilder for \"", class-context name, "\".")
 		builder = CompiledClassBuilder new: class-context
 	else
 		error: "Internal error: unknown type of ClassContext."
@@ -47,27 +45,21 @@ live-proto
 
 
 build-functions-into: object
-	send: ("Building functions for ", class-context name, "...")
 	for function in class-context newly-defined-functions
-		send: (" Building: ", function key)
 		machine-code = function value build: this
 		if machine-code
 			symbol = function key intern
-			send: ("  Installing: ", symbol)
 			object .class install-method: symbol machine-code: machine-code
 
 
 build-compiled-function: function
-	send: "  ...a CompiledFunction."
 	return X86Compiler compile: function
 
 build-new-function: function
-	send: "  ...a NewFunction."
 	return MethodBuilder build-new-function: function
 
 
 build-proto-function: function
-	send: "  ...a ProtoFunction."
 	# Build the subproto first.
 	subproto = ClassBuilder build: function proto
 
@@ -76,20 +68,16 @@ build-proto-function: function
 
 
 build-field-getter: function
-	send: "  ...a FieldGetter."
 	# ...
 
 build-field-setter: function
-	send: "  ...a FieldSetter."
 	# ...
 
 build-shared-field-getter: function
-	send: "  ...a SharedFieldGetter."
 	shared-field = new-shared-field-for: function field
 	return MethodBuilder build-location-getter: shared-field value-ptr
 
 build-shared-field-setter: function
-	send: "  ...a SharedFieldSetter."
 	shared-field = new-shared-field-for: function field
 	return MethodBuilder build-location-setter: shared-field value-ptr
 
@@ -105,7 +93,6 @@ new-shared-field-for: field
 	return shared-field
 
 build-primitive-function: function
-	send: "  ...a PrimitiveFunction."
 	# ...
 
 

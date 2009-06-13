@@ -239,24 +239,6 @@ build-new-function: function
 	return (MethodBuilder new: compiled-function code: block) emit-method
 
 
-	####
-	return MethodBuilder new emit-new-function: name args: args on: class
-
-emit-new-function: name args: args on: class
-	# "obj_ obj = AllocObjFromClassInfo_(class);"
-	obj = new-local
-	args = List with: (LiteralResult new: class)
-	push-args: args
-	emit-c-call: alloc-obj-from-class-info-addr
-	emit-pop-args: 1
-	emit-move-to: obj from: CallResult
-	# "obj create: arg"
-	create-name = "create" + (name substr: 3)
-	emit-send-of: create-name to: obj with: args
-	# ...how to handle args?
-	# ...
-
-
 
 # Low-level emission.
 
