@@ -16,6 +16,8 @@ subclass-object = test NewSubclass raw-new
 test test: subclass-object foo against: "bar" name: "De-novo subclass"
 
 # We don't expect this to work yet:
-foo = test NewSubclass new
-test test: foo foo against: "bar" name: "'new' function"
+it = test NewSubclass new
+test test: it foo against: "bar" name: "'new' function"
+it = test NewSubclass new: "blargh"
+test test: it foo against: "bar" name: "'new:' function"
 

@@ -219,8 +219,8 @@ build-new-function: function
 	# "obj create: arg arg: arg"
 	arg-exprs = List new
 	for arg in args
-		arg-getter = Compiler ArgumentFunction new: arg name
-		arg-get = Compiler FunctionCall create: arg-getter arguments: empty
+		arg-getter = Compiler ArgumentFunction new: arg
+		arg-get = Compiler FunctionCall new: arg-getter arguments: empty
 		arg-exprs append: arg-get
 	local-getter = Compiler LocalGetter new: obj-local
 	local-get = Compiler FunctionCall new: local-getter arguments: empty

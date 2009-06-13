@@ -22,6 +22,10 @@ class NewSubclass
 		# Field getters/setters not working yet:
 		# value = "baz"
 	
+	create: value
+		# Field getters/setters not working yet:
+		# this value = value
+	
 	foo
 		return "bar"
 
