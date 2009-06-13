@@ -17,4 +17,5 @@ test test: subclass-object foo against: "bar" name: "De-novo subclass"
 
 # We don't expect this to work yet:
 foo = test NewSubclass new
+test test: foo foo against: "bar" name: "'new' function"
 

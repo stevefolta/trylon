@@ -1,6 +1,8 @@
 trylon ClassContext
 superclass Context
 
+fields compile-info
+
 
 add-function: function
 	virtual

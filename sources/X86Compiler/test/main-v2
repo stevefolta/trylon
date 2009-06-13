@@ -19,7 +19,8 @@ class NewSubclass
 	fields value
 
 	create
-		value = "baz"
+		# Field getters/setters not working yet:
+		# value = "baz"
 	
 	foo
 		return "bar"
