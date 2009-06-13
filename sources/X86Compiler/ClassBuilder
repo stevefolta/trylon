@@ -97,7 +97,4 @@ new-shared-field-for: field
 		new-shared-fields append: shared-field
 	return shared-field
 
-build-primitive-function: function
-	# ...
-
 

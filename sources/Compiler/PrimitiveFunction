@@ -2,6 +2,7 @@ trylon PrimitiveFunction
 superclass TrylonFunction
 
 # Functions that are defined outside Trylon code.
+# Will only exist inside a method, not as part of a ClassContext.
 
 fields name on-proto
 
@@ -13,9 +14,6 @@ create: name on-proto: on-proto
 
 compile-call: builder with: arguments
 	return builder compile-primitive-function-call: this with: arguments
-
-build: builder
-	return builder build-primitive-function: this
 
 
 
