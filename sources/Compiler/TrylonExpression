@@ -4,7 +4,7 @@ trylon TrylonExpression
 prepare-to-emit
 	virtual
 
-compiled: builder
+compile: builder
 	virtual
 
 

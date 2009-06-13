@@ -8,6 +8,9 @@ create: expression comment: comment
 	this expression = expression
 	this comment = comment
 
+create: expression
+	this expression = expression
+
 
 prepare-to-emit
 	expression prepare-to-emit

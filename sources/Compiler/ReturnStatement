@@ -8,6 +8,9 @@ create: value comment: comment
 	this value = value
 	this comment = comment
 
+create: value
+	this value = value
+
 
 prepare-to-emit
 	value prepare-to-emit

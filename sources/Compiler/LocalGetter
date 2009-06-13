@@ -12,5 +12,9 @@ compile-call: builder with: arguments
 	return builder compile-local-getter-call: this
 
 
+name
+	return local name
+
+
 # Copyright 2007-2009 Steve Folta.  See the License file.
 

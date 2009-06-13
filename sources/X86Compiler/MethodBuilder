@@ -197,6 +197,66 @@ emit-location-setter: ptr
 	return assemble-buffers
 
 
+build-new-function: function
+	name = function name
+	args = function creator arguments
+	parent-context = function on-proto
+	class = ClassBuilder live-proto-for: parent-context
+
+	# Build a pseudo-Trylon function.
+	parent-context = Compiler ExistingProto new: class
+	method-context = Compiler MethodContext new: args parent: parent-context
+	block = Compiler Block new: method-context
+	# "obj = class raw-new"
+	obj-local = Compiler CompiledField new: "obj"
+	block add-local: obj-local
+	class-literal = LiteralExpression new: class
+	send := Compiler Send message: "raw-new" to: class-literal with: empty
+	local-setter = Compiler LocalSetter new: obj-local
+	local-set = 	--
+		Compiler FunctionCall new: local-setter arguments: (List with: send)
+	block append: (Compiler ExpressionStatement new: local-set)
+	# "obj create: arg arg: arg"
+	arg-exprs = List new
+	for arg in args
+		arg-getter = Compiler ArgumentFunction new: arg name
+		arg-get = Compiler FunctionCall create: arg-getter arguments: empty
+		arg-exprs append: arg-get
+	local-getter = Compiler LocalGetter new: obj-local
+	local-get = Compiler FunctionCall new: local-getter arguments: empty
+	create-name = "create" + (name substr: 3)
+	send = Compiler Send message: create-name to: local-get with: arg-exprs
+	block append: (Compiler ExpressionStatement new: send)
+	# "return obj"
+	block append: (Compiler ReturnStatement new: local-get)
+
+	# Compile it.
+	# We need a CompiledFunction, really just for the arguments.
+	compiled-function = 	--
+		Compiler CompiledFunction 	--
+			new: name arguments: args return-type: nil on-proto: parent-context 	--
+			body: block is-primitive: false
+	return (MethodBuilder new: compiled-function code: block) emit-method
+
+
+	####
+	return MethodBuilder new emit-new-function: name args: args on: class
+
+emit-new-function: name args: args on: class
+	# "obj_ obj = AllocObjFromClassInfo_(class);"
+	obj = new-local
+	args = List with: (LiteralResult new: class)
+	push-args: args
+	emit-c-call: alloc-obj-from-class-info-addr
+	emit-pop-args: 1
+	emit-move-to: obj from: CallResult
+	# "obj create: arg"
+	create-name = "create" + (name substr: 3)
+	emit-send-of: create-name to: obj with: args
+	# ...how to handle args?
+	# ...
+
+
 
 # Low-level emission.
 
@@ -523,6 +583,8 @@ c-fn pop-exception-fn-addr
 	return BuildBytePtr_(&PopException_);
 c-fn throw-fn-addr
 	return BuildBytePtr_(&Throw_);
+c-fn alloc-obj-from-class-info-addr
+	return BuildBytePtr_(&AllocObjFromClassInfo_);
 c-fn setjmp-fn-addr
 	return BuildBytePtr_(setjmp);
 c-fn current-exception-addr

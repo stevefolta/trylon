@@ -52,7 +52,7 @@ build-compiled-function: function
 	return X86Compiler compile: function
 
 build-new-function: function
-	# ...
+	return MethodBuilder build-new-function: function
 
 
 build-proto-function: function
