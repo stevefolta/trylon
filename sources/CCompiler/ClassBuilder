@@ -139,6 +139,8 @@ emit-on: stream
 
 	# Shared fields initial values.
 	for field in proto shared-fields values
+		if !field initial-value is-literal
+			error: "Initial value for \"" + field name + "\" is not literal."
 		field initial-value-result = field initial-value emit-code: this
 	if !extern-declarations is-empty
 		for declaration in extern-declarations
