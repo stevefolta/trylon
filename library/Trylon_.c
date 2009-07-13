@@ -7,6 +7,9 @@
 #ifdef SYMBOL_DISPATCH_
 	#include <stdarg.h>
 #endif
+#ifdef TAGGED_INTS_
+	#include <stdint.h>
+#endif
 #ifdef OSX_FINK
 	#include "gc.h"
 #else
@@ -28,6 +31,13 @@ fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 #ifdef NIL_OBJECT_
 	if (object == nil)
 		object = &nil__Standard;
+#endif
+#if defined(NIL_OBJECT_) && defined(TAGGED_INTS_)
+	else
+#endif
+#ifdef TAGGED_INTS_
+	if (IsTaggedInt_(object))
+		object = &SmallInt__CImplementation__Standard;
 #endif
 
 #ifdef SYMBOL_DISPATCH_
@@ -78,6 +88,13 @@ obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
 	if (object == nil)
 		object = &nil__Standard;
 #endif
+#if defined(NIL_OBJECT_) && defined(TAGGED_INTS_)
+	else
+#endif
+#ifdef TAGGED_INTS_
+	if (IsTaggedInt_(object))
+		object = &SmallInt__CImplementation__Standard;
+#endif
 
 #ifdef SYMBOL_DISPATCH_
 	selector_ selector =
@@ -122,6 +139,13 @@ fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ selectorIn)
 #ifdef NIL_OBJECT_
 	if (object == nil)
 		object = &nil__Standard;
+#endif
+#if defined(NIL_OBJECT_) && defined(TAGGED_INTS_)
+	else
+#endif
+#ifdef TAGGED_INTS_
+	if (IsTaggedInt_(object))
+		object = &SmallInt__CImplementation__Standard;
 #endif
 
 #ifdef SYMBOL_DISPATCH_
@@ -250,8 +274,23 @@ void RegisterFinalizer_(obj_ object)
 
 
 
+#ifdef TAGGED_INTS_
+int IntValue_(obj_ obj)
+{
+	if (((ptrdiff_t) obj & 0x01) != 0)
+		return (ptrdiff_t) obj >> 1;
+	return (((struct Standard__Int__internal*) obj)->value);
+}
+#endif
+
+
 obj_ BuildInt_(int value)
 {
+#ifdef TAGGED_INTS_
+	if (value <= PTRDIFF_MAX >> 1 && value >= PTRDIFF_MIN >> 1)
+		return SmallInt_(value);
+#endif
+
 	struct Standard__Int__internal* result =
 		(struct Standard__Int__internal*)
 			GC_MALLOC(sizeof(struct Standard__Int__internal));
@@ -465,6 +504,10 @@ int main(int argc, char* argv[])
 	// Return the result.
 	if (result == nil)
 		return 0;
+#ifdef TAGGED_INTS_
+	else if (IsTaggedInt_(result))
+		return IntValue_(result);
+#endif
 	else if (result->class_ == StdClassRef_(Int))
 		return IntValue_(result);
 	else

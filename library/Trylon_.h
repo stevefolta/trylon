@@ -176,6 +176,9 @@ UsingClass_(True__Standard)
 #ifdef NIL_OBJECT_
 UsingClass_(nil__Standard)
 #endif
+#ifdef TAGGED_INTS_
+UsingClass_(SmallInt__CImplementation__Standard);
+#endif
 #ifdef CLASS_OBJECTS_
 UsingClass_(Class__CImplementation__Standard)
 #endif
@@ -326,7 +329,13 @@ extern obj_ currentException_;
 
 /* Helpers for primitives. */
 
-#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
+#ifdef TAGGED_INTS_
+	extern int IntValue_(obj_ obj);
+	#define SmallInt_(value)	((obj_) ((value << 1) | 0x01))
+	#define IsTaggedInt_(obj)	(((ptrdiff_t) obj) & 0x01 != 0)
+#else
+	#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
+#endif
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 #define StringStart_(obj) 	\

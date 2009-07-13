@@ -87,6 +87,13 @@ extend Compiler IntLiteral
 		return true
 
 	emit-code: builder
+		if build-settings["tagged-ints"]
+			# In order to generate code that'll run on both 32-bit and 64-bit
+			# systems, we'll only generate tagged ints for values that'll fit into
+			# 31 bits.
+			if value < 1073741823 && value > -1073741824
+				return CCompiler LiteralResult new: this
+
 		if build-settings shared-ints
 			compiler using-int: value
 		builder int-literals add: this
@@ -99,6 +106,8 @@ extend Compiler IntLiteral
 			stream send: ("\tDefineInt_(", index string, ", ", value string, ")")
 	
 	access
+		if build-settings["tagged-ints"]
+			return "SmallInt_(" + value string + ")"
 		if build-settings shared-ints
 			return "Int_(" + value-name + ")"
 		else

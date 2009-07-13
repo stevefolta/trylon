@@ -27,4 +27,6 @@ references
 	GarbageCollector
 	iff class-objects
 		Class
+	iff tagged-ints
+		SmallInt
 
