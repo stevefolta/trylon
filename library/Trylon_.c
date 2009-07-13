@@ -7,9 +7,6 @@
 #ifdef SYMBOL_DISPATCH_
 	#include <stdarg.h>
 #endif
-#ifdef TAGGED_INTS_
-	#include <stdint.h>
-#endif
 #ifdef OSX_FINK
 	#include "gc.h"
 #else

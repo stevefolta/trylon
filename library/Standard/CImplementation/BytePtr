@@ -21,7 +21,11 @@ extend Standard BytePtr
 	c-fn + arg
 		return BuildBytePtr_(BytePtrValue_(this_) + IntValue_(arg));
 	c-fn - arg
+		#ifdef TAGGED_INTS_
+		if (!IsTaggedInt_(arg) && arg->class_ == StdClassRef_(BytePtr))
+		#else
 		if (arg->class_ == StdClassRef_(BytePtr))
+		#endif
 			return BuildInt_(BytePtrValue_(this_) - BytePtrValue_(arg));
 		else
 			return BuildBytePtr_(BytePtrValue_(this_) - IntValue_(arg));

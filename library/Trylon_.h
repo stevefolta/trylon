@@ -1,6 +1,10 @@
 /* Trylon_.h */
 
 #include "settings_.h"
+#ifdef TAGGED_INTS_
+	#include <stddef.h>
+	#include <stdint.h>
+#endif
 
 /* Objects */
 

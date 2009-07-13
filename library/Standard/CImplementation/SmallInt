@@ -1,4 +1,5 @@
 trylon SmallInt
+superclass Standard Int
 # Tagged integer.
 
 c-preamble
