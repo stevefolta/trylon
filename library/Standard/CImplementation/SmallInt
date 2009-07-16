@@ -87,3 +87,35 @@ c-fn is-whitespace
 	return Bool_(val == ' ' || val == '\t' || val == '\n' || val == '\r');
 
 
+
+# Low-level Object methods.
+
+c-fn .proto
+	return Proto_(SmallInt__CImplementation__Standard);
+
+c-fn .parent-context
+	return StdClassRef_(SmallInt__CImplementation)->parentContext;
+
+c-fn .superclass
+	return StdClassRef_(SmallInt__CImplementation)->superclass;
+
+c-fn .proto-name
+	return StdClassRef_(SmallInt__CImplementation)->name;
+
+c-fn .used-contexts
+	return StdClassRef_(SmallInt__CImplementation)->usedContexts;
+
+c-fn .object-size
+	return BuildInt_(sizeof(classref_) + this_->class_->numSlots * sizeof(obj_));
+
+c-fn .added-fields
+	return StdClassRef_(SmallInt__CImplementation)->addedFields;
+
+iff support-subprotos
+	c-fn .subprotos
+		return StdClassRef_(SmallInt__CImplementation)->subprotos;
+
+iff class-objects
+	c-fn .class
+		return (obj_) StdClassRef_(SmallInt__CImplementation);
+
