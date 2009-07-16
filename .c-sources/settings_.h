@@ -1,0 +1,9 @@
+#define SUPPORT_PERFORM_
+#define SHARED_INTS_
+#define SHARED_FIELD_ACCESSORS_
+#define NIL_OBJECT_
+#define TAGGED_INTS_
+#define SUPPORT_NEW_METHODS_
+#define CLASS_OBJECTS_
+#define SYMBOL_DISPATCH_
+
