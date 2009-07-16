@@ -256,7 +256,7 @@ escape-string-for-c: string
 					escape-string = c char-string
 				else
 					escape-string = "x"
-					digit = c >> 4
+					digit = (c >> 4) & 0x0F
 					if digit > 9
 						escape-string += (digit - 0x0A + `A`) char-string
 					else
