@@ -356,7 +356,8 @@ references
 	# Make sure these get loaded up; the old Trylon 1 compiler didn't like if if
 	# the extensions came too late.
 	CCompiler
-	JoltCompiler
+	iff support-jolt
+		JoltCompiler
 	Interpreter
 	iff support-new-methods
 		X86Compiler
