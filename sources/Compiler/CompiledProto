@@ -218,26 +218,27 @@ setup-main: main-directory library-directory: library-directory
 	uses-protos append: standard-proto
 
 	# Targeting Jolt.
-	if build-settings targeting-jolt
-		standard-proto get-subproto: "JoltImplementation"
+	iff support-jolt
+		if build-settings targeting-jolt
+			standard-proto get-subproto: "JoltImplementation"
 
-		# Set up Posix.
-		posix-directory = library-directory at: "IdPosix"
-		posix-proto = 	--
-			JoltCompiler PosixProto 	--
-				new: "Posix" parent: this directory: posix-directory
-		proto-function = ProtoFunction new: posix-proto
-		functions at: "Posix" put: proto-function
-		compiler proto-queue append: posix-proto
+			# Set up Posix.
+			posix-directory = library-directory at: "IdPosix"
+			posix-proto = 	--
+				JoltCompiler PosixProto 	--
+					new: "Posix" parent: this directory: posix-directory
+			proto-function = ProtoFunction new: posix-proto
+			functions at: "Posix" put: proto-function
+			compiler proto-queue append: posix-proto
 
-		# Set up Standard Pepsi.
-		standard-directory = library-directory at: "Standard"
-		pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
-		proto-function = ProtoFunction new: pepsi-proto
-		standard-proto functions at: "Pepsi" put: proto-function
-		lines = (LinesLexer new: (standard-directory at: "Pepsi") contents) lex
-		TrylonProtoParser parse-proto-contents: lines into: pepsi-proto
-		compiler proto-queue append: pepsi-proto
+			# Set up Standard Pepsi.
+			standard-directory = library-directory at: "Standard"
+			pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
+			proto-function = ProtoFunction new: pepsi-proto
+			standard-proto functions at: "Pepsi" put: proto-function
+			lines = (LinesLexer new: (standard-directory at: "Pepsi") contents) lex
+			TrylonProtoParser parse-proto-contents: lines into: pepsi-proto
+			compiler proto-queue append: pepsi-proto
 	
 	# Targeting C.
 	if compiler build-settings targeting-c

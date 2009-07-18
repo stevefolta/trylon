@@ -96,8 +96,9 @@ compile-program: compile-symbols
 	object-class is-root-object = true
 
 	# Emit
-	if build-settings targeting-jolt
-		JoltCompiler emit-jolt: this
+	iff support-jolt
+		if build-settings targeting-jolt
+			JoltCompiler emit-jolt: this
 	if build-settings targeting-c
 		CCompiler emit-c: this
 
