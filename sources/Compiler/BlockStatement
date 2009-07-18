@@ -8,6 +8,10 @@ create: block
 	this block = block
 
 
+prepare-to-emit
+	block prepare-to-emit
+
+
 compile: builder
 	return builder compile-block-statement: this
 
