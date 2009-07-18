@@ -4,7 +4,7 @@ UsingSym_(ShortCircuitNot)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ShortCircuitNot__Compiler)
 struct ClassInfo ShortCircuitNot__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 118, 1, Proto_(ShortCircuitNot__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitNot), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 114, 1, Proto_(ShortCircuitNot__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitNot), nil, nil };
 struct object ShortCircuitNot__Compiler = 
 	{ &ShortCircuitNot__Compiler__classInfo_, {nil} };
 
@@ -86,26 +86,6 @@ obj_ interpreted__ShortCircuitNot__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__ShortCircuitNot__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(not)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(expr) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(expr, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(not), t1_);
-		return t2_;
-		}
-	return nil;
-}
-
-
 obj_ new_co___ShortCircuitNot__Compiler(obj_ this_, obj_ expr)
 {
 	UsingClass_(ShortCircuitNot__Compiler)
@@ -124,28 +104,6 @@ obj_ prepare_to_emit__ShortCircuitNot__Compiler(obj_ this_)
 		{
 		t0_ = Call_(expr, this_);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ShortCircuitNot__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(not)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(expr) UsingMethod_(expr_co_) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(expr, this_);
-		t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(not), t0_);
-		t2_ = Call_(expr_co_, this_, t1_);
-		t0_ = Call_(expr, this_);
-		t1_ = Call_(translateExpression_co_, compiler, t0_);
-		return t1_;
 		}
 	return nil;
 }

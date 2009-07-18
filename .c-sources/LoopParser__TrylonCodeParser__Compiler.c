@@ -4,7 +4,7 @@ UsingSym_(LoopParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(LoopParser__TrylonCodeParser__Compiler)
 struct ClassInfo LoopParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 98, 0, Proto_(LoopParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(LoopParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 94, 0, Proto_(LoopParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(LoopParser), nil, nil };
 struct object LoopParser__TrylonCodeParser__Compiler = 
 	{ &LoopParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

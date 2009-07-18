@@ -4,7 +4,7 @@ UsingSym_(SilentStatusReporter)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(SilentStatusReporter)
 struct ClassInfo SilentStatusReporter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 194, 0, Proto_(SilentStatusReporter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(SilentStatusReporter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 184, 0, Proto_(SilentStatusReporter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(SilentStatusReporter), nil, nil };
 struct object SilentStatusReporter = 
 	{ &SilentStatusReporter__classInfo_, {} };
 

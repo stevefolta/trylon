@@ -4,7 +4,7 @@ UsingSym_(BuildSettings)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(BuildSettings__Compiler)
 struct ClassInfo BuildSettings__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 78, 1, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 76, 1, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings), nil, nil };
 struct object BuildSettings__Compiler = 
 	{ &BuildSettings__Compiler__classInfo_, {nil} };
 

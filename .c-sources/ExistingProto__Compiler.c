@@ -4,7 +4,7 @@ UsingSym_(ExistingProto)UsingClass_(Compiler)
 UsingClass_(ClassContext__Compiler)
 UsingClass_(ExistingProto__Compiler)
 struct ClassInfo ExistingProto__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 79, 5, Proto_(ExistingProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(ExistingProto), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 77, 5, Proto_(ExistingProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(ExistingProto), nil, nil };
 struct object ExistingProto__Compiler = 
 	{ &ExistingProto__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

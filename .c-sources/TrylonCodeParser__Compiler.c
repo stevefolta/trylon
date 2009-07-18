@@ -6,7 +6,7 @@ UsingSym_(TrylonCodeParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(TrylonCodeParser__Compiler)
 struct ClassInfo TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 89, 5, Proto_(TrylonCodeParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonCodeParser), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 85, 5, Proto_(TrylonCodeParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonCodeParser), nil, ((obj_) tu0_) };
 struct object TrylonCodeParser__Compiler = 
 	{ &TrylonCodeParser__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

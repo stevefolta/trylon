@@ -4,7 +4,7 @@ UsingSym_(BlankLine)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BlankLine__Compiler)
 struct ClassInfo BlankLine__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 149, 1, Proto_(BlankLine__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlankLine), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 143, 1, Proto_(BlankLine__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlankLine), nil, nil };
 struct object BlankLine__Compiler = 
 	{ &BlankLine__Compiler__classInfo_, {nil} };
 
@@ -60,21 +60,6 @@ obj_ interpreted__BlankLine__Compiler(obj_ this_)
 
 		{
 		return nil;
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__BlankLine__Compiler(obj_ this_)
-{
-	extern obj_ with_co___Expression(obj_ this_, obj_ value);
-	UsingSym_(blank_line)
-	obj_ t0_;
-	UsingClass_(Expression)
-
-		{
-		t0_ = with_co___Expression(Proto_(Expression), Sym_(blank_line));
-		return t0_;
 		}
 	return nil;
 }

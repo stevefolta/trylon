@@ -4,7 +4,7 @@ UsingSym_(CatchClause)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(CatchClause__Compiler)
 struct ClassInfo CatchClause__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 85, 4, Proto_(CatchClause__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(CatchClause), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 81, 4, Proto_(CatchClause__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(CatchClause), nil, nil };
 struct object CatchClause__Compiler = 
 	{ &CatchClause__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -67,21 +67,6 @@ obj_ interpreted__CatchClause__Compiler(obj_ this_)
 		{
 		t0_ = Call_(body, this_);
 		t1_ = Call_(interpreted, t0_);
-		return t1_;
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__CatchClause__Compiler(obj_ this_)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(jolt_expression)
-
-		{
-		t0_ = Call_(body, this_);
-		t1_ = Call_(jolt_expression, t0_);
 		return t1_;
 		}
 	return nil;

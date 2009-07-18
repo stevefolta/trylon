@@ -4,7 +4,7 @@ UsingSym_(TryStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(TryStatement__Compiler)
 struct ClassInfo TryStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 159, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 153, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
 struct object TryStatement__Compiler = 
 	{ &TryStatement__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -136,40 +136,6 @@ obj_ interpreted__TryStatement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__TryStatement__Compiler(obj_ this_)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(catch)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		obj_ else_expr;
-		else_expr = nil;
-		t0_ = Call_(else_clause, this_);
-		if (t0_)
-			{
-			t0_ = Call_(else_clause, this_);
-			t1_ = Call_(jolt_expression, t0_);
-			else_expr = t1_;
-			}
-		else
-			{
-			else_expr = Sym_(nil);
-			}
-		t0_ = Call_(body, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(catch), t1_, else_expr);
-		return t2_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_comment_co___TryStatement__Compiler(obj_ this_, obj_ body, obj_ comment)
 {
 	UsingClass_(TryStatement__Compiler)
@@ -194,39 +160,6 @@ obj_ prepare_to_emit__TryStatement__Compiler(obj_ this_)
 			t0_ = Call_(else_clause, this_);
 			t1_ = Call_(prepare_to_emit, t0_);
 			}
-		}
-	return nil;
-}
-
-
-obj_ translate_co___TryStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(catch)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ else_expr, expr;
-		else_expr = nil;
-		t0_ = Call_(else_clause, this_);
-		if (t0_)
-			{
-			t0_ = Call_(else_clause, this_);
-			else_expr = t0_;
-			}
-		else
-			{
-			else_expr = Sym_(nil);
-			}
-		t0_ = Call_(body, this_);
-		t1_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(catch), t0_, else_expr);
-		expr = t1_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

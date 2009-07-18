@@ -4,7 +4,7 @@ UsingSym_(CompiledFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(CompiledFunction__Compiler)
 struct ClassInfo CompiledFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 131, 7, Proto_(CompiledFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CompiledFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 126, 7, Proto_(CompiledFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CompiledFunction), nil, nil };
 struct object CompiledFunction__Compiler = 
 	{ &CompiledFunction__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -173,115 +173,6 @@ obj_ emit_c_function_on_co___CompiledFunction__Compiler(obj_ this_, obj_ stream)
 }
 
 
-obj_ emit_call_co___CompiledFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, index;
-		t0_ = Call_(count, arguments);
-		t1_ = Call_(_pl_, t0_, SmallInt_(3));
-		t2_ = new_co___Expression(Proto_(Expression), t1_);
-		expr = t2_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t1_);
-		t3_ = Call_(at_co_put_co_, expr, SmallInt_(1), t2_);
-		t0_ = Call_(on_proto, this_);
-		t1_ = Call_(access, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(2), t1_);
-		index = SmallInt_(3);
-		ForStart_(0, arguments, arg)
-			{
-			t0_ = Call_(jolt_expression, arg);
-			t1_ = Call_(at_co_put_co_, expr, index, t0_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		return expr;
-		}
-	return nil;
-}
-
-
-obj_ emit_code__CompiledFunction__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(define_send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(4)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, index;
-		t0_ = Call_(body, this_);
-		t1_ = Not_(t0_);
-		if (t1_)
-			{
-			return nil;
-			}
-		
-		t0_ = Call_(arguments, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(4));
-		t3_ = new_co___Expression(Proto_(Expression), t2_);
-		expr = t3_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(define_send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t1_);
-		t3_ = Call_(at_co_put_co_, expr, SmallInt_(1), t2_);
-		t0_ = Call_(on_proto, this_);
-		t1_ = Call_(access, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(2), t1_);
-		index = SmallInt_(3);
-		t0_ = Call_(arguments, this_);
-		ForStart_(0, t0_, arg)
-			{
-			t0_ = Call_(name, arg);
-			t1_ = Call_(intern, t0_);
-			t2_ = Call_(at_co_put_co_, expr, index, t1_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = Call_(body, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = Call_(at_co_put_co_, expr, index, t1_);
-		return expr;
-		}
-	return nil;
-}
-
-
 obj_ has_code__CompiledFunction__Compiler(obj_ this_)
 {
 	obj_ t0_;
@@ -321,16 +212,6 @@ obj_ interpret_call_with_co___CompiledFunction__Compiler(obj_ this_, obj_ argume
 }
 
 
-obj_ is_translatable__CompiledFunction__Compiler(obj_ this_)
-{
-
-		{
-		return true_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_arguments_co_return_type_co_on_proto_co_body_co_is_primitive_co___CompiledFunction__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ return_type, obj_ on_proto, obj_ body, obj_ is_primitive)
 {
 	UsingClass_(CompiledFunction__Compiler)
@@ -359,108 +240,6 @@ obj_ prepare_to_emit__CompiledFunction__Compiler(obj_ this_)
 			t0_ = Call_(body, this_);
 			t1_ = Call_(prepare_to_emit, t0_);
 			}
-		}
-	return nil;
-}
-
-
-obj_ translate_call_co_compiler_co___CompiledFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, index;
-		t0_ = Call_(count, arguments);
-		t1_ = Call_(_pl_, t0_, SmallInt_(3));
-		t2_ = new_co___Expression(Proto_(Expression), t1_);
-		expr = t2_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t1_);
-		t3_ = Call_(at_co_put_co_, expr, SmallInt_(1), t2_);
-		t0_ = Call_(on_proto, this_);
-		t1_ = Call_(access, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(2), t1_);
-		index = SmallInt_(3);
-		ForStart_(0, arguments, arg)
-			{
-			t0_ = Call_(at_co_put_co_, expr, index, arg);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		}
-	return nil;
-}
-
-
-obj_ translate_co___CompiledFunction__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(define_send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(4)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, index;
-		t0_ = Call_(arguments, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(4));
-		t3_ = new_co___Expression(Proto_(Expression), t2_);
-		expr = t3_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(define_send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t1_);
-		t3_ = Call_(at_co_put_co_, expr, SmallInt_(1), t2_);
-		t0_ = Call_(on_proto, this_);
-		t1_ = Call_(access, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(2), t1_);
-		index = SmallInt_(3);
-		t0_ = Call_(arguments, this_);
-		ForStart_(0, t0_, arg)
-			{
-			t0_ = Call_(name, arg);
-			t1_ = Call_(intern, t0_);
-			t2_ = Call_(at_co_put_co_, expr, index, t1_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = Call_(body, this_);
-		t1_ = Call_(at_co_put_co_, expr, index, t0_);
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(TupleExpression)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(TupleExpression__Compiler)
 struct ClassInfo TupleExpression__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 120, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 116, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression), nil, nil };
 struct object TupleExpression__Compiler = 
 	{ &TupleExpression__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -350,47 +350,6 @@ obj_ is_literal__TupleExpression__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__TupleExpression__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_tuple)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(1)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(members)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(members, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(1));
-		t3_ = new_co___Expression(Proto_(Expression), t2_);
-		expr = t3_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(trylon_tuple));
-		t0_ = Call_(index_co_, this_, SmallInt_(1));
-		t0_ = Call_(members, this_);
-		ForStart_(0, t0_, member)
-			{
-			t0_ = Call_(index, this_);
-			t1_ = Call_(jolt_expression, member);
-			t2_ = Call_(at_co_put_co_, expr, t0_, t1_);
-			t0_ = Call_(index, this_);
-			t1_ = Call_(_pl_, t0_, SmallInt_(1));
-			t2_ = Call_(index_co_, this_, t1_);
-			}
-		ForEnd_(0)
-		return expr;
-		}
-	return nil;
-}
-
-
 obj_ new__TupleExpression__Compiler(obj_ this_)
 {
 	UsingClass_(TupleExpression__Compiler)
@@ -412,47 +371,6 @@ obj_ prepare_to_emit__TupleExpression__Compiler(obj_ this_)
 			t0_ = Call_(prepare_to_emit, member);
 			}
 		ForEnd_(0)
-		}
-	return nil;
-}
-
-
-obj_ translate_co___TupleExpression__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_tuple)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(1)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(members, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(1));
-		t3_ = new_co___Expression(Proto_(Expression), t2_);
-		expr = t3_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(trylon_tuple));
-		t0_ = Call_(index_co_, this_, SmallInt_(1));
-		t0_ = Call_(members, this_);
-		ForStart_(0, t0_, member)
-			{
-			t0_ = Call_(index, this_);
-			t1_ = Call_(at_co_put_co_, expr, t0_, member);
-			t0_ = Call_(index, this_);
-			t1_ = Call_(_pl_, t0_, SmallInt_(1));
-			t2_ = Call_(index_co_, this_, t1_);
-			}
-		ForEnd_(0)
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

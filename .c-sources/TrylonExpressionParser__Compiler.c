@@ -4,7 +4,7 @@ UsingSym_(TrylonExpressionParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(TrylonExpressionParser__Compiler)
 struct ClassInfo TrylonExpressionParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 201, 3, Proto_(TrylonExpressionParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonExpressionParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 191, 3, Proto_(TrylonExpressionParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonExpressionParser), nil, nil };
 struct object TrylonExpressionParser__Compiler = 
 	{ &TrylonExpressionParser__Compiler__classInfo_, {nil, nil, nil} };
 

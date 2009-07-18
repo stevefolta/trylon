@@ -2,7 +2,7 @@
 
 UsingClass_(Standard)
 static obj_ tu0_[];
-UsingClass_(CCompiler) UsingClass_(Compiler) UsingClass_(Expression) UsingClass_(Interpreter) UsingClass_(JoltCompiler) UsingClass_(Main) UsingClass_(SilentStatusReporter) UsingClass_(Standard) UsingClass_(StatusReporter) UsingClass_(StdoutStatusReporter) UsingClass_(VT100StatusReporter) UsingClass_(X86Compiler) 
+UsingClass_(CCompiler) UsingClass_(Compiler) UsingClass_(Expression) UsingClass_(Interpreter) UsingClass_(Main) UsingClass_(SilentStatusReporter) UsingClass_(Standard) UsingClass_(StatusReporter) UsingClass_(StdoutStatusReporter) UsingClass_(VT100StatusReporter) UsingClass_(X86Compiler) 
 static obj_ tu1_[];
 UsingSym_(Main)UsingClass_(Object__Standard)
 UsingClass_(Main)
@@ -12,9 +12,9 @@ struct object Main =
 	{ &Main__classInfo_, {} };
 
 	UsingInt_(1)
-	UsingInt_(12)
+	UsingInt_(11)
 static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Standard) };
-static obj_ tu1_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(12), Proto_(CCompiler), Proto_(Compiler), Proto_(Expression), Proto_(Interpreter), Proto_(JoltCompiler), Proto_(Main), Proto_(SilentStatusReporter), Proto_(Standard), Proto_(StatusReporter), Proto_(StdoutStatusReporter), Proto_(VT100StatusReporter), Proto_(X86Compiler) };
+static obj_ tu1_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(11), Proto_(CCompiler), Proto_(Compiler), Proto_(Expression), Proto_(Interpreter), Proto_(Main), Proto_(SilentStatusReporter), Proto_(Standard), Proto_(StatusReporter), Proto_(StdoutStatusReporter), Proto_(VT100StatusReporter), Proto_(X86Compiler) };
 
 
 DeclareSharedField_(compiler, Main, nil)
@@ -44,13 +44,6 @@ obj_ Interpreter__Main__accessor_(obj_ this_)
 {
 	UsingClass_(Interpreter)
 	return Proto_(Interpreter);
-}
-
-
-obj_ JoltCompiler__Main__accessor_(obj_ this_)
-{
-	UsingClass_(JoltCompiler)
-	return Proto_(JoltCompiler);
 }
 
 
@@ -560,7 +553,6 @@ obj_ references__Main(obj_ this_)
 {
 	UsingClass_(CCompiler)
 	UsingClass_(Interpreter)
-	UsingClass_(JoltCompiler)
 	UsingClass_(X86Compiler)
 
 		{

@@ -4,7 +4,7 @@ UsingSym_(CharacterLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(CharacterLiteral__Compiler)
 struct ClassInfo CharacterLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 114, 2, Proto_(CharacterLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(CharacterLiteral), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 110, 2, Proto_(CharacterLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(CharacterLiteral), nil, nil };
 struct object CharacterLiteral__Compiler = 
 	{ &CharacterLiteral__Compiler__classInfo_, {nil, nil} };
 
@@ -186,26 +186,6 @@ obj_ is_literal__CharacterLiteral__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__CharacterLiteral__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(trylon_char_literal)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(char_) UsingMethod_(int_)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(char_, this_);
-		t1_ = Call_(int_, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_char_literal), t1_);
-		return t2_;
-		}
-	return nil;
-}
-
-
 obj_ new_co___CharacterLiteral__Compiler(obj_ this_, obj_ char_)
 {
 	UsingClass_(CharacterLiteral__Compiler)
@@ -220,26 +200,6 @@ obj_ prepare_to_emit__CharacterLiteral__Compiler(obj_ this_)
 
 		{
 		/*  Nothing to do. */
-		}
-	return nil;
-}
-
-
-obj_ translate_co___CharacterLiteral__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(char_) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(char_, this_);
-		t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t0_);
-		t2_ = Call_(translateExpression_co_, compiler, t1_);
-		return t2_;
 		}
 	return nil;
 }

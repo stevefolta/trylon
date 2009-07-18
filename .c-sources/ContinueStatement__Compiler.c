@@ -4,7 +4,7 @@ UsingSym_(ContinueStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ContinueStatement__Compiler)
 struct ClassInfo ContinueStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 158, 1, Proto_(ContinueStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ContinueStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 152, 1, Proto_(ContinueStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ContinueStatement), nil, nil };
 struct object ContinueStatement__Compiler = 
 	{ &ContinueStatement__Compiler__classInfo_, {nil} };
 
@@ -66,21 +66,6 @@ obj_ interpreted__ContinueStatement__Compiler(obj_ this_)
 
 		{
 		Throw_(Proto_(Continue__Statements__Interpreter));
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__ContinueStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co___Expression(obj_ this_, obj_ value);
-	UsingSym_(fixed_continue)
-	obj_ t0_;
-	UsingClass_(Expression)
-
-		{
-		t0_ = with_co___Expression(Proto_(Expression), Sym_(fixed_continue));
-		return t0_;
 		}
 	return nil;
 }

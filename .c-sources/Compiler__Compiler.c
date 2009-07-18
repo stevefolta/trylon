@@ -4,7 +4,7 @@ UsingSym_(Compiler)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Compiler__Compiler)
 struct ClassInfo Compiler__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 74, 7, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 72, 7, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler), nil, nil };
 struct object Compiler__Compiler = 
 	{ &Compiler__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -109,7 +109,6 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
 	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
-	extern obj_ emit_jolt_co___JoltCompiler(obj_ this_, obj_ compiler);
 	extern obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler);
 	extern obj_ milliseconds__System__Standard(obj_ this_);
 	obj_ t0_;
@@ -138,7 +137,6 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	UsingClass_(CCompiler)
 	UsingClass_(CompiledProto__Compiler)
 	UsingClass_(FileDirectory__Standard)
-	UsingClass_(JoltCompiler)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(StdoutStatusReporter)
 	UsingClass_(System__Standard)
@@ -256,12 +254,6 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 		t0_ = Call_(is_root_object_co_, object_class, true_);
 		
 		/*  Emit */
-		t0_ = Call_(build_settings, this_);
-		t1_ = Call_(targeting_jolt, t0_);
-		if (t1_)
-			{
-			t0_ = emit_jolt_co___JoltCompiler(Proto_(JoltCompiler), this_);
-			}
 		t0_ = Call_(build_settings, this_);
 		t1_ = Call_(targeting_c, t0_);
 		if (t1_)

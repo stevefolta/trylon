@@ -4,7 +4,7 @@ UsingSym_(Comment)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(Comment__Compiler)
 struct ClassInfo Comment__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 150, 2, Proto_(Comment__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(Comment), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 144, 2, Proto_(Comment__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(Comment), nil, nil };
 struct object Comment__Compiler = 
 	{ &Comment__Compiler__classInfo_, {nil, nil} };
 
@@ -74,24 +74,6 @@ obj_ interpreted__Comment__Compiler(obj_ this_)
 
 		{
 		return nil;
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__Comment__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(text)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(text, this_);
-		t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(comment), t0_);
-		return t1_;
 		}
 	return nil;
 }

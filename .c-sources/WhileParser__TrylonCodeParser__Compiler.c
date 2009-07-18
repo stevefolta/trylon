@@ -4,7 +4,7 @@ UsingSym_(WhileParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(WhileParser__TrylonCodeParser__Compiler)
 struct ClassInfo WhileParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 103, 0, Proto_(WhileParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(WhileParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 99, 0, Proto_(WhileParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(WhileParser), nil, nil };
 struct object WhileParser__TrylonCodeParser__Compiler = 
 	{ &WhileParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

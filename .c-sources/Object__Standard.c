@@ -3,7 +3,7 @@
 UsingSym_(Object)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 struct ClassInfo Object__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 221, 0, Proto_(Object__Standard), Proto_(Standard), nil, nil, Sym_(Object), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 211, 0, Proto_(Object__Standard), Proto_(Standard), nil, nil, Sym_(Object), nil, nil };
 struct object Object__Standard = 
 	{ &Object__Standard__classInfo_, {} };
 

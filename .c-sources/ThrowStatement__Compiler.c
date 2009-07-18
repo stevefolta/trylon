@@ -4,7 +4,7 @@ UsingSym_(ThrowStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ThrowStatement__Compiler)
 struct ClassInfo ThrowStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 160, 2, Proto_(ThrowStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ThrowStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 154, 2, Proto_(ThrowStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ThrowStatement), nil, nil };
 struct object ThrowStatement__Compiler = 
 	{ &ThrowStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -81,26 +81,6 @@ obj_ interpreted__ThrowStatement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__ThrowStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(throw)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(jolt_expression) UsingMethod_(value)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(value, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(throw), t1_);
-		return t2_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_comment_co___ThrowStatement__Compiler(obj_ this_, obj_ value, obj_ comment)
 {
 	UsingClass_(ThrowStatement__Compiler)
@@ -119,27 +99,6 @@ obj_ prepare_to_emit__ThrowStatement__Compiler(obj_ this_)
 		{
 		t0_ = Call_(value, this_);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ThrowStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(throw)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(translateExpression_co_) UsingMethod_(value)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(value, this_);
-		t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(throw), t0_);
-		expr = t1_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

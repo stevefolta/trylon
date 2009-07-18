@@ -6,7 +6,7 @@ UsingSym_(MethodBuilder)UsingClass_(X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(MethodBuilder__X86Compiler)
 struct ClassInfo MethodBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 185, 14, Proto_(MethodBuilder__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 175, 14, Proto_(MethodBuilder__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, ((obj_) tu0_) };
 struct object MethodBuilder__X86Compiler = 
 	{ &MethodBuilder__X86Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 

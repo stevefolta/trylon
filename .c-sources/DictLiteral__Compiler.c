@@ -6,7 +6,7 @@ UsingSym_(DictLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(DictLiteral__Compiler)
 struct ClassInfo DictLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 115, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 111, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral), nil, ((obj_) tu0_) };
 struct object DictLiteral__Compiler = 
 	{ &DictLiteral__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -220,42 +220,6 @@ obj_ emit_declaration_co___DictLiteral__Compiler(obj_ this_, obj_ stream)
 }
 
 
-obj_ emit_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
-	UsingSym_(trylon_dict_node)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	obj_ t7_;
-	UsingMethod_(emit_node_co_) UsingMethod_(jolt_expression) UsingMethod_(key) UsingMethod_(left) UsingMethod_(right) UsingMethod_(value)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Not_(node);
-		if (t0_)
-			{
-			return Sym_(nil);
-			}
-		t0_ = Call_(key, node);
-		t1_ = Call_(value, node);
-		t2_ = Call_(jolt_expression, t1_);
-		t3_ = Call_(left, node);
-		t4_ = Call_(emit_node_co_, this_, t3_);
-		t5_ = Call_(right, node);
-		t6_ = Call_(emit_node_co_, this_, t5_);
-		t7_ = with_co_with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_dict_node), t0_, t2_, t4_, t6_);
-		return t7_;
-		}
-	return nil;
-}
-
-
 obj_ interpreted__DictLiteral__Compiler(obj_ this_)
 {
 	extern obj_ new__Dictionary__Standard(obj_ this_);
@@ -291,32 +255,6 @@ obj_ is_literal__DictLiteral__Compiler(obj_ this_)
 
 		{
 		return true_;
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__DictLiteral__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(trylon_dict)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(dict) UsingMethod_(emit_node_co_) UsingMethod_(num_items) UsingMethod_(root)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(dict, this_);
-		t1_ = Call_(root, t0_);
-		t2_ = Call_(emit_node_co_, this_, t1_);
-		t3_ = Call_(dict, this_);
-		t4_ = Call_(num_items, t3_);
-		t5_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_dict), t2_, t4_);
-		return t5_;
 		}
 	return nil;
 }
@@ -371,69 +309,6 @@ obj_ prepare_to_emit_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 			}
 		t0_ = Call_(value, node);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_node_co___DictLiteral__Compiler(obj_ this_, obj_ node)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
-	UsingSym_(trylon_dict_node)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	UsingMethod_(emit_node_co_) UsingMethod_(key) UsingMethod_(left) UsingMethod_(right) UsingMethod_(value)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Not_(node);
-		if (t0_)
-			{
-			return Sym_(nil);
-			}
-		t0_ = Call_(key, node);
-		t1_ = Call_(value, node);
-		t2_ = Call_(left, node);
-		t3_ = Call_(emit_node_co_, this_, t2_);
-		t4_ = Call_(right, node);
-		t5_ = Call_(emit_node_co_, this_, t4_);
-		t6_ = with_co_with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_dict_node), t0_, t1_, t3_, t5_);
-		return t6_;
-		}
-	return nil;
-}
-
-
-obj_ translate_co___DictLiteral__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(trylon_dict)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(dict) UsingMethod_(num_items) UsingMethod_(root) UsingMethod_(translate_node_co_) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(dict, this_);
-		t1_ = Call_(root, t0_);
-		t2_ = Call_(translate_node_co_, this_, t1_);
-		t3_ = Call_(dict, this_);
-		t4_ = Call_(num_items, t3_);
-		t5_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_dict), t2_, t4_);
-		expr = t5_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

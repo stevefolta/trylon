@@ -4,7 +4,7 @@ UsingSym_(Temporary)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(Temporary__CCompiler)
 struct ClassInfo Temporary__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 206, 1, Proto_(Temporary__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(Temporary), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 196, 1, Proto_(Temporary__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(Temporary), nil, nil };
 struct object Temporary__CCompiler = 
 	{ &Temporary__CCompiler__classInfo_, {nil} };
 

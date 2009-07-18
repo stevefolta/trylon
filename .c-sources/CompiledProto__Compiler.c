@@ -4,7 +4,7 @@ UsingSym_(CompiledProto)UsingClass_(Compiler)
 UsingClass_(ClassContext__Compiler)
 UsingClass_(CompiledProto__Compiler)
 struct ClassInfo CompiledProto__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 82, 17, Proto_(CompiledProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(CompiledProto), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 78, 17, Proto_(CompiledProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(CompiledProto), nil, nil };
 struct object CompiledProto__Compiler = 
 	{ &CompiledProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -28,78 +28,6 @@ struct object CompiledProto__Compiler =
 #define class_num__fld_	(14)
 #define c_preamble__fld_	(15)
 #define _dt_c_name__fld_	(16)
-
-
-obj_ access__CompiledProto__Compiler(obj_ this_)
-{
-	UsingSym_(Trylon)
-	UsingSym_(trylon_root_object)
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_proto)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingInt_(1)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(is_main) UsingMethod_(is_root_object) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(push_front_co_)
-	UsingClass_(Expression)
-	UsingClass_(List__Standard)
-
-		{
-		t0_ = Call_(is_main, this_);
-		if (t0_)
-			{
-			return Sym_(Trylon);
-			}
-		else
-			{
-			t0_ = Call_(is_root_object, this_);
-			if (t0_)
-				{
-				return Sym_(trylon_root_object);
-				}
-			else
-				{
-				obj_ expr, index, list, namespace_;
-				t0_ = new__List__Standard(Proto_(List__Standard));
-				list = t0_;
-				namespace_ = this_;
-				while (1) {
-					ContinuePoint_(0)
-					t0_ = Call_(is_main, namespace_);
-					t1_ = Not_(t0_);
-					if (!(t1_))
-						Break_(0)
-					{
-					t0_ = Call_(push_front_co_, list, namespace_);
-					t0_ = Call_(parent, namespace_);
-					namespace_ = t0_;
-					}
-					}
-				t0_ = Call_(count, list);
-				t1_ = Call_(_pl_, t0_, SmallInt_(1));
-				t2_ = new_co___Expression(Proto_(Expression), t1_);
-				expr = t2_;
-				t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(trylon_proto));
-				index = SmallInt_(1);
-				ForStart_(1, list, namespace_)
-					{
-					t0_ = Call_(name, namespace_);
-					t1_ = Call_(intern, t0_);
-					t2_ = Call_(at_co_put_co_, expr, index, t1_);
-					t0_ = Call_(_pl_, index, SmallInt_(1));
-					index = t0_;
-					}
-				ForEnd_(1)
-				return expr;
-				}
-			}
-		}
-	return nil;
-}
 
 
 obj_ add_directory_co___CompiledProto__Compiler(obj_ this_, obj_ directory)
@@ -550,58 +478,6 @@ obj_ emit_all_function_declarations_co___CompiledProto__Compiler(obj_ this_, obj
 }
 
 
-obj_ emit_code__CompiledProto__Compiler(obj_ this_)
-{
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, "Generating code for ")
-	DefineString_(1, "...")
-	DefineString_(2, " has these functions:")
-	UsingMethod_(_pl_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(emit_jolt_file) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_verbose) UsingMethod_(iterator) UsingMethod_(keys) UsingMethod_(name) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
-	UsingSharedField_(compiler, Main) 
-
-		{
-		obj_ is_changed, status_reporter;
-		t0_ = Call_(status_reporter, SharedField_(compiler, Main));
-		status_reporter = t0_;
-		t0_ = Call_(name, this_);
-		t1_ = Call_(_pl_, Str_(0), t0_);
-		t2_ = Call_(_pl_, t1_, Str_(1));
-		t3_ = Call_(report_co_, status_reporter, t2_);
-		t0_ = Call_(indent, status_reporter);
-		
-		t0_ = Call_(build_settings, SharedField_(compiler, Main));
-		t1_ = Call_(is_verbose, t0_);
-		if (t1_)
-			{
-			t0_ = Call_(name, this_);
-			t1_ = Call_(_pl_, t0_, Str_(2));
-			t2_ = Call_(report_co_, status_reporter, t1_);
-			t0_ = Call_(indent, status_reporter);
-			t0_ = Call_(functions, this_);
-			t1_ = Call_(keys, t0_);
-			ForStart_(0, t1_, name)
-				{
-				t0_ = Call_(report_co_, status_reporter, name);
-				}
-			ForEnd_(0)
-			t0_ = Call_(unindent, status_reporter);
-			}
-		
-		t0_ = Call_(emit_jolt_file, this_);
-		is_changed = t0_;
-		
-		t0_ = Call_(unindent, status_reporter);
-		
-		is_changed = true_;
-		return is_changed;
-		}
-	return nil;
-}
-
-
 obj_ emit_field_indices_co___CompiledProto__Compiler(obj_ this_, obj_ stream)
 {
 	extern obj_ mangle_name_co___Compiler(obj_ this_, obj_ name);
@@ -646,184 +522,6 @@ obj_ emit_field_indices_co___CompiledProto__Compiler(obj_ this_, obj_ stream)
 		t0_ = Call_(write_line, stream);
 		
 		return index;
-		}
-	return nil;
-}
-
-
-obj_ emit_jolt_file__CompiledProto__Compiler(obj_ this_)
-{
-	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4, obj_ value_5);
-	UsingSym_(define_trylon_proto)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(trylon_tuple)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_constant_field)
-	UsingSym_(_dt_used_contexts)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	DefineString_(0, "/")
-	DefineString_(1, ".k")
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(close) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(emit_code) UsingMethod_(emit_co_) UsingMethod_(fields) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(jolt_sources_dir) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(status_reporter) UsingMethod_(superclass) UsingMethod_(uses_protos) UsingMethod_(values) UsingMethod_(write_line)
-	UsingSharedField_(compiler, Main) 
-	UsingClass_(ExistingFileStream__Standard)
-	UsingClass_(Expression)
-	UsingClass_(File__Standard)
-	UsingClass_(ProtoFunction__Compiler)
-
-		{
-		obj_ file, got_one, status_reporter, stream;
-		t0_ = Call_(status_reporter, SharedField_(compiler, Main));
-		status_reporter = t0_;
-		
-		/*  Open the file. */
-		t0_ = Call_(build_settings, SharedField_(compiler, Main));
-		t1_ = Call_(jolt_sources_dir, t0_);
-		t2_ = Call_(_pl_, t1_, Str_(0));
-		t3_ = Call_(full_name, this_);
-		t4_ = Call_(_pl_, t2_, t3_);
-		t5_ = Call_(_pl_, t4_, Str_(1));
-		t6_ = new_co___File__Standard(Proto_(File__Standard), t5_);
-		file = t6_;
-		t0_ = new_co___ExistingFileStream__Standard(Proto_(ExistingFileStream__Standard), file);
-		stream = t0_;
-		
-		/*  Define the proto. */
-		/*  ...but not for Trylon or Standard Object (which are created specially in */
-		/*  (setup-Trylon)). */
-		t0_ = Call_(parent, this_);
-		if (t0_) {
-			t1_ = Call_(superclass, this_);
-			t0_ = t1_;
-			}
-		if (t0_)
-			{
-			obj_ expr, index, parent_access, slots, superclass_access;
-			t0_ = Call_(parent, this_);
-			t1_ = Call_(access, t0_);
-			parent_access = t1_;
-			t0_ = Call_(superclass, this_);
-			t1_ = Call_(access, t0_);
-			superclass_access = t1_;
-			t0_ = Call_(fields, this_);
-			t1_ = Call_(count, t0_);
-			t2_ = new_co___Expression(Proto_(Expression), t1_);
-			slots = t2_;
-			index = SmallInt_(0);
-			t0_ = Call_(fields, this_);
-			ForStart_(0, t0_, field)
-				{
-				t0_ = Call_(name, field);
-				t1_ = Call_(intern, t0_);
-				t2_ = Call_(at_co_put_co_, slots, index, t1_);
-				t0_ = Call_(_pl_, index, SmallInt_(1));
-				index = t0_;
-				}
-			ForEnd_(0)
-			t0_ = Call_(name, this_);
-			t1_ = Call_(intern, t0_);
-			t2_ = with_co_with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(define_trylon_proto), t1_, parent_access, superclass_access, slots);
-			expr = t2_;
-			t0_ = Call_(emit_co_, expr, stream);
-			t0_ = Call_(write_line, stream);
-			t0_ = Call_(write_line, stream);
-			}
-		
-		/*  Add loaders for the subprotos. */
-		got_one = nil;
-		t0_ = Call_(functions, this_);
-		t1_ = Call_(values, t0_);
-		ForStart_(1, t1_, function)
-			{
-			t0_ = Call_(is_a_co_, function, Proto_(ProtoFunction__Compiler));
-			if (t0_)
-				{
-				obj_ compiled_code;
-				t0_ = Call_(emit_code, function);
-				compiled_code = t0_;
-				if (compiled_code)
-					{
-					t0_ = Call_(emit_co_, compiled_code, stream);
-					t0_ = Call_(write_line, stream);
-					got_one = true_;
-					}
-				}
-			}
-		ForEnd_(1)
-		if (got_one)
-			{
-			t0_ = Call_(write_line, stream);
-			}
-		
-		/*  Add '.used-contexts'. */
-		t0_ = Call_(uses_protos, this_);
-		t1_ = Call_(is_empty, t0_);
-		t2_ = Not_(t1_);
-		if (t2_)
-			{
-			obj_ expr, index, tuple_expr;
-			t0_ = Call_(uses_protos, this_);
-			t1_ = Call_(count, t0_);
-			t2_ = Call_(_pl_, t1_, SmallInt_(1));
-			t3_ = new_co___Expression(Proto_(Expression), t2_);
-			tuple_expr = t3_;
-			t0_ = Call_(at_co_put_co_, tuple_expr, SmallInt_(0), Sym_(trylon_tuple));
-			index = SmallInt_(1);
-			t0_ = Call_(uses_protos, this_);
-			ForStart_(2, t0_, proto)
-				{
-				t0_ = Call_(access, proto);
-				t1_ = Call_(at_co_put_co_, tuple_expr, index, t0_);
-				t0_ = Call_(_pl_, index, SmallInt_(1));
-				index = t0_;
-				}
-			ForEnd_(2)
-			t0_ = Call_(access, this_);
-			t1_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(add_constant_field), Sym_(_dt_used_contexts), t0_, tuple_expr);
-			expr = t1_;
-			t0_ = Call_(emit_co_, expr, stream);
-			t0_ = Call_(write_line, stream);
-			t0_ = Call_(write_line, stream);
-			}
-		
-		/*  Compile all the functions. */
-		t0_ = Call_(functions, this_);
-		t1_ = Call_(values, t0_);
-		ForStart_(3, t1_, function)
-			{
-			obj_ compiled_code;
-			t0_ = Call_(is_a_co_, function, Proto_(ProtoFunction__Compiler));
-			if (t0_)
-				{
-				Continue_(3)
-				}
-			t0_ = Call_(emit_code, function);
-			compiled_code = t0_;
-			if (compiled_code)
-				{
-				t0_ = Call_(emit_co_, compiled_code, stream);
-				t0_ = Call_(write_line, stream);
-				t0_ = Call_(write_line, stream);
-				}
-			}
-		ForEnd_(3)
-		
-		
-		t0_ = Call_(close, stream);
 		}
 	return nil;
 }
@@ -1319,13 +1017,6 @@ obj_ setup_main_co_library_directory_co___CompiledProto__Compiler(obj_ this_, ob
 {
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new_co_parent_co_directory_co___PosixProto__JoltCompiler(obj_ this_, obj_ name, obj_ parent, obj_ directory);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_parent_co___PepsiProto__Compiler(obj_ this_, obj_ name, obj_ parent);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
-	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
-	extern obj_ build_settings__Main(obj_ this_);
 	extern obj_ new__NilFunction__Compiler(obj_ this_);
 	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
 	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
@@ -1342,32 +1033,24 @@ obj_ setup_main_co_library_directory_co___CompiledProto__Compiler(obj_ this_, ob
 	UsingInt_(7)
 	DefineString_(0, "Standard")
 	DefineString_(1, "The Standard proto can't be found!")
-	DefineString_(2, "JoltImplementation")
-	DefineString_(3, "IdPosix")
-	DefineString_(4, "Posix")
-	DefineString_(5, "Posix")
-	DefineString_(6, "Standard")
-	DefineString_(7, "Pepsi")
-	DefineString_(8, "Pepsi")
-	DefineString_(9, "Pepsi")
-	DefineString_(10, "CImplementation")
-	DefineString_(11, "nil-object")
-	DefineString_(12, "nil")
-	DefineString_(13, "true")
-	DefineString_(14, "false")
-	DefineString_(15, "main")
-	DefineString_(16, "main")
-	DefineString_(17, "BytePtr")
-	DefineString_(18, "Int")
-	DefineString_(19, "String")
-	DefineString_(20, "Float")
-	DefineString_(21, "Symbol")
-	DefineString_(22, "Tuple")
-	DefineString_(23, "List")
-	DefineString_(24, "nil-object")
-	DefineString_(25, "nil")
-static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(17), Str_(18), Str_(19), Str_(20), Str_(21), Str_(22), Str_(23) };
-	UsingMethod_(add_directory_co_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(functions) UsingMethod_(get_subproto_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_main_co_) UsingMethod_(iterator) UsingMethod_(lex) UsingMethod_(library_dirs) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(proto_queue) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos)
+	DefineString_(2, "CImplementation")
+	DefineString_(3, "nil-object")
+	DefineString_(4, "nil")
+	DefineString_(5, "true")
+	DefineString_(6, "false")
+	DefineString_(7, "main")
+	DefineString_(8, "main")
+	DefineString_(9, "BytePtr")
+	DefineString_(10, "Int")
+	DefineString_(11, "String")
+	DefineString_(12, "Float")
+	DefineString_(13, "Symbol")
+	DefineString_(14, "Tuple")
+	DefineString_(15, "List")
+	DefineString_(16, "nil-object")
+	DefineString_(17, "nil")
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(9), Str_(10), Str_(11), Str_(12), Str_(13), Str_(14), Str_(15) };
+	UsingMethod_(add_directory_co_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(build_settings) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(functions) UsingMethod_(get_subproto_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_main_co_) UsingMethod_(iterator) UsingMethod_(lex) UsingMethod_(library_dirs) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(targeting_c) UsingMethod_(uses_protos)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(BoolLiteralFunction__Compiler)
 	UsingClass_(FileDirectory__Standard)
@@ -1375,8 +1058,6 @@ static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(17), Str_(
 	UsingClass_(Main)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(NilFunction__Compiler)
-	UsingClass_(PepsiProto__Compiler)
-	UsingClass_(PosixProto__JoltCompiler)
 	UsingClass_(ProtoFunction__Compiler)
 	UsingClass_(TrylonProtoParser__Compiler)
 	UsingClass_(Tuple__Standard)
@@ -1407,78 +1088,41 @@ static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(17), Str_(
 		t2_ = Call_(append_co_, t1_, standard_proto);
 		
 		/*  Targeting Jolt. */
-		t0_ = build_settings__Main(Proto_(Main));
-		t1_ = Call_(targeting_jolt, t0_);
-		if (t1_)
-			{
-			obj_ lines, pepsi_proto, posix_directory, posix_proto, proto_function, standard_directory;
-			t0_ = Call_(get_subproto_co_, standard_proto, Str_(2));
-			
-			/*  Set up Posix. */
-			t0_ = Call_(at_co_, library_directory, Str_(3));
-			posix_directory = t0_;
-			t0_ = new_co_parent_co_directory_co___PosixProto__JoltCompiler(Proto_(PosixProto__JoltCompiler), Str_(4), this_, posix_directory);
-			posix_proto = t0_;
-			t0_ = new_co___ProtoFunction__Compiler(Proto_(ProtoFunction__Compiler), posix_proto);
-			proto_function = t0_;
-			t0_ = Call_(functions, this_);
-			t1_ = Call_(at_co_put_co_, t0_, Str_(5), proto_function);
-			t0_ = Call_(proto_queue, SharedField_(compiler, Main));
-			t1_ = Call_(append_co_, t0_, posix_proto);
-			
-			/*  Set up Standard Pepsi. */
-			t0_ = Call_(at_co_, library_directory, Str_(6));
-			standard_directory = t0_;
-			t0_ = new_co_parent_co___PepsiProto__Compiler(Proto_(PepsiProto__Compiler), Str_(7), standard_proto);
-			pepsi_proto = t0_;
-			t0_ = new_co___ProtoFunction__Compiler(Proto_(ProtoFunction__Compiler), pepsi_proto);
-			proto_function = t0_;
-			t0_ = Call_(functions, standard_proto);
-			t1_ = Call_(at_co_put_co_, t0_, Str_(8), proto_function);
-			t0_ = Call_(at_co_, standard_directory, Str_(9));
-			t1_ = Call_(contents, t0_);
-			t2_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t1_);
-			t3_ = Call_(lex, t2_);
-			lines = t3_;
-			t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, pepsi_proto);
-			t0_ = Call_(proto_queue, SharedField_(compiler, Main));
-			t1_ = Call_(append_co_, t0_, pepsi_proto);
-			}
 		
 		/*  Targeting C. */
 		t0_ = Call_(build_settings, SharedField_(compiler, Main));
 		t1_ = Call_(targeting_c, t0_);
 		if (t1_)
 			{
-			t0_ = Call_(get_subproto_co_, standard_proto, Str_(10));
+			t0_ = Call_(get_subproto_co_, standard_proto, Str_(2));
 			}
 		
 		/*  Add "nil", "true", and "false" to Standard. */
 		t0_ = build_settings__Main(Proto_(Main));
-		t1_ = Call_(at_co_, t0_, Str_(11));
+		t1_ = Call_(at_co_, t0_, Str_(3));
 		t2_ = Not_(t1_);
 		if (t2_)
 			{
 			t0_ = Call_(functions, standard_proto);
 			t1_ = new__NilFunction__Compiler(Proto_(NilFunction__Compiler));
-			t2_ = Call_(at_co_put_co_, t0_, Str_(12), t1_);
+			t2_ = Call_(at_co_put_co_, t0_, Str_(4), t1_);
 			}
 		t0_ = Call_(functions, standard_proto);
 		t1_ = new_co___BoolLiteralFunction__Compiler(Proto_(BoolLiteralFunction__Compiler), true_);
-		t2_ = Call_(at_co_put_co_, t0_, Str_(13), t1_);
+		t2_ = Call_(at_co_put_co_, t0_, Str_(5), t1_);
 		t0_ = Call_(functions, standard_proto);
 		t1_ = new_co___BoolLiteralFunction__Compiler(Proto_(BoolLiteralFunction__Compiler), nil);
-		t2_ = Call_(at_co_put_co_, t0_, Str_(14), t1_);
+		t2_ = Call_(at_co_put_co_, t0_, Str_(6), t1_);
 		
 		/*  Load our "main"s */
 		t0_ = Call_(directories, this_);
 		ForStart_(0, t0_, directory)
 			{
-			t0_ = Call_(contains_co_, directory, Str_(15));
+			t0_ = Call_(contains_co_, directory, Str_(7));
 			if (t0_)
 				{
 				obj_ lines;
-				t0_ = Call_(at_co_, directory, Str_(16));
+				t0_ = Call_(at_co_, directory, Str_(8));
 				t1_ = Call_(contents, t0_);
 				t2_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t1_);
 				t3_ = Call_(lex, t2_);
@@ -1496,10 +1140,10 @@ static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(17), Str_(
 			}
 		ForEnd_(1)
 		t0_ = build_settings__Main(Proto_(Main));
-		t1_ = Call_(at_co_, t0_, Str_(24));
+		t1_ = Call_(at_co_, t0_, Str_(16));
 		if (t1_)
 			{
-			t0_ = Call_(lookup_function_co_, standard_proto, Str_(25));
+			t0_ = Call_(lookup_function_co_, standard_proto, Str_(17));
 			}
 		
 		/*  Self. */

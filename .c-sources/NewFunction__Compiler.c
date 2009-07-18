@@ -4,7 +4,7 @@ UsingSym_(NewFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(NewFunction__Compiler)
 struct ClassInfo NewFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 133, 3, Proto_(NewFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NewFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 128, 3, Proto_(NewFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NewFunction), nil, nil };
 struct object NewFunction__Compiler = 
 	{ &NewFunction__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -198,188 +198,6 @@ obj_ emit_c_function_on_co___NewFunction__Compiler(obj_ this_, obj_ stream)
 }
 
 
-obj_ emit_call_co___NewFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	UsingSym_(clone)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	UsingSym_(new_object)
-	extern obj_ with_co___Expression(obj_ this_, obj_ value);
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(new_object)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(let)
-	UsingSym_(new_object)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		obj_ allocation, creator_call, index, let_spec;
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), Sym_(clone));
-		t1_ = Call_(on_proto, this_);
-		t2_ = Call_(access, t1_);
-		t3_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t0_, t2_);
-		allocation = t3_;
-		t0_ = Call_(count, arguments);
-		t1_ = Call_(_pl_, t0_, SmallInt_(3));
-		t2_ = new_co___Expression(Proto_(Expression), t1_);
-		creator_call = t2_;
-		t0_ = Call_(at_co_put_co_, creator_call, SmallInt_(0), Sym_(send));
-		t0_ = Call_(creator, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t2_);
-		t4_ = Call_(at_co_put_co_, creator_call, SmallInt_(1), t3_);
-		t0_ = Call_(at_co_put_co_, creator_call, SmallInt_(2), Sym_(new_object));
-		index = SmallInt_(3);
-		ForStart_(0, arguments, arg)
-			{
-			t0_ = Call_(jolt_expression, arg);
-			t1_ = Call_(at_co_put_co_, creator_call, index, t0_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(new_object), allocation);
-		t1_ = with_co___Expression(Proto_(Expression), t0_);
-		let_spec = t1_;
-		t0_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(let), let_spec, creator_call, Sym_(new_object));
-		return t0_;
-		}
-	return nil;
-}
-
-
-obj_ emit_code__NewFunction__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	UsingSym_(raw_new)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	UsingSym_(new_object)
-	extern obj_ with_co___Expression(obj_ this_, obj_ value);
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(new_object)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(let)
-	UsingSym_(new_object)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(define_send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingInt_(4)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(creator) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		obj_ allocation, body, creator_call, expr, index, let_spec;
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), Sym_(raw_new));
-		t1_ = Call_(on_proto, this_);
-		t2_ = Call_(access, t1_);
-		t3_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t0_, t2_);
-		allocation = t3_;
-		t0_ = Call_(creator, this_);
-		t1_ = Call_(arguments, t0_);
-		t2_ = Call_(count, t1_);
-		t3_ = Call_(_pl_, t2_, SmallInt_(3));
-		t4_ = new_co___Expression(Proto_(Expression), t3_);
-		creator_call = t4_;
-		t0_ = Call_(at_co_put_co_, creator_call, SmallInt_(0), Sym_(send));
-		t0_ = Call_(creator, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t2_);
-		t4_ = Call_(at_co_put_co_, creator_call, SmallInt_(1), t3_);
-		t0_ = Call_(at_co_put_co_, creator_call, SmallInt_(2), Sym_(new_object));
-		index = SmallInt_(3);
-		t0_ = Call_(creator, this_);
-		t1_ = Call_(arguments, t0_);
-		ForStart_(0, t1_, arg)
-			{
-			t0_ = Call_(name, arg);
-			t1_ = Call_(intern, t0_);
-			t2_ = Call_(at_co_put_co_, creator_call, index, t1_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(new_object), allocation);
-		t1_ = with_co___Expression(Proto_(Expression), t0_);
-		let_spec = t1_;
-		t0_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(let), let_spec, creator_call, Sym_(new_object));
-		body = t0_;
-		
-		t0_ = Call_(creator, this_);
-		t1_ = Call_(arguments, t0_);
-		t2_ = Call_(count, t1_);
-		t3_ = Call_(_pl_, t2_, SmallInt_(4));
-		t4_ = new_co___Expression(Proto_(Expression), t3_);
-		expr = t4_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(define_send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t1_);
-		t3_ = Call_(at_co_put_co_, expr, SmallInt_(1), t2_);
-		t0_ = Call_(on_proto, this_);
-		t1_ = Call_(access, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(2), t1_);
-		index = SmallInt_(3);
-		t0_ = Call_(creator, this_);
-		t1_ = Call_(arguments, t0_);
-		ForStart_(1, t1_, arg)
-			{
-			t0_ = Call_(name, arg);
-			t1_ = Call_(intern, t0_);
-			t2_ = Call_(at_co_put_co_, expr, index, t1_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(1)
-		t0_ = Call_(at_co_put_co_, expr, index, body);
-		return expr;
-		}
-	return nil;
-}
-
-
 obj_ interpret_call_with_co___NewFunction__Compiler(obj_ this_, obj_ arguments)
 {
 	obj_ t0_;
@@ -397,59 +215,12 @@ obj_ interpret_call_with_co___NewFunction__Compiler(obj_ this_, obj_ arguments)
 }
 
 
-obj_ is_translatable__NewFunction__Compiler(obj_ this_)
-{
-
-		{
-		return true_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_on_proto_co___NewFunction__Compiler(obj_ this_, obj_ creator, obj_ on_proto)
 {
 	UsingClass_(NewFunction__Compiler)
 	obj_ obj = AllocObj_(NewFunction__Compiler);
 	create_co_on_proto_co___NewFunction__Compiler(obj, creator, on_proto);
 	return obj;
-}
-
-
-obj_ translate_call_co_compiler_co___NewFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
-{
-	extern obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ object, obj_ arguments);
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingMethod_(access) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translate_co_)
-	UsingClass_(Send__Compiler)
-
-		{
-		t0_ = Call_(name, this_);
-		t1_ = Call_(on_proto, this_);
-		t2_ = Call_(access, t1_);
-		t3_ = new_co_object_co_arguments_co___Send__Compiler(Proto_(Send__Compiler), t0_, t2_, arguments);
-		t4_ = Call_(translate_co_, t3_, compiler);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___NewFunction__Compiler(obj_ this_, obj_ compiler)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(emit_code) UsingMethod_(translateExpression_co_)
-
-		{
-		t0_ = Call_(emit_code, this_);
-		t1_ = Call_(translateExpression_co_, compiler, t0_);
-		return t1_;
-		}
-	return nil;
 }
 
 

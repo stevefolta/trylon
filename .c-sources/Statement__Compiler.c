@@ -4,7 +4,7 @@ UsingSym_(Statement)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Statement__Compiler)
 struct ClassInfo Statement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 162, 1, Proto_(Statement__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Statement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 156, 1, Proto_(Statement__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Statement), nil, nil };
 struct object Statement__Compiler = 
 	{ &Statement__Compiler__classInfo_, {nil} };
 
@@ -135,40 +135,11 @@ obj_ is_self_blocking__Statement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__Statement__Compiler(obj_ this_)
-{
-	extern obj_ virtual__Standard(obj_ this_);
-	obj_ t0_;
-	UsingClass_(Standard)
-
-		{
-		t0_ = virtual__Standard(Proto_(Standard));
-		}
-	return nil;
-}
-
-
 obj_ prepare_to_emit__Statement__Compiler(obj_ this_)
 {
 
 		{
 		/*  Default: nothing to do. */
-		}
-	return nil;
-}
-
-
-obj_ translate_co___Statement__Compiler(obj_ this_, obj_ compiler)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(jolt_expression) UsingMethod_(translate_co_)
-
-		{
-		/*  Default: use jolt-expression. */
-		t0_ = Call_(jolt_expression, this_);
-		t1_ = Call_(translate_co_, t0_, compiler);
-		return t1_;
 		}
 	return nil;
 }

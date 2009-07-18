@@ -4,7 +4,7 @@ UsingSym_(SharedFieldGetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(SharedFieldGetter__Compiler)
 struct ClassInfo SharedFieldGetter__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 129, 2, Proto_(SharedFieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldGetter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 124, 2, Proto_(SharedFieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldGetter), nil, nil };
 struct object SharedFieldGetter__Compiler = 
 	{ &SharedFieldGetter__Compiler__classInfo_, {nil, nil} };
 
@@ -185,81 +185,6 @@ obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream
 }
 
 
-obj_ emit_call_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t2_);
-		t4_ = Call_(on_proto, this_);
-		t5_ = Call_(access, t4_);
-		t6_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t3_, t5_);
-		return t6_;
-		}
-	return nil;
-}
-
-
-obj_ emit_code__SharedFieldGetter__Compiler(obj_ this_)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_shared_field)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(initial_value) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		obj_ initial_value;
-		/*  If it has an intial value, emit the literal. */
-		initial_value = nil;
-		t0_ = Call_(field, this_);
-		t1_ = Call_(initial_value, t0_);
-		if (t1_)
-			{
-			t0_ = Call_(field, this_);
-			t1_ = Call_(initial_value, t0_);
-			t2_ = Call_(jolt_expression, t1_);
-			initial_value = t2_;
-			}
-		else
-			{
-			initial_value = Sym_(nil);
-			}
-		
-		/*  Just emit the declaration. */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(on_proto, this_);
-		t4_ = Call_(access, t3_);
-		t5_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(add_shared_field), t2_, t4_, initial_value);
-		return t5_;
-		}
-	return nil;
-}
-
-
 obj_ interpret_call_with_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments)
 {
 	obj_ t0_;
@@ -274,16 +199,6 @@ obj_ interpret_call_with_co___SharedFieldGetter__Compiler(obj_ this_, obj_ argum
 		t2_ = Call_(on_proto, this_);
 		t3_ = Call_(interpret_proto_send_of_co_to_co_with_co_, this_, t1_, t2_, arguments);
 		return t3_;
-		}
-	return nil;
-}
-
-
-obj_ is_translatable__SharedFieldGetter__Compiler(obj_ this_)
-{
-
-		{
-		return true_;
 		}
 	return nil;
 }
@@ -310,47 +225,6 @@ obj_ new_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field, ob
 	obj_ obj = AllocObj_(SharedFieldGetter__Compiler);
 	create_co_on_proto_co___SharedFieldGetter__Compiler(obj, field, on_proto);
 	return obj;
-}
-
-
-obj_ translate_co___SharedFieldGetter__Compiler(obj_ this_, obj_ compiler)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_shared_field)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(initial_value) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, initial_value;
-		/*  Handle the initial value. */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(initial_value, t0_);
-		initial_value = t1_;
-		t0_ = Not_(initial_value);
-		if (t0_)
-			{
-			initial_value = Sym_(nil);
-			}
-		
-		/*  Translate. */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(on_proto, this_);
-		t4_ = Call_(access, t3_);
-		t5_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(add_shared_field), t2_, t4_, initial_value);
-		expr = t5_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		}
-	return nil;
 }
 
 

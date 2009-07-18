@@ -4,7 +4,7 @@ UsingSym_(TrylonFunction)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(TrylonFunction__Compiler)
 struct ClassInfo TrylonFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 145, 0, Proto_(TrylonFunction__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 139, 0, Proto_(TrylonFunction__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonFunction), nil, nil };
 struct object TrylonFunction__Compiler = 
 	{ &TrylonFunction__Compiler__classInfo_, {} };
 
@@ -134,30 +134,6 @@ obj_ emit_c_function_on_co___TrylonFunction__Compiler(obj_ this_, obj_ stream)
 }
 
 
-obj_ emit_call_co___TrylonFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ virtual__Standard(obj_ this_);
-	obj_ t0_;
-	UsingClass_(Standard)
-
-		{
-		t0_ = virtual__Standard(Proto_(Standard));
-		}
-	return nil;
-}
-
-
-obj_ emit_code__TrylonFunction__Compiler(obj_ this_)
-{
-
-		{
-		/*  Default: nothing to do. */
-		return nil;
-		}
-	return nil;
-}
-
-
 obj_ emit_proto_send_co_arguments_co_builder_co___TrylonFunction__Compiler(obj_ this_, obj_ proto, obj_ arguments, obj_ builder)
 {
 	extern obj_ new__List__Standard(obj_ this_);
@@ -270,37 +246,11 @@ obj_ interpret_proto_send_of_co_to_co_with_co___TrylonFunction__Compiler(obj_ th
 }
 
 
-obj_ is_translatable__TrylonFunction__Compiler(obj_ this_)
-{
-
-		{
-		return nil;
-		}
-	return nil;
-}
-
-
 obj_ prepare_to_emit__TrylonFunction__Compiler(obj_ this_)
 {
 
 		{
 		/*  Default: nothing to do. */
-		}
-	return nil;
-}
-
-
-obj_ translate_call_co_compiler_co___TrylonFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(emit_call_co_) UsingMethod_(translate_co_)
-
-		{
-		/*  Default: use emit-call. */
-		t0_ = Call_(emit_call_co_, this_, arguments);
-		t1_ = Call_(translate_co_, t0_, compiler);
-		return t1_;
 		}
 	return nil;
 }

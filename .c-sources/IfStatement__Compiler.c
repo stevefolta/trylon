@@ -4,7 +4,7 @@ UsingSym_(IfStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(IfStatement__Compiler)
 struct ClassInfo IfStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 153, 6, Proto_(IfStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(IfStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 147, 6, Proto_(IfStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(IfStatement), nil, nil };
 struct object IfStatement__Compiler = 
 	{ &IfStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 
@@ -174,110 +174,6 @@ obj_ interpreted__IfStatement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__IfStatement__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(begin)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(if)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingInt_(2)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(condition) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(else_block) UsingMethod_(else_comment) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(pre_else_comments)
-	UsingClass_(Expression)
-
-		{
-		obj_ else_expression;
-		else_expression = nil;
-		t0_ = Call_(else_block, this_);
-		if (t0_)
-			{
-			obj_ size;
-			size = SmallInt_(2);
-			t0_ = Call_(pre_else_comments, this_);
-			if (t0_)
-				{
-				t0_ = Call_(pre_else_comments, this_);
-				t1_ = Call_(count, t0_);
-				t2_ = Call_(_pl_, size, t1_);
-				size = t2_;
-				}
-			t0_ = Call_(else_comment, this_);
-			if (t0_)
-				{
-				t0_ = Call_(_pl_, size, SmallInt_(1));
-				size = t0_;
-				}
-			t0_ = Call_(_eq__eq_, size, SmallInt_(2));
-			if (t0_)
-				{
-				/*  No comments. */
-				t0_ = Call_(else_block, this_);
-				t1_ = Call_(jolt_expression, t0_);
-				else_expression = t1_;
-				}
-			else
-				{
-				obj_ index;
-				t0_ = new_co___Expression(Proto_(Expression), size);
-				else_expression = t0_;
-				t0_ = Call_(at_co_put_co_, else_expression, SmallInt_(0), Sym_(begin));
-				index = SmallInt_(1);
-				t0_ = Call_(pre_else_comments, this_);
-				if (t0_)
-					{
-					t0_ = Call_(pre_else_comments, this_);
-					ForStart_(0, t0_, statement)
-						{
-						t0_ = Call_(jolt_expression, statement);
-						t1_ = Call_(at_co_put_co_, else_expression, index, t0_);
-						t0_ = Call_(_pl_, index, SmallInt_(1));
-						index = t0_;
-						}
-					ForEnd_(0)
-					}
-				t0_ = Call_(else_comment, this_);
-				if (t0_)
-					{
-					t0_ = Call_(else_comment, this_);
-					t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(comment), t0_);
-					t2_ = Call_(at_co_put_co_, else_expression, index, t1_);
-					t0_ = Call_(_pl_, index, SmallInt_(1));
-					index = t0_;
-					}
-				t0_ = Call_(else_block, this_);
-				t1_ = Call_(jolt_expression, t0_);
-				t2_ = Call_(at_co_put_co_, else_expression, index, t1_);
-				}
-			}
-		else
-			{
-			else_expression = Sym_(nil);
-			}
-		
-		t0_ = Call_(condition, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = Call_(body, this_);
-		t3_ = Call_(jolt_expression, t2_);
-		t4_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(if), t1_, t3_, else_expression);
-		return t4_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_body_co_comment_co___IfStatement__Compiler(obj_ this_, obj_ condition, obj_ body, obj_ comment)
 {
 	UsingClass_(IfStatement__Compiler)
@@ -313,38 +209,6 @@ obj_ prepare_to_emit__IfStatement__Compiler(obj_ this_)
 			t0_ = Call_(else_block, this_);
 			t1_ = Call_(prepare_to_emit, t0_);
 			}
-		}
-	return nil;
-}
-
-
-obj_ translate_co___IfStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(if)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(else_block) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ else_expr, expr;
-		t0_ = Call_(else_block, this_);
-		else_expr = t0_;
-		t0_ = Call_(else_block, this_);
-		t1_ = Not_(t0_);
-		if (t1_)
-			{
-			else_expr = Sym_(nil);
-			}
-		t0_ = Call_(condition, this_);
-		t1_ = Call_(body, this_);
-		t2_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(if), t0_, t1_, else_expr);
-		expr = t2_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

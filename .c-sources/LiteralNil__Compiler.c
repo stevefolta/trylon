@@ -4,7 +4,7 @@ UsingSym_(LiteralNil)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(LiteralNil__Compiler)
 struct ClassInfo LiteralNil__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 112, 0, Proto_(LiteralNil__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LiteralNil), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 108, 0, Proto_(LiteralNil__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LiteralNil), nil, nil };
 struct object LiteralNil__Compiler = 
 	{ &LiteralNil__Compiler__classInfo_, {} };
 
@@ -66,17 +66,6 @@ obj_ is_literal__LiteralNil__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__LiteralNil__Compiler(obj_ this_)
-{
-	UsingSym_(nil)
-
-		{
-		return Sym_(nil);
-		}
-	return nil;
-}
-
-
 obj_ new__LiteralNil__Compiler(obj_ this_)
 {
 	UsingClass_(LiteralNil__Compiler)
@@ -91,24 +80,6 @@ obj_ prepare_to_emit__LiteralNil__Compiler(obj_ this_)
 
 		{
 		/*  Nothing to do. */
-		}
-	return nil;
-}
-
-
-obj_ translate_co___LiteralNil__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), nil);
-		t1_ = Call_(translateExpression_co_, compiler, t0_);
-		return t1_;
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(SwitchParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SwitchParser__TrylonCodeParser__Compiler)
 struct ClassInfo SwitchParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 100, 0, Proto_(SwitchParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(SwitchParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 96, 0, Proto_(SwitchParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(SwitchParser), nil, nil };
 struct object SwitchParser__TrylonCodeParser__Compiler = 
 	{ &SwitchParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

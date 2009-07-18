@@ -4,7 +4,7 @@ UsingSym_(ForStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ForStatement__Compiler)
 struct ClassInfo ForStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 156, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 150, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
 struct object ForStatement__Compiler = 
 	{ &ForStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -163,36 +163,6 @@ obj_ interpreted__ForStatement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__ForStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(trylon_for)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	obj_ t7_;
-	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(local) UsingMethod_(name)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(local, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(collection, this_);
-		t4_ = Call_(jolt_expression, t3_);
-		t5_ = Call_(body, this_);
-		t6_ = Call_(jolt_expression, t5_);
-		t7_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_for), t2_, t4_, t6_);
-		return t7_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ this_, obj_ local, obj_ collection, obj_ body, obj_ comment)
 {
 	UsingClass_(ForStatement__Compiler)
@@ -213,35 +183,6 @@ obj_ prepare_to_emit__ForStatement__Compiler(obj_ this_)
 		t1_ = Call_(prepare_to_emit, t0_);
 		t0_ = Call_(body, this_);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ForStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(trylon_for)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(intern) UsingMethod_(local) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(local, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(collection, this_);
-		t4_ = Call_(body, this_);
-		t5_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_for), t2_, t3_, t4_);
-		expr = t5_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

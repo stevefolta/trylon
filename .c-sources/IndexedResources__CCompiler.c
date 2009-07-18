@@ -4,7 +4,7 @@ UsingSym_(IndexedResources)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(IndexedResources__CCompiler)
 struct ClassInfo IndexedResources__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 210, 2, Proto_(IndexedResources__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(IndexedResources), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 200, 2, Proto_(IndexedResources__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(IndexedResources), nil, nil };
 struct object IndexedResources__CCompiler = 
 	{ &IndexedResources__CCompiler__classInfo_, {nil, nil} };
 

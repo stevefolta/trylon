@@ -4,7 +4,7 @@ UsingSym_(SetArgumentFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(SetArgumentFunction__Compiler)
 struct ClassInfo SetArgumentFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 139, 1, Proto_(SetArgumentFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SetArgumentFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 134, 1, Proto_(SetArgumentFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SetArgumentFunction), nil, nil };
 struct object SetArgumentFunction__Compiler = 
 	{ &SetArgumentFunction__Compiler__classInfo_, {nil} };
 
@@ -72,30 +72,6 @@ obj_ emit_c_call_co_builder_co___SetArgumentFunction__Compiler(obj_ this_, obj_ 
 }
 
 
-obj_ emit_call_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(set)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = Call_(first_item, arguments);
-		t3_ = Call_(jolt_expression, t2_);
-		t4_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(set), t1_, t3_);
-		return t4_;
-		}
-	return nil;
-}
-
-
 obj_ interpret_call_with_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arguments)
 {
 
@@ -112,31 +88,6 @@ obj_ new_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arg)
 	obj_ obj = AllocObj_(SetArgumentFunction__Compiler);
 	create_co___SetArgumentFunction__Compiler(obj, arg);
 	return obj;
-}
-
-
-obj_ translate_call_co_compiler_co___SetArgumentFunction__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(set)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = Call_(first_item, arguments);
-		t3_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(set), t1_, t2_);
-		expr = t3_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		}
-	return nil;
 }
 
 

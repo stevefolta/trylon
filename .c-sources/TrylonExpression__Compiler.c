@@ -4,7 +4,7 @@ UsingSym_(TrylonExpression)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(TrylonExpression__Compiler)
 struct ClassInfo TrylonExpression__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 125, 0, Proto_(TrylonExpression__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonExpression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 120, 0, Proto_(TrylonExpression__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonExpression), nil, nil };
 struct object TrylonExpression__Compiler = 
 	{ &TrylonExpression__Compiler__classInfo_, {} };
 
@@ -56,19 +56,6 @@ obj_ is_literal__TrylonExpression__Compiler(obj_ this_)
 		{
 		/*  Default: no. */
 		return nil;
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__TrylonExpression__Compiler(obj_ this_)
-{
-	extern obj_ virtual__Standard(obj_ this_);
-	obj_ t0_;
-	UsingClass_(Standard)
-
-		{
-		t0_ = virtual__Standard(Proto_(Standard));
 		}
 	return nil;
 }

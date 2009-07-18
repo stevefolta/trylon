@@ -4,7 +4,7 @@ UsingSym_(SharedFieldSetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(SharedFieldSetter__Compiler)
 struct ClassInfo SharedFieldSetter__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 130, 2, Proto_(SharedFieldSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldSetter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 125, 2, Proto_(SharedFieldSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldSetter), nil, nil };
 struct object SharedFieldSetter__Compiler = 
 	{ &SharedFieldSetter__Compiler__classInfo_, {nil, nil} };
 
@@ -194,43 +194,6 @@ obj_ emit_c_function_on_co___SharedFieldSetter__Compiler(obj_ this_, obj_ stream
 }
 
 
-obj_ emit_call_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	obj_ t7_;
-	obj_ t8_;
-	obj_ t9_;
-	DefineString_(0, ":")
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(field) UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(_pl_, t1_, Str_(0));
-		t3_ = Call_(intern, t2_);
-		t4_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t3_);
-		t5_ = Call_(on_proto, this_);
-		t6_ = Call_(access, t5_);
-		t7_ = Call_(first_item, arguments);
-		t8_ = Call_(jolt_expression, t7_);
-		t9_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t4_, t6_, t8_);
-		return t9_;
-		}
-	return nil;
-}
-
-
 obj_ interpret_call_with_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments)
 {
 	obj_ t0_;
@@ -277,44 +240,6 @@ obj_ new_co_on_proto_co___SharedFieldSetter__Compiler(obj_ this_, obj_ field, ob
 	obj_ obj = AllocObj_(SharedFieldSetter__Compiler);
 	create_co_on_proto_co___SharedFieldSetter__Compiler(obj, field, on_proto);
 	return obj;
-}
-
-
-obj_ translate_call_co_compiler_co___SharedFieldSetter__Compiler(obj_ this_, obj_ arguments, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	obj_ t7_;
-	obj_ t8_;
-	DefineString_(0, ":")
-	UsingMethod_(_pl_) UsingMethod_(access) UsingMethod_(field) UsingMethod_(first_item) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(_pl_, t1_, Str_(0));
-		t3_ = Call_(intern, t2_);
-		t4_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t3_);
-		t5_ = Call_(on_proto, this_);
-		t6_ = Call_(access, t5_);
-		t7_ = Call_(first_item, arguments);
-		t8_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t4_, t6_, t7_);
-		expr = t8_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		}
-	return nil;
 }
 
 

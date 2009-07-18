@@ -4,7 +4,7 @@ UsingSym_(ReturnStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ReturnStatement__Compiler)
 struct ClassInfo ReturnStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 152, 2, Proto_(ReturnStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ReturnStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 146, 2, Proto_(ReturnStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ReturnStatement), nil, nil };
 struct object ReturnStatement__Compiler = 
 	{ &ReturnStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -91,44 +91,6 @@ obj_ interpreted__ReturnStatement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__ReturnStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(fixed_return)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(begin)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(comment) UsingMethod_(jolt_expression) UsingMethod_(value)
-	UsingClass_(Expression)
-
-		{
-		obj_ expression;
-		/*  Coke's (return) form is broken, just fake it for now so we can flush out */
-		/*  other bugs. */
-		t0_ = Call_(value, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(fixed_return), t1_);
-		expression = t2_;
-		t0_ = Call_(comment, this_);
-		if (t0_)
-			{
-			obj_ comment_expression;
-			t0_ = Call_(comment, this_);
-			t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(comment), t0_);
-			comment_expression = t1_;
-			t0_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(begin), expression, comment_expression);
-			expression = t0_;
-			}
-		return expression;
-		}
-	return nil;
-}
-
-
 obj_ new_co___ReturnStatement__Compiler(obj_ this_, obj_ value)
 {
 	UsingClass_(ReturnStatement__Compiler)
@@ -156,27 +118,6 @@ obj_ prepare_to_emit__ReturnStatement__Compiler(obj_ this_)
 		{
 		t0_ = Call_(value, this_);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ReturnStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(fixed_return)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(translateExpression_co_) UsingMethod_(value)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(value, this_);
-		t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(fixed_return), t0_);
-		expr = t1_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

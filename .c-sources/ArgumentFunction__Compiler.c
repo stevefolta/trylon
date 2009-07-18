@@ -4,7 +4,7 @@ UsingSym_(ArgumentFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(ArgumentFunction__Compiler)
 struct ClassInfo ArgumentFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 138, 1, Proto_(ArgumentFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ArgumentFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 133, 1, Proto_(ArgumentFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ArgumentFunction), nil, nil };
 struct object ArgumentFunction__Compiler = 
 	{ &ArgumentFunction__Compiler__classInfo_, {nil} };
 
@@ -66,21 +66,6 @@ obj_ emit_c_call_co_builder_co___ArgumentFunction__Compiler(obj_ this_, obj_ arg
 		{
 		t0_ = new_co___LiteralResult__CCompiler(Proto_(LiteralResult__CCompiler), this_);
 		return t0_;
-		}
-	return nil;
-}
-
-
-obj_ emit_call_co___ArgumentFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(intern) UsingMethod_(name)
-
-		{
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		return t1_;
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(ProtoFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(ProtoFunction__Compiler)
 struct ClassInfo ProtoFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 132, 1, Proto_(ProtoFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ProtoFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 127, 1, Proto_(ProtoFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ProtoFunction), nil, nil };
 struct object ProtoFunction__Compiler = 
 	{ &ProtoFunction__Compiler__classInfo_, {nil} };
 
@@ -177,82 +177,6 @@ obj_ emit_c_function_on_co___ProtoFunction__Compiler(obj_ this_, obj_ stream)
 		t0_ = Call_(write_line_co_, stream, Str_(5));
 		t0_ = Call_(write_line, stream);
 		t0_ = Call_(write_line, stream);
-		}
-	return nil;
-}
-
-
-obj_ emit_call_co___ProtoFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(access) UsingMethod_(proto)
-
-		{
-		t0_ = Call_(proto, this_);
-		t1_ = Call_(access, t0_);
-		return t1_;
-		}
-	return nil;
-}
-
-
-obj_ emit_code__ProtoFunction__Compiler(obj_ this_)
-{
-	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(install_proto_loader)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingInt_(1)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(is_main) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(parent) UsingMethod_(proto) UsingMethod_(push_front_co_)
-	UsingClass_(Expression)
-	UsingClass_(List__Standard)
-
-		{
-		obj_ expr, index, list, namespace_;
-		t0_ = Call_(proto, this_);
-		t1_ = Call_(is_main, t0_);
-		if (t1_)
-			{
-			return nil;
-			}
-		t0_ = new__List__Standard(Proto_(List__Standard));
-		list = t0_;
-		t0_ = Call_(proto, this_);
-		namespace_ = t0_;
-		while (1) {
-			ContinuePoint_(0)
-			t0_ = Call_(is_main, namespace_);
-			t1_ = Not_(t0_);
-			if (!(t1_))
-				Break_(0)
-			{
-			t0_ = Call_(push_front_co_, list, namespace_);
-			t0_ = Call_(parent, namespace_);
-			namespace_ = t0_;
-			}
-			}
-		t0_ = Call_(count, list);
-		t1_ = Call_(_pl_, t0_, SmallInt_(1));
-		t2_ = new_co___Expression(Proto_(Expression), t1_);
-		expr = t2_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(install_proto_loader));
-		index = SmallInt_(1);
-		ForStart_(1, list, namespace_)
-			{
-			t0_ = Call_(name, namespace_);
-			t1_ = Call_(intern, t0_);
-			t2_ = Call_(at_co_put_co_, expr, index, t1_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(1)
-		return expr;
 		}
 	return nil;
 }

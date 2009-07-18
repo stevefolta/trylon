@@ -6,7 +6,7 @@ UsingSym_(ObjectMap)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(ObjectMap__Standard)
 struct ClassInfo ObjectMap__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 213, 1, Proto_(ObjectMap__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(ObjectMap), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 203, 1, Proto_(ObjectMap__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(ObjectMap), nil, ((obj_) tu0_) };
 struct object ObjectMap__Standard = 
 	{ &ObjectMap__Standard__classInfo_, {nil} };
 

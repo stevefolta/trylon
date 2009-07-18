@@ -4,7 +4,7 @@ UsingSym_(ThisFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(ThisFunction__Compiler)
 struct ClassInfo ThisFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 137, 0, Proto_(ThisFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ThisFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 132, 0, Proto_(ThisFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ThisFunction), nil, nil };
 struct object ThisFunction__Compiler = 
 	{ &ThisFunction__Compiler__classInfo_, {} };
 
@@ -41,17 +41,6 @@ obj_ emit_c_call_co_builder_co___ThisFunction__Compiler(obj_ this_, obj_ argumen
 		{
 		t0_ = new_co___NameResult__CCompiler(Proto_(NameResult__CCompiler), Str_(0));
 		return t0_;
-		}
-	return nil;
-}
-
-
-obj_ emit_call_co___ThisFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	UsingSym_(self)
-
-		{
-		return Sym_(self);
 		}
 	return nil;
 }

@@ -6,7 +6,7 @@ UsingSym_(Statements)UsingClass_(Interpreter)
 UsingClass_(Object__Standard)
 UsingClass_(Statements__Interpreter)
 struct ClassInfo Statements__Interpreter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 146, 0, Proto_(Statements__Interpreter), Proto_(Interpreter), Proto_(Object__Standard), nil, Sym_(Statements), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 140, 0, Proto_(Statements__Interpreter), Proto_(Interpreter), Proto_(Object__Standard), nil, Sym_(Statements), nil, ((obj_) tu0_) };
 struct object Statements__Interpreter = 
 	{ &Statements__Interpreter__classInfo_, {} };
 

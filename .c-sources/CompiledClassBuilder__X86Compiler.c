@@ -4,7 +4,7 @@ UsingSym_(CompiledClassBuilder)UsingClass_(X86Compiler)
 UsingClass_(ClassBuilder__X86Compiler)
 UsingClass_(CompiledClassBuilder__X86Compiler)
 struct ClassInfo CompiledClassBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 192, 3, Proto_(CompiledClassBuilder__X86Compiler), Proto_(X86Compiler), Proto_(ClassBuilder__X86Compiler), nil, Sym_(CompiledClassBuilder), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 182, 3, Proto_(CompiledClassBuilder__X86Compiler), Proto_(X86Compiler), Proto_(ClassBuilder__X86Compiler), nil, Sym_(CompiledClassBuilder), nil, nil };
 struct object CompiledClassBuilder__X86Compiler = 
 	{ &CompiledClassBuilder__X86Compiler__classInfo_, {nil, nil, nil} };
 

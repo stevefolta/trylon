@@ -4,7 +4,7 @@ UsingSym_(SymbolLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(SymbolLiteral__Compiler)
 struct ClassInfo SymbolLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 111, 1, Proto_(SymbolLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SymbolLiteral), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 107, 1, Proto_(SymbolLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SymbolLiteral), nil, nil };
 struct object SymbolLiteral__Compiler = 
 	{ &SymbolLiteral__Compiler__classInfo_, {nil} };
 
@@ -127,26 +127,6 @@ obj_ is_literal__SymbolLiteral__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__SymbolLiteral__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(intern) UsingMethod_(name)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t1_);
-		return t2_;
-		}
-	return nil;
-}
-
-
 obj_ new_co___SymbolLiteral__Compiler(obj_ this_, obj_ name)
 {
 	UsingClass_(SymbolLiteral__Compiler)
@@ -161,21 +141,6 @@ obj_ prepare_to_emit__SymbolLiteral__Compiler(obj_ this_)
 
 		{
 		/*  Nothing to do. */
-		}
-	return nil;
-}
-
-
-obj_ translate_co___SymbolLiteral__Compiler(obj_ this_, obj_ compiler)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(jolt_expression) UsingMethod_(translateExpression_co_)
-
-		{
-		t0_ = Call_(jolt_expression, this_);
-		t1_ = Call_(translateExpression_co_, compiler, t0_);
-		return t1_;
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(ShortCircuitAnd)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ShortCircuitAnd__Compiler)
 struct ClassInfo ShortCircuitAnd__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 116, 2, Proto_(ShortCircuitAnd__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitAnd), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 112, 2, Proto_(ShortCircuitAnd__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitAnd), nil, nil };
 struct object ShortCircuitAnd__Compiler = 
 	{ &ShortCircuitAnd__Compiler__classInfo_, {nil, nil} };
 
@@ -126,30 +126,6 @@ obj_ interpreted__ShortCircuitAnd__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__ShortCircuitAnd__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(and)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingMethod_(expr1) UsingMethod_(expr2) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(expr1, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = Call_(expr2, this_);
-		t3_ = Call_(jolt_expression, t2_);
-		t4_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(and), t1_, t3_);
-		return t4_;
-		}
-	return nil;
-}
-
-
 obj_ new_co_with_co___ShortCircuitAnd__Compiler(obj_ this_, obj_ expr1, obj_ expr2)
 {
 	UsingClass_(ShortCircuitAnd__Compiler)
@@ -170,29 +146,6 @@ obj_ prepare_to_emit__ShortCircuitAnd__Compiler(obj_ this_)
 		t1_ = Call_(prepare_to_emit, t0_);
 		t0_ = Call_(expr2, this_);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ShortCircuitAnd__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(and)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(expr1) UsingMethod_(expr2) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(expr1, this_);
-		t1_ = Call_(expr2, this_);
-		t2_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(and), t0_, t1_);
-		expr = t2_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

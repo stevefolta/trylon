@@ -4,7 +4,7 @@ UsingSym_(CatchParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CatchParser__TrylonCodeParser__Compiler)
 struct ClassInfo CatchParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 91, 0, Proto_(CatchParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(CatchParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 87, 0, Proto_(CatchParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(CatchParser), nil, nil };
 struct object CatchParser__TrylonCodeParser__Compiler = 
 	{ &CatchParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

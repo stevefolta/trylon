@@ -4,7 +4,7 @@ UsingSym_(NameResult)UsingClass_(CCompiler)
 UsingClass_(ExpressionResult__CCompiler)
 UsingClass_(NameResult__CCompiler)
 struct ClassInfo NameResult__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 204, 2, Proto_(NameResult__CCompiler), Proto_(CCompiler), Proto_(ExpressionResult__CCompiler), nil, Sym_(NameResult), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 194, 2, Proto_(NameResult__CCompiler), Proto_(CCompiler), Proto_(ExpressionResult__CCompiler), nil, Sym_(NameResult), nil, nil };
 struct object NameResult__CCompiler = 
 	{ &NameResult__CCompiler__classInfo_, {nil, nil} };
 

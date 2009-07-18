@@ -4,7 +4,7 @@ UsingSym_(BreakStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BreakStatement__Compiler)
 struct ClassInfo BreakStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 157, 1, Proto_(BreakStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BreakStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 151, 1, Proto_(BreakStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BreakStatement), nil, nil };
 struct object BreakStatement__Compiler = 
 	{ &BreakStatement__Compiler__classInfo_, {nil} };
 
@@ -66,21 +66,6 @@ obj_ interpreted__BreakStatement__Compiler(obj_ this_)
 
 		{
 		Throw_(Proto_(Break__Statements__Interpreter));
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__BreakStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co___Expression(obj_ this_, obj_ value);
-	UsingSym_(fixed_break)
-	obj_ t0_;
-	UsingClass_(Expression)
-
-		{
-		t0_ = with_co___Expression(Proto_(Expression), Sym_(fixed_break));
-		return t0_;
 		}
 	return nil;
 }

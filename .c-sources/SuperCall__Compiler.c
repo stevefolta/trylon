@@ -4,7 +4,7 @@ UsingSym_(SuperCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(SuperCall__Compiler)
 struct ClassInfo SuperCall__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 107, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 103, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall), nil, nil };
 struct object SuperCall__Compiler = 
 	{ &SuperCall__Compiler__classInfo_, {nil, nil} };
 
@@ -172,52 +172,6 @@ obj_ interpreted__SuperCall__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__SuperCall__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(super_send)
-	UsingSym_(self)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(name)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, index;
-		t0_ = Call_(arguments, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(3));
-		t3_ = new_co___Expression(Proto_(Expression), t2_);
-		expr = t3_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(super_send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(1), t1_);
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(2), Sym_(self));
-		index = SmallInt_(3);
-		t0_ = Call_(arguments, this_);
-		ForStart_(0, t0_, arg)
-			{
-			t0_ = Call_(jolt_expression, arg);
-			t1_ = Call_(at_co_put_co_, expr, index, t0_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		return expr;
-		}
-	return nil;
-}
-
-
 obj_ new_co_arguments_co___SuperCall__Compiler(obj_ this_, obj_ name, obj_ arguments)
 {
 	UsingClass_(SuperCall__Compiler)
@@ -239,53 +193,6 @@ obj_ prepare_to_emit__SuperCall__Compiler(obj_ this_)
 			t0_ = Call_(prepare_to_emit, arg);
 			}
 		ForEnd_(0)
-		}
-	return nil;
-}
-
-
-obj_ translate_co___SuperCall__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(super_send)
-	UsingSym_(self)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(3)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(at_co_put_co_) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(intern) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(name) UsingMethod_(translateExpression_co_) UsingMethod_(translateSymbol_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, index;
-		t0_ = Call_(arguments, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(3));
-		t3_ = new_co___Expression(Proto_(Expression), t2_);
-		expr = t3_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(super_send));
-		t0_ = Call_(name, this_);
-		t1_ = Call_(intern, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(1), t1_);
-		t0_ = Call_(translateSymbol_co_, compiler, Sym_(self));
-		t1_ = Call_(at_co_put_co_, expr, SmallInt_(2), t0_);
-		index = SmallInt_(3);
-		t0_ = Call_(arguments, this_);
-		ForStart_(0, t0_, arg)
-			{
-			t0_ = Call_(at_co_put_co_, expr, index, arg);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

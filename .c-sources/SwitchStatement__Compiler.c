@@ -4,7 +4,7 @@ UsingSym_(SwitchStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(SwitchStatement__Compiler)
 struct ClassInfo SwitchStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 161, 6, Proto_(SwitchStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(SwitchStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 155, 6, Proto_(SwitchStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(SwitchStatement), nil, nil };
 struct object SwitchStatement__Compiler = 
 	{ &SwitchStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 
@@ -139,61 +139,6 @@ obj_ interpreted__SwitchStatement__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__SwitchStatement__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(switch)
-	UsingSym_(nil)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(clauses) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(else_clause) UsingMethod_(expression) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, expr_size, index;
-		t0_ = Call_(clauses, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(3));
-		expr_size = t2_;
-		t0_ = new_co___Expression(Proto_(Expression), expr_size);
-		expr = t0_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(switch));
-		t0_ = Call_(expression, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(1), t1_);
-		index = SmallInt_(2);
-		t0_ = Call_(clauses, this_);
-		ForStart_(0, t0_, clause)
-			{
-			t0_ = Call_(jolt_expression, clause);
-			t1_ = Call_(at_co_put_co_, expr, index, t0_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = Call_(else_clause, this_);
-		if (t0_)
-			{
-			t0_ = Call_(else_clause, this_);
-			t1_ = Call_(jolt_expression, t0_);
-			t2_ = Call_(at_co_put_co_, expr, index, t1_);
-			}
-		else
-			{
-			t0_ = Call_(at_co_put_co_, expr, index, Sym_(nil));
-			}
-		return expr;
-		}
-	return nil;
-}
-
-
 obj_ new_co_value_comment_co___SwitchStatement__Compiler(obj_ this_, obj_ expression, obj_ value_comment)
 {
 	UsingClass_(SwitchStatement__Compiler)
@@ -224,60 +169,6 @@ obj_ prepare_to_emit__SwitchStatement__Compiler(obj_ this_)
 			t0_ = Call_(else_clause, this_);
 			t1_ = Call_(prepare_to_emit, t0_);
 			}
-		}
-	return nil;
-}
-
-
-obj_ translate_co___SwitchStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(switch)
-	UsingSym_(nil)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingInt_(1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(clauses) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(else_clause) UsingMethod_(expression) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(translate_jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, expr_size, index;
-		t0_ = Call_(clauses, this_);
-		t1_ = Call_(count, t0_);
-		t2_ = Call_(_pl_, t1_, SmallInt_(3));
-		expr_size = t2_;
-		t0_ = new_co___Expression(Proto_(Expression), expr_size);
-		expr = t0_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(switch));
-		t0_ = Call_(expression, this_);
-		t1_ = Call_(at_co_put_co_, expr, SmallInt_(1), t0_);
-		index = SmallInt_(2);
-		t0_ = Call_(clauses, this_);
-		ForStart_(0, t0_, clause)
-			{
-			t0_ = Call_(translate_jolt_expression, clause);
-			t1_ = Call_(at_co_put_co_, expr, index, t0_);
-			t0_ = Call_(_pl_, index, SmallInt_(1));
-			index = t0_;
-			}
-		ForEnd_(0)
-		t0_ = Call_(else_clause, this_);
-		if (t0_)
-			{
-			t0_ = Call_(else_clause, this_);
-			t1_ = Call_(translate_jolt_expression, t0_);
-			t2_ = Call_(at_co_put_co_, expr, index, t1_);
-			}
-		else
-			{
-			t0_ = Call_(at_co_put_co_, expr, index, Sym_(nil));
-			}
-		return expr;
 		}
 	return nil;
 }

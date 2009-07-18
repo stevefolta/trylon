@@ -4,7 +4,7 @@ UsingSym_(NilTest)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(NilTest__Compiler)
 struct ClassInfo NilTest__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 119, 2, Proto_(NilTest__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(NilTest), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 115, 2, Proto_(NilTest__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(NilTest), nil, nil };
 struct object NilTest__Compiler = 
 	{ &NilTest__Compiler__classInfo_, {nil, nil} };
 
@@ -110,47 +110,6 @@ obj_ interpreted__NilTest__Compiler(obj_ this_)
 }
 
 
-obj_ jolt_expression__NilTest__Compiler(obj_ this_)
-{
-	UsingSym_(isNil)
-	UsingSym_(notNil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingMethod_(at_co_put_co_) UsingMethod_(is_nil) UsingMethod_(jolt_expression) UsingMethod_(object)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, message;
-		message = Sym_(isNil);
-		t0_ = Call_(is_nil, this_);
-		t1_ = Not_(t0_);
-		if (t1_)
-			{
-			message = Sym_(notNil);
-			}
-		t0_ = new_co___Expression(Proto_(Expression), SmallInt_(3));
-		expr = t0_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(send));
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), message);
-		t1_ = Call_(at_co_put_co_, expr, SmallInt_(1), t0_);
-		t0_ = Call_(object, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = Call_(at_co_put_co_, expr, SmallInt_(2), t1_);
-		return expr;
-		}
-	return nil;
-}
-
-
 obj_ new_co_is_nil_co___NilTest__Compiler(obj_ this_, obj_ object, obj_ is_nil)
 {
 	UsingClass_(NilTest__Compiler)
@@ -169,46 +128,6 @@ obj_ prepare_to_emit__NilTest__Compiler(obj_ this_)
 		{
 		t0_ = Call_(object, this_);
 		t1_ = Call_(prepare_to_emit, t0_);
-		}
-	return nil;
-}
-
-
-obj_ translate_co___NilTest__Compiler(obj_ this_, obj_ compiler)
-{
-	UsingSym_(isNil)
-	UsingSym_(notNil)
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	UsingInt_(3)
-	UsingInt_(0)
-	UsingInt_(1)
-	UsingInt_(2)
-	UsingMethod_(at_co_put_co_) UsingMethod_(is_nil) UsingMethod_(object) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, message;
-		message = Sym_(isNil);
-		t0_ = Call_(is_nil, this_);
-		t1_ = Not_(t0_);
-		if (t1_)
-			{
-			message = Sym_(notNil);
-			}
-		t0_ = new_co___Expression(Proto_(Expression), SmallInt_(3));
-		expr = t0_;
-		t0_ = Call_(at_co_put_co_, expr, SmallInt_(0), Sym_(send));
-		t0_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), message);
-		t1_ = Call_(at_co_put_co_, expr, SmallInt_(1), t0_);
-		t0_ = Call_(object, this_);
-		t1_ = Call_(at_co_put_co_, expr, SmallInt_(2), t0_);
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
 		}
 	return nil;
 }

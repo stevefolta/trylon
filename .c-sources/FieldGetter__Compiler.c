@@ -4,7 +4,7 @@ UsingSym_(FieldGetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(FieldGetter__Compiler)
 struct ClassInfo FieldGetter__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 127, 2, Proto_(FieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(FieldGetter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 122, 2, Proto_(FieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(FieldGetter), nil, nil };
 struct object FieldGetter__Compiler = 
 	{ &FieldGetter__Compiler__classInfo_, {nil, nil} };
 
@@ -198,37 +198,6 @@ obj_ emit_c_function_on_co___FieldGetter__Compiler(obj_ this_, obj_ stream)
 		t0_ = Call_(write_co_, stream, Str_(3));
 		t0_ = Call_(write_line, stream);
 		t0_ = Call_(write_line, stream);
-		}
-	return nil;
-}
-
-
-obj_ emit_call_co___FieldGetter__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		/*  Could do this more efficiently... */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t2_);
-		t4_ = Call_(on_proto, this_);
-		t5_ = Call_(access, t4_);
-		t6_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t3_, t5_);
-		return t6_;
 		}
 	return nil;
 }
