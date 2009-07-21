@@ -12,8 +12,8 @@ create: expression
 	this expression = expression
 
 
-prepare-to-emit
-	expression prepare-to-emit
+resolve
+	expression resolve
 
 
 compile: builder

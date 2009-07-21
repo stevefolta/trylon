@@ -4,7 +4,7 @@ superclass TrylonExpression
 create
 
 
-prepare-to-emit
+resolve
 	# Nothing to do.
 
 

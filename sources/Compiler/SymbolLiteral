@@ -8,7 +8,7 @@ create: name
 	this name = name
 
 
-prepare-to-emit
+resolve
 	# Nothing to do.
 
 

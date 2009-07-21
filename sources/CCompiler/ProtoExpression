@@ -7,7 +7,7 @@ fields proto
 create: proto
 	this proto = proto
 
-prepare-to-emit
+resolve
 
 is-literal
 	return true

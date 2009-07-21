@@ -15,7 +15,7 @@ extend Compiler TrylonExpression
 extend Compiler Send
 	emit-code: builder
 		# Special-case calls on prototypes.
-		# "Compiler Send prepare-to-emit" has found the ProtoFunction for us.
+		# "Compiler Send resolve" has found the ProtoFunction for us.
 		if proto-result-function
 			return proto-result-function emit-c-call: arguments builder: builder
 
@@ -29,7 +29,7 @@ extend Compiler Send
 
 extend Compiler FunctionCall
 	emit-code: builder
-		# We already got the function in prepare-to-emit.
+		# We already got the function in 'resolve'.
 		if function == nil
 			throw MessageException new: "There is no \"" + name + "\" function."
 		

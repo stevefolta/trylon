@@ -22,7 +22,7 @@ compile: function
 	old-compiler = compiler
 	compiler = this
 	parse-tree = function body
-	parse-tree prepare-to-emit
+	parse-tree resolve
 
 	# Codegen.
 	method-builder = MethodBuilder new: function code: parse-tree

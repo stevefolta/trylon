@@ -88,7 +88,7 @@ compile-program: compile-symbols
 	status-reporter report: "Preparing to emit..."
 	status-reporter indent
 	for proto in proto-queue
-		proto prepare-to-emit
+		proto resolve
 	status-reporter unindent
 
 	# Set up Standard Object.

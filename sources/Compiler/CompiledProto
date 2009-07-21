@@ -289,12 +289,12 @@ needs-finalizer
 	return false
 
 
-prepare-to-emit
+resolve
 	if superclass == nil
 		ensure-superclasses: (compiler get-standard-class: "Object")
 	
 	for function in functions values
-		function prepare-to-emit
+		function resolve
 
 
 newly-defined-functions

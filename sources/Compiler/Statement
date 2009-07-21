@@ -3,7 +3,7 @@ trylon Statement
 fields comment
 
 
-prepare-to-emit
+resolve
 	# Default: nothing to do.
 
 compile: builder

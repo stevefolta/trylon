@@ -8,7 +8,7 @@ create: char
 	this char = char
 
 
-prepare-to-emit
+resolve
 	# Nothing to do.
 
 

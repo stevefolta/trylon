@@ -11,7 +11,7 @@ interpret: code
 	parser = Compiler TrylonCodeParser new: lines in: context
 	parse-tree = parser parse
 	compiler = this
-	parse-tree prepare-to-emit
+	parse-tree resolve
 	result = parse-tree interpreted
 	compiler = nil
 	return result

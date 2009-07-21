@@ -14,12 +14,12 @@ add-clause: clause
 	clauses append: clause
 
 
-prepare-to-emit
-	expression prepare-to-emit
+resolve
+	expression resolve
 	for clause in clauses
-		clause prepare-to-emit
+		clause resolve
 	if else-clause
-		else-clause prepare-to-emit
+		else-clause resolve
 
 
 compile: builder

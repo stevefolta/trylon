@@ -9,9 +9,9 @@ create: expr1 with: expr2
 	this expr2 = expr2
 
 
-prepare-to-emit
-	expr1 prepare-to-emit
-	expr2 prepare-to-emit
+resolve
+	expr1 resolve
+	expr2 resolve
 
 
 compile: builder

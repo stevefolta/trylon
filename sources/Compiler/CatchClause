@@ -20,8 +20,8 @@ enclosing-method-context
 	return parent enclosing-method-context
 
 
-prepare-to-emit
-	body prepare-to-emit
+resolve
+	body resolve
 
 
 

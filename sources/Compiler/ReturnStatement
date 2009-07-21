@@ -12,8 +12,8 @@ create: value
 	this value = value
 
 
-prepare-to-emit
-	value prepare-to-emit
+resolve
+	value resolve
 
 
 compile: builder
