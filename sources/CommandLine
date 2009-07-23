@@ -51,9 +51,9 @@ run
 				(add_history [line _stringValue])
 			last-line = line
 		try
-			lines = (Compiler LinesLexer new: line + "\n") lex
+			lines = (Trylon LinesLexer new: line + "\n") lex
 			line = lines first-item
-			words = Compiler TrylonWordsLexer new: line
+			words = Trylon WordsLexer new: line
 			parser = 	--
 				Compiler TrylonExpressionParser new: words line: line context: context
 			parser = Compiler Parser new: line context: context

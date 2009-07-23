@@ -6,7 +6,7 @@ word-size = 4
 reload: proto from: file-path
 	# Read into an ExistingProto.
 	source = File contents-of: file-path
-	lines = Compiler LinesLexer read: source
+	lines = Trylon LinesLexer read: source
 	existing-proto = Compiler ExistingProto new: proto
 	old-compiler = compiler
 	compiler = this

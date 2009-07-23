@@ -12,7 +12,7 @@ create: text
 
 
 words
-	return TrylonWordsLexer new: text
+	return WordsLexer new: text
 
 
 flattened-block

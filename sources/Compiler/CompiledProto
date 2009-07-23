@@ -177,7 +177,7 @@ load-subproto: name
 			return add-proto: name directory: (directory at: name)
 		else if directory contains: name
 			proto = add-proto: name
-			lines = (LinesLexer new: (directory at: name) contents) lex
+			lines = (Trylon LinesLexer new: (directory at: name) contents) lex
 			TrylonProtoParser parse-proto-contents: lines into: proto
 			return proto
 
@@ -197,7 +197,7 @@ add-directory: directory
 	directories append: directory
 
 	if directory contains: "main"
-		lines = (LinesLexer new: (directory at: "main") contents) lex
+		lines = (Trylon LinesLexer new: (directory at: "main") contents) lex
 		TrylonProtoParser parse-proto-contents: lines into: this
 
 
@@ -236,7 +236,8 @@ setup-main: main-directory library-directory: library-directory
 			pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
 			proto-function = ProtoFunction new: pepsi-proto
 			standard-proto functions at: "Pepsi" put: proto-function
-			lines = (LinesLexer new: (standard-directory at: "Pepsi") contents) lex
+			lines = 	--
+				(Trylon LinesLexer new: (standard-directory at: "Pepsi") contents) lex
 			TrylonProtoParser parse-proto-contents: lines into: pepsi-proto
 			compiler proto-queue append: pepsi-proto
 	
@@ -253,7 +254,7 @@ setup-main: main-directory library-directory: library-directory
 	# Load our "main"s
 	for directory in directories
 		if directory contains: "main"
-			lines = (LinesLexer new: (directory at: "main") contents) lex
+			lines = (Trylon LinesLexer new: (directory at: "main") contents) lex
 			TrylonProtoParser parse-proto-contents: lines into: this
 	
 	# Load up standard protos.

@@ -104,7 +104,7 @@ load-from: file-name
 		return
 	
 	try
-		load-lines: (LinesLexer read: file contents)
+		load-lines: (Trylon LinesLexer read: file contents)
 	catch Exception
 		throw 	--
 			MessageException new: 	--

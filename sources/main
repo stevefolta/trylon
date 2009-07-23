@@ -327,7 +327,7 @@ dump-expr: expr level: level
 test-words-lexer: filename
 	try
 		for line in (File new: filename) contents lines
-			lexer = Compiler TrylonWordsLexer new: line
+			lexer = Trylon WordsLexer new: line
 			while !lexer is-done
 				print-line: lexer next
 	catch Exception
@@ -336,7 +336,7 @@ test-words-lexer: filename
 
 test-lines-lexer: filename
 	try
-		lexer = Compiler LinesLexer new: (File new: filename) contents
+		lexer = Trylon LinesLexer new: (File new: filename) contents
 		lines = lexer lex
 		dump-lines: lines level: 0
 	catch Exception

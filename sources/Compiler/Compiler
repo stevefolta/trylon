@@ -32,7 +32,7 @@ return-value
 compile-file: file as: name into: parent-proto
 	status-reporter = VT100StatusReporter new
 	proto = parent-proto add-proto: name
-	lines = (LinesLexer new: file contents) lex
+	lines = (Trylon LinesLexer new: file contents) lex
 	parser = TrylonProtoParser new: lines into: proto context: parent-proto
 	parser parse
 	return proto

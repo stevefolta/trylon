@@ -1,5 +1,8 @@
 trylon SmallStringBuilder
 
+# This is better for strings that are built more or less one character at a
+# time.  Otherwise, use StringBuilder.
+
 fields size capacity buffer
 
 create
