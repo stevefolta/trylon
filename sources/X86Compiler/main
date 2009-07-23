@@ -17,6 +17,28 @@ reload: proto from: file-path
 	ExistingClassBuilder build: existing-proto
 
 
+load: file-path into: proto as: name
+	# Set up.
+	old-compiler = compiler
+	compiler = this
+	caught-exception = nil
+
+	# Load the file as a new class.
+	try
+		parent-class = Compiler ExistingProto new: proto
+		compiled-class = parent-class add-proto: name
+		lines = Trylon LinesLexer read: (File contents-of: file-path)
+		Compiler TrylonProtoParser parse-proto-contents: lines into: compiled-class
+		ClassBuilder build: parent-class
+	else
+		caught-exception = exception
+	
+	# Clean up.
+	compiler = old-compiler
+	if caught-exception
+		throw caught-exception
+
+
 compile: function
 	# Function resolution.
 	old-compiler = compiler

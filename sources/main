@@ -12,6 +12,7 @@ main: arguments
 		do-coke-lexer-test = false
 		do-words-lexer-test = false
 		do-lines-lexer-test = false
+		run-classes = false
 		for arg in arguments tail
 			if arg starts-with: "--"
 				compile-symbols append: (arg substr: 2)
@@ -23,6 +24,8 @@ main: arguments
 					do-words-lexer-test = true
 				else if arg == "--test-lines-lexer"
 					do-lines-lexer-test = true
+				else if arg == "--run-class" || arg == "-r"
+					run-classes = true
 				else if arg == "--verbose" || 	--
 				        arg == "--target-c" || arg == "--target-jolt"
 					# Allowed.
@@ -45,8 +48,16 @@ main: arguments
 				test-lines-lexer: arg
 
 		else if !file-names is-empty
-			for file-name in file-names
-				Interpreter interpret: (File contents-of: file-name)
+			if run-classes
+				iff !support-new-methods
+					error: "Running classes is not supported by this build of Trylon."
+				iff support-new-methods
+					script-path = file-names pop-front
+					X86Compiler load: script-path into: Main as: "Script"
+					Main Script main: file-names 	# 'file-names' is really the arguments.
+			else
+				for file-name in file-names
+					Interpreter interpret: (File contents-of: file-name)
 
 		else
 			return-value = Compiler compile: compile-symbols
@@ -364,6 +375,12 @@ references
 		iff test-x86-compiler
 			X86Compiler test
 
+
+iff support-new-methods
+	class References
+		Script
+			# Defining the 'Script' message, so the compiler won't complain about
+			# calling it.
 
 
 # Copyright 2007 Steve Folta.  See the License file.

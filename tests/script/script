@@ -1,0 +1,6 @@
+trylon Script
+
+main: args
+	send: "Hello world!"
+
+
