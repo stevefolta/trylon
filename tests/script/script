@@ -2,5 +2,15 @@ trylon Script
 
 main: args
 	send: "Hello world!"
+	foo
+	Foo foo
 
 
+foo
+	for item in ("One", "Two", "Three")
+		send: item
+
+class Foo
+	foo
+		for item in ("Four", "Five", "Six")
+			send: item

@@ -124,6 +124,9 @@ declaring-selector: name
 calling-selector: name
 	(symbol-info-for: name) called = true
 
+adding-class: class
+	proto-queue append: class
+
 using-symbol: name
 	(symbol-info-for: name) used-as-symbol = true
 

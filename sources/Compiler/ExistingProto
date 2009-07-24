@@ -8,6 +8,10 @@ create: name proto: proto
 	this name = name
 	this proto = proto
 	new-functions = Dictionary new
+	iff targeting-jolt
+		is-main = (proto == Trylon)
+	iff !targeting-jolt
+		is-main = (proto == Main)
 
 create: proto
 	create: proto .proto-name proto: proto
@@ -92,13 +96,9 @@ lookup-instance-function: name
 parent
 	if proto responds-to: '.parent-context'
 		parent-context = proto .parent-context
+		if parent-context == nil
+			return nil
 		existing-proto = ExistingProto new: parent-context
-		iff targeting-jolt
-			if parent-context == Trylon
-				existing-proto is-main = true
-		iff !targeting-jolt
-			if parent-context == Main
-				existing-proto is-main = true
 		return existing-proto
 	return nil
 
