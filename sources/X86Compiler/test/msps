@@ -1,4 +1,4 @@
-#!/usr/bin/env trylon
+#!/usr/bin/env trylon-interpreter
 
 send: "Timing..."
 BenchObject = X86Compiler test BenchObject

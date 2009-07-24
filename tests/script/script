@@ -1,7 +1,15 @@
+#!/usr/bin/env trylon
+
 trylon Script
 
 main: args
 	send: "Hello world!"
+	args pop-front
+	if !args is-empty
+		send: "Args:"
+		for arg in args
+			send: ("  ", arg)
+		send: "-----"
 	foo
 	Foo foo
 

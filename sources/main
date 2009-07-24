@@ -12,9 +12,10 @@ main: arguments
 		do-coke-lexer-test = false
 		do-words-lexer-test = false
 		do-lines-lexer-test = false
-		run-classes = false
+		interpret = false
+		pass-remaining-args = false
 		for arg in arguments tail
-			if arg starts-with: "--"
+			if arg starts-with: "--" && !pass-remaining-args
 				compile-symbols append: (arg substr: 2)
 				if arg == "--lex-test"
 					do-lex-test = true
@@ -25,13 +26,18 @@ main: arguments
 				else if arg == "--test-lines-lexer"
 					do-lines-lexer-test = true
 				else if arg == "--run-class" || arg == "-r"
-					run-classes = true
+					interpret = false
+					pass-remaining-args = true
 				else if arg == "--verbose" || 	--
 				        arg == "--target-c" || arg == "--target-jolt"
 					# Allowed.
 				else
 					throw MessageException new: ("Unknown option: " + arg)
+			else if arg == "-i" && !pass-remaining-args
+				interpret = true
 			else
+				if !interpret
+					pass-remaining-args = true
 				file-names append: arg
 
 		if do-lex-test
@@ -48,11 +54,11 @@ main: arguments
 				test-lines-lexer: arg
 
 		else if !file-names is-empty
-			if run-classes
+			if !interpret
 				iff !support-new-methods
 					error: "Running classes is not supported by this build of Trylon."
 				iff support-new-methods
-					script-path = file-names pop-front
+					script-path = file-names first-item
 					X86Compiler load: script-path into: Main as: "Script"
 					Main Script main: file-names 	# 'file-names' is really the arguments.
 			else
