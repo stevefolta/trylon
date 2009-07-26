@@ -1,0 +1,11 @@
+#!/usr/bin/env trylon
+
+main: args
+	had-item = false
+	for item in nil
+		had-item = true
+	if had-item
+		send: "nil as collection: FAILED."
+		return 1
+	send: "nil as collection: succeeded."
+
