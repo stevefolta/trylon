@@ -1,9 +1,15 @@
 trylon nil
 
+# This is a single object used for 'nil' when 'nil-object' is on in the
+# build-settings.
+#
+# The main advantage is that sends to 'nil' can be handled as exceptions rather
+# than crashing the program.
+
 
 message-not-understood
-	# This is the weak form of "message-not-understood" that is currently
-	# implemented.
+	# This is the weak form of "message-not-understood" that is used when
+	# 'symbol-dispatch' is turned off in the build-settings.
 	throw MessageException new: "Attempt to use 'nil'."
 
 
