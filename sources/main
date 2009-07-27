@@ -380,6 +380,9 @@ references
 		X86Compiler
 		iff test-x86-compiler
 			X86Compiler test
+		# Nice things to have for scripts, that aren't already used by the compiler
+		# itself:
+		Standard Test
 
 
 iff support-new-methods
