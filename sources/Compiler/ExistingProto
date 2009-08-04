@@ -56,13 +56,7 @@ function-for: selector in: proto
 	# Is it a ProtoFunction?
 	function-name = selector string
 	if (function-name index-of: `:`) < 0
-		# 'support-subprotos' must be on!
-		found-subproto = nil
-		if proto .subprotos
-			for subproto in proto .subprotos
-				if subproto .proto-name == function-name
-					found-subproto = subproto
-					break
+		found-subproto = find-subproto: function-name
 		if found-subproto
 			existing-proto = ExistingProto new: function-name proto: found-subproto
 			return ProtoFunction new: existing-proto
@@ -73,17 +67,27 @@ function-for: selector in: proto
 	return PrimitiveFunction new: function-name on-proto: existing-proto
 
 
+find-subproto: name
+	# 'support-subprotos' must be on!
+	if proto .subprotos
+		for subproto in proto .subprotos
+			if subproto .proto-name == name
+				return subproto
+	
+	return nil
+
+
 lookup-function: name visited-protos: visited-protos
 	return lookup-function: name
 
 
 lookup-instance-function: name
+	found-subproto = find-subproto: name
+	if found-subproto
+		existing-proto = ExistingProto new: name proto: found-subproto
+		return ProtoFunction new: existing-proto
+
 	if proto responds-to: name intern
-		first-char = name at: 0
-		if (first-char >= `A`) && (first-char <= `Z`)
-			existing-proto = 	--
-				ExistingProto new: name proto: (proto perform: name intern)
-			return ProtoFunction new: existing-proto
 		return PrimitiveFunction new: name on-proto: proto
 	
 	function = new-functions at: name
