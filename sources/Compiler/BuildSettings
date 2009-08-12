@@ -82,7 +82,7 @@ target: target
 
 load
 	# Load global build-settings first.
-	library-path = compiler find-library-path
+	library-path = find-library-path
 	if library-path
 		load-from: library-path + "/build-settings"
 	# Then user's semi-global build-settings.
