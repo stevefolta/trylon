@@ -163,6 +163,7 @@ add-proto: name directory: directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto
 	new-functions at: name put: proto-function
+	compiler adding-class: new-proto
 	status-reporter unindent
 	return new-proto
 

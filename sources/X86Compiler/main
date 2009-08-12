@@ -1,4 +1,5 @@
 trylon X86Compiler
+fields class-queue
 
 word-size = 4
 
@@ -22,18 +23,22 @@ load: file-path into: proto as: name
 	old-compiler = compiler
 	compiler = this
 	caught-exception = nil
+	class-queue = List new
 
 	# Load the file as a new class.
 	try
 		parent-class = Compiler ExistingProto new: proto
+		adding-class: parent-class
 		compiled-class = parent-class add-proto: name
 		lines = Trylon LinesLexer read: (File contents-of: file-path)
 		Compiler TrylonProtoParser parse-proto-contents: lines into: compiled-class
-		ClassBuilder build: parent-class
+		for class-spec in class-queue
+			ClassBuilder build: class-spec
 	else
 		caught-exception = exception
 	
 	# Clean up.
+	class-queue = nil
 	compiler = old-compiler
 	if caught-exception
 		throw caught-exception
