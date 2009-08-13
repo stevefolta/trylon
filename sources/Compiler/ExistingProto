@@ -1,20 +1,41 @@
 trylon ExistingProto
 superclass ClassContext
 
-fields name proto new-functions is-main
+fields name proto new-functions is-main directories
 
 
 create: name proto: proto
 	this name = name
 	this proto = proto
 	new-functions = Dictionary new
+	directories = List new
 	iff targeting-jolt
 		is-main = (proto == Trylon)
 	iff !targeting-jolt
 		is-main = (proto == Main)
+	if is-main
+		setup-main
 
 create: proto
 	create: proto .proto-name proto: proto
+
+
+setup-main
+	# Add current directory (or "./sources").
+	main-directory = FileDirectory new: "."
+	if main-directory entry-is-directory: "sources"
+		main-directory = main-directory at: "sources"
+
+	# Add the system library.
+	library-path = find-library-path
+	if library-path
+		try
+			library-directory = FileDirectory new: library-path
+			directories append: library-directory
+
+	# Add the library-dirs.
+	for directory in build-settings library-dirs
+		add-directory: (FileDirectory new: directory)
 
 
 lookup-function: name
