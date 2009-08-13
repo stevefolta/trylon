@@ -5,17 +5,29 @@ word-size = 4
 
 
 reload: proto from: file-path
-	# Read into an ExistingProto.
-	source = File contents-of: file-path
-	lines = Trylon LinesLexer read: source
+	# Set up.
 	old-compiler = compiler
 	compiler = this
-	existing-proto = Compiler ExistingProto new: proto
-	Compiler TrylonProtoParser parse-proto-contents: lines into: existing-proto
-	compiler = old-compiler
+	caught-exception = nil
+	class-queue = List new
 
-	# Build the ExistingProto into the in-process class.
-	ExistingClassBuilder build: existing-proto
+	try
+		# Read into an ExistingProto.
+		source = File contents-of: file-path
+		lines = Trylon LinesLexer read: source
+		existing-proto = Compiler ExistingProto new: proto
+		Compiler TrylonProtoParser parse-proto-contents: lines into: existing-proto
+
+		# Build the ExistingProto into the in-process class.
+		ExistingClassBuilder build: existing-proto
+	else
+		caught-exception = exception
+
+	# Clean up.
+	class-queue = nil
+	compiler = old-compiler
+	if caught-exception
+		throw caught-exception
 
 
 load: file-path into: proto as: name
