@@ -114,9 +114,7 @@ calling-selector: selector
 	# Nothing to do.
 
 adding-class: class
-	# Nothing to do... I think.  If libraries are dragged in that aren't already
-	# built into the compiler, we may need to keep a "proto-queue" like Compiler
-	# does.
+	class-queue append: class
 
 build-settings
 	if .build-settings == nil
