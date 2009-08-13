@@ -32,8 +32,6 @@ setup-main
 		try
 			library-directory = FileDirectory new: library-path
 			directories append: library-directory
-		else
-			# Ignore it if it doesn't exist.
 
 	# Add the library-dirs.
 	for directory in build-settings library-dirs

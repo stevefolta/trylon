@@ -173,6 +173,8 @@ extend Compiler TryStatement
 		if else-clause
 			builder add-line: "TryElse_"
 			else-clause emit-code: builder
+		else
+			builder add-line: "TryHasNoElse_"
 		builder add-line: "EndTry_"
 
 extend Compiler CatchClause

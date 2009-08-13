@@ -318,6 +318,9 @@ extern obj_ currentException_;
 		} 	\
 	}
 
+#define TryHasNoElse_ 	\
+	PopException_();
+
 
 #define Switch_(value) 	\
 	{ 	\
