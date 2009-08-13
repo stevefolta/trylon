@@ -1,0 +1,34 @@
+#!/usr/bin/env trylon
+trylon test-fixed-bugs
+
+# This should be run both as a script, and compiled via C, to test codegen of
+# both.
+
+main: args
+	try
+		Test name: "Elseless try" check: test-elseless-try
+	else
+		send: exception message
+
+
+error: message
+	msg-string = StringBuilder new
+	for item in message
+		msg-string += item string
+	throw MessageException new: msg-string string
+
+
+test-elseless-try
+	# 2009.8.13: The C compiler generated bad code for this which would cause a
+	# crash, or at least a premature exit while complaining about a bad
+	# PopException_().
+	try
+		thrower
+	return true
+
+thrower
+	# Actually, the bug is that it crashed, so this message wouldn't be seen.
+	error: "Elseless try failed!"
+
+
+
