@@ -20,10 +20,26 @@ error: message
 
 test-elseless-try
 	# 2009.8.13: The C compiler generated bad code for this which would cause a
-	# crash, or at least a premature exit while complaining about a bad
-	# PopException_().
+	# crash, or a premature exit while complaining about a bad PopException_(),
+	# or an infinite loop.
+
+	# Make sure the body pops the exception stack.
+	try
+		try
+			# Don't need to do anything here, just the elseless "try" itself is
+			# enough.  Since we're testing the "try" body, we *can't* do anything
+			# here that might throw an exception.
+		# This throw should end up in the outer "try".  If it ends up in the inner
+		# "try", we'll be in an infinite loop.
+		thrower
+
+	# Make sure a caught exception in a non-existent "else" clause pops the
+	# exception stack.
 	try
 		throw-and-catch
+		# If "throw-and-catch" doesn't pop the exception, this throw will end up in
+		# its stack frame, which has already exited and been overwritten, causing a
+		# crash.
 		thrower
 	return true
 
