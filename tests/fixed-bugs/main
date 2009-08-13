@@ -23,6 +23,12 @@ test-elseless-try
 	# crash, or at least a premature exit while complaining about a bad
 	# PopException_().
 	try
+		throw-and-catch
+		thrower
+	return true
+
+throw-and-catch
+	try
 		thrower
 	return true
 
