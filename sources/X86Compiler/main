@@ -57,6 +57,11 @@ load: file-path into: proto as: name
 
 
 compile: function
+	if function is-primitive
+		error: 	--
+			('"', function on-proto name, " ", function name, '"', 	--
+			" is primitive, and can't be compiled to x86.")
+
 	# Function resolution.
 	old-compiler = compiler
 	compiler = this
