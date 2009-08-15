@@ -31,7 +31,7 @@ in: directory for: name parent: parent
 
 	if directory contains: name
 		status-reporter = compiler status-reporter
-		status-reporter report: "Loading " + name + " into " + full-name + "..."
+		status-reporter report: "Loading " + name + " into " + parent full-name + "..."
 		status-reporter indent
 
 		new-proto = CompiledProto new: name parent: parent
@@ -321,18 +321,6 @@ resolve
 newly-defined-functions
 	return functions pairs
 
-
-# Helpers
-
-full-name
-	if is-main
-		return name
-	result = this name
-	proto = parent
-	while !proto is-main
-		result = proto name + " " + result
-		proto = proto parent
-	return result
 
 
 

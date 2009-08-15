@@ -70,10 +70,8 @@ lookup-function: name
 	
 	return nil
 
+
 function-for: selector in: proto
-	if !(proto responds-to: selector)
-		return nil
-	
 	# Is it a ProtoFunction?
 	function-name = selector string
 	if (function-name index-of: `:`) < 0
@@ -81,6 +79,9 @@ function-for: selector in: proto
 		if found-subproto-fn
 			return found-subproto-fn
 
+	if !(proto responds-to: selector)
+		return nil
+	
 	existing-proto = this
 	if proto != this
 		existing-proto = ExistingProto new: proto .proto-name proto: proto

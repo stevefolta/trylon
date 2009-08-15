@@ -24,5 +24,27 @@ newly-defined-functions
 	# "Dictionary pairs".
 	virtual
 
+name
+	virtual
+parent
+	virtual
+is-main
+	virtual
+
+
+# Helpers
+
+full-name
+	if is-main
+		return name
+	result = this name
+	proto = parent
+	while !proto is-main
+		result = proto name + " " + result
+		proto = proto parent
+	return result
+
+
 
 # Copyright 2009 Steve Folta.  See the License file.
+

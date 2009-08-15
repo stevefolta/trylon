@@ -1,5 +1,4 @@
 #!/usr/bin/env trylon
-
 trylon Script
 
 main: args
@@ -12,6 +11,16 @@ main: args
 		send: "-----"
 	foo
 	Foo foo
+
+	try
+		Test name: "Script class load from directory" 	--
+			check: ScriptTest result against: 'dir-from-existing'
+		Test name: "Script class load from file" 	--
+			check: ScriptTest Subclass result against: 'file-from-new'
+		Test name: "Script class load from library file" 	--
+			check: ScriptTestFile result against: 'file-from-existing'
+	else
+		send: exception message
 
 
 foo

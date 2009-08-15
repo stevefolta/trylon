@@ -1,0 +1,7 @@
+trylon Subclass
+
+
+result
+	return 'file-from-new'
+
+
