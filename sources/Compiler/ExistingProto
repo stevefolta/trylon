@@ -103,6 +103,10 @@ load-subproto: name
 		return nil
 	
 	existing-proto = ExistingProto new: name proto: found-subproto
+	for directory in directories
+		if directory entry-is-directory: name
+			existing-proto add-directory: directory[name]
+
 	return ProtoFunction new: existing-proto
 
 
@@ -198,6 +202,10 @@ add-proto: name directory: directory
 
 add-proto: name
 	return add-proto: name directory: nil
+
+
+add-directory: directory
+	directories append: directory
 
 
 source-name: name
