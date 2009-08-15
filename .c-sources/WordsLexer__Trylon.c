@@ -1,12 +1,12 @@
 #include "Trylon_.h"
 
-UsingSym_(TrylonWordsLexer)UsingClass_(Compiler)
+UsingSym_(WordsLexer)UsingClass_(Trylon)
 UsingClass_(Object__Standard)
-UsingClass_(TrylonWordsLexer__Compiler)
-struct ClassInfo TrylonWordsLexer__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 68, 3, Proto_(TrylonWordsLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonWordsLexer), nil, nil };
-struct object TrylonWordsLexer__Compiler = 
-	{ &TrylonWordsLexer__Compiler__classInfo_, {nil, nil, nil} };
+UsingClass_(WordsLexer__Trylon)
+struct ClassInfo WordsLexer__Trylon__classInfo_ = 
+	{ StdClassRef_(Class__CImplementation), 78, 3, Proto_(WordsLexer__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(WordsLexer), nil, nil };
+struct object WordsLexer__Trylon = 
+	{ &WordsLexer__Trylon__classInfo_, {nil, nil, nil} };
 
 
 #define cached_word__fld_	(0)
@@ -14,7 +14,7 @@ struct object TrylonWordsLexer__Compiler =
 #define stopper__fld_	(2)
 
 
-obj_ create_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ string)
+obj_ create_co___WordsLexer__Trylon(obj_ this_, obj_ string)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -30,7 +30,7 @@ obj_ create_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ string)
 }
 
 
-obj_ create_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ create_co_to_co___WordsLexer__Trylon(obj_ this_, obj_ start, obj_ stopper)
 {
 	obj_ t0_;
 	UsingMethod_(p_co_) UsingMethod_(stopper_co_)
@@ -43,7 +43,7 @@ obj_ create_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ start, obj_ s
 }
 
 
-obj_ current__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ current__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -64,7 +64,7 @@ obj_ current__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ current_item__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ current_item__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	UsingMethod_(current)
@@ -77,7 +77,7 @@ obj_ current_item__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ go_forward__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ go_forward__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	UsingMethod_(next)
@@ -89,7 +89,7 @@ obj_ go_forward__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ is_done__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ is_done__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -104,7 +104,7 @@ obj_ is_done__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ is_empty__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ is_empty__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -119,7 +119,7 @@ obj_ is_empty__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ iterator__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ iterator__WordsLexer__Trylon(obj_ this_)
 {
 
 		{
@@ -129,25 +129,25 @@ obj_ iterator__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ new_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ string)
+obj_ new_co___WordsLexer__Trylon(obj_ this_, obj_ string)
 {
-	UsingClass_(TrylonWordsLexer__Compiler)
-	obj_ obj = AllocObj_(TrylonWordsLexer__Compiler);
-	create_co___TrylonWordsLexer__Compiler(obj, string);
+	UsingClass_(WordsLexer__Trylon)
+	obj_ obj = AllocObj_(WordsLexer__Trylon);
+	create_co___WordsLexer__Trylon(obj, string);
 	return obj;
 }
 
 
-obj_ new_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ new_co_to_co___WordsLexer__Trylon(obj_ this_, obj_ start, obj_ stopper)
 {
-	UsingClass_(TrylonWordsLexer__Compiler)
-	obj_ obj = AllocObj_(TrylonWordsLexer__Compiler);
-	create_co_to_co___TrylonWordsLexer__Compiler(obj, start, stopper);
+	UsingClass_(WordsLexer__Trylon)
+	obj_ obj = AllocObj_(WordsLexer__Trylon);
+	create_co_to_co___WordsLexer__Trylon(obj, start, stopper);
 	return obj;
 }
 
 
-obj_ next__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ next__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	UsingMethod_(cached_word) UsingMethod_(cached_word_co_) UsingMethod_(parse_next_word)
@@ -172,13 +172,13 @@ obj_ next__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ parse_char_escape_from_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ parse_char_escape_from_co_to_co___WordsLexer__Trylon(obj_ this_, obj_ start, obj_ stopper)
 {
-	extern obj_ new_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ new_co_to_co___WordsLexer__Trylon(obj_ this_, obj_ start, obj_ stopper);
 	UsingSym_(u)
 	UsingSym_(U)
 	extern obj_ new_co___Tuple__Standard(obj_, obj_);
-	extern obj_ new__SmallStringBuilder__Compiler(obj_ this_);
+	extern obj_ new__SmallStringBuilder__Standard(obj_ this_);
 	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	obj_ t0_;
 	obj_ t1_;
@@ -190,12 +190,12 @@ obj_ parse_char_escape_from_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, ob
 	UsingInt_(2)
 	UsingInt_(2)
 	UsingMethod_(_eq__eq_) UsingMethod_(deref_char) UsingMethod_(first_character) UsingMethod_(p) UsingMethod_(parse_escaped_char_into_co_) UsingMethod_(parse_hex_co_) UsingMethod_(string)
-	UsingClass_(SmallStringBuilder__Compiler)
-	UsingClass_(TrylonWordsLexer__Compiler)
+	UsingClass_(SmallStringBuilder__Standard)
+	UsingClass_(WordsLexer__Trylon)
 
 		{
 		obj_ c, lexer;
-		t0_ = new_co_to_co___TrylonWordsLexer__Compiler(Proto_(TrylonWordsLexer__Compiler), start, stopper);
+		t0_ = new_co_to_co___WordsLexer__Trylon(Proto_(WordsLexer__Trylon), start, stopper);
 		lexer = t0_;
 		t0_ = Call_(deref_char, start);
 		c = t0_;
@@ -224,7 +224,7 @@ obj_ parse_char_escape_from_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, ob
 		else
 			{
 			obj_ builder;
-			t2_ = new__SmallStringBuilder__Compiler(Proto_(SmallStringBuilder__Compiler));
+			t2_ = new__SmallStringBuilder__Standard(Proto_(SmallStringBuilder__Standard));
 			builder = t2_;
 			t0_ = Call_(parse_escaped_char_into_co_, lexer, builder);
 			t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), SmallInt_(2));
@@ -240,7 +240,7 @@ obj_ parse_char_escape_from_co_to_co___TrylonWordsLexer__Compiler(obj_ this_, ob
 }
 
 
-obj_ parse_escaped_char_into_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ builder)
+obj_ parse_escaped_char_into_co___WordsLexer__Trylon(obj_ this_, obj_ builder)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -482,7 +482,7 @@ obj_ parse_escaped_char_into_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ bu
 }
 
 
-obj_ parse_hex_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ max_digits)
+obj_ parse_hex_co___WordsLexer__Trylon(obj_ this_, obj_ max_digits)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -581,14 +581,14 @@ obj_ parse_hex_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ max_digits)
 }
 
 
-obj_ parse_next_word__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ parse_next_word__WordsLexer__Trylon(obj_ this_)
 {
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ from_co_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
@@ -642,7 +642,7 @@ obj_ parse_next_word__TrylonWordsLexer__Compiler(obj_ this_)
 	DefineString_(0, "Unterminated quote.")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(add_from_co_to_co_) UsingMethod_(deref_char) UsingMethod_(is_whitespace) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(parse_escaped_char_into_co_) UsingMethod_(stopper) UsingMethod_(string)
 	UsingClass_(MessageException__Standard)
-	UsingClass_(SmallStringBuilder__Compiler)
+	UsingClass_(SmallStringBuilder__Standard)
 	UsingClass_(String__Standard)
 
 		{
@@ -844,7 +844,7 @@ obj_ parse_next_word__TrylonWordsLexer__Compiler(obj_ this_)
 									if (t0_)
 										{
 										t0_ = Call_(p, this_);
-										t1_ = from_co_to_co___SmallStringBuilder__Compiler(Proto_(SmallStringBuilder__Compiler), word_start, t0_);
+										t1_ = from_co_to_co___SmallStringBuilder__Standard(Proto_(SmallStringBuilder__Standard), word_start, t0_);
 										builder = t1_;
 										}
 									else
@@ -941,7 +941,7 @@ obj_ parse_next_word__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ peek__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ peek__WordsLexer__Trylon(obj_ this_)
 {
 	obj_ t0_;
 	UsingMethod_(current)
@@ -954,7 +954,7 @@ obj_ peek__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ remainder__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ remainder__WordsLexer__Trylon(obj_ this_)
 {
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
@@ -973,16 +973,20 @@ obj_ remainder__TrylonWordsLexer__Compiler(obj_ this_)
 }
 
 
-obj_ require_eol__TrylonWordsLexer__Compiler(obj_ this_)
+obj_ require_eol__WordsLexer__Trylon(obj_ this_)
 {
-	extern obj_ new_co_token_co___ParseException__Compiler(obj_ this_, obj_ error_message, obj_ token);
+	extern obj_ error_co___Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	UsingSym_(Extra__stuff__at__end__of__line___40__34_)
+	UsingSym_(_34__41__dt_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
+	obj_ t3_;
+	UsingInt_(3)
 	DefineString_(0, "#")
-	DefineString_(1, "Extra stuff at end of line.")
 	UsingMethod_(_eq__eq_) UsingMethod_(current) UsingMethod_(is_empty) UsingMethod_(remainder)
-	UsingClass_(ParseException__Compiler)
+	UsingClass_(Standard)
 
 		{
 		t0_ = Call_(is_empty, this_);
@@ -997,15 +1001,18 @@ obj_ require_eol__TrylonWordsLexer__Compiler(obj_ this_)
 			t0_ = Call_(remainder, this_);
 			return t0_;
 			}
-		t1_ = Call_(current, this_);
-		t2_ = new_co_token_co___ParseException__Compiler(Proto_(ParseException__Compiler), Str_(1), t1_);
-		Throw_(t2_);
+		t1_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), SmallInt_(3));
+		t1_->fields[1] = Sym_(Extra__stuff__at__end__of__line___40__34_);
+		t2_ = Call_(remainder, this_);
+		t1_->fields[2] = t2_;
+		t1_->fields[3] = Sym_(_34__41__dt_);
+		t3_ = error_co___Standard(Proto_(Standard), t1_);
 		}
 	return nil;
 }
 
 
-obj_ utf8_encode_co_into_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ char_, obj_ builder)
+obj_ utf8_encode_co_into_co___WordsLexer__Trylon(obj_ this_, obj_ char_, obj_ builder)
 {
 	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;

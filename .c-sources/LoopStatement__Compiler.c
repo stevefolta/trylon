@@ -4,7 +4,7 @@ UsingSym_(LoopStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(LoopStatement__Compiler)
 struct ClassInfo LoopStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 148, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 166, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement), nil, nil };
 struct object LoopStatement__Compiler = 
 	{ &LoopStatement__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -126,15 +126,15 @@ obj_ new_co_comment_co___LoopStatement__Compiler(obj_ this_, obj_ body, obj_ com
 }
 
 
-obj_ prepare_to_emit__LoopStatement__Compiler(obj_ this_)
+obj_ resolve__LoopStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

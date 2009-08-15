@@ -6,7 +6,7 @@ UsingSym_(List)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(List__Standard)
 struct ClassInfo List__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 14, 2, Proto_(List__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(List), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 18, 2, Proto_(List__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(List), nil, ((obj_) tu0_) };
 struct object List__Standard = 
 	{ &List__Standard__classInfo_, {nil, nil} };
 

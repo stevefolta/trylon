@@ -4,7 +4,7 @@ UsingSym_(Expression)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(Expression)
 struct ClassInfo Expression__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 20, 1, Proto_(Expression), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Expression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 23, 1, Proto_(Expression), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Expression), nil, nil };
 struct object Expression = 
 	{ &Expression__classInfo_, {nil} };
 

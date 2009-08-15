@@ -6,7 +6,7 @@ UsingSym_(Tuple)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Tuple__Standard)
 struct ClassInfo Tuple__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 18, 1, Proto_(Tuple__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Tuple), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 22, 1, Proto_(Tuple__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Tuple), nil, ((obj_) tu0_) };
 struct object Tuple__Standard = 
 	{ &Tuple__Standard__classInfo_, {nil} };
 

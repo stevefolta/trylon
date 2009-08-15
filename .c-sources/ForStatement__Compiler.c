@@ -4,7 +4,7 @@ UsingSym_(ForStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ForStatement__Compiler)
 struct ClassInfo ForStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 150, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 168, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
 struct object ForStatement__Compiler = 
 	{ &ForStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -172,17 +172,17 @@ obj_ new_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ this_
 }
 
 
-obj_ prepare_to_emit__ForStatement__Compiler(obj_ this_)
+obj_ resolve__ForStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(collection, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

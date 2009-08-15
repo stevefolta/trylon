@@ -4,7 +4,7 @@ UsingSym_(Send)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(Send__Compiler)
 struct ClassInfo Send__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 101, 4, Proto_(Send__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(Send), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 137, 4, Proto_(Send__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(Send), nil, nil };
 struct object Send__Compiler = 
 	{ &Send__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -119,7 +119,7 @@ obj_ emit_code_co___Send__Compiler(obj_ this_, obj_ builder)
 		{
 		obj_ object_result;
 		/*  Special-case calls on prototypes. */
-		/*  "Compiler Send prepare-to-emit" has found the ProtoFunction for us. */
+		/*  "Compiler Send resolve" has found the ProtoFunction for us. */
 		t0_ = Call_(proto_result_function, this_);
 		if (t0_)
 			{
@@ -186,13 +186,13 @@ obj_ new_co_object_co_arguments_co___Send__Compiler(obj_ this_, obj_ name, obj_ 
 }
 
 
-obj_ prepare_to_emit__Send__Compiler(obj_ this_)
+obj_ resolve__Send__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	UsingMethod_(arguments) UsingMethod_(calling_selector_co_) UsingMethod_(current_item) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(object) UsingMethod_(prepare_to_emit) UsingMethod_(proto) UsingMethod_(proto_result_function) UsingMethod_(proto_result_function_co_)
+	UsingMethod_(arguments) UsingMethod_(calling_selector_co_) UsingMethod_(current_item) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(is_a_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lookup_function_co_) UsingMethod_(name) UsingMethod_(object) UsingMethod_(proto) UsingMethod_(proto_result_function) UsingMethod_(proto_result_function_co_) UsingMethod_(resolve)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(FunctionCall__Compiler)
 	UsingClass_(ProtoFunction__Compiler)
@@ -203,11 +203,11 @@ obj_ prepare_to_emit__Send__Compiler(obj_ this_)
 		t0_ = Call_(name, this_);
 		t1_ = Call_(calling_selector_co_, SharedField_(compiler, Main), t0_);
 		t0_ = Call_(object, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(arguments, this_);
 		ForStart_(0, t0_, arg)
 			{
-			t0_ = Call_(prepare_to_emit, arg);
+			t0_ = Call_(resolve, arg);
 			}
 		ForEnd_(0)
 		

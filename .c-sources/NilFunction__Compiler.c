@@ -4,7 +4,7 @@ UsingSym_(NilFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(NilFunction__Compiler)
 struct ClassInfo NilFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 129, 0, Proto_(NilFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NilFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 124, 0, Proto_(NilFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NilFunction), nil, nil };
 struct object NilFunction__Compiler = 
 	{ &NilFunction__Compiler__classInfo_, {} };
 

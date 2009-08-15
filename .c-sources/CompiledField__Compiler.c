@@ -4,7 +4,7 @@ UsingSym_(CompiledField)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CompiledField__Compiler)
 struct ClassInfo CompiledField__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 174, 6, Proto_(CompiledField__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CompiledField), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 101, 6, Proto_(CompiledField__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CompiledField), nil, nil };
 struct object CompiledField__Compiler = 
 	{ &CompiledField__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 

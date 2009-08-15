@@ -6,7 +6,7 @@ UsingSym_(Iterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 struct ClassInfo Iterator__Dictionary__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 39, 1, Proto_(Iterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Iterator), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 43, 1, Proto_(Iterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Iterator), nil, ((obj_) tu0_) };
 struct object Iterator__Dictionary__Standard = 
 	{ &Iterator__Dictionary__Standard__classInfo_, {nil} };
 

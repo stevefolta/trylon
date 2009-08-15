@@ -4,7 +4,7 @@ UsingSym_(BlockStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BlockStatement__Compiler)
 struct ClassInfo BlockStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 145, 2, Proto_(BlockStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlockStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 163, 2, Proto_(BlockStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlockStatement), nil, nil };
 struct object BlockStatement__Compiler = 
 	{ &BlockStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -87,15 +87,15 @@ obj_ new_co___BlockStatement__Compiler(obj_ this_, obj_ block)
 }
 
 
-obj_ prepare_to_emit__BlockStatement__Compiler(obj_ this_)
+obj_ resolve__BlockStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(block) UsingMethod_(prepare_to_emit)
+	UsingMethod_(block) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(block, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

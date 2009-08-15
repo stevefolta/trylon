@@ -4,7 +4,7 @@ UsingSym_(ProtoExpression)UsingClass_(CCompiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ProtoExpression__CCompiler)
 struct ClassInfo ProtoExpression__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 118, 1, Proto_(ProtoExpression__CCompiler), Proto_(CCompiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ProtoExpression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 155, 1, Proto_(ProtoExpression__CCompiler), Proto_(CCompiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ProtoExpression), nil, nil };
 struct object ProtoExpression__CCompiler = 
 	{ &ProtoExpression__CCompiler__classInfo_, {nil} };
 
@@ -79,7 +79,7 @@ obj_ new_co___ProtoExpression__CCompiler(obj_ this_, obj_ proto)
 }
 
 
-obj_ prepare_to_emit__ProtoExpression__CCompiler(obj_ this_)
+obj_ resolve__ProtoExpression__CCompiler(obj_ this_)
 {
 	return nil;
 }

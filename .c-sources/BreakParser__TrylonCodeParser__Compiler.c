@@ -4,7 +4,7 @@ UsingSym_(BreakParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(BreakParser__TrylonCodeParser__Compiler)
 struct ClassInfo BreakParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 86, 0, Proto_(BreakParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(BreakParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 103, 0, Proto_(BreakParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(BreakParser), nil, nil };
 struct object BreakParser__TrylonCodeParser__Compiler = 
 	{ &BreakParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

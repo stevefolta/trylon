@@ -4,7 +4,7 @@ UsingSym_(CommentParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CommentParser__TrylonCodeParser__Compiler)
 struct ClassInfo CommentParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 88, 0, Proto_(CommentParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(CommentParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 105, 0, Proto_(CommentParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(CommentParser), nil, nil };
 struct object CommentParser__TrylonCodeParser__Compiler = 
 	{ &CommentParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

@@ -1,19 +1,19 @@
 #include "Trylon_.h"
 
-UsingSym_(CodeLine)UsingClass_(Compiler)
+UsingSym_(CodeLine)UsingClass_(Trylon)
 UsingClass_(Object__Standard)
-UsingClass_(CodeLine__Compiler)
-struct ClassInfo CodeLine__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 185, 2, Proto_(CodeLine__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CodeLine), nil, nil };
-struct object CodeLine__Compiler = 
-	{ &CodeLine__Compiler__classInfo_, {nil, nil} };
+UsingClass_(CodeLine__Trylon)
+struct ClassInfo CodeLine__Trylon__classInfo_ = 
+	{ StdClassRef_(Class__CImplementation), 191, 2, Proto_(CodeLine__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(CodeLine), nil, nil };
+struct object CodeLine__Trylon = 
+	{ &CodeLine__Trylon__classInfo_, {nil, nil} };
 
 
 #define text__fld_	(0)
 #define block__fld_	(1)
 
 
-obj_ add_to_flattened_lines_co___CodeLine__Compiler(obj_ this_, obj_ lines)
+obj_ add_to_flattened_lines_co___CodeLine__Trylon(obj_ this_, obj_ lines)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -37,7 +37,7 @@ obj_ add_to_flattened_lines_co___CodeLine__Compiler(obj_ this_, obj_ lines)
 }
 
 
-obj_ create_co___CodeLine__Compiler(obj_ this_, obj_ text)
+obj_ create_co___CodeLine__Trylon(obj_ this_, obj_ text)
 {
 	obj_ t0_;
 	UsingMethod_(block_co_) UsingMethod_(text_co_)
@@ -50,7 +50,7 @@ obj_ create_co___CodeLine__Compiler(obj_ this_, obj_ text)
 }
 
 
-obj_ create_co_block_co___CodeLine__Compiler(obj_ this_, obj_ text, obj_ block)
+obj_ create_co_block_co___CodeLine__Trylon(obj_ this_, obj_ text, obj_ block)
 {
 	obj_ t0_;
 	UsingMethod_(block_co_) UsingMethod_(text_co_)
@@ -63,7 +63,7 @@ obj_ create_co_block_co___CodeLine__Compiler(obj_ this_, obj_ text, obj_ block)
 }
 
 
-obj_ flattened_block__CodeLine__Compiler(obj_ this_)
+obj_ flattened_block__CodeLine__Trylon(obj_ this_)
 {
 	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
@@ -90,7 +90,7 @@ obj_ flattened_block__CodeLine__Compiler(obj_ this_)
 }
 
 
-obj_ flattened_block_text__CodeLine__Compiler(obj_ this_)
+obj_ flattened_block_text__CodeLine__Trylon(obj_ this_)
 {
 	extern obj_ new__StringBuilder__Standard(obj_ this_);
 	obj_ t0_;
@@ -118,35 +118,35 @@ obj_ flattened_block_text__CodeLine__Compiler(obj_ this_)
 }
 
 
-obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text)
+obj_ new_co___CodeLine__Trylon(obj_ this_, obj_ text)
 {
-	UsingClass_(CodeLine__Compiler)
-	obj_ obj = AllocObj_(CodeLine__Compiler);
-	create_co___CodeLine__Compiler(obj, text);
+	UsingClass_(CodeLine__Trylon)
+	obj_ obj = AllocObj_(CodeLine__Trylon);
+	create_co___CodeLine__Trylon(obj, text);
 	return obj;
 }
 
 
-obj_ new_co_block_co___CodeLine__Compiler(obj_ this_, obj_ text, obj_ block)
+obj_ new_co_block_co___CodeLine__Trylon(obj_ this_, obj_ text, obj_ block)
 {
-	UsingClass_(CodeLine__Compiler)
-	obj_ obj = AllocObj_(CodeLine__Compiler);
-	create_co_block_co___CodeLine__Compiler(obj, text, block);
+	UsingClass_(CodeLine__Trylon)
+	obj_ obj = AllocObj_(CodeLine__Trylon);
+	create_co_block_co___CodeLine__Trylon(obj, text, block);
 	return obj;
 }
 
 
-obj_ words__CodeLine__Compiler(obj_ this_)
+obj_ words__CodeLine__Trylon(obj_ this_)
 {
-	extern obj_ new_co___TrylonWordsLexer__Compiler(obj_ this_, obj_ string);
+	extern obj_ new_co___WordsLexer__Trylon(obj_ this_, obj_ string);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(text)
-	UsingClass_(TrylonWordsLexer__Compiler)
+	UsingClass_(WordsLexer__Trylon)
 
 		{
 		t0_ = Call_(text, this_);
-		t1_ = new_co___TrylonWordsLexer__Compiler(Proto_(TrylonWordsLexer__Compiler), t0_);
+		t1_ = new_co___WordsLexer__Trylon(Proto_(WordsLexer__Trylon), t0_);
 		return t1_;
 		}
 	return nil;

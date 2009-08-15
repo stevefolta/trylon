@@ -6,7 +6,7 @@ UsingSym_(Dictionary)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Dictionary__Standard)
 struct ClassInfo Dictionary__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 35, 2, Proto_(Dictionary__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Dictionary), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 39, 2, Proto_(Dictionary__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Dictionary), nil, ((obj_) tu0_) };
 struct object Dictionary__Standard = 
 	{ &Dictionary__Standard__classInfo_, {nil, nil} };
 

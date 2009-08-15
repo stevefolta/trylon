@@ -4,7 +4,7 @@ UsingSym_(String)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(String__Standard)
 struct ClassInfo String__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 17, 2, Proto_(String__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(String), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 21, 2, Proto_(String__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(String), nil, nil };
 struct object String__Standard = 
 	{ &String__Standard__classInfo_, {nil, nil} };
 

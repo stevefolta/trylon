@@ -4,7 +4,7 @@ UsingSym_(SuperCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(SuperCall__Compiler)
 struct ClassInfo SuperCall__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 103, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 139, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall), nil, nil };
 struct object SuperCall__Compiler = 
 	{ &SuperCall__Compiler__classInfo_, {nil, nil} };
 
@@ -181,16 +181,16 @@ obj_ new_co_arguments_co___SuperCall__Compiler(obj_ this_, obj_ name, obj_ argum
 }
 
 
-obj_ prepare_to_emit__SuperCall__Compiler(obj_ this_)
+obj_ resolve__SuperCall__Compiler(obj_ this_)
 {
 	obj_ t0_;
-	UsingMethod_(arguments) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(prepare_to_emit)
+	UsingMethod_(arguments) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(arguments, this_);
 		ForStart_(0, t0_, arg)
 			{
-			t0_ = Call_(prepare_to_emit, arg);
+			t0_ = Call_(resolve, arg);
 			}
 		ForEnd_(0)
 		}

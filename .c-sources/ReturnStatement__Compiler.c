@@ -4,7 +4,7 @@ UsingSym_(ReturnStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ReturnStatement__Compiler)
 struct ClassInfo ReturnStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 146, 2, Proto_(ReturnStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ReturnStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 164, 2, Proto_(ReturnStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ReturnStatement), nil, nil };
 struct object ReturnStatement__Compiler = 
 	{ &ReturnStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -109,15 +109,15 @@ obj_ new_co_comment_co___ReturnStatement__Compiler(obj_ this_, obj_ value, obj_ 
 }
 
 
-obj_ prepare_to_emit__ReturnStatement__Compiler(obj_ this_)
+obj_ resolve__ReturnStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(prepare_to_emit) UsingMethod_(value)
+	UsingMethod_(resolve) UsingMethod_(value)
 
 		{
 		t0_ = Call_(value, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

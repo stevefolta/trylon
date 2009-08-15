@@ -4,7 +4,7 @@ UsingSym_(WhileStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(WhileStatement__Compiler)
 struct ClassInfo WhileStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 149, 4, Proto_(WhileStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(WhileStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 167, 4, Proto_(WhileStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(WhileStatement), nil, nil };
 struct object WhileStatement__Compiler = 
 	{ &WhileStatement__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -152,17 +152,17 @@ obj_ new_co_body_co_comment_co___WhileStatement__Compiler(obj_ this_, obj_ condi
 }
 
 
-obj_ prepare_to_emit__WhileStatement__Compiler(obj_ this_)
+obj_ resolve__WhileStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(condition, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

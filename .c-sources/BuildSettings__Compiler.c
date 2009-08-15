@@ -4,7 +4,7 @@ UsingSym_(BuildSettings)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(BuildSettings__Compiler)
 struct ClassInfo BuildSettings__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 76, 1, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 83, 1, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings), nil, nil };
 struct object BuildSettings__Compiler = 
 	{ &BuildSettings__Compiler__classInfo_, {nil} };
 
@@ -323,6 +323,7 @@ obj_ linker__BuildSettings__Compiler(obj_ this_)
 
 obj_ load__BuildSettings__Compiler(obj_ this_)
 {
+	extern obj_ find_library_path__Compiler(obj_ this_);
 	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
 	obj_ t0_;
 	obj_ t1_;
@@ -334,14 +335,14 @@ obj_ load__BuildSettings__Compiler(obj_ this_)
 	DefineString_(4, "build-settings")
 	DefineString_(5, "symbol-dispatch")
 	DefineString_(6, "support-perform")
-	UsingMethod_(_pl_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(dictionary) UsingMethod_(find_library_path) UsingMethod_(is_empty) UsingMethod_(load_from_co_)
-	UsingSharedField_(compiler, Main) 
+	UsingMethod_(_pl_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(dictionary) UsingMethod_(is_empty) UsingMethod_(load_from_co_)
+	UsingClass_(Compiler)
 	UsingClass_(System__Standard)
 
 		{
 		obj_ home_path, library_path;
 		/*  Load global build-settings first. */
-		t0_ = Call_(find_library_path, SharedField_(compiler, Main));
+		t0_ = find_library_path__Compiler(Proto_(Compiler));
 		library_path = t0_;
 		if (library_path)
 			{
@@ -382,7 +383,7 @@ obj_ load__BuildSettings__Compiler(obj_ this_)
 obj_ load_from_co___BuildSettings__Compiler(obj_ this_, obj_ file_name)
 {
 	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ read_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ read_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
@@ -393,7 +394,7 @@ obj_ load_from_co___BuildSettings__Compiler(obj_ this_, obj_ file_name)
 	DefineString_(1, "\": ")
 	UsingMethod_(_pl_) UsingMethod_(contents) UsingMethod_(exists) UsingMethod_(load_lines_co_) UsingMethod_(message)
 	UsingClass_(File__Standard)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -410,7 +411,7 @@ obj_ load_from_co___BuildSettings__Compiler(obj_ this_, obj_ file_name)
 		Try_
 			{
 			t0_ = Call_(contents, file);
-			t1_ = read_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t0_);
+			t1_ = read_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t0_);
 			t2_ = Call_(load_lines_co_, this_, t1_);
 			}
 		TryElse_

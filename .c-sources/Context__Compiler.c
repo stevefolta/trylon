@@ -4,7 +4,7 @@ UsingSym_(Context)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Context__Compiler)
 struct ClassInfo Context__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 84, 0, Proto_(Context__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Context), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 96, 0, Proto_(Context__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Context), nil, nil };
 struct object Context__Compiler = 
 	{ &Context__Compiler__classInfo_, {} };
 

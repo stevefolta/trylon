@@ -4,7 +4,7 @@ UsingSym_(FloatLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(FloatLiteral__Compiler)
 struct ClassInfo FloatLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 105, 2, Proto_(FloatLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FloatLiteral), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 141, 2, Proto_(FloatLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FloatLiteral), nil, nil };
 struct object FloatLiteral__Compiler = 
 	{ &FloatLiteral__Compiler__classInfo_, {nil, nil} };
 
@@ -144,7 +144,7 @@ obj_ new_co___FloatLiteral__Compiler(obj_ this_, obj_ value)
 }
 
 
-obj_ prepare_to_emit__FloatLiteral__Compiler(obj_ this_)
+obj_ resolve__FloatLiteral__Compiler(obj_ this_)
 {
 
 		{

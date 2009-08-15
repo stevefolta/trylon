@@ -4,7 +4,7 @@ UsingSym_(LiteralNil)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(LiteralNil__Compiler)
 struct ClassInfo LiteralNil__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 108, 0, Proto_(LiteralNil__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LiteralNil), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 144, 0, Proto_(LiteralNil__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LiteralNil), nil, nil };
 struct object LiteralNil__Compiler = 
 	{ &LiteralNil__Compiler__classInfo_, {} };
 
@@ -75,7 +75,7 @@ obj_ new__LiteralNil__Compiler(obj_ this_)
 }
 
 
-obj_ prepare_to_emit__LiteralNil__Compiler(obj_ this_)
+obj_ resolve__LiteralNil__Compiler(obj_ this_)
 {
 
 		{

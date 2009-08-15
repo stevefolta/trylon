@@ -4,7 +4,7 @@ UsingSym_(IffParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(IffParser__TrylonCodeParser__Compiler)
 struct ClassInfo IffParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 93, 0, Proto_(IffParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(IffParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 110, 0, Proto_(IffParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(IffParser), nil, nil };
 struct object IffParser__TrylonCodeParser__Compiler = 
 	{ &IffParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

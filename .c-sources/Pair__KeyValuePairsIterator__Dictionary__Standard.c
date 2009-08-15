@@ -4,7 +4,7 @@ UsingSym_(Pair)UsingClass_(KeyValuePairsIterator__Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Pair__KeyValuePairsIterator__Dictionary__Standard)
 struct ClassInfo Pair__KeyValuePairsIterator__Dictionary__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 41, 2, Proto_(Pair__KeyValuePairsIterator__Dictionary__Standard), Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Pair), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 45, 2, Proto_(Pair__KeyValuePairsIterator__Dictionary__Standard), Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Pair), nil, nil };
 struct object Pair__KeyValuePairsIterator__Dictionary__Standard = 
 	{ &Pair__KeyValuePairsIterator__Dictionary__Standard__classInfo_, {nil, nil} };
 

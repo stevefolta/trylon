@@ -6,15 +6,16 @@ UsingSym_(X86Compiler)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(X86Compiler)
 struct ClassInfo X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 71, 1, Proto_(X86Compiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(X86Compiler), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 72, 2, Proto_(X86Compiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(X86Compiler), nil, ((obj_) tu0_) };
 struct object X86Compiler = 
-	{ &X86Compiler__classInfo_, {nil} };
+	{ &X86Compiler__classInfo_, {nil, nil} };
 
 	UsingInt_(11)
 	UsingInt_(4)
 static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(11), Proto_(ArgumentResult__X86Compiler), Proto_(CallResult__X86Compiler), Proto_(ClassBuilder__X86Compiler), Proto_(CompiledClassBuilder__X86Compiler), Proto_(ExistingClassBuilder__X86Compiler), Proto_(LiteralExpression__X86Compiler), Proto_(LiteralResult__X86Compiler), Proto_(LocalResult__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(NewSharedField__X86Compiler), Proto_(Result__X86Compiler) };
 
-#define _dt_build_settings__fld_	(0)
+#define class_queue__fld_	(0)
+#define _dt_build_settings__fld_	(1)
 
 DeclareSharedField_(word_size, X86Compiler, SmallInt_(4))
 
@@ -95,6 +96,20 @@ obj_ Result__X86Compiler__accessor_(obj_ this_)
 }
 
 
+obj_ adding_class_co___X86Compiler(obj_ this_, obj_ class_)
+{
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(append_co_) UsingMethod_(class_queue)
+
+		{
+		t0_ = Call_(class_queue, this_);
+		t1_ = Call_(append_co_, t0_, class_);
+		}
+	return nil;
+}
+
+
 obj_ build_settings__X86Compiler(obj_ this_)
 {
 	extern obj_ new__BuildSettings__Compiler(obj_ this_);
@@ -130,20 +145,48 @@ obj_ calling_selector_co___X86Compiler(obj_ this_, obj_ selector)
 
 obj_ compile_co___X86Compiler(obj_ this_, obj_ function)
 {
+	extern obj_ error_co___Standard(obj_ this_, obj_ message);
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	UsingSym_(_34_)
+	UsingSym_(_34_)
 	extern obj_ new_co_code_co___MethodBuilder__X86Compiler(obj_ this_, obj_ function, obj_ code_tree);
 	obj_ t0_;
-	UsingMethod_(body) UsingMethod_(emit_method) UsingMethod_(prepare_to_emit)
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	UsingInt_(6)
+	DefineString_(0, " ")
+	DefineString_(1, " is primitive, and can't be compiled to x86.")
+	UsingMethod_(body) UsingMethod_(emit_method) UsingMethod_(is_primitive) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(resolve)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(MethodBuilder__X86Compiler)
+	UsingClass_(Standard)
 
 		{
 		obj_ method_builder, old_compiler, parse_tree, result;
+		t0_ = Call_(is_primitive, function);
+		if (t0_)
+			{
+			t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), SmallInt_(6));
+			t0_->fields[1] = Sym_(_34_);
+			t1_ = Call_(on_proto, function);
+			t2_ = Call_(name, t1_);
+			t0_->fields[2] = t2_;
+			t0_->fields[3] = Str_(0);
+			t3_ = Call_(name, function);
+			t0_->fields[4] = t3_;
+			t0_->fields[5] = Sym_(_34_);
+			t0_->fields[6] = Str_(1);
+			t4_ = error_co___Standard(Proto_(Standard), t0_);
+			}
+		
 		/*  Function resolution. */
 		old_compiler = SharedField_(compiler, Main);
 		SetSharedField_(compiler, Main, this_);
 		t0_ = Call_(body, function);
 		parse_tree = t0_;
-		t0_ = Call_(prepare_to_emit, parse_tree);
+		t0_ = Call_(resolve, parse_tree);
 		
 		/*  Codegen. */
 		t0_ = new_co_code_co___MethodBuilder__X86Compiler(Proto_(MethodBuilder__X86Compiler), function, parse_tree);
@@ -163,6 +206,72 @@ obj_ declaring_selector_co___X86Compiler(obj_ this_, obj_ selector)
 
 		{
 		/*  Nothing to do. */
+		}
+	return nil;
+}
+
+
+obj_ load_co_into_co_as_co___X86Compiler(obj_ this_, obj_ file_path, obj_ proto, obj_ name)
+{
+	extern obj_ new__List__Standard(obj_ this_);
+	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
+	extern obj_ read_co___LinesLexer__Trylon(obj_ this_, obj_ text);
+	extern obj_ contents_of_co___File__Standard(obj_ this_, obj_ path);
+	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
+	extern obj_ build_co___ClassBuilder__X86Compiler(obj_ this_, obj_ class_context);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(add_proto_co_) UsingMethod_(adding_class_co_) UsingMethod_(class_queue) UsingMethod_(class_queue_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator)
+	UsingSharedField_(compiler, Main) 
+	UsingClass_(ClassBuilder__X86Compiler)
+	UsingClass_(ExistingProto__Compiler)
+	UsingClass_(File__Standard)
+	UsingClass_(LinesLexer__Trylon)
+	UsingClass_(List__Standard)
+	UsingClass_(TrylonProtoParser__Compiler)
+
+		{
+		obj_ caught_exception, old_compiler;
+		/*  Set up. */
+		old_compiler = SharedField_(compiler, Main);
+		SetSharedField_(compiler, Main, this_);
+		caught_exception = nil;
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		t1_ = Call_(class_queue_co_, this_, t0_);
+		
+		/*  Load the file as a new class. */
+		Try_
+			{
+			obj_ compiled_class, lines, parent_class;
+			t0_ = new_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), proto);
+			parent_class = t0_;
+			t0_ = Call_(adding_class_co_, this_, parent_class);
+			t0_ = Call_(add_proto_co_, parent_class, name);
+			compiled_class = t0_;
+			t0_ = contents_of_co___File__Standard(Proto_(File__Standard), file_path);
+			t1_ = read_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t0_);
+			lines = t1_;
+			t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, compiled_class);
+			t0_ = Call_(class_queue, this_);
+			ForStart_(0, t0_, class_spec)
+				{
+				t0_ = build_co___ClassBuilder__X86Compiler(Proto_(ClassBuilder__X86Compiler), class_spec);
+				}
+			ForEnd_(0)
+			}
+		TryElse_
+			{
+			caught_exception = exception;
+			}
+		EndTry_
+		
+		/*  Clean up. */
+		t0_ = Call_(class_queue_co_, this_, nil);
+		SetSharedField_(compiler, Main, old_compiler);
+		if (caught_exception)
+			{
+			Throw_(caught_exception);
+			}
 		}
 	return nil;
 }
@@ -192,35 +301,59 @@ obj_ method_replacement_error_co___X86Compiler(obj_ this_, obj_ symbol)
 
 obj_ reload_co_from_co___X86Compiler(obj_ this_, obj_ proto, obj_ file_path)
 {
+	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ contents_of_co___File__Standard(obj_ this_, obj_ path);
-	extern obj_ read_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ read_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
 	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
 	obj_ t0_;
-	UsingMethod_(build_co_)
+	obj_ t1_;
+	UsingMethod_(build_co_) UsingMethod_(class_queue_co_)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(ExistingClassBuilder__X86Compiler)
 	UsingClass_(ExistingProto__Compiler)
 	UsingClass_(File__Standard)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
+	UsingClass_(List__Standard)
 	UsingClass_(TrylonProtoParser__Compiler)
 
 		{
-		obj_ existing_proto, lines, old_compiler, source;
-		/*  Read into an ExistingProto. */
-		t0_ = contents_of_co___File__Standard(Proto_(File__Standard), file_path);
-		source = t0_;
-		t0_ = read_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), source);
-		lines = t0_;
-		t0_ = new_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), proto);
-		existing_proto = t0_;
+		obj_ caught_exception, old_compiler;
+		/*  Set up. */
 		old_compiler = SharedField_(compiler, Main);
 		SetSharedField_(compiler, Main, this_);
-		t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, existing_proto);
-		SetSharedField_(compiler, Main, old_compiler);
+		caught_exception = nil;
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		t1_ = Call_(class_queue_co_, this_, t0_);
 		
-		/*  Build the ExistingProto into the in-process class. */
-		t0_ = Call_(build_co_, Proto_(ExistingClassBuilder__X86Compiler), existing_proto);
+		Try_
+			{
+			obj_ existing_proto, lines, source;
+			/*  Read into an ExistingProto. */
+			t0_ = contents_of_co___File__Standard(Proto_(File__Standard), file_path);
+			source = t0_;
+			t0_ = read_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), source);
+			lines = t0_;
+			t0_ = new_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), proto);
+			existing_proto = t0_;
+			t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, existing_proto);
+			
+			/*  Build the ExistingProto into the in-process class. */
+			t0_ = Call_(build_co_, Proto_(ExistingClassBuilder__X86Compiler), existing_proto);
+			}
+		TryElse_
+			{
+			caught_exception = exception;
+			}
+		EndTry_
+		
+		/*  Clean up. */
+		t0_ = Call_(class_queue_co_, this_, nil);
+		SetSharedField_(compiler, Main, old_compiler);
+		if (caught_exception)
+			{
+			Throw_(caught_exception);
+			}
 		}
 	return nil;
 }
@@ -254,7 +387,7 @@ obj_ replace_method_co_on_co_with_co_arg_names_co___X86Compiler(obj_ this_, obj_
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new_co___CompiledField__Compiler(obj_ this_, obj_ name);
 	extern obj_ new_co_parent_co___MethodContext__Compiler(obj_ this_, obj_ arguments, obj_ parent);
-	extern obj_ read_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ read_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ new_co_in_co___TrylonCodeParser__Compiler(obj_ this_, obj_ lines, obj_ context);
 	extern obj_ new_co_arguments_co_return_type_co_on_proto_co_body_co_is_primitive_co___CompiledFunction__Compiler(obj_ this_, obj_ name, obj_ arguments, obj_ return_type, obj_ on_proto, obj_ body, obj_ is_primitive);
 	extern obj_ compile_co___X86Compiler(obj_ this_, obj_ function);
@@ -264,7 +397,7 @@ obj_ replace_method_co_on_co_with_co_arg_names_co___X86Compiler(obj_ this_, obj_
 	UsingClass_(CompiledField__Compiler)
 	UsingClass_(CompiledFunction__Compiler)
 	UsingClass_(ExistingProto__Compiler)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(List__Standard)
 	UsingClass_(MethodContext__Compiler)
 	UsingClass_(TrylonCodeParser__Compiler)
@@ -287,7 +420,7 @@ obj_ replace_method_co_on_co_with_co_arg_names_co___X86Compiler(obj_ this_, obj_
 		/*  Parse. */
 		t0_ = new_co_parent_co___MethodContext__Compiler(Proto_(MethodContext__Compiler), arguments, on_proto);
 		context = t0_;
-		t0_ = read_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), source);
+		t0_ = read_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), source);
 		lines = t0_;
 		t0_ = new_co_in_co___TrylonCodeParser__Compiler(Proto_(TrylonCodeParser__Compiler), lines, context);
 		parser = t0_;

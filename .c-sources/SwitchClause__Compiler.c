@@ -4,7 +4,7 @@ UsingSym_(SwitchClause)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SwitchClause__Compiler)
 struct ClassInfo SwitchClause__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 172, 5, Proto_(SwitchClause__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchClause), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 189, 5, Proto_(SwitchClause__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchClause), nil, nil };
 struct object SwitchClause__Compiler = 
 	{ &SwitchClause__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -143,11 +143,11 @@ obj_ new_co_body_co_pre_clause_comments_co_value_comment_co___SwitchClause__Comp
 }
 
 
-obj_ prepare_to_emit__SwitchClause__Compiler(obj_ this_)
+obj_ resolve__SwitchClause__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(prepare_to_emit) UsingMethod_(values)
+	UsingMethod_(body) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(resolve) UsingMethod_(values)
 
 		{
 		t0_ = Call_(values, this_);
@@ -156,12 +156,12 @@ obj_ prepare_to_emit__SwitchClause__Compiler(obj_ this_)
 			t0_ = Call_(values, this_);
 			ForStart_(0, t0_, value)
 				{
-				t0_ = Call_(prepare_to_emit, value);
+				t0_ = Call_(resolve, value);
 				}
 			ForEnd_(0)
 			}
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

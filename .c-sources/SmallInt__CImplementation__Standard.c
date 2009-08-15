@@ -4,7 +4,7 @@ UsingSym_(SmallInt)UsingClass_(CImplementation__Standard)
 UsingClass_(Int__Standard)
 UsingClass_(SmallInt__CImplementation__Standard)
 struct ClassInfo SmallInt__CImplementation__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 4, 0, Proto_(SmallInt__CImplementation__Standard), Proto_(CImplementation__Standard), Proto_(Int__Standard), nil, Sym_(SmallInt), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 7, 0, Proto_(SmallInt__CImplementation__Standard), Proto_(CImplementation__Standard), Proto_(Int__Standard), nil, Sym_(SmallInt), nil, nil };
 struct object SmallInt__CImplementation__Standard = 
 	{ &SmallInt__CImplementation__Standard__classInfo_, {} };
 

@@ -6,7 +6,7 @@ UsingSym_(FileDirectory)UsingClass_(Standard)
 UsingClass_(FileDirectoryEntry__Standard)
 UsingClass_(FileDirectory__Standard)
 struct ClassInfo FileDirectory__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 52, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 56, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory), nil, ((obj_) tu0_) };
 struct object FileDirectory__Standard = 
 	{ &FileDirectory__Standard__classInfo_, {nil} };
 

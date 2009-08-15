@@ -6,7 +6,7 @@ UsingSym_(DictLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(DictLiteral__Compiler)
 struct ClassInfo DictLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 111, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 147, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral), nil, ((obj_) tu0_) };
 struct object DictLiteral__Compiler = 
 	{ &DictLiteral__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -269,46 +269,46 @@ obj_ new__DictLiteral__Compiler(obj_ this_)
 }
 
 
-obj_ prepare_to_emit__DictLiteral__Compiler(obj_ this_)
+obj_ resolve__DictLiteral__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	DefineString_(0, "Dictionary")
-	UsingMethod_(dict) UsingMethod_(get_standard_class_co_) UsingMethod_(prepare_to_emit_co_) UsingMethod_(root)
+	UsingMethod_(dict) UsingMethod_(get_standard_class_co_) UsingMethod_(resolve_co_) UsingMethod_(root)
 	UsingSharedField_(compiler, Main) 
 
 		{
 		t0_ = Call_(get_standard_class_co_, SharedField_(compiler, Main), Str_(0));
 		t0_ = Call_(dict, this_);
 		t1_ = Call_(root, t0_);
-		t2_ = Call_(prepare_to_emit_co_, this_, t1_);
+		t2_ = Call_(resolve_co_, this_, t1_);
 		}
 	return nil;
 }
 
 
-obj_ prepare_to_emit_co___DictLiteral__Compiler(obj_ this_, obj_ node)
+obj_ resolve_co___DictLiteral__Compiler(obj_ this_, obj_ node)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(left) UsingMethod_(prepare_to_emit) UsingMethod_(prepare_to_emit_co_) UsingMethod_(right) UsingMethod_(value)
+	UsingMethod_(left) UsingMethod_(resolve) UsingMethod_(resolve_co_) UsingMethod_(right) UsingMethod_(value)
 
 		{
 		t0_ = Call_(left, node);
 		if (t0_)
 			{
 			t0_ = Call_(left, node);
-			t1_ = Call_(prepare_to_emit_co_, this_, t0_);
+			t1_ = Call_(resolve_co_, this_, t0_);
 			}
 		t0_ = Call_(right, node);
 		if (t0_)
 			{
 			t0_ = Call_(right, node);
-			t1_ = Call_(prepare_to_emit_co_, this_, t0_);
+			t1_ = Call_(resolve_co_, this_, t0_);
 			}
 		t0_ = Call_(value, node);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

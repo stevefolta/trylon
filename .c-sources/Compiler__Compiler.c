@@ -4,7 +4,7 @@ UsingSym_(Compiler)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Compiler__Compiler)
 struct ClassInfo Compiler__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 72, 7, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 79, 7, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler), nil, nil };
 struct object Compiler__Compiler = 
 	{ &Compiler__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -16,6 +16,20 @@ struct object Compiler__Compiler =
 #define symbols__fld_	(4)
 #define ints__fld_	(5)
 #define status_reporter__fld_	(6)
+
+
+obj_ adding_class_co___Compiler__Compiler(obj_ this_, obj_ class_)
+{
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(append_co_) UsingMethod_(proto_queue)
+
+		{
+		t0_ = Call_(proto_queue, this_);
+		t1_ = Call_(append_co_, t0_, class_);
+		}
+	return nil;
+}
 
 
 obj_ all_protos__Compiler__Compiler(obj_ this_)
@@ -69,13 +83,13 @@ obj_ compile_dir_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ dir, obj
 obj_ compile_file_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ file, obj_ name, obj_ parent_proto)
 {
 	extern obj_ new__VT100StatusReporter(obj_ this_);
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ new_co_into_co_context_co___TrylonProtoParser__Compiler(obj_ this_, obj_ lines, obj_ proto, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	UsingMethod_(add_proto_co_) UsingMethod_(contents) UsingMethod_(lex) UsingMethod_(parse) UsingMethod_(status_reporter_co_)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(TrylonProtoParser__Compiler)
 	UsingClass_(VT100StatusReporter)
 
@@ -86,7 +100,7 @@ obj_ compile_file_co_as_co_into_co___Compiler__Compiler(obj_ this_, obj_ file, o
 		t0_ = Call_(add_proto_co_, parent_proto, name);
 		proto = t0_;
 		t0_ = Call_(contents, file);
-		t1_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t0_);
+		t1_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t0_);
 		t2_ = Call_(lex, t1_);
 		lines = t2_;
 		t0_ = new_co_into_co_context_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, proto, parent_proto);
@@ -106,6 +120,7 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	extern obj_ new__StdoutStatusReporter(obj_ this_);
 	extern obj_ new__VT100StatusReporter(obj_ this_);
 	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ find_library_path__Compiler(obj_ this_);
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
 	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
@@ -132,10 +147,11 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	DefineString_(13, "Preparing to emit...")
 	DefineString_(14, "Compiled in ")
 	DefineString_(15, "ms.")
-	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_library_path) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_root_object_co_) UsingMethod_(is_verbose) UsingMethod_(is_verbose_co_) UsingMethod_(iterator) UsingMethod_(load) UsingMethod_(main_proto) UsingMethod_(main_proto_co_) UsingMethod_(prepare_to_emit) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(root_proto_co_) UsingMethod_(setup_main_co_library_directory_co_) UsingMethod_(show_warnings) UsingMethod_(status_reporter) UsingMethod_(status_reporter_co_) UsingMethod_(string) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(unindent)
+	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_root_object_co_) UsingMethod_(is_verbose) UsingMethod_(is_verbose_co_) UsingMethod_(iterator) UsingMethod_(load) UsingMethod_(main_proto) UsingMethod_(main_proto_co_) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(resolve) UsingMethod_(root_proto_co_) UsingMethod_(setup_main_co_library_directory_co_) UsingMethod_(show_warnings) UsingMethod_(status_reporter) UsingMethod_(status_reporter_co_) UsingMethod_(string) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(CCompiler)
 	UsingClass_(CompiledProto__Compiler)
+	UsingClass_(Compiler)
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(StdoutStatusReporter)
@@ -200,7 +216,7 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 			t0_ = Call_(at_co_, main_directory, Str_(7));
 			main_directory = t0_;
 			}
-		t0_ = Call_(find_library_path, this_);
+		t0_ = find_library_path__Compiler(Proto_(Compiler));
 		library_path = t0_;
 		t0_ = Not_(library_path);
 		if (t0_)
@@ -241,7 +257,7 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 		t0_ = Call_(proto_queue, this_);
 		ForStart_(1, t0_, proto)
 			{
-			t0_ = Call_(prepare_to_emit, proto);
+			t0_ = Call_(resolve, proto);
 			}
 		ForEnd_(1)
 		t0_ = Call_(status_reporter, this_);
@@ -317,99 +333,6 @@ obj_ declaring_selector_co___Compiler__Compiler(obj_ this_, obj_ name)
 		{
 		t0_ = Call_(symbol_info_for_co_, this_, name);
 		t1_ = Call_(declared_co_, t0_, true_);
-		}
-	return nil;
-}
-
-
-obj_ find_library_path__Compiler__Compiler(obj_ this_)
-{
-	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
-	extern obj_ environment_variable_named_co___System__Standard(obj_ this_, obj_ name);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingInt_(4)
-	DefineString_(0, "TRYLON_LIBRARY")
-	DefineString_(1, "HOME")
-	DefineString_(2, "trylon/library")
-	DefineString_(3, "/trylon/library")
-	DefineString_(4, ".")
-	DefineString_(5, "library")
-	DefineString_(6, "./library")
-	DefineString_(7, "/usr/lib")
-	DefineString_(8, "/usr/local/lib")
-	DefineString_(9, "/usr/share")
-	DefineString_(10, "/opt/lib")
-	DefineString_(11, "trylon")
-	DefineString_(12, "/trylon")
-static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(4), Str_(7), Str_(8), Str_(9), Str_(10) };
-	UsingMethod_(_pl_) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator)
-	UsingClass_(FileDirectory__Standard)
-	UsingClass_(System__Standard)
-	UsingClass_(Tuple__Standard)
-
-		{
-		obj_ home_path, library_path;
-		/*  Use $TRYLON_LIBRARY if it's set. */
-		t0_ = environment_variable_named_co___System__Standard(Proto_(System__Standard), Str_(0));
-		library_path = t0_;
-		t0_ = library_path;
-		if (t0_) {
-			t1_ = Call_(is_empty, library_path);
-			t2_ = Not_(t1_);
-			t0_ = t2_;
-			}
-		if (t0_)
-			{
-			return library_path;
-			}
-		/*  Check $HOME/trylon. */
-		t0_ = environment_variable_named_co___System__Standard(Proto_(System__Standard), Str_(1));
-		home_path = t0_;
-		t0_ = home_path;
-		if (t0_) {
-			t1_ = Call_(is_empty, home_path);
-			t2_ = Not_(t1_);
-			t0_ = t2_;
-			}
-		if (t0_)
-			{
-			obj_ home_dir;
-			t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), home_path);
-			home_dir = t0_;
-			t0_ = Call_(entry_is_directory_co_, home_dir, Str_(2));
-			if (t0_)
-				{
-				t0_ = Call_(_pl_, home_path, Str_(3));
-				return t0_;
-				}
-			}
-		/*  Check ./library. */
-		t1_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), Str_(4));
-		t2_ = Call_(entry_is_directory_co_, t1_, Str_(5));
-		if (t2_)
-			{
-			return Str_(6);
-			}
-		/*  Look in some common places. */
-		ForStart_(0, ((obj_) tu0_), prefix_path)
-			{
-			obj_ prefix_dir;
-			t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), prefix_path);
-			prefix_dir = t0_;
-			t0_ = Call_(entry_is_directory_co_, prefix_dir, Str_(11));
-			if (t0_)
-				{
-				t0_ = Call_(_pl_, prefix_path, Str_(12));
-				return t0_;
-				}
-			}
-		ForEnd_(0)
-		return nil;
 		}
 	return nil;
 }

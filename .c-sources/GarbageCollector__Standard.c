@@ -4,7 +4,7 @@ UsingSym_(GarbageCollector)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(GarbageCollector__Standard)
 struct ClassInfo GarbageCollector__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 54, 0, Proto_(GarbageCollector__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(GarbageCollector), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 58, 0, Proto_(GarbageCollector__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(GarbageCollector), nil, nil };
 struct object GarbageCollector__Standard = 
 	{ &GarbageCollector__Standard__classInfo_, {} };
 

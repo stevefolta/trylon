@@ -4,7 +4,7 @@ UsingSym_(Statement)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Statement__Compiler)
 struct ClassInfo Statement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 156, 1, Proto_(Statement__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Statement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 174, 1, Proto_(Statement__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Statement), nil, nil };
 struct object Statement__Compiler = 
 	{ &Statement__Compiler__classInfo_, {nil} };
 
@@ -135,7 +135,7 @@ obj_ is_self_blocking__Statement__Compiler(obj_ this_)
 }
 
 
-obj_ prepare_to_emit__Statement__Compiler(obj_ this_)
+obj_ resolve__Statement__Compiler(obj_ this_)
 {
 
 		{

@@ -4,7 +4,7 @@ UsingSym_(StringLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(StringLiteral__Compiler)
 struct ClassInfo StringLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 106, 2, Proto_(StringLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(StringLiteral), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 142, 2, Proto_(StringLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(StringLiteral), nil, nil };
 struct object StringLiteral__Compiler = 
 	{ &StringLiteral__Compiler__classInfo_, {nil, nil} };
 
@@ -145,7 +145,7 @@ obj_ new_co___StringLiteral__Compiler(obj_ this_, obj_ value)
 }
 
 
-obj_ prepare_to_emit__StringLiteral__Compiler(obj_ this_)
+obj_ resolve__StringLiteral__Compiler(obj_ this_)
 {
 
 		{

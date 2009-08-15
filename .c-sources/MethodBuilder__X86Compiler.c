@@ -6,7 +6,7 @@ UsingSym_(MethodBuilder)UsingClass_(X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(MethodBuilder__X86Compiler)
 struct ClassInfo MethodBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 175, 14, Proto_(MethodBuilder__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 84, 14, Proto_(MethodBuilder__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, ((obj_) tu0_) };
 struct object MethodBuilder__X86Compiler = 
 	{ &MethodBuilder__X86Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -1018,32 +1018,21 @@ obj_ compile_primitive_function_call_co_with_co___MethodBuilder__X86Compiler(obj
 
 obj_ compile_proto_call_co___MethodBuilder__X86Compiler(obj_ this_, obj_ func)
 {
+	extern obj_ build_co___ClassBuilder__X86Compiler(obj_ this_, obj_ class_context);
 	extern obj_ new_co___LiteralResult__X86Compiler(obj_ this_, obj_ value);
-	extern obj_ error_co___Standard(obj_ this_, obj_ message);
 	obj_ t0_;
 	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	DefineString_(0, "Defining new classes is not yet supported in the X86 compiler.")
-	UsingMethod_(is_a_co_) UsingMethod_(proto)
-	UsingClass_(ExistingProto__Compiler)
+	UsingMethod_(proto)
+	UsingClass_(ClassBuilder__X86Compiler)
 	UsingClass_(LiteralResult__X86Compiler)
-	UsingClass_(Standard)
 
 		{
+		obj_ proto;
 		t0_ = Call_(proto, func);
-		t1_ = Call_(is_a_co_, t0_, Proto_(ExistingProto__Compiler));
-		if (t1_)
-			{
-			t0_ = Call_(proto, func);
-			t1_ = Call_(proto, t0_);
-			t2_ = new_co___LiteralResult__X86Compiler(Proto_(LiteralResult__X86Compiler), t1_);
-			return t2_;
-			}
-		else
-			{
-			t3_ = error_co___Standard(Proto_(Standard), Str_(0));
-			}
+		t1_ = build_co___ClassBuilder__X86Compiler(Proto_(ClassBuilder__X86Compiler), t0_);
+		proto = t1_;
+		t0_ = new_co___LiteralResult__X86Compiler(Proto_(LiteralResult__X86Compiler), proto);
+		return t0_;
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(ElseParser)UsingClass_(TrylonCodeParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ElseParser__TrylonCodeParser__Compiler)
 struct ClassInfo ElseParser__TrylonCodeParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 90, 0, Proto_(ElseParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(ElseParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 107, 0, Proto_(ElseParser__TrylonCodeParser__Compiler), Proto_(TrylonCodeParser__Compiler), Proto_(Object__Standard), nil, Sym_(ElseParser), nil, nil };
 struct object ElseParser__TrylonCodeParser__Compiler = 
 	{ &ElseParser__TrylonCodeParser__Compiler__classInfo_, {} };
 

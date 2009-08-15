@@ -4,7 +4,7 @@ UsingSym_(CompiledProto)UsingClass_(Compiler)
 UsingClass_(ClassContext__Compiler)
 UsingClass_(CompiledProto__Compiler)
 struct ClassInfo CompiledProto__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 78, 17, Proto_(CompiledProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(CompiledProto), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 90, 17, Proto_(CompiledProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(CompiledProto), nil, nil };
 struct object CompiledProto__Compiler = 
 	{ &CompiledProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -32,7 +32,7 @@ struct object CompiledProto__Compiler =
 
 obj_ add_directory_co___CompiledProto__Compiler(obj_ this_, obj_ directory)
 {
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
@@ -41,7 +41,7 @@ obj_ add_directory_co___CompiledProto__Compiler(obj_ this_, obj_ directory)
 	DefineString_(0, "main")
 	DefineString_(1, "main")
 	UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(directories) UsingMethod_(lex)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(TrylonProtoParser__Compiler)
 
 		{
@@ -54,7 +54,7 @@ obj_ add_directory_co___CompiledProto__Compiler(obj_ this_, obj_ directory)
 			obj_ lines;
 			t0_ = Call_(at_co_, directory, Str_(1));
 			t1_ = Call_(contents, t0_);
-			t2_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t1_);
+			t2_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t1_);
 			t3_ = Call_(lex, t2_);
 			lines = t3_;
 			t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, this_);
@@ -232,7 +232,7 @@ obj_ add_proto_co_directory_co___CompiledProto__Compiler(obj_ this_, obj_ name, 
 	DefineString_(2, "Loading ")
 	DefineString_(3, " into ")
 	DefineString_(4, "...")
-	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(add_function_co_function_co_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(proto) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
+	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(add_function_co_function_co_) UsingMethod_(adding_class_co_) UsingMethod_(at_co_) UsingMethod_(full_name) UsingMethod_(functions) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(proto) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(CompiledProto__Compiler)
 	UsingClass_(MessageException__Standard)
@@ -278,8 +278,7 @@ obj_ add_proto_co_directory_co___CompiledProto__Compiler(obj_ this_, obj_ name, 
 		t0_ = new_co___ProtoFunction__Compiler(Proto_(ProtoFunction__Compiler), new_proto);
 		proto_function = t0_;
 		t0_ = Call_(add_function_co_function_co_, this_, name, proto_function);
-		t0_ = Call_(proto_queue, SharedField_(compiler, Main));
-		t1_ = Call_(append_co_, t0_, new_proto);
+		t0_ = Call_(adding_class_co_, SharedField_(compiler, Main), new_proto);
 		t0_ = Call_(unindent, status_reporter);
 		return new_proto;
 		}
@@ -569,47 +568,6 @@ obj_ ensure_superclasses_co___CompiledProto__Compiler(obj_ this_, obj_ object_pr
 }
 
 
-obj_ full_name__CompiledProto__Compiler(obj_ this_)
-{
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	DefineString_(0, " ")
-	UsingMethod_(_pl_) UsingMethod_(is_main) UsingMethod_(name) UsingMethod_(parent)
-
-		{
-		obj_ proto, result;
-		t0_ = Call_(is_main, this_);
-		if (t0_)
-			{
-			t0_ = Call_(name, this_);
-			return t0_;
-			}
-		t1_ = Call_(name, this_);
-		result = t1_;
-		t0_ = Call_(parent, this_);
-		proto = t0_;
-		while (1) {
-			ContinuePoint_(0)
-			t0_ = Call_(is_main, proto);
-			t1_ = Not_(t0_);
-			if (!(t1_))
-				Break_(0)
-			{
-			t0_ = Call_(name, proto);
-			t1_ = Call_(_pl_, t0_, Str_(0));
-			t2_ = Call_(_pl_, t1_, result);
-			result = t2_;
-			t0_ = Call_(parent, proto);
-			proto = t0_;
-			}
-			}
-		return result;
-		}
-	return nil;
-}
-
-
 obj_ get_proto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 {
 	obj_ t0_;
@@ -682,16 +640,81 @@ obj_ get_subproto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 }
 
 
+obj_ in_co_for_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ directory, obj_ name, obj_ parent)
+{
+	extern obj_ new_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ name, obj_ parent);
+	extern obj_ read_co___LinesLexer__Trylon(obj_ this_, obj_ text);
+	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	obj_ t5_;
+	DefineString_(0, "Loading ")
+	DefineString_(1, " into ")
+	DefineString_(2, "...")
+	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(at_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(entry_is_directory_co_) UsingMethod_(full_name) UsingMethod_(indent) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
+	UsingSharedField_(compiler, Main) 
+	UsingClass_(CompiledProto__Compiler)
+	UsingClass_(LinesLexer__Trylon)
+	UsingClass_(TrylonProtoParser__Compiler)
+
+		{
+		obj_ new_proto;
+		new_proto = nil;
+		
+		t0_ = Call_(contains_co_, directory, name);
+		if (t0_)
+			{
+			obj_ status_reporter;
+			t0_ = Call_(status_reporter, SharedField_(compiler, Main));
+			status_reporter = t0_;
+			t0_ = Call_(_pl_, Str_(0), name);
+			t1_ = Call_(_pl_, t0_, Str_(1));
+			t2_ = Call_(full_name, parent);
+			t3_ = Call_(_pl_, t1_, t2_);
+			t4_ = Call_(_pl_, t3_, Str_(2));
+			t5_ = Call_(report_co_, status_reporter, t4_);
+			t0_ = Call_(indent, status_reporter);
+			
+			t0_ = new_co_parent_co___CompiledProto__Compiler(Proto_(CompiledProto__Compiler), name, parent);
+			new_proto = t0_;
+			t0_ = Call_(entry_is_directory_co_, directory, name);
+			if (t0_)
+				{
+				t0_ = Call_(at_co_, directory, name);
+				t1_ = Call_(add_directory_co_, new_proto, t0_);
+				}
+			else
+				{
+				obj_ lines;
+				t0_ = Call_(at_co_, directory, name);
+				t1_ = Call_(contents, t0_);
+				t2_ = read_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t1_);
+				lines = t2_;
+				t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, new_proto);
+				}
+			
+			t0_ = Call_(unindent, status_reporter);
+			}
+		
+		return new_proto;
+		}
+	return nil;
+}
+
+
 obj_ load_subproto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 {
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
 	UsingMethod_(add_proto_co_) UsingMethod_(add_proto_co_directory_co_) UsingMethod_(at_co_) UsingMethod_(contains_co_) UsingMethod_(contents) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lex)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(TrylonProtoParser__Compiler)
 
 		{
@@ -715,7 +738,7 @@ obj_ load_subproto_co___CompiledProto__Compiler(obj_ this_, obj_ name)
 					proto = t0_;
 					t0_ = Call_(at_co_, directory, name);
 					t1_ = Call_(contents, t0_);
-					t2_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t1_);
+					t2_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t1_);
 					t3_ = Call_(lex, t2_);
 					lines = t3_;
 					t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, proto);
@@ -943,12 +966,12 @@ obj_ number_classes_co___CompiledProto__Compiler(obj_ this_, obj_ numberer)
 }
 
 
-obj_ prepare_to_emit__CompiledProto__Compiler(obj_ this_)
+obj_ resolve__CompiledProto__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "Object")
-	UsingMethod_(current_item) UsingMethod_(ensure_superclasses_co_) UsingMethod_(functions) UsingMethod_(get_standard_class_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(prepare_to_emit) UsingMethod_(superclass) UsingMethod_(values)
+	UsingMethod_(current_item) UsingMethod_(ensure_superclasses_co_) UsingMethod_(functions) UsingMethod_(get_standard_class_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(resolve) UsingMethod_(superclass) UsingMethod_(values)
 	UsingSharedField_(compiler, Main) 
 
 		{
@@ -964,7 +987,7 @@ obj_ prepare_to_emit__CompiledProto__Compiler(obj_ this_)
 		t1_ = Call_(values, t0_);
 		ForStart_(0, t1_, function)
 			{
-			t0_ = Call_(prepare_to_emit, function);
+			t0_ = Call_(resolve, function);
 			}
 		ForEnd_(0)
 		}
@@ -1020,7 +1043,7 @@ obj_ setup_main_co_library_directory_co___CompiledProto__Compiler(obj_ this_, ob
 	extern obj_ new__NilFunction__Compiler(obj_ this_);
 	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
 	extern obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value);
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(obj_ this_, obj_ block, obj_ proto);
 	extern obj_ build_settings__Main(obj_ this_);
 	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
@@ -1054,7 +1077,7 @@ static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(9), Str_(1
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(BoolLiteralFunction__Compiler)
 	UsingClass_(FileDirectory__Standard)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(Main)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(NilFunction__Compiler)
@@ -1124,7 +1147,7 @@ static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(7), Str_(9), Str_(1
 				obj_ lines;
 				t0_ = Call_(at_co_, directory, Str_(8));
 				t1_ = Call_(contents, t0_);
-				t2_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), t1_);
+				t2_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), t1_);
 				t3_ = Call_(lex, t2_);
 				lines = t3_;
 				t0_ = parse_proto_contents_co_into_co___TrylonProtoParser__Compiler(Proto_(TrylonProtoParser__Compiler), lines, this_);

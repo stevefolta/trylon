@@ -4,7 +4,7 @@ UsingSym_(Buffer)UsingClass_(MethodBuilder__X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Buffer__MethodBuilder__X86Compiler)
 struct ClassInfo Buffer__MethodBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 176, 2, Proto_(Buffer__MethodBuilder__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(Object__Standard), nil, Sym_(Buffer), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 85, 2, Proto_(Buffer__MethodBuilder__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(Object__Standard), nil, Sym_(Buffer), nil, nil };
 struct object Buffer__MethodBuilder__X86Compiler = 
 	{ &Buffer__MethodBuilder__X86Compiler__classInfo_, {nil, nil} };
 

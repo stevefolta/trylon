@@ -4,7 +4,7 @@ UsingSym_(CompiledFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(CompiledFunction__Compiler)
 struct ClassInfo CompiledFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 126, 7, Proto_(CompiledFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CompiledFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 117, 7, Proto_(CompiledFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CompiledFunction), nil, nil };
 struct object CompiledFunction__Compiler = 
 	{ &CompiledFunction__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -221,12 +221,12 @@ obj_ new_co_arguments_co_return_type_co_on_proto_co_body_co_is_primitive_co___Co
 }
 
 
-obj_ prepare_to_emit__CompiledFunction__Compiler(obj_ this_)
+obj_ resolve__CompiledFunction__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	UsingMethod_(body) UsingMethod_(is_primitive) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(is_primitive) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(body, this_);
@@ -238,7 +238,7 @@ obj_ prepare_to_emit__CompiledFunction__Compiler(obj_ this_)
 		if (t0_)
 			{
 			t0_ = Call_(body, this_);
-			t1_ = Call_(prepare_to_emit, t0_);
+			t1_ = Call_(resolve, t0_);
 			}
 		}
 	return nil;

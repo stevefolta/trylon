@@ -4,7 +4,7 @@ UsingSym_(TryStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(TryStatement__Compiler)
 struct ClassInfo TryStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 153, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 171, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
 struct object TryStatement__Compiler = 
 	{ &TryStatement__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -95,10 +95,10 @@ obj_ emit_code_co___TryStatement__Compiler(obj_ this_, obj_ builder)
 		t1_ = Call_(add_line_co_, builder, t0_);
 		t0_ = Call_(body, this_);
 		t1_ = Call_(emit_code_co_, t0_, builder);
+		t0_ = Call_(add_line_co_, builder, Str_(1));
 		t0_ = Call_(else_clause, this_);
 		if (t0_)
 			{
-			t0_ = Call_(add_line_co_, builder, Str_(1));
 			t0_ = Call_(else_clause, this_);
 			t1_ = Call_(emit_code_co_, t0_, builder);
 			}
@@ -145,20 +145,20 @@ obj_ new_co_comment_co___TryStatement__Compiler(obj_ this_, obj_ body, obj_ comm
 }
 
 
-obj_ prepare_to_emit__TryStatement__Compiler(obj_ this_)
+obj_ resolve__TryStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(else_clause, this_);
 		if (t0_)
 			{
 			t0_ = Call_(else_clause, this_);
-			t1_ = Call_(prepare_to_emit, t0_);
+			t1_ = Call_(resolve, t0_);
 			}
 		}
 	return nil;

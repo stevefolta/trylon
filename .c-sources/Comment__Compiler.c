@@ -4,7 +4,7 @@ UsingSym_(Comment)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(Comment__Compiler)
 struct ClassInfo Comment__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 144, 2, Proto_(Comment__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(Comment), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 162, 2, Proto_(Comment__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(Comment), nil, nil };
 struct object Comment__Compiler = 
 	{ &Comment__Compiler__classInfo_, {nil, nil} };
 

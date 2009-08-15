@@ -4,7 +4,7 @@ UsingSym_(Block)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(Block__Compiler)
 struct ClassInfo Block__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 80, 3, Proto_(Block__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(Block), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 93, 3, Proto_(Block__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(Block), nil, nil };
 struct object Block__Compiler = 
 	{ &Block__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -341,23 +341,6 @@ obj_ new_co___Block__Compiler(obj_ this_, obj_ parent)
 }
 
 
-obj_ prepare_to_emit__Block__Compiler(obj_ this_)
-{
-	obj_ t0_;
-	UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(prepare_to_emit) UsingMethod_(statements)
-
-		{
-		t0_ = Call_(statements, this_);
-		ForStart_(0, t0_, statement)
-			{
-			t0_ = Call_(prepare_to_emit, statement);
-			}
-		ForEnd_(0)
-		}
-	return nil;
-}
-
-
 obj_ prepend_co___Block__Compiler(obj_ this_, obj_ statement)
 {
 	obj_ t0_;
@@ -367,6 +350,23 @@ obj_ prepend_co___Block__Compiler(obj_ this_, obj_ statement)
 		{
 		t0_ = Call_(statements, this_);
 		t1_ = Call_(prepend_co_, t0_, statement);
+		}
+	return nil;
+}
+
+
+obj_ resolve__Block__Compiler(obj_ this_)
+{
+	obj_ t0_;
+	UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(resolve) UsingMethod_(statements)
+
+		{
+		t0_ = Call_(statements, this_);
+		ForStart_(0, t0_, statement)
+			{
+			t0_ = Call_(resolve, statement);
+			}
+		ForEnd_(0)
 		}
 	return nil;
 }

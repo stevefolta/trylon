@@ -4,7 +4,7 @@ UsingSym_(ShortCircuitAnd)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ShortCircuitAnd__Compiler)
 struct ClassInfo ShortCircuitAnd__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 112, 2, Proto_(ShortCircuitAnd__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitAnd), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 148, 2, Proto_(ShortCircuitAnd__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitAnd), nil, nil };
 struct object ShortCircuitAnd__Compiler = 
 	{ &ShortCircuitAnd__Compiler__classInfo_, {nil, nil} };
 
@@ -135,17 +135,17 @@ obj_ new_co_with_co___ShortCircuitAnd__Compiler(obj_ this_, obj_ expr1, obj_ exp
 }
 
 
-obj_ prepare_to_emit__ShortCircuitAnd__Compiler(obj_ this_)
+obj_ resolve__ShortCircuitAnd__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(expr1) UsingMethod_(expr2) UsingMethod_(prepare_to_emit)
+	UsingMethod_(expr1) UsingMethod_(expr2) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(expr1, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(expr2, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

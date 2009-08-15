@@ -4,7 +4,7 @@ UsingSym_(ExpressionStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ExpressionStatement__Compiler)
 struct ClassInfo ExpressionStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 141, 2, Proto_(ExpressionStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ExpressionStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 159, 2, Proto_(ExpressionStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ExpressionStatement), nil, nil };
 struct object ExpressionStatement__Compiler = 
 	{ &ExpressionStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -107,15 +107,15 @@ obj_ new_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expressi
 }
 
 
-obj_ prepare_to_emit__ExpressionStatement__Compiler(obj_ this_)
+obj_ resolve__ExpressionStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(expression) UsingMethod_(prepare_to_emit)
+	UsingMethod_(expression) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(expression, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

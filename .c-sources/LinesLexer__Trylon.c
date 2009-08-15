@@ -1,12 +1,12 @@
 #include "Trylon_.h"
 
-UsingSym_(LinesLexer)UsingClass_(Compiler)
+UsingSym_(LinesLexer)UsingClass_(Trylon)
 UsingClass_(Object__Standard)
-UsingClass_(LinesLexer__Compiler)
-struct ClassInfo LinesLexer__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 67, 8, Proto_(LinesLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(LinesLexer), nil, nil };
-struct object LinesLexer__Compiler = 
-	{ &LinesLexer__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil} };
+UsingClass_(LinesLexer__Trylon)
+struct ClassInfo LinesLexer__Trylon__classInfo_ = 
+	{ StdClassRef_(Class__CImplementation), 77, 8, Proto_(LinesLexer__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(LinesLexer), nil, nil };
+struct object LinesLexer__Trylon = 
+	{ &LinesLexer__Trylon__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil} };
 
 
 #define p__fld_	(0)
@@ -19,7 +19,7 @@ struct object LinesLexer__Compiler =
 #define had_indent_problem__fld_	(7)
 
 
-obj_ create_co___LinesLexer__Compiler(obj_ this_, obj_ text)
+obj_ create_co___LinesLexer__Trylon(obj_ this_, obj_ text)
 {
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
@@ -60,17 +60,17 @@ obj_ create_co___LinesLexer__Compiler(obj_ this_, obj_ text)
 }
 
 
-obj_ lex__LinesLexer__Compiler(obj_ this_)
+obj_ lex__LinesLexer__Trylon(obj_ this_)
 {
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new_co___Tuple__Standard(obj_, obj_);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
-	extern obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___CodeLine__Trylon(obj_ this_, obj_ text);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
-	extern obj_ new_co___CodeLine__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___CodeLine__Trylon(obj_ this_, obj_ text);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -116,7 +116,7 @@ obj_ lex__LinesLexer__Compiler(obj_ this_)
 	DefineString_(4, "--")
 	DefineString_(5, " ")
 	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt_) UsingMethod_(_gt__eq_) UsingMethod_(append_co_) UsingMethod_(block_co_) UsingMethod_(cur_indentation) UsingMethod_(cur_indentation_co_) UsingMethod_(cur_lines) UsingMethod_(cur_lines_co_) UsingMethod_(deref_char) UsingMethod_(ends_with_co_) UsingMethod_(first) UsingMethod_(head) UsingMethod_(indent_stack) UsingMethod_(is_empty) UsingMethod_(last_item) UsingMethod_(length) UsingMethod_(lines) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(pending_blank_lines) UsingMethod_(pending_blank_lines_co_) UsingMethod_(pop_front) UsingMethod_(push_front_co_) UsingMethod_(second) UsingMethod_(stopper) UsingMethod_(substr_co_length_co_) UsingMethod_(trimmed)
-	UsingClass_(CodeLine__Compiler)
+	UsingClass_(CodeLine__Trylon)
 	UsingClass_(List__Standard)
 	UsingClass_(MessageException__Standard)
 	UsingClass_(String__Standard)
@@ -313,7 +313,7 @@ obj_ lex__LinesLexer__Compiler(obj_ this_)
 					Break_(4)
 				{
 				t0_ = Call_(cur_lines, this_);
-				t1_ = new_co___CodeLine__Compiler(Proto_(CodeLine__Compiler), Str_(3));
+				t1_ = new_co___CodeLine__Trylon(Proto_(CodeLine__Trylon), Str_(3));
 				t2_ = Call_(append_co_, t0_, t1_);
 				t0_ = Call_(pending_blank_lines, this_);
 				t1_ = Call_(_, t0_, SmallInt_(1));
@@ -433,7 +433,7 @@ obj_ lex__LinesLexer__Compiler(obj_ this_)
 			
 			/*  Add the line. */
 			t0_ = Call_(cur_lines, this_);
-			t1_ = new_co___CodeLine__Compiler(Proto_(CodeLine__Compiler), text);
+			t1_ = new_co___CodeLine__Trylon(Proto_(CodeLine__Trylon), text);
 			t2_ = Call_(append_co_, t0_, t1_);
 			}
 			}
@@ -445,25 +445,25 @@ obj_ lex__LinesLexer__Compiler(obj_ this_)
 }
 
 
-obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text)
+obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text)
 {
-	UsingClass_(LinesLexer__Compiler)
-	obj_ obj = AllocObj_(LinesLexer__Compiler);
-	create_co___LinesLexer__Compiler(obj, text);
+	UsingClass_(LinesLexer__Trylon)
+	obj_ obj = AllocObj_(LinesLexer__Trylon);
+	create_co___LinesLexer__Trylon(obj, text);
 	return obj;
 }
 
 
-obj_ read_co___LinesLexer__Compiler(obj_ this_, obj_ text)
+obj_ read_co___LinesLexer__Trylon(obj_ this_, obj_ text)
 {
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	obj_ t0_;
 	obj_ t1_;
 	UsingMethod_(lex)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 
 		{
-		t0_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), text);
+		t0_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), text);
 		t1_ = Call_(lex, t0_);
 		return t1_;
 		}

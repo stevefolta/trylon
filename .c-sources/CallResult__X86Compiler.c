@@ -4,7 +4,7 @@ UsingSym_(CallResult)UsingClass_(X86Compiler)
 UsingClass_(Result__X86Compiler)
 UsingClass_(CallResult__X86Compiler)
 struct ClassInfo CallResult__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 208, 0, Proto_(CallResult__X86Compiler), Proto_(X86Compiler), Proto_(Result__X86Compiler), nil, Sym_(CallResult), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 200, 0, Proto_(CallResult__X86Compiler), Proto_(X86Compiler), Proto_(Result__X86Compiler), nil, Sym_(CallResult), nil, nil };
 struct object CallResult__X86Compiler = 
 	{ &CallResult__X86Compiler__classInfo_, {} };
 

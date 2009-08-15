@@ -4,7 +4,7 @@ UsingSym_(NilTest)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(NilTest__Compiler)
 struct ClassInfo NilTest__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 115, 2, Proto_(NilTest__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(NilTest), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 151, 2, Proto_(NilTest__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(NilTest), nil, nil };
 struct object NilTest__Compiler = 
 	{ &NilTest__Compiler__classInfo_, {nil, nil} };
 
@@ -119,15 +119,15 @@ obj_ new_co_is_nil_co___NilTest__Compiler(obj_ this_, obj_ object, obj_ is_nil)
 }
 
 
-obj_ prepare_to_emit__NilTest__Compiler(obj_ this_)
+obj_ resolve__NilTest__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(object) UsingMethod_(prepare_to_emit)
+	UsingMethod_(object) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(object, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

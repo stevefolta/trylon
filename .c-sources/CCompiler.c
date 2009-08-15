@@ -6,7 +6,7 @@ UsingSym_(CCompiler)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(CCompiler)
 struct ClassInfo CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 70, 0, Proto_(CCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(CCompiler), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 74, 0, Proto_(CCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(CCompiler), nil, ((obj_) tu0_) };
 struct object CCompiler = 
 	{ &CCompiler__classInfo_, {} };
 
@@ -238,6 +238,7 @@ obj_ compile_c_file_co_force_compile_co___CCompiler(obj_ this_, obj_ name, obj_ 
 
 obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 {
+	extern obj_ find_library_path__Compiler(obj_ this_);
 	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
 	extern obj_ new__ClassNumberer__CCompiler(obj_ this_);
 	extern obj_ new_co___File__Standard(obj_ this_, obj_ path);
@@ -281,9 +282,10 @@ obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 	DefineString_(16, "-o")
 	DefineString_(17, "'")
 	DefineString_(18, "' is called but never defined.")
-	UsingMethod_(_pl_) UsingMethod_(_gt_) UsingMethod_(all_protos) UsingMethod_(append_co_) UsingMethod_(assign_field_indices) UsingMethod_(build_settings) UsingMethod_(c_sources_dir) UsingMethod_(called) UsingMethod_(close) UsingMethod_(compile_c_file_co_force_compile_co_) UsingMethod_(contents) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(declared) UsingMethod_(emit_dispatch_table_co_) UsingMethod_(emit_field_accessors_co_) UsingMethod_(emit_ints) UsingMethod_(emit_settings_co_) UsingMethod_(emit_symbols) UsingMethod_(emit_co_) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_library_path) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(link_flags) UsingMethod_(linker) UsingMethod_(main_proto) UsingMethod_(name) UsingMethod_(number_classes_co_) UsingMethod_(object_file_name) UsingMethod_(objects_dir) UsingMethod_(program_name) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_) UsingMethod_(shared_field_accessors) UsingMethod_(shared_ints) UsingMethod_(source_name) UsingMethod_(standard_object_proto) UsingMethod_(symbols) UsingMethod_(total_num_fields) UsingMethod_(unindent) UsingMethod_(values) UsingMethod_(warn_co_) UsingMethod_(write_co_)
+	UsingMethod_(_pl_) UsingMethod_(_gt_) UsingMethod_(all_protos) UsingMethod_(append_co_) UsingMethod_(assign_field_indices) UsingMethod_(build_settings) UsingMethod_(c_sources_dir) UsingMethod_(called) UsingMethod_(close) UsingMethod_(compile_c_file_co_force_compile_co_) UsingMethod_(contents) UsingMethod_(create_subdirectory_co_) UsingMethod_(current_item) UsingMethod_(declared) UsingMethod_(emit_dispatch_table_co_) UsingMethod_(emit_field_accessors_co_) UsingMethod_(emit_ints) UsingMethod_(emit_settings_co_) UsingMethod_(emit_symbols) UsingMethod_(emit_co_) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_changed) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(link_flags) UsingMethod_(linker) UsingMethod_(main_proto) UsingMethod_(name) UsingMethod_(number_classes_co_) UsingMethod_(object_file_name) UsingMethod_(objects_dir) UsingMethod_(program_name) UsingMethod_(report_run_program_co_arguments_co_) UsingMethod_(report_co_) UsingMethod_(shared_field_accessors) UsingMethod_(shared_ints) UsingMethod_(source_name) UsingMethod_(standard_object_proto) UsingMethod_(symbols) UsingMethod_(total_num_fields) UsingMethod_(unindent) UsingMethod_(values) UsingMethod_(warn_co_) UsingMethod_(write_co_)
 	UsingClass_(ClassBuilder__CCompiler)
 	UsingClass_(ClassNumberer__CCompiler)
+	UsingClass_(Compiler)
 	UsingClass_(ExistingFileStream__Standard)
 	UsingClass_(FileDirectory__Standard)
 	UsingClass_(File__Standard)
@@ -295,7 +297,7 @@ obj_ emit_c_co___CCompiler(obj_ this_, obj_ compiler)
 		obj_ args, build_settings, c_file_name, compile_trylon_c, contents, directory, library_path, max_num_fields, object_class, objects, program_name, recompile, recompile_all, settings_changed, stream;
 		t0_ = Call_(build_settings, compiler);
 		build_settings = t0_;
-		t0_ = Call_(find_library_path, compiler);
+		t0_ = find_library_path__Compiler(Proto_(Compiler));
 		library_path = t0_;
 		recompile_all = nil;
 		

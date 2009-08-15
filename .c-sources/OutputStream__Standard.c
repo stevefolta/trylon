@@ -4,7 +4,7 @@ UsingSym_(OutputStream)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(OutputStream__Standard)
 struct ClassInfo OutputStream__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 61, 0, Proto_(OutputStream__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(OutputStream), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 65, 0, Proto_(OutputStream__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(OutputStream), nil, nil };
 struct object OutputStream__Standard = 
 	{ &OutputStream__Standard__classInfo_, {} };
 

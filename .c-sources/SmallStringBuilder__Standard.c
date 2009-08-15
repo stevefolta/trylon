@@ -1,12 +1,12 @@
 #include "Trylon_.h"
 
-UsingSym_(SmallStringBuilder)UsingClass_(Compiler)
+UsingSym_(SmallStringBuilder)UsingClass_(Standard)
 UsingClass_(Object__Standard)
-UsingClass_(SmallStringBuilder__Compiler)
-struct ClassInfo SmallStringBuilder__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 186, 3, Proto_(SmallStringBuilder__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SmallStringBuilder), nil, nil };
-struct object SmallStringBuilder__Compiler = 
-	{ &SmallStringBuilder__Compiler__classInfo_, {nil, nil, nil} };
+UsingClass_(SmallStringBuilder__Standard)
+struct ClassInfo SmallStringBuilder__Standard__classInfo_ = 
+	{ StdClassRef_(Class__CImplementation), 192, 3, Proto_(SmallStringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(SmallStringBuilder), nil, nil };
+struct object SmallStringBuilder__Standard = 
+	{ &SmallStringBuilder__Standard__classInfo_, {nil, nil, nil} };
 
 
 #define size__fld_	(0)
@@ -14,7 +14,7 @@ struct object SmallStringBuilder__Compiler =
 #define buffer__fld_	(2)
 
 
-obj_ add_char_co___SmallStringBuilder__Compiler(obj_ this_, obj_ char_)
+obj_ add_char_co___SmallStringBuilder__Standard(obj_ this_, obj_ char_)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -44,7 +44,7 @@ obj_ add_char_co___SmallStringBuilder__Compiler(obj_ this_, obj_ char_)
 }
 
 
-obj_ add_from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ add_from_co_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ start, obj_ stopper)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -75,7 +75,7 @@ obj_ add_from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, ob
 }
 
 
-obj_ add_co___SmallStringBuilder__Compiler(obj_ this_, obj_ string)
+obj_ add_co___SmallStringBuilder__Standard(obj_ this_, obj_ string)
 {
 	obj_ t0_;
 	obj_ t1_;
@@ -91,7 +91,7 @@ obj_ add_co___SmallStringBuilder__Compiler(obj_ this_, obj_ string)
 }
 
 
-obj_ create__SmallStringBuilder__Compiler(obj_ this_)
+obj_ create__SmallStringBuilder__Standard(obj_ this_)
 {
 	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
@@ -113,7 +113,7 @@ obj_ create__SmallStringBuilder__Compiler(obj_ this_)
 }
 
 
-obj_ create_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ create_co_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ start, obj_ stopper)
 {
 	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
@@ -140,21 +140,21 @@ obj_ create_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_
 }
 
 
-obj_ from_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ from_co_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ start, obj_ stopper)
 {
-	extern obj_ new_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper);
+	extern obj_ new_co_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;
-	UsingClass_(SmallStringBuilder__Compiler)
+	UsingClass_(SmallStringBuilder__Standard)
 
 		{
-		t0_ = new_co_to_co___SmallStringBuilder__Compiler(Proto_(SmallStringBuilder__Compiler), start, stopper);
+		t0_ = new_co_to_co___SmallStringBuilder__Standard(Proto_(SmallStringBuilder__Standard), start, stopper);
 		return t0_;
 		}
 	return nil;
 }
 
 
-obj_ grow_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ new_size)
+obj_ grow_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ new_size)
 {
 	extern obj_ new_non_pointer_co___BytePtr__Standard(obj_ this_, obj_ size);
 	obj_ t0_;
@@ -192,25 +192,25 @@ obj_ grow_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ new_size)
 }
 
 
-obj_ new__SmallStringBuilder__Compiler(obj_ this_)
+obj_ new__SmallStringBuilder__Standard(obj_ this_)
 {
-	UsingClass_(SmallStringBuilder__Compiler)
-	obj_ obj = AllocObj_(SmallStringBuilder__Compiler);
-	create__SmallStringBuilder__Compiler(obj);
+	UsingClass_(SmallStringBuilder__Standard)
+	obj_ obj = AllocObj_(SmallStringBuilder__Standard);
+	create__SmallStringBuilder__Standard(obj);
 	return obj;
 }
 
 
-obj_ new_co_to_co___SmallStringBuilder__Compiler(obj_ this_, obj_ start, obj_ stopper)
+obj_ new_co_to_co___SmallStringBuilder__Standard(obj_ this_, obj_ start, obj_ stopper)
 {
-	UsingClass_(SmallStringBuilder__Compiler)
-	obj_ obj = AllocObj_(SmallStringBuilder__Compiler);
-	create_co_to_co___SmallStringBuilder__Compiler(obj, start, stopper);
+	UsingClass_(SmallStringBuilder__Standard)
+	obj_ obj = AllocObj_(SmallStringBuilder__Standard);
+	create_co_to_co___SmallStringBuilder__Standard(obj, start, stopper);
 	return obj;
 }
 
 
-obj_ string__SmallStringBuilder__Compiler(obj_ this_)
+obj_ string__SmallStringBuilder__Standard(obj_ this_)
 {
 	extern obj_ from_co_to_co___String__Standard(obj_ this_, obj_ start, obj_ stopper);
 	obj_ t0_;

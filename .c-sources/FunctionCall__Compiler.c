@@ -4,7 +4,7 @@ UsingSym_(FunctionCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(FunctionCall__Compiler)
 struct ClassInfo FunctionCall__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 102, 4, Proto_(FunctionCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FunctionCall), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 138, 4, Proto_(FunctionCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FunctionCall), nil, nil };
 struct object FunctionCall__Compiler = 
 	{ &FunctionCall__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -104,7 +104,7 @@ obj_ create_co_arguments_co___FunctionCall__Compiler(obj_ this_, obj_ function, 
 		t0_ = Call_(name, function);
 		t1_ = Call_(name_co_, this_, t0_);
 		t0_ = Call_(arguments_co_, this_, arguments);
-		/*  "context" is not needed; we skip the "prepare-to-emit" phase. */
+		/*  "context" is not needed; we skip the "resolve" phase. */
 		}
 	return nil;
 }
@@ -140,7 +140,7 @@ obj_ emit_code_co___FunctionCall__Compiler(obj_ this_, obj_ builder)
 	UsingClass_(MessageException__Standard)
 
 		{
-		/*  We already got the function in prepare-to-emit. */
+		/*  We already got the function in 'resolve'. */
 		t0_ = Call_(function, this_);
 		t1_ = Not_(t0_);
 		if (t1_)
@@ -177,7 +177,7 @@ obj_ interpreted__FunctionCall__Compiler(obj_ this_)
 	UsingClass_(MessageException__Standard)
 
 		{
-		/*  We already got the function in prepare-to-emit. */
+		/*  We already got the function in 'resolve'. */
 		t0_ = Call_(function, this_);
 		t1_ = Not_(t0_);
 		if (t1_)
@@ -216,7 +216,7 @@ obj_ new_co_arguments_co_context_co___FunctionCall__Compiler(obj_ this_, obj_ na
 }
 
 
-obj_ prepare_to_emit__FunctionCall__Compiler(obj_ this_)
+obj_ resolve__FunctionCall__Compiler(obj_ this_)
 {
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
 	obj_ t0_;
@@ -226,7 +226,7 @@ obj_ prepare_to_emit__FunctionCall__Compiler(obj_ this_)
 	obj_ t4_;
 	DefineString_(0, "There is no \"")
 	DefineString_(1, "\" function.")
-	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(function) UsingMethod_(function_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lookup_function_autodeclaring_co_) UsingMethod_(name) UsingMethod_(prepare_to_emit)
+	UsingMethod_(_pl_) UsingMethod_(arguments) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(function) UsingMethod_(function_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(lookup_function_autodeclaring_co_) UsingMethod_(name) UsingMethod_(resolve)
 	UsingClass_(MessageException__Standard)
 
 		{
@@ -248,7 +248,7 @@ obj_ prepare_to_emit__FunctionCall__Compiler(obj_ this_)
 		t4_ = Call_(arguments, this_);
 		ForStart_(0, t4_, arg)
 			{
-			t0_ = Call_(prepare_to_emit, arg);
+			t0_ = Call_(resolve, arg);
 			}
 		ForEnd_(0)
 		}

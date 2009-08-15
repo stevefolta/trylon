@@ -6,7 +6,7 @@ UsingSym_(Interpreter)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(Interpreter)
 struct ClassInfo Interpreter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 69, 1, Proto_(Interpreter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Interpreter), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 73, 1, Proto_(Interpreter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Interpreter), nil, ((obj_) tu0_) };
 struct object Interpreter = 
 	{ &Interpreter__classInfo_, {nil} };
 
@@ -313,36 +313,41 @@ obj_ interpret_send_of_co_to_co_with_co___Interpreter(obj_ this_, obj_ name, obj
 obj_ interpret_co___Interpreter(obj_ this_, obj_ code)
 {
 	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co___LinesLexer__Compiler(obj_ this_, obj_ text);
+	extern obj_ new_co___LinesLexer__Trylon(obj_ this_, obj_ text);
 	extern obj_ new_co_in_co___TrylonCodeParser__Compiler(obj_ this_, obj_ lines, obj_ context);
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(interpreted) UsingMethod_(lex) UsingMethod_(parse) UsingMethod_(prepare_to_emit)
+	UsingMethod_(interpreted) UsingMethod_(lex) UsingMethod_(parse) UsingMethod_(resolve)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(ExistingProto__Compiler)
-	UsingClass_(LinesLexer__Compiler)
+	UsingClass_(LinesLexer__Trylon)
 	UsingClass_(Main)
 	UsingClass_(TrylonCodeParser__Compiler)
 
 		{
 		obj_ context, lines, main_context, parse_tree, parser, result;
+		SetSharedField_(compiler, Main, this_);
+		
+		/*  Get the Main context to interpret it in. */
 		main_context = nil;
 			{
 			main_context = Proto_(Main);
 			}
 		t0_ = new_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), main_context);
 		context = t0_;
-		t0_ = new_co___LinesLexer__Compiler(Proto_(LinesLexer__Compiler), code);
+		t0_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), code);
 		t1_ = Call_(lex, t0_);
 		lines = t1_;
+		
+		/*  Interpret. */
 		t0_ = new_co_in_co___TrylonCodeParser__Compiler(Proto_(TrylonCodeParser__Compiler), lines, context);
 		parser = t0_;
 		t0_ = Call_(parse, parser);
 		parse_tree = t0_;
-		SetSharedField_(compiler, Main, this_);
-		t0_ = Call_(prepare_to_emit, parse_tree);
+		t0_ = Call_(resolve, parse_tree);
 		t0_ = Call_(interpreted, parse_tree);
 		result = t0_;
+		
 		SetSharedField_(compiler, Main, nil);
 		return result;
 		}

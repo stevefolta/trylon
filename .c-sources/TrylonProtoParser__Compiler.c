@@ -4,7 +4,7 @@ UsingSym_(TrylonProtoParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(TrylonProtoParser__Compiler)
 struct ClassInfo TrylonProtoParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 180, 5, Proto_(TrylonProtoParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonProtoParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 97, 5, Proto_(TrylonProtoParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(TrylonProtoParser), nil, nil };
 struct object TrylonProtoParser__Compiler = 
 	{ &TrylonProtoParser__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

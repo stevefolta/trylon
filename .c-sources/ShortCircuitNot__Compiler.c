@@ -4,7 +4,7 @@ UsingSym_(ShortCircuitNot)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ShortCircuitNot__Compiler)
 struct ClassInfo ShortCircuitNot__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 114, 1, Proto_(ShortCircuitNot__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitNot), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 150, 1, Proto_(ShortCircuitNot__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitNot), nil, nil };
 struct object ShortCircuitNot__Compiler = 
 	{ &ShortCircuitNot__Compiler__classInfo_, {nil} };
 
@@ -95,15 +95,15 @@ obj_ new_co___ShortCircuitNot__Compiler(obj_ this_, obj_ expr)
 }
 
 
-obj_ prepare_to_emit__ShortCircuitNot__Compiler(obj_ this_)
+obj_ resolve__ShortCircuitNot__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(expr) UsingMethod_(prepare_to_emit)
+	UsingMethod_(expr) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(expr, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

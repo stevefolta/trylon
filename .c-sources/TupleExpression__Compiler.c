@@ -4,7 +4,7 @@ UsingSym_(TupleExpression)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(TupleExpression__Compiler)
 struct ClassInfo TupleExpression__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 116, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 152, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression), nil, nil };
 struct object TupleExpression__Compiler = 
 	{ &TupleExpression__Compiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -359,16 +359,16 @@ obj_ new__TupleExpression__Compiler(obj_ this_)
 }
 
 
-obj_ prepare_to_emit__TupleExpression__Compiler(obj_ this_)
+obj_ resolve__TupleExpression__Compiler(obj_ this_)
 {
 	obj_ t0_;
-	UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(prepare_to_emit)
+	UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(members) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(members, this_);
 		ForStart_(0, t0_, member)
 			{
-			t0_ = Call_(prepare_to_emit, member);
+			t0_ = Call_(resolve, member);
 			}
 		ForEnd_(0)
 		}

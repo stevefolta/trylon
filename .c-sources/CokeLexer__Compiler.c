@@ -4,7 +4,7 @@ UsingSym_(CokeLexer)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CokeLexer__Compiler)
 struct ClassInfo CokeLexer__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 65, 4, Proto_(CokeLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CokeLexer), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 70, 4, Proto_(CokeLexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(CokeLexer), nil, nil };
 struct object CokeLexer__Compiler = 
 	{ &CokeLexer__Compiler__classInfo_, {nil, nil, nil, nil} };
 

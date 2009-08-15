@@ -4,7 +4,7 @@ UsingSym_(IfStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(IfStatement__Compiler)
 struct ClassInfo IfStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 147, 6, Proto_(IfStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(IfStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 165, 6, Proto_(IfStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(IfStatement), nil, nil };
 struct object IfStatement__Compiler = 
 	{ &IfStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 
@@ -192,22 +192,22 @@ obj_ new_co_body_co_else_block_co_comment_co_else_comment_co_pre_else_comments_c
 }
 
 
-obj_ prepare_to_emit__IfStatement__Compiler(obj_ this_)
+obj_ resolve__IfStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(else_block) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(condition) UsingMethod_(else_block) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(condition, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(else_block, this_);
 		if (t0_)
 			{
 			t0_ = Call_(else_block, this_);
-			t1_ = Call_(prepare_to_emit, t0_);
+			t1_ = Call_(resolve, t0_);
 			}
 		}
 	return nil;

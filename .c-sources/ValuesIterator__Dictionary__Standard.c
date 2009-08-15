@@ -4,7 +4,7 @@ UsingSym_(ValuesIterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 UsingClass_(ValuesIterator__Dictionary__Standard)
 struct ClassInfo ValuesIterator__Dictionary__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 37, 1, Proto_(ValuesIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(ValuesIterator), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 41, 1, Proto_(ValuesIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(ValuesIterator), nil, nil };
 struct object ValuesIterator__Dictionary__Standard = 
 	{ &ValuesIterator__Dictionary__Standard__classInfo_, {nil} };
 

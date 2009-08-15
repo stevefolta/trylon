@@ -4,7 +4,7 @@ UsingSym_(ThrowStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ThrowStatement__Compiler)
 struct ClassInfo ThrowStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 154, 2, Proto_(ThrowStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ThrowStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 172, 2, Proto_(ThrowStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ThrowStatement), nil, nil };
 struct object ThrowStatement__Compiler = 
 	{ &ThrowStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -90,15 +90,15 @@ obj_ new_co_comment_co___ThrowStatement__Compiler(obj_ this_, obj_ value, obj_ c
 }
 
 
-obj_ prepare_to_emit__ThrowStatement__Compiler(obj_ this_)
+obj_ resolve__ThrowStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(prepare_to_emit) UsingMethod_(value)
+	UsingMethod_(resolve) UsingMethod_(value)
 
 		{
 		t0_ = Call_(value, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(BoolLiteralFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(BoolLiteralFunction__Compiler)
 struct ClassInfo BoolLiteralFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 130, 1, Proto_(BoolLiteralFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(BoolLiteralFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 125, 1, Proto_(BoolLiteralFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(BoolLiteralFunction), nil, nil };
 struct object BoolLiteralFunction__Compiler = 
 	{ &BoolLiteralFunction__Compiler__classInfo_, {nil} };
 

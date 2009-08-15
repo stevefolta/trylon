@@ -4,9 +4,9 @@ UsingSym_(ExistingProto)UsingClass_(Compiler)
 UsingClass_(ClassContext__Compiler)
 UsingClass_(ExistingProto__Compiler)
 struct ClassInfo ExistingProto__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 77, 5, Proto_(ExistingProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(ExistingProto), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 89, 6, Proto_(ExistingProto__Compiler), Proto_(Compiler), Proto_(ClassContext__Compiler), nil, Sym_(ExistingProto), nil, nil };
 struct object ExistingProto__Compiler = 
-	{ &ExistingProto__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
+	{ &ExistingProto__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 
 
 
@@ -16,6 +16,21 @@ struct object ExistingProto__Compiler =
 #define proto__fld_	(2)
 #define new_functions__fld_	(3)
 #define is_main__fld_	(4)
+#define directories__fld_	(5)
+
+
+obj_ add_directory_co___ExistingProto__Compiler(obj_ this_, obj_ directory)
+{
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(append_co_) UsingMethod_(directories)
+
+		{
+		t0_ = Call_(directories, this_);
+		t1_ = Call_(append_co_, t0_, directory);
+		}
+	return nil;
+}
 
 
 obj_ add_field_co___ExistingProto__Compiler(obj_ this_, obj_ field)
@@ -149,7 +164,7 @@ obj_ add_proto_co_directory_co___ExistingProto__Compiler(obj_ this_, obj_ name, 
 	DefineString_(2, "Loading ")
 	DefineString_(3, " into ")
 	DefineString_(4, "...")
-	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(at_co_put_co_) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name) UsingMethod_(new_functions) UsingMethod_(proto) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
+	UsingMethod_(_pl_) UsingMethod_(add_directory_co_) UsingMethod_(adding_class_co_) UsingMethod_(at_co_put_co_) UsingMethod_(indent) UsingMethod_(is_a_co_) UsingMethod_(lookup_instance_function_co_) UsingMethod_(name) UsingMethod_(new_functions) UsingMethod_(proto) UsingMethod_(report_co_) UsingMethod_(status_reporter) UsingMethod_(unindent)
 	UsingSharedField_(compiler, Main) 
 	UsingClass_(CompiledProto__Compiler)
 	UsingClass_(MessageException__Standard)
@@ -195,6 +210,7 @@ obj_ add_proto_co_directory_co___ExistingProto__Compiler(obj_ this_, obj_ name, 
 		proto_function = t0_;
 		t0_ = Call_(new_functions, this_);
 		t1_ = Call_(at_co_put_co_, t0_, name, proto_function);
+		t0_ = Call_(adding_class_co_, SharedField_(compiler, Main), new_proto);
 		t0_ = Call_(unindent, status_reporter);
 		return new_proto;
 		}
@@ -248,16 +264,62 @@ obj_ create_co___ExistingProto__Compiler(obj_ this_, obj_ proto)
 obj_ create_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto)
 {
 	extern obj_ new__Dictionary__Standard(obj_ this_);
+	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(name_co_) UsingMethod_(new_functions_co_) UsingMethod_(proto_co_)
+	UsingMethod_(_eq__eq_) UsingMethod_(directories_co_) UsingMethod_(is_main) UsingMethod_(is_main_co_) UsingMethod_(name_co_) UsingMethod_(new_functions_co_) UsingMethod_(proto_co_) UsingMethod_(setup_main)
 	UsingClass_(Dictionary__Standard)
+	UsingClass_(List__Standard)
+	UsingClass_(Main)
 
 		{
 		t0_ = Call_(name_co_, this_, name);
 		t0_ = Call_(proto_co_, this_, proto);
 		t0_ = new__Dictionary__Standard(Proto_(Dictionary__Standard));
 		t1_ = Call_(new_functions_co_, this_, t0_);
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		t1_ = Call_(directories_co_, this_, t0_);
+			{
+			t0_ = Call_(_eq__eq_, proto, Proto_(Main));
+			t1_ = Call_(is_main_co_, this_, t0_);
+			}
+		t0_ = Call_(is_main, this_);
+		if (t0_)
+			{
+			t0_ = Call_(setup_main, this_);
+			}
+		}
+	return nil;
+}
+
+
+obj_ find_subproto_co___ExistingProto__Compiler(obj_ this_, obj_ name)
+{
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(_dt_proto_name) UsingMethod_(_dt_subprotos) UsingMethod_(_eq__eq_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(proto)
+
+		{
+		/*  'support-subprotos' must be on! */
+		t0_ = Call_(proto, this_);
+		t1_ = Call_(_dt_subprotos, t0_);
+		if (t1_)
+			{
+			t0_ = Call_(proto, this_);
+			t1_ = Call_(_dt_subprotos, t0_);
+			ForStart_(0, t1_, subproto)
+				{
+				t0_ = Call_(_dt_proto_name, subproto);
+				t1_ = Call_(_eq__eq_, t0_, name);
+				if (t1_)
+					{
+					return subproto;
+					}
+				}
+			ForEnd_(0)
+			}
+		
+		return nil;
 		}
 	return nil;
 }
@@ -266,27 +328,17 @@ obj_ create_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ pr
 obj_ function_for_co_in_co___ExistingProto__Compiler(obj_ this_, obj_ selector, obj_ proto)
 {
 	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
-	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
 	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	UsingInt_(58)
 	UsingInt_(0)
-	UsingMethod_(_nt__eq_) UsingMethod_(_dt_proto_name) UsingMethod_(_dt_subprotos) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(index_of_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(responds_to_co_) UsingMethod_(string)
+	UsingMethod_(_nt__eq_) UsingMethod_(_dt_proto_name) UsingMethod_(_lt_) UsingMethod_(index_of_co_) UsingMethod_(load_subproto_co_) UsingMethod_(responds_to_co_) UsingMethod_(string)
 	UsingClass_(ExistingProto__Compiler)
 	UsingClass_(PrimitiveFunction__Compiler)
-	UsingClass_(ProtoFunction__Compiler)
 
 		{
 		obj_ existing_proto, function_name;
-		t0_ = Call_(responds_to_co_, proto, selector);
-		t1_ = Not_(t0_);
-		if (t1_)
-			{
-			return nil;
-			}
-		
 		/*  Is it a ProtoFunction? */
 		t0_ = Call_(string, selector);
 		function_name = t0_;
@@ -294,33 +346,20 @@ obj_ function_for_co_in_co___ExistingProto__Compiler(obj_ this_, obj_ selector, 
 		t1_ = Call_(_lt_, t0_, SmallInt_(0));
 		if (t1_)
 			{
-			obj_ found_subproto;
-			/*  'support-subprotos' must be on! */
-			found_subproto = nil;
-			t0_ = Call_(_dt_subprotos, proto);
-			if (t0_)
+			obj_ found_subproto_fn;
+			t0_ = Call_(load_subproto_co_, this_, function_name);
+			found_subproto_fn = t0_;
+			if (found_subproto_fn)
 				{
-				t0_ = Call_(_dt_subprotos, proto);
-				ForStart_(0, t0_, subproto)
-					{
-					t0_ = Call_(_dt_proto_name, subproto);
-					t1_ = Call_(_eq__eq_, t0_, function_name);
-					if (t1_)
-						{
-						found_subproto = subproto;
-						Break_(0)
-						}
-					}
-				ForEnd_(0)
+				return found_subproto_fn;
 				}
-			if (found_subproto)
-				{
-				obj_ existing_proto;
-				t0_ = new_co_proto_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), function_name, found_subproto);
-				existing_proto = t0_;
-				t0_ = new_co___ProtoFunction__Compiler(Proto_(ProtoFunction__Compiler), existing_proto);
-				return t0_;
-				}
+			}
+		
+		t0_ = Call_(responds_to_co_, proto, selector);
+		t1_ = Not_(t0_);
+		if (t1_)
+			{
+			return nil;
 			}
 		
 		existing_proto = this_;
@@ -396,6 +435,66 @@ obj_ get_subproto_co___ExistingProto__Compiler(obj_ this_, obj_ name)
 			}
 		
 		return nil;
+		}
+	return nil;
+}
+
+
+obj_ load_subproto_co___ExistingProto__Compiler(obj_ this_, obj_ name)
+{
+	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
+	extern obj_ in_co_for_co_parent_co___CompiledProto__Compiler(obj_ this_, obj_ directory, obj_ name, obj_ parent);
+	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
+	obj_ t0_;
+	obj_ t1_;
+	UsingMethod_(add_directory_co_) UsingMethod_(at_co_) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(entry_is_directory_co_) UsingMethod_(find_subproto_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator)
+	UsingClass_(CompiledProto__Compiler)
+	UsingClass_(ExistingProto__Compiler)
+	UsingClass_(ProtoFunction__Compiler)
+
+		{
+		obj_ found_subproto, subproto;
+		subproto = nil;
+		
+		/*  Do we already have it? */
+		t0_ = Call_(find_subproto_co_, this_, name);
+		found_subproto = t0_;
+		if (found_subproto)
+			{
+			t0_ = new_co_proto_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), name, found_subproto);
+			subproto = t0_;
+			t0_ = Call_(directories, this_);
+			ForStart_(0, t0_, directory)
+				{
+				t0_ = Call_(entry_is_directory_co_, directory, name);
+				if (t0_)
+					{
+					t0_ = Call_(at_co_, directory, name);
+					t1_ = Call_(add_directory_co_, subproto, t0_);
+					}
+				}
+			ForEnd_(0)
+			}
+		else
+			{
+			t0_ = Call_(directories, this_);
+			ForStart_(1, t0_, directory)
+				{
+				t0_ = in_co_for_co_parent_co___CompiledProto__Compiler(Proto_(CompiledProto__Compiler), directory, name, this_);
+				subproto = t0_;
+				}
+			ForEnd_(1)
+			}
+		
+		/*  If not, look for it in our directories. */
+		
+		t0_ = Not_(subproto);
+		if (t0_)
+			{
+			return nil;
+			}
+		t0_ = new_co___ProtoFunction__Compiler(Proto_(ProtoFunction__Compiler), subproto);
+		return t0_;
 		}
 	return nil;
 }
@@ -492,56 +591,36 @@ obj_ lookup_function_co_visited_protos_co___ExistingProto__Compiler(obj_ this_, 
 
 obj_ lookup_instance_function_co___ExistingProto__Compiler(obj_ this_, obj_ name)
 {
-	extern obj_ new_co_proto_co___ExistingProto__Compiler(obj_ this_, obj_ name, obj_ proto);
-	extern obj_ new_co___ProtoFunction__Compiler(obj_ this_, obj_ proto);
 	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	obj_ t4_;
-	UsingInt_(0)
-	UsingInt_(65)
-	UsingInt_(90)
-	UsingMethod_(_lt__eq_) UsingMethod_(_gt__eq_) UsingMethod_(at_co_) UsingMethod_(intern) UsingMethod_(new_functions) UsingMethod_(perform_co_) UsingMethod_(proto) UsingMethod_(responds_to_co_)
-	UsingClass_(ExistingProto__Compiler)
+	UsingMethod_(at_co_) UsingMethod_(intern) UsingMethod_(load_subproto_co_) UsingMethod_(new_functions) UsingMethod_(proto) UsingMethod_(responds_to_co_)
 	UsingClass_(PrimitiveFunction__Compiler)
-	UsingClass_(ProtoFunction__Compiler)
 
 		{
-		obj_ function;
+		obj_ found_subproto_fn, function;
+		t0_ = Call_(load_subproto_co_, this_, name);
+		found_subproto_fn = t0_;
+		if (found_subproto_fn)
+			{
+			return found_subproto_fn;
+			}
+		
 		t0_ = Call_(proto, this_);
 		t1_ = Call_(intern, name);
 		t2_ = Call_(responds_to_co_, t0_, t1_);
 		if (t2_)
 			{
-			obj_ first_char;
-			t0_ = Call_(at_co_, name, SmallInt_(0));
-			first_char = t0_;
-			t0_ = Call_(_gt__eq_, first_char, Int_(65));
-			if (t0_) {
-				t1_ = Call_(_lt__eq_, first_char, Int_(90));
-				t0_ = t1_;
-				}
-			if (t0_)
-				{
-				obj_ existing_proto;
-				t0_ = Call_(proto, this_);
-				t1_ = Call_(intern, name);
-				t2_ = Call_(perform_co_, t0_, t1_);
-				t3_ = new_co_proto_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), name, t2_);
-				existing_proto = t3_;
-				t0_ = new_co___ProtoFunction__Compiler(Proto_(ProtoFunction__Compiler), existing_proto);
-				return t0_;
-				}
-			t1_ = Call_(proto, this_);
-			t2_ = new_co_on_proto_co___PrimitiveFunction__Compiler(Proto_(PrimitiveFunction__Compiler), name, t1_);
-			return t2_;
+			t0_ = Call_(proto, this_);
+			t1_ = new_co_on_proto_co___PrimitiveFunction__Compiler(Proto_(PrimitiveFunction__Compiler), name, t0_);
+			return t1_;
 			}
 		
-		t3_ = Call_(new_functions, this_);
-		t4_ = Call_(at_co_, t3_, name);
-		function = t4_;
+		t2_ = Call_(new_functions, this_);
+		t3_ = Call_(at_co_, t2_, name);
+		function = t3_;
 		if (function)
 			{
 			return function;
@@ -592,9 +671,8 @@ obj_ parent__ExistingProto__Compiler(obj_ this_)
 	extern obj_ new_co___ExistingProto__Compiler(obj_ this_, obj_ proto);
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(_dt_parent_context) UsingMethod_(_eq__eq_) UsingMethod_(is_main_co_) UsingMethod_(proto) UsingMethod_(responds_to_co_)
+	UsingMethod_(_dt_parent_context) UsingMethod_(proto) UsingMethod_(responds_to_co_)
 	UsingClass_(ExistingProto__Compiler)
-	UsingClass_(Main)
 
 		{
 		t0_ = Call_(proto, this_);
@@ -605,18 +683,76 @@ obj_ parent__ExistingProto__Compiler(obj_ this_)
 			t0_ = Call_(proto, this_);
 			t1_ = Call_(_dt_parent_context, t0_);
 			parent_context = t1_;
+			t0_ = Not_(parent_context);
+			if (t0_)
+				{
+				return nil;
+				}
 			t0_ = new_co___ExistingProto__Compiler(Proto_(ExistingProto__Compiler), parent_context);
 			existing_proto = t0_;
-				{
-				t0_ = Call_(_eq__eq_, parent_context, Proto_(Main));
-				if (t0_)
-					{
-					t0_ = Call_(is_main_co_, existing_proto, true_);
-					}
-				}
 			return existing_proto;
 			}
 		return nil;
+		}
+	return nil;
+}
+
+
+obj_ setup_main__ExistingProto__Compiler(obj_ this_)
+{
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ find_library_path__Compiler(obj_ this_);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	extern obj_ build_settings__Main(obj_ this_);
+	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
+	obj_ t0_;
+	obj_ t1_;
+	DefineString_(0, ".")
+	DefineString_(1, "sources")
+	DefineString_(2, "sources")
+	UsingMethod_(add_directory_co_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(current_item) UsingMethod_(directories) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(library_dirs)
+	UsingClass_(Compiler)
+	UsingClass_(FileDirectory__Standard)
+	UsingClass_(Main)
+
+		{
+		obj_ library_path, main_directory;
+		/*  Add current directory (or "./sources"). */
+		t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), Str_(0));
+		main_directory = t0_;
+		t0_ = Call_(entry_is_directory_co_, main_directory, Str_(1));
+		if (t0_)
+			{
+			t0_ = Call_(at_co_, main_directory, Str_(2));
+			main_directory = t0_;
+			}
+		
+		/*  Add the system library. */
+		t0_ = find_library_path__Compiler(Proto_(Compiler));
+		library_path = t0_;
+		if (library_path)
+			{
+			Try_
+				{
+				obj_ library_directory;
+				t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), library_path);
+				library_directory = t0_;
+				t0_ = Call_(directories, this_);
+				t1_ = Call_(append_co_, t0_, library_directory);
+				}
+			TryElse_
+			EndTry_
+			}
+		
+		/*  Add the library-dirs. */
+		t0_ = build_settings__Main(Proto_(Main));
+		t1_ = Call_(library_dirs, t0_);
+		ForStart_(0, t1_, directory)
+			{
+			t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), directory);
+			t1_ = Call_(add_directory_co_, this_, t0_);
+			}
+		ForEnd_(0)
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(InStream)UsingClass_(File__Standard)
 UsingClass_(InputStream__Standard)
 UsingClass_(InStream__File__Standard)
 struct ClassInfo InStream__File__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 56, 1, Proto_(InStream__File__Standard), Proto_(File__Standard), Proto_(InputStream__Standard), nil, Sym_(InStream), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 60, 1, Proto_(InStream__File__Standard), Proto_(File__Standard), Proto_(InputStream__Standard), nil, Sym_(InStream), nil, nil };
 struct object InStream__File__Standard = 
 	{ &InStream__File__Standard__classInfo_, {nil} };
 

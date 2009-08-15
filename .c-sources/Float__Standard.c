@@ -4,7 +4,7 @@ UsingSym_(Float)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Float__Standard)
 struct ClassInfo Float__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 3, 0, Proto_(Float__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Float), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 6, 0, Proto_(Float__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Float), nil, nil };
 struct object Float__Standard = 
 	{ &Float__Standard__classInfo_, {} };
 

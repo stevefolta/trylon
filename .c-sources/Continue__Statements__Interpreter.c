@@ -4,7 +4,7 @@ UsingSym_(Continue)UsingClass_(Statements__Interpreter)
 UsingClass_(Exception__Standard)
 UsingClass_(Continue__Statements__Interpreter)
 struct ClassInfo Continue__Statements__Interpreter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 48, 0, Proto_(Continue__Statements__Interpreter), Proto_(Statements__Interpreter), Proto_(Exception__Standard), nil, Sym_(Continue), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 52, 0, Proto_(Continue__Statements__Interpreter), Proto_(Statements__Interpreter), Proto_(Exception__Standard), nil, Sym_(Continue), nil, nil };
 struct object Continue__Statements__Interpreter = 
 	{ &Continue__Statements__Interpreter__classInfo_, {} };
 
