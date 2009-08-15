@@ -1,0 +1,6 @@
+trylon ScriptTest
+
+
+result
+	return 'dir-from-existing'
+

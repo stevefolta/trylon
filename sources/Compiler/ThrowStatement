@@ -9,8 +9,8 @@ create: value comment: comment
 	this comment = comment
 
 
-prepare-to-emit
-	value prepare-to-emit
+resolve
+	value resolve
 
 
 compile: builder

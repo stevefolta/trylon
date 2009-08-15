@@ -3,7 +3,7 @@ trylon CCompiler
 
 emit-c: compiler
 	build-settings = compiler build-settings
-	library-path = compiler find-library-path
+	library-path = Compiler find-library-path
 	recompile-all = false
 
 	# Figure out the program name.

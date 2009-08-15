@@ -8,8 +8,8 @@ create: expr
 	this expr = expr
 
 
-prepare-to-emit
-	expr prepare-to-emit
+resolve
+	expr resolve
 
 
 compile: builder

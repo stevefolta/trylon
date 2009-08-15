@@ -15,10 +15,10 @@ attach-else: statement line: line
 	else-clause body = statement
 
 
-prepare-to-emit
-	body prepare-to-emit
+resolve
+	body resolve
 	if else-clause
-		else-clause prepare-to-emit
+		else-clause resolve
 
 
 compile: builder

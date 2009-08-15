@@ -70,9 +70,9 @@ is-lambda
 	return false
 
 
-prepare-to-emit
+resolve
 	for statement in statements
-		statement prepare-to-emit
+		statement resolve
 
 
 compile: builder

@@ -1,4 +1,4 @@
-#!/usr/bin/env trylon
+#!/usr/bin/env trylon-interpreter
 
 # Replace an existing method.  The replacement code tests all the codegen.
 source = File contents-of: "replacement-code"

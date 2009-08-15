@@ -1,28 +1,72 @@
 trylon X86Compiler
+fields class-queue
 
 word-size = 4
 
 
 reload: proto from: file-path
-	# Read into an ExistingProto.
-	source = File contents-of: file-path
-	lines = Compiler LinesLexer read: source
-	existing-proto = Compiler ExistingProto new: proto
+	# Set up.
 	old-compiler = compiler
 	compiler = this
-	Compiler TrylonProtoParser parse-proto-contents: lines into: existing-proto
-	compiler = old-compiler
+	caught-exception = nil
+	class-queue = List new
 
-	# Build the ExistingProto into the in-process class.
-	ExistingClassBuilder build: existing-proto
+	try
+		# Read into an ExistingProto.
+		source = File contents-of: file-path
+		lines = Trylon LinesLexer read: source
+		existing-proto = Compiler ExistingProto new: proto
+		Compiler TrylonProtoParser parse-proto-contents: lines into: existing-proto
+
+		# Build the ExistingProto into the in-process class.
+		ExistingClassBuilder build: existing-proto
+	else
+		caught-exception = exception
+
+	# Clean up.
+	class-queue = nil
+	compiler = old-compiler
+	if caught-exception
+		throw caught-exception
+
+
+load: file-path into: proto as: name
+	# Set up.
+	old-compiler = compiler
+	compiler = this
+	caught-exception = nil
+	class-queue = List new
+
+	# Load the file as a new class.
+	try
+		parent-class = Compiler ExistingProto new: proto
+		adding-class: parent-class
+		compiled-class = parent-class add-proto: name
+		lines = Trylon LinesLexer read: (File contents-of: file-path)
+		Compiler TrylonProtoParser parse-proto-contents: lines into: compiled-class
+		for class-spec in class-queue
+			ClassBuilder build: class-spec
+	else
+		caught-exception = exception
+	
+	# Clean up.
+	class-queue = nil
+	compiler = old-compiler
+	if caught-exception
+		throw caught-exception
 
 
 compile: function
+	if function is-primitive
+		error: 	--
+			('"', function on-proto name, " ", function name, '"', 	--
+			" is primitive, and can't be compiled to x86.")
+
 	# Function resolution.
 	old-compiler = compiler
 	compiler = this
 	parse-tree = function body
-	parse-tree prepare-to-emit
+	parse-tree resolve
 
 	# Codegen.
 	method-builder = MethodBuilder new: function code: parse-tree
@@ -40,7 +84,7 @@ replace-method: symbol on: object with: source arg-names: arg-names
 
 	# Parse.
 	context = Compiler MethodContext new: arguments parent: on-proto
-	lines = Compiler LinesLexer read: source
+	lines = Trylon LinesLexer read: source
 	parser = Compiler TrylonCodeParser new: lines in: context
 	parse-tree = parser parse
 
@@ -85,6 +129,9 @@ declaring-selector: selector
 
 calling-selector: selector
 	# Nothing to do.
+
+adding-class: class
+	class-queue append: class
 
 build-settings
 	if .build-settings == nil

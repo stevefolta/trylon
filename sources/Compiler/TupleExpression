@@ -12,9 +12,9 @@ add-member: member
 	members append: member
 
 
-prepare-to-emit
+resolve
 	for member in members
-		member prepare-to-emit
+		member resolve
 
 
 compile: builder

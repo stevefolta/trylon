@@ -12,16 +12,16 @@ at: key put: value
 	dict at: key put: value
 
 
-prepare-to-emit
+resolve
 	compiler get-standard-class: "Dictionary"
-	prepare-to-emit: dict root
+	resolve: dict root
 
-prepare-to-emit: node
+resolve: node
 	if node left
-		prepare-to-emit: node left
+		resolve: node left
 	if node right
-		prepare-to-emit: node right
-	node value prepare-to-emit
+		resolve: node right
+	node value resolve
 
 
 compile: builder

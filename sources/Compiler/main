@@ -13,6 +13,28 @@ compile
 	compile: List new
 
 
+find-library-path
+	# Use $TRYLON_LIBRARY if it's set.
+	library-path = System environment-variable-named: "TRYLON_LIBRARY"
+	if library-path && !(library-path is-empty)
+		return library-path
+	# Check $HOME/trylon.
+	home-path = System environment-variable-named: "HOME"
+	if home-path && !(home-path is-empty)
+		home-dir = FileDirectory new: home-path
+		if home-dir entry-is-directory: "trylon/library"
+			return home-path + "/trylon/library"
+	# Check ./library.
+	if (FileDirectory new: ".") entry-is-directory: "library"
+		return "./library"
+	# Look in some common places.
+	for prefix-path in ("/usr/lib", "/usr/local/lib", "/usr/share", "/opt/lib")
+		prefix-dir = FileDirectory new: prefix-path
+		if prefix-dir entry-is-directory: "trylon"
+			return prefix-path + "/trylon"
+	return nil
+
+
 iff targeting-jolt
 	compile-file: file as: name into: parent-proto
 		if !(parent-proto is-a: ExistingProto)

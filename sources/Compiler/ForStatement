@@ -11,9 +11,9 @@ create: local collection: collection body: body comment: comment
 	this comment = comment
 
 
-prepare-to-emit
-	collection prepare-to-emit
-	body prepare-to-emit
+resolve
+	collection resolve
+	body resolve
 
 
 compile: builder

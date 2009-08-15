@@ -1,7 +1,7 @@
 trylon TrylonFunction
 
 
-prepare-to-emit
+resolve
 	# Default: nothing to do.
 
 compile-call: builder with: arguments

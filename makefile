@@ -24,6 +24,7 @@ install:
 	install -d $(PREFIX)/bin
 	install -d $(PREFIX)/lib
 	install trylon $(PREFIX)/bin
+	install trylon-interpreter $(PREFIX)/bin
 	cp -r library $(PREFIX)/lib/trylon
 
 clean:
@@ -44,6 +45,7 @@ TARBALL_FILES += docs/doctifier/build-settings docs/doctifier/sources
 TARBALL_FILES += start.k start-self.k command-line.k
 TARBALL_FILES += tests
 TARBALL_FILES += build-settings .c-sources
+TARBALL_FILES += trylon-interpreter
 
 TRYLON_DIR := $(notdir $(PWD))
 TARBALL_FILES := $(addprefix $(TRYLON_DIR)/,$(TARBALL_FILES))

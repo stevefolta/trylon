@@ -82,7 +82,7 @@ target: target
 
 load
 	# Load global build-settings first.
-	library-path = compiler find-library-path
+	library-path = find-library-path
 	if library-path
 		load-from: library-path + "/build-settings"
 	# Then user's semi-global build-settings.
@@ -104,7 +104,7 @@ load-from: file-name
 		return
 	
 	try
-		load-lines: (LinesLexer read: file contents)
+		load-lines: (Trylon LinesLexer read: file contents)
 	catch Exception
 		throw 	--
 			MessageException new: 	--

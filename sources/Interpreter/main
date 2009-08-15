@@ -1,18 +1,23 @@
 trylon Interpreter
 
 interpret: code
+	compiler = this
+
+	# Get the Main context to interpret it in.
 	main-context = nil
 	iff !targeting-jolt
 		main-context = Main
 	iff targeting-jolt
 		main-context = Trylon
 	context = Compiler ExistingProto new: main-context
-	lines = (Compiler LinesLexer new: code) lex
+	lines = (Trylon LinesLexer new: code) lex
+
+	# Interpret.
 	parser = Compiler TrylonCodeParser new: lines in: context
 	parse-tree = parser parse
-	compiler = this
-	parse-tree prepare-to-emit
+	parse-tree resolve
 	result = parse-tree interpreted
+
 	compiler = nil
 	return result
 

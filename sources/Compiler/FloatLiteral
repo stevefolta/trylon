@@ -8,7 +8,7 @@ create: value
 	this value = value float
 
 
-prepare-to-emit
+resolve
 	# Nothing to do.
 
 

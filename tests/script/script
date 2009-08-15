@@ -1,0 +1,33 @@
+#!/usr/bin/env trylon
+trylon Script
+
+main: args
+	send: "Hello world!"
+	args pop-front
+	if !args is-empty
+		send: "Args:"
+		for arg in args
+			send: ("  ", arg)
+		send: "-----"
+	foo
+	Foo foo
+
+	try
+		Test name: "Script class load from directory" 	--
+			check: ScriptTest result against: 'dir-from-existing'
+		Test name: "Script class load from file" 	--
+			check: ScriptTest Subclass result against: 'file-from-new'
+		Test name: "Script class load from library file" 	--
+			check: ScriptTestFile result against: 'file-from-existing'
+	else
+		send: exception message
+
+
+foo
+	for item in ("One", "Two", "Three")
+		send: item
+
+class Foo
+	foo
+		for item in ("Four", "Five", "Six")
+			send: item

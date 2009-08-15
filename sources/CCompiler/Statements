@@ -170,8 +170,8 @@ extend Compiler TryStatement
 	emit-code: builder
 		builder add-line: (add-comment: "Try_")
 		body emit-code: builder
+		builder add-line: "TryElse_"
 		if else-clause
-			builder add-line: "TryElse_"
 			else-clause emit-code: builder
 		builder add-line: "EndTry_"
 

@@ -21,9 +21,9 @@ has-code
 	return false
 
 
-prepare-to-emit
+resolve
 	if body && !is-primitive
-		body prepare-to-emit
+		body resolve
 
 
 compile: builder

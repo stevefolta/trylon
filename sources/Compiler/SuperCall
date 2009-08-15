@@ -9,9 +9,9 @@ create: name arguments: arguments
 	this arguments = arguments
 
 
-prepare-to-emit
+resolve
 	for arg in arguments
-		arg prepare-to-emit
+		arg resolve
 
 
 compile: builder

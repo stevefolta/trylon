@@ -32,7 +32,7 @@ return-value
 compile-file: file as: name into: parent-proto
 	status-reporter = VT100StatusReporter new
 	proto = parent-proto add-proto: name
-	lines = (LinesLexer new: file contents) lex
+	lines = (Trylon LinesLexer new: file contents) lex
 	parser = TrylonProtoParser new: lines into: proto context: parent-proto
 	parser parse
 	return proto
@@ -88,7 +88,7 @@ compile-program: compile-symbols
 	status-reporter report: "Preparing to emit..."
 	status-reporter indent
 	for proto in proto-queue
-		proto prepare-to-emit
+		proto resolve
 	status-reporter unindent
 
 	# Set up Standard Object.
@@ -123,6 +123,9 @@ declaring-selector: name
 
 calling-selector: name
 	(symbol-info-for: name) called = true
+
+adding-class: class
+	proto-queue append: class
 
 using-symbol: name
 	(symbol-info-for: name) used-as-symbol = true
@@ -159,28 +162,6 @@ standard-object-proto
 
 get-standard-class: name
 	return (main-proto get-subproto: "Standard") get-proto: name
-
-
-find-library-path
-	# Use $TRYLON_LIBRARY if it's set.
-	library-path = System environment-variable-named: "TRYLON_LIBRARY"
-	if library-path && !(library-path is-empty)
-		return library-path
-	# Check $HOME/trylon.
-	home-path = System environment-variable-named: "HOME"
-	if home-path && !(home-path is-empty)
-		home-dir = FileDirectory new: home-path
-		if home-dir entry-is-directory: "trylon/library"
-			return home-path + "/trylon/library"
-	# Check ./library.
-	if (FileDirectory new: ".") entry-is-directory: "library"
-		return "./library"
-	# Look in some common places.
-	for prefix-path in ("/usr/lib", "/usr/local/lib", "/usr/share", "/opt/lib")
-		prefix-dir = FileDirectory new: prefix-path
-		if prefix-dir entry-is-directory: "trylon"
-			return prefix-path + "/trylon"
-	return nil
 
 
 

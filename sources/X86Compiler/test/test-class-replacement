@@ -1,4 +1,4 @@
-#!/usr/bin/env trylon
+#!/usr/bin/env trylon-interpreter
 
 test = X86Compiler test
 X86Compiler reload: test from: "main-v2"

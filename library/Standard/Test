@@ -1,0 +1,13 @@
+trylon Test
+
+
+name: name check: value against: expected-value
+	name: name check: value == expected-value
+
+
+name: name check: ok
+	if ok
+		send: (name, ": succeeded.")
+	else
+		error: (name, ": FAILED.")
+
