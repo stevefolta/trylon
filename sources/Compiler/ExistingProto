@@ -98,16 +98,24 @@ find-subproto: name
 
 
 load-subproto: name
-	found-subproto = find-subproto: name
-	if found-subproto == nil
-		return nil
-	
-	existing-proto = ExistingProto new: name proto: found-subproto
-	for directory in directories
-		if directory entry-is-directory: name
-			existing-proto add-directory: directory[name]
+	subproto = nil
 
-	return ProtoFunction new: existing-proto
+	# Do we already have it?
+	found-subproto = find-subproto: name
+	if found-subproto
+		subproto = ExistingProto new: name proto: found-subproto
+		for directory in directories
+			if directory entry-is-directory: name
+				subproto add-directory: directory[name]
+	
+	# If not, look for it in our directories.
+	else
+		for directory in directories
+			subproto = CompiledProto in: directory for: name parent: this
+
+	if subproto == nil
+		return nil
+	return ProtoFunction new: subproto
 
 
 lookup-function: name visited-protos: visited-protos

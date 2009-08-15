@@ -26,6 +26,26 @@ create: name parent: parent
 		add-function: (PrimitiveFunction new: ".superclass" on-proto: this)
 
 
+in: directory for: name parent: parent
+	new-proto = nil
+
+	if directory contains: name
+		status-reporter = compiler status-reporter
+		status-reporter report: "Loading " + name + " into " + full-name + "..."
+		status-reporter indent
+
+		new-proto = CompiledProto new: name parent: parent
+		if directory entry-is-directory: name
+			new-proto add-directory: directory[name]
+		else
+			lines = Trylon LinesLexer read: directory[name] contents
+			TrylonProtoParser parse-proto-contents: lines into: new-proto
+
+		status-reporter unindent
+
+	return new-proto
+
+
 lookup-function: name
 	return lookup-function: name visited-protos: ObjectMap new
 
