@@ -29,7 +29,10 @@ end-message
 error: message
 	# Calling this is not only more concise than creating and throwing a
 	# MessageException yourself, it also gives a handy place to set a breakpoint.
-	throw MessageException new: message
+	msg-string = StringBuilder new
+	for item in message
+		msg-string += item string
+	throw MessageException new: msg-string string
 
 
 # Pseudo-declarations
