@@ -30,6 +30,12 @@ flattened-block-text
 		result += "\n"
 	return result string
 
+block-as-text
+	builder = StringBuilder new
+	for line in block
+		line add-to-block-text: builder level: 0
+	return builder string
+
 
 # ===== Private
 
@@ -40,6 +46,16 @@ add-to-flattened-lines: lines
 			line add-to-flattened-lines: lines
 
 
+add-to-block-text: builder level: level
+	if level > 0
+		builder += "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" substr: 0 length: level
+	builder += text
+	builder += "\n"
+	if block
+		for line in block
+			line add-to-block-text: builder level: level + 1
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

@@ -414,6 +414,13 @@ parse-primary-expression
 		words next
 		return BoolLiteral new: false
 	
+	else if word == "¶"
+		words next
+		result = StringLiteral new: line block-as-text
+		# Consume the block.
+		line block = nil
+		return result
+	
 	else
 		# Non-object function call.
 		words next

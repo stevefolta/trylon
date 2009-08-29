@@ -25,8 +25,26 @@ main: args
 		# "super" call is field.
 		check: OverridingFieldClass new value against: "foo augmented" title: "Super call on field"
 
+		# Paragraph literals.
+		para = ¶
+			foo
+			bar
+				baz
+		lines = para lines
+		ok = lines next == "foo" && lines next == "bar" && lines next == "\tbaz"
+		test: ok title: "Text literals"
+		lines = shared-text lines
+		ok = lines next == "bar" && lines next == "baz" && lines next == "quux"
+		test: ok title: "Text literals as shared variable values"
+
 	catch
 		send: exception message
+
+
+shared-text = ¶
+	bar
+	baz
+	quux
 
 
 check: value against: expected-value title: title
@@ -37,7 +55,7 @@ check: value against: expected-value title: title
 
 test: succeeded title: title
 	if succeeded
-		print-line: title + " test succeeded."
+		print-line: title + ": succeeded."
 	else
 		throw MessageException new: "*** " + title + " test failed. ***"
 
