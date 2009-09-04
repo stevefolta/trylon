@@ -11,7 +11,7 @@ create: name arguments: arguments context: context
 	this context = context
 
 create: function arguments: arguments
-	# Special for use by "in-process" functions like ExistingProto
+	# Special for use by "in-process" functions like ExistingClass
 	# and PrimitiveFunction.
 	this function = function
 	this name = function name

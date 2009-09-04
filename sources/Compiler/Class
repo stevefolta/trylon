@@ -1,4 +1,4 @@
-trylon ClassContext
+trylon Class
 superclass Context
 
 fields compile-info

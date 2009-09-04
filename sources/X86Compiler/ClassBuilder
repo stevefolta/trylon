@@ -22,7 +22,7 @@ builder-for: class-context
 	else if class-context is-a: Compiler CompiledClass
 		builder = CompiledClassBuilder new: class-context
 	else
-		error: "Internal error: unknown type of ClassContext."
+		error: "Internal error: unknown type of Class."
 	class-context compile-info = builder
 	return builder
 

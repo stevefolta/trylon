@@ -2,7 +2,7 @@ trylon PrimitiveFunction
 superclass TrylonFunction
 
 # Functions that are defined outside Trylon code.
-# Will only exist inside a method, not as part of a ClassContext.
+# Will only exist inside a method, not as part of a Class.
 
 fields name on-proto
 

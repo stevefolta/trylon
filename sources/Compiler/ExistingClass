@@ -1,5 +1,5 @@
 trylon ExistingClass
-superclass ClassContext
+superclass Class
 
 fields name proto new-functions is-main directories
 

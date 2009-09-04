@@ -1,5 +1,5 @@
 trylon CompiledClass
-superclass ClassContext
+superclass Class
 
 fields name parent functions fields shared-fields superclass directories
 fields uses-protos subclasses
