@@ -490,7 +490,7 @@ parse-declaration: lhs
 	type = nil
 	iff not-now
 		# Not supporting this syntax currently; parse-type-spec would have to be
-		# written, or made visible (it's pretty much the same as "TrylonProtoParser
+		# written, or made visible (it's pretty much the same as "ClassParser
 		# parse-proto-spec").
 		if words peek == "("
 			words next

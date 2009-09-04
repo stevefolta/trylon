@@ -1,4 +1,4 @@
-trylon TrylonProtoParser
+trylon ClassParser
 
 fields lines proto context
 fields line words 	# Only valid during 'parse-line:'.
@@ -108,7 +108,7 @@ parse-member-proto
 
 
 parse-proto-contents: block into: proto
-	parser = TrylonProtoParser new: block into: proto context: proto
+	parser = ClassParser new: block into: proto context: proto
 	parser parse
 
 

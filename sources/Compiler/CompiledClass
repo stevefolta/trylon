@@ -39,7 +39,7 @@ in: directory for: name parent: parent
 			new-proto add-directory: directory[name]
 		else
 			lines = Trylon LinesLexer read: directory[name] contents
-			TrylonProtoParser parse-proto-contents: lines into: new-proto
+			ClassParser parse-proto-contents: lines into: new-proto
 
 		status-reporter unindent
 
@@ -198,7 +198,7 @@ load-subproto: name
 		else if directory contains: name
 			proto = add-proto: name
 			lines = (Trylon LinesLexer new: (directory at: name) contents) lex
-			TrylonProtoParser parse-proto-contents: lines into: proto
+			ClassParser parse-proto-contents: lines into: proto
 			return proto
 
 	return nil
@@ -218,7 +218,7 @@ add-directory: directory
 
 	if directory contains: "main"
 		lines = (Trylon LinesLexer new: (directory at: "main") contents) lex
-		TrylonProtoParser parse-proto-contents: lines into: this
+		ClassParser parse-proto-contents: lines into: this
 
 
 setup-main: main-directory library-directory: library-directory
@@ -258,7 +258,7 @@ setup-main: main-directory library-directory: library-directory
 			standard-proto functions at: "Pepsi" put: proto-function
 			lines = 	--
 				(Trylon LinesLexer new: (standard-directory at: "Pepsi") contents) lex
-			TrylonProtoParser parse-proto-contents: lines into: pepsi-proto
+			ClassParser parse-proto-contents: lines into: pepsi-proto
 			compiler adding-class: pepsi-proto
 	
 	# Targeting C.
@@ -275,7 +275,7 @@ setup-main: main-directory library-directory: library-directory
 	for directory in directories
 		if directory contains: "main"
 			lines = (Trylon LinesLexer new: (directory at: "main") contents) lex
-			TrylonProtoParser parse-proto-contents: lines into: this
+			ClassParser parse-proto-contents: lines into: this
 	
 	# Load up standard protos.
 	std-protos = ("BytePtr", "Int", "String", "Float", "Symbol", "Tuple", "List")
