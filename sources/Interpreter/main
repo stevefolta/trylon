@@ -13,7 +13,7 @@ interpret: code
 	lines = (Trylon LinesLexer new: code) lex
 
 	# Interpret.
-	parser = Compiler TrylonCodeParser new: lines in: context
+	parser = Compiler MethodParser new: lines in: context
 	parse-tree = parser parse
 	parse-tree resolve
 	result = parse-tree interpreted

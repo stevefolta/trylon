@@ -85,7 +85,7 @@ replace-method: symbol on: object with: source arg-names: arg-names
 	# Parse.
 	context = Compiler MethodContext new: arguments parent: on-proto
 	lines = Trylon LinesLexer read: source
-	parser = Compiler TrylonCodeParser new: lines in: context
+	parser = Compiler MethodParser new: lines in: context
 	parse-tree = parser parse
 
 	# Compile.

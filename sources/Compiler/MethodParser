@@ -1,4 +1,4 @@
-trylon TrylonCodeParser
+trylon MethodParser
 
 fields lines context
 fields else-target

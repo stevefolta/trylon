@@ -51,7 +51,7 @@ parse-into: switch-statement
 				throw ParseException new: "Extra words at end of line." in: line
 
 		# Parse the body.
-		body = (TrylonCodeParser new: line block in: context) parse
+		body = (MethodParser new: line block in: context) parse
 
 		# Add the SwitchClause.
 		clause = 	--

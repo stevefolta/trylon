@@ -187,7 +187,7 @@ parse-function: initial-name is-primitive: is-primitive
 	else
 		if line block
 			method-context = MethodContext new: arguments parent: context
-			parser = TrylonCodeParser new: line block in: method-context
+			parser = MethodParser new: line block in: method-context
 			body = parser parse
 		else
 			body = nil
