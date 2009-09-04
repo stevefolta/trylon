@@ -28,7 +28,7 @@ parse-line: line
 	switch words peek
 		"proto", "class"
 			words next
-			parse-member-proto
+			parse-member-class
 		"fn", "function", "class-fn"
 			words next
 			proto add-function: parse-function
@@ -88,7 +88,7 @@ parse-line: line
 				proto add-function: (parse-function: name)
 
 
-parse-member-proto
+parse-member-class
 	name = words next
 	if name == nil
 		parse-error: "Missing class name."
@@ -98,17 +98,17 @@ parse-member-proto
 	report: "Parsing " + name + "..."
 	indent
 
-	# Create (or get) the proto.
-	member-proto = context add-proto: name
+	# Create (or get) the class.
+	member-class = context add-proto: name
 
 	# Read the contents (if any).
-	parse-proto-contents: line block into: member-proto
+	parse-class-contents: line block into: member-class
 	
 	unindent
 
 
-parse-proto-contents: block into: proto
-	parser = ClassParser new: block into: proto context: proto
+parse-class-contents: block into: class
+	parser = ClassParser new: block into: class context: class
 	parser parse
 
 
@@ -203,14 +203,14 @@ parse-function: initial-name is-primitive: is-primitive
 
 
 parse-extension
-	# The prototype to extend.
-	extended-proto = parse-proto-spec
+	# The class to extend.
+	extended-class = parse-class-spec
 	words require-eol
 
-	report: "Parsing " + extended-proto name + "..."
+	report: "Parsing " + extended-class name + "..."
 	indent
 
-	parse-proto-contents: line block into: extended-proto
+	parse-class-contents: line block into: extended-class
 
 	unindent
 
@@ -245,40 +245,40 @@ parse-arg-type
 
 
 parse-type-spec
-	type = parse-proto-spec
+	type = parse-class-spec
 
-	# Make sure we got a proto.
+	# Make sure we got a class.
 	okay = type is-a: CompiledClass
 	iff in-jolt
 		if !okay
 			okay = type is-a: ExistingClass
 	if !okay
-		parse-error: "A type specifier was given, but is not a prototype." 	--
+		parse-error: "A type specifier was given, but is not a class." 	--
 			token: type name
 	
 	return type
 
 
-parse-proto-spec
+parse-class-spec
 	type = nil
 	cur-context = context
 	while !(words is-empty) && (is-name: words peek)
-		# Find the prototype.
+		# Find the class.
 		name = words next
 		if type == nil
 			# The first name can be anything in scope.
 			type-function = cur-context lookup-function: name
 			if type-function == nil || !(type-function is-a: ProtoFunction)
-				parse-error: "Unknown prototype." token: name
+				parse-error: "Unknown class." token: name
 			type = type-function proto
 		else
-			# Other names must be subprotos of the proto specified so far.
+			# Other names must be subclasses of the class specified so far.
 			type = cur-context get-subproto: name
 			if type == nil
-				parse-error: "Unknown prototype." token: name
+				parse-error: "Unknown class." token: name
 		cur-context = type
 	
-	# Make sure we got a proto.
+	# Make sure we got a class.
 	if type == nil
 		parse-error: "Missing the type in a type specifier."
 	

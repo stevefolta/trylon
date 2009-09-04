@@ -491,7 +491,7 @@ parse-declaration: lhs
 	iff not-now
 		# Not supporting this syntax currently; parse-type-spec would have to be
 		# written, or made visible (it's pretty much the same as "ClassParser
-		# parse-proto-spec").
+		# parse-class-spec").
 		if words peek == "("
 			words next
 			type = parse-type-spec
