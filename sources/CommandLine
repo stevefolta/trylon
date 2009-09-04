@@ -55,7 +55,7 @@ run
 			line = lines first-item
 			words = Trylon WordsLexer new: line
 			parser = 	--
-				Compiler TrylonExpressionParser new: words line: line context: context
+				Compiler ExpressionParser new: words line: line context: context
 			parser = Compiler Parser new: line context: context
 			expr = parser parse-expression
 			if expr

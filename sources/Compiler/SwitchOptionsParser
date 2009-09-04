@@ -24,7 +24,7 @@ parse-into: switch-statement
 
 		else
 			# Gather the values.
-			parser = TrylonExpressionParser new: words line: line context: context
+			parser = ExpressionParser new: words line: line context: context
 			values = List new
 			while !words is-empty
 				# Comment? 

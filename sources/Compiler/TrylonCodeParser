@@ -72,7 +72,7 @@ parse-line: line
 	# Otherwise, it's an expression.
 	# It could be an assignment with a block on the RHS, so we give the block too.
 	expression = 	--
-		(TrylonExpressionParser new: words line: line context: cur-context) 	--
+		(ExpressionParser new: words line: line context: cur-context) 	--
 			parse-expression
 	comment = get-comment: words
 	return ExpressionStatement new: expression comment: comment
@@ -95,7 +95,7 @@ get-comment: words
 
 parse-expression: words
 	expression = 	--
-		(TrylonExpressionParser new: words line: cur-line context: cur-context) 	--
+		(ExpressionParser new: words line: cur-line context: cur-context) 	--
 			parse-expression
 	if expression == nil
 		error: "Missing expression."
@@ -103,7 +103,7 @@ parse-expression: words
 
 parse-optional-expression: words
 	return 	--
-		(TrylonExpressionParser new: words line: cur-line context: cur-context) 	--
+		(ExpressionParser new: words line: cur-line context: cur-context) 	--
 			parse-expression
 
 

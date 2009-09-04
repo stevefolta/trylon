@@ -75,7 +75,7 @@ parse-line: line
 				# Declaring a shared variable.
 				# Get the initial value.
 				words next
-				parser = TrylonExpressionParser new: words line: line context: context
+				parser = ExpressionParser new: words line: line context: context
 				initial-value = parser parse-expression
 
 				# Add it.
@@ -302,7 +302,7 @@ unindent
 		status-reporter unindent
 
 is-name: name
-	return TrylonExpressionParser is-name: name
+	return ExpressionParser is-name: name
 
 
 # Copyright 2007 Steve Folta.  See the License file.
