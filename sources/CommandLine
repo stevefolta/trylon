@@ -77,7 +77,7 @@ proto Context
 
 	create: command-line
 		this command-line = command-line
-		parent = Compiler ExistingProto new: "command-line" proto: command-line
+		parent = Compiler ExistingClass new: "command-line" proto: command-line
 	
 	lookup-function: name
 		return parent lookup-function: name

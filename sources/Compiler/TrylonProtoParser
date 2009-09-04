@@ -248,10 +248,10 @@ parse-type-spec
 	type = parse-proto-spec
 
 	# Make sure we got a proto.
-	okay = type is-a: CompiledProto
+	okay = type is-a: CompiledClass
 	iff in-jolt
 		if !okay
-			okay = type is-a: ExistingProto
+			okay = type is-a: ExistingClass
 	if !okay
 		parse-error: "A type specifier was given, but is not a prototype." 	--
 			token: type name

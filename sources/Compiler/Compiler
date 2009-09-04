@@ -78,7 +78,7 @@ compile-program: compile-symbols
 		main-name = "Trylon"
 	status-reporter report: "Loading " + main-name + "..."
 	status-reporter indent
-	main-proto = CompiledProto new: main-name parent: nil
+	main-proto = CompiledClass new: main-name parent: nil
 	main-proto 	--
 		setup-main: main-directory library-directory: library-directory
 	proto-queue append: main-proto

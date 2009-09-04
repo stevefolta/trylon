@@ -9,7 +9,7 @@ interpret: code
 		main-context = Main
 	iff targeting-jolt
 		main-context = Trylon
-	context = Compiler ExistingProto new: main-context
+	context = Compiler ExistingClass new: main-context
 	lines = (Trylon LinesLexer new: code) lex
 
 	# Interpret.

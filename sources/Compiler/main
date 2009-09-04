@@ -37,23 +37,23 @@ find-library-path
 
 iff targeting-jolt
 	compile-file: file as: name into: parent-proto
-		if !(parent-proto is-a: ExistingProto)
-			parent-proto = ExistingProto new: parent-proto
+		if !(parent-proto is-a: ExistingClass)
+			parent-proto = ExistingClass new: parent-proto
 		compiler = Compiler new
 		program = compiler compile-file: file as: name into: parent-proto
 		program _eval
 	
 	compile-dir: dir as: name into: parent-proto
-		if !(parent-proto is-a: ExistingProto)
-			parent-proto = ExistingProto new: parent-proto
+		if !(parent-proto is-a: ExistingClass)
+			parent-proto = ExistingClass new: parent-proto
 		compiler = Compiler new
 		program = compiler compile-dir: dir as: name into: parent-proto
 		program _eval
 		compiler = nil
 	
 	parse-file: file as: name into: parent-proto
-		if !(parent-proto is-a: ExistingProto)
-			parent-proto = ExistingProto new: parent-proto
+		if !(parent-proto is-a: ExistingClass)
+			parent-proto = ExistingClass new: parent-proto
 		if !(file is-a: File)
 			file = File new: file
 		compiler = Compiler new

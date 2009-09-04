@@ -475,7 +475,7 @@ parse-super-call
 	
 	# Get the proto that it's on.
 	on-proto = method-context parent
-	if !(on-proto is-a: CompiledProto || on-proto is-a: ExistingProto)
+	if !(on-proto is-a: CompiledClass || on-proto is-a: ExistingClass)
 		parse-error: "Internal error: no proto for super call."
 	
 	return SuperCall new: name arguments: arguments

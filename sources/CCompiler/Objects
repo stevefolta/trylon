@@ -1,6 +1,6 @@
 trylon Objects
 
-extend Compiler CompiledProto
+extend Compiler CompiledClass
 	field class-num c-preamble
 
 	c-name

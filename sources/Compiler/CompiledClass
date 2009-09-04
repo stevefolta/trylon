@@ -1,4 +1,4 @@
-trylon CompiledProto
+trylon CompiledClass
 superclass ClassContext
 
 fields name parent functions fields shared-fields superclass directories
@@ -34,7 +34,7 @@ in: directory for: name parent: parent
 		status-reporter report: "Loading " + name + " into " + parent full-name + "..."
 		status-reporter indent
 
-		new-proto = CompiledProto new: name parent: parent
+		new-proto = CompiledClass new: name parent: parent
 		if directory entry-is-directory: name
 			new-proto add-directory: directory[name]
 		else
@@ -163,7 +163,7 @@ add-proto: name directory: directory
 	status-reporter = compiler status-reporter
 	status-reporter report: "Loading " + name + " into " + full-name + "..."
 	status-reporter indent
-	new-proto = CompiledProto new: name parent: this
+	new-proto = CompiledClass new: name parent: this
 	if directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto

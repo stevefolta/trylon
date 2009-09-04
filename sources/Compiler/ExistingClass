@@ -1,4 +1,4 @@
-trylon ExistingProto
+trylon ExistingClass
 superclass ClassContext
 
 fields name proto new-functions is-main directories
@@ -84,7 +84,7 @@ function-for: selector in: proto
 	
 	existing-proto = this
 	if proto != this
-		existing-proto = ExistingProto new: proto .proto-name proto: proto
+		existing-proto = ExistingClass new: proto .proto-name proto: proto
 	return PrimitiveFunction new: function-name on-proto: existing-proto
 
 
@@ -104,7 +104,7 @@ load-subproto: name
 	# Do we already have it?
 	found-subproto = find-subproto: name
 	if found-subproto
-		subproto = ExistingProto new: name proto: found-subproto
+		subproto = ExistingClass new: name proto: found-subproto
 		for directory in directories
 			if directory entry-is-directory: name
 				subproto add-directory: directory[name]
@@ -112,7 +112,7 @@ load-subproto: name
 	# If not, look for it in our directories.
 	else
 		for directory in directories
-			subproto = CompiledProto in: directory for: name parent: this
+			subproto = CompiledClass in: directory for: name parent: this
 
 	if subproto == nil
 		return nil
@@ -143,7 +143,7 @@ parent
 		parent-context = proto .parent-context
 		if parent-context == nil
 			return nil
-		existing-proto = ExistingProto new: parent-context
+		existing-proto = ExistingClass new: parent-context
 		return existing-proto
 	return nil
 
@@ -199,7 +199,7 @@ add-proto: name directory: directory
 	status-reporter = compiler status-reporter
 	status-reporter report: "Loading " + name + " into " + this name + "..."
 	status-reporter indent
-	new-proto = CompiledProto new: name parent: this
+	new-proto = CompiledClass new: name parent: this
 	if directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto

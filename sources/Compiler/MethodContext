@@ -26,7 +26,7 @@ lookup-function: name
 			return SetArgumentFunction new: argument
 	
 	# Function calls on "this".
-	# The parent will be a CompiledProto.
+	# The parent will be a CompiledClass.
 	found-function = parent lookup-instance-function: name
 	if found-function
 		if found-function is-a: ProtoFunction

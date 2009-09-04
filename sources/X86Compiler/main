@@ -12,13 +12,13 @@ reload: proto from: file-path
 	class-queue = List new
 
 	try
-		# Read into an ExistingProto.
+		# Read into an ExistingClass.
 		source = File contents-of: file-path
 		lines = Trylon LinesLexer read: source
-		existing-proto = Compiler ExistingProto new: proto
+		existing-proto = Compiler ExistingClass new: proto
 		Compiler TrylonProtoParser parse-proto-contents: lines into: existing-proto
 
-		# Build the ExistingProto into the in-process class.
+		# Build the ExistingClass into the in-process class.
 		ExistingClassBuilder build: existing-proto
 	else
 		caught-exception = exception
@@ -39,7 +39,7 @@ load: file-path into: proto as: name
 
 	# Load the file as a new class.
 	try
-		parent-class = Compiler ExistingProto new: proto
+		parent-class = Compiler ExistingClass new: proto
 		adding-class: parent-class
 		compiled-class = parent-class add-proto: name
 		lines = Trylon LinesLexer read: (File contents-of: file-path)
@@ -77,7 +77,7 @@ compile: function
 
 
 replace-method: symbol on: object with: source arg-names: arg-names
-	on-proto = Compiler ExistingProto new: object .proto
+	on-proto = Compiler ExistingClass new: object .proto
 	arguments = List new
 	for name in arg-names
 		arguments append: (Compiler CompiledField new: name)

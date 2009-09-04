@@ -90,7 +90,7 @@ emit-on: stream
 	mangled-name = mangle-name: proto name
 	stream write-all: ("UsingSym_(", mangled-name, ")")
 	parent-context-ref = "nil"
-	if proto parent && (proto parent is-a: Compiler CompiledProto)
+	if proto parent && (proto parent is-a: Compiler CompiledClass)
 		stream write-all: ("UsingClass_(", proto parent c-name, ")\n")
 		parent-context-ref = "Proto_(" + proto parent c-name + ")"
 	superclass-ref = "nil"

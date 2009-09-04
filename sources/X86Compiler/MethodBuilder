@@ -204,7 +204,7 @@ build-new-function: function
 	class = ClassBuilder live-proto-for: parent-context
 
 	# Build a pseudo-Trylon function.
-	parent-context = Compiler ExistingProto new: class
+	parent-context = Compiler ExistingClass new: class
 	method-context = Compiler MethodContext new: args parent: parent-context
 	block = Compiler Block new: method-context
 	# "obj = class raw-new"
