@@ -55,6 +55,10 @@ div.titleless-entry-date {
 	color: gray;
 }
 
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 div.code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
@@ -63,6 +67,33 @@ div.code {
 	margin-right: 2em;
 	white-space: pre;
 }
+
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
+
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
 
 </style>
 
@@ -89,32 +120,46 @@ Trylon is a computer language.  It is basically a cross between Python and Small
 A simple "Hello World":
 </p>
 
-<div class="code">trylon hello-world
-
-main: arguments
-  send: "Hello world!"
-  return 0</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">trylon</span> hello-world</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">main:</span> arguments</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">send:</span> <span class="trylon-constant">"Hello world!"</span></div>
+<div class="trylon-line">return <span class="trylon-constant">0</span></div>
+</div>
+</div>
 
 <p>
 A more object-oriented "Hello World":
 </p>
 
-<div class="code">trylon hello-world
-
-class Hailer
-  field whom
-
-  create: whom
-    this whom = whom
-
-  hail
-    send: ("Hello, ", whom, "!")
-
-
-main: arguments
-  hailer = Hailer new: "world"
-  hailer hail
-  return 0</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">trylon</span> hello-world</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Hailer</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">field</span> whom</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">create:</span> whom</div>
+<div class="trylon-block">
+<div class="trylon-line">this whom = whom</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">hail</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">send:</span> (<span class="trylon-constant">"Hello, "</span>, whom, <span class="trylon-constant">"!"</span>)</div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">main:</span> arguments</div>
+<div class="trylon-block">
+<div class="trylon-line">hailer = Hailer <span class="trylon-keyword">new:</span> <span class="trylon-constant">"world"</span></div>
+<div class="trylon-line">hailer hail</div>
+<div class="trylon-line">return <span class="trylon-constant">0</span></div>
+</div>
+</div>
 
 </div>
 
@@ -144,12 +189,14 @@ Alternately, you can get it with Git: "git clone git://repo.or.cz/trylon.git".  
 
 <div class="entry">
 <div class="entry-title"> Documentation </div>
-<div class="code"><a href="objects.html">Objects</a>
-<a href="code-structure.html">Code Structure</a>
-<a href="statements.html">Statements</a>
-<a href="expressions.html">Expressions</a>
-<a href="building.html">Building Trylon Programs</a>
-<a href="debugging.html">Debugging</a></div>
+<p>
+<div class="page-link"><a href="objects.html">Objects</a></div>
+<div class="page-link"><a href="code-structure.html">Code Structure</a></div>
+<div class="page-link"><a href="statements.html">Statements</a></div>
+<div class="page-link"><a href="expressions.html">Expressions</a></div>
+<div class="page-link"><a href="building.html">Building Trylon Programs</a></div>
+<div class="page-link"><a href="debugging.html">Debugging</a></div>
+</p>
 
 </div>
 

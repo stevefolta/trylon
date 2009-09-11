@@ -57,12 +57,12 @@ Alternately, you can get it with Git: "git clone git://repo.or.cz/trylon.git".  
 
 Documentation
 
-	<a href="objects.html">Objects</a>
-	<a href="code-structure.html">Code Structure</a>
-	<a href="statements.html">Statements</a>
-	<a href="expressions.html">Expressions</a>
-	<a href="building.html">Building Trylon Programs</a>
-	<a href="debugging.html">Debugging</a>
+<div class="page-link"><a href="objects.html">Objects</a></div>
+<div class="page-link"><a href="code-structure.html">Code Structure</a></div>
+<div class="page-link"><a href="statements.html">Statements</a></div>
+<div class="page-link"><a href="expressions.html">Expressions</a></div>
+<div class="page-link"><a href="building.html">Building Trylon Programs</a></div>
+<div class="page-link"><a href="debugging.html">Debugging</a></div>
 
 
 

@@ -27,7 +27,7 @@ Symbols are like strings, except that only one instance of a given symbol exists
 
 Character literals are specified using backquotes:
 
-	if cur-char == `\n`
+	if cur-char == `\\n`
 		#...
 
 Finally, there are the following named literals:
