@@ -103,6 +103,10 @@ make-subclass-of: superclass
 	superclass subclasses append: this
 
 
+add-used-namespace: namespace
+	uses-protos append: namespace
+
+
 add-function: function
 	function-name = function name
 	if function has-code

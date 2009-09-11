@@ -26,7 +26,7 @@ resolve
 		body resolve
 
 
-compile: builder
+compile-call: builder with: arguments
 	return compile-send-of: name to-proto: on-proto with: arguments using: builder
 
 build: builder

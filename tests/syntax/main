@@ -37,6 +37,9 @@ main: args
 		ok = lines next == "bar" && lines next == "baz" && lines next == "quux"
 		test: ok title: "Text literals as shared variable values"
 
+		# "uses"
+		check: UsingClass test-value against: "ok" title: "\"uses\""
+
 	catch
 		send: exception message
 
@@ -78,5 +81,16 @@ class OverridingFieldClass
 		super create
 	value
 		return super value + " augmented"
+
+
+class UsedClass
+	value
+		return "ok"
+
+class UsingClass
+	uses UsedClass
+
+	test-value
+		return value
 
 

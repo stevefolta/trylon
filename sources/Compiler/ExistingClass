@@ -239,6 +239,35 @@ get-proto: name
 	return nil
 
 
+add-used-namespace: namespace
+	if !namespace is-a: ExistingClass
+		# Not yet supported, we'd need to defer the attempt until after the new
+		# class/namespace has been installed.
+		error: 	--
+			('Adding new classes as "used" classes of existing classes (', 	--
+			namespace name, " to ", name, ') is not supported.')
+
+	class = proto .class
+	new-used-proto = namespace proto
+	if class used-contexts == nil
+		class used-contexts = Tuple with: new-used-proto
+	else
+		# Is it already there?
+		# Use "same-as:" to check.
+		for proto in class used-contexts
+			if new-used-proto same-as: proto
+				return
+
+		# Build a new 'used-contexts', adding the new one.
+		new-used-contexts = Tuple new: class used-contexts num-items + 1
+		index = 0
+		for proto in class used-contexts
+			new-used-contexts[index] = proto
+			index += 1
+		new-used-contexts[index] = new-used-proto
+		class used-contexts = new-used-contexts
+
+
 newly-defined-functions
 	return new-functions pairs
 

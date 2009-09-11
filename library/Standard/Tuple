@@ -7,6 +7,13 @@ new: num-items
 	tuple num-items = num-items
 	return tuple
 
+
+with: item
+	tuple = Tuple new: 1
+	tuple[0] = item
+	return tuple
+
+
 at: index
 	if index < 0 || index >= num-items
 		throw MessageException new: "Bad tuple index."

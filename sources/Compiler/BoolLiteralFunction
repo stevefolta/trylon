@@ -15,7 +15,7 @@ name
 		return "false"
 
 
-compile: builder
+compile-call: builder with: arguments
 	return builder compile-bool-literal-call: this
 
 

@@ -46,6 +46,9 @@ parse-line: line
 		"extend"
 			words next
 			parse-extension
+		"uses"
+			words next
+			parse-uses
 		"iff"
 			parse-iff
 		"trylon", "trylid"
@@ -213,6 +216,12 @@ parse-extension
 	parse-class-contents: line block into: extended-class
 
 	unindent
+
+
+parse-uses
+	used-class = parse-class-spec
+	words require-eol
+	proto add-used-namespace: used-class
 
 
 parse-iff

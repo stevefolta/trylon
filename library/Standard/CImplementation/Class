@@ -17,6 +17,9 @@ c-fn superclass
 	return classInfo->superclass;
 c-fn used-contexts
 	return classInfo->usedContexts;
+c-fn used-contexts: new-used-contexts
+	classInfo->usedContexts = new_used_contexts;
+	return nil;
 c-fn name
 	return classInfo->name;
 c-fn added-fields

@@ -19,6 +19,12 @@ add-class: name
 get-subproto: name
 	virtual
 
+make-subclass-of: superclass
+	virtual
+
+add-used-namespace: namespace
+	virtual
+
 newly-defined-functions
 	# Should return an iterator returning (key, value) pairs, like
 	# "Dictionary pairs".
