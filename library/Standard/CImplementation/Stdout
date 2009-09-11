@@ -1,0 +1,10 @@
+trylon Stdout
+
+extend Standard Stdout
+	c-preamble
+		#include <stdio.h>
+
+	c-fn write-buffer: buffer length: length
+		fwrite(BytePtrValue_(buffer), IntValue_(length), 1, stdout);
+
+

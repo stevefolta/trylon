@@ -23,6 +23,7 @@ references
 	System
 	File
 	FileDirectory
+	Stdout
 	Implementation
 	GarbageCollector
 	iff class-objects
