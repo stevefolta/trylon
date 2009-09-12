@@ -15,7 +15,6 @@ A simple "Hello World":
 
 	main: arguments
 		send: "Hello world!"
-		return 0
 
 A more object-oriented "Hello World":
 
@@ -34,7 +33,6 @@ A more object-oriented "Hello World":
 	main: arguments
 		hailer = Hailer new: "world"
 		hailer hail
-		return 0
 
 
 ======
