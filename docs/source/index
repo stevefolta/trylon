@@ -37,19 +37,18 @@ A more object-oriented "Hello World":
 
 ======
 
-What is Trylon 2?
+What is Trylon 3?
 
-Trylon 2 improves on the original Trylon by having a better, simpler object system.  See the <a href="objects.html">objects</a> doc.
-
-Other smaller improvements have also been made: "try"/"else", for instance.  And there is a backend for Jolt (from the Trylid project), and an experimental interpreter.
+Trylon 3 is really grab-bag of incremental improvements, compared to Trylon 2.  A re-written compiler has facilitated some small improvements to the syntax.  The runtime has some improvements, such as class objects and tagged integers.  And an in-process x86 compiler (like a JIT) allows scripting, at compiled speeds (albeit not optimized).
 
 ======
 
 Getting Trylon
 
-Trylon is available as a <a href="trylon.tgz">tarball</a> which should compile on Unixy systems (but you'll need to have the Boehm-Demers-Weiser garbage collector package installed).
+Trylon 2 is available as a <a href="trylon.tgz">tarball</a> which should compile on Unixy systems (but you'll need to have the Boehm-Demers-Weiser garbage collector package installed).  Alternately, you can get it with Git: "git clone git://github.com/stevefolta/trylon.git".  Then checkout the 'with-c-sources' branch and "make".
 
-Alternately, you can get it with Git: "git clone git://repo.or.cz/trylon.git".  Then checkout the 'with-c-sources' branch and "make".
+Trylon 3 is currently on the 'trylon-3' branch at "git://github.com/stevefolta/trylon.git"; to build it, use the 'trylon-3-with-c-sources' branch.
+
 
 ======
 
