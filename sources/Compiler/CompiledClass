@@ -38,8 +38,7 @@ in: directory for: name parent: parent
 		if directory entry-is-directory: name
 			new-proto add-directory: directory[name]
 		else
-			lines = Trylon LinesLexer read: directory[name] contents
-			ClassParser parse-class-contents: lines into: new-proto
+			load-class-file: directory[name] into: new-proto
 
 		status-reporter unindent
 
@@ -201,8 +200,7 @@ load-subproto: name
 			return add-proto: name directory: (directory at: name)
 		else if directory contains: name
 			proto = add-proto: name
-			lines = (Trylon LinesLexer new: (directory at: name) contents) lex
-			ClassParser parse-class-contents: lines into: proto
+			load-class-file: directory[name] into: proto
 			return proto
 
 	return nil
@@ -221,8 +219,12 @@ add-directory: directory
 	directories append: directory
 
 	if directory contains: "main"
-		lines = (Trylon LinesLexer new: (directory at: "main") contents) lex
-		ClassParser parse-class-contents: lines into: this
+		load-class-file: directory["main"] into: this
+
+
+load-class-file: file into: class
+	lines = (Trylon LinesLexer new: file contents) lex
+	ClassParser parse-class-contents: lines into: class
 
 
 setup-main: main-directory library-directory: library-directory
@@ -260,9 +262,7 @@ setup-main: main-directory library-directory: library-directory
 			pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
 			proto-function = ProtoFunction new: pepsi-proto
 			standard-proto functions at: "Pepsi" put: proto-function
-			lines = 	--
-				(Trylon LinesLexer new: (standard-directory at: "Pepsi") contents) lex
-			ClassParser parse-class-contents: lines into: pepsi-proto
+			load-class-file: standard-directory["Pepsi"] into: pepsi-proto
 			compiler adding-class: pepsi-proto
 	
 	# Targeting C.
@@ -278,8 +278,7 @@ setup-main: main-directory library-directory: library-directory
 	# Load our "main"s
 	for directory in directories
 		if directory contains: "main"
-			lines = (Trylon LinesLexer new: (directory at: "main") contents) lex
-			ClassParser parse-class-contents: lines into: this
+			load-class-file: directory["main"] into: this
 	
 	# Load up standard protos.
 	std-protos = ("BytePtr", "Int", "String", "Float", "Symbol", "Tuple", "List")
