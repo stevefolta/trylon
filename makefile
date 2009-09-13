@@ -37,7 +37,7 @@ syntax-test:
 	cd tests/syntax && rm -f syntax-test && make && trylon main
 
 fixed-bugs-test:
-	cd tests/fixed-bugs && rm -f fixed-bugs-test && make
+	cd tests/fixed-bugs && rm -f test-fixed-bugs && make
 
 x86-compiler-test:
 	cd sources/X86Compiler/test && make
