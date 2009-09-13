@@ -269,12 +269,6 @@ setup-main: main-directory library-directory: library-directory
 	if compiler build-settings targeting-c
 		standard-proto get-subproto: "CImplementation"
 
-	# Add "nil", "true", and "false" to Standard.
-	if !build-settings["nil-object"]
-		standard-proto functions at: "nil" put: NilFunction new
-	standard-proto functions at: "true" put: (BoolLiteralFunction new: true)
-	standard-proto functions at: "false" put: (BoolLiteralFunction new: false)
-
 
 ensure-superclasses: object-proto
 	if superclass == nil && object-proto != this
