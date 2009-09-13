@@ -15,7 +15,7 @@ all: trylon
 trylon:
 	$(CC) -o trylon .c-sources/*.c -lgc -lm $(PLATFORM_FLAGS)
 
-.PHONY: jolt-backend install clean
+.PHONY: jolt-backend install clean tests syntax-test fix-bugs-test x86-compiler-test
 
 jolt-backend:
 	(cd library/IdPosix && make)
@@ -30,6 +30,17 @@ install:
 clean:
 	rm -rf \
 		.c-sources .objects .jolt-sources .jolt-sources-self .c-sources-2 .objects-2
+
+tests: syntax-test fixed-bugs-test x86-compiler-test
+
+syntax-test:
+	cd tests/syntax && rm -f syntax-test && make && trylon main
+
+fixed-bugs-test:
+	cd tests/fixed-bugs && rm -f fixed-bugs-test && make
+
+x86-compiler-test:
+	cd sources/X86Compiler/test && make
 
 
 # Tarball creation.
