@@ -59,9 +59,21 @@ fn ...
 
 
 references
+	# Everybody needs these.
+	BytePtr
+	Int
+	String
+	Symbol
+	Float
+	Tuple
+	List
+
 	iff targeting-c
+		CImplementation
 		True
+	iff nil-object
+		Standard nil
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

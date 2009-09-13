@@ -230,18 +230,18 @@ load-class-file: file into: class
 setup-main: main-directory library-directory: library-directory
 	is-main = true
 
-	# We want the main-directory to have precedence when looking up names,
-	# but we won't be able to compile its "main" until the library directory
-	# is in the "directories" and Standard is visible.  So add both, *then*
-	# compile the "main"s.
-	directories append: main-directory
-	directories append: library-directory
+	# Self.
+	functions at: name put: (ProtoFunction new: this)
 
-	# Load Standard.
+	# Directories.
+	# The library must come first, as it loads/"uses" Standard.
+	# The main directory comes last, so everything is in place for its "main".
+	add-directory: library-directory
+	for directory in build-settings library-dirs
+		add-directory: (FileDirectory new: directory)
+	add-directory: main-directory
+
 	standard-proto = get-subproto: "Standard"
-	if standard-proto == nil
-		throw MessageException new: "The Standard proto can't be found!"
-	uses-protos append: standard-proto
 
 	# Targeting Jolt.
 	iff support-jolt
@@ -274,25 +274,6 @@ setup-main: main-directory library-directory: library-directory
 		standard-proto functions at: "nil" put: NilFunction new
 	standard-proto functions at: "true" put: (BoolLiteralFunction new: true)
 	standard-proto functions at: "false" put: (BoolLiteralFunction new: false)
-
-	# Load our "main"s
-	for directory in directories
-		if directory contains: "main"
-			load-class-file: directory["main"] into: this
-	
-	# Load up standard protos.
-	std-protos = ("BytePtr", "Int", "String", "Float", "Symbol", "Tuple", "List")
-	for proto-name in std-protos
-		standard-proto lookup-function: proto-name
-	if build-settings["nil-object"]
-		standard-proto lookup-function: "nil"
-	
-	# Self.
-	functions at: name put: (ProtoFunction new: this)
-
-	# Add the library-dirs.
-	for directory in build-settings library-dirs
-		add-directory: (FileDirectory new: directory)
 
 
 ensure-superclasses: object-proto
