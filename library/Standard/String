@@ -159,7 +159,7 @@ index-of: char
 		if char-ptr deref-char == char
 			return char-ptr - start
 		char-ptr += 1
-	return -1
+	return nil
 
 last-index-of: char
 	char-ptr = stopper - 1
@@ -176,7 +176,7 @@ index-of-string: search-string
 		if remainder starts-with: search-string
 			return length - remainder length
 		remainder = remainder substr: 1
-	return -1
+	return nil
 
 starts-with: other
 	return (substr: 0 length: other length) == other
@@ -185,7 +185,7 @@ ends-with: other
 	return (substr: length - other length) == other
 
 contains: other
-	return (index-of-string: other) >= 0
+	return (index-of-string: other) != nil
 
 at: index
 	return (start + index) deref-char

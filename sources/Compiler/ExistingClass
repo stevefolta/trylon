@@ -74,7 +74,7 @@ lookup-function: name
 function-for: selector in: proto
 	# Is it a ProtoFunction?
 	function-name = selector string
-	if (function-name index-of: `:`) < 0
+	if (function-name index-of: `:`) == nil
 		found-subproto-fn = load-subproto: function-name
 		if found-subproto-fn
 			return found-subproto-fn

@@ -92,7 +92,7 @@ proto Context
 		else if name == "false"
 			return Compiler BoolLiteralFunction new: false
 
-		if (name index-of: `:`) == name length - 1
+		if name ends-with: ":"
 			# Autodeclare it as a shared field in the command-line.
 			field-name = name substr: 0 length: name length - 1
 			field-name-symbol = field-name intern
