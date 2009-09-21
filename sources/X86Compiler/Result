@@ -1,0 +1,15 @@
+trylon Result
+
+is-eax
+	return false
+
+is-literal
+	return false
+
+mod-rm
+	return nil
+disp8
+	return nil
+disp32
+	return nil
+

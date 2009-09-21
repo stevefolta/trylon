@@ -1,0 +1,87 @@
+     1                                  bits 32
+     2                                  
+     3                                  ; NOTE: mov dst, src
+     4                                  
+     5 00000000 90                      nop
+     6 00000001 50                      push eax
+     7 00000002 8B450C                  mov eax,[ebp+12]
+     8 00000005 89450C                  mov [ebp+12], eax
+     9 00000008 FF750C                  push dword [ebp+12]
+    10 0000000B FF75F4                  push dword [ebp-12]
+    11 0000000E FFB500FFFFFF            push dword [ebp-256]
+    12 00000014 68452301FF              push 0xFF012345
+    13 00000019 B867452301              mov eax, 0x01234567
+    14 0000001E FF10                    call [eax]
+    15 00000020 FFD0                    call eax
+    16 00000022 C9                      leave
+    17 00000023 C3                      ret
+    18 00000024 31C0                    xor eax, eax
+    19 00000026 81C40C000000            add esp, 12
+    20 0000002C 83C40C                  add esp, byte 12
+    21 0000002F 83F800                  cmp eax, byte 0
+    22 00000032 837DF800                cmp dword [ebp-8], byte 0
+    23 00000036 8D450C                  lea eax, [ebp+12]
+    24                                  
+    25 00000039 55                      push ebp
+    26 0000003A 89E5                    mov ebp, esp
+    27 0000003C 81EC0C000000            sub esp, dword 12
+    28                                  
+    29 00000042 FFE0                    jmp eax
+    30 00000044 FF20                    jmp [eax]
+    31 00000046 E909000000              jmp dword foo
+    32                                  
+    33 0000004B 7407                    	jz foo
+    34 0000004D B867452301              	mov eax, 0x01234567
+    35 00000052 FFE0                    	jmp eax
+    36                                  foo:
+    37 00000054 31C0                    	xor eax, eax
+    38                                  
+    39 00000056 75FC                    jnz foo
+    40                                  
+    41                                  ; Stupid NASM doesn't accept "jz dword foo1"
+    42 00000058 0F8400000000            	jz near foo1
+    43                                  foo1:
+    44 0000005E 0F8500000000            	jnz near foo2
+    45                                  foo2:
+    46                                  
+    47 00000064 7507                    	jnz was_true
+    48 00000066 B867452301              	mov eax, 0x01234567
+    49 0000006B EB02                    	jmp short not_complete
+    50                                  was_true:
+    51 0000006D 31C0                    	xor eax, eax
+    52                                  not_complete:
+    53                                  
+    54 0000006F B8[74000000]            mov eax, hello
+    55                                  
+    56 00000074 68656C6C6F              hello: db 'hello'
+    57                                  
+    58 00000079 83E4F0                  and esp, byte -16
+    59 0000007C 83EC0C                  sub esp, byte (3 * 4)
+    60 0000007F 83C4F4                  add esp, byte -(3 * 4)
+    61                                  
+    62                                  ; Field getter
+    63 00000082 8B442404                mov	eax, [esp+4] 	; eax <- object
+    64 00000086 8B4004                  mov eax, [eax + 4]
+    65 00000089 C3                      ret
+    66                                  
+    67                                  ; Field setter
+    68 0000008A 8B442408                mov eax, [esp + 8]	; eax <- new-value
+    69 0000008E 8B542404                mov edx, [esp + 4]	; edx <- object
+    70 00000092 894204                  mov [edx + 4], eax
+    71 00000095 C3                      ret
+    72                                  
+    73 00000096 898200010000            mov [edx + 256], eax
+    74 0000009C 8B8000010000            mov eax, [eax + 256]
+    75                                  
+    76                                  ; Location getter
+    77 000000A2 B878563412              mov eax, 0x12345678
+    78 000000A7 8B00                    mov eax, [eax]
+    79 000000A9 C3                      ret
+    80                                  
+    81                                  ; Location setter
+    82 000000AA 8B442404                mov eax, [esp + 4] 	; eax <- new-value
+    83 000000AE BAFFFFFFFF              mov edx, 0xFFFFFFFF
+    84 000000B3 8902                    mov [edx], eax
+    85 000000B5 C3                      ret
+    86                                  
+    87                                  

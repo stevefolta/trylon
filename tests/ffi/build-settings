@@ -1,0 +1,14 @@
+link-flags += "-lffi"
+link-flags += "-rdynamic"
+
+# libffi 3.0.8, by default, installs itself in a highly non-standard location (rather
+# than in /usr/include like every other library), and expects you to use
+# pkgconfig to find it (without mentioning that in the manpage!).  Of course,
+# we *won't* use pkgconfig, but will need to add that location to the include
+# search.  Even more unfortunately, that location includes the version of
+# libffi, so if they keep that up, we'll have to list every possible version
+# here...
+c-flags += "-I/usr/lib/libffi-3.0.8/include"
+
+test-builtin-functions = true
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+GREPPER=grep
+if [ -n "$(type -p glark)" ]; then
+	GREPPER=glark
+fi
+
+$GREPPER -r "$@" sources/ library/
+

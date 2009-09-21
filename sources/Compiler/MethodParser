@@ -1,4 +1,4 @@
-trylon TrylidCodeParser
+trylon MethodParser
 
 fields lines context
 fields else-target
@@ -41,30 +41,38 @@ parse-block: lines
 	block = Block new: cur-context
 	old-context = cur-context
 	cur-context = block
+	old-else-target = else-target
 	for line in lines
 		cur-line = line
 		statement = parse-line: line
 		if statement
-			if !statement ignored-for-else
+			if !(statement ignored-for-else)
 				else-target = statement
 			block append: statement
 	cur-context = old-context
+	else-target = old-else-target
 	return block
 
 
 parse-line: line
 	words = line words
+	if words is-done
+		return BlankLine new
 
 	# Is it a special form?
 	syntax = special-forms at: words current
 	if syntax
 		words next
 		return syntax parse: words line: line parser: this
+
+	# Handle "#" that isn't a standalone word.
+	if words peek starts-with: "#"
+		return Comment new: words remainder
 	
 	# Otherwise, it's an expression.
 	# It could be an assignment with a block on the RHS, so we give the block too.
 	expression = 	--
-		(TrylidExpressionParser new: words line: line context: cur-context) 	--
+		(ExpressionParser new: words line: line context: cur-context) 	--
 			parse-expression
 	comment = get-comment: words
 	return ExpressionStatement new: expression comment: comment
@@ -87,7 +95,7 @@ get-comment: words
 
 parse-expression: words
 	expression = 	--
-		(TrylidExpressionParser new: words line: cur-line context: cur-context) 	--
+		(ExpressionParser new: words line: cur-line context: cur-context) 	--
 			parse-expression
 	if expression == nil
 		error: "Missing expression."
@@ -95,7 +103,7 @@ parse-expression: words
 
 parse-optional-expression: words
 	return 	--
-		(TrylidExpressionParser new: words line: cur-line context: cur-context) 	--
+		(ExpressionParser new: words line: cur-line context: cur-context) 	--
 			parse-expression
 
 
@@ -127,7 +135,7 @@ class ElseParser
 
 	parse: words line: line parser: parser
 		statement = nil
-		if words peek == "if"
+		if !(words is-empty) && words peek == "if"
 			words next
 			statement = (IfParser new) parse: words line: line parser: parser
 		else
@@ -136,6 +144,7 @@ class ElseParser
 			if comment
 				# "statement" will be a Block.
 				statement prepend: (Comment new: comment)
+			statement = BlockStatement new: statement
 		parser attach-else: statement line: line
 		parser else-target = statement 	# In case it's an "if" statement.
 		return nil
@@ -208,6 +217,8 @@ class ReturnParser
 
 	parse: words line: line parser: parser
 		value = parser parse-optional-expression: words
+		if value == nil
+			value = LiteralNil new
 		comment = parser get-comment: words
 		return ReturnStatement new: value comment: comment
 
@@ -239,12 +250,13 @@ class CatchParser
 	create
 
 	parse: words line: line parser: parser
-		# Ignore words.  In Trylon, these would specify the type to catch.  But
-		# Trylid catches all types always.
+		# Ignore words.  In Trylon 1, these would specify the type to catch.  But
+		# Trylon 2 catches all types always.
 		while (!words is-empty) && (words peek != "#")
 			words next
 		comment = parser get-comment: words
 		body = parser parse-block: line block
+		body = BlockStatement new: body
 		parser attach-else: body line: line
 		return nil
 
@@ -277,13 +289,11 @@ class IffParser
 			parser error: "\"iff\" statement is missing its word."
 		name = words next
 		parser get-comment: words
-		test-succeeded = 	--
-			((parser cur-context lookup-function: name) != nil) || 	--
-			(build-settings has-symbol: name)
+		test-succeeded = (build-settings has-symbol: name)
 		if inverted
 			test-succeeded = !test-succeeded
 		if test-succeeded
-			return parser parse-block: line block
+			return BlockStatement new: (parser parse-block: line block)
 		return nil
 
 

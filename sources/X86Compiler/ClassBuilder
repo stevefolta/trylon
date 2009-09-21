@@ -1,0 +1,100 @@
+trylon ClassBuilder
+
+fields class-context shared-fields
+
+# List of NewSharedFields, to keep them from getting GC'd.
+new-shared-fields = nil
+
+
+build: class-context
+	return (builder-for: class-context) build
+
+live-proto-for: class-context
+	return (builder-for: class-context) live-proto
+
+builder-for: class-context
+	if class-context compile-info
+		return class-context compile-info
+
+	builder = nil
+	if class-context is-a: Compiler ExistingClass
+		builder = ExistingClassBuilder new: class-context
+	else if class-context is-a: Compiler CompiledClass
+		builder = CompiledClassBuilder new: class-context
+	else
+		error: "Internal error: unknown type of Class."
+	class-context compile-info = builder
+	return builder
+
+
+create: class-context
+	init
+	this class-context = class-context
+	shared-fields = Dictionary new
+
+init
+	if new-shared-fields
+		return
+	new-shared-fields = List new
+
+build
+	virtual
+
+live-proto
+	virtual
+
+index-for-field: name
+	virtual
+
+
+build-functions-into: object
+	for function in class-context newly-defined-functions
+		machine-code = function value build: this
+		if machine-code
+			symbol = function key intern
+			object .class install-method: symbol machine-code: machine-code
+
+
+build-compiled-function: function
+	return X86Compiler compile: function
+
+build-new-function: function
+	return MethodBuilder build-new-function: function
+
+
+build-proto-function: function
+	# Build the subproto first.
+	subproto = ClassBuilder build: function proto
+
+	# Make a method that returns it.
+	return MethodBuilder build-object-returner: subproto
+
+
+build-field-getter: function
+	field-index = index-for-field: function name
+	return MethodBuilder build-field-getter: field-index
+
+build-field-setter: function
+	field-index = index-for-field: function field name
+	return MethodBuilder build-field-setter: field-index
+
+build-shared-field-getter: function
+	shared-field = new-shared-field-for: function field
+	return MethodBuilder build-location-getter: shared-field value-ptr
+
+build-shared-field-setter: function
+	shared-field = new-shared-field-for: function field
+	return MethodBuilder build-location-setter: shared-field value-ptr
+
+new-shared-field-for: field
+	name = field name
+	shared-field = shared-fields[name]
+	if shared-field == nil
+		shared-field = NewSharedField new: name
+		if field initial-value
+			shared-field value = field initial-value interpreted
+		shared-fields[name] = shared-field
+		new-shared-fields append: shared-field
+	return shared-field
+
+

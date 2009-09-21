@@ -12,11 +12,11 @@ create: values body: body 	--
 	this value-comment = value-comment
 
 
-prepare-to-emit
+resolve
 	if values
 		for value in values
-			value prepare-to-emit
-	body prepare-to-emit
+			value resolve
+	body resolve
 
 
 

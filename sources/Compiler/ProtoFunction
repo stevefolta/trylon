@@ -12,7 +12,14 @@ name
 	return proto name
 
 
+compile-call: builder with: arguments
+	return builder compile-proto-call: this
+
+build: builder
+	return builder build-proto-function: this
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

@@ -1,0 +1,76 @@
+trylon test
+
+
+say-it
+	send: "Replacement failed."
+
+please-say-it
+	result = say-it
+	if result
+		send: ("Returned:  ", result)
+
+
+test: value against: expected-value name: name
+	if value == expected-value
+		send: (name, ":  succeeded.")
+	else
+		send: (name, ":  FAILED.")
+
+check: ok name: name
+	if ok
+		send: (name, ":  succeeded.")
+	else
+		send: (name, ":  FAILED.")
+
+true-returner
+	return true
+false-returner
+	return false
+
+do: arg1 and: arg2
+	return arg2
+
+debug-point
+	# A nice place to put a breakpoint when debugging.
+
+
+time-nfibs
+	# Run the benchmark.
+	# We have to allocate the object; the CCompiler optimizes calls to protos so
+	# they're C function calls rather than sends.
+	bench = BenchObject new
+	level = 33
+	start-gcs = System num-garbage-collections
+	start-time = System milliseconds
+	num-sends = bench nfibs: level
+	time = System milliseconds - start-time
+	num-gcs = System num-garbage-collections - start-gcs
+
+	# Report the results.
+	sends-per-second = num-sends float / (time float / 1000.0)
+	if sends-per-second > 1000000.0
+		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
+	else
+		send: (sends-per-second, " sends per second.")
+	send: ("(level ", level, ", ", num-sends, " sends, ", time, " ms, ", num-gcs, " GCs.)")
+
+
+class BenchObject
+	create
+
+	nfibs: n
+		send: "nfibs not replaced."
+
+
+class SuperClass
+	value
+		return "super"
+
+class SubClass
+	superclass SuperClass
+	create
+		# Nothing to do.
+	value
+		return "not replaced"
+
+

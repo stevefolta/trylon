@@ -29,6 +29,9 @@ fn byte-at: index
 
 fn as-object
 
+fn deref-ptr: new-value
+fn deref-int: new-value
+fn deref-char: new-value
 fn ptr-at: index put: value
 fn object-at: index put: value
 fn char-at: index put: value

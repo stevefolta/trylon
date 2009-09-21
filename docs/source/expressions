@@ -7,8 +7,8 @@ The usual string and numeric literals are supported.
 	"Some kinda something"
 	"The whole line.\n"
 	3
-	2.75       	[Not yet supported.]
-	0xDEADBEEF 	[Not yet supported.]
+	2.75
+	0xDEADBEEF
 
 Symbols are like strings, except that only one instance of a given symbol exists throughout the entire program.  This means they can be compared for equality without looking at all the characters, and thus can take the place of enumerations.
 
@@ -27,7 +27,7 @@ Symbols are like strings, except that only one instance of a given symbol exists
 
 Character literals are specified using backquotes:
 
-	if cur-char == `\n`
+	if cur-char == `\\n`
 		#...
 
 Finally, there are the following named literals:

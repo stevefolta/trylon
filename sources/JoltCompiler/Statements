@@ -26,8 +26,8 @@ extend Compiler ExpressionStatement
 
 
 extend Compiler BlockStatement
-	prepare-to-emit
-		block prepare-to-emit
+	resolve
+		block resolve
 
 	jolt-expression
 		return block jolt-expression

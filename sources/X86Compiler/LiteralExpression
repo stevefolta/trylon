@@ -1,0 +1,12 @@
+trylon LiteralExpression
+superclass Compiler TrylonExpression
+
+fields value
+
+
+create: value
+	this value = value
+
+compile: builder
+	return LiteralResult new: value
+

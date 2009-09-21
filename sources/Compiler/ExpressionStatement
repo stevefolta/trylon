@@ -8,12 +8,19 @@ create: expression comment: comment
 	this expression = expression
 	this comment = comment
 
-
-prepare-to-emit
-	expression prepare-to-emit
-
+create: expression
+	this expression = expression
 
 
+resolve
+	expression resolve
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+compile: builder
+	return builder compile-expression-statement: this
+
+
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

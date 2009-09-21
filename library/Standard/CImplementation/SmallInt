@@ -1,0 +1,121 @@
+trylon SmallInt
+superclass Standard Int
+# Tagged integer.
+
+c-preamble
+	#include <stddef.h>
+	#include <stdio.h>
+
+	#define TaggedValue(val) ((ptrdiff_t) val >> 1)
+
+c-fn + other
+	return BuildInt_(TaggedValue(this_) + IntValue_(other));
+c-fn - other
+	return BuildInt_(TaggedValue(this_) - IntValue_(other));
+c-fn * other
+	return BuildInt_(TaggedValue(this_) * IntValue_(other));
+c-fn / other
+	return BuildInt_(TaggedValue(this_) / IntValue_(other));
+c-fn % other
+	return BuildInt_(TaggedValue(this_) % IntValue_(other));
+c-fn << other
+	return BuildInt_(TaggedValue(this_) << IntValue_(other));
+c-fn >> other
+	return BuildInt_(TaggedValue(this_) >> IntValue_(other));
+c-fn unary-minus
+	return BuildInt_(-TaggedValue(this_));
+c-fn | other
+	return BuildInt_(TaggedValue(this_) | IntValue_(other));
+c-fn & other
+	return BuildInt_(TaggedValue(this_) & IntValue_(other));
+c-fn ^ other
+	return BuildInt_(TaggedValue(this_) ^ IntValue_(other));
+c-fn ~
+	return BuildInt_(~TaggedValue(this_));
+
+c-fn == other
+	return Bool_(TaggedValue(this_) == IntValue_(other));
+c-fn != other
+	return Bool_(TaggedValue(this_) != IntValue_(other));
+c-fn < other
+	return Bool_(TaggedValue(this_) < IntValue_(other));
+c-fn > other
+	return Bool_(TaggedValue(this_) > IntValue_(other));
+c-fn <= other
+	return Bool_(TaggedValue(this_) <= IntValue_(other));
+c-fn >= other
+	return Bool_(TaggedValue(this_) >= IntValue_(other));
+
+c-fn string
+	char str[64];
+	sprintf(str, "%d", TaggedValue(this_));
+	return BuildString_(str);
+
+c-fn char-string
+	char str[5];
+	unsigned long c = (unsigned long) TaggedValue(this_);
+	char* p = str;
+	if (c < 0x0080)
+		*p++ = c;
+	else if (c < 0x0800) {
+		*p++ = (c >> 6) | 0xC0;
+		*p++ = (c & 0x3F) | 0x80;
+		}
+	else if (c < 0x00010000) {
+		*p++ = (c >> 12) | 0xE0;
+		*p++ = ((c >> 6) & 0x3F) | 0x80;
+		*p++ = (c & 0x3F) | 0x80;
+		}
+	else if (c < 0x00110000) {
+		*p++ = (c >> 18) | 0xF0;
+		*p++ = ((c >> 12) & 0x3F) | 0x80;
+		*p++ = ((c >> 6) & 0x3F) | 0x80;
+		*p++ = (c & 0x3F) | 0x80;
+		}
+	*p++ = 0;
+	return BuildString_(str);
+
+c-fn float
+	return BuildFloat_(TaggedValue(this_));
+
+c-fn is-digit
+	int val = TaggedValue(this_);
+	return Bool_(val >= '0' && val <= '9');
+
+c-fn is-whitespace
+	int val = TaggedValue(this_);
+	return Bool_(val == ' ' || val == '\t' || val == '\n' || val == '\r');
+
+
+
+# Low-level Object methods.
+
+c-fn .proto
+	return Proto_(SmallInt__CImplementation__Standard);
+
+c-fn .parent-context
+	return StdClassRef_(SmallInt__CImplementation)->parentContext;
+
+c-fn .superclass
+	return StdClassRef_(SmallInt__CImplementation)->superclass;
+
+c-fn .proto-name
+	return StdClassRef_(SmallInt__CImplementation)->name;
+
+c-fn .used-contexts
+	return StdClassRef_(SmallInt__CImplementation)->usedContexts;
+
+c-fn .object-size
+	return BuildInt_(sizeof(classref_) + this_->class_->numSlots * sizeof(obj_));
+
+c-fn .added-fields
+	return StdClassRef_(SmallInt__CImplementation)->addedFields;
+
+iff support-subprotos
+	c-fn .subprotos
+		return StdClassRef_(SmallInt__CImplementation)->subprotos;
+
+iff class-objects
+	c-fn .class
+		return (obj_) StdClassRef_(SmallInt__CImplementation);
+

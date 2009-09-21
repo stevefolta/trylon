@@ -1,0 +1,99 @@
+trylon Class
+
+
+c-preamble
+	#define classInfo ((struct ClassInfo*) this_)
+
+c-fn num-slots
+	return BuildInt_(classInfo->numSlots);
+c-fn class-num
+	return BuildInt_(classInfo->classNum);
+
+c-fn proto
+	return classInfo->proto;
+c-fn parent-context
+	return classInfo->parentContext;
+c-fn superclass
+	return classInfo->superclass;
+c-fn used-contexts
+	return classInfo->usedContexts;
+c-fn used-contexts: new-used-contexts
+	classInfo->usedContexts = new_used_contexts;
+	return nil;
+c-fn name
+	return classInfo->name;
+c-fn added-fields
+	return classInfo->addedFields;
+c-fn subprotos
+	return classInfo->subprotos;
+
+
+iff support-new-methods
+
+	c-fn new: name field-names: field-names 	--
+			parent: parent-context superclass: superclass
+		UsingMethod_(num_items)
+		UsingMethod_(iterator) UsingMethod_(is_done)
+		UsingMethod_(current_item) UsingMethod_(go_forward)
+
+		/* Count the total number of fields. */
+		int numAddedFields = 0;
+		if (field_names)
+			numAddedFields = IntValue_(Call_(num_items, field_names));
+		int totalFields = numAddedFields;
+		if (superclass)
+			totalFields += superclass->class_->numSlots;
+
+		/* Create the class. */
+		struct ClassInfo* newClass = Allocate_(sizeof(struct ClassInfo));
+		newClass->class_ = StdClassRef_(Class__CImplementation);
+		newClass->classNum = -1;
+		newClass->numSlots = totalFields;
+		newClass->parentContext = parent_context;
+		newClass->superclass = superclass;
+		newClass->name = name;
+
+		/* Set up "addedFields". */
+		obj_ addedFields = NewTuple_(numAddedFields);
+		int whichField = 0;
+		if (field_names) {
+			ForStart_(1, field_names, fieldName)
+				TuplePut_(addedFields, whichField, fieldName);
+				whichField += 1;
+			ForEnd_(1)
+			}
+		newClass->addedFields = addedFields;
+
+		/* Make the prototype. */
+		newClass->proto = AllocObjFromClassInfo_(newClass);
+
+		return (obj_) newClass;
+
+
+	c-fn new-methods
+		return classInfo->newMethods;
+	c-fn new-methods: dict
+		return classInfo->newMethods = dict;
+
+	install-method: name machine-code: code
+		selector = name intern
+
+		# If it's in the dispatch table, patch that.
+		table-entry-ptr = dispatch-table-entry-for: selector
+		if table-entry-ptr
+			table-entry-ptr deref-ptr = code
+			return
+
+		# Otherwise, add it to the "new-methods" dictionary.
+		if new-methods == nil
+			new-methods = Dictionary new
+		new-methods[selector] = code
+	
+
+	c-fn dispatch-table-entry-for: selector
+		fn_ptr_* entry_ptr = MethodLocation_(classInfo->proto, selector);
+		if (entry_ptr == nil)
+			return nil;
+		return BuildBytePtr_(entry_ptr);
+
+

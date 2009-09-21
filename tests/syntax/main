@@ -1,0 +1,96 @@
+trylon syntax-test
+
+main: args
+	try
+		# Declaration.
+		var = 'outer'
+		if true
+			var := 'inner'
+			check: var against: 'inner' title: "Declaration (inner)"
+		check: var against: 'outer' title: "Declaration"
+
+		# C-style calls.
+		check: function() against: 0 title: "C-style function calls (nullary)"
+		check: function("foo") against: 1 title: "C-style function calls (unary)"
+		check: function("foo", "bar") against: 2 title: "C-style function calls (2 args)"
+
+		# [].
+		check: ("zero", "one", "two")[2] against: "two" title: "[] (Tuple)"
+		dict = Dictionary new
+		dict["foo"] = "foom"
+		dict["bar"] = "barm"
+		dict["baz"] = "bazm"
+		check: dict["bar"] against: "barm" title: "[] (Dictionary)"
+
+		# "super" call is field.
+		check: OverridingFieldClass new value against: "foo augmented" title: "Super call on field"
+
+		# Paragraph literals.
+		para = ¶
+			foo
+			bar
+				baz
+		lines = para lines
+		ok = lines next == "foo" && lines next == "bar" && lines next == "\tbaz"
+		test: ok title: "Text literals"
+		lines = shared-text lines
+		ok = lines next == "bar" && lines next == "baz" && lines next == "quux"
+		test: ok title: "Text literals as shared variable values"
+
+		# "uses"
+		check: UsingClass test-value against: "ok" title: "\"uses\""
+
+	catch
+		send: exception message
+
+
+shared-text = ¶
+	bar
+	baz
+	quux
+
+
+check: value against: expected-value title: title
+	if value == expected-value
+		print-line: title + ": succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
+test: succeeded title: title
+	if succeeded
+		print-line: title + ": succeeded."
+	else
+		throw MessageException new: "*** " + title + " test failed. ***"
+
+
+class function
+	call: args
+		return args num-items
+
+
+class FieldedClass
+	field value
+
+	create
+		value = "foo"
+
+class OverridingFieldClass
+	superclass FieldedClass
+
+	create
+		super create
+	value
+		return super value + " augmented"
+
+
+class UsedClass
+	value
+		return "ok"
+
+class UsingClass
+	uses UsedClass
+
+	test-value
+		return value
+
+

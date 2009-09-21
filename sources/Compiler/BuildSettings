@@ -1,29 +1,23 @@
 trylon BuildSettings
 
 fields dictionary
-fields program-name c-flags link-flags c-compiler linker
-fields jolt-sources-dir
-fields c-sources-dir objects-dir
-fields is-verbose targeting-c targeting-jolt
-fields debugger include-selector-symbols support-perform
 
 
 create
 	dictionary = Dictionary new
-	program-name = ""
-	c-flags = List new
-	link-flags = List new
-	c-compiler = "gcc"
-	linker = "gcc"
-	jolt-sources-dir = ".jolt-sources"
-	c-sources-dir = ".c-sources"
-	objects-dir = ".objects"
-	is-verbose = false
-	target = 'C'
+	dictionary at: "c-flags" put: List new
+	dictionary at: "link-flags" put: List new
+	dictionary at: "library-dirs" put: List new
+	dictionary at: "c-compiler" put: "gcc"
+	dictionary at: "linker" put: "gcc"
+	dictionary at: "c-sources-dir" put: ".c-sources"
+	dictionary at: "objects-dir" put: ".objects"
+	dictionary at: "jolt-sources-dir" put: ".jolt-sources"
+	target: 'C'
 
 	sysname = System sysname
 	if !sysname is-empty
-		(dictionary at: sysname) = sysname
+		dictionary at: sysname put: sysname
 	(dictionary at: "in-trylid") = "true"
 	(dictionary at: "trylon-2") = "true"
 	if Implementation .target-language == "Coke"
@@ -33,13 +27,75 @@ create
 has-symbol: name
 	return (dictionary at: name) != nil
 
+program-name
+	# Note!: This one uses a different name.
+	return dictionary at: "program"
+c-flags
+	return dictionary at: "c-flags"
+link-flags
+	return dictionary at: "link-flags"
+c-compiler
+	return dictionary at: "c-compiler"
+linker
+	return dictionary at: "linker"
+library-dirs
+	return dictionary at: "library-dirs"
+jolt-sources-dir
+	return dictionary at: "jolt-sources-dir"
+c-sources-dir
+	return dictionary at: "c-sources-dir"
+objects-dir
+	return dictionary at: "objects-dir"
+is-verbose
+	return dictionary at: "is-verbose"
+is-verbose: new-value
+	dictionary at: "is-verbose" put: new-value
+targeting-c
+	return dictionary at: "targeting-c"
+targeting-jolt
+	return dictionary at: "targeting-jolt"
+debugger
+	return dictionary at: "debugger"
+include-selector-symbols
+	return dictionary at: "include-selector-symbols"
+support-perform
+	return dictionary at: "support-perform"
+shared-ints
+	return dictionary at: "shared-ints"
+shared-field-accessors
+	return dictionary at: "shared-field-accessors"
+
+
+at: key
+	return dictionary at: key
+
+
+target: target
+	switch target
+		'C'
+			dictionary at: "targeting-c" put: "true"
+			dictionary at: "targeting-jolt" put: nil
+		'Jolt'
+			dictionary at: "targeting-jolt" put: "true"
+			dictionary at: "targeting-c" put: nil
+
 
 load
-	library-path = compiler find-library-path
+	# Load global build-settings first.
+	library-path = find-library-path
 	if library-path
 		load-from: library-path + "/build-settings"
+	# Then user's semi-global build-settings.
+	home-path = System environment-variable-named: "HOME"
+	if home-path && !(home-path is-empty)
+		load-from: home-path + "/.trylon-build-settings"
+	# The project-specific build-settings.
 	load-from: "build-settings.local"
 	load-from: "build-settings"
+
+	# 'symbol-dispatch' requires 'support-perform'.
+	if dictionary["symbol-dispatch"]
+		dictionary["support-perform"] = true
 
 
 load-from: file-name
@@ -48,207 +104,125 @@ load-from: file-name
 		return
 	
 	try
-		lexer = Lexer new: file contents
-		parse-block: lexer
+		load-lines: (Trylon LinesLexer read: file contents)
 	catch Exception
 		throw 	--
 			MessageException new: 	--
 				"Error in \"" + file-name + "\": " + exception message
 
 
-parse-block: lexer
-	loop
-		token = lexer next-token
-		type = token type
+load-lines: lines
+	for line in lines
+		load-line: line
 
-		if type == 'eol'
-			continue
 
-		else if type == 'comment'
-			token = lexer next-token 	# It *will* be an 'eol'.
-			continue
+load-line: line
+	words = line words
+	first-word = words next
 
-		else if type == 'name' || type == 'keyword'
-			name = token text
-			if type == 'keyword'
-				name = name substr: 0 length: name length - 1
-			if name == "program"
-				program-name = parse-name: lexer name: name
-			else if name == "c-flags"
-				parse-flags: lexer into: c-flags name: name
-			else if name == "link-flags"
-				parse-flags: lexer into: link-flags name: name
-			else if name == "c-compiler"
-				c-compiler = parse-name: lexer name: name
-			else if name == "linker"
-				linker = parse-name: lexer name: name
-			else if name == "jolt-sources-dir"
-				jolt-sources-dir = parse-name: lexer name: name
-			else if name == "c-sources-dir"
-				c-sources-dir = parse-name: lexer name: name
-			else if name == "objects-dir"
-				objects-dir = parse-name: lexer name: name
-			else if name == "debugger"
-				debugger = parse-boolean: lexer name: name
-			else if name == "support-perform"
-				support-perform = parse-boolean: lexer name: name
-			else if name == "include-selector-symbols"
-				include-selector-symbols = parse-boolean: lexer name: name
-			else if name == "verbose"
-				is-verbose = parse-boolean: lexer name: name
-			else if name == "targeting-c"
-				targeting-c = parse-boolean: lexer name: name
-				if targeting-c
-					target = 'C'
-			else if name == "targeting-jolt"
-				targeting-jolt = parse-boolean: lexer name: name
-				if targeting-jolt
-					target = 'Jolt'
+	# Comments and blank lines.
+	if first-word == nil || first-word starts-with: "#"
+		# Nothing to do.
 
-			else if name == "if" || name == "iff"
-				parse-if: lexer
-
+	# "if" is the only special form.
+	else if first-word == "if" || first-word == "iff"
+		# Get the symbol and the sense.
+		reverse-sense = false
+		symbol = words next
+		if symbol == nil || symbol starts-with: "#"
+			error: "\"if\" line needs a condition" in: line
+		if symbol starts-with: "!"
+			reverse-sense = true
+			if symbol == "!"
+				# "if ! foo"
+				symbol = words next
 			else
-				# Anything else is just a boolean for the dictionary.
-				parse-boolean: lexer name: name
+				# "if !foo"
+				symbol = symbol substr: 1
+		words require-eol
 
-		else if type == 'indent'
-			parse-block: lexer
+		# Test it.
+		value = dictionary at: symbol
+		if value == nil
+			value = ""
+		test-succeeded = !value is-empty
+		if reverse-sense
+			test-succeeded = !test-succeeded
 
-		else if type == 'eof' || type == 'unindent'
-			break
+		# Do, or do not.
+		if test-succeeded
+			load-lines: line block
 
-
-target: target
-	switch target
-		'C'
-			targeting-c = true
-			targeting-jolt = false
-			dictionary at: "targeting-c" put: "true"
-			dictionary at: "targeting-jolt" put: nil
-		'Jolt'
-			targeting-jolt = true
-			targeting-c = false
-			dictionary at: "targeting-jolt" put: "true"
-			dictionary at: "targeting-c" put: nil
-
-
-parse-name: lexer name: declaration
-	token = lexer next-token
-	if token == '='
-		token = lexer next-token
-	if token == 'eol' || token == 'comment'
-		throw MessageException new: "Empty \"" + declaration + "\" declaration."
-	
-	name = token text
-	token = lexer next-token
-	if token == 'comment'
-		lexer next-token 	# It *will* be an 'eol'.
-	else if token != 'eol'
-		throw 	--
-			MessageException new: 	--
-				"Extra tokens in \"" + declaration + "\" declaration."
-	
-	return name
-
-
-parse-flags: lexer into: flags name: declaration
-	flag = ""
-	have-started = false
-	loop
-		token = lexer next-token
-
-		if !have-started && token type == '+='
-			# Just go around again.
-		
-		else if token == 'eol'
-			if !flag is-empty
-				flags append: flag
-			break
-
-		else if token == 'comment'
-			# Just go around again; 'eol' will be next.
-
-		else if token == '-'
-			# We want to allow flags starting with hyphens without quoting.
-			flag += "-"
-
+	# Anything else is a sort of assignment expression.
+	else
+		# Name and flavor.
+		name = first-word
+		appending = false
+		if name ends-with: ":"
+			name = name substr: 0 length: name length - 2
 		else
-			flag += token text
-			flags append: flag
-			flag = ""
+			operator = words next
+			if operator == "+="
+				appending = true
+			else if operator != "="
+				error: "'=' or '+=' expected" in: line
 
-		have-started = true
+		# Get the value, as a string.
+		value = words next
+		if value == nil || value starts-with: "#"
+			error: "value expected" in: line
+		value = resolve-value: value
 
+		# Appending to a list.
+		if appending
+			# Append the first value.
+			if value == nil
+				return
+			old-value = dictionary at: name
+			if old-value == nil
+				# Just use the new value.
+			else if old-value is-a: List
+				old-value append: value
+				value = old-value
+			else
+				value = List with: old-value and: value
+			dictionary at: name put: value
 
-parse-boolean: lexer name: declaration
-	token = lexer next-token
-	if token == '='
-		token = lexer next-token
-	if token == 'eol' || token == 'comment'
-		throw MessageException new: "Empty \"" + declaration + "\" declaration."
-	
-	name = token text
-	token = lexer next-token
-	if token == 'comment'
-		lexer next-token 	# It *will* be an 'eol'.
-	else if token != 'eol'
-		throw 	--
-			MessageException new: 	--
-				"Extra tokens in \"" + declaration + "\" declaration."
-	
-	on = (name == "true" || name == "on")
-	if on
-		(dictionary at: declaration) = declaration
-	else
-		dictionary remove: declaration
-	return on
+		# Setting a value.
+		else
+			dictionary at: name put: value
 
-
-parse-if: lexer
-	# Check for "!".
-	token = lexer next-token
-	reverse-sense = false
-	if token == '!'
-		reverse-sense = true
-		token = lexer next-token
-	
-	# Get the value.
-	if token == 'comment' || token == 'eol'
-		throw MessageException new: "Invalid \"if\" statement."
-	value = dictionary at: token text
-	if value == nil
-		value = ""
-	test-is-true = !value is-empty
-	if reverse-sense
-		test-is-true = !test-is-true
-	
-	# Get the end of line.
-	token = lexer next-token
-	if token == 'comment'
-		token = lexer next-token
-	if token != 'eol'
-		throw MessageException new: "Extra tokens in \"if\" statement."
-	
-	# Handle the block.
-	token = lexer next-token
-	if token != 'indent'
-		throw MessageException new: "Missing block in \"if\" statement."
-	if test-is-true
-		parse-block: lexer
-	else
-		# Skip the block.
-		indent-count = 1
+		# Append any more values we find on the line.
 		loop
-			token = lexer next-token
-			if token == 'indent'
-				indent-count += 1
-			else if token == 'unindent'
-				indent-count -= 1
-				if indent-count <= 0
-					break
+			value = words next
+			if value == nil || value starts-with: "#"
+				break
+			value = resolve-value: value
+			old-value = dictionary at: name
+			if old-value && old-value is-a: List
+				old-value append: value
+				value = old-value
+			else
+				value = List with: old-value and: value
+			dictionary at: name put: value
+
+		# Special-case 'targeting-c' and 'targeting-jolt', which are mutually
+		# exclusive.
+		if name == "targeting-c" && dictionary at: name
+			target = 'C'
+		else if name == "targeting-jolt" && dictionary at: name
+			target = 'Jolt'
 
 
+resolve-value: value
+	if value == nil || value == "false" || value == "nil"
+		return nil
+	else if value starts-with: "\"" || value starts-with: "'"
+		return value substr: 1 length: value length - 2
+	return value
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+error: message in: line
+	throw MessageException new: message
+
 

@@ -1,0 +1,23 @@
+trylon test
+
+say-it
+	send: "'say-it' successfully replaced from \"main-v2\"."
+
+new-method
+	send: "'new-method' successfully installed."
+
+new-shared-field = "foo"
+
+
+class NewSubclass
+	fields value
+
+	create
+		value = "baz"
+	
+	create: value
+		this value = value
+	
+	foo
+		return "bar"
+

@@ -9,11 +9,15 @@ create: value comment: comment
 	this comment = comment
 
 
-prepare-to-emit
-	value prepare-to-emit
+resolve
+	value resolve
+
+
+compile: builder
+	return builder compile-throw: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

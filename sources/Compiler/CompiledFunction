@@ -21,12 +21,19 @@ has-code
 	return false
 
 
-prepare-to-emit
+resolve
 	if body && !is-primitive
-		body prepare-to-emit
+		body resolve
+
+
+compile-call: builder with: arguments
+	return compile-send-of: name to-proto: on-proto with: arguments using: builder
+
+build: builder
+	return builder build-compiled-function: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

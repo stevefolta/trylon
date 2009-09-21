@@ -1,0 +1,14 @@
+trylon LiteralResult
+superclass Result
+
+fields value
+
+create: value
+	this value = value
+
+is-literal
+	return true
+
+ptr
+	return value object-ptr
+

@@ -23,13 +23,20 @@ current
 	return cached-word
 
 peek
-	current
+	return current
 
 is-empty
 	return (current == nil)
 
 remainder
 	return String from: p to: stopper
+
+require-eol
+	if is-empty
+		return nil
+	if current == "#"
+		return remainder
+	error: ('Extra stuff at end of line ("', remainder, '").')
 
 
 class-fn parse-char-escape-from: start to: stopper
@@ -58,6 +65,9 @@ is-done
 go-forward
 	next
 
+iterator
+	return this
+
 
 # ===== Private
 
@@ -78,13 +88,28 @@ parse-next-word
 	word-start = p
 
 	# Is it a paren/bracket/brace/comma/minus?
-	if c == `(` || c == `)` || c == `[` || c == `]` || c == `{` || c == `}` || 	--
-	   c == `,` || c == `!` || c == `-`
+	if c == `!`
+		p += 1
+		if p < stopper && p deref-char == `=`
+			p += 1
+		return String from: word-start to: p
+	else if c == `(` || c == `)` || c == `[` || c == `]` || 	--
+	        c == `{` || c == `}` || c == `,` || c == `!` || c == `~`
 		p += 1
 		return String from: word-start to: p
+	else if c == `-`
+		p += 1
+		# A minus is usually its own token, even at the front of a "word".  But
+		# there are a couple of two-character tokens that start with a minus ("-="
+		# and "->").
+		if p < stopper
+			c = p deref-char
+			if c == `=` || c == `>`
+				p += 1
+		return String from: word-start to: p
 	
-	# A string/symbol?
-	else if c == `"` || c == `'`
+	# A string/symbol/character literal?
+	else if c == `"` || c == `'` || c == `\``
 		delimiter = c
 		builder = nil
 		p += 1
@@ -181,6 +206,7 @@ parse-escaped-char-into: builder
 			utf8-encode: value into: builder
 		else
 			escaped-char = p deref-char
+			p += 1
 	if escaped-char
 		builder add-char: escaped-char
 

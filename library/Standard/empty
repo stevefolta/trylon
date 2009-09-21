@@ -1,0 +1,24 @@
+trylon empty
+superclass Collection
+
+
+iterator
+	return Iterator new
+num-items
+	return 0
+is-empty
+	return true
+
+
+class Iterator
+	superclass Standard Iterator
+
+	create
+	is-done
+		return true
+	current-item
+		return nil
+	go-forward
+		# Do nothing.
+	
+

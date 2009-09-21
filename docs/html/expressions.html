@@ -55,6 +55,10 @@ div.titleless-entry-date {
 	color: gray;
 }
 
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 div.code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
@@ -64,8 +68,33 @@ div.code {
 	white-space: pre;
 }
 
-</style>
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
 
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
+</style>
 </head>
 
 
@@ -81,43 +110,66 @@ Expressions
 The usual string and numeric literals are supported.
 </p>
 
-<div class="code">"Some kinda something"
-"The whole line.\n"
-3
-2.75         [Not yet supported.]
-0xDEADBEEF   [Not yet supported.]</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-constant">"Some kinda something"</span></div>
+<div class="trylon-line"><span class="trylon-constant">"The whole line.
+"</span></div>
+<div class="trylon-line"><span class="trylon-constant">3</span></div>
+<div class="trylon-line"><span class="trylon-constant">2.75</span></div>
+<div class="trylon-line"><span class="trylon-constant">0xDEADBEEF</span></div>
+</div>
 
 <p>
 Symbols are like strings, except that only one instance of a given symbol exists throughout the entire program.  This means they can be compared for equality without looking at all the characters, and thus can take the place of enumerations.
 </p>
 
-<div class="code">'primary'
-if alignment == 'justified'
-  #...
-switch alignment
-  'left'
-    # ...
-  'right'
-    # ...
-  'center'
-    # ...
-  'justified'
-    # ...</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-constant">'primary'</span></div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> alignment == <span class="trylon-constant">'justified'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment">#...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">switch</span> alignment</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-constant">'left'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-constant">'right'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-constant">'center'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-constant">'justified'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+</div>
+</div>
 
 <p>
 Character literals are specified using backquotes:
 </p>
 
-<div class="code">if cur-char == `\n`
-  #...</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> cur-char == <span class="trylon-constant">`\n`</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment">#...</span></div>
+</div>
+</div>
 
 <p>
 Finally, there are the following named literals:
 </p>
 
-<div class="code">true
-false
-nil</div>
+<div class="trylon-code">
+<div class="trylon-line">true</div>
+<div class="trylon-line">false</div>
+<div class="trylon-line">nil</div>
+</div>
 
 </div>
 
@@ -127,9 +179,11 @@ nil</div>
 The value of a variable is accessed simply by giving its name:
 </p>
 
-<div class="code">args
-current-line
-point-1</div>
+<div class="trylon-code">
+<div class="trylon-line">args</div>
+<div class="trylon-line">current-line</div>
+<div class="trylon-line">point-1</div>
+</div>
 
 <p>
 It could be the name of a local variable, a function argument, a field, or a shared variable.
@@ -151,7 +205,9 @@ Most of the binary operators from C are available: +, -, *, /, %, |, &, ^.  Howe
 There is a comma operator, but it's not used as it is in C.  Instead, it is used to create "Tuples", which are essentially a form of array:
 </p>
 
-<div class="code">( "one", "two", "three" )</div>
+<div class="trylon-code">
+<div class="trylon-line">(<span class="trylon-constant">"one"</span>, <span class="trylon-constant">"two"</span>, <span class="trylon-constant">"three"</span>)</div>
+</div>
 
 <p>
 These unary operators are available: -, +, ~, !.
@@ -165,16 +221,20 @@ These unary operators are available: -, +, ~, !.
 Sending a message to an object uses the normal Smalltalk syntax:
 </p>
 
-<div class="code">"Hello" length
-point x
-"Hello" substr: 3 length: 2   # "ll"</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-constant">"Hello"</span> length</div>
+<div class="trylon-line">point x</div>
+<div class="trylon-line"><span class="trylon-constant">"Hello"</span> <span class="trylon-keyword">substr:</span> <span class="trylon-constant">3</span> <span class="trylon-keyword">length:</span> <span class="trylon-constant">2</span> <span class="trylon-comment"># "ll"</span></div>
+</div>
 
 <p>
 For functions in the current scope (that is, in the current namespace and its enclosing namespaces), you don't need to specify the receiver:
 </p>
 
-<div class="code">print-line
-print-line: "Hello"</div>
+<div class="trylon-code">
+<div class="trylon-line">print-line</div>
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> <span class="trylon-constant">"Hello"</span></div>
+</div>
 
 <p>
 These would be message sends to the namespace prototype in which they are defined.  For instance "print-line" would be the same as "Standard print-line".
@@ -184,7 +244,9 @@ These would be message sends to the namespace prototype in which they are define
 "Super" sends are also available:
 </p>
 
-<div class="code">super create: name</div>
+<div class="trylon-code">
+<div class="trylon-line">super <span class="trylon-keyword">create:</span> name</div>
+</div>
 
 </div>
 
@@ -194,23 +256,25 @@ These would be message sends to the namespace prototype in which they are define
 Precedence is as follows:
 </p>
 
-<div class="code">,
-=, +=, etc.
-||
-&&
-!
-keyword: send
-|
-^
-&
-==, !=
-<, >, <=, >=
-<<, >>
-+, -
-*, /, %
-unary+, unary-, ~
-unary send
-primary</div>
+<div class="trylon-code">
+<div class="trylon-line">,</div>
+<div class="trylon-line">=, +=, etc.</div>
+<div class="trylon-line">||</div>
+<div class="trylon-line">&amp;&amp;</div>
+<div class="trylon-line">!</div>
+<div class="trylon-line"><span class="trylon-keyword">keyword:</span> send</div>
+<div class="trylon-line">|</div>
+<div class="trylon-line">^</div>
+<div class="trylon-line">&amp;</div>
+<div class="trylon-line">==, !=</div>
+<div class="trylon-line">&lt;, &gt;, &lt;=, &gt;=</div>
+<div class="trylon-line">&lt;&lt;, &gt;&gt;</div>
+<div class="trylon-line">+, -</div>
+<div class="trylon-line">*, /, %</div>
+<div class="trylon-line">unary+, unary-, ~</div>
+<div class="trylon-line">unary send</div>
+<div class="trylon-line">primary</div>
+</div>
 
 <p>
 "Primaries" include literals, names by themselves, keyword sends with implicit receivers, and parenthesized expressions.

@@ -7,6 +7,10 @@ fields cur-lines cur-indentation 	# Caching top of indent-stack.
 fields had-indent-problem
 
 
+read: text
+	return (LinesLexer new: text) lex
+
+
 create: text
 	p = text start
 	stopper = text stopper
@@ -65,7 +69,11 @@ lex
 			while line-indentation < indent-stack head first
 				indent-stack pop-front
 			if line-indentation > indent-stack head first
-				throw MessageException new: "Indentation error."
+				line-start = p
+				while p < stopper && p deref-char != `\n` && p deref-char != `\r`
+					p += 1
+				line = (String from: line-start to: p) trimmed
+				throw MessageException new: "Indentation error (\"" + line + "\")."
 			cur-indentation = indent-stack head first
 			cur-lines = indent-stack head second
 

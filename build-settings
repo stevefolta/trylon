@@ -1,6 +1,21 @@
 program = "trylon"
 debugging = true
+
+# Needed for Interpreter (and X86Compiler) to work.
 support-perform = true
+support-subprotos = true
+
+# 'support-new-methods' is needed for the X86Compiler to work; it allows new
+# methods to be defined on existing classes.  Dispatch for these new methods
+# will be slower than for "baked-in" methods.  Turn this off if you want the
+# compiler to be the minimum size possible.
+support-new-methods = true
+
+# I really like to see this.  If it bugs you, turn it off.
+time-compilation = true
+
+
+# Archaic stuff.
 
 iff !trylon-2
 	# Trylon 1 boilerplate.
@@ -11,9 +26,6 @@ iff !trylon-2
 		c-flags += "-DMAC_OSX" "-DOSX_FINK" "-I/sw/include"
 		link-flags += "-L/sw/lib"
 
-
-
-# Trylid settings.
 
 iff in-jolt
 	jolt-sources-dir = ".jolt-sources-self"

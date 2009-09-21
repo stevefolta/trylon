@@ -14,6 +14,13 @@ name
 	return field name
 
 
+compile-call: builder with: arguments
+	return compile-send-of: name to-proto: on-proto with: arguments using: builder
 
-# Copyright 2007 Steve Folta.  See the License file.
+build: builder
+	return builder build-field-getter: this
+
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

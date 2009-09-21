@@ -54,7 +54,7 @@ lookup-function-autodeclaring: name
 		return function
 	
 	# If it wasn't found, and it's a setter, autodeclare a local.
-	if (name index-of: `:`) == name length - 1
+	if name ends-with: ":"
 		local = CompiledField new: (name substr: 0 length: name length - 1) type: nil
 		add-local: local
 		return LocalSetter new: local
@@ -70,11 +70,15 @@ is-lambda
 	return false
 
 
-prepare-to-emit
+resolve
 	for statement in statements
-		statement prepare-to-emit
+		statement resolve
+
+
+compile: builder
+	return builder compile-block: this
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

@@ -15,7 +15,7 @@ extend Compiler TrylonExpression
 extend Compiler Send
 	emit-code: builder
 		# Special-case calls on prototypes.
-		# "Compiler Send prepare-to-emit" has found the ProtoFunction for us.
+		# "Compiler Send resolve" has found the ProtoFunction for us.
 		if proto-result-function
 			return proto-result-function emit-c-call: arguments builder: builder
 
@@ -29,7 +29,7 @@ extend Compiler Send
 
 extend Compiler FunctionCall
 	emit-code: builder
-		# We already got the function in prepare-to-emit.
+		# We already got the function in 'resolve'.
 		if function == nil
 			throw MessageException new: "There is no \"" + name + "\" function."
 		
@@ -42,7 +42,12 @@ extend Compiler SuperCall
 		if superclass == nil
 			throw MessageException new: 	--
 				"Attempt to do a super call on a class with no superclass."
-		fn-name = (mangle-name: name) + "__" + superclass c-name
+		super-fn = superclass lookup-instance-function: name
+		if super-fn == nil
+			throw MessageException new: 	--
+				"Attempt to do a super call of '" + name + 	--
+				"', which is not defined in any superclass."
+		fn-name = (superclass lookup-instance-function: name) c-name
 
 		# Declare it.
 		declaration = StringBuilder new
@@ -82,14 +87,37 @@ extend Compiler IntLiteral
 		return true
 
 	emit-code: builder
+		if build-settings["tagged-ints"]
+			# In order to generate code that'll run on both 32-bit and 64-bit
+			# systems, we'll only generate tagged ints for values that'll fit into
+			# 31 bits.
+			if value < 1073741823 && value > -1073741824
+				return CCompiler LiteralResult new: this
+
+		if build-settings shared-ints
+			compiler using-int: value
 		builder int-literals add: this
 		return CCompiler LiteralResult new: this
 
 	emit-declaration: stream
-		stream write-all: ("\tDefineInt_(", index string, ", ", value string, ")\n")
+		if build-settings shared-ints
+			stream send: ("\tUsingInt_(", value-name, ")")
+		else
+			stream send: ("\tDefineInt_(", index string, ", ", value string, ")")
 	
 	access
-		return "Int_(" + index string + ")"
+		if build-settings["tagged-ints"]
+			return "SmallInt_(" + value string + ")"
+		if build-settings shared-ints
+			return "Int_(" + value-name + ")"
+		else
+			return "Int_(" + index string + ")"
+	
+	value-name
+		if value < 0
+			return "m" + (-value) string
+		else
+			return value string
 	
 
 extend Compiler FloatLiteral
@@ -121,8 +149,9 @@ extend Compiler StringLiteral
 		return CCompiler LiteralResult new: this
 	
 	emit-declaration: stream
+		escaped-string = CCompiler escape-string-for-c: value string
 		stream write-all: 	--
-			("\tDefineString_(", index string, ", \"", value string, "\")\n")
+			("\tDefineString_(", index string, ", \"", escaped-string, "\")\n")
 	
 	access
 		return "Str_(" + index string + ")"
@@ -174,6 +203,8 @@ extend Compiler CharacterLiteral
 		return true
 
 	emit-code: builder
+		if build-settings shared-ints
+			compiler using-int: char
 		builder int-literals add: this
 		return CCompiler LiteralResult new: this
 	
@@ -184,10 +215,16 @@ extend Compiler CharacterLiteral
 			char-string = char int string
 		iff trylon-2
 			char-string = char string
-		stream write-all: ("\tDefineInt_(", index string, ", ", char-string, ")\n")
+		if build-settings shared-ints
+			stream send: ("\tUsingInt_(", char-string, ")")
+		else
+			stream send: ("\tDefineInt_(", index string, ", ", char-string, ")")
 	
 	access
-		return "Int_(" + index string + ")"
+		if build-settings shared-ints
+			return "Int_(" + char string + ")"
+		else
+			return "Int_(" + index string + ")"
 	
 
 extend Compiler DictLiteral

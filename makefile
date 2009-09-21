@@ -15,7 +15,7 @@ all: trylon
 trylon:
 	$(CC) -o trylon .c-sources/*.c -lgc -lm $(PLATFORM_FLAGS)
 
-.PHONY: jolt-backend install clean
+.PHONY: jolt-backend install clean tests syntax-test fix-bugs-test x86-compiler-test
 
 jolt-backend:
 	(cd library/IdPosix && make)
@@ -24,11 +24,23 @@ install:
 	install -d $(PREFIX)/bin
 	install -d $(PREFIX)/lib
 	install trylon $(PREFIX)/bin
+	install trylon-interpreter $(PREFIX)/bin
 	cp -r library $(PREFIX)/lib/trylon
 
 clean:
 	rm -rf \
 		.c-sources .objects .jolt-sources .jolt-sources-self .c-sources-2 .objects-2
+
+tests: syntax-test fixed-bugs-test x86-compiler-test
+
+syntax-test:
+	cd tests/syntax && rm -f syntax-test && make && trylon main
+
+fixed-bugs-test:
+	cd tests/fixed-bugs && rm -f test-fixed-bugs && make
+
+x86-compiler-test:
+	cd sources/X86Compiler/test && make
 
 
 # Tarball creation.
@@ -44,6 +56,7 @@ TARBALL_FILES += docs/doctifier/build-settings docs/doctifier/sources
 TARBALL_FILES += start.k start-self.k command-line.k
 TARBALL_FILES += tests
 TARBALL_FILES += build-settings .c-sources
+TARBALL_FILES += trylon-interpreter
 
 TRYLON_DIR := $(notdir $(PWD))
 TARBALL_FILES := $(addprefix $(TRYLON_DIR)/,$(TARBALL_FILES))

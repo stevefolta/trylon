@@ -11,17 +11,21 @@ create: body comment: comment
 
 attach-else: statement line: line
 	else-clause = CatchClause new: body parent comment: nil
-	statement parent = this 	# "statement" will be a Block.
+	statement block parent = else-clause 	# "statement" will be a BlockStatement.
 	else-clause body = statement
 
 
-prepare-to-emit
-	body prepare-to-emit
+resolve
+	body resolve
 	if else-clause
-		else-clause prepare-to-emit
+		else-clause resolve
+
+
+compile: builder
+	return builder compile-try: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

@@ -8,6 +8,13 @@ create: local
 	this local = local
 
 
+compile-call: builder with: arguments
+	return builder compile-local-setter-call: this with: arguments
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+name
+	return local name + ":"
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

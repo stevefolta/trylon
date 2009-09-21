@@ -1,5 +1,5 @@
 trylon LinesIterator
-
+superclass Iterator
 
 fields current-line remaining-string all-done
 
@@ -24,7 +24,7 @@ go-forward
 		return
 	
 	newline-index = remaining-string index-of: `\n`
-	if newline-index == -1
+	if newline-index == nil
 		current-line = remaining-string
 		remaining-string = ""
 		return

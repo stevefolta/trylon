@@ -74,6 +74,9 @@ count
 is-empty
 	return (num-items == 0)
 
+clear
+	create
+
 
 iff not-yet
 	each-key: block

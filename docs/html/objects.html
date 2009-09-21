@@ -64,6 +64,33 @@ div.code {
 	white-space: pre;
 }
 
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
+
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
+
 </style>
 
 </head>
@@ -97,17 +124,25 @@ An object may have functions and fields.  Fields defined in Trylon always have g
 There is also such a thing as a "shared field", whose value is shared by all instances of a class, much like a "static member variable" in C++, or a "class variable" in Smalltalk.
 </p>
 
-<div class="code">class MyClass
-  field my-field
-
-  my-shared-field = 'foo'   # A shared field.
-
-  create: value
-    # Each instance has a separate value for "my-field".
-    my-field = value
-
-  bar
-    return my-shared-field + " " + value string</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> MyClass</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">field</span> my-field</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">my-shared-field = <span class="trylon-constant">'foo'</span> <span class="trylon-comment"># A shared field.</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">create:</span> value</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># Each instance has a separate value for "my-field".</span></div>
+<div class="trylon-line">my-field = value</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">bar</div>
+<div class="trylon-block">
+<div class="trylon-line">return my-shared-field + <span class="trylon-constant">" "</span> + value string</div>
+</div>
+</div>
+</div>
 
 </div>
 
@@ -117,15 +152,27 @@ There is also such a thing as a "shared field", whose value is shared by all ins
 In Trylon, classes also can act as namespaces (a.k.a. packages).  One class may be "contained" in another (as a shared field); functions in the child class have access to functions in the parent class.
 </p>
 
-<div class="code">class WindowSystem
-  class Event
-    create: raw-event
-      #...
-
-  class Window
-    next-event
-      # Notice that it knows the name "Event":
-      return Event new: get-raw-event</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> WindowSystem</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Event</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">create:</span> raw-event</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment">#...</span></div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Window</div>
+<div class="trylon-block">
+<div class="trylon-line">next-event</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># Notice that it knows the name "Event":</span></div>
+<div class="trylon-line">return Event <span class="trylon-keyword">new:</span> get-raw-event</div>
+</div>
+</div>
+</div>
+</div>
 
 <p>
 There is a top-level namespace called "Main", which acts as a global namespace for all Trylon objects.  There is a namespace called "Standard" which contains some common classes.  One of these is "Object", from which all prototypes descend.  You can access the members of "Standard" without having to specify it explicitly.
@@ -143,59 +190,87 @@ If you're using the Fonc/Jolt/Id backend, there are a few differences from the a
 As in Smalltalk, one creates a new object by sending a message to a class.  Or rather, to an instance of the class, usually the class's prototype.  Consider this code for initializing an object:
 </p>
 
-<div class="code">class MyClass
-  fields c-name body
-
-  new: name
-    new-object = MyClass raw-new
-    new-object c-name = mangle-name: name
-    new-object body = List new
-    return new-object</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> MyClass</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> c-name body</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">new:</span> name</div>
+<div class="trylon-block">
+<div class="trylon-line">new-object = MyClass raw-new</div>
+<div class="trylon-line">new-object c-name = <span class="trylon-keyword">mangle-name:</span> name</div>
+<div class="trylon-line">new-object body = List new</div>
+<div class="trylon-line">return new-object</div>
+</div>
+</div>
+</div>
 
 <p>
 It seems to be natural to write an initialization function that is called on the new object itself, instead of doing everything by operating on the object from the "outside".  Such a function is much like a "constructor" in C++:
 </p>
 
-<div class="code">class MyClass
-  fields c-name body
-
-  create: name
-    c-name = mangle-name: name
-    body = List new
-
-  new: name
-    new-object = MyClass raw-new
-    new-object create: name
-    return new-object</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> MyClass</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> c-name body</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">create:</span> name</div>
+<div class="trylon-block">
+<div class="trylon-line">c-name = <span class="trylon-keyword">mangle-name:</span> name</div>
+<div class="trylon-line">body = List new</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">new:</span> name</div>
+<div class="trylon-block">
+<div class="trylon-line">new-object = MyClass raw-new</div>
+<div class="trylon-line">new-object <span class="trylon-keyword">create:</span> name</div>
+<div class="trylon-line">return new-object</div>
+</div>
+</div>
+</div>
 
 <p>
 But it's annoying and pointless to keep writing pairs of functions like this, especially since the "new" functions all look about the same.  So in Trylon, anytime you define a function whose name begins with "create", the compiler will automatically generate the corresponding "new" function.  Here are some examples of "create" functions:
 </p>
 
-<div class="code">class MyPoint
-  fields x y
-
-  create
-    x = 0
-    y = 0
-
-  create: x y: y
-    this x = x
-    this y = y
-
-  create-x: x y: y
-    this x = y
-    this y = 0
-
-  create-x: x
-    this x = x
-    this y = 0
-
-test-point
-  point = MyPoint new
-  point = MyPoint new: 10 y: 20
-  point = MyPoint new-x: 10 y: 20
-  point = MyPoint new-x: 10</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> MyPoint</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> x y</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">create</div>
+<div class="trylon-block">
+<div class="trylon-line">x = <span class="trylon-constant">0</span></div>
+<div class="trylon-line">y = <span class="trylon-constant">0</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">create:</span> x <span class="trylon-keyword">y:</span> y</div>
+<div class="trylon-block">
+<div class="trylon-line">this x = x</div>
+<div class="trylon-line">this y = y</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">create-x:</span> x <span class="trylon-keyword">y:</span> y</div>
+<div class="trylon-block">
+<div class="trylon-line">this x = y</div>
+<div class="trylon-line">this y = <span class="trylon-constant">0</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">create-x:</span> x</div>
+<div class="trylon-block">
+<div class="trylon-line">this x = x</div>
+<div class="trylon-line">this y = <span class="trylon-constant">0</span></div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">test-point</div>
+<div class="trylon-block">
+<div class="trylon-line">point = MyPoint new</div>
+<div class="trylon-line">point = MyPoint <span class="trylon-keyword">new:</span> <span class="trylon-constant">10</span> <span class="trylon-keyword">y:</span> <span class="trylon-constant">20</span></div>
+<div class="trylon-line">point = MyPoint <span class="trylon-keyword">new-x:</span> <span class="trylon-constant">10</span> <span class="trylon-keyword">y:</span> <span class="trylon-constant">20</span></div>
+<div class="trylon-line">point = MyPoint <span class="trylon-keyword">new-x:</span> <span class="trylon-constant">10</span></div>
+</div>
+</div>
 
 </div>
 

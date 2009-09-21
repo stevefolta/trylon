@@ -1,0 +1,11 @@
+trylon SilentStatusReporter
+
+report: message
+	# Do nothing.
+
+indent
+	# Do nothing.
+
+unindent
+	# Do nothing.
+

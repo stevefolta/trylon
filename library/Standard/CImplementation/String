@@ -14,3 +14,7 @@ extend Standard String
 	intern
 		return Symbol intern: this
 
+
+
+# Copyright 2009 Steve Folta.  See the License file.
+

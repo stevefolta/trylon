@@ -15,6 +15,9 @@ name
 		return "false"
 
 
+compile-call: builder with: arguments
+	return builder compile-bool-literal-call: this
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

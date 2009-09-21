@@ -8,11 +8,10 @@ extend Standard File
 	
 
 	c-fn size
-		DefineInt_(0, 0);
 		struct stat buf;
 		int error = stat(CString_(Field_(path)), &buf);
 		if (error != 0)
-			return Int_(0);
+			return BuildInt_(0);
 		return BuildInt_(buf.st_size);
 
 	c-fn exists

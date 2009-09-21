@@ -2,7 +2,7 @@ trylon FunctionCall
 superclass TrylonExpression
 
 fields name arguments context
-fields function 	# Only valid after prepare-to-emit.
+fields function 	# Only valid after resolve.
 
 
 create: name arguments: arguments context: context
@@ -10,12 +10,26 @@ create: name arguments: arguments context: context
 	this arguments = arguments
 	this context = context
 
+create: function arguments: arguments
+	# Special for use by "in-process" functions like ExistingClass
+	# and PrimitiveFunction.
+	this function = function
+	this name = function name
+	this arguments = arguments
+	# "context" is not needed; we skip the "resolve" phase.
 
-prepare-to-emit
+
+resolve
 	function = context lookup-function-autodeclaring: name
+	if function == nil
+		throw MessageException new: "There is no \"" + name + "\" function."
 
 	for arg in arguments
-		arg prepare-to-emit
+		arg resolve
+
+
+compile: builder
+	return builder compile-function-call: this
 
 
 convert-to-setter-call: value
@@ -34,5 +48,5 @@ copy
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

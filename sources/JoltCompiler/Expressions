@@ -57,14 +57,14 @@ extend Compiler SuperCall
 
 extend Compiler FunctionCall
 	jolt-expression
-		# We already got the function in prepare-to-emit.
+		# We already got the function in resolve.
 		if function == nil
 			throw MessageException new: "There is no \"" + name + "\" function."
 		
 		return function emit-call: arguments
 
 	translate: compiler
-		# Are we using a prepare-to-emit phase?  Work either way.
+		# Are we using a resolve phase?  Work either way.
 		if function == nil
 			function = context lookup-function-autodeclaring: name
 			if function == nil

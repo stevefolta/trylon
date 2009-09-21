@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# This is for running old-style scripts, where the file is treated as the body
+# of a function, and allows you to run them using Unix shebangs
+# ("#!/usr/bin/env trylon-interpreter").  But the new class-based style script
+# (where the file is treated as the definition of a class) is preferred when it
+# can be used.
+
+trylon -i "$@"
+

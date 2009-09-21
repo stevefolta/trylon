@@ -12,5 +12,9 @@ ignored-for-else
 	return true
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+compile: builder
+	return builder compile-comment: this
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

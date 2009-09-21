@@ -1,11 +1,11 @@
-trylon-class Code
+trylon Code
 superclass Paragraph
 
 field blank-lines
 
 
 fn create
-	super create
+	lines = StringBuilder new
 	blank-lines = 0
 
 
@@ -14,10 +14,11 @@ fn add-line: line
 	# We treat blank lines this way in order to get rid of any blank lines 
 	# at the end of the code block.
 	while blank-lines > 0
-		lines append: ""
+		lines += "\n"
 		blank-lines -= 1
 	# Trim off the initial `\t`.
-	lines append: (line substr: 1)
+	lines += line substr: 1
+	lines += "\n"
 
 
 fn add-blank-line
@@ -25,27 +26,13 @@ fn add-blank-line
 
 
 fn emit
-	print: "<div class=\"code\">"
+	send: '<div class="trylon-code">'
+
+	code-lines = Trylon LinesLexer read: lines string
+	Trylon PrettyPrinter pretty-print-lines: code-lines to: Stdout
 	
-	had-line = false
-	for line in lines
-		if had-line
-			print-line
-		else
-			had-line = true
-		
-		# Write out the line, character-by-character, turning tabs into two spaces.
-		for char in line characters
-			if char == `\t`
-				print: "  "
-			else
-				iff trylon-2
-					print: char char-string
-				iff !trylon-2
-					print: char
-	
-	print-line: "</div>"
-	print-line
+	send: "</div>"
+	send: ""
 
 
 

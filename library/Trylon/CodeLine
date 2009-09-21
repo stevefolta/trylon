@@ -1,0 +1,61 @@
+trylon CodeLine
+
+fields text block
+
+create: text block: block
+	this text = text
+	this block = block
+
+create: text
+	this text = text
+	this block = nil
+
+
+words
+	return WordsLexer new: text
+
+
+flattened-block
+	lines = List new
+	if block
+		for line in block
+			line add-to-flattened-lines: lines
+	return lines
+
+
+flattened-block-text
+	result = StringBuilder new
+	for line in flattened-block
+		result += line
+		result += "\n"
+	return result string
+
+block-as-text
+	builder = StringBuilder new
+	for line in block
+		line add-to-block-text: builder level: 0
+	return builder string
+
+
+# ===== Private
+
+add-to-flattened-lines: lines
+	lines append: text
+	if block
+		for line in block
+			line add-to-flattened-lines: lines
+
+
+add-to-block-text: builder level: level
+	if level > 0
+		builder += "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" substr: 0 length: level
+	builder += text
+	builder += "\n"
+	if block
+		for line in block
+			line add-to-block-text: builder level: level + 1
+
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
+
