@@ -19,6 +19,24 @@ write-all: collection
 		write: item string
 
 
+# Message-oriented API.
+# We think of output as sending messages to the stream.  By default, each
+# message is a line.  But particular types of streams can override
+# 'end-message' (and possibly 'send-chunk:') if their messages are delimited in
+# some other way.
+
+send: message
+	send-chunk: message
+	end-message
+
+send-chunk: message-chunk
+	for item in message-chunk
+		write: item string
+
+end-message
+	write: "\n"
+
+
 
 # Copyright 2007 Steve Folta.  See the License file.
 

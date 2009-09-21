@@ -1,5 +1,5 @@
 trylon
-trylon.working
+trylon.working*
 build-settings.local
 temp
 temp.*
@@ -21,4 +21,5 @@ tarball-date
 .c-sources-2
 .objects-2
 .msg
+make.bugs
 

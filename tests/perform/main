@@ -2,16 +2,13 @@ trylon perform-test
 
 main: args
 	selector = 'print-string'
-	print-line: (Object perform: selector)
+	send: (Object perform: selector)
 	test-responds-to: 'print-string'
 	test-responds-to: 'foo'
 
 test-responds-to: selector
-	print: "Object responds-to: "
-	print: selector print-string
-	print: " = "
+	result = "false"
 	if Object responds-to: selector
-		print-line: "true"
-	else
-		print-line: "false"
+		result = "true"
+	send: ("Object responds-to: ", selector print-string, " = ", result)
 

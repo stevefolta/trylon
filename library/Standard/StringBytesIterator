@@ -1,4 +1,5 @@
-trylon StringIterator
+trylon StringBytesIterator
+superclass Iterator
 
 
 fields start stopper string
@@ -17,7 +18,7 @@ create: start to: stopper string: string
 
 
 copy
-	return StringIterator new: start to: stopper string: string
+	return StringBytesIterator new: start to: stopper string: string
 
 
 is-done

@@ -21,6 +21,8 @@ extend Standard String
 	float
 		coke
 			[Float fromString: self]
+	intern
+		return this asSymbol
 
 
 	# ===== Interoperability with Pepsi strings

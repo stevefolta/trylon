@@ -112,6 +112,28 @@ Assignments are expressions, so you can do things like "x = y = 0".
 
 ======
 
+The "for" Statement
+
+A "for" statement can iterate over any collection that responds to the "iterate" message with an iterator object that responds to the "is-done", "current-item", and "go-forward" messages.  So this:
+
+	for item in collection
+		print: item string
+
+is roughly equivalent to this:
+
+	iterator = collection iterator
+	while !iterator is-done
+		item = iterator current-item
+
+		print: item string
+
+		iterator go-forward
+
+(I say "roughly" because the "continue" statement would work correctly in a real "for" loop, and because the "iterator" variable isn't visible.)
+
+
+======
+
 Conditional Compilation ("iff" Statements)
 
 The "iff" statement is used for conditional compilation:

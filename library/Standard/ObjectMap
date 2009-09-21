@@ -35,6 +35,8 @@ values
 
 count
 	return dictionary count
+num-items
+	return dictionary count
 
 is-empty
 	return dictionary is-empty

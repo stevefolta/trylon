@@ -7,8 +7,9 @@ create: block-size
 	this block-size = block-size
 	num-items = 0
 	num-blocks = 1
-	blocks = BytePtr new: 4 * num-blocks
-	(blocks ptr-at: 0) = BytePtr new: 4 * block-size
+	ptr-size = Implementation ptr-size
+	blocks = BytePtr new: ptr-size * num-blocks
+	(blocks ptr-at: 0) = BytePtr new: ptr-size * block-size
 
 
 create
@@ -73,13 +74,14 @@ iterator
 
 expand: new-num-blocks
 	# Copy the existing "blocks".
-	new-blocks = BytePtr new: 4 * new-num-blocks
-	new-blocks copy-from: blocks length: 4 * num-blocks
+	ptr-size = Implementation ptr-size
+	new-blocks = BytePtr new: ptr-size * new-num-blocks
+	new-blocks copy-from: blocks length: ptr-size * num-blocks
 
 	# Add the new blocks.
 	which-block = num-blocks
 	while which-block < new-num-blocks
-		(new-blocks ptr-at: which-block) = BytePtr new: 4 * block-size
+		(new-blocks ptr-at: which-block) = BytePtr new: ptr-size * block-size
 		which-block += 1
 	
 	# Install the new "blocks".

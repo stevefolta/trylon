@@ -4,6 +4,8 @@ allocate-object: proto with-extra-slots: num-extra-slots
 allocate-bytes: num-bytes
 allocate-bytes-non-ptr: num-bytes
 
+ptr-size
+
 .target-language
 
 

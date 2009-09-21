@@ -1,0 +1,54 @@
+#!/usr/bin/env trylon
+
+# Declaration, expression.
+message = "Hello world!"
+print-line: message
+
+# "if".
+if 2 < 3
+	Standard print-line: "Yeh."
+else
+	Standard print-line: "Nah."
+
+# "loop"
+i = 0
+loop
+	Standard print-line: i string
+	if i >= 3
+		break
+	i += 1
+Standard print-line: "-----"
+
+# "while"
+i = 0
+while i < 3
+	Standard print-line: i string
+	i += 1
+Standard print-line: "-----"
+
+# "for"
+for char in "abc" characters
+	if char == `b`
+		continue
+	Standard print-line: char char-string
+Standard print-line: "-----"
+print-line
+
+# Files.
+for file in ("interpreter", "tests/interpreter")
+	try
+		contents = File contents-of: file
+		line-number = 1
+		for line in contents lines
+			print: line-number string
+			print: ": "
+			print-line: line
+			line-number += 1
+	else
+		print-line: exception message
+
+# We can get to the compiler.  But what could we do with it?
+Compiler
+
+
+

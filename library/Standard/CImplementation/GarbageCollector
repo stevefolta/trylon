@@ -1,0 +1,13 @@
+trylon GarbageCollector
+
+extend Standard
+	class GarbageCollector
+		c-preamble
+			#include <gc/gc.h>
+
+		c-fn num-collections
+			return BuildInt_(GC_gc_no);
+
+		c-fn force-collection
+			GC_gcollect();
+

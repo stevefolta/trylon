@@ -17,9 +17,6 @@ static obj_ SendMessageNotUnderstood_(obj_ object, ...)
 }
 
 
-#ifdef __GNUC__
-	__attribute__((fastcall))
-#endif
 fn_ptr_ Dispatch_(selector_ selector, obj_ object)
 {
 	struct RDTableEntry_* entry =
@@ -46,13 +43,16 @@ obj_ RespondsTo_(obj_ object, selector_ selector)
 
 obj_ AllocObjFromClassInfo_(struct ClassInfo* classInfo)
 {
-	obj_ object = (obj_) GC_MALLOC(sizeof(classref_) + classInfo->size);
+	obj_ object =
+		(obj_) GC_MALLOC(
+			sizeof(classref_) + classInfo->numSlots * sizeof(obj_));
 	object->class_ = classInfo;
 	return object;
 }
 
 
 static ExceptionCatcher_* currentExceptionCatcher = NULL;
+obj_ currentException_ = NULL;
 
 void PushException_(ExceptionCatcher_* catcher)
 {
@@ -69,7 +69,8 @@ void Throw_(obj_ object)
 		exit(1);
 		}
 
-	longjmp(currentExceptionCatcher->jumpBuf, (int) object);
+	currentException_ = object;
+	longjmp(currentExceptionCatcher->jumpBuf, 1);
 }
 
 
@@ -85,7 +86,7 @@ void PopException_()
 }
 
 
-static void FinalizeObject_(GC_PTR obj, GC_PTR clientData)
+static void FinalizeObject_(void* obj, void* clientData)
 {
 	UsingMethod_(destroy);
 	Call_(destroy, (obj_) obj);
@@ -95,7 +96,7 @@ static void FinalizeObject_(GC_PTR obj, GC_PTR clientData)
 void RegisterFinalizer_(obj_ object)
 {
 	GC_finalization_proc oldProc;
-	GC_PTR oldData;
+	void* oldData;
 	GC_REGISTER_FINALIZER(object, &FinalizeObject_, NULL, &oldProc, &oldData);
 }
 
@@ -230,10 +231,47 @@ obj_ CloneObj_(obj_ object)
 obj_ CloneObjExtra_(obj_ object, int numExtraFields)
 {
 	size_t size =
-		sizeof(classref_) + object->class_->size + numExtraFields * sizeof(obj_);
+		sizeof(classref_) +
+		(object->class_->numSlots + numExtraFields) * sizeof(obj_);
 	obj_ newObject = (obj_) GC_MALLOC(size);
 	newObject->class_ = object->class_;
 	return newObject;
+}
+
+
+int SymToEnum_(
+	obj_ symbol, const EnumDictEntry_* dict, int dictSize, int notFoundValue)
+{
+	/* The dictionary is sorted by symbol name, and the symbol objects are sorted
+	   in memory, so we can use a binary search. */
+	unsigned int low = 0;
+	unsigned int high = dictSize - 1;
+	while (low <= high) {
+		unsigned int mid = (low + high) / 2;
+		const EnumDictEntry_* entry = &dict[mid];
+		if (entry->symbol > symbol)
+			high = mid - 1;
+		else if (entry->symbol < symbol)
+			low = mid + 1;
+		else
+			return entry->value;
+		}
+
+	/* Not found. */
+	return notFoundValue;
+}
+
+
+obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize)
+{
+	/* Linear search. */
+	const EnumDictEntry_* entry = dict;
+	const EnumDictEntry_* stopper = &dict[dictSize];
+	for (; entry < stopper; ++entry) {
+		if (entry->value == value)
+			return entry->symbol;
+		}
+	return nil;
 }
 
 
@@ -246,6 +284,8 @@ int main(int argc, char* argv[])
 	extern obj_ new__List__Standard(obj_ this_);
 	UsingMethod_(append_co_)
 	UsingClass_(Main) UsingClass_(List__Standard)
+
+	GC_INIT();
 
 	// Build the list of args.
 	args = new__List__Standard(Proto_(List__Standard));

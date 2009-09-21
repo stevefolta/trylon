@@ -1,6 +1,8 @@
 trylon Standard
 
 
+# Output.
+
 fn print: string
 
 print-line: line
@@ -9,6 +11,25 @@ print-line: line
 
 print-line
 	print: "\n"
+
+send: message
+	send-chunk: message
+	print-line
+
+send-chunk: message
+	for item in message
+		print: item string
+
+end-message
+	print-line
+
+
+# Helper.
+
+error: message
+	# Calling this is not only more concise than creating and throwing a
+	# MessageException yourself, it also gives a handy place to set a breakpoint.
+	throw MessageException new: message
 
 
 # Pseudo-declarations
@@ -34,6 +55,9 @@ fn ...
 	etc.
 
 
+references
+	iff targeting-c
+		True
 
 
 # Copyright 2007 Steve Folta.  See the License file.

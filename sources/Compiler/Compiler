@@ -3,6 +3,9 @@ trylon Compiler
 # This is "Compiler Compiler"... if this were pure Trylon 2, we'd just put
 # everything in "Compiler", but we have to also compile under Trylon 1, which
 # always treats directories as packages, never as classes.
+# (Note: That's no longer true.  Since removing "InternedString", the compiler
+# no longer compiles under Trylon 1.  So the way is clear for the contents of
+# "Compiler Compiler" to someday be hoisted into "Compiler".)
 
 fields successful build-settings
 fields proto-queue main-proto symbols
@@ -39,6 +42,8 @@ compile-dir: dir as: name into: parent-proto
 
 
 compile-program: compile-symbols
+	start-ms = System milliseconds
+
 	# Read the settings.
 	for setting in compile-symbols
 		switch setting
@@ -94,7 +99,12 @@ compile-program: compile-symbols
 	if build-settings targeting-c
 		CCompiler emit-c: this
 
-	status-reporter report: "Done."
+	# Report.
+	iff time-compilation
+		elapsed-time = System milliseconds - start-ms
+		status-reporter report: "Compiled in " + elapsed-time string + "ms."
+	iff !time-compilation
+		status-reporter report: "Done."
 	status-reporter show-warnings
 
 

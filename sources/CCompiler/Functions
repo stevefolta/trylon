@@ -45,14 +45,14 @@ extend Compiler TrylonFunction
 	
 
 
-##### Object structure
+# Object structure.
 
 extend Compiler FieldGetter
 	emit-c-call: arguments builder: builder
 		# Don't be confused!  (I was!)  This is not a class's method accessing its
 		# own field.  It will only be used when a method accesses a field of an
-		# enclosing namespace.  That means accessing the the field of the
-		# namespace's prototype.
+		# enclosing namespace.  That means accessing the field of the namespace's
+		# prototype.
 		builder using-class: on-proto
 		proto-access = "Proto_(" + on-proto c-name + ")"
 		return 	--
@@ -220,8 +220,10 @@ extend Compiler NewFunction
 		arg-names = List new
 		for arg in creator arguments
 			arg-names append: (mangle-name: arg name)
+
 		# Signature.
 		stream write-line: c-signature
+
 		# Body
 		proto-name = on-proto c-name
 		stream write: "{\n"
@@ -232,6 +234,8 @@ extend Compiler NewFunction
 			stream write: ", "
 			stream write: arg-name
 		stream write: ");\n"
+		if on-proto needs-finalizer
+			stream write: "\tRegisterFinalizer_(obj);\n"
 		stream write: "\treturn obj;\n"
 		stream write: "}\n\n\n"
 	
@@ -273,7 +277,7 @@ extend Compiler PrimitiveFunction
 
 
 
-##### Inside a method
+# Inside a method.
 
 extend Compiler ThisFunction
 	emit-c-call: arguments builder: builder

@@ -1,0 +1,114 @@
+trylon Posix
+
+
+# Errors.
+
+c-fn errno
+	return BuildInt_(errno);
+
+c-fn strerror: errnum
+	return BuildString_(strerror(IntValue_(errnum)));
+
+
+# Files.
+
+c-fn read-fd: fd to: buffer size: size
+	return BuildInt_(read(IntValue_(fd), BytePtrValue_(buffer), IntValue_(size)));
+
+c-fn write-fd: fd from: buffer size: size
+	return BuildInt_(write(IntValue_(fd), BytePtrValue_(buffer), IntValue_(size)));
+
+c-fn open: path int-flags: flags
+	return BuildInt_(open(CString_(path), IntValue_(flags)));
+
+open: path flags: flags
+	int-flags = 0
+	for flag in flags
+		int-flags |= value-for-flag: flag
+	return open: path int-flags: int-flags
+
+c-fn close-fd: fd
+	return BuildInt_(close(IntValue_(fd)));
+
+
+
+# Private.
+
+c-preamble
+	#include <unistd.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <fcntl.h>
+	#include <errno.h>
+	#include <string.h>
+
+c-fn value-for-flag: flag
+	UsingSym_(O_ul_RDONLY)
+	UsingSym_(O_ul_WRONLY)
+	UsingSym_(O_ul_RDWR)
+	UsingSym_(O_ul_APPEND)
+	UsingSym_(O_ul_ASYNC)
+	UsingSym_(O_ul_CREAT)
+	UsingSym_(O_ul_DIRECT)
+	UsingSym_(O_ul_DIRECTORY)
+	UsingSym_(O_ul_EXCL)
+	UsingSym_(O_ul_LARGEFILE)
+	UsingSym_(O_ul_NOATIME)
+	UsingSym_(O_ul_NOCTTY)
+	UsingSym_(O_ul_NOFOLLOW)
+	UsingSym_(O_ul_NONBLOCK)
+	UsingSym_(O_ul_NDELAY)
+	UsingSym_(O_ul_SYNC)
+	UsingSym_(O_ul_TRUNC)
+
+	static const EnumDictEntry_ flagsDict[] = {
+		{ Sym_(O_ul_APPEND), O_APPEND },
+		{ Sym_(O_ul_ASYNC), O_ASYNC },
+		{ Sym_(O_ul_CREAT), O_CREAT },
+		#ifdef __USE_GNU
+			{ Sym_(O_ul_DIRECT), O_DIRECT },
+			{ Sym_(O_ul_DIRECTORY), O_DIRECTORY },
+		#endif
+		{ Sym_(O_ul_EXCL), O_EXCL },
+		#ifdef __USE_LARGEFILE64
+			{ Sym_(O_ul_LARGEFILE), O_LARGEFILE },
+		#endif
+		{ Sym_(O_ul_NDELAY), O_NDELAY },
+		#ifdef __USE_GNU
+			{ Sym_(O_ul_NOATIME), O_NOATIME },
+		#endif
+		{ Sym_(O_ul_NOCTTY), O_NOCTTY },
+		#ifdef __USE_GNU
+			{ Sym_(O_ul_NOFOLLOW), O_NOFOLLOW },
+		#endif
+		{ Sym_(O_ul_NONBLOCK), O_NONBLOCK },
+		{ Sym_(O_ul_RDONLY), O_RDONLY },
+		{ Sym_(O_ul_RDWR), O_RDWR },
+		{ Sym_(O_ul_SYNC), O_SYNC },
+		{ Sym_(O_ul_TRUNC), O_TRUNC },
+		{ Sym_(O_ul_WRONLY), O_WRONLY }
+		};
+	int intFlag =
+		SymToEnum_(flag, flagsDict, sizeof(flagsDict) / sizeof(EnumDictEntry_), 0);
+	return BuildInt_(intFlag);
+
+
+references
+	'O_RDONLY'
+	'O_WRONLY'
+	'O_RDWR'
+	'O_APPEND'
+	'O_ASYNC'
+	'O_CREAT'
+	'O_DIRECT'
+	'O_DIRECTORY'
+	'O_EXCL'
+	'O_LARGEFILE'
+	'O_NOATIME'
+	'O_NOCTTY'
+	'O_NOFOLLOW'
+	'O_NONBLOCK'
+	'O_NDELAY'
+	'O_SYNC'
+	'O_TRUNC'
+

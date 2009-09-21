@@ -1,31 +1,71 @@
-Welcome to Trylon 2!  Sorry, the documentation isn't ready yet.
+Trylon ReadMe
+=============
 
-Trylon 2 is the next iteration of the Trylon language, changed based on lessons
-learned while doing Trylid:
+What Is Trylon?
+---------------
 
-- Each class now has prototype object associated with it.  Naming the class in
-an expression names that prototype object.  There is no more distinction
-between packages and classes; it's all classes now, and you can use a directory
-to define a class.
+Trylon is a computer language.  Code in it looks like a cross between Python
+and Smalltalk -- indentation is significant, expressions are like Smalltalk
+(but with operator precedence).  It is object-oriented and garbage collected
+and it compiles down to binaries via C.
 
-- "nil" is the only falsy value, which makes tests quicker.
 
-- Catch clauses don't specify a type, 'cause I've found you don't care about
-the type often enough.  Why incur those "is-a:" calls?  It's just as easy to
-add them to the source when needed.
+What Does It Look Like?
+-----------------------
 
-In fact, the Trylon 2 compiler is derived from the Trylid compiler; a C backend
-was added.
+Hello world:
 
-Additionally, you no longer need the "boilerplate" in your build-settings file;
-that's automatically included.  In most cases, the build-settings file can be
-as simple as:
+	trylon hello-world
 
-	program = "my-program-name"
+	main: arguments
+		send: "Hello world!"
 
-How to use it?  Depends how you got it.  If as a tarball, I think you can type
-"make" to build the compiler, and then "trylon" to try self-compiling.  If you
-got it from Git, you'll need a Trylon compiler already built (the Trylon 1
-compiler is fine); see <http://somefancy.com/trylon>.
+Or, using a new class:
+
+	trylon hello-world
+
+	class Halloer
+		say-it
+			send: "Hello!"
+	
+	main: arguments
+		halloer = Halloer new
+		halloer say-it
+
+
+Installation
+------------
+
+You must have the Boehm-Demers-Wieser garbage collector installed as "libgc".
+This has different package names on different distributions, such as "boehm-gc"
+(Gentoo), "libgc-dev" (Debian/Ubuntu, or so I'm told), "boehmgc" (MacPorts), or
+simply "gc" (Fink).
+
+You won't be able to build Trylon from the 'master' branch of Git repository.
+You must start with the tarball: <http://somefancy.com/trylon/trylon.tgz>; or
+from the 'with-c-sources' branch of the Git repository.
+
+To install Trylon from the tarball, do this:
+
+	make
+	make install
+
+The "make install" will install /usr/bin/trylon and /usr/lib/trylon.  If you
+want to install it elsewhere, you can use PREFIX:
+
+	make PREFIX=/opt install
+
+The Trylon compiler will look for its library in a few standard places
+(/usr/lib, /usr/local/lib, /opt/lib, even $HOME/trylon), but if install it
+somewhere else, you will need to set the $TRYLON_LIBRARY environment variable
+to tell it where it is.
+
+
+Contacts
+--------
+
+The Trylon web site is at <http://somefancy.com/trylon>.  You can contact me by
+email at "steve@folta.net".
+
 
 

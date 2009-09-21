@@ -139,6 +139,11 @@ extend Compiler SymbolLiteral
 		return 	--
 			CCompiler NameResult new: "Sym_(" + mangled-name + ")" is-constant: true
 
+	emit-declaration: stream
+		mangled-name = mangle-name: name
+		stream write-all: 	--
+			("\tUsingSym_(", mangled-name, "\")\n")
+	
 
 extend Compiler LiteralNil
 	is-literal

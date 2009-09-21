@@ -111,6 +111,13 @@ cur-loop-index
 emit: stream
 	stream write-line: "{"
 
+	# External declarations.
+	# Includes symbol declarations, so declare these before Tuples/Dicts.
+	if !extern-declarations is-empty
+		for declaration in extern-declarations
+			stream write: "\t"
+			stream write-line: declaration
+	
 	# Declarations.
 	temporaries emit-declarations-on: stream
 	# loops emit-declarations-on: stream 	# Not needed.
@@ -141,16 +148,17 @@ emit: stream
 				 on-proto c-name, ") ")
 		stream write-line
 
-	# External declarations.
-	if !extern-declarations is-empty
-		for declaration in extern-declarations
-			stream write: "\t"
-			stream write-line: declaration
-	
 	# Used classes.
+	# Sort by C name, to avoid unnecessary recompilations of the C file.
+	# "used-classes" is an ObjectMap, so the sort key is the address of the class
+	# in memory.  That can be different on different runs.
+	used-class-names = Dictionary new
 	for used-class in used-classes values
+		c-name = used-class c-name
+		used-class-names at: c-name put: c-name
+	for class-name in used-class-names keys
 		stream write: "\tUsingClass_("
-		stream write: used-class c-name
+		stream write: class-name
 		stream write-line: ")"
 	
 	# ...
