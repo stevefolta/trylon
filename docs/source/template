@@ -55,6 +55,10 @@ div.titleless-entry-date {
 	color: gray;
 }
 
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 div.code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
@@ -64,8 +68,33 @@ div.code {
 	white-space: pre;
 }
 
-</style>
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
 
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
+</style>
 </head>
 
 

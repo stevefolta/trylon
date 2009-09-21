@@ -10,6 +10,9 @@ create: creator on-proto: on-proto
 
 	name = "new" + (creator name substr: 6)
 
+build: builder
+	return builder build-new-function: this
+
 
 
 

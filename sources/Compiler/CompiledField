@@ -2,6 +2,7 @@ trylon CompiledField
 
 fields name type
 fields initial-value 	# Only used for shared fields.
+fields compile-info 	# The compiler can store whatever it wants here.
 
 
 create: name type: type

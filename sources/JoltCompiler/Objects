@@ -1,6 +1,6 @@
 trylon Objects
 
-extend Compiler CompiledProto
+extend Compiler CompiledClass
 	emit-code
 		status-reporter = compiler status-reporter
 		status-reporter report: "Generating code for " + name + "..."
@@ -114,7 +114,7 @@ extend Compiler CompiledProto
 		translate: compiler
 			# Make sure there's a superclass.
 			if superclass == nil
-				superclass = ExistingProto new: "Object" proto: Object
+				superclass = ExistingClass new: "Object" proto: Object
 
 			# Start creating the big expression that creates the proto and all its
 			# components.
@@ -142,7 +142,7 @@ extend Compiler CompiledProto
 			# Add the functions.
 			for function in functions values
 				if function is-translatable
-					function prepare-to-emit
+					function resolve
 					stream nextPut: function
 
 			return compiler translateExpression: stream contents
@@ -176,7 +176,7 @@ extend Compiler CompiledProto
 
 
 iff targeting-jolt
-	extend Compiler ExistingProto
+	extend Compiler ExistingClass
 		translate: compiler
 			stream = Pepsi WriteStream on: (Expression new: new-functions count)
 			stream nextPut: 'begin'
@@ -187,7 +187,7 @@ iff targeting-jolt
 			# Add the functions.
 			for function in new-functions values
 				if function is-translatable
-					function prepare-to-emit
+					function resolve
 					stream nextPut: function
 			
 			return compiler translateExpression: stream contents

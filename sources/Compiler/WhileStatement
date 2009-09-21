@@ -10,12 +10,16 @@ create: condition body: body comment: comment
 	this comment = comment
 
 
-prepare-to-emit
-	condition prepare-to-emit
-	body prepare-to-emit
+resolve
+	condition resolve
+	body resolve
+
+
+compile: builder
+	return builder compile-while: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

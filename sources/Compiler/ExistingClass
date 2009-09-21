@@ -1,16 +1,41 @@
-trylon ExistingProto
-superclass Context
+trylon ExistingClass
+superclass Class
 
-fields name proto new-functions is-main
+fields name proto new-functions is-main directories
 
 
 create: name proto: proto
 	this name = name
 	this proto = proto
 	new-functions = Dictionary new
+	directories = List new
+	iff targeting-jolt
+		is-main = (proto == Trylon)
+	iff !targeting-jolt
+		is-main = (proto == Main)
+	if is-main
+		setup-main
 
 create: proto
 	create: proto .proto-name proto: proto
+
+
+setup-main
+	# Add current directory (or "./sources").
+	main-directory = FileDirectory new: "."
+	if main-directory entry-is-directory: "sources"
+		main-directory = main-directory at: "sources"
+
+	# Add the system library.
+	library-path = find-library-path
+	if library-path
+		try
+			library-directory = FileDirectory new: library-path
+			directories append: library-directory
+
+	# Add the library-dirs.
+	for directory in build-settings library-dirs
+		add-directory: (FileDirectory new: directory)
 
 
 lookup-function: name
@@ -45,24 +70,53 @@ lookup-function: name
 	
 	return nil
 
+
 function-for: selector in: proto
+	# Is it a ProtoFunction?
+	function-name = selector string
+	if (function-name index-of: `:`) == nil
+		found-subproto-fn = load-subproto: function-name
+		if found-subproto-fn
+			return found-subproto-fn
+
 	if !(proto responds-to: selector)
 		return nil
 	
-	# Is it a ProtoFunction?
-	function-name = selector string
-	if (function-name index-of: `:`) < 0
-		# A little dangerous: we're going to actually make the call to see if we
-		# get a proto.
-		result = proto perform: selector
-		if result && (result .proto same-as: result)
-			existing-proto = ExistingProto new: selector string proto: result
-			return ProtoFunction new: existing-proto
-
 	existing-proto = this
 	if proto != this
-		existing-proto = ExistingProto new: function-name proto: proto
+		existing-proto = ExistingClass new: proto .proto-name proto: proto
 	return PrimitiveFunction new: function-name on-proto: existing-proto
+
+
+find-subproto: name
+	# 'support-subprotos' must be on!
+	if proto .subprotos
+		for subproto in proto .subprotos
+			if subproto .proto-name == name
+				return subproto
+	
+	return nil
+
+
+load-subproto: name
+	subproto = nil
+
+	# Do we already have it?
+	found-subproto = find-subproto: name
+	if found-subproto
+		subproto = ExistingClass new: name proto: found-subproto
+		for directory in directories
+			if directory entry-is-directory: name
+				subproto add-directory: directory[name]
+	
+	# If not, look for it in our directories.
+	else
+		for directory in directories
+			subproto = CompiledClass in: directory for: name parent: this
+
+	if subproto == nil
+		return nil
+	return ProtoFunction new: subproto
 
 
 lookup-function: name visited-protos: visited-protos
@@ -70,12 +124,11 @@ lookup-function: name visited-protos: visited-protos
 
 
 lookup-instance-function: name
+	found-subproto-fn = load-subproto: name
+	if found-subproto-fn
+		return found-subproto-fn
+
 	if proto responds-to: name intern
-		first-char = name at: 0
-		if (first-char >= `A`) && (first-char <= `Z`)
-			existing-proto = 	--
-				ExistingProto new: name proto: (proto perform: name intern)
-			return ProtoFunction new: existing-proto
 		return PrimitiveFunction new: name on-proto: proto
 	
 	function = new-functions at: name
@@ -88,13 +141,9 @@ lookup-instance-function: name
 parent
 	if proto responds-to: '.parent-context'
 		parent-context = proto .parent-context
-		existing-proto = ExistingProto new: parent-context
-		iff targeting-jolt
-			if parent-context == Trylon
-				existing-proto is-main = true
-		iff !targeting-jolt
-			if parent-context == Main
-				existing-proto is-main = true
+		if parent-context == nil
+			return nil
+		existing-proto = ExistingClass new: parent-context
 		return existing-proto
 	return nil
 
@@ -150,17 +199,26 @@ add-proto: name directory: directory
 	status-reporter = compiler status-reporter
 	status-reporter report: "Loading " + name + " into " + this name + "..."
 	status-reporter indent
-	new-proto = CompiledProto new: name parent: this
+	new-proto = CompiledClass new: name parent: this
 	if directory
 		new-proto add-directory: directory
 	proto-function = ProtoFunction new: new-proto
 	new-functions at: name put: proto-function
+	compiler adding-class: new-proto
 	status-reporter unindent
 	return new-proto
 
 
 add-proto: name
 	return add-proto: name directory: nil
+
+
+add-directory: directory
+	directories append: directory
+
+
+source-name: name
+	# We don't care.
 
 
 get-subproto: name
@@ -179,6 +237,39 @@ get-proto: name
 	if function && (function is-a: ProtoFunction)
 		return function proto
 	return nil
+
+
+add-used-namespace: namespace
+	if !namespace is-a: ExistingClass
+		# Not yet supported, we'd need to defer the attempt until after the new
+		# class/namespace has been installed.
+		error: 	--
+			('Adding new classes as "used" classes of existing classes (', 	--
+			namespace name, " to ", name, ') is not supported.')
+
+	class = proto .class
+	new-used-proto = namespace proto
+	if class used-contexts == nil
+		class used-contexts = Tuple with: new-used-proto
+	else
+		# Is it already there?
+		# Use "same-as:" to check.
+		for proto in class used-contexts
+			if new-used-proto same-as: proto
+				return
+
+		# Build a new 'used-contexts', adding the new one.
+		new-used-contexts = Tuple new: class used-contexts num-items + 1
+		index = 0
+		for proto in class used-contexts
+			new-used-contexts[index] = proto
+			index += 1
+		new-used-contexts[index] = new-used-proto
+		class used-contexts = new-used-contexts
+
+
+newly-defined-functions
+	return new-functions pairs
 
 
 # Copyright 2007 Steve Folta.  See the License file.

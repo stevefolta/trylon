@@ -23,6 +23,11 @@ references
 	System
 	File
 	FileDirectory
+	Stdout
 	Implementation
 	GarbageCollector
+	iff class-objects
+		Class
+	iff tagged-ints
+		SmallInt
 

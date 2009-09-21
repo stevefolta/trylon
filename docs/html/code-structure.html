@@ -64,6 +64,33 @@ div.code {
 	white-space: pre;
 }
 
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
+
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
+
 </style>
 
 </head>
@@ -85,7 +112,9 @@ Words are separated by whitespace, and can contain most non-whitespace character
 The following characters are not allowed in names:
 </p>
 
-<div class="code"># " ' ` ( ) [ ] { } ; ~ = + * / % ^ < > & | ,</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-comment"># " ' ` ( ) [ ] { } ; ~ = + * / % ^ &lt; &gt; &amp; | ,</span></div>
+</div>
 
 </div>
 
@@ -99,23 +128,31 @@ Like Python, Trylon code is organized by lines and indented blocks.  An indented
 If a line is too long to fit on the screen, it can be continued with "--" at the end of the line.  Then the following line (minus its indentation, which is ignored) will be considered part of that line.
 </p>
 
-<div class="code">if some-value == "this" || some-value == "that" ||   --
-   some-value == "the-other" ||   --
-   some-value == "yet-something-else"
-  do-something</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> some-value == <span class="trylon-constant">"this"</span> || some-value == <span class="trylon-constant">"that"</span> || some-value == <span class="trylon-constant">"the-other"</span> || some-value == <span class="trylon-constant">"yet-something-else"</span></div>
+<div class="trylon-block">
+<div class="trylon-line">do-something</div>
+</div>
+</div>
 
 <p>
 The meaning of a line will depend on the current syntax, but might be changed by the first word on the line:
 </p>
 
-<div class="code"># In the method syntax, most lines are expressions:
-foo = bar + baz
-
-# But some words introduce special forms:
-if x < y
-  do-something
-for item in collection
-  print-line: item string</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-comment"># In the method syntax, most lines are expressions:</span></div>
+<div class="trylon-line">foo = bar + baz</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># But some words introduce special forms:</span></div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> x &lt; y</div>
+<div class="trylon-block">
+<div class="trylon-line">do-something</div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">for</span> item <span class="trylon-reserved-word">in</span> collection</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> item string</div>
+</div>
+</div>
 
 <p>
 The syntax of a block is usually determined by its owning line.
@@ -129,21 +166,31 @@ The syntax of a block is usually determined by its owning line.
 Trylon has two block-level syntaxes.  One is the "class" syntax, defining methods and other elements of a class:
 </p>
 
-<div class="code">superclass SuperClass
-fields name collection
-
-help-text = "Help text goes here."   # A "shared field".
-
-num-items
-  return collection num-items
-
-for-each: block
-  for item in collection
-    block value: item
-
-class SubProto
-  # Another class in the "namespace" of the current class.
-  fields name value</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">superclass</span> SuperClass</div>
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> name collection</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">help-text = <span class="trylon-constant">"Help text goes here."</span> <span class="trylon-comment"># A "shared field".</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">num-items</div>
+<div class="trylon-block">
+<div class="trylon-line">return collection num-items</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">for-each:</span> block</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">for</span> item <span class="trylon-reserved-word">in</span> collection</div>
+<div class="trylon-block">
+<div class="trylon-line">block <span class="trylon-keyword">value:</span> item</div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> SubProto</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># Another class in the "namespace" of the current class.</span></div>
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> name value</div>
+</div>
+</div>
 
 <p>
 Lines in the "class" syntax are function declarations (with their associated code blocks), shared-field declarations (using "="), or special forms like "fields" or "class".
@@ -153,12 +200,18 @@ Lines in the "class" syntax are function declarations (with their associated cod
 The other is the "method" syntax, for code within a method:
 </p>
 
-<div class="code">frobnify: index
-  adjusted-index = index   # Auto-declaration of a local.
-  if adjusted-index > max-index
-    adjusted-index = max-index
-
-  print-line: "Frobnification complete."</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-keyword">frobnify:</span> index</div>
+<div class="trylon-block">
+<div class="trylon-line">adjusted-index = index <span class="trylon-comment"># Auto-declaration of a local.</span></div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> adjusted-index &gt; max-index</div>
+<div class="trylon-block">
+<div class="trylon-line">adjusted-index = max-index</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> <span class="trylon-constant">"Frobnification complete."</span></div>
+</div>
+</div>
 
 <p>
 Lines within the "method" syntax are either expressions, assignments (technically, assignments are also expressions, and if the name being assigned to doesn't exist in an outer scope, a local is auto-declared in the current block), and special forms like "if", "while", "for", etc.
@@ -180,44 +233,72 @@ Most classes will have a file in the filesystem with the source code to define i
 A typical project will live in a directory, with its sources in a subdirectory called "sources":
 </p>
 
-<div class="code">my-project/
-  Notes
-  to-do
-  build-settings
-  sources/
-    main
-    Screen
-    Window
-    XWindows/
-      Screen
-      Window
-    Carbon/
-      Screen
-      Window</div>
+<div class="trylon-code">
+<div class="trylon-line">my-project/</div>
+<div class="trylon-block">
+<div class="trylon-line">Notes</div>
+<div class="trylon-line">to-do</div>
+<div class="trylon-line">build-settings</div>
+<div class="trylon-line">sources/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+<div class="trylon-line">Screen</div>
+<div class="trylon-line">Window</div>
+<div class="trylon-line">XWindows/</div>
+<div class="trylon-block">
+<div class="trylon-line">Screen</div>
+<div class="trylon-line">Window</div>
+</div>
+<div class="trylon-line">Carbon/</div>
+<div class="trylon-block">
+<div class="trylon-line">Screen</div>
+<div class="trylon-line">Window</div>
+</div>
+</div>
+</div>
+</div>
 
 <p>
 Note that this could have all been defined within one file ("sources/main"), if that were more convenient:
 </p>
 
-<div class="code">trylon main
-
-class Screen
-  # ...
-
-class Window
-  # ...
-
-class XWindows
-  class Screen
-    # ...
-  class Window
-    # ...
-
-class Carbon
-  class Screen
-    # ...
-  class Window
-    # ...</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">trylon</span> main</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Screen</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Window</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> XWindows</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Screen</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Window</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Carbon</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Screen</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">class</span> Window</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+</div>
+</div>
 
 </div>
 

@@ -14,15 +14,19 @@ add-clause: clause
 	clauses append: clause
 
 
-prepare-to-emit
-	expression prepare-to-emit
+resolve
+	expression resolve
 	for clause in clauses
-		clause prepare-to-emit
+		clause resolve
 	if else-clause
-		else-clause prepare-to-emit
+		else-clause resolve
+
+
+compile: builder
+	return builder compile-switch: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

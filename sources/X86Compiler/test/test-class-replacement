@@ -1,0 +1,23 @@
+#!/usr/bin/env trylon-interpreter
+
+test = X86Compiler test
+X86Compiler reload: test from: "main-v2"
+
+test say-it
+test new-method
+
+test test: test new-shared-field against: "foo" name: "Shared field getter"
+test new-shared-field = "bar"
+test test: test new-shared-field against: "bar" name: "Shared field setter"
+
+# Early on, we didn't have "new" functions working yet, so this circumvents
+# that to test subclass creation.
+subclass-object = test NewSubclass raw-new
+test test: subclass-object foo against: "bar" name: "De-novo subclass"
+
+# Test "new" functions.
+it = test NewSubclass new
+test test: it value against: "baz" name: "'new' function"
+it = test NewSubclass new: "blargh"
+test test: it value against: "blargh" name: "'new:' function"
+

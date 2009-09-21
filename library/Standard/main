@@ -29,7 +29,10 @@ end-message
 error: message
 	# Calling this is not only more concise than creating and throwing a
 	# MessageException yourself, it also gives a handy place to set a breakpoint.
-	throw MessageException new: message
+	msg-string = StringBuilder new
+	for item in message
+		msg-string += item string
+	throw MessageException new: msg-string string
 
 
 # Pseudo-declarations
@@ -56,9 +59,21 @@ fn ...
 
 
 references
+	# Everybody needs these.
+	BytePtr
+	Int
+	String
+	Symbol
+	Float
+	Tuple
+	List
+
 	iff targeting-c
+		CImplementation
 		True
+	iff nil-object
+		Standard nil
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

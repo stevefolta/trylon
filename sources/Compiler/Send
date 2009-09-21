@@ -3,7 +3,7 @@ superclass TrylonExpression
 
 fields name object arguments
 
-# Very special for prepare-to-emit handling of proto functions.
+# Very special for resolve handling of proto functions.
 fields proto-result-function
 
 
@@ -16,11 +16,11 @@ message: name to: object with: arguments
 	return new: name object: object arguments: arguments
 
 
-prepare-to-emit
+resolve
 	compiler calling-selector: name
-	object prepare-to-emit
+	object resolve
 	for arg in arguments
-		arg prepare-to-emit
+		arg resolve
 	
 	# Handle proto functions, to ensure the proto is loaded.
 	function = nil
@@ -30,6 +30,10 @@ prepare-to-emit
 		function = object proto-result-function
 	if function && (function is-a: ProtoFunction)
 		proto-result-function = function proto lookup-function: name
+
+
+compile: builder
+	return builder compile-send: this
 
 
 convert-to-setter-call: value
@@ -49,5 +53,5 @@ copy
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

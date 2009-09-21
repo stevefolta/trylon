@@ -1,0 +1,29 @@
+In x86, ESP points to the last stack item, and is predecremented to push.
+
+The relevant document is <http://developer.apple.com/documentation/developertools/Conceptual/LowLevelABI/130-IA-32_Function_Calling_Conventions/IA32.html>.
+
+So, when it says "The caller ensures that the stack is 16-byte aligned at the point of the function call", does that mean in the caller, right before it does the "call" instruction?  Or in the callee, right after the "call" instruction?  The former -- in the caller, right before the "call" instruction.
+
+So, the stack frame:
+
+	+-----------------+
+	|  arg 1          |
+	+-----------------+
+	|  arg 0          |
+	+-----------------+ <- ESP before "call", 16-byte aligned in Mac OSX ABI.
+	|  return addr    |
+	+-----------------+
+	|  saved EBP      |
+	+-----------------+ <- EBP
+	|  local 0        |
+	+-----------------+
+	|  local 1        |
+	+-----------------+
+	|  args...        |
+	+-----------------+
+
+
+Now this paragraph will just be my rambling notes as I try to do today's debugging (2009.5.7).  I've got changes in 'compile-throw:' that get the stack alignment right at the Throw_() call point.  But I've still got errors, apparently longjmp() isn't happy, either with the struct alignment or with where it's being asked to jump to.  Trying aligning the stack at the setjmp() call point.  Failed.  The alignment was correct; it even appears that the struct is 16-byte aligned.  So WTF?  Is longjmp() checking my EBP too or something?
+
+More debugging, 2009.5.9.  Verified stack alignment at setjmp() and longjmp(), and the alignment of the catcher too.  "si"ing through the longjmp(), it seemed actually to work.  It wasn't until the next dispatch for the 'test:against:name:' -- and it *was* in Dispatch_(), or so it seems -- that we hit the __dyld_misaligned_stack_error().  But how can Dispatch_() have a problem?  No, it is GDB's "finish" command that has a problem.  We run fine until "Standard print:" calls fwrite().  Conclusion: we really do need stack alignment for sends.
+

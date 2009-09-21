@@ -1,7 +1,54 @@
 # This is the global boilerplate.  It is loaded first, so later build-settings
 # files can replace the values here.
 
+# Default options.
+
+# 'nil-object' means 'nil' is treated as an object which can be sent messages.
+# It turns nil dereferences into message-not-understood errors, rather than
+# crashing the program.  This can make it easier to find bugs.  The downside is
+# slightly slower message dispatch, so you can turn it off if you want maximum
+# speed.
+nil-object = true
+
+# 'tagged-ints' stores small integers as tagged values, rather than allocating
+# space for them on the heap.  If your program uses integers much, this will
+# speed it up.  But it does make message dispatch slightly slower, so if you're
+# sure you're not using ints much, turning it off may speed up your program
+# (but not by much).
+tagged-ints = true
+
+# 'class-objects' means that the structures describing a class are objects
+# themselves, accessible by sending '.class' to any object.  Only turn this off
+# if you need your program to use the absolute minimum amount of space.
+class-objects = true
+
+# 'symbol-dispatch' controls how the generated code does message dispatch.  If
+# on, the symbol object is passed.  This is required for
+# 'message-not-understood:arguments:' to work; otherwise, only
+# 'message-not-understood' can be sent, and it will not know what message was
+# sent.  If it is off, an integer message selector is passed instead.  That
+# *may* be slightly faster, but probably not.
+# If 'symbol-dispatch' is on, 'support-perform' will automatically be turned on
+# as well.
+symbol-dispatch = true
+
+# 'shared-ints' causes the compiler to use a pool of Int constants.  If off,
+# any literal integer objects will be created for each use, even when they are
+# for the same value.  This setting will not have much effect if 'tagged-ints'
+# is on.  There is probably no reason to turn it off.
+shared-ints = true
+
+# 'shared-field-accessors' uses a pool of accessor methods for field access,
+# rather than generating getters and setters for each field in each class.
+# When on, it make programs smaller and likely a little faster due to cache
+# effects.  Turn this off if you want to set debugger breakpoints in specific
+# getters or setters.
+shared-field-accessors = true
+
+
+
 # C compilation.
+
 c-flags += "-g"
 link-flags += "-lgc" "-ldl" "-lm"
 

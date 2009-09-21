@@ -8,8 +8,14 @@ create: object is-nil: is-nil
 	this is-nil = is-nil
 
 
-prepare-to-emit
-	object prepare-to-emit
+resolve
+	object resolve
 
 
+compile: builder
+	return builder compile-nil-test: this
+
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

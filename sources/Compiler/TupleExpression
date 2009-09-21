@@ -12,12 +12,16 @@ add-member: member
 	members append: member
 
 
-prepare-to-emit
+resolve
 	for member in members
-		member prepare-to-emit
+		member resolve
+
+
+compile: builder
+	return builder compile-tuple-expression: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

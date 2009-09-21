@@ -1,0 +1,145 @@
+trylon X86Compiler
+fields class-queue
+
+word-size = 4
+
+
+reload: proto from: file-path
+	# Set up.
+	old-compiler = compiler
+	compiler = this
+	caught-exception = nil
+	class-queue = List new
+
+	try
+		# Read into an ExistingClass.
+		source = File contents-of: file-path
+		lines = Trylon LinesLexer read: source
+		existing-proto = Compiler ExistingClass new: proto
+		Compiler ClassParser parse-class-contents: lines into: existing-proto
+
+		# Build the ExistingClass into the in-process class.
+		ExistingClassBuilder build: existing-proto
+	else
+		caught-exception = exception
+
+	# Clean up.
+	class-queue = nil
+	compiler = old-compiler
+	if caught-exception
+		throw caught-exception
+
+
+load: file-path into: proto as: name
+	# Set up.
+	old-compiler = compiler
+	compiler = this
+	caught-exception = nil
+	class-queue = List new
+
+	# Load the file as a new class.
+	try
+		parent-class = Compiler ExistingClass new: proto
+		adding-class: parent-class
+		compiled-class = parent-class add-proto: name
+		lines = Trylon LinesLexer read: (File contents-of: file-path)
+		Compiler ClassParser parse-class-contents: lines into: compiled-class
+		for class-spec in class-queue
+			ClassBuilder build: class-spec
+	else
+		caught-exception = exception
+	
+	# Clean up.
+	class-queue = nil
+	compiler = old-compiler
+	if caught-exception
+		throw caught-exception
+
+
+compile: function
+	if function is-primitive
+		error: 	--
+			('"', function on-proto name, " ", function name, '"', 	--
+			" is primitive, and can't be compiled to x86.")
+
+	# Function resolution.
+	old-compiler = compiler
+	compiler = this
+	parse-tree = function body
+	parse-tree resolve
+
+	# Codegen.
+	method-builder = MethodBuilder new: function code: parse-tree
+	result = method-builder emit-method
+
+	compiler = old-compiler
+	return result
+
+
+replace-method: symbol on: object with: source arg-names: arg-names
+	on-proto = Compiler ExistingClass new: object .proto
+	arguments = List new
+	for name in arg-names
+		arguments append: (Compiler CompiledField new: name)
+
+	# Parse.
+	context = Compiler MethodContext new: arguments parent: on-proto
+	lines = Trylon LinesLexer read: source
+	parser = Compiler MethodParser new: lines in: context
+	parse-tree = parser parse
+
+	# Compile.
+	function = 	--
+		Compiler CompiledFunction 	--
+			new: symbol string arguments: arguments return-type: nil 	--
+			on-proto: on-proto body: parse-tree is-primitive: nil
+	machine-code = X86Compiler compile: function
+
+	# Replace the method.
+	object .class install-method: symbol machine-code: machine-code
+
+
+c-fn replace-method: symbol on: object with-ptr: fn-ptr
+	#ifdef SUPPORT_NEW_METHODS_
+		#ifdef SYMBOL_DISPATCH_
+			fn_ptr_* method_ptr = MethodLocation_(object, symbol);
+		#else
+			struct Standard__Symbol__internal* sym =
+				(struct Standard__Symbol__internal*) symbol;
+			fn_ptr_* method_ptr = MethodLocation_(object, sym->selector);
+		#endif
+	#else
+		fn_ptr_* method_ptr = nil;
+	#endif
+	if (method_ptr == nil) {
+		UsingMethod_(method_replacement_error_co_)
+		Call_(method_replacement_error_co_, this_, symbol);
+		}
+	*method_ptr = (fn_ptr_) BytePtrValue_(fn_ptr);
+	return nil;
+
+method-replacement-error: symbol
+	error: "Unable to replace method '" + symbol string + "'."
+
+
+# As a Compiler.
+
+declaring-selector: selector
+	# Nothing to do.
+
+calling-selector: selector
+	# Nothing to do.
+
+adding-class: class
+	class-queue append: class
+
+build-settings
+	if .build-settings == nil
+		.build-settings = Compiler BuildSettings new
+	return .build-settings
+field .build-settings
+
+status-reporter
+	return SilentStatusReporter
+
+

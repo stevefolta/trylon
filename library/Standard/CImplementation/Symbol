@@ -9,6 +9,9 @@ extend Standard Symbol
 			create_co_to_co___String__Standard(this_, start, stopper);
 			Field_(_dt__ul_selector) = (obj_) -1;
 
+		c-fn selector
+			return BuildInt_((int) Field_(_dt__ul_selector));
+
 	# Dynamic lookup.
 
 	built-in-table = nil
@@ -30,6 +33,8 @@ extend Standard Symbol
 			return result
 
 		# Need to add it.
+		# Reallocate the string, since we don't know where it came from.
+		name = name reallocated
 		result = Symbol new: name start to: name stopper
 		dynamic-table at: name put: result
 		return result

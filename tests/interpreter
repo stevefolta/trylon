@@ -1,4 +1,4 @@
-#!/usr/bin/env trylon
+#!/usr/bin/env trylon-interpreter
 
 # Declaration, expression.
 message = "Hello world!"

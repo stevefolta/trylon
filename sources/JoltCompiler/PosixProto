@@ -1,5 +1,5 @@
 trylon PosixProto
-superclass Compiler CompiledProto
+superclass Compiler CompiledClass
 
 
 create: name parent: parent directory: directory
@@ -40,7 +40,7 @@ class PosixProtoFunction
 			return 	--
 				Compiler Send 	--
 					new: name 	--
-					object: (Compiler ExistingProto new: Posix) 	--
+					object: (Compiler ExistingClass new: Posix) 	--
 					arguments: arguments
 
 

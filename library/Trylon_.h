@@ -1,6 +1,10 @@
 /* Trylon_.h */
 
 #include "settings_.h"
+#ifdef TAGGED_INTS_
+	#include <stddef.h>
+	#include <stdint.h>
+#endif
 
 /* Objects */
 
@@ -8,12 +12,19 @@ typedef struct object* obj_;
 typedef struct ClassInfo* classref_;
 
 struct ClassInfo {
+#ifdef CLASS_OBJECTS_
+	classref_	class_;
+#endif
 	int 	classNum;
 	int 	numSlots;
 	obj_	proto, parentContext, superclass;
 	obj_	usedContexts;
 	obj_	name;
 	obj_	addedFields; 	/* Only if "debugger" is on. */
+	obj_	subprotos;
+#ifdef SUPPORT_NEW_METHODS_
+	obj_	newMethods;
+#endif
 };
 
 struct object {
@@ -30,6 +41,11 @@ typedef char* byte_ptr_;
 #define nil	(0)
 
 typedef int selector_;
+#ifdef SYMBOL_DISPATCH_
+	typedef obj_ dispatch_selector_;
+#else
+	typedef selector_ dispatch_selector_;
+#endif
 
 struct RDTableEntry_ {
 	fn_ptr_  	method;
@@ -38,8 +54,11 @@ struct RDTableEntry_ {
 
 extern struct RDTableEntry_ dispatchTable_[];
 
-extern fn_ptr_ Dispatch_(selector_ selector, obj_ object);
-extern obj_ RespondsTo_(obj_ object, selector_ selector);
+extern fn_ptr_ Dispatch_(dispatch_selector_ symbol, obj_ object);
+extern obj_ RespondsTo_(obj_ object, dispatch_selector_ symbol);
+#ifdef SUPPORT_NEW_METHODS_
+	extern fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ symbol);
+#endif
 
 #ifdef SUPPORT_PERFORM_
 	#define UsingMethod_(methodName)	UsingSym_(methodName)
@@ -52,9 +71,15 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 	#define Selector_(fnName)	fnName##__selector_
 #endif
 
-#define Call_(fnName, object, args...) \
-	((*Dispatch_(Selector_(fnName), (obj_) (object))) \
-	 ((obj_) object, ##args))
+#ifdef SYMBOL_DISPATCH_
+	#define Call_(fnName, object, args...) \
+		((*Dispatch_(Sym_(fnName), (obj_) (object))) \
+	 	((obj_) object, ##args))
+#else
+	#define Call_(fnName, object, args...) \
+		((*Dispatch_(Selector_(fnName), (obj_) (object))) \
+	 	((obj_) object, ##args))
+#endif
 
 #define Field_(name)        	this_->fields[name##__fld_]
 #define FieldOf_(obj, name) 	obj->fields[name##__fld_]
@@ -66,6 +91,21 @@ extern obj_ RespondsTo_(obj_ object, selector_ selector);
 	obj_ name##__##className##__storage_ = value;
 #define UsingSharedField_(name, className) 	\
 	extern obj_ name##__##className##__storage_;
+
+#define DefineFieldAccessors_(index) 	\
+	obj_ FieldGetter##index##_(obj_ this_) 	\
+	{ 	\
+		return this_->fields[index]; 	\
+	} 	\
+	\
+	obj_ FieldSetter##index##_(obj_ this_, obj_ value) 	\
+	{ 	\
+		this_->fields[index] = value; 	\
+		return value; 	\
+	}
+#define DeclareFieldAccessors_(index) 	\
+	extern obj_ FieldGetter##index##_(obj_ this_); 	\
+	extern obj_ FieldSetter##index##_(obj_ this_, obj_ value);
 
 #define UsingClass_(className) 	\
 	extern struct ClassInfo className##__classInfo_;	 \
@@ -137,13 +177,29 @@ UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
 UsingClass_(True__Standard)
+#ifdef NIL_OBJECT_
+UsingClass_(nil__Standard)
+#endif
+#ifdef TAGGED_INTS_
+UsingClass_(SmallInt__CImplementation__Standard);
+#endif
+#ifdef CLASS_OBJECTS_
+UsingClass_(Class__CImplementation__Standard)
+#endif
 
 
 
 /* Literals */
 
-#define DefineInt_(index, value) \
-	static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
+#ifdef SHARED_INTS_
+	#define UsingInt_(value) 	\
+		extern struct object i##value##_;
+	#define DefineInt_(name, value) \
+		struct object i##name##_ = { StdClassRef_(Int), (obj_) (value) };
+#else
+	#define DefineInt_(index, value) \
+		static struct object i##index##_ = { StdClassRef_(Int), (obj_) (value) };
+#endif
 #define Int_(index)	(&i##index##_)
 
 #define DefineFloat_(index, value) 	\
@@ -277,7 +333,13 @@ extern obj_ currentException_;
 
 /* Helpers for primitives. */
 
-#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
+#ifdef TAGGED_INTS_
+	extern int IntValue_(obj_ obj);
+	#define SmallInt_(value)	((obj_) ((value << 1) | 0x01))
+	#define IsTaggedInt_(obj)	(((ptrdiff_t) obj) & 0x01 != 0)
+#else
+	#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
+#endif
 #define FloatValue_(obj) 	(((struct Standard__Float__internal*) obj)->value)
 #define BytePtrValue_(obj) 	(((struct Standard__BytePtr__internal*) obj)->value)
 #define StringStart_(obj) 	\
@@ -296,6 +358,9 @@ extern obj_ BuildStringStartStopper_(const char* start, const char* stopper);
 extern char* CString_(obj_ str);
 extern void* Allocate_(int numBytes);
 extern void* AllocNonPtr_(int numBytes);
+extern obj_ NewTuple_(int numItems);
+extern obj_ TupleAt_(obj_ tuple, int index);
+extern void TuplePut_(obj_ tuple, int index, obj_ value);
 
 extern obj_ CloneObj_(obj_ object);
 extern obj_ CloneObjExtra_(obj_ object, int numExtraFields);

@@ -15,7 +15,7 @@ extend Compiler Send
 
 extend Compiler FunctionCall
 	interpreted
-		# We already got the function in prepare-to-emit.
+		# We already got the function in 'resolve'.
 		if function == nil
 			throw MessageException new: "There is no \"" + name + "\" function."
 		

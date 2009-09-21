@@ -64,6 +64,33 @@ div.code {
 	white-space: pre;
 }
 
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
+
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
+
 </style>
 
 </head>
@@ -81,55 +108,89 @@ Statements
 There are the usual flow-of-control statements:
 </p>
 
-<div class="code">if name == "anyone"
-  print-line: "Anyone"
-
-if x == 0
-  return 0
-else
-  return x * (factorial: x - 1)
-
-return   # No value given, so this returns "nil".
-
-loop
-  token = next-token
-  if token type == 'eof'
-    break
-  consume-token
-
-  if token type == 'comment'
-    continue
-
-while which-item < num-items
-  print-line: (items at: which-item)
-  which-item += 1
-
-for item in items
-  if item name is-empty
-    continue
-  print-line: item name
-
-try
-  event-loop
-else
-  # "exception" is automatically defined as the caught object.
-  print-line: exception message
-
-throw MessageException new: "Couldn't connect."
-
-switch justification
-  'left'
-    # ...
-  'right'
-    # ...
-  'center', 'centered'
-    # ...
-  'justified'
-    # ...
-  else
-    throw   --
-      MessageException  --
-        new: "Bad justification: " + justification string</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> name == <span class="trylon-constant">"anyone"</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> <span class="trylon-constant">"Anyone"</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> x == <span class="trylon-constant">0</span></div>
+<div class="trylon-block">
+<div class="trylon-line">return <span class="trylon-constant">0</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">else</span></div>
+<div class="trylon-block">
+<div class="trylon-line">return x * (<span class="trylon-keyword">factorial:</span> x - <span class="trylon-constant">1</span>)</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">return <span class="trylon-comment"># No value given, so this returns "nil".</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">loop</span></div>
+<div class="trylon-block">
+<div class="trylon-line">token = next-token</div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> token type == <span class="trylon-constant">'eof'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">break</span></div>
+</div>
+<div class="trylon-line">consume-token</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> token type == <span class="trylon-constant">'comment'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">continue</span></div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">while</span> which-item &lt; num-items</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> (items <span class="trylon-keyword">at:</span> which-item)</div>
+<div class="trylon-line">which-item += <span class="trylon-constant">1</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">for</span> item <span class="trylon-reserved-word">in</span> items</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> item name is-empty</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">continue</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> item name</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">try</span></div>
+<div class="trylon-block">
+<div class="trylon-line">event-loop</div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">else</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># "exception" is automatically defined as the caught object.</span></div>
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> exception message</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">throw</span> MessageException <span class="trylon-keyword">new:</span> <span class="trylon-constant">"Couldn't connect."</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-reserved-word">switch</span> justification</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-constant">'left'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-constant">'right'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-constant">'center'</span>, <span class="trylon-constant">'centered'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-constant">'justified'</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># ...</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">else</span></div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">throw</span> MessageException <span class="trylon-keyword">new:</span> <span class="trylon-constant">"Bad justification: "</span> + justification string</div>
+</div>
+</div>
+</div>
 
 </div>
 
@@ -139,7 +200,9 @@ switch justification
 An expression on a line by itself also constitutes a statement:
 </p>
 
-<div class="code">print-line: "Hello world!"</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> <span class="trylon-constant">"Hello world!"</span></div>
+</div>
 
 </div>
 
@@ -149,18 +212,26 @@ An expression on a line by itself also constitutes a statement:
 Assignment in Trylon is designed to be easy to read (and type), but the rules behind it can be a little complex.
 </p>
 
-<div class="code">proto MyObject
-  fields total
-
-  grand-total = 0   # A shared variable, with its initial value.
-
-  reset
-    total = 0   # Sets the object's "total" field.
-
-  frobnicate: value
-    massaged-value = value * 7 + 3   # Creates a new local variable.
-    total = total + massaged-value   # Sets the object's "total" field.
-    grand-total = grand-total + massaged-value   # Sets the shared variable.</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">proto</span> MyObject</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> total</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">grand-total = <span class="trylon-constant">0</span> <span class="trylon-comment"># A shared variable, with its initial value.</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">reset</div>
+<div class="trylon-block">
+<div class="trylon-line">total = <span class="trylon-constant">0</span> <span class="trylon-comment"># Sets the object's "total" field.</span></div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">frobnicate:</span> value</div>
+<div class="trylon-block">
+<div class="trylon-line">massaged-value = value * <span class="trylon-constant">7</span> + <span class="trylon-constant">3</span> <span class="trylon-comment"># Creates a new local variable.</span></div>
+<div class="trylon-line">total = total + massaged-value <span class="trylon-comment"># Sets the object's "total" field.</span></div>
+<div class="trylon-line">grand-total = grand-total + massaged-value <span class="trylon-comment"># Sets the shared variable.</span></div>
+</div>
+</div>
+</div>
 
 <p>
 The basic idea is that an assignment will assign to a variable in the current scope, and if no such variable exists, a new local variable will be created.  The scope of the new local is the block in which it is assigned.
@@ -170,25 +241,35 @@ The basic idea is that an assignment will assign to a variable in the current sc
 Assignment can also be a shorthand for a function call:
 </p>
 
-<div class="code">(array at: 7) = "hello"   # is the same as:
-array at: 7 put: "hello"</div>
+<div class="trylon-code">
+<div class="trylon-line">(array <span class="trylon-keyword">at:</span> <span class="trylon-constant">7</span>) = <span class="trylon-constant">"hello"</span> <span class="trylon-comment"># is the same as:</span></div>
+<div class="trylon-line">array <span class="trylon-keyword">at:</span> <span class="trylon-constant">7</span> <span class="trylon-keyword">put:</span> <span class="trylon-constant">"hello"</span></div>
+</div>
 
 <p>
 If the function being set is a unary function, rather than a keyword function, then the setter function's name is the unary function's name with a colon appended:
 </p>
 
-<div class="code">proto MyProto
-  fields real-name
-
-  name
-    return real-name
-
-  name: new-name
-    real-name = new-name + " Jr."
-
-obj = MyProto new
-obj name = "Joey Jo Jo Shabbadoo"
-print-line: obj name   # Prints "Joey Jo Jo Shabbadoo Jr."</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">proto</span> MyProto</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-reserved-word">fields</span> real-name</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">name</div>
+<div class="trylon-block">
+<div class="trylon-line">return real-name</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">name:</span> new-name</div>
+<div class="trylon-block">
+<div class="trylon-line">real-name = new-name + <span class="trylon-constant">" Jr."</span></div>
+</div>
+</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">obj = MyProto new</div>
+<div class="trylon-line">obj name = <span class="trylon-constant">"Joey Jo Jo Shabbadoo"</span></div>
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> obj name <span class="trylon-comment"># Prints "Joey Jo Jo Shabbadoo Jr."</span></div>
+</div>
 
 <p>
 (Indeed, the compiler treats *all* assignments this way, even those to local variables.  So "foo = bar" can always be written as "foo: bar".)
@@ -206,20 +287,28 @@ Assignments are expressions, so you can do things like "x = y = 0".
 A "for" statement can iterate over any collection that responds to the "iterate" message with an iterator object that responds to the "is-done", "current-item", and "go-forward" messages.  So this:
 </p>
 
-<div class="code">for item in collection
-  print: item string</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">for</span> item <span class="trylon-reserved-word">in</span> collection</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">print:</span> item string</div>
+</div>
+</div>
 
 <p>
 is roughly equivalent to this:
 </p>
 
-<div class="code">iterator = collection iterator
-while !iterator is-done
-  item = iterator current-item
-
-  print: item string
-
-  iterator go-forward</div>
+<div class="trylon-code">
+<div class="trylon-line">iterator = collection iterator</div>
+<div class="trylon-line"><span class="trylon-reserved-word">while</span> !iterator is-done</div>
+<div class="trylon-block">
+<div class="trylon-line">item = iterator current-item</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">print:</span> item string</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line">iterator go-forward</div>
+</div>
+</div>
 
 <p>
 (I say "roughly" because the "continue" statement would work correctly in a real "for" loop, and because the "iterator" variable isn't visible.)
@@ -233,8 +322,12 @@ while !iterator is-done
 The "iff" statement is used for conditional compilation:
 </p>
 
-<div class="code">iff debug
-  print-line: "Reached a certain point."</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">iff</span> debug</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> <span class="trylon-constant">"Reached a certain point."</span></div>
+</div>
+</div>
 
 <p>
 In this case, "debug" is not an expression, but the name of a symbol.  If that symbol is defined in the build-settings, the block will be compiled.  If not (or if it's set to "false"), the block will be completely ignored by the compiler.
@@ -244,22 +337,34 @@ In this case, "debug" is not an expression, but the name of a symbol.  If that s
 You can't use an "else" block with an "iff" statement (not yet, anyway), but you can put a "!" before the symbol to reverse the sense of the test.
 </p>
 
-<div class="code">version = "1.0 "
-iff development
-  version += "development"
-iff !development
-  version += "release"</div>
+<div class="trylon-code">
+<div class="trylon-line">version = <span class="trylon-constant">"1.0 "</span></div>
+<div class="trylon-line"><span class="trylon-reserved-word">iff</span> development</div>
+<div class="trylon-block">
+<div class="trylon-line">version += <span class="trylon-constant">"development"</span></div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">iff</span> !development</div>
+<div class="trylon-block">
+<div class="trylon-line">version += <span class="trylon-constant">"release"</span></div>
+</div>
+</div>
 
 <p>
 A few symbols are defined automatically in the build-settings.  Most notably, the "sysname" (what you'd see if you typed "uname" at the shell) is defined.
 </p>
 
-<div class="code">display = nil
-iff Linux
-  display = XlibDisplay new
-iff Darwin
-  # Mac OSX calls itself Darwin, for the purposes of "uname".
-  display = CarbonDisplay new</div>
+<div class="trylon-code">
+<div class="trylon-line">display = nil</div>
+<div class="trylon-line"><span class="trylon-reserved-word">iff</span> Linux</div>
+<div class="trylon-block">
+<div class="trylon-line">display = XlibDisplay new</div>
+</div>
+<div class="trylon-line"><span class="trylon-reserved-word">iff</span> Darwin</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-comment"># Mac OSX calls itself Darwin, for the purposes of "uname".</span></div>
+<div class="trylon-line">display = CarbonDisplay new</div>
+</div>
+</div>
 
 <p>
 Also defined are "trylon-2" (to distinguish from Trylon 1), "targeting-c" or "targeting-jolt", depending on which backend you're using, and "in-jolt" if the compiler itself is actually running within Jolt.

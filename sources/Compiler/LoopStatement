@@ -9,11 +9,15 @@ create: body comment: comment
 	this comment = comment
 
 
-prepare-to-emit
-	body prepare-to-emit
+resolve
+	body resolve
+
+
+compile: builder
+	return builder compile-loop: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

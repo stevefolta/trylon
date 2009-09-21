@@ -1,0 +1,24 @@
+trylon ExistingClassBuilder
+superclass ClassBuilder
+
+create: existing-class
+	super create: existing-class
+
+
+build
+	build-functions-into: class-context proto
+
+	# Clear new-functions, just in case the existing-class gets used again.
+	class-context new-functions clear
+
+	return class-context proto
+
+
+live-proto
+	return class-context proto
+
+
+index-for-field: name
+	error: "Adding new fields to existing classes isn't supported."
+
+

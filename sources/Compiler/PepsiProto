@@ -1,5 +1,5 @@
 trylon PepsiProto
-superclass CompiledProto
+superclass CompiledClass
 
 create: name parent: parent
 	super create: name parent: parent
@@ -7,9 +7,9 @@ create: name parent: parent
 
 get-subproto: name
 	# *Always* return it.
-	# Just return a CompiledProto, without calling add-proto, so we don't try to
+	# Just return a CompiledClass, without calling add-proto, so we don't try to
 	# do any codegen for it.
-	return CompiledProto new: name parent: this
+	return CompiledClass new: name parent: this
 
 
 

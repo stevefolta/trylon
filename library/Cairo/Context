@@ -256,14 +256,13 @@ c-preamble
 	{
 		double value = 0;
 		UsingMethod_(is_a_co_) UsingMethod_(at_co_) UsingMethod_(x)
-		DefineInt_(0, 0)
 
 		if (obj == nil)
 			;
 		else if (Call_(is_a_co_, obj, Proto_(Point__Standard)))
 			value = DoubleVal(Call_(x, obj));
 		else if (Call_(is_a_co_, obj, Proto_(Tuple__Standard)))
-			value = DoubleVal(Call_(at_co_, obj, Int_(0)));
+			value = DoubleVal(Call_(at_co_, obj, BuildInt_(0)));
 
 		return value;
 	}
@@ -272,14 +271,13 @@ c-preamble
 	{
 		double value = 0;
 		UsingMethod_(is_a_co_) UsingMethod_(at_co_) UsingMethod_(y)
-		DefineInt_(0, 1)
 
 		if (obj == nil)
 			;
 		else if (Call_(is_a_co_, obj, Proto_(Point__Standard)))
 			value = DoubleVal(Call_(y, obj));
 		else if (Call_(is_a_co_, obj, Proto_(Tuple__Standard)))
-			value = DoubleVal(Call_(at_co_, obj, Int_(0)));
+			value = DoubleVal(Call_(at_co_, obj, BuildInt_(1)));
 
 		return value;
 	}

@@ -8,12 +8,19 @@ create: value comment: comment
 	this value = value
 	this comment = comment
 
-
-prepare-to-emit
-	value prepare-to-emit
-
+create: value
+	this value = value
 
 
+resolve
+	value resolve
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+compile: builder
+	return builder compile-return: this
+
+
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

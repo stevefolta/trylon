@@ -1,0 +1,11 @@
+# We're returning the total number of sends, including the
+# currently-executing send of 'nfibs:'.
+
+if n < 2
+	# 2 sends: nfibs: (this one), <
+	return 2
+else
+	# 6 sends, not counting the calls to nfibs: (they'll count themselves):
+	# nfibs: (this one), <, -, -, +, +
+	return (nfibs: n - 1) + (nfibs: n - 2) + 6
+

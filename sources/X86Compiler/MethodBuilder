@@ -1,0 +1,1088 @@
+trylon MethodBuilder
+
+fields function code-tree
+fields refs out-ptr buffer-limit buffers offset
+fields dispatch-fn
+fields postamble-label argument-indices
+fields cur-num-locals num-locals loop-stack cur-caught-exception
+
+buffer-size = 512
+buffer-slop-space = 32	# Enough space for the longest instruction.
+
+literals = nil
+
+iff Darwin
+	alignment-slots = nil
+	fields stack-alignment
+
+
+# NOTE:
+# When assembly language is used in the comments, Intel-style syntax is used:
+# 	mov dest, src
+
+
+create: function code: code-tree
+	init
+	this function = function
+	this code-tree = code-tree
+	refs = List new
+	buffers = List new
+	grow
+	offset = 0
+
+	dispatch-fn = dispatch-fn-addr
+
+create
+	# Because this class has all the code generation machinery (eg. the buffers
+	# list), we use it for generating non-CompiledFunctions too, eg. getters and
+	# setters.  This constructor is used for those types of functions only.
+	create: nil code: nil
+
+
+init
+	if literals
+		return
+	
+	literals = List new
+
+	iff Darwin
+		alignment-slots = 16 / word-size
+
+
+emit-method
+	if code-tree == nil
+		error: "Internal error: called 'emit-method' for a non-CompiledFunction."
+
+	postamble-label = Label new
+	cur-num-locals = 0
+	num-locals = 0
+	loop-stack = List new
+
+	# Set up arguments.
+	argument-indices = Dictionary new
+	index = 1 	# Index 0 is "this".
+	for arg in function arguments
+		argument-indices at: arg name put: index
+		index += 1
+
+	# Emit the preamble.
+	emit: 0x55 	# "push ebp"
+	emit: (0x89, 0xE5) 	# "mov ebp, esp"
+	emit: (0x81, 0xEC) 	# "sub esp, num-locals * 4"
+	frame-size-offset = offset
+	emit-word: 0 	# Will be patched later.
+	iff Darwin
+		stack-alignment = 0
+
+	# Emit the body of the code.
+	code-tree compile: this
+
+	# Emit the postamble.
+	# The default return value is "nil".
+	compile-nil-call: nil
+	postamble-label define: offset
+	emit: 0xC9 	# "leave"
+	emit: 0xC3 	# "ret"
+
+	# Assemble the buffers into the final code.
+	code = assemble-buffers
+
+	# Patch the frame size.
+	iff Darwin
+		# Mac OSX requires alignment to 16 bytes (4 slots).
+		# Because we don't know the total number of locals until we're done with
+		# codegen, we adjust it here so ESP is aligned at the start of codegen.
+		# The distance from the last known alignment point (the call) is the number
+		# of locals + the return address + the saved EBP.
+		alignment-delta = (num-locals + 2) % alignment-slots
+		if alignment-delta != 0
+			num-locals += alignment-slots - alignment-delta
+	# This is not done as a label since it's not relocated, only patched.
+	(code + frame-size-offset) int-at: 0 put: num-locals * word-size
+
+	# Patch the labels.
+	for ref in refs
+		target = ref label offset
+		if target == nil
+			error: "Undefined label."
+		offset = ref offset
+		displacement = target - (offset + word-size)
+		(code + offset) int-at: 0 put: displacement
+	
+	return code
+
+
+build-object-returner: object
+	return MethodBuilder new emit-object-returner: object
+
+emit-object-returner: object
+	# "mov eax, object"
+	emit: 0xB8
+	emit-ptr: object object-ptr
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-field-getter: index
+	return MethodBuilder new emit-field-getter: index
+
+emit-field-getter: index
+	# "mov eax, [esp + word-size]"	; eax <- object
+	emit: (0x8B, 0x44, 0x24, word-size)
+	# "mov eax, [eax + (index + 1) * word-size]"
+	slot-offset = (index + 1) * word-size
+	if slot-offset < 256
+		emit: (0x8B, 0x40, slot-offset)
+	else
+		emit: (0x8B, 0x80)
+		emit-word: slot-offset
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-field-setter: index
+	return MethodBuilder new emit-field-setter: index
+
+emit-field-setter: index
+	# "mov eax, [esp + 2 * word-size]" 	; eax <- new-value
+	emit: (0x8B, 0x44, 0x24, word-size * 2)
+	# "mov edx, [esp + word-size]" 	; edx <- object
+	emit: (0x8B, 0x54, 0x24, word-size)
+	# "mov [edx + (index + 1) * word-size], eax"
+	slot-offset = (index + 1) * word-size
+	if slot-offset < 256
+		emit: (0x89, 0x42, slot-offset)
+	else
+		emit: (0x89, 0x82)
+		emit-word: slot-offset
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-location-getter: ptr
+	return MethodBuilder new emit-location-getter: ptr
+
+emit-location-getter: ptr
+	# "mov eax, location"
+	emit: 0xB8
+	emit-ptr: ptr
+	# "mov eax, [eax]"
+	emit: (0x8B, 0x00)
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-location-setter: ptr
+	return MethodBuilder new emit-location-setter: ptr
+
+emit-location-setter: ptr
+	# "mov eax, [esp + 2 * word-size]" 	; eax <- new-value
+	emit: (0x8B, 0x44, 0x24, 2 * word-size)
+	# "mov edx, location"
+	emit: 0xBA
+	emit-ptr: ptr
+	# "mov [edx], eax"
+	emit: (0x89, 0x02)
+	# "ret"
+	emit: 0xC3
+
+	return assemble-buffers
+
+
+build-new-function: function
+	name = function name
+	args = function creator arguments
+	parent-context = function on-proto
+	class = ClassBuilder live-proto-for: parent-context
+
+	# Build a pseudo-Trylon function.
+	parent-context = Compiler ExistingClass new: class
+	method-context = Compiler MethodContext new: args parent: parent-context
+	block = Compiler Block new: method-context
+	# "obj = class raw-new"
+	obj-local = Compiler CompiledField new: "obj"
+	block add-local: obj-local
+	class-literal = LiteralExpression new: class
+	send := Compiler Send message: "raw-new" to: class-literal with: empty
+	local-setter = Compiler LocalSetter new: obj-local
+	local-set = 	--
+		Compiler FunctionCall new: local-setter arguments: (List with: send)
+	block append: (Compiler ExpressionStatement new: local-set)
+	# "obj create: arg arg: arg"
+	arg-exprs = List new
+	for arg in args
+		arg-getter = Compiler ArgumentFunction new: arg
+		arg-get = Compiler FunctionCall new: arg-getter arguments: empty
+		arg-exprs append: arg-get
+	local-getter = Compiler LocalGetter new: obj-local
+	local-get = Compiler FunctionCall new: local-getter arguments: empty
+	create-name = "create" + (name substr: 3)
+	send = Compiler Send message: create-name to: local-get with: arg-exprs
+	block append: (Compiler ExpressionStatement new: send)
+	# "return obj"
+	block append: (Compiler ReturnStatement new: local-get)
+
+	# Compile it.
+	# We need a CompiledFunction, really just for the arguments.
+	compiled-function = 	--
+		Compiler CompiledFunction 	--
+			new: name arguments: args return-type: nil on-proto: parent-context 	--
+			body: block is-primitive: false
+	return (MethodBuilder new: compiled-function code: block) emit-method
+
+
+
+# Low-level emission.
+
+# Code will be emitted into buffers, kept in a list.  At the end, the final
+# code block is allocated (with the exact size) and the buffers are copied into
+# it.  Only then are label-refs patched.
+
+emit: opcodes
+	for opcode in opcodes
+		out-ptr byte-at: 0 put: opcode
+		out-ptr += 1
+		offset += 1 	# Separate from out-ptr.
+		if out-ptr >= buffer-limit
+			grow
+
+emit-word: word
+	out-ptr int-at: 0 put: word
+	out-ptr += word-size
+	offset += word-size
+	if out-ptr >= buffer-limit
+		grow
+
+emit-ptr: ptr
+	out-ptr ptr-at: 0 put: ptr
+	out-ptr += word-size
+	offset += word-size
+	if out-ptr >= buffer-limit
+		grow
+
+emit-opcode-extensions-for: result
+	emit: result mod-rm
+	disp8 = result disp8
+	if disp8
+		emit: disp8
+	disp32 = result disp32
+	if disp32
+		emit-word: disp32
+
+emit-opcode-extensions-for: result with: additional-opcode
+	mod-rm = result mod-rm
+	mod-rm |= additional-opcode << 3
+	emit: mod-rm
+	disp8 = result disp8
+	if disp8
+		emit: disp8
+	disp32 = result disp32
+	if disp32
+		emit-word: disp32
+
+
+class Buffer
+	fields ptr used-size
+	
+	create
+		ptr = BytePtr new: buffer-size
+	
+	create: size
+		ptr = BytePtr new: size
+
+grow
+	# Finish the current buffer.
+	buffer = buffers last-item
+	if buffer
+		buffer used-size = out-ptr - buffer ptr
+
+	# Start a new buffer.
+	buffer = Buffer new
+	buffers append: buffer
+	out-ptr = buffer ptr
+	buffer-limit = out-ptr + buffer-size - buffer-slop-space
+
+
+assemble-buffers
+	# Complete the last buffer.
+	buffer = buffers last-item
+	buffer used-size = out-ptr - buffer ptr
+
+	# Assemble the buffers into the final code.
+	code-size = 0
+	for buffer in buffers
+		code-size += buffer used-size
+	code = BytePtr new: code-size
+	dest = code
+	for buffer in buffers
+		buffer-size = buffer used-size
+		dest copy-from: buffer ptr length: buffer-size
+		dest += buffer-size
+	
+	return code
+
+
+class Label
+	fields offset
+
+	create
+
+	define: offset
+		this offset = offset
+
+class LabelRef
+	fields label offset
+
+	create: label at: offset
+		this label = label
+		this offset = offset
+
+emit-label-ref: label
+	ref = LabelRef new: label at: offset
+	refs append: ref
+	emit-word: 0
+
+
+emit-push: result
+	if result is-eax
+		emit: 0x50 	# "push eax"
+	else if result is-literal
+		emit: 0x68	# "push imm32"
+		emit-ptr: result ptr
+	else
+		emit: 0xFF 	# "push r/m32"
+		emit-opcode-extensions-for: result with: 6
+
+
+emit-test: result
+	# Literals, at least, can't be accessed using r/m32, and must be moved into
+	# eax.
+	if result mod-rm == nil
+		result = to-eax: result
+	# "cmp result, 0"
+	emit: 0x83
+	emit-opcode-extensions-for: result with: 7
+	emit: 0
+
+
+emit-jmp: label
+	emit: 0xE9
+	emit-label-ref: label
+
+jmp-length
+	return 1 + word-size
+
+emit-cond-jmp: cond to: label
+	switch cond
+		'z'
+			emit: (0x0F, 0x84) 	# "jz"
+		'nz'
+			emit: (0x0F, 0x85) 	# "jnz"
+		else
+			error: "Unknown opcode: " + cond string + "."
+	emit-label-ref: label
+
+emit-c-call: addr
+	# "mov eax, addr"
+	emit: 0xB8
+	emit-ptr: addr
+	# "call eax"
+	emit: (0xFF, 0xD0)
+
+
+stash: result
+	# If the result is already safely on the stack, simply return it.  If not,
+	# stash it in a temporary.
+	if result is-eax
+		temp = get-temporary
+		# "mov temp, eax"
+		emit: 0x89
+		emit-opcode-extensions-for: temp
+		result = temp
+	return result
+
+
+to-eax: result
+	if result is-eax
+		# Nothing to do.
+	else if result is-literal
+		# "mov eax, imm32"
+		emit: 0xB8
+		emit-ptr: result ptr
+	else
+		# "mov eax, r/m32"
+		emit: 0x8B
+		emit-opcode-extensions-for: result with: 0
+	return CallResult
+
+
+emit-move-to: dest from: src
+	to-eax: src
+	# "move r/m32, eax"
+	emit: 0x89
+	emit-opcode-extensions-for: dest with: 0
+
+
+new-local
+	# Allocate an index.
+	index = cur-num-locals
+	cur-num-locals += 1
+	if cur-num-locals > num-locals
+		num-locals = cur-num-locals
+
+	# Create the local.
+	return LocalResult new: index
+
+get-temporary
+	# A temporary is no different from any other local.
+	return new-local
+
+allocate-stack-struct: size
+	num-slots = (size + 3) / 4
+	cur-num-locals += num-slots
+	if cur-num-locals > num-locals
+		num-locals = cur-num-locals
+
+	# We'll return it as a local.  Since the stack grows downward, we want to use
+	# the index of the *last* slot it occupies.
+	return LocalResult new: cur-num-locals - 1
+
+
+class Loop
+	fields continue-label break-label
+
+	create-continue: continue-label break: break-label
+		this continue-label = continue-label
+		this break-label = break-label
+
+start-loop-continue: continue-label break: break-label
+	new-loop = Loop new-continue: continue-label break: break-label
+	loop-stack push-front: new-loop
+
+end-loop
+	loop-stack pop-front
+
+
+iff Darwin
+	alignment-slots-needed: num-args
+		alignment-delta = (stack-alignment + num-args) % alignment-slots
+		if alignment-delta == 0
+			return 0
+		return alignment-slots - alignment-delta
+	
+	align-for-args: num-args
+		padding-slots = alignment-slots-needed: num-args
+		if padding-slots != 0
+			# Pad the stack so that it will be aligned when we're done pushing the
+			# args.
+			# "sub esp, padding-slots * word-size"
+			emit: (0x83, 0xEC, padding-slots * word-size)
+			stack-alignment += padding-slots
+
+
+push-args: args
+	iff Darwin
+		# We will also be pushing the receiver object as a "hidden" argument.
+		align-for-args: args num-items + 1
+	reversed-args = List new
+	for arg in args
+		reversed-args push-front: arg
+	for arg in reversed-args
+		result = arg compile: this
+		emit-push: result
+		iff Darwin
+			stack-alignment += 1
+
+
+emit-pop-args: num-args
+	num-bytes = num-args * word-size
+	if num-bytes < 127
+		# More compact 8-bit form.
+		emit: 0x83
+		emit: 0xC4
+		emit: num-bytes
+	else
+		emit: 0x81
+		emit: 0xC4
+		emit-word: num-bytes
+
+emit-pop-aligned-args: num-args
+	iff Darwin
+		num-args += alignment-slots-needed: num-args
+	emit-pop-args: num-args
+
+
+emit-send-of: symbol to: object-result with: args
+	# Push method args.
+	exterior-stack-alignment = nil
+	iff Darwin
+		exterior-stack-alignment = stack-alignment
+	object-result = stash: object-result
+	push-args: args
+	emit-push: object-result
+
+	# Call Dispatch_().
+	emit-push: object-result
+	iff symbol-dispatch
+		# "push symbol"
+		emit: 0x68
+		emit-ptr: symbol object-ptr
+	iff !symbol-dispatch
+		# "push selector"
+		emit: 0x68
+		emit-word: symbol selector
+	# "mov eax, dispatch-fn"
+	emit: 0xB8
+	emit-ptr: dispatch-fn
+	# "call eax"
+	emit: 0xFF
+	emit: 0xD0
+	emit-pop-args: 2
+
+	# Call the method.
+	# "call eax"
+	emit: 0xFF
+	emit: 0xD0
+	iff Darwin
+		stack-alignment = exterior-stack-alignment
+	emit-pop-aligned-args: args num-items + 1
+	return CallResult
+
+
+c-fn dispatch-fn-addr
+	return BuildBytePtr_(&Dispatch_);
+c-fn push-exception-fn-addr
+	return BuildBytePtr_(&PushException_);
+c-fn pop-exception-fn-addr
+	return BuildBytePtr_(&PopException_);
+c-fn throw-fn-addr
+	return BuildBytePtr_(&Throw_);
+c-fn alloc-obj-from-class-info-addr
+	return BuildBytePtr_(&AllocObjFromClassInfo_);
+c-fn setjmp-fn-addr
+	return BuildBytePtr_(setjmp);
+c-fn current-exception-addr
+	return BuildBytePtr_(&currentException_);
+c-fn exception-catcher-size
+	return BuildInt_(sizeof(ExceptionCatcher_));
+
+
+to-boolean: object-result reverse-sense: reverse-sense
+	emit-test: object-result
+	if reverse-sense
+		# "jnz result_false"
+		emit: (0x75, 0x07)
+	else
+		# "jz result_false"
+		emit: (0x74, 0x07)
+	# "mov eax, True"
+	emit: 0xB8
+	emit-ptr: Standard True object-ptr
+	# "jmp test_complete"
+	emit: (0xEB, 0x02)
+	# "result_false: xor eax, eax"
+	emit: (0x31, 0xC0)
+	return CallResult
+
+
+
+# Statement compilation.
+
+compile-block: block
+	# Set up locals.
+	exterior-num-locals = cur-num-locals
+	if block locals
+		for local in block locals values
+			local compile-info = new-local
+
+	# Body.
+	for stmt in block statements
+		stmt compile: this
+	
+	# Clean up locals.
+	cur-num-locals = exterior-num-locals
+
+compile-block-statement: stmt
+	return compile-block: stmt block
+
+compile-expression-statement: stmt
+	exterior-num-locals = cur-num-locals
+	result = stmt expression compile: this
+	cur-num-locals = exterior-num-locals
+	return result
+
+
+compile-comment: stmt
+	# Nothing to do.
+
+compile-blank-line: stmt
+	# Nothing to do.
+
+
+compile-if: stmt
+	pre-cond-num-locals = cur-num-locals
+	condition-result = stmt condition compile: this
+	cur-num-locals = pre-cond-num-locals
+	emit-test: condition-result
+	end = Label new
+	emit-cond-jmp: 'z' to: end
+	stmt body compile: this
+	if stmt else-block
+		# End the body by jumping past the else-branch
+		final-end = Label new
+		emit-jmp: final-end
+
+		# "end" currently means the end of the "if" branch; the conditional needs
+		# to jump there.
+		end define: offset
+
+		# Repurpose "end", so "final-end" is defined correctly.
+		end = final-end
+
+		# Emit the "else" clause.
+		stmt else-block compile: this
+	end define: offset
+
+
+compile-loop: stmt
+	start = Label new
+	start define: offset
+	end = Label new
+	start-loop-continue: start break: end
+	stmt body compile: this
+	emit-jmp: start
+	end define: offset
+	end-loop
+
+
+compile-while: stmt
+	# "start:"
+	start = Label new
+	start define: offset
+	end = Label new
+	# condition
+	pre-cond-num-locals = cur-num-locals
+	condition-result = stmt condition compile: this
+	emit-test: condition-result
+	cur-num-locals = pre-cond-num-locals
+	# "jne body"
+	emit: (0x75, jmp-length)
+	# "jmp end"
+	emit-jmp: end
+	# "body:"
+	start-loop-continue: start break: end
+	stmt body compile: this
+	# "jmp start"
+	emit-jmp: start
+	# "end:"
+	end define: offset
+	end-loop
+
+
+compile-for: stmt
+	# Set up the iterator and the local.
+	exterior-num-locals = cur-num-locals
+	iterator-result = new-local
+	local-result = new-local
+	stmt local compile-info = local-result
+
+	# Emit the creation of the iterator.
+	interior-num-locals = cur-num-locals
+	collection-result = stmt collection compile: this
+	iterator-call-result = 	--
+		emit-send-of: 'iterator' to: collection-result with: empty
+	emit-move-to: iterator-result from: iterator-call-result
+	cur-num-locals = interior-num-locals
+
+	# Start the loop.
+	again = Label new
+	end = Label new
+	start-loop-continue: again break: end
+
+	# The test.
+	test = Label new
+	test define: offset
+	done-result = emit-send-of: 'is-done' to: iterator-result with: empty
+	emit-test: done-result
+	emit-cond-jmp: 'nz' to: end
+
+	# The body.
+	value-result = emit-send-of: 'current-item' to: iterator-result with: empty
+	emit-move-to: local-result from: value-result
+	stmt body compile: this
+
+	# Go around again.
+	again define: offset
+	emit-send-of: 'go-forward' to: iterator-result with: empty
+	emit-jmp: test
+
+	# End the loop.
+	end define: offset
+	end-loop
+
+	# Finish up.
+	cur-num-locals = exterior-num-locals
+
+
+compile-continue: stmt
+	emit-jmp: loop-stack first-item continue-label
+
+compile-break: stmt
+	emit-jmp: loop-stack first-item break-label
+
+
+compile-return: stmt
+	result = stmt value compile: this
+	to-eax: result
+	emit-jmp: postamble-label
+
+
+compile-try: stmt
+	# Allocate the catcher.
+	catcher = allocate-stack-struct: exception-catcher-size
+
+	# Call PushException_().
+	# "lea eax, catcher"
+	emit: 0x8D
+	emit-opcode-extensions-for: catcher
+	# "push eax"
+	emit: 0x50
+	# "call PushException_()"
+	emit-c-call: push-exception-fn-addr
+	emit-pop-args: 1
+
+	# Call setjmp().
+	iff Darwin
+		align-for-args: 1
+	# "lea eax, catcher" -- we happen to know that the jmp_buf is at offset zero.
+	emit: 0x8D
+	emit-opcode-extensions-for: catcher
+	# "push eax"
+	emit: 0x50
+	# "call setjmp()"
+	emit-c-call: setjmp-fn-addr
+	emit-pop-aligned-args: 1
+
+	# Test setjmp() result.
+	catch-clause = Label new
+	emit-test: CallResult
+	emit-cond-jmp: 'nz' to: catch-clause
+
+	# Body.
+	stmt body compile: this
+	# Call PopException_().
+	emit-c-call: pop-exception-fn-addr
+	# "jmp end".
+	end = Label new
+	emit-jmp: end
+
+	# "else" clause.
+	catch-clause define: offset
+	if stmt else-clause
+		# Set up the "exception" local.
+		exterior-caught-exception = cur-caught-exception
+		cur-caught-exception = new-local
+		# Call PopException_().
+		emit-c-call: pop-exception-fn-addr
+		# "mov eax, currentException_"
+		emit: (0x8B, 0x05)
+		emit-ptr: current-exception-addr
+		# "mov exception, eax"
+		emit-move-to: cur-caught-exception from: CallResult
+		# "else" clause body.
+		stmt else-clause body compile: this
+		# Clean up.
+		cur-caught-exception = exterior-caught-exception
+	else
+		# No "else" clause.
+		# Still need to call PopException_().
+		emit-c-call: pop-exception-fn-addr
+
+	end define: offset
+
+
+compile-throw: stmt
+	value-result = stmt value compile: this
+	iff Darwin
+		align-for-args: 1
+	emit-push: value-result
+	emit-c-call: throw-fn-addr
+	emit-pop-aligned-args: 1
+
+
+compile-switch: stmt
+	# Value.
+	exterior-num-locals = cur-num-locals
+	interior-num-locals = cur-num-locals
+	value-result = stmt expression compile: this
+	value-result = stash: value-result
+	cur-num-locals = interior-num-locals
+
+	# Set up labels.
+	next-clause = Label new
+	exit = Label new
+
+	# Clauses.
+	for clause in stmt clauses
+		next-clause define: offset
+		next-clause = Label new
+		clause-body = Label new
+		values-left = clause values num-items
+		# Tests.
+		for value in clause values
+			values-left -= 1
+			interior-num-locals = cur-num-locals
+			args = List with: value
+			test-result = emit-send-of: '==' to: value-result with: args
+			cur-num-locals = interior-num-locals
+			emit-test: test-result
+			if values-left == 0
+				# This is the last test.
+				emit-cond-jmp: 'z' to: next-clause
+				# Body follows immediately.
+			else
+				emit-cond-jmp: 'nz' to: clause-body
+				# Next test follows immediately.
+		# Body.
+		clause-body define: offset
+		clause body compile: this
+		emit-jmp: exit
+	
+	# "else" clause.
+	if stmt else-clause
+		next-clause define: offset
+		next-clause = nil 	# So it doesn't get redefined below.
+		stmt else-clause body compile: this
+	
+	# Exit.
+	if next-clause
+		next-clause define: offset
+	exit define: offset
+
+	cur-num-locals = exterior-num-locals
+
+
+# Expression compilation.
+
+compile-send: send
+	object-result = send object compile: this
+	return emit-send-of: send name intern to: object-result with: send arguments
+
+
+compile-super-call: super-call
+	# Push method args.
+	exterior-stack-alignment = nil
+	iff Darwin
+		exterior-stack-alignment = stack-alignment
+	object-result = compile-this-call: nil
+	push-args: super-call arguments
+	emit-push: object-result
+
+	# Get the superclass.
+	superclass-result = emit-send-of: '.superclass' to: object-result with: empty
+
+	# Call Dispatch_() on the superclass.
+	emit-push: superclass-result
+	iff symbol-dispatch
+		# "push symbol"
+		emit: 0x68
+		emit-ptr: super-call name intern object-ptr
+	iff !symbol-dispatch
+		# "push selector"
+		emit: 0x68
+		emit-word: super-call name intern selector
+	# "mov eax, dispatch-fn"
+	emit: 0xB8
+	emit-ptr: dispatch-fn
+	# "call eax"
+	emit: (0xFF, 0xD0)
+	emit-pop-args: 2
+
+	# Call the method.
+	# "call eax"
+	emit: (0xFF, 0xD0)
+	iff Darwin
+		stack-alignment = exterior-stack-alignment
+	emit-pop-aligned-args: super-call arguments num-items + 1
+	return CallResult
+
+
+compile-function-call: call
+	return call function compile-call: this with: call arguments
+
+
+compile-literal: value
+	# We keep all literals in the "literals" list so the GC won't throw them out.
+	literals append: value
+	return LiteralResult new: value
+
+compile-int-literal: literal
+	return compile-literal: literal value
+
+compile-char-literal: literal
+	return compile-literal: literal value
+
+compile-bool-literal: literal
+	# Don't need to keep these on the list.
+	return LiteralResult new: literal value
+
+compile-float-literal: literal
+	return compile-literal: literal value
+
+compile-string-literal: literal
+	return compile-literal: literal value
+
+compile-symbol-literal: literal
+	# Don't need to keep these on the list.
+	return LiteralResult new: literal name intern
+
+compile-literal-nil: literal
+	# Don't need to keep this on the list.
+	return LiteralResult new: nil
+
+compile-dict-literal: literal
+	dict = Dictionary new
+	for pair in literal dict pairs
+		# We know the result will be a LiteralResult.
+		value-result = pair value compile: this
+		dict at: pair name put: value-result value
+	return compile-literal: dict
+
+
+compile-tuple-expression: expr
+	# Create the tuple.
+	args = Tuple new: 1
+	args at: 0 put: (Compiler IntLiteral new: expr members num-items)
+	tuple-obj-result = LiteralResult new: Tuple
+	tuple = emit-send-of: 'new:' to: tuple-obj-result with: args
+	tuple = stash: tuple
+
+	# Add the members.
+	index = 0
+	for member in expr members
+		index-literal = Compiler IntLiteral new: index
+		emit-send-of: 'at:put:' to: tuple with: (index-literal, member)
+		index += 1
+
+	return tuple
+
+
+compile-short-circuit-and: expr
+	end = Label new
+	first-result = expr expr1 compile: this
+	first-result = to-eax: first-result
+	emit-test: first-result
+	emit-cond-jmp: 'z' to: end
+	second-result = expr expr2 compile: this
+	to-eax: second-result
+	end define: offset
+	return CallResult
+
+compile-short-circuit-or: expr
+	end = Label new
+	first-result = expr expr1 compile: this
+	first-result = to-eax: first-result
+	emit-test: first-result
+	emit-cond-jmp: 'nz' to: end
+	second-result = expr expr2 compile: this
+	to-eax: second-result
+	end define: offset
+	return CallResult
+
+compile-short-circuit-not: expr
+	object-result = expr expr compile: this
+	return to-boolean: object-result reverse-sense: true
+
+compile-nil-test: expr
+	object-result = expr object compile: this
+	return to-boolean: object-result reverse-sense: expr is-nil
+
+
+# Function call compilation.
+
+compile-this-call: func
+	return ArgumentResult new: 0
+
+compile-argument-call: func
+	return ArgumentResult new: argument-indices[func name]
+
+compile-set-argument-call: func with: arguments
+	index = argument-indices[func name]
+	value-result = arguments first-item compile: this
+	arg-result = ArgumentResult new: index
+	emit-move-to: arg-result from: value-result
+	return arg-result
+
+compile-local-getter-call: func
+	return func local compile-info
+
+compile-local-setter-call: func with: arguments
+	value-result = arguments first-item compile: this
+	local-result = func local compile-info
+	emit-move-to: local-result from: value-result
+	return local-result
+
+
+compile-shared-field-getter-call: func
+	# We could get more efficient here, but instead will just emit a send to the
+	# proto.
+	return 	--
+		func 	--
+			compile-send-of: func name to-proto: func on-proto with: empty using: this
+
+compile-shared-field-setter-call: func with: arguments
+	# We could get more efficient here, but instead will just emit a send to the
+	# proto.
+	return 	--
+		func 	--
+			compile-send-of: func name to-proto: func on-proto 	--
+			with: arguments using: this
+
+
+compile-function-on-this-call: func with: arguments
+	this-result = ArgumentResult new: 0
+	return emit-send-of: func name intern to: this-result with: arguments
+
+
+compile-proto-call: func
+	proto = ClassBuilder build: func proto
+	return LiteralResult new: proto
+
+
+compile-primitive-function-call: func with: arguments
+	return 	--
+		func 	--
+			compile-send-of: func name to-proto: func on-proto 	--
+			with: arguments using: this
+
+
+compile-caught-exception-call: func
+	if cur-caught-exception == nil
+		error: "Internal compiler error: no cur-caught-exception."
+	return cur-caught-exception
+
+
+compile-nil-call: func
+	# Using "xor eax,eax".
+	emit: 0x31
+	emit: 0xC0
+	return CallResult
+
+
+compile-bool-literal-call: func
+	if func value
+		return LiteralResult new: true
+	return LiteralResult new: false
+
+
+
+# Copyright 2009 Steve Folta.  See the License file.
+

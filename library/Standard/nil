@@ -1,0 +1,58 @@
+trylon nil
+superclass Collection
+
+# This is a single object used for 'nil' when 'nil-object' is on in the
+# build-settings.
+#
+# The main advantage is that sends to 'nil' can be handled as exceptions rather
+# than crashing the program.
+# 
+# Another nice thing is that it can be used as a collection, so you can do
+# this:
+#
+# 	for item in items
+# 		...
+#
+# instead of:
+#
+# 	if items
+# 		for item in items
+# 			...
+
+
+message-not-understood
+	# This is the weak form of "message-not-understood" that is used when
+	# 'symbol-dispatch' is turned off in the build-settings.
+	throw MessageException new: "Attempt to use 'nil'."
+
+
+message-not-understood: selector arguments: arguments
+	throw MessageException new: 	--
+		"Attempt to call '" + selector string + "' on 'nil'."
+
+
+string
+	return "nil"
+
+
+
+# As a Collection.
+
+class iterator
+	superclass Iterator
+	is-done
+		return true
+	current-item
+		return nil
+	go-forward
+		# Nothing to do.
+	next
+		return nil
+
+num-items
+	return 0
+is-empty
+	return true
+
+
+

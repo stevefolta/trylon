@@ -1,0 +1,7 @@
+trylon Stdout
+superclass OutputStream
+
+
+write-buffer: buffer length: length
+
+

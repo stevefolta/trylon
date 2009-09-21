@@ -1,0 +1,27 @@
+trylon ArgumentResult
+superclass Result
+
+fields offset
+
+create: index
+	offset = (index + 2) * word-size
+
+
+mod-rm
+	if offset > 127
+		return 0x85
+	else
+		return 0x45
+
+disp8
+	if offset < 127
+		return offset
+	return nil
+
+disp32
+	if offset > 127
+		return offset
+	return nil
+
+
+

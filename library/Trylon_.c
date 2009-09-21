@@ -4,40 +4,209 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef SYMBOL_DISPATCH_
+	#include <stdarg.h>
+#endif
 #ifdef OSX_FINK
 	#include "gc.h"
 #else
 	#include "gc/gc.h"
 #endif
 
-static obj_ SendMessageNotUnderstood_(obj_ object, ...)
-{
-	UsingMethod_(message_not_understood);
-	return Call_(message_not_understood, object);
-}
+
+#ifdef SYMBOL_DISPATCH_
+// Not thread-safe!  We'll need to move this to thread-local storage if we
+// support threads.
+static obj_ unhandledMessage = nil;
+#endif
+
+static obj_ SendMessageNotUnderstood_(obj_ object, ...);
 
 
-fn_ptr_ Dispatch_(selector_ selector, obj_ object)
+fn_ptr_ Dispatch_(dispatch_selector_ selectorIn, obj_ object)
 {
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+#if defined(NIL_OBJECT_) && defined(TAGGED_INTS_)
+	else
+#endif
+#ifdef TAGGED_INTS_
+	if (IsTaggedInt_(object))
+		object = &SmallInt__CImplementation__Standard;
+#endif
+
+#ifdef SYMBOL_DISPATCH_
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	int selector = selectorIn;
+#endif
+
+	// First, try to get it from the dispatch table.
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
-
 	if (entry->selector == selector)
 		return entry->method;
 
-	// Send message-not-understood:instead.
-	// *** Eventually, we want to actually specify *which* message wasn't
-	// *** understood, and also pass the arguments.
+#if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
+	// Next, try the "newMethods" dictionaries for this and all superclasses, and
+	// the dispatch tables of the superclasses too.
+	struct ClassInfo* classInfo = object->class_;
+	for (;;) {
+		if (classInfo->newMethods) {
+			UsingMethod_(at_co_)
+			obj_ method_ptr = Call_(at_co_, classInfo->newMethods, selectorIn);
+			if (method_ptr)
+				return (fn_ptr_) BytePtrValue_(method_ptr);
+			}
+		if (classInfo->superclass == nil)
+			break;
+		classInfo = classInfo->superclass->class_;
+		entry = &dispatchTable_[selector + classInfo->classNum];
+		if (entry->selector == selector)
+			return entry->method;
+		}
+#endif
+
+	// Message not understood.
+	// Send 'message-not-understood:arguments:' instead.
+#ifdef SYMBOL_DISPATCH_
+	unhandledMessage = selectorIn;
+#endif
 	return (fn_ptr_) &SendMessageNotUnderstood_;
 }
 
 
-obj_ RespondsTo_(obj_ object, selector_ selector)
+obj_ RespondsTo_(obj_ object, dispatch_selector_ selectorIn)
 {
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+#if defined(NIL_OBJECT_) && defined(TAGGED_INTS_)
+	else
+#endif
+#ifdef TAGGED_INTS_
+	if (IsTaggedInt_(object))
+		object = &SmallInt__CImplementation__Standard;
+#endif
+
+#ifdef SYMBOL_DISPATCH_
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	selector_ selector = selectorIn;
+#endif
+
+	// First, try the dispatch table.
+	struct RDTableEntry_* entry =
+		&dispatchTable_[selector + ClassNumFor_(object)];
+	if (entry->selector == selector)
+		return true_;
+
+#if defined(SUPPORT_NEW_METHODS_) && defined(SYMBOL_DISPATCH_)
+	// Next, try the "newMethods" dictionaries for this and all superclasses, and
+	// the dispatch tables of the superclasses too.
+	struct ClassInfo* classInfo = object->class_;
+	for (;;) {
+		if (classInfo->newMethods) {
+			UsingMethod_(at_co_)
+			obj_ method_ptr = Call_(at_co_, classInfo->newMethods, selectorIn);
+			if (method_ptr)
+				return true_;
+			}
+		if (classInfo->superclass == nil)
+			break;
+		classInfo = classInfo->superclass->class_;
+		entry = &dispatchTable_[selector + classInfo->classNum];
+		if (entry->selector == selector)
+			return true_;
+		}
+#endif
+
+	return nil;
+}
+
+
+#ifdef SUPPORT_NEW_METHODS_
+fn_ptr_* MethodLocation_(obj_ object, dispatch_selector_ selectorIn)
+{
+#ifdef NIL_OBJECT_
+	if (object == nil)
+		object = &nil__Standard;
+#endif
+#if defined(NIL_OBJECT_) && defined(TAGGED_INTS_)
+	else
+#endif
+#ifdef TAGGED_INTS_
+	if (IsTaggedInt_(object))
+		object = &SmallInt__CImplementation__Standard;
+#endif
+
+#ifdef SYMBOL_DISPATCH_
+	selector_ selector =
+		((struct Standard__Symbol__internal*) selectorIn)->selector;
+#else
+	selector_ selector = selectorIn;
+#endif
+
 	struct RDTableEntry_* entry =
 		&dispatchTable_[selector + ClassNumFor_(object)];
 
-	return Bool_(entry->selector == selector);
+	if (entry->selector == selector)
+		return &entry->method;
+
+	return nil;
+}
+#endif
+
+
+static obj_ SendMessageNotUnderstood_(obj_ object, ...)
+{
+#ifdef SYMBOL_DISPATCH_
+
+	UsingMethod_(characters) UsingMethod_(iterator)
+	UsingMethod_(is_done) UsingMethod_(current_item) UsingMethod_(go_forward)
+	UsingMethod_(message_not_understood_co_arguments_co_);
+	int num_args = 0, which_arg;
+	char c;
+	va_list arg_list;
+	obj_ args_tuple;
+
+	// How many arguments are there?
+	// We can find out by counting the number of colons in the selector.
+	obj_ characters = Call_(characters, unhandledMessage);
+	ForStart_(1, characters, char_obj)
+		c = IntValue_(char_obj);
+		if (c == ':')
+			num_args += 1;
+		ForEnd_(1)
+	
+	// Gather the arguments into a tuple.
+	args_tuple = NewTuple_(num_args);
+	va_start(arg_list, object);
+	for (which_arg = 0; which_arg < num_args; ++which_arg) {
+		obj_ arg = va_arg(arg_list, obj_);
+		TuplePut_(args_tuple, which_arg, arg);
+		}
+	va_end(arg_list);
+
+	// Call 'message-not-understood:arguments:'.
+	return
+		Call_(
+			message_not_understood_co_arguments_co_,
+			object, unhandledMessage, args_tuple);
+
+#else 	// !SYMBOL_DISPATCH_
+
+	// If 'symbol-dispatch' isn't on, we don't have a good way of knowing what
+	// message was sent.
+	UsingMethod_(message_not_understood);
+	return Call_(message_not_understood, object);
+
+#endif
 }
 
 
@@ -102,8 +271,23 @@ void RegisterFinalizer_(obj_ object)
 
 
 
+#ifdef TAGGED_INTS_
+int IntValue_(obj_ obj)
+{
+	if (((ptrdiff_t) obj & 0x01) != 0)
+		return (ptrdiff_t) obj >> 1;
+	return (((struct Standard__Int__internal*) obj)->value);
+}
+#endif
+
+
 obj_ BuildInt_(int value)
 {
+#ifdef TAGGED_INTS_
+	if (value <= PTRDIFF_MAX >> 1 && value >= PTRDIFF_MIN >> 1)
+		return SmallInt_(value);
+#endif
+
 	struct Standard__Int__internal* result =
 		(struct Standard__Int__internal*)
 			GC_MALLOC(sizeof(struct Standard__Int__internal));
@@ -222,6 +406,25 @@ void* AllocNonPtr_(int numBytes)
 }
 
 
+obj_ NewTuple_(int numItems)
+{
+	extern obj_ new_co___Tuple__Standard(obj_, obj_);
+	return new_co___Tuple__Standard(Proto_(Tuple__Standard), BuildInt_(numItems));
+}
+
+
+obj_ TupleAt_(obj_ tuple, int index)
+{
+	return tuple->fields[index + 1];
+}
+
+
+void TuplePut_(obj_ tuple, int index, obj_ value)
+{
+	tuple->fields[index + 1] = value;
+}
+
+
 obj_ CloneObj_(obj_ object)
 {
 	return AllocObjFromClassInfo_(object->class_);
@@ -296,7 +499,13 @@ int main(int argc, char* argv[])
 	result = main_co___Main(Proto_(Main), args);
 
 	// Return the result.
-	if (result && result->class_ == StdClassRef_(Int))
+	if (result == nil)
+		return 0;
+#ifdef TAGGED_INTS_
+	else if (IsTaggedInt_(result))
+		return IntValue_(result);
+#endif
+	else if (result->class_ == StdClassRef_(Int))
 		return IntValue_(result);
 	else
 		return 1;

@@ -1,0 +1,10 @@
+trylon NewSharedField
+
+fields name value
+
+create: name
+	this name = name
+
+c-fn value-ptr
+	return BuildBytePtr_(&Field_(value));
+

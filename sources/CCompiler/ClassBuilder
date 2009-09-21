@@ -18,7 +18,7 @@ emit: force-compile
 	build-settings = compiler build-settings
 
 	# Emit the C code.
-	status-reporter report: "Emitting C for " + proto name + "..."
+	status-reporter report: "Emitting C for " + proto full-name + "..."
 	c-file-name = 	--
 		build-settings c-sources-dir + "/" + proto c-name + ".c"
 	stream = ExistingFileStream new: c-file-name
@@ -67,12 +67,30 @@ emit-on: stream
 		stream write-line: tuple forward-declaration
 		used-contexts-access = tuple access
 
+	# Subprotos.
+	subprotos-access = "nil"
+	if build-settings["support-subprotos"]
+		tuple = nil
+		for function in proto functions values
+			if !(function is-a: Compiler ProtoFunction)
+				continue
+			if tuple == nil
+				tuple = Compiler TupleExpression new
+			subproto = function proto
+			stream write-all: ("UsingClass_(", subproto c-name, ") ")
+			tuple add-member: (ProtoExpression new: subproto)
+		if tuple
+			stream write-line
+			tuple emit-code: this
+			stream write-line: tuple forward-declaration
+			subprotos-access = tuple access
+
 	# Class info.
 	compiler using-symbol: proto name
 	mangled-name = mangle-name: proto name
 	stream write-all: ("UsingSym_(", mangled-name, ")")
 	parent-context-ref = "nil"
-	if proto parent && (proto parent is-a: Compiler CompiledProto)
+	if proto parent && (proto parent is-a: Compiler CompiledClass)
 		stream write-all: ("UsingClass_(", proto parent c-name, ")\n")
 		parent-context-ref = "Proto_(" + proto parent c-name + ")"
 	superclass-ref = "nil"
@@ -83,6 +101,8 @@ emit-on: stream
 	stream write: "struct ClassInfo "
 	stream write: proto c-name
 	stream write: "__classInfo_ = \n\t{ "
+	if build-settings has-symbol: "class-objects"
+		stream write: "StdClassRef_(Class__CImplementation), "
 	stream write: proto class-num string
 	stream write: ", "
 	stream write: proto total-num-fields string
@@ -96,8 +116,10 @@ emit-on: stream
 	stream write: used-contexts-access
 	stream write: ", Sym_("
 	stream write: mangled-name
-	stream write: ") ,"
+	stream write: "), "
 	stream write: added-fields-access
+	stream write: ", "
+	stream write: subprotos-access
 	stream write: " };\n"
 
 	# Prototype.
@@ -117,6 +139,8 @@ emit-on: stream
 
 	# Shared fields initial values.
 	for field in proto shared-fields values
+		if !field initial-value is-literal
+			error: "Initial value for \"" + field name + "\" is not literal."
 		field initial-value-result = field initial-value emit-code: this
 	if !extern-declarations is-empty
 		for declaration in extern-declarations

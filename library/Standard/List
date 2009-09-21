@@ -7,6 +7,24 @@ create
 	first-cell = nil
 	last-cell = nil
 
+with: value
+	list = List new
+	list append: value
+	return list
+
+with: value-1 and: value-2
+	list = List new
+	list append: value-1
+	list append: value-2
+	return list
+
+with: value-1 and: value-2 and: value-3
+	list = List new
+	list append: value-1
+	list append: value-2
+	list append: value-3
+	return list
+
 append: object
 	cell = Cell new: object
 	if last-cell != nil

@@ -9,12 +9,16 @@ create: expr1 with: expr2
 	this expr2 = expr2
 
 
-prepare-to-emit
-	expr1 prepare-to-emit
-	expr2 prepare-to-emit
+resolve
+	expr1 resolve
+	expr2 resolve
+
+
+compile: builder
+	return builder compile-short-circuit-or: this
 
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

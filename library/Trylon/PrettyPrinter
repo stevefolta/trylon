@@ -1,0 +1,127 @@
+trylon PrettyPrinter
+
+pretty-print-lines: lines to: stream
+	for line in lines
+		pretty-print-line: line text to: stream
+		if line block
+			stream send: "<div class=\"trylon-block\">"
+			pretty-print-lines: line block to: stream
+			stream send: "</div>"
+
+
+pretty-print-line: line to: stream
+	if line trimmed is-empty
+		line = "&nbsp;"
+	else
+		# Build up the line, word by word (token by token).
+		is-first-word = true
+		last-binds-forward = true
+		is-for-statement = false
+		is-else-statement = false
+		words = Trylon WordsLexer new: line
+		result-line = StringBuilder new
+		for word in words
+			# What kind of word is this?
+			word-type = 'normal'
+			if is-first-word
+				switch word
+					"trylon", "fn", "function", "c-fn", "field", "fields", "flds", 	--
+					"proto", "class", "extend", "superclass", "c-preamble", 	--
+					"if", "iff", "switch", 	--
+					"loop", "while", "break", "continue", 	--
+					"try", "catch", "throw"
+						word-type = 'reserved'
+					"else"
+						word-type = 'reserved'
+						is-else-statement = true
+					"for"
+						word-type = 'reserved'
+						is-for-statement = true
+				is-first-word = false 	# from now on.
+			if word-type != 'normal'
+				# Already handled, don't keep checking.
+			else if is-for-statement && word == "in"
+				word-type = 'reserved'
+			else if is-else-statement && word == "if"
+				word-type = 'reserved'
+			else if word ends-with: ":"
+				word-type = 'keyword'
+			else if word starts-with: "\"" || word starts-with: "'" || 	--
+			        word starts-with: "`"
+				word-type = 'constant'
+			else if word first-character is-digit
+				word-type = 'constant'
+			else if word starts-with: "#"
+				word-type = 'comment'
+				word += words remainder
+
+			# Do we need a space?
+			binds-forward = binds-backward = false
+			if word-type == 'normal' 	# Optimization.
+				switch word
+					"(", "!"
+						binds-forward = true
+					")", ","
+						binds-backward = true
+
+			# Add the word to the line.
+			if !last-binds-forward && !binds-backward
+				result-line += " "
+			if word-type != 'normal'
+				result-line += "<span class=\"" + (tag-for-word-type: word-type) + "\">"
+			result-line += html-escape: word
+			if word-type != 'normal'
+				result-line += "</span>"
+
+			# Go 'round again.
+			last-binds-forward = binds-forward
+			if word-type == 'comment'
+				break
+
+		line = result-line string
+
+	stream send: ("<div class=\"trylon-line\">", line, "</div>")
+
+
+tag-for-word-type: word-type
+	switch word-type
+		'reserved'
+			return "trylon-reserved-word"
+		'keyword'
+			return "trylon-keyword"
+		'constant'
+			return "trylon-constant"
+		'comment'
+			return "trylon-comment"
+
+
+html-escape: text
+	escaped-text = StringBuilder new
+	p = text start
+	stopper = text stopper
+	run-start = p
+	while p < stopper
+		c = p deref-char
+		switch c
+			`&`
+				escaped-text += String from: run-start to: p
+				p += 1
+				run-start = p
+				escaped-text += "&amp;"
+			`<`
+				escaped-text += String from: run-start to: p
+				p += 1
+				run-start = p
+				escaped-text += "&lt;"
+			`>`
+				escaped-text += String from: run-start to: p
+				p += 1
+				run-start = p
+				escaped-text += "&gt;"
+			else
+				p += 1
+	if run-start < stopper
+		escaped-text += String from: run-start to: stopper
+	return escaped-text string
+
+

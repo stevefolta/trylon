@@ -51,6 +51,11 @@ run
 				(add_history [line _stringValue])
 			last-line = line
 		try
+			lines = (Trylon LinesLexer new: line + "\n") lex
+			line = lines first-item
+			words = Trylon WordsLexer new: line
+			parser = 	--
+				Compiler ExpressionParser new: words line: line context: context
 			parser = Compiler Parser new: line context: context
 			expr = parser parse-expression
 			if expr
@@ -72,7 +77,7 @@ proto Context
 
 	create: command-line
 		this command-line = command-line
-		parent = Compiler ExistingProto new: "command-line" proto: command-line
+		parent = Compiler ExistingClass new: "command-line" proto: command-line
 	
 	lookup-function: name
 		return parent lookup-function: name
@@ -87,7 +92,7 @@ proto Context
 		else if name == "false"
 			return Compiler BoolLiteralFunction new: false
 
-		if (name index-of: `:`) == name length - 1
+		if name ends-with: ":"
 			# Autodeclare it as a shared field in the command-line.
 			field-name = name substr: 0 length: name length - 1
 			field-name-symbol = field-name intern

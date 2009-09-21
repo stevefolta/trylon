@@ -5,7 +5,10 @@ superclass TrylonFunction
 create
 
 
+compile-call: builder with: arguments
+	return builder compile-this-call: this
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

@@ -16,7 +16,9 @@ create: error-message in: line
 message
 	if line
 		return error-message + " (\"" + line text trimmed + "\")"
-	return error-message + " (\"" + token string + "\")"
+	if token
+		return error-message + " (\"" + token string + "\")"
+	return error-message
 
 
 

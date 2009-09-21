@@ -1,0 +1,318 @@
+trylon ClassParser
+
+fields lines proto context
+fields line words 	# Only valid during 'parse-line:'.
+
+
+create: lines into: proto context: context
+	this lines = lines
+	this proto = proto
+	this context = context
+
+
+parse
+	parse-block: lines
+
+
+parse-block: lines
+	if lines
+		for line in lines
+			parse-line: line
+
+
+parse-line: line
+	this line = line
+	words = line words
+	if words is-done
+		return
+	switch words peek
+		"proto", "class"
+			words next
+			parse-member-class
+		"fn", "function", "class-fn"
+			words next
+			proto add-function: parse-function
+		"field", "fields"
+			words next
+			for field-name in words
+				if field-name starts-with: "#"
+					break
+				field = CompiledField new: field-name
+				proto add-field: field
+		"superclass"
+			words next
+			superclass = parse-type-spec
+			proto make-subclass-of: superclass
+		"extend"
+			words next
+			parse-extension
+		"uses"
+			words next
+			parse-uses
+		"iff"
+			parse-iff
+		"trylon", "trylid"
+			words next
+			# Likely followed by the name; grab that if possible.
+			if !(words is-empty) && (is-name: words peek)
+				proto source-name = words next
+			# Ignore the rest of the line.
+		"c-preamble"
+			if !(build-settings targeting-c)
+				parse-error: "c-preamble not allowed when not targeting C."
+			words next
+			words require-eol
+			proto c-preamble = line flattened-block-text
+		"primitive-fn", "c-fn"
+			words next
+			function = parse-function: words next is-primitive: true
+			proto add-function: function
+		"#"
+			# A comment, just skip it.
+		else
+			name = words next
+			if name starts-with: "#"
+				# A comment, skip it.
+				return
+			if !(words is-done) && (words peek == "=")
+				# Declaring a shared variable.
+				# Get the initial value.
+				words next
+				parser = ExpressionParser new: words line: line context: context
+				initial-value = parser parse-expression
+
+				# Add it.
+				field = CompiledField new: name type: nil
+				field initial-value = initial-value
+				proto add-shared-field: field
+
+			else
+				# Declaring a function.
+				proto add-function: (parse-function: name)
+
+
+parse-member-class
+	name = words next
+	if name == nil
+		parse-error: "Missing class name."
+	if !is-name: name
+		parse-error: "\"" + name + "\" is not a valid class name."
+
+	report: "Parsing " + name + "..."
+	indent
+
+	# Create (or get) the class.
+	member-class = context add-proto: name
+
+	# Read the contents (if any).
+	parse-class-contents: line block into: member-class
+	
+	unindent
+
+
+parse-class-contents: block into: class
+	parser = ClassParser new: block into: class context: class
+	parser parse
+
+
+parse-function
+	return parse-function: nil is-primitive: false
+
+parse-function: initial-name
+	return parse-function: initial-name is-primitive: false
+
+
+parse-function: initial-name is-primitive: is-primitive
+	# Get the name.
+	# We're allowing any name; we want to allow unops and binops and string 
+	# literals as well as names.  Ideally we should reject other names, but 
+	# currently we don't bother.
+	name = initial-name
+	if name == nil
+		name = words next
+
+	# Get the arguments.
+	arguments = List new
+	if !(is-name: name) && name != "~"
+		# Get the first argument.
+		if words is-done
+			parse-error: "Missing argument name in " + name + "."
+		arg-name = words next
+		if !(is-name: arg-name)
+			parse-error: "Missing argument name in " + name + "." token: arg-name
+		arg-type = parse-arg-type
+		arguments append: (CompiledField new: arg-name type: arg-type)
+
+		# Get additional arguments.
+		loop
+			# Are we looking at an argument?
+			if words is-done
+				break
+			token = words peek
+			is-keyword = false
+			if token ends-with: ":"
+				is-keyword = true
+			else if !(is-name: token)
+				break
+
+			# Get the name.
+			if is-keyword
+				# Standard argument declaration ("keyword: name").
+				name += words next
+				arg-name = words next
+				if !(is-name: arg-name)
+					parse-error: "Missing argument name." token: arg-name
+			else
+				# Special shortcut: just an argument name.  Equivalent to "name: name".
+				name += words next + ":"
+				arg-name = words next
+				arg-name = arg-name substr: 0 length: arg-name length - 1
+
+			# Get the type and add the argument.
+			arg-type = parse-arg-type
+			arguments append: (CompiledField new: arg-name type: arg-type)
+	
+	# Get the return type.
+	return-type = nil
+	if !(words is-done) && words peek == '->'
+		words next
+		return-type = parse-type-spec
+	
+	words require-eol
+
+	report: "Parsing " + name + "..."
+
+	# Parse the body.
+	body = nil
+	method-context = nil
+	if is-primitive
+		body = line flattened-block-text
+	else
+		if line block
+			method-context = MethodContext new: arguments parent: context
+			parser = MethodParser new: line block in: method-context
+			body = parser parse
+		else
+			body = nil
+	
+	# Build the function and return it.
+	new-function = 	--
+		CompiledFunction new: name arguments: arguments 	--
+			return-type: return-type --
+			on-proto: context body: body is-primitive: is-primitive
+	if method-context
+		new-function method-context = method-context
+	return new-function
+
+
+parse-extension
+	# The class to extend.
+	extended-class = parse-class-spec
+	words require-eol
+
+	report: "Parsing " + extended-class name + "..."
+	indent
+
+	parse-class-contents: line block into: extended-class
+
+	unindent
+
+
+parse-uses
+	used-class = parse-class-spec
+	words require-eol
+	proto add-used-namespace: used-class
+
+
+parse-iff
+	words next 	# Get past the "iff".
+	inverted = false
+	if words peek == "!"
+		inverted = true
+		words next
+	if words is-empty
+		parse-error: "\"iff\" statement is missing its word."
+	name = words next
+	words require-eol
+	test-succeeded = (build-settings has-symbol: name)
+	if inverted
+		test-succeeded = !test-succeeded
+	if test-succeeded
+		parse-block: line block
+
+
+parse-arg-type
+	arg-type = nil
+	if !(words is-done) && words peek == "("
+		# Type is specified.
+		words next
+		arg-type = parse-type-spec
+		if words peek != ")"
+			parse-error: "Missing \")\"."
+		words next
+	return arg-type
+
+
+parse-type-spec
+	type = parse-class-spec
+
+	# Make sure we got a class.
+	okay = type is-a: CompiledClass
+	iff in-jolt
+		if !okay
+			okay = type is-a: ExistingClass
+	if !okay
+		parse-error: "A type specifier was given, but is not a class." 	--
+			token: type name
+	
+	return type
+
+
+parse-class-spec
+	type = nil
+	cur-context = context
+	while !(words is-empty) && (is-name: words peek)
+		# Find the class.
+		name = words next
+		if type == nil
+			# The first name can be anything in scope.
+			type-function = cur-context lookup-function: name
+			if type-function == nil || !(type-function is-a: ProtoFunction)
+				parse-error: "Unknown class." token: name
+			type = type-function proto
+		else
+			# Other names must be subclasses of the class specified so far.
+			type = cur-context get-subproto: name
+			if type == nil
+				parse-error: "Unknown class." token: name
+		cur-context = type
+	
+	# Make sure we got a class.
+	if type == nil
+		parse-error: "Missing the type in a type specifier."
+	
+	return type
+
+
+parse-error: message token: token
+	throw ParseException new: message token: token
+parse-error: message
+	parse-error: message token: words peek
+
+report: message
+	iff report-parsing
+		if status-reporter
+			status-reporter report: message
+indent
+	if status-reporter
+		status-reporter indent
+unindent
+	if status-reporter
+		status-reporter unindent
+
+is-name: name
+	return ExpressionParser is-name: name
+
+
+# Copyright 2007 Steve Folta.  See the License file.
+

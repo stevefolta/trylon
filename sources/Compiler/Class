@@ -1,0 +1,56 @@
+trylon Class
+superclass Context
+
+fields compile-info
+
+
+add-function: function
+	virtual
+
+add-field: field
+	virtual
+
+add-shared-field: field
+	virtual
+
+add-class: name
+	virtual
+
+get-subproto: name
+	virtual
+
+make-subclass-of: superclass
+	virtual
+
+add-used-namespace: namespace
+	virtual
+
+newly-defined-functions
+	# Should return an iterator returning (key, value) pairs, like
+	# "Dictionary pairs".
+	virtual
+
+name
+	virtual
+parent
+	virtual
+is-main
+	virtual
+
+
+# Helpers
+
+full-name
+	if is-main
+		return name
+	result = this name
+	proto = parent
+	while !proto is-main
+		result = proto name + " " + result
+		proto = proto parent
+	return result
+
+
+
+# Copyright 2009 Steve Folta.  See the License file.
+

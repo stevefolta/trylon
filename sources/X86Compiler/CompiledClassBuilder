@@ -1,0 +1,73 @@
+trylon CompiledClassBuilder
+superclass ClassBuilder
+
+fields created-proto
+
+created-protos = nil 	# A List to keep them from being GC'd.
+
+
+create: compiled-class
+	super create: compiled-class
+	if created-protos == nil
+		created-protos = List new
+
+
+build
+	# Create the new class in the runtime.
+	proto = live-proto
+
+	# Add in all the functions.
+	build-functions-into: proto
+
+	return proto
+
+
+live-proto
+	# Create it, if we haven't already.
+	if created-proto == nil
+		compiled-class = class-context
+
+		# Parent, superclass.
+		parent-object = nil
+		if compiled-class parent
+			parent-object = live-proto-for: compiled-class parent
+		superclass-object = nil
+		if compiled-class superclass
+			superclass-object = live-proto-for: compiled-class superclass
+		else
+			superclass-object = Object
+		field-names = List new
+
+		# Set up fields.
+		# We need the field names for the Class; also assign field indices here.
+		field-index = superclass-object .class num-slots
+		for field in compiled-class fields
+			field-names append: field name intern
+			field compile-info = field-index
+			field-index += 1
+
+		# Create the class.
+		class-info = 	--
+			CImplementation Class 	--
+				new: compiled-class name intern --
+				field-names: field-names 	--
+				parent: parent-object superclass: superclass-object
+		created-proto = class-info proto
+		created-protos append: created-proto
+
+	return created-proto
+
+
+index-for-field: name
+	# We assign the field indices while setting up the live-proto, so make sure
+	# that's happened.
+	live-proto
+
+	for field in class-context fields
+		if name == field name
+			return field compile-info
+	
+	error: "Internal error: Unknown field: \"" + name + "\""
+
+
+

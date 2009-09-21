@@ -1,0 +1,9 @@
+trylon CallResult
+superclass Result
+
+is-eax
+	return true
+
+mod-rm
+	return 0xC0
+

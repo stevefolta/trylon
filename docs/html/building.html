@@ -64,6 +64,33 @@ div.code {
 	white-space: pre;
 }
 
+div.trylon-code {
+	font-family: arial, sans;
+	margin-left: 1em;
+}
+
+div.trylon-block {
+	margin-left: 1em;
+}
+
+span.trylon-reserved-word {
+	/* font-weight: bold; */
+	color: #905010;
+}
+
+span.trylon-keyword {
+	color: #0060FF;
+}
+
+span.trylon-constant {
+	color: #800060;
+}
+
+span.trylon-comment {
+	color: gray;
+}
+
+
 </style>
 
 </head>
@@ -81,11 +108,15 @@ Building Trylon Programs
 Here is the "hello world" program in Trylon.  It can also be found in the "tests" directory of the distribution.  Here are the contents of the "main" file:
 </p>
 
-<div class="code">trylon hello-world
-
-main: args
-  print-line: "Hello world!"
-  return 0</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-reserved-word">trylon</span> hello-world</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-keyword">main:</span> args</div>
+<div class="trylon-block">
+<div class="trylon-line"><span class="trylon-keyword">print-line:</span> <span class="trylon-constant">"Hello world!"</span></div>
+<div class="trylon-line">return <span class="trylon-constant">0</span></div>
+</div>
+</div>
 
 <p>
 The "trylon" line is not necessary, but it may help your editor highlight syntax.  Anything after the word "trylon" on that line is usually ignored, but often the name of the class defined in the file is put there.  But we're looking at the one case where it makes a difference: in your main "main" file, the word after "trylon" is used as the name of the resulting binary, if it isn't specified elsewhere.
@@ -99,16 +130,24 @@ The rest of the file declares a function named "main:".  The "main:" function is
 To build this program, make a directory for your program, and put the code into a file named "main" in that directory:
 </p>
 
-<div class="code">hello-world/
-  main</div>
+<div class="trylon-code">
+<div class="trylon-line">hello-world/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+</div>
+</div>
 
 <p>
 Go into that directory and type "trylon".  The code will be compiled into a program that's ready to run:
 </p>
 
-<div class="code">hello-world/
-  hello-world
-  main</div>
+<div class="trylon-code">
+<div class="trylon-line">hello-world/</div>
+<div class="trylon-block">
+<div class="trylon-line">hello-world</div>
+<div class="trylon-line">main</div>
+</div>
+</div>
 
 </div>
 
@@ -118,42 +157,62 @@ Go into that directory and type "trylon".  The code will be compiled into a prog
 If you have more than one class in your program, you'll normally want each class to have its own file.  These can go directly in your program's directory:
 </p>
 
-<div class="code">my-program/
-  main
-  CodeView
-  HTMLView
-  Window</div>
+<div class="trylon-code">
+<div class="trylon-line">my-program/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+<div class="trylon-line">CodeView</div>
+<div class="trylon-line">HTMLView</div>
+<div class="trylon-line">Window</div>
+</div>
+</div>
 
 <p>
 But you can keep your top-level directory cleaner by putting your code into a "sources" directory:
 </p>
 
-<div class="code">my-program/
-  my-program
-  sources/
-    main
-    CodeView
-    HTMLView
-    Window
-  ReadMe</div>
+<div class="trylon-code">
+<div class="trylon-line">my-program/</div>
+<div class="trylon-block">
+<div class="trylon-line">my-program</div>
+<div class="trylon-line">sources/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+<div class="trylon-line">CodeView</div>
+<div class="trylon-line">HTMLView</div>
+<div class="trylon-line">Window</div>
+</div>
+<div class="trylon-line">ReadMe</div>
+</div>
+</div>
 
 <p>
 A more complex example, showing how some classes are used as namespaces containing other classes:
 </p>
 
-<div class="code">my-program/
-  my-program
-  sources/
-    main
-    CodeView/
-      main
-      Line
-    HTMLView/
-      main
-      Document
-      Element
-      Node
-      Text</div>
+<div class="trylon-code">
+<div class="trylon-line">my-program/</div>
+<div class="trylon-block">
+<div class="trylon-line">my-program</div>
+<div class="trylon-line">sources/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+<div class="trylon-line">CodeView/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+<div class="trylon-line">Line</div>
+</div>
+<div class="trylon-line">HTMLView/</div>
+<div class="trylon-block">
+<div class="trylon-line">main</div>
+<div class="trylon-line">Document</div>
+<div class="trylon-line">Element</div>
+<div class="trylon-line">Node</div>
+<div class="trylon-line">Text</div>
+</div>
+</div>
+</div>
+</div>
 
 </div>
 
@@ -163,58 +222,68 @@ A more complex example, showing how some classes are used as namespaces containi
 Your program's directory may also contain a "build-settings" file.  Here's an example:
 </p>
 
-<div class="code"># The program name.  (This overrides what the "trylon"
-# line in "main" says.)
-program = "my-program"
-
-# If you ever need to debug your program in GDB, this will
-# add some helpful things, like showObj_().
-debugger = true
-
-# As of this writing, this is needed if you want to use
-# "perform:".  In the future, this will likely be on by
-# default, and you'd turn it off if you don't need to send
-# 'perform:' and want your program to be as small as
-# possible.
-support-perform = true
-
-# A little optimization can be nice.  Note the "+=", which
-# is supported by the "c-flags" and "link-flags" settings.
-c-flags += "-O1"
-
-# One of the more common uses for the "build-settings"
-# file is to give the location of C libraries that are
-# used.
-c-flags += "-I/usr/include/cairo"
-link-flags += "-lcairo"
-
-# Don't like the way the C sources are hidden from sight
-# in the ".c-sources" directory?  Change where they're
-# put.
-c-sources-dir = "C-sources"
-# "objects-dir" and "jolt-sources-dir" can be similarly
-# specified.
-
-# You can also define your own settings.  These can be
-# used by "iff" (conditional compilation) statements in
-# the code, or they can be used in "if" statements here in
-# the build-settings file.
-use-tcc = true
-if use-tcc
-  c-compiler = "tcc"
-  linker = "tcc"</div>
+<div class="trylon-code">
+<div class="trylon-line"><span class="trylon-comment"># The program name.  (This overrides what the "trylon"</span></div>
+<div class="trylon-line"><span class="trylon-comment"># line in "main" says.)</span></div>
+<div class="trylon-line">program = <span class="trylon-constant">"my-program"</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># If you ever need to debug your program in GDB, this will</span></div>
+<div class="trylon-line"><span class="trylon-comment"># add some helpful things, like showObj_().</span></div>
+<div class="trylon-line">debugger = true</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># As of this writing, this is needed if you want to use</span></div>
+<div class="trylon-line"><span class="trylon-comment"># "perform:".  In the future, this will likely be on by</span></div>
+<div class="trylon-line"><span class="trylon-comment"># default, and you'd turn it off if you don't need to send</span></div>
+<div class="trylon-line"><span class="trylon-comment"># 'perform:' and want your program to be as small as</span></div>
+<div class="trylon-line"><span class="trylon-comment"># possible.</span></div>
+<div class="trylon-line">support-perform = true</div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># A little optimization can be nice.  Note the "+=", which</span></div>
+<div class="trylon-line"><span class="trylon-comment"># is supported by the "c-flags" and "link-flags" settings.</span></div>
+<div class="trylon-line">c-flags += <span class="trylon-constant">"-O1"</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># One of the more common uses for the "build-settings"</span></div>
+<div class="trylon-line"><span class="trylon-comment"># file is to give the location of C libraries that are</span></div>
+<div class="trylon-line"><span class="trylon-comment"># used.</span></div>
+<div class="trylon-line">c-flags += <span class="trylon-constant">"-I/usr/include/cairo"</span></div>
+<div class="trylon-line">link-flags += <span class="trylon-constant">"-lcairo"</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># Don't like the way the C sources are hidden from sight</span></div>
+<div class="trylon-line"><span class="trylon-comment"># in the ".c-sources" directory?  Change where they're</span></div>
+<div class="trylon-line"><span class="trylon-comment"># put.</span></div>
+<div class="trylon-line">c-sources-dir = <span class="trylon-constant">"C-sources"</span></div>
+<div class="trylon-line"><span class="trylon-comment"># "objects-dir" and "jolt-sources-dir" can be similarly</span></div>
+<div class="trylon-line"><span class="trylon-comment"># specified.</span></div>
+<div class="trylon-line">&nbsp;</div>
+<div class="trylon-line"><span class="trylon-comment"># You can also define your own settings.  These can be</span></div>
+<div class="trylon-line"><span class="trylon-comment"># used by "iff" (conditional compilation) statements in</span></div>
+<div class="trylon-line"><span class="trylon-comment"># the code, or they can be used in "if" statements here in</span></div>
+<div class="trylon-line"><span class="trylon-comment"># the build-settings file.</span></div>
+<div class="trylon-line">use-tcc = true</div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> use-tcc</div>
+<div class="trylon-block">
+<div class="trylon-line">c-compiler = <span class="trylon-constant">"tcc"</span></div>
+<div class="trylon-line">linker = <span class="trylon-constant">"tcc"</span></div>
+</div>
+</div>
 
 <p>
 The settings can also be modified by a "build-settings.local" file.  "build-settings" would be distributed with the program (checked into the Git repository, included in the tarball, etc.), but "build-settings.local" would allow local (possibly temporary) changes like enabling debugging.
 </p>
 
-<div class="code">my-program/
-  .gitignore   # Includes "build-settings.local" and "my-program".
-  build-settings
-  build-settings.local
-  my-program   # The built binary.
-  sources/
-    ...</div>
+<div class="trylon-code">
+<div class="trylon-line">my-program/</div>
+<div class="trylon-block">
+<div class="trylon-line">.gitignore <span class="trylon-comment"># Includes "build-settings.local" and "my-program".</span></div>
+<div class="trylon-line">build-settings</div>
+<div class="trylon-line">build-settings.local</div>
+<div class="trylon-line">my-program <span class="trylon-comment"># The built binary.</span></div>
+<div class="trylon-line">sources/</div>
+<div class="trylon-block">
+<div class="trylon-line">...</div>
+</div>
+</div>
+</div>
 
 </div>
 

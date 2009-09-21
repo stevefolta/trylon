@@ -13,37 +13,6 @@ enclosing-method-context
 	return nil
 
 
-# The following are valid on top-level contexts (classes and packages) only.
-
-add-function: function
-	# Default: not valid.
-	throw 	--
-		MessageException new: "Internal error: bad \"Context add-function\" call."
-
-
-add-field: field
-	# Default: not valid.
-	throw 	--
-		MessageException new: "Internal error: bad \"Context add-field\" call."
-
-
-add-class: name
-	# Default: not valid.
-	throw 	--
-		MessageException new: "Internal error: bad \"Context add-class\" call."
-
-
-add-package: name directory: FileDirectory
-	throw 	--
-		MessageException new: "Interanl error: bad \"Context add-package\" call."
-
-
-get-subproto: name
-	# Default: not valid.
-	throw 	--
-		MessageException new: "Internal error: bad \"Context get-subproto\" call."
-
-
 
 # Copyright 2007 Steve Folta.  See the License file.
 
