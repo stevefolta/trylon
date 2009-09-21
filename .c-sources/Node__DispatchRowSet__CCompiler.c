@@ -4,7 +4,7 @@ UsingSym_(Node)UsingClass_(DispatchRowSet__CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(Node__DispatchRowSet__CCompiler)
 struct ClassInfo Node__DispatchRowSet__CCompiler__classInfo_ = 
-	{ 148, 4, Proto_(Node__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Node) ,nil };
+	{ StdClassRef_(Class__CImplementation), 181, 4, Proto_(Node__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Node), nil, nil };
 struct object Node__DispatchRowSet__CCompiler = 
 	{ &Node__DispatchRowSet__CCompiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -18,15 +18,14 @@ struct object Node__DispatchRowSet__CCompiler =
 obj_ create_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row)
 {
 	obj_ t0_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(left_co_) UsingMethod_(level_co_) UsingMethod_(right_co_) UsingMethod_(row_co_)
 
 		{
 		t0_ = Call_(row_co_, this_, row);
 		t0_ = Call_(left_co_, this_, nil);
 		t0_ = Call_(right_co_, this_, nil);
-		t0_ = Call_(level_co_, this_, Int_(0));
-		
+		t0_ = Call_(level_co_, this_, SmallInt_(1));
 		}
 	return nil;
 }
@@ -45,7 +44,7 @@ obj_ insert_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ new_row)
 
 		{
 		obj_ new_tree_top;
-		/* Insert the new row. */
+		/*  Insert the new row. */
 		t0_ = Call_(num_entries, new_row);
 		t1_ = Call_(row, this_);
 		t2_ = Call_(num_entries, t1_);
@@ -78,44 +77,17 @@ obj_ insert_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ new_row)
 				{
 				t0_ = new_co___Node__DispatchRowSet__CCompiler(Proto_(Node__DispatchRowSet__CCompiler), new_row);
 				t1_ = Call_(right_co_, this_, t0_);
-				
 				}
 			}
-		/* Rebalance the tree. */
+		
+		/*  Rebalance the tree. */
 		t0_ = Call_(skew, this_);
 		new_tree_top = t0_;
 		t0_ = Call_(split, new_tree_top);
 		new_tree_top = t0_;
 		return new_tree_top;
-		
 		}
 	return nil;
-}
-
-
-obj_ left__Node__DispatchRowSet__CCompiler(obj_ this_)
-{
-	return Field_(left);
-}
-
-
-obj_ left_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(left) = value;
-	return value;
-}
-
-
-obj_ level__Node__DispatchRowSet__CCompiler(obj_ this_)
-{
-	return Field_(level);
-}
-
-
-obj_ level_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(level) = value;
-	return value;
 }
 
 
@@ -125,32 +97,6 @@ obj_ new_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ row)
 	obj_ obj = AllocObj_(Node__DispatchRowSet__CCompiler);
 	create_co___Node__DispatchRowSet__CCompiler(obj, row);
 	return obj;
-}
-
-
-obj_ right__Node__DispatchRowSet__CCompiler(obj_ this_)
-{
-	return Field_(right);
-}
-
-
-obj_ right_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(right) = value;
-	return value;
-}
-
-
-obj_ row__Node__DispatchRowSet__CCompiler(obj_ this_)
-{
-	return Field_(row);
-}
-
-
-obj_ row_co___Node__DispatchRowSet__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(row) = value;
-	return value;
 }
 
 
@@ -177,16 +123,15 @@ obj_ skew__Node__DispatchRowSet__CCompiler(obj_ this_)
 			}
 		if (t0_)
 			{
-			/* Rotate with left. */
+			/*  Rotate with left. */
 			t0_ = Call_(left, this_);
 			new_tree_top = t0_;
 			t0_ = Call_(right, new_tree_top);
 			t1_ = Call_(left_co_, this_, t0_);
 			t0_ = Call_(right_co_, new_tree_top, this_);
-			
 			}
-		return new_tree_top;
 		
+		return new_tree_top;
 		}
 	return nil;
 }
@@ -202,7 +147,7 @@ obj_ split__Node__DispatchRowSet__CCompiler(obj_ this_)
 	obj_ t5_;
 	obj_ t6_;
 	obj_ t7_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(level) UsingMethod_(level_co_) UsingMethod_(right) UsingMethod_(right_co_)
 
 		{
@@ -225,21 +170,19 @@ obj_ split__Node__DispatchRowSet__CCompiler(obj_ this_)
 			}
 		if (t0_)
 			{
-			/* Rotate with right. */
+			/*  Rotate with right. */
 			t0_ = Call_(right, this_);
 			new_tree_top = t0_;
 			t0_ = Call_(left, new_tree_top);
 			t1_ = Call_(right_co_, this_, t0_);
 			t0_ = Call_(left_co_, new_tree_top, this_);
-			/* Boost the level. */
+			/*  Boost the level. */
 			t0_ = Call_(level, new_tree_top);
-			t1_ = Call_(_pl_, t0_, Int_(0));
+			t1_ = Call_(_pl_, t0_, SmallInt_(1));
 			t2_ = Call_(level_co_, new_tree_top, t1_);
-			
 			}
+		
 		return new_tree_top;
-		
-		
 		}
 	return nil;
 }

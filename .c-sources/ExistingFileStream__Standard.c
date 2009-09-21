@@ -4,7 +4,7 @@ UsingSym_(ExistingFileStream)UsingClass_(Standard)
 UsingClass_(OutputStream__Standard)
 UsingClass_(ExistingFileStream__Standard)
 struct ClassInfo ExistingFileStream__Standard__classInfo_ = 
-	{ 56, 5, Proto_(ExistingFileStream__Standard), Proto_(Standard), Proto_(OutputStream__Standard), nil, Sym_(ExistingFileStream) ,nil };
+	{ StdClassRef_(Class__CImplementation), 54, 5, Proto_(ExistingFileStream__Standard), Proto_(Standard), Proto_(OutputStream__Standard), nil, Sym_(ExistingFileStream), nil, nil };
 struct object ExistingFileStream__Standard = 
 	{ &ExistingFileStream__Standard__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -24,7 +24,7 @@ obj_ close__ExistingFileStream__Standard(obj_ this_)
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	DefineString_(0, "")
 	DefineString_(1, "")
 	UsingMethod_(_) UsingMethod_(close) UsingMethod_(contents) UsingMethod_(contents_co_) UsingMethod_(file) UsingMethod_(is_empty) UsingMethod_(length) UsingMethod_(matches_so_far) UsingMethod_(output_stream) UsingMethod_(output_stream_co_) UsingMethod_(remaining_contents) UsingMethod_(remaining_contents_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(write_co_)
@@ -45,8 +45,8 @@ obj_ close__ExistingFileStream__Standard(obj_ this_)
 			if (t2_)
 				{
 				obj_ length_so_far;
-				/* The new one is shorter than the old one (albeit otherwise identical).   */
-				/* Rewrite it.  (We could use truncate(), but this is a little easier...) */
+				/*  The new one is shorter than the old one (albeit otherwise identical).   */
+				/*  Rewrite it.  (We could use truncate(), but this is a little easier...) */
 				t0_ = Call_(contents, this_);
 				t1_ = Call_(length, t0_);
 				t2_ = Call_(remaining_contents, this_);
@@ -58,32 +58,16 @@ obj_ close__ExistingFileStream__Standard(obj_ this_)
 				t2_ = Call_(output_stream_co_, this_, t1_);
 				t0_ = Call_(output_stream, this_);
 				t1_ = Call_(contents, this_);
-				t2_ = Call_(substr_co_length_co_, t1_, Int_(0), length_so_far);
+				t2_ = Call_(substr_co_length_co_, t1_, SmallInt_(0), length_so_far);
 				t3_ = Call_(write_co_, t0_, t2_);
 				t0_ = Call_(contents_co_, this_, Str_(0));
 				t0_ = Call_(remaining_contents_co_, this_, Str_(1));
 				t0_ = Call_(output_stream, this_);
 				t1_ = Call_(close, t0_);
-				
-				
-				
 				}
 			}
 		}
 	return nil;
-}
-
-
-obj_ contents__ExistingFileStream__Standard(obj_ this_)
-{
-	return Field_(contents);
-}
-
-
-obj_ contents_co___ExistingFileStream__Standard(obj_ this_, obj_ value)
-{
-	Field_(contents) = value;
-	return value;
 }
 
 
@@ -119,27 +103,12 @@ obj_ create_co___ExistingFileStream__Standard(obj_ this_, obj_ file)
 			t0_ = Call_(contents_co_, this_, Str_(0));
 			t0_ = Call_(remaining_contents_co_, this_, Str_(1));
 			}
-		/* Even if it doesn't match (ie. doesn't exist), "matches-so-far" is set  */
-		/* so "write-buffer" will create the file. */
+		/*  Even if it doesn't match (ie. doesn't exist), "matches-so-far" is set  */
+		/*  so "write-buffer" will create the file. */
 		t0_ = Call_(matches_so_far_co_, this_, true_);
 		t0_ = Call_(output_stream_co_, this_, nil);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ file__ExistingFileStream__Standard(obj_ this_)
-{
-	return Field_(file);
-}
-
-
-obj_ file_co___ExistingFileStream__Standard(obj_ this_, obj_ value)
-{
-	Field_(file) = value;
-	return value;
 }
 
 
@@ -160,24 +129,8 @@ obj_ is_changed__ExistingFileStream__Standard(obj_ this_)
 			}
 		t3_ = Not_(t0_);
 		return t3_;
-		
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ matches_so_far__ExistingFileStream__Standard(obj_ this_)
-{
-	return Field_(matches_so_far);
-}
-
-
-obj_ matches_so_far_co___ExistingFileStream__Standard(obj_ this_, obj_ value)
-{
-	Field_(matches_so_far) = value;
-	return value;
 }
 
 
@@ -190,32 +143,6 @@ obj_ new_co___ExistingFileStream__Standard(obj_ this_, obj_ file)
 }
 
 
-obj_ output_stream__ExistingFileStream__Standard(obj_ this_)
-{
-	return Field_(output_stream);
-}
-
-
-obj_ output_stream_co___ExistingFileStream__Standard(obj_ this_, obj_ value)
-{
-	Field_(output_stream) = value;
-	return value;
-}
-
-
-obj_ remaining_contents__ExistingFileStream__Standard(obj_ this_)
-{
-	return Field_(remaining_contents);
-}
-
-
-obj_ remaining_contents_co___ExistingFileStream__Standard(obj_ this_, obj_ value)
-{
-	Field_(remaining_contents) = value;
-	return value;
-}
-
-
 obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ buffer, obj_ length)
 {
 	extern obj_ new_co_length_co___String__Standard(obj_ this_, obj_ start, obj_ length);
@@ -225,8 +152,8 @@ obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ b
 	obj_ t3_;
 	obj_ t4_;
 	obj_ t5_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 0)
+	UsingInt_(0)
+	UsingInt_(0)
 	DefineString_(0, "")
 	DefineString_(1, "")
 	UsingMethod_(_nt__eq_) UsingMethod_(_) UsingMethod_(contents) UsingMethod_(contents_co_) UsingMethod_(file) UsingMethod_(length) UsingMethod_(matches_so_far) UsingMethod_(matches_so_far_co_) UsingMethod_(output_stream) UsingMethod_(output_stream_co_) UsingMethod_(remaining_contents) UsingMethod_(remaining_contents_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(write_buffer_co_length_co_) UsingMethod_(write_co_)
@@ -238,17 +165,17 @@ obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ b
 			{
 			t0_ = new_co_length_co___String__Standard(Proto_(String__Standard), buffer, length);
 			t1_ = Call_(remaining_contents, this_);
-			t2_ = Call_(substr_co_length_co_, t1_, Int_(0), length);
+			t2_ = Call_(substr_co_length_co_, t1_, SmallInt_(0), length);
 			t3_ = Call_(_nt__eq_, t0_, t2_);
 			if (t3_)
 				{
 				obj_ length_so_far;
-				/* It has stopped matching -- rewrite the file. */
+				/*  It has stopped matching -- rewrite the file. */
 				t0_ = Call_(matches_so_far_co_, this_, nil);
 				t0_ = Call_(file, this_);
 				t1_ = Call_(output_stream, t0_);
 				t2_ = Call_(output_stream_co_, this_, t1_);
-				/* Rewrite the contents to this point. */
+				/*  Rewrite the contents to this point. */
 				t0_ = Call_(contents, this_);
 				t1_ = Call_(length, t0_);
 				t2_ = Call_(remaining_contents, this_);
@@ -257,12 +184,12 @@ obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ b
 				length_so_far = t4_;
 				t0_ = Call_(output_stream, this_);
 				t1_ = Call_(contents, this_);
-				t2_ = Call_(substr_co_length_co_, t1_, Int_(1), length_so_far);
+				t2_ = Call_(substr_co_length_co_, t1_, SmallInt_(0), length_so_far);
 				t3_ = Call_(write_co_, t0_, t2_);
-				/* Clean up stuff we don't need anymore. */
+				/*  Clean up stuff we don't need anymore. */
 				t0_ = Call_(contents_co_, this_, Str_(0));
 				t0_ = Call_(remaining_contents_co_, this_, Str_(1));
-				/* The new stuff will be written below. */
+				/*  The new stuff will be written below. */
 				}
 			else
 				{
@@ -272,17 +199,15 @@ obj_ write_buffer_co_length_co___ExistingFileStream__Standard(obj_ this_, obj_ b
 				t3_ = Call_(_, t2_, length);
 				t4_ = Call_(substr_co_length_co_, t0_, length, t3_);
 				t5_ = Call_(remaining_contents_co_, this_, t4_);
-				
 				}
 			}
+		
 		t0_ = Call_(matches_so_far, this_);
 		t1_ = Not_(t0_);
 		if (t1_)
 			{
 			t0_ = Call_(output_stream, this_);
 			t1_ = Call_(write_buffer_co_length_co_, t0_, buffer, length);
-			
-			
 			}
 		}
 	return nil;

@@ -4,7 +4,7 @@ UsingSym_(StringBytesIterator)UsingClass_(Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(StringBytesIterator__Standard)
 struct ClassInfo StringBytesIterator__Standard__classInfo_ = 
-	{ 15, 3, Proto_(StringBytesIterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(StringBytesIterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 45, 3, Proto_(StringBytesIterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(StringBytesIterator), nil, nil };
 struct object StringBytesIterator__Standard = 
 	{ &StringBytesIterator__Standard__classInfo_, {nil, nil, nil} };
 
@@ -27,8 +27,6 @@ obj_ _gt___StringBytesIterator__Standard(obj_ this_, obj_ other)
 		t1_ = Call_(start, other);
 		t2_ = Call_(_gt_, t0_, t1_);
 		return t2_;
-		
-		
 		}
 	return nil;
 }
@@ -40,7 +38,7 @@ obj_ back_up__StringBytesIterator__Standard(obj_ this_)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_) UsingMethod_(_gt_) UsingMethod_(start) UsingMethod_(start_co_) UsingMethod_(string)
 
 		{
@@ -51,10 +49,8 @@ obj_ back_up__StringBytesIterator__Standard(obj_ this_)
 		if (t3_)
 			{
 			t0_ = Call_(start, this_);
-			t1_ = Call_(_, t0_, Int_(0));
+			t1_ = Call_(_, t0_, SmallInt_(1));
 			t2_ = Call_(start_co_, this_, t1_);
-			
-			
 			}
 		}
 	return nil;
@@ -77,8 +73,6 @@ obj_ copy__StringBytesIterator__Standard(obj_ this_)
 		t2_ = Call_(string, this_);
 		t3_ = new_co_to_co_string_co___StringBytesIterator__Standard(Proto_(StringBytesIterator__Standard), t0_, t1_, t2_);
 		return t3_;
-		
-		
 		}
 	return nil;
 }
@@ -96,8 +90,6 @@ obj_ create_co___StringBytesIterator__Standard(obj_ this_, obj_ string)
 		t1_ = Call_(start_co_, this_, t0_);
 		t0_ = Call_(stopper, string);
 		t1_ = Call_(stopper_co_, this_, t0_);
-		
-		
 		}
 	return nil;
 }
@@ -112,8 +104,6 @@ obj_ create_co_to_co_string_co___StringBytesIterator__Standard(obj_ this_, obj_ 
 		t0_ = Call_(start_co_, this_, start);
 		t0_ = Call_(stopper_co_, this_, stopper);
 		t0_ = Call_(string_co_, this_, string);
-		
-		
 		}
 	return nil;
 }
@@ -129,8 +119,6 @@ obj_ current_item__StringBytesIterator__Standard(obj_ this_)
 		t0_ = Call_(start, this_);
 		t1_ = Call_(deref_char, t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -141,15 +129,13 @@ obj_ go_forward__StringBytesIterator__Standard(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(start) UsingMethod_(start_co_)
 
 		{
 		t0_ = Call_(start, this_);
-		t1_ = Call_(_pl_, t0_, Int_(0));
+		t1_ = Call_(_pl_, t0_, SmallInt_(1));
 		t2_ = Call_(start_co_, this_, t1_);
-		
-		
 		}
 	return nil;
 }
@@ -167,8 +153,6 @@ obj_ is_done__StringBytesIterator__Standard(obj_ this_)
 		t1_ = Call_(stopper, this_);
 		t2_ = Call_(_gt__eq_, t0_, t1_);
 		return t2_;
-		
-		
 		}
 	return nil;
 }
@@ -179,9 +163,6 @@ obj_ iterator__StringBytesIterator__Standard(obj_ this_)
 
 		{
 		return this_;
-		
-		
-		
 		}
 	return nil;
 }
@@ -219,8 +200,6 @@ obj_ remainder__StringBytesIterator__Standard(obj_ this_)
 		t1_ = Call_(stopper, this_);
 		t2_ = new_co_to_co___String__Standard(Proto_(String__Standard), t0_, t1_);
 		return t2_;
-		
-		
 		}
 	return nil;
 }
@@ -237,49 +216,8 @@ obj_ skip_co___StringBytesIterator__Standard(obj_ this_, obj_ num_chars)
 		t0_ = Call_(start, this_);
 		t1_ = Call_(_pl_, t0_, num_chars);
 		t2_ = Call_(start_co_, this_, t1_);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ start__StringBytesIterator__Standard(obj_ this_)
-{
-	return Field_(start);
-}
-
-
-obj_ start_co___StringBytesIterator__Standard(obj_ this_, obj_ value)
-{
-	Field_(start) = value;
-	return value;
-}
-
-
-obj_ stopper__StringBytesIterator__Standard(obj_ this_)
-{
-	return Field_(stopper);
-}
-
-
-obj_ stopper_co___StringBytesIterator__Standard(obj_ this_, obj_ value)
-{
-	Field_(stopper) = value;
-	return value;
-}
-
-
-obj_ string__StringBytesIterator__Standard(obj_ this_)
-{
-	return Field_(string);
-}
-
-
-obj_ string_co___StringBytesIterator__Standard(obj_ this_, obj_ value)
-{
-	Field_(string) = value;
-	return value;
 }
 
 

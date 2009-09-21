@@ -4,7 +4,7 @@ UsingSym_(Symbol)UsingClass_(Standard)
 UsingClass_(String__Standard)
 UsingClass_(Symbol__Standard)
 struct ClassInfo Symbol__Standard__classInfo_ = 
-	{ 21, 3, Proto_(Symbol__Standard), Proto_(Standard), Proto_(String__Standard), nil, Sym_(Symbol) ,nil };
+	{ StdClassRef_(Class__CImplementation), 56, 3, Proto_(Symbol__Standard), Proto_(Standard), Proto_(String__Standard), nil, Sym_(Symbol), nil, nil };
 struct object Symbol__Standard = 
 	{ &Symbol__Standard__classInfo_, {nil, nil, nil} };
 
@@ -29,22 +29,8 @@ obj_ _nt__eq___Symbol__Standard(obj_ this_, obj_ arg)
 		t1_ = Call_(object_ptr, arg);
 		t2_ = Call_(_nt__eq_, t0_, t1_);
 		return t2_;
-		
 		}
 	return nil;
-}
-
-
-obj_ _dt__ul_selector__Symbol__Standard(obj_ this_)
-{
-	return Field_(_dt__ul_selector);
-}
-
-
-obj_ _dt__ul_selector_co___Symbol__Standard(obj_ this_, obj_ value)
-{
-	Field_(_dt__ul_selector) = value;
-	return value;
 }
 
 
@@ -60,7 +46,6 @@ obj_ _eq__eq___Symbol__Standard(obj_ this_, obj_ arg)
 		t1_ = Call_(object_ptr, arg);
 		t2_ = Call_(_eq__eq_, t0_, t1_);
 		return t2_;
-		
 		}
 	return nil;
 }
@@ -84,7 +69,6 @@ obj_ create_co_to_co___Symbol__Standard(obj_ this_, obj_ start, obj_ stopper)
 extern obj_ create_co_to_co___String__Standard(obj_, obj_, obj_);
 create_co_to_co___String__Standard(this_, start, stopper);
 Field_(_dt__ul_selector) = (obj_) -1;
-
 }
 
 
@@ -96,9 +80,6 @@ obj_ debug_string__Symbol__Standard(obj_ this_)
 		{
 		t0_ = Call_(print_string, this_);
 		return t0_;
-		
-		
-		
 		}
 	return nil;
 }
@@ -121,10 +102,8 @@ obj_ intern__Symbol__Standard(obj_ this_)
 {
 
 		{
-		/* Intern this Symbol.  It's a Symbol, therefore already interned. */
+		/*  Intern this Symbol.  It's a Symbol, therefore already interned. */
 		return this_;
-		
-		
 		}
 	return nil;
 }
@@ -138,14 +117,14 @@ obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(built_in_table) UsingMethod_(built_in_table_co_) UsingMethod_(dynamic_table) UsingMethod_(dynamic_table_co_) UsingMethod_(start) UsingMethod_(stopper)
+	UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(built_in_table) UsingMethod_(built_in_table_co_) UsingMethod_(dynamic_table) UsingMethod_(dynamic_table_co_) UsingMethod_(reallocated) UsingMethod_(start) UsingMethod_(stopper)
 	UsingClass_(BuiltInSymbols__Symbol__CImplementation__Standard)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(Symbol__Standard)
 
 		{
 		obj_ result;
-		/* First check the symbols that were present in the source. */
+		/*  First check the symbols that were present in the source. */
 		t0_ = Call_(built_in_table, this_);
 		t1_ = Not_(t0_);
 		if (t1_)
@@ -159,9 +138,9 @@ obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name)
 		if (result)
 			{
 			return result;
-			
 			}
-		/* Next see if it's already in the dynamic symbol table. */
+		
+		/*  Next see if it's already in the dynamic symbol table. */
 		t0_ = Call_(dynamic_table, this_);
 		t1_ = Not_(t0_);
 		if (t1_)
@@ -175,9 +154,12 @@ obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name)
 		if (result)
 			{
 			return result;
-			
 			}
-		/* Need to add it. */
+		
+		/*  Need to add it. */
+		/*  Reallocate the string, since we don't know where it came from. */
+		t0_ = Call_(reallocated, name);
+		name = t0_;
 		t0_ = Call_(start, name);
 		t1_ = Call_(stopper, name);
 		t2_ = new_co_to_co___Symbol__Standard(Proto_(Symbol__Standard), t0_, t1_);
@@ -185,7 +167,6 @@ obj_ intern_co___Symbol__Standard(obj_ this_, obj_ name)
 		t0_ = Call_(dynamic_table, this_);
 		t1_ = Call_(at_co_put_co_, t0_, name, result);
 		return result;
-		
 		}
 	return nil;
 }
@@ -212,9 +193,14 @@ obj_ print_string__Symbol__Standard(obj_ this_)
 		t0_ = Call_(_pl_, Str_(0), this_);
 		t1_ = Call_(_pl_, t0_, Str_(1));
 		return t1_;
-		
 		}
 	return nil;
+}
+
+
+obj_ selector__Symbol__Standard(obj_ this_)
+{
+return BuildInt_((int) Field_(_dt__ul_selector));
 }
 
 

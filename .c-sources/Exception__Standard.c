@@ -4,7 +4,7 @@ UsingSym_(Exception)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Exception__Standard)
 struct ClassInfo Exception__Standard__classInfo_ = 
-	{ 9, 0, Proto_(Exception__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Exception) ,nil };
+	{ StdClassRef_(Class__CImplementation), 29, 0, Proto_(Exception__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Exception), nil, nil };
 struct object Exception__Standard = 
 	{ &Exception__Standard__classInfo_, {} };
 
@@ -19,9 +19,6 @@ obj_ message__Exception__Standard(obj_ this_)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
-		
-		
 		}
 	return nil;
 }

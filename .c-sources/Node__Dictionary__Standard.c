@@ -4,7 +4,7 @@ UsingSym_(Node)UsingClass_(Dictionary__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Node__Dictionary__Standard)
 struct ClassInfo Node__Dictionary__Standard__classInfo_ = 
-	{ 45, 5, Proto_(Node__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Node) ,nil };
+	{ StdClassRef_(Class__CImplementation), 79, 5, Proto_(Node__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Object__Standard), nil, Sym_(Node), nil, nil };
 struct object Node__Dictionary__Standard = 
 	{ &Node__Dictionary__Standard__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -19,7 +19,7 @@ struct object Node__Dictionary__Standard =
 obj_ create_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ value)
 {
 	obj_ t0_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(key_co_) UsingMethod_(left_co_) UsingMethod_(level_co_) UsingMethod_(right_co_) UsingMethod_(value_co_)
 
 		{
@@ -27,9 +27,7 @@ obj_ create_co_value_co___Node__Dictionary__Standard(obj_ this_, obj_ key, obj_ 
 		t0_ = Call_(value_co_, this_, value);
 		t0_ = Call_(left_co_, this_, nil);
 		t0_ = Call_(right_co_, this_, nil);
-		t0_ = Call_(level_co_, this_, Int_(0));
-		
-		
+		t0_ = Call_(level_co_, this_, SmallInt_(1));
 		}
 	return nil;
 }
@@ -63,14 +61,13 @@ obj_ insert_co_at_co___Node__Dictionary__Standard(obj_ this_, obj_ new_value, ob
 					}
 				else
 					{
-					return nil; 	/* Key already exists; propagate that up. */
+					return nil; 	/*  Key already exists; propagate that up. */
 					}
 				}
 			else
 				{
 				t0_ = new_co_value_co___Node__Dictionary__Standard(Proto_(Node__Dictionary__Standard), new_key, new_value);
 				t1_ = Call_(left_co_, this_, t0_);
-				
 				}
 			}
 		else
@@ -92,72 +89,32 @@ obj_ insert_co_at_co___Node__Dictionary__Standard(obj_ this_, obj_ new_value, ob
 						}
 					else
 						{
-						return nil; 	/* Key already exists; propagate that up. */
+						return nil; 	/*  Key already exists; propagate that up. */
 						}
 					}
 				else
 					{
 					t0_ = new_co_value_co___Node__Dictionary__Standard(Proto_(Node__Dictionary__Standard), new_key, new_value);
 					t1_ = Call_(right_co_, this_, t0_);
-					
 					}
 				}
 			else
 				{
-				/* This node *is* the new key.  Signal that by returning nil. */
+				/*  This node *is* the new key.  Signal that by returning nil. */
 				t0_ = Call_(value_co_, this_, new_value);
 				return nil;
-				
 				}
 			}
+		
+		
+		
 		t0_ = Call_(skew, this_);
 		new_top = t0_;
 		t0_ = Call_(split, new_top);
 		new_top = t0_;
 		return new_top;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ key__Node__Dictionary__Standard(obj_ this_)
-{
-	return Field_(key);
-}
-
-
-obj_ key_co___Node__Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(key) = value;
-	return value;
-}
-
-
-obj_ left__Node__Dictionary__Standard(obj_ this_)
-{
-	return Field_(left);
-}
-
-
-obj_ left_co___Node__Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(left) = value;
-	return value;
-}
-
-
-obj_ level__Node__Dictionary__Standard(obj_ this_)
-{
-	return Field_(level);
-}
-
-
-obj_ level_co___Node__Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(level) = value;
-	return value;
 }
 
 
@@ -178,15 +135,15 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 	obj_ t3_;
 	obj_ t4_;
 	obj_ t5_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 0)
-	DefineInt_(2, 1)
-	DefineInt_(3, 1)
-	DefineInt_(4, 1)
+	UsingInt_(0)
+	UsingInt_(0)
+	UsingInt_(1)
+	UsingInt_(1)
+	UsingInt_(1)
 	UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(_gt_) UsingMethod_(delete_node) UsingMethod_(delete_node_co_) UsingMethod_(deleted_value_co_) UsingMethod_(item_found_co_) UsingMethod_(key) UsingMethod_(key_co_) UsingMethod_(last_node) UsingMethod_(last_node_co_) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(level) UsingMethod_(level_co_) UsingMethod_(remove_co_) UsingMethod_(right) UsingMethod_(right_co_) UsingMethod_(skew) UsingMethod_(split) UsingMethod_(value) UsingMethod_(value_co_)
 
 		{
-		/* Search down the tree, setting delete-node and last-node. */
+		/*  Search down the tree, setting delete-node and last-node. */
 		t0_ = Call_(last_node_co_, context, this_);
 		t0_ = Call_(key, context);
 		t1_ = Call_(key, this_);
@@ -210,10 +167,10 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 				t0_ = Call_(right, this_);
 				t1_ = Call_(remove_co_, t0_, context);
 				t2_ = Call_(right_co_, this_, t1_);
-				
 				}
 			}
-		/* If we're at the bottom, and the key is present, remove it. */
+		
+		/*  If we're at the bottom, and the key is present, remove it. */
 		t0_ = Call_(last_node, context);
 		t1_ = Call_(_eq__eq_, t0_, this_);
 		if (t1_)
@@ -229,12 +186,12 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 				}
 			if (t1_)
 				{
-				/* Found it!  (At delete-node, not here.) */
+				/*  Found it!  (At delete-node, not here.) */
 				t0_ = Call_(item_found_co_, context, true_);
 				t0_ = Call_(delete_node, context);
 				t1_ = Call_(value, t0_);
 				t2_ = Call_(deleted_value_co_, context, t1_);
-				/* Move this key/value into the place of the deleted key/value. */
+				/*  Move this key/value into the place of the deleted key/value. */
 				t0_ = Call_(delete_node, context);
 				t1_ = Call_(key, this_);
 				t2_ = Call_(key_co_, t0_, t1_);
@@ -243,14 +200,12 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 				t2_ = Call_(value_co_, t0_, t1_);
 				t0_ = Call_(right, this_);
 				return t0_;
-				
 				}
 			}
-		/* Otherwise, we are not at the bottom; rebalance. */
 		else
 			{
 			obj_ left_level, right_level;
-			left_level = Int_(0);
+			left_level = SmallInt_(0);
 			t0_ = Call_(left, this_);
 			if (t0_)
 				{
@@ -258,7 +213,7 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 				t1_ = Call_(level, t0_);
 				left_level = t1_;
 				}
-			right_level = Int_(1);
+			right_level = SmallInt_(0);
 			t0_ = Call_(right, this_);
 			if (t0_)
 				{
@@ -267,11 +222,11 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 				right_level = t1_;
 				}
 			t0_ = Call_(level, this_);
-			t1_ = Call_(_, t0_, Int_(2));
+			t1_ = Call_(_, t0_, SmallInt_(1));
 			t2_ = Call_(_lt_, left_level, t1_);
 			if ((t2_) == nil) {
 				t3_ = Call_(level, this_);
-				t4_ = Call_(_, t3_, Int_(3));
+				t4_ = Call_(_, t3_, SmallInt_(1));
 				t5_ = Call_(_lt_, right_level, t4_);
 				t2_ = t5_;
 				}
@@ -279,7 +234,7 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 				{
 				obj_ new_top;
 				t0_ = Call_(level, this_);
-				t1_ = Call_(_, t0_, Int_(4));
+				t1_ = Call_(_, t0_, SmallInt_(1));
 				t2_ = Call_(level_co_, this_, t1_);
 				t0_ = Call_(right, this_);
 				if (t0_) {
@@ -328,27 +283,14 @@ obj_ remove_co___Node__Dictionary__Standard(obj_ this_, obj_ context)
 					t2_ = Call_(right_co_, new_top, t1_);
 					}
 				return new_top;
-				
 				}
 			}
+		
+		/*  Otherwise, we are not at the bottom; rebalance. */
+		
 		return this_;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ right__Node__Dictionary__Standard(obj_ this_)
-{
-	return Field_(right);
-}
-
-
-obj_ right_co___Node__Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(right) = value;
-	return value;
 }
 
 
@@ -375,17 +317,15 @@ obj_ skew__Node__Dictionary__Standard(obj_ this_)
 			}
 		if (t0_)
 			{
-			/* Rotate with left. */
+			/*  Rotate with left. */
 			t0_ = Call_(left, this_);
 			new_top = t0_;
 			t0_ = Call_(right, new_top);
 			t1_ = Call_(left_co_, this_, t0_);
 			t0_ = Call_(right_co_, new_top, this_);
-			
 			}
+		
 		return new_top;
-		
-		
 		}
 	return nil;
 }
@@ -401,7 +341,7 @@ obj_ split__Node__Dictionary__Standard(obj_ this_)
 	obj_ t5_;
 	obj_ t6_;
 	obj_ t7_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(left) UsingMethod_(left_co_) UsingMethod_(level) UsingMethod_(level_co_) UsingMethod_(right) UsingMethod_(right_co_)
 
 		{
@@ -424,36 +364,21 @@ obj_ split__Node__Dictionary__Standard(obj_ this_)
 			}
 		if (t0_)
 			{
-			/* Rotate with right. */
+			/*  Rotate with right. */
 			t0_ = Call_(right, this_);
 			new_top = t0_;
 			t0_ = Call_(left, new_top);
 			t1_ = Call_(right_co_, this_, t0_);
 			t0_ = Call_(left_co_, new_top, this_);
-			/* Boost the level. */
+			/*  Boost the level. */
 			t0_ = Call_(level, new_top);
-			t1_ = Call_(_pl_, t0_, Int_(0));
+			t1_ = Call_(_pl_, t0_, SmallInt_(1));
 			t2_ = Call_(level_co_, new_top, t1_);
-			
 			}
+		
 		return new_top;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ value__Node__Dictionary__Standard(obj_ this_)
-{
-	return Field_(value);
-}
-
-
-obj_ value_co___Node__Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(value) = value;
-	return value;
 }
 
 

@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Iterator__ExpandoArray__CCompiler) 
+static obj_ tu0_[];
 UsingSym_(ExpandoArray)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpandoArray__CCompiler)
 struct ClassInfo ExpandoArray__CCompiler__classInfo_ = 
-	{ 150, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray) ,nil };
+	{ StdClassRef_(Class__CImplementation), 183, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray), nil, ((obj_) tu0_) };
 struct object ExpandoArray__CCompiler = 
 	{ &ExpandoArray__CCompiler__classInfo_, {nil, nil, nil, nil} };
 
+	UsingInt_(1)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Iterator__ExpandoArray__CCompiler) };
 
 #define blocks__fld_	(0)
 #define num_blocks__fld_	(1)
@@ -28,10 +32,9 @@ int index = IntValue_(index_arg);
 int block_size = IntValue_(Field_(block_size));
 int which_block = index / block_size;
 if (which_block >= IntValue_(Field_(num_blocks)))
-	return nil;
+return nil;
 return
-	((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size];
-
+((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size];
 }
 
 
@@ -42,16 +45,13 @@ int index = IntValue_(index_arg);
 int block_size = IntValue_(Field_(block_size));
 int which_block = index / block_size;
 if (which_block >= IntValue_(Field_(num_blocks)))
-	Call_(expand_co_, this_, BuildInt_(which_block + 1));
+Call_(expand_co_, this_, BuildInt_(which_block + 1));
 
 ((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size] =
-	object;
+object;
 
 if (index >= IntValue_(Field_(num_items)))
-	Field_(num_items) = BuildInt_(index + 1);
-
-
-
+Field_(num_items) = BuildInt_(index + 1);
 }
 
 
@@ -62,49 +62,19 @@ obj_ at_co_set_to_co___ExpandoArray__CCompiler(obj_ this_, obj_ index, obj_ obje
 
 		{
 		t0_ = Call_(at_co_put_co_, this_, index, object);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ block_size__ExpandoArray__CCompiler(obj_ this_)
-{
-	return Field_(block_size);
-}
-
-
-obj_ block_size_co___ExpandoArray__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(block_size) = value;
-	return value;
-}
-
-
-obj_ blocks__ExpandoArray__CCompiler(obj_ this_)
-{
-	return Field_(blocks);
-}
-
-
-obj_ blocks_co___ExpandoArray__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(blocks) = value;
-	return value;
 }
 
 
 obj_ create__ExpandoArray__CCompiler(obj_ this_)
 {
 	obj_ t0_;
-	DefineInt_(0, 128)
+	UsingInt_(128)
 	UsingMethod_(create_co_)
 
 		{
-		t0_ = Call_(create_co_, this_, Int_(0));
-		
-		
+		t0_ = Call_(create_co_, this_, SmallInt_(128));
 		}
 	return nil;
 }
@@ -119,9 +89,9 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 1)
-	DefineInt_(2, 0)
+	UsingInt_(0)
+	UsingInt_(1)
+	UsingInt_(0)
 	UsingMethod_(_st_) UsingMethod_(block_size_co_) UsingMethod_(blocks) UsingMethod_(blocks_co_) UsingMethod_(num_blocks) UsingMethod_(num_blocks_co_) UsingMethod_(num_items_co_) UsingMethod_(ptr_at_co_put_co_)
 	UsingClass_(BytePtr__Standard)
 	UsingClass_(Implementation__Standard)
@@ -129,8 +99,8 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 		{
 		obj_ ptr_size;
 		t0_ = Call_(block_size_co_, this_, block_size);
-		t0_ = Call_(num_items_co_, this_, Int_(0));
-		t0_ = Call_(num_blocks_co_, this_, Int_(1));
+		t0_ = Call_(num_items_co_, this_, SmallInt_(0));
+		t0_ = Call_(num_blocks_co_, this_, SmallInt_(1));
 		t0_ = ptr_size__Implementation__Standard(Proto_(Implementation__Standard));
 		ptr_size = t0_;
 		t0_ = Call_(num_blocks, this_);
@@ -140,9 +110,7 @@ obj_ create_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 		t0_ = Call_(blocks, this_);
 		t1_ = Call_(_st_, ptr_size, block_size);
 		t2_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t1_);
-		t3_ = Call_(ptr_at_co_put_co_, t0_, Int_(2), t2_);
-		
-		
+		t3_ = Call_(ptr_at_co_put_co_, t0_, SmallInt_(0), t2_);
 		}
 	return nil;
 }
@@ -157,14 +125,14 @@ obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_st_) UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(block_size) UsingMethod_(blocks) UsingMethod_(blocks_co_) UsingMethod_(copy_from_co_length_co_) UsingMethod_(num_blocks) UsingMethod_(num_blocks_co_) UsingMethod_(ptr_at_co_put_co_)
 	UsingClass_(BytePtr__Standard)
 	UsingClass_(Implementation__Standard)
 
 		{
 		obj_ new_blocks, ptr_size, which_block;
-		/* Copy the existing "blocks". */
+		/*  Copy the existing "blocks". */
 		t0_ = ptr_size__Implementation__Standard(Proto_(Implementation__Standard));
 		ptr_size = t0_;
 		t0_ = Call_(_st_, ptr_size, new_num_blocks);
@@ -175,7 +143,7 @@ obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 		t2_ = Call_(_st_, ptr_size, t1_);
 		t3_ = Call_(copy_from_co_length_co_, new_blocks, t0_, t2_);
 		
-		/* Add the new blocks. */
+		/*  Add the new blocks. */
 		t0_ = Call_(num_blocks, this_);
 		which_block = t0_;
 		while (1) {
@@ -188,16 +156,14 @@ obj_ expand_co___ExpandoArray__CCompiler(obj_ this_, obj_ new_num_blocks)
 			t1_ = Call_(_st_, ptr_size, t0_);
 			t2_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t1_);
 			t3_ = Call_(ptr_at_co_put_co_, new_blocks, which_block, t2_);
-			t0_ = Call_(_pl_, which_block, Int_(0));
+			t0_ = Call_(_pl_, which_block, SmallInt_(1));
 			which_block = t0_;
-			
 			}
 			}
-		/* Install the new "blocks". */
+		
+		/*  Install the new "blocks". */
 		t0_ = Call_(blocks_co_, this_, new_blocks);
 		t0_ = Call_(num_blocks_co_, this_, new_num_blocks);
-		
-		
 		}
 	return nil;
 }
@@ -212,8 +178,6 @@ obj_ iterator__ExpandoArray__CCompiler(obj_ this_)
 		{
 		t0_ = new_co___Iterator__ExpandoArray__CCompiler(Proto_(Iterator__ExpandoArray__CCompiler), this_);
 		return t0_;
-		
-		
 		}
 	return nil;
 }
@@ -234,32 +198,6 @@ obj_ new_co___ExpandoArray__CCompiler(obj_ this_, obj_ block_size)
 	obj_ obj = AllocObj_(ExpandoArray__CCompiler);
 	create_co___ExpandoArray__CCompiler(obj, block_size);
 	return obj;
-}
-
-
-obj_ num_blocks__ExpandoArray__CCompiler(obj_ this_)
-{
-	return Field_(num_blocks);
-}
-
-
-obj_ num_blocks_co___ExpandoArray__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(num_blocks) = value;
-	return value;
-}
-
-
-obj_ num_items__ExpandoArray__CCompiler(obj_ this_)
-{
-	return Field_(num_items);
-}
-
-
-obj_ num_items_co___ExpandoArray__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(num_items) = value;
-	return value;
 }
 
 

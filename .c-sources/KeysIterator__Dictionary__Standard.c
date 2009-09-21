@@ -4,7 +4,7 @@ UsingSym_(KeysIterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 UsingClass_(KeysIterator__Dictionary__Standard)
 struct ClassInfo KeysIterator__Dictionary__Standard__classInfo_ = 
-	{ 39, 1, Proto_(KeysIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeysIterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 73, 1, Proto_(KeysIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeysIterator), nil, nil };
 struct object KeysIterator__Dictionary__Standard = 
 	{ &KeysIterator__Dictionary__Standard__classInfo_, {nil} };
 
@@ -20,7 +20,6 @@ obj_ create_co___KeysIterator__Dictionary__Standard(obj_ this_, obj_ root)
 
 		{
 		t0_ = create_co___Iterator__Dictionary__Standard(this_, root);
-		
 		}
 	return nil;
 }
@@ -44,8 +43,6 @@ obj_ current_item__KeysIterator__Dictionary__Standard(obj_ this_)
 		t1_ = Call_(node, t0_);
 		t2_ = Call_(key, t1_);
 		return t2_;
-		
-		
 		}
 	return nil;
 }

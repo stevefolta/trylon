@@ -4,7 +4,7 @@ UsingSym_(NameResult)UsingClass_(CCompiler)
 UsingClass_(ExpressionResult__CCompiler)
 UsingClass_(NameResult__CCompiler)
 struct ClassInfo NameResult__CCompiler__classInfo_ = 
-	{ 172, 2, Proto_(NameResult__CCompiler), Proto_(CCompiler), Proto_(ExpressionResult__CCompiler), nil, Sym_(NameResult) ,nil };
+	{ StdClassRef_(Class__CImplementation), 209, 2, Proto_(NameResult__CCompiler), Proto_(CCompiler), Proto_(ExpressionResult__CCompiler), nil, Sym_(NameResult), nil, nil };
 struct object NameResult__CCompiler = 
 	{ &NameResult__CCompiler__classInfo_, {nil, nil} };
 
@@ -22,10 +22,6 @@ obj_ access__NameResult__CCompiler(obj_ this_)
 		{
 		t0_ = Call_(name, this_);
 		return t0_;
-		
-		
-		
-		
 		}
 	return nil;
 }
@@ -39,8 +35,6 @@ obj_ create_co___NameResult__CCompiler(obj_ this_, obj_ name)
 		{
 		t0_ = Call_(name_co_, this_, name);
 		t0_ = Call_(is_constant_co_, this_, nil);
-		
-		
 		}
 	return nil;
 }
@@ -54,36 +48,8 @@ obj_ create_co_is_constant_co___NameResult__CCompiler(obj_ this_, obj_ name, obj
 		{
 		t0_ = Call_(name_co_, this_, name);
 		t0_ = Call_(is_constant_co_, this_, is_constant);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ is_constant__NameResult__CCompiler(obj_ this_)
-{
-	return Field_(is_constant);
-}
-
-
-obj_ is_constant_co___NameResult__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(is_constant) = value;
-	return value;
-}
-
-
-obj_ name__NameResult__CCompiler(obj_ this_)
-{
-	return Field_(name);
-}
-
-
-obj_ name_co___NameResult__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(name) = value;
-	return value;
 }
 
 

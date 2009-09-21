@@ -4,7 +4,7 @@ UsingSym_(SharedFieldGetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(SharedFieldGetter__Compiler)
 struct ClassInfo SharedFieldGetter__Compiler__classInfo_ = 
-	{ 109, 2, Proto_(SharedFieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldGetter) ,nil };
+	{ StdClassRef_(Class__CImplementation), 122, 2, Proto_(SharedFieldGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldGetter), nil, nil };
 struct object SharedFieldGetter__Compiler = 
 	{ &SharedFieldGetter__Compiler__classInfo_, {nil, nil} };
 
@@ -43,7 +43,19 @@ obj_ access__SharedFieldGetter__Compiler(obj_ this_)
 		t7_ = Call_(_pl_, t4_, t6_);
 		t8_ = Call_(_pl_, t7_, Str_(2));
 		return t8_;
-		
+		}
+	return nil;
+}
+
+
+obj_ build_co___SharedFieldGetter__Compiler(obj_ this_, obj_ builder)
+{
+	obj_ t0_;
+	UsingMethod_(build_shared_field_getter_co_)
+
+		{
+		t0_ = Call_(build_shared_field_getter_co_, builder, this_);
+		return t0_;
 		}
 	return nil;
 }
@@ -72,8 +84,6 @@ obj_ c_name__SharedFieldGetter__Compiler(obj_ this_)
 		t5_ = Call_(c_name, t4_);
 		t6_ = Call_(_pl_, t3_, t5_);
 		return t6_;
-		
-		
 		}
 	return nil;
 }
@@ -93,7 +103,19 @@ obj_ c_signature__SharedFieldGetter__Compiler(obj_ this_)
 		t1_ = Call_(_pl_, Str_(0), t0_);
 		t2_ = Call_(_pl_, t1_, Str_(1));
 		return t2_;
-		
+		}
+	return nil;
+}
+
+
+obj_ compile_call_co_with_co___SharedFieldGetter__Compiler(obj_ this_, obj_ builder, obj_ arguments)
+{
+	obj_ t0_;
+	UsingMethod_(compile_shared_field_getter_call_co_)
+
+		{
+		t0_ = Call_(compile_shared_field_getter_call_co_, builder, this_);
+		return t0_;
 		}
 	return nil;
 }
@@ -107,8 +129,6 @@ obj_ create_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field,
 		{
 		t0_ = Call_(field_co_, this_, field);
 		t0_ = Call_(on_proto_co_, this_, on_proto);
-		
-		
 		}
 	return nil;
 }
@@ -129,7 +149,6 @@ obj_ emit_c_call_co_builder_co___SharedFieldGetter__Compiler(obj_ this_, obj_ ar
 		t2_ = Call_(using_shared_field_co_on_proto_co_, builder, t0_, t1_);
 		t0_ = new_co___LiteralResult__CCompiler(Proto_(LiteralResult__CCompiler), this_);
 		return t0_;
-		
 		}
 	return nil;
 }
@@ -141,7 +160,7 @@ obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 3)
+	UsingInt_(3)
 	DefineString_(0, "{\n")
 	DefineString_(1, "\treturn ")
 	DefineString_(2, ";\n")
@@ -152,7 +171,7 @@ obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream
 		t0_ = Call_(c_signature, this_);
 		t1_ = Call_(write_line_co_, stream, t0_);
 		t0_ = Call_(write_co_, stream, Str_(0));
-		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(0));
+		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), SmallInt_(3));
 		t0_->fields[1] = Str_(1);
 		t1_ = Call_(access, this_);
 		t0_->fields[2] = t1_;
@@ -161,100 +180,8 @@ obj_ emit_c_function_on_co___SharedFieldGetter__Compiler(obj_ this_, obj_ stream
 		t0_ = Call_(write_co_, stream, Str_(3));
 		t0_ = Call_(write_line, stream);
 		t0_ = Call_(write_line, stream);
-		
 		}
 	return nil;
-}
-
-
-obj_ emit_call_co___SharedFieldGetter__Compiler(obj_ this_, obj_ arguments)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(send)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(quote)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = with_co_with_co___Expression(Proto_(Expression), Sym_(quote), t2_);
-		t4_ = Call_(on_proto, this_);
-		t5_ = Call_(access, t4_);
-		t6_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(send), t3_, t5_);
-		return t6_;
-		
-		}
-	return nil;
-}
-
-
-obj_ emit_code__SharedFieldGetter__Compiler(obj_ this_)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_shared_field)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(initial_value) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(name) UsingMethod_(on_proto)
-	UsingClass_(Expression)
-
-		{
-		obj_ initial_value;
-		/* If it has an intial value, emit the literal. */
-		initial_value = nil;
-		t0_ = Call_(field, this_);
-		t1_ = Call_(initial_value, t0_);
-		if (t1_)
-			{
-			t0_ = Call_(field, this_);
-			t1_ = Call_(initial_value, t0_);
-			t2_ = Call_(jolt_expression, t1_);
-			initial_value = t2_;
-			}
-		else
-			{
-			initial_value = Sym_(nil);
-			
-			}
-		/* Just emit the declaration. */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(on_proto, this_);
-		t4_ = Call_(access, t3_);
-		t5_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(add_shared_field), t2_, t4_, initial_value);
-		return t5_;
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ field__SharedFieldGetter__Compiler(obj_ this_)
-{
-	return Field_(field);
-}
-
-
-obj_ field_co___SharedFieldGetter__Compiler(obj_ this_, obj_ value)
-{
-	Field_(field) = value;
-	return value;
 }
 
 
@@ -272,19 +199,6 @@ obj_ interpret_call_with_co___SharedFieldGetter__Compiler(obj_ this_, obj_ argum
 		t2_ = Call_(on_proto, this_);
 		t3_ = Call_(interpret_proto_send_of_co_to_co_with_co_, this_, t1_, t2_, arguments);
 		return t3_;
-		
-		}
-	return nil;
-}
-
-
-obj_ is_translatable__SharedFieldGetter__Compiler(obj_ this_)
-{
-
-		{
-		return true_;
-		
-		
 		}
 	return nil;
 }
@@ -300,9 +214,6 @@ obj_ name__SharedFieldGetter__Compiler(obj_ this_)
 		t0_ = Call_(field, this_);
 		t1_ = Call_(name, t0_);
 		return t1_;
-		
-		
-		
 		}
 	return nil;
 }
@@ -314,61 +225,6 @@ obj_ new_co_on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ field, ob
 	obj_ obj = AllocObj_(SharedFieldGetter__Compiler);
 	create_co_on_proto_co___SharedFieldGetter__Compiler(obj, field, on_proto);
 	return obj;
-}
-
-
-obj_ on_proto__SharedFieldGetter__Compiler(obj_ this_)
-{
-	return Field_(on_proto);
-}
-
-
-obj_ on_proto_co___SharedFieldGetter__Compiler(obj_ this_, obj_ value)
-{
-	Field_(on_proto) = value;
-	return value;
-}
-
-
-obj_ translate_co___SharedFieldGetter__Compiler(obj_ this_, obj_ compiler)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(add_shared_field)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(access) UsingMethod_(field) UsingMethod_(initial_value) UsingMethod_(intern) UsingMethod_(name) UsingMethod_(on_proto) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr, initial_value;
-		/* Handle the initial value. */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(initial_value, t0_);
-		initial_value = t1_;
-		t0_ = Not_(initial_value);
-		if (t0_)
-			{
-			initial_value = Sym_(nil);
-			
-			}
-		/* Translate. */
-		t0_ = Call_(field, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(on_proto, this_);
-		t4_ = Call_(access, t3_);
-		t5_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(add_shared_field), t2_, t4_, initial_value);
-		expr = t5_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		
-		}
-	return nil;
 }
 
 

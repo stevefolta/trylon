@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(Tuple__Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(Iterator__Tuple__Standard)
 struct ClassInfo Iterator__Tuple__Standard__classInfo_ = 
-	{ 12, 2, Proto_(Iterator__Tuple__Standard), Proto_(Tuple__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 40, 2, Proto_(Iterator__Tuple__Standard), Proto_(Tuple__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator), nil, nil };
 struct object Iterator__Tuple__Standard = 
 	{ &Iterator__Tuple__Standard__classInfo_, {nil, nil} };
 
@@ -17,12 +17,12 @@ struct object Iterator__Tuple__Standard =
 obj_ create_co___Iterator__Tuple__Standard(obj_ this_, obj_ tuple)
 {
 	obj_ t0_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(index_co_) UsingMethod_(tuple_co_)
 
 		{
 		t0_ = Call_(tuple_co_, this_, tuple);
-		t0_ = Call_(index_co_, this_, Int_(0));
+		t0_ = Call_(index_co_, this_, SmallInt_(0));
 		}
 	return nil;
 }
@@ -50,31 +50,15 @@ obj_ go_forward__Iterator__Tuple__Standard(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(index) UsingMethod_(index_co_)
 
 		{
 		t0_ = Call_(index, this_);
-		t1_ = Call_(_pl_, t0_, Int_(0));
+		t1_ = Call_(_pl_, t0_, SmallInt_(1));
 		t2_ = Call_(index_co_, this_, t1_);
-		
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ index__Iterator__Tuple__Standard(obj_ this_)
-{
-	return Field_(index);
-}
-
-
-obj_ index_co___Iterator__Tuple__Standard(obj_ this_, obj_ value)
-{
-	Field_(index) = value;
-	return value;
 }
 
 
@@ -103,19 +87,6 @@ obj_ new_co___Iterator__Tuple__Standard(obj_ this_, obj_ tuple)
 	obj_ obj = AllocObj_(Iterator__Tuple__Standard);
 	create_co___Iterator__Tuple__Standard(obj, tuple);
 	return obj;
-}
-
-
-obj_ tuple__Iterator__Tuple__Standard(obj_ this_)
-{
-	return Field_(tuple);
-}
-
-
-obj_ tuple_co___Iterator__Tuple__Standard(obj_ this_, obj_ value)
-{
-	Field_(tuple) = value;
-	return value;
 }
 
 

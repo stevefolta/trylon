@@ -4,7 +4,7 @@ UsingSym_(BoolLiteralFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(BoolLiteralFunction__Compiler)
 struct ClassInfo BoolLiteralFunction__Compiler__classInfo_ = 
-	{ 115, 1, Proto_(BoolLiteralFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(BoolLiteralFunction) ,nil };
+	{ StdClassRef_(Class__CImplementation), 127, 1, Proto_(BoolLiteralFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(BoolLiteralFunction), nil, nil };
 struct object BoolLiteralFunction__Compiler = 
 	{ &BoolLiteralFunction__Compiler__classInfo_, {nil} };
 
@@ -29,9 +29,20 @@ obj_ c_signature__BoolLiteralFunction__Compiler(obj_ this_)
 		else
 			{
 			return Str_(1);
-			
-			
 			}
+		}
+	return nil;
+}
+
+
+obj_ compile_call_co_with_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ builder, obj_ arguments)
+{
+	obj_ t0_;
+	UsingMethod_(compile_bool_literal_call_co_)
+
+		{
+		t0_ = Call_(compile_bool_literal_call_co_, builder, this_);
+		return t0_;
 		}
 	return nil;
 }
@@ -44,8 +55,6 @@ obj_ create_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value)
 
 		{
 		t0_ = Call_(value_co_, this_, value);
-		
-		
 		}
 	return nil;
 }
@@ -73,31 +82,6 @@ obj_ emit_c_call_co_builder_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ 
 			{
 			t1_ = new_co___NameResult__CCompiler(Proto_(NameResult__CCompiler), Str_(1));
 			return t1_;
-			
-			}
-		}
-	return nil;
-}
-
-
-obj_ emit_call_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	UsingSym_(true)
-	UsingSym_(false)
-	obj_ t0_;
-	UsingMethod_(value)
-
-		{
-		t0_ = Call_(value, this_);
-		if (t0_)
-			{
-			return Sym_(true);
-			}
-		else
-			{
-			return Sym_(false);
-			
-			
 			}
 		}
 	return nil;
@@ -112,7 +96,6 @@ obj_ interpret_call_with_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ arg
 		{
 		t0_ = Call_(value, this_);
 		return t0_;
-		
 		}
 	return nil;
 }
@@ -134,9 +117,6 @@ obj_ name__BoolLiteralFunction__Compiler(obj_ this_)
 		else
 			{
 			return Str_(1);
-			
-			
-			
 			}
 		}
 	return nil;
@@ -149,19 +129,6 @@ obj_ new_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value)
 	obj_ obj = AllocObj_(BoolLiteralFunction__Compiler);
 	create_co___BoolLiteralFunction__Compiler(obj, value);
 	return obj;
-}
-
-
-obj_ value__BoolLiteralFunction__Compiler(obj_ this_)
-{
-	return Field_(value);
-}
-
-
-obj_ value_co___BoolLiteralFunction__Compiler(obj_ this_, obj_ value)
-{
-	Field_(value) = value;
-	return value;
 }
 
 

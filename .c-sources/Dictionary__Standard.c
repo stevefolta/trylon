@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Iterator__Dictionary__Standard) UsingClass_(KeyValuePairsIterator__Dictionary__Standard) UsingClass_(KeysIterator__Dictionary__Standard) UsingClass_(Node__Dictionary__Standard) UsingClass_(RemoveContext__Dictionary__Standard) UsingClass_(ValuesIterator__Dictionary__Standard) 
+static obj_ tu0_[];
 UsingSym_(Dictionary)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Dictionary__Standard)
 struct ClassInfo Dictionary__Standard__classInfo_ = 
-	{ 38, 2, Proto_(Dictionary__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Dictionary) ,nil };
+	{ StdClassRef_(Class__CImplementation), 72, 2, Proto_(Dictionary__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Dictionary), nil, ((obj_) tu0_) };
 struct object Dictionary__Standard = 
 	{ &Dictionary__Standard__classInfo_, {nil, nil} };
 
+	UsingInt_(6)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(6), Proto_(Iterator__Dictionary__Standard), Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(KeysIterator__Dictionary__Standard), Proto_(Node__Dictionary__Standard), Proto_(RemoveContext__Dictionary__Standard), Proto_(ValuesIterator__Dictionary__Standard) };
 
 #define root__fld_	(0)
 #define num_items__fld_	(1)
@@ -95,8 +99,6 @@ obj_ at_co___Dictionary__Standard(obj_ this_, obj_ key)
 			}
 			}
 		return nil;
-		
-		
 		}
 	return nil;
 }
@@ -109,8 +111,18 @@ obj_ at_co_put_co___Dictionary__Standard(obj_ this_, obj_ key, obj_ value)
 
 		{
 		t0_ = Call_(insert_co_at_co_, this_, value, key);
-		
-		
+		}
+	return nil;
+}
+
+
+obj_ clear__Dictionary__Standard(obj_ this_)
+{
+	obj_ t0_;
+	UsingMethod_(create)
+
+		{
+		t0_ = Call_(create, this_);
 		}
 	return nil;
 }
@@ -155,8 +167,6 @@ obj_ contains_co___Dictionary__Standard(obj_ this_, obj_ key)
 			}
 			}
 		return nil;
-		
-		
 		}
 	return nil;
 }
@@ -178,14 +188,12 @@ obj_ count__Dictionary__Standard(obj_ this_)
 obj_ create__Dictionary__Standard(obj_ this_)
 {
 	obj_ t0_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(num_items_co_) UsingMethod_(root_co_)
 
 		{
 		t0_ = Call_(root_co_, this_, nil);
-		t0_ = Call_(num_items_co_, this_, Int_(0));
-		
-		
+		t0_ = Call_(num_items_co_, this_, SmallInt_(0));
 		}
 	return nil;
 }
@@ -197,8 +205,8 @@ obj_ insert_co_at_co___Dictionary__Standard(obj_ this_, obj_ value, obj_ key)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 1)
-	DefineInt_(1, 1)
+	UsingInt_(1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(insert_co_at_co_) UsingMethod_(num_items) UsingMethod_(num_items_co_) UsingMethod_(root) UsingMethod_(root_co_)
 	UsingClass_(Node__Dictionary__Standard)
 
@@ -214,23 +222,22 @@ obj_ insert_co_at_co___Dictionary__Standard(obj_ this_, obj_ value, obj_ key)
 				{
 				t0_ = Call_(root_co_, this_, insert_result);
 				t0_ = Call_(num_items, this_);
-				t1_ = Call_(_pl_, t0_, Int_(0));
+				t1_ = Call_(_pl_, t0_, SmallInt_(1));
 				t2_ = Call_(num_items_co_, this_, t1_);
 				}
 			else
 				{
-				/* The key was already present. */
+				/*  The key was already present. */
 				}
 			}
 		else
 			{
-			/* Empty so far. */
+			/*  Empty so far. */
 			t0_ = new_co_value_co___Node__Dictionary__Standard(Proto_(Node__Dictionary__Standard), key, value);
 			t1_ = Call_(root_co_, this_, t0_);
 			t0_ = Call_(num_items, this_);
-			t1_ = Call_(_pl_, t0_, Int_(1));
+			t1_ = Call_(_pl_, t0_, SmallInt_(1));
 			t2_ = Call_(num_items_co_, this_, t1_);
-			
 			}
 		}
 	return nil;
@@ -241,15 +248,13 @@ obj_ is_empty__Dictionary__Standard(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(_eq__eq_) UsingMethod_(num_items)
 
 		{
 		t0_ = Call_(num_items, this_);
-		t1_ = Call_(_eq__eq_, t0_, Int_(0));
+		t1_ = Call_(_eq__eq_, t0_, SmallInt_(0));
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -281,19 +286,6 @@ obj_ new__Dictionary__Standard(obj_ this_)
 }
 
 
-obj_ num_items__Dictionary__Standard(obj_ this_)
-{
-	return Field_(num_items);
-}
-
-
-obj_ num_items_co___Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(num_items) = value;
-	return value;
-}
-
-
 obj_ pairs__Dictionary__Standard(obj_ this_)
 {
 	extern obj_ new_co___KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ root);
@@ -306,8 +298,6 @@ obj_ pairs__Dictionary__Standard(obj_ this_)
 		t0_ = Call_(root, this_);
 		t1_ = new_co___KeyValuePairsIterator__Dictionary__Standard(Proto_(KeyValuePairsIterator__Dictionary__Standard), t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -319,7 +309,7 @@ obj_ remove_co___Dictionary__Standard(obj_ this_, obj_ key)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_) UsingMethod_(deleted_value) UsingMethod_(item_found) UsingMethod_(num_items) UsingMethod_(num_items_co_) UsingMethod_(remove_co_) UsingMethod_(root) UsingMethod_(root_co_)
 	UsingClass_(RemoveContext__Dictionary__Standard)
 
@@ -330,8 +320,8 @@ obj_ remove_co___Dictionary__Standard(obj_ this_, obj_ key)
 		if (t1_)
 			{
 			return nil;
-			
 			}
+		
 		t0_ = new_co___RemoveContext__Dictionary__Standard(Proto_(RemoveContext__Dictionary__Standard), key);
 		context = t0_;
 		t0_ = Call_(root, this_);
@@ -342,28 +332,13 @@ obj_ remove_co___Dictionary__Standard(obj_ this_, obj_ key)
 		if (t0_)
 			{
 			t0_ = Call_(num_items, this_);
-			t1_ = Call_(_, t0_, Int_(0));
+			t1_ = Call_(_, t0_, SmallInt_(1));
 			t2_ = Call_(num_items_co_, this_, t1_);
 			}
 		t0_ = Call_(deleted_value, context);
 		return t0_;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ root__Dictionary__Standard(obj_ this_)
-{
-	return Field_(root);
-}
-
-
-obj_ root_co___Dictionary__Standard(obj_ this_, obj_ value)
-{
-	Field_(root) = value;
-	return value;
 }
 
 

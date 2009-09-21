@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(DispatchRowSet__CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(Iterator__DispatchRowSet__CCompiler)
 struct ClassInfo Iterator__DispatchRowSet__CCompiler__classInfo_ = 
-	{ 147, 1, Proto_(Iterator__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 180, 1, Proto_(Iterator__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Iterator), nil, nil };
 struct object Iterator__DispatchRowSet__CCompiler = 
 	{ &Iterator__DispatchRowSet__CCompiler__classInfo_, {nil} };
 
@@ -24,7 +24,6 @@ obj_ create_co___Iterator__DispatchRowSet__CCompiler(obj_ this_, obj_ root)
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(stack_co_, this_, t0_);
 		t0_ = Call_(push_tree_co_, this_, root);
-		
 		}
 	return nil;
 }
@@ -43,13 +42,12 @@ obj_ current_item__Iterator__DispatchRowSet__CCompiler(obj_ this_)
 		if (t1_)
 			{
 			return nil;
-			
 			}
+		
 		t0_ = Call_(stack, this_);
 		t1_ = Call_(first_item, t0_);
 		t2_ = Call_(row, t1_);
 		return t2_;
-		
 		}
 	return nil;
 }
@@ -69,8 +67,8 @@ obj_ go_forward__Iterator__DispatchRowSet__CCompiler(obj_ this_)
 		if (t1_)
 			{
 			return nil;
-			
 			}
+		
 		t0_ = Call_(stack, this_);
 		t1_ = Call_(first_item, t0_);
 		t2_ = Call_(right, t1_);
@@ -78,7 +76,6 @@ obj_ go_forward__Iterator__DispatchRowSet__CCompiler(obj_ this_)
 		t0_ = Call_(stack, this_);
 		t1_ = Call_(pop_front, t0_);
 		t0_ = Call_(push_tree_co_, this_, right);
-		
 		}
 	return nil;
 }
@@ -94,7 +91,6 @@ obj_ is_done__Iterator__DispatchRowSet__CCompiler(obj_ this_)
 		t0_ = Call_(stack, this_);
 		t1_ = Call_(is_empty, t0_);
 		return t1_;
-		
 		}
 	return nil;
 }
@@ -127,26 +123,10 @@ obj_ push_tree_co___Iterator__DispatchRowSet__CCompiler(obj_ this_, obj_ node)
 			t1_ = Call_(push_front_co_, t0_, cur_node);
 			t0_ = Call_(left, cur_node);
 			cur_node = t0_;
-			
-			
-			
 			}
 			}
 		}
 	return nil;
-}
-
-
-obj_ stack__Iterator__DispatchRowSet__CCompiler(obj_ this_)
-{
-	return Field_(stack);
-}
-
-
-obj_ stack_co___Iterator__DispatchRowSet__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(stack) = value;
-	return value;
 }
 
 

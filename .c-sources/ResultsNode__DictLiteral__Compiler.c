@@ -4,7 +4,7 @@ UsingSym_(ResultsNode)UsingClass_(DictLiteral__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ResultsNode__DictLiteral__Compiler)
 struct ClassInfo ResultsNode__DictLiteral__Compiler__classInfo_ = 
-	{ 155, 7, Proto_(ResultsNode__DictLiteral__Compiler), Proto_(DictLiteral__Compiler), Proto_(Object__Standard), nil, Sym_(ResultsNode) ,nil };
+	{ StdClassRef_(Class__CImplementation), 188, 7, Proto_(ResultsNode__DictLiteral__Compiler), Proto_(DictLiteral__Compiler), Proto_(Object__Standard), nil, Sym_(ResultsNode), nil, nil };
 struct object ResultsNode__DictLiteral__Compiler = 
 	{ &ResultsNode__DictLiteral__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -45,7 +45,6 @@ obj_ access__ResultsNode__DictLiteral__Compiler(obj_ this_)
 		t7_ = Call_(_pl_, t4_, t6_);
 		t8_ = Call_(_pl_, t7_, Str_(2));
 		return t8_;
-		
 		}
 	return nil;
 }
@@ -59,22 +58,8 @@ obj_ create_co_in_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ node_
 		{
 		t0_ = Call_(node_index_co_, this_, node_index);
 		t0_ = Call_(dict_co_, this_, dict);
-		
 		}
 	return nil;
-}
-
-
-obj_ dict__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(dict);
-}
-
-
-obj_ dict_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(dict) = value;
-	return value;
 }
 
 
@@ -96,7 +81,7 @@ obj_ emit_declaration_on_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj
 	obj_ t10_;
 	obj_ t11_;
 	obj_ t12_;
-	DefineInt_(0, 15)
+	UsingInt_(15)
 	DefineString_(0, "DefineDictNode_(")
 	DefineString_(1, ", ")
 	DefineString_(2, ", ")
@@ -129,7 +114,7 @@ obj_ emit_declaration_on_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj
 			t1_ = Call_(access, t0_);
 			right_access = t1_;
 			}
-		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), Int_(0));
+		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), SmallInt_(15));
 		t0_->fields[1] = Str_(0);
 		t1_ = Call_(dict, this_);
 		t2_ = Call_(index, t1_);
@@ -157,48 +142,8 @@ obj_ emit_declaration_on_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj
 		t0_->fields[14] = t11_;
 		t0_->fields[15] = Str_(7);
 		t12_ = Call_(write_all_co_, stream, t0_);
-		
 		}
 	return nil;
-}
-
-
-obj_ key__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(key);
-}
-
-
-obj_ key_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(key) = value;
-	return value;
-}
-
-
-obj_ left__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(left);
-}
-
-
-obj_ left_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(left) = value;
-	return value;
-}
-
-
-obj_ level__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(level);
-}
-
-
-obj_ level_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(level) = value;
-	return value;
 }
 
 
@@ -208,45 +153,6 @@ obj_ new_co_in_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ node_ind
 	obj_ obj = AllocObj_(ResultsNode__DictLiteral__Compiler);
 	create_co_in_co___ResultsNode__DictLiteral__Compiler(obj, node_index, dict);
 	return obj;
-}
-
-
-obj_ node_index__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(node_index);
-}
-
-
-obj_ node_index_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(node_index) = value;
-	return value;
-}
-
-
-obj_ right__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(right);
-}
-
-
-obj_ right_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(right) = value;
-	return value;
-}
-
-
-obj_ value__ResultsNode__DictLiteral__Compiler(obj_ this_)
-{
-	return Field_(value);
-}
-
-
-obj_ value_co___ResultsNode__DictLiteral__Compiler(obj_ this_, obj_ value)
-{
-	Field_(value) = value;
-	return value;
 }
 
 

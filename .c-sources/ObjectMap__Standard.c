@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Iterator__ObjectMap__Standard) 
+static obj_ tu0_[];
 UsingSym_(ObjectMap)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(ObjectMap__Standard)
 struct ClassInfo ObjectMap__Standard__classInfo_ = 
-	{ 179, 1, Proto_(ObjectMap__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(ObjectMap) ,nil };
+	{ StdClassRef_(Class__CImplementation), 215, 1, Proto_(ObjectMap__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(ObjectMap), nil, ((obj_) tu0_) };
 struct object ObjectMap__Standard = 
 	{ &ObjectMap__Standard__classInfo_, {nil} };
 
+	UsingInt_(1)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Iterator__ObjectMap__Standard) };
 
 #define dictionary__fld_	(0)
 
@@ -31,7 +35,6 @@ obj_ at_co___ObjectMap__Standard(obj_ this_, obj_ key)
 		t1_ = Call_(object_ptr, key);
 		t2_ = Call_(at_co_, t0_, t1_);
 		return t2_;
-		
 		}
 	return nil;
 }
@@ -44,7 +47,6 @@ obj_ at_co_put_co___ObjectMap__Standard(obj_ this_, obj_ key, obj_ value)
 
 		{
 		t0_ = Call_(insert_co_at_co_, this_, value, key);
-		
 		}
 	return nil;
 }
@@ -62,8 +64,6 @@ obj_ contains_co___ObjectMap__Standard(obj_ this_, obj_ key)
 		t1_ = Call_(object_ptr, key);
 		t2_ = Call_(contains_co_, t0_, t1_);
 		return t2_;
-		
-		
 		}
 	return nil;
 }
@@ -95,22 +95,8 @@ obj_ create__ObjectMap__Standard(obj_ this_)
 		{
 		t0_ = new__Dictionary__Standard(Proto_(Dictionary__Standard));
 		t1_ = Call_(dictionary_co_, this_, t0_);
-		
 		}
 	return nil;
-}
-
-
-obj_ dictionary__ObjectMap__Standard(obj_ this_)
-{
-	return Field_(dictionary);
-}
-
-
-obj_ dictionary_co___ObjectMap__Standard(obj_ this_, obj_ value)
-{
-	Field_(dictionary) = value;
-	return value;
 }
 
 
@@ -125,7 +111,6 @@ obj_ insert_co_at_co___ObjectMap__Standard(obj_ this_, obj_ value, obj_ key)
 		t0_ = Call_(dictionary, this_);
 		t1_ = Call_(object_ptr, key);
 		t2_ = Call_(insert_co_at_co_, t0_, value, t1_);
-		
 		}
 	return nil;
 }
@@ -141,9 +126,6 @@ obj_ is_empty__ObjectMap__Standard(obj_ this_)
 		t0_ = Call_(dictionary, this_);
 		t1_ = Call_(is_empty, t0_);
 		return t1_;
-		
-		
-		
 		}
 	return nil;
 }
@@ -163,7 +145,6 @@ obj_ keys__ObjectMap__Standard(obj_ this_)
 		t1_ = Call_(keys, t0_);
 		t2_ = new_co___Iterator__ObjectMap__Standard(Proto_(Iterator__ObjectMap__Standard), t1_);
 		return t2_;
-		
 		}
 	return nil;
 }
@@ -188,7 +169,6 @@ obj_ num_items__ObjectMap__Standard(obj_ this_)
 		t0_ = Call_(dictionary, this_);
 		t1_ = Call_(count, t0_);
 		return t1_;
-		
 		}
 	return nil;
 }
@@ -206,7 +186,6 @@ obj_ remove_co___ObjectMap__Standard(obj_ this_, obj_ key)
 		t1_ = Call_(object_ptr, key);
 		t2_ = Call_(remove_co_, t0_, t1_);
 		return t2_;
-		
 		}
 	return nil;
 }
@@ -222,8 +201,6 @@ obj_ values__ObjectMap__Standard(obj_ this_)
 		t0_ = Call_(dictionary, this_);
 		t1_ = Call_(values, t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(GarbageCollector)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(GarbageCollector__Standard)
 struct ClassInfo GarbageCollector__Standard__classInfo_ = 
-	{ 50, 0, Proto_(GarbageCollector__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(GarbageCollector) ,nil };
+	{ StdClassRef_(Class__CImplementation), 34, 0, Proto_(GarbageCollector__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(GarbageCollector), nil, nil };
 struct object GarbageCollector__Standard = 
 	{ &GarbageCollector__Standard__classInfo_, {} };
 
@@ -12,18 +12,15 @@ struct object GarbageCollector__Standard =
 
 
 #include <gc/gc.h>
-
 obj_ force_collection__GarbageCollector__Standard(obj_ this_)
 {
 GC_gcollect();
-
 }
 
 
 obj_ num_collections__GarbageCollector__Standard(obj_ this_)
 {
 return BuildInt_(GC_gc_no);
-
 }
 
 

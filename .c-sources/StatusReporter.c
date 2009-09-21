@@ -4,7 +4,7 @@ UsingSym_(StatusReporter)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(StatusReporter)
 struct ClassInfo StatusReporter__classInfo_ = 
-	{ 169, 1, Proto_(StatusReporter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(StatusReporter) ,nil };
+	{ StdClassRef_(Class__CImplementation), 197, 1, Proto_(StatusReporter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(StatusReporter), nil, nil };
 struct object StatusReporter = 
 	{ &StatusReporter__classInfo_, {nil} };
 
@@ -23,7 +23,6 @@ obj_ create__StatusReporter(obj_ this_)
 		{
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(warnings_co_, this_, t0_);
-		
 		}
 	return nil;
 }
@@ -37,7 +36,6 @@ obj_ indent__StatusReporter(obj_ this_)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
 		}
 	return nil;
 }
@@ -60,7 +58,6 @@ obj_ report_co___StatusReporter(obj_ this_, obj_ message)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
 		}
 	return nil;
 }
@@ -88,9 +85,6 @@ obj_ show_warnings__StatusReporter(obj_ this_)
 			ForStart_(0, t0_, warning)
 				{
 				t0_ = print_line_co___Standard(Proto_(Standard), warning);
-				
-				
-				
 				}
 			ForEnd_(0)
 			}
@@ -107,7 +101,6 @@ obj_ unindent__StatusReporter(obj_ this_)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
 		}
 	return nil;
 }
@@ -122,22 +115,8 @@ obj_ warn_co___StatusReporter(obj_ this_, obj_ message)
 		{
 		t0_ = Call_(warnings, this_);
 		t1_ = Call_(append_co_, t0_, message);
-		
 		}
 	return nil;
-}
-
-
-obj_ warnings__StatusReporter(obj_ this_)
-{
-	return Field_(warnings);
-}
-
-
-obj_ warnings_co___StatusReporter(obj_ this_, obj_ value)
-{
-	Field_(warnings) = value;
-	return value;
 }
 
 

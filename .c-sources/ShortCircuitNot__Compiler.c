@@ -4,13 +4,26 @@ UsingSym_(ShortCircuitNot)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ShortCircuitNot__Compiler)
 struct ClassInfo ShortCircuitNot__Compiler__classInfo_ = 
-	{ 99, 1, Proto_(ShortCircuitNot__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitNot) ,nil };
+	{ StdClassRef_(Class__CImplementation), 152, 1, Proto_(ShortCircuitNot__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitNot), nil, nil };
 struct object ShortCircuitNot__Compiler = 
 	{ &ShortCircuitNot__Compiler__classInfo_, {nil} };
 
 
 
 #define expr__fld_	(0)
+
+
+obj_ compile_co___ShortCircuitNot__Compiler(obj_ this_, obj_ builder)
+{
+	obj_ t0_;
+	UsingMethod_(compile_short_circuit_not_co_)
+
+		{
+		t0_ = Call_(compile_short_circuit_not_co_, builder, this_);
+		return t0_;
+		}
+	return nil;
+}
 
 
 obj_ create_co___ShortCircuitNot__Compiler(obj_ this_, obj_ expr)
@@ -20,8 +33,6 @@ obj_ create_co___ShortCircuitNot__Compiler(obj_ this_, obj_ expr)
 
 		{
 		t0_ = Call_(expr_co_, this_, expr);
-		
-		
 		}
 	return nil;
 }
@@ -53,23 +64,8 @@ obj_ emit_code_co___ShortCircuitNot__Compiler(obj_ this_, obj_ builder)
 		t4_ = Call_(_pl_, t3_, Str_(1));
 		t5_ = Call_(add_line_co_, builder, t4_);
 		return temp;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ expr__ShortCircuitNot__Compiler(obj_ this_)
-{
-	return Field_(expr);
-}
-
-
-obj_ expr_co___ShortCircuitNot__Compiler(obj_ this_, obj_ value)
-{
-	Field_(expr) = value;
-	return value;
 }
 
 
@@ -85,29 +81,6 @@ obj_ interpreted__ShortCircuitNot__Compiler(obj_ this_)
 		t1_ = Call_(interpreted, t0_);
 		t2_ = Not_(t1_);
 		return t2_;
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__ShortCircuitNot__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(not)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(expr) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(expr, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = with_co_with_co___Expression(Proto_(Expression), Sym_(not), t1_);
-		return t2_;
-		
 		}
 	return nil;
 }
@@ -122,43 +95,15 @@ obj_ new_co___ShortCircuitNot__Compiler(obj_ this_, obj_ expr)
 }
 
 
-obj_ prepare_to_emit__ShortCircuitNot__Compiler(obj_ this_)
+obj_ resolve__ShortCircuitNot__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(expr) UsingMethod_(prepare_to_emit)
+	UsingMethod_(expr) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(expr, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
-		
-		
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ShortCircuitNot__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(not)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(expr) UsingMethod_(expr_co_) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(expr, this_);
-		t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(not), t0_);
-		t2_ = Call_(expr_co_, this_, t1_);
-		t0_ = Call_(expr, this_);
-		t1_ = Call_(translateExpression_co_, compiler, t0_);
-		return t1_;
-		
-		
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

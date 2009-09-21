@@ -4,7 +4,7 @@ UsingSym_(FileMissingException)UsingClass_(File__Standard)
 UsingClass_(Exception__Standard)
 UsingClass_(FileMissingException__File__Standard)
 struct ClassInfo FileMissingException__File__Standard__classInfo_ = 
-	{ 4, 1, Proto_(FileMissingException__File__Standard), Proto_(File__Standard), Proto_(Exception__Standard), nil, Sym_(FileMissingException) ,nil };
+	{ StdClassRef_(Class__CImplementation), 24, 1, Proto_(FileMissingException__File__Standard), Proto_(File__Standard), Proto_(Exception__Standard), nil, Sym_(FileMissingException), nil, nil };
 struct object FileMissingException__File__Standard = 
 	{ &FileMissingException__File__Standard__classInfo_, {nil} };
 
@@ -20,7 +20,6 @@ obj_ create_co___FileMissingException__File__Standard(obj_ this_, obj_ path)
 
 		{
 		t0_ = Call_(path_co_, this_, path);
-		
 		}
 	return nil;
 }
@@ -40,8 +39,6 @@ obj_ message__FileMissingException__File__Standard(obj_ this_)
 		t1_ = Call_(_pl_, Str_(0), t0_);
 		t2_ = Call_(_pl_, t1_, Str_(1));
 		return t2_;
-		
-		
 		}
 	return nil;
 }
@@ -53,19 +50,6 @@ obj_ new_co___FileMissingException__File__Standard(obj_ this_, obj_ path)
 	obj_ obj = AllocObj_(FileMissingException__File__Standard);
 	create_co___FileMissingException__File__Standard(obj, path);
 	return obj;
-}
-
-
-obj_ path__FileMissingException__File__Standard(obj_ this_)
-{
-	return Field_(path);
-}
-
-
-obj_ path_co___FileMissingException__File__Standard(obj_ this_, obj_ value)
-{
-	Field_(path) = value;
-	return value;
 }
 
 

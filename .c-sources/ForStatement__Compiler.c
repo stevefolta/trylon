@@ -4,7 +4,7 @@ UsingSym_(ForStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ForStatement__Compiler)
 struct ClassInfo ForStatement__Compiler__classInfo_ = 
-	{ 136, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement) ,nil };
+	{ StdClassRef_(Class__CImplementation), 170, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
 struct object ForStatement__Compiler = 
 	{ &ForStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -17,29 +17,16 @@ struct object ForStatement__Compiler =
 #define index__fld_	(4)
 
 
-obj_ body__ForStatement__Compiler(obj_ this_)
+obj_ compile_co___ForStatement__Compiler(obj_ this_, obj_ builder)
 {
-	return Field_(body);
-}
+	obj_ t0_;
+	UsingMethod_(compile_for_co_)
 
-
-obj_ body_co___ForStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(body) = value;
-	return value;
-}
-
-
-obj_ collection__ForStatement__Compiler(obj_ this_)
-{
-	return Field_(collection);
-}
-
-
-obj_ collection_co___ForStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(collection) = value;
-	return value;
+		{
+		t0_ = Call_(compile_for_co_, builder, this_);
+		return t0_;
+		}
+	return nil;
 }
 
 
@@ -53,8 +40,6 @@ obj_ create_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ th
 		t0_ = Call_(collection_co_, this_, collection);
 		t0_ = Call_(body_co_, this_, body);
 		t0_ = Call_(comment_co_, this_, comment);
-		
-		
 		}
 	return nil;
 }
@@ -93,7 +78,7 @@ obj_ emit_code_co___ForStatement__Compiler(obj_ this_, obj_ builder)
 		t0_ = Call_(calling_method_co_, builder, Str_(2));
 		t0_ = Call_(calling_method_co_, builder, Str_(3));
 		
-		/* Start the loop. */
+		/*  Start the loop. */
 		t0_ = Call_(collection, this_);
 		t1_ = Call_(emit_code_co_, t0_, builder);
 		collection_result = t1_;
@@ -114,34 +99,19 @@ obj_ emit_code_co___ForStatement__Compiler(obj_ this_, obj_ builder)
 		t8_ = Call_(_pl_, t7_, Str_(7));
 		t9_ = Call_(add_line_co_, builder, t8_);
 		
-		/* Body. */
+		/*  Body. */
 		t0_ = Call_(body, this_);
 		t1_ = Call_(emit_code_co_, t0_, builder);
 		
-		/* Finish the loop. */
+		/*  Finish the loop. */
 		t0_ = Call_(cur_loop_index, builder);
 		t1_ = Call_(string, t0_);
 		t2_ = Call_(_pl_, Str_(8), t1_);
 		t3_ = Call_(_pl_, t2_, Str_(9));
 		t4_ = Call_(add_line_co_, builder, t3_);
 		t0_ = Call_(end_loop, builder);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ index__ForStatement__Compiler(obj_ this_)
-{
-	return Field_(index);
-}
-
-
-obj_ index_co___ForStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(index) = value;
-	return value;
 }
 
 
@@ -185,56 +155,11 @@ obj_ interpreted__ForStatement__Compiler(obj_ this_)
 			if (t0_)
 				{
 				Throw_(exception);
-				
 				}
 			}
 		EndTry_
 		}
 	return nil;
-}
-
-
-obj_ jolt_expression__ForStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(trylon_for)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	obj_ t6_;
-	obj_ t7_;
-	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(intern) UsingMethod_(jolt_expression) UsingMethod_(local) UsingMethod_(name)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(local, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(collection, this_);
-		t4_ = Call_(jolt_expression, t3_);
-		t5_ = Call_(body, this_);
-		t6_ = Call_(jolt_expression, t5_);
-		t7_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_for), t2_, t4_, t6_);
-		return t7_;
-		
-		}
-	return nil;
-}
-
-
-obj_ local__ForStatement__Compiler(obj_ this_)
-{
-	return Field_(local);
-}
-
-
-obj_ local_co___ForStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(local) = value;
-	return value;
 }
 
 
@@ -247,52 +172,17 @@ obj_ new_co_collection_co_body_co_comment_co___ForStatement__Compiler(obj_ this_
 }
 
 
-obj_ prepare_to_emit__ForStatement__Compiler(obj_ this_)
+obj_ resolve__ForStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(collection, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
-		
-		
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ForStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3, obj_ value_4);
-	UsingSym_(trylon_for)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	UsingMethod_(body) UsingMethod_(collection) UsingMethod_(intern) UsingMethod_(local) UsingMethod_(name) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(local, this_);
-		t1_ = Call_(name, t0_);
-		t2_ = Call_(intern, t1_);
-		t3_ = Call_(collection, this_);
-		t4_ = Call_(body, this_);
-		t5_ = with_co_with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(trylon_for), t2_, t3_, t4_);
-		expr = t5_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		
-		
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

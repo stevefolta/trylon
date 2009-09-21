@@ -4,7 +4,7 @@ UsingSym_(SwitchClause)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SwitchClause__Compiler)
 struct ClassInfo SwitchClause__Compiler__classInfo_ = 
-	{ 158, 5, Proto_(SwitchClause__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchClause) ,nil };
+	{ StdClassRef_(Class__CImplementation), 191, 5, Proto_(SwitchClause__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchClause), nil, nil };
 struct object SwitchClause__Compiler = 
 	{ &SwitchClause__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -14,19 +14,6 @@ struct object SwitchClause__Compiler =
 #define pre_clause_comments__fld_	(2)
 #define value_comment__fld_	(3)
 #define value_results__fld_	(4)
-
-
-obj_ body__SwitchClause__Compiler(obj_ this_)
-{
-	return Field_(body);
-}
-
-
-obj_ body_co___SwitchClause__Compiler(obj_ this_, obj_ value)
-{
-	Field_(body) = value;
-	return value;
-}
 
 
 obj_ create_co_body_co_pre_clause_comments_co_value_comment_co___SwitchClause__Compiler(obj_ this_, obj_ values, obj_ body, obj_ pre_clause_comments, obj_ value_comment)
@@ -39,8 +26,6 @@ obj_ create_co_body_co_pre_clause_comments_co_value_comment_co___SwitchClause__C
 		t0_ = Call_(body_co_, this_, body);
 		t0_ = Call_(pre_clause_comments_co_, this_, pre_clause_comments);
 		t0_ = Call_(value_comment_co_, this_, value_comment);
-		
-		
 		}
 	return nil;
 }
@@ -118,9 +103,6 @@ obj_ emit_code_co_is_first_co___SwitchClause__Compiler(obj_ this_, obj_ builder,
 		else
 			{
 			t0_ = Call_(add_line_co_, builder, Str_(6));
-			
-			
-			
 			}
 		}
 	return nil;
@@ -145,60 +127,8 @@ obj_ emit_values_co___SwitchClause__Compiler(obj_ this_, obj_ builder)
 			t0_ = Call_(value_results, this_);
 			t1_ = Call_(emit_code_co_, value, builder);
 			t2_ = Call_(append_co_, t0_, t1_);
-			
 			}
 		ForEnd_(0)
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__SwitchClause__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(jolt_expression) UsingMethod_(values)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(values, this_);
-		if (t0_)
-			{
-			obj_ index, values_list;
-			t0_ = Call_(values, this_);
-			t1_ = Call_(count, t0_);
-			t2_ = new_co___Expression(Proto_(Expression), t1_);
-			values_list = t2_;
-			index = Int_(0);
-			t0_ = Call_(values, this_);
-			ForStart_(0, t0_, value)
-				{
-				t0_ = Call_(jolt_expression, value);
-				t1_ = Call_(at_co_put_co_, values_list, index, t0_);
-				t0_ = Call_(_pl_, index, Int_(1));
-				index = t0_;
-				}
-			ForEnd_(0)
-			t0_ = Call_(body, this_);
-			t1_ = Call_(jolt_expression, t0_);
-			t2_ = with_co_with_co___Expression(Proto_(Expression), values_list, t1_);
-			return t2_;
-			}
-		else
-			{
-			/* It's the "else" clause. */
-			t3_ = Call_(body, this_);
-			t4_ = Call_(jolt_expression, t3_);
-			return t4_;
-			
-			}
 		}
 	return nil;
 }
@@ -213,24 +143,11 @@ obj_ new_co_body_co_pre_clause_comments_co_value_comment_co___SwitchClause__Comp
 }
 
 
-obj_ pre_clause_comments__SwitchClause__Compiler(obj_ this_)
-{
-	return Field_(pre_clause_comments);
-}
-
-
-obj_ pre_clause_comments_co___SwitchClause__Compiler(obj_ this_, obj_ value)
-{
-	Field_(pre_clause_comments) = value;
-	return value;
-}
-
-
-obj_ prepare_to_emit__SwitchClause__Compiler(obj_ this_)
+obj_ resolve__SwitchClause__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(prepare_to_emit) UsingMethod_(values)
+	UsingMethod_(body) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(resolve) UsingMethod_(values)
 
 		{
 		t0_ = Call_(values, this_);
@@ -239,104 +156,14 @@ obj_ prepare_to_emit__SwitchClause__Compiler(obj_ this_)
 			t0_ = Call_(values, this_);
 			ForStart_(0, t0_, value)
 				{
-				t0_ = Call_(prepare_to_emit, value);
+				t0_ = Call_(resolve, value);
 				}
 			ForEnd_(0)
 			}
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
-		
-		
-		
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
-}
-
-
-obj_ translate_jolt_expression__SwitchClause__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 1)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(count) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(values)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(values, this_);
-		if (t0_)
-			{
-			obj_ index, values_list;
-			t0_ = Call_(values, this_);
-			t1_ = Call_(count, t0_);
-			t2_ = new_co___Expression(Proto_(Expression), t1_);
-			values_list = t2_;
-			index = Int_(0);
-			t0_ = Call_(values, this_);
-			ForStart_(0, t0_, value)
-				{
-				t0_ = Call_(at_co_put_co_, values_list, index, value);
-				t0_ = Call_(_pl_, index, Int_(1));
-				index = t0_;
-				}
-			ForEnd_(0)
-			t0_ = Call_(body, this_);
-			t1_ = with_co_with_co___Expression(Proto_(Expression), values_list, t0_);
-			return t1_;
-			}
-		else
-			{
-			/* It's the "else" clause. */
-			t2_ = Call_(body, this_);
-			return t2_;
-			
-			
-			
-			}
-		}
-	return nil;
-}
-
-
-obj_ value_comment__SwitchClause__Compiler(obj_ this_)
-{
-	return Field_(value_comment);
-}
-
-
-obj_ value_comment_co___SwitchClause__Compiler(obj_ this_, obj_ value)
-{
-	Field_(value_comment) = value;
-	return value;
-}
-
-
-obj_ value_results__SwitchClause__Compiler(obj_ this_)
-{
-	return Field_(value_results);
-}
-
-
-obj_ value_results_co___SwitchClause__Compiler(obj_ this_, obj_ value)
-{
-	Field_(value_results) = value;
-	return value;
-}
-
-
-obj_ values__SwitchClause__Compiler(obj_ this_)
-{
-	return Field_(values);
-}
-
-
-obj_ values_co___SwitchClause__Compiler(obj_ this_, obj_ value)
-{
-	Field_(values) = value;
-	return value;
 }
 
 

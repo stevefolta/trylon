@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Iterator__FileDirectory__Standard) 
+static obj_ tu0_[];
 UsingSym_(FileDirectory)UsingClass_(Standard)
 UsingClass_(FileDirectoryEntry__Standard)
 UsingClass_(FileDirectory__Standard)
 struct ClassInfo FileDirectory__Standard__classInfo_ = 
-	{ 48, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory) ,nil };
+	{ StdClassRef_(Class__CImplementation), 31, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory), nil, ((obj_) tu0_) };
 struct object FileDirectory__Standard = 
 	{ &FileDirectory__Standard__classInfo_, {nil} };
 
+	UsingInt_(1)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Iterator__FileDirectory__Standard) };
 
 
 #define path__fld_	(0)
@@ -21,7 +25,6 @@ struct object FileDirectory__Standard =
 
 UsingMethod_(_pl_)
 DefineString_(slash, "/");
-
 obj_ Iterator__FileDirectory__Standard__accessor_(obj_ this_)
 {
 	UsingClass_(Iterator__FileDirectory__Standard)
@@ -71,8 +74,6 @@ obj_ at_co___FileDirectory__Standard(obj_ this_, obj_ name)
 			{
 			t1_ = new_co___File__Standard(Proto_(File__Standard), entry_path);
 			return t1_;
-			
-			
 			}
 		}
 	return nil;
@@ -82,46 +83,45 @@ obj_ at_co___FileDirectory__Standard(obj_ this_, obj_ name)
 obj_ contains_co___FileDirectory__Standard(obj_ this_, obj_ name)
 {
 #ifndef MAC_OSX
-	/* Build the path string. */
-	obj_ entryPath = Call_(_pl_, Call_(_pl_, Field_(path), Str_(slash)), name);
-	char* entryPathStr = CString_(entryPath);
+/* Build the path string. */
+obj_ entryPath = Call_(_pl_, Call_(_pl_, Field_(path), Str_(slash)), name);
+char* entryPathStr = CString_(entryPath);
 
-	/* Does the entry exist? */
-	struct stat statBuf;
-	int result = stat(entryPathStr, &statBuf);
-	return Bool_(result != -1);
+/* Does the entry exist? */
+struct stat statBuf;
+int result = stat(entryPathStr, &statBuf);
+return Bool_(result != -1);
 
 #else 	/* MAC_OSX */
-	/* The stupid Mac OSX filesystem is case-insensitive, so simply doing 
-	 * a stat() won't tell us if a file with that (case-sensitive) name 
-	 * really exists.  stat() doesn't give us the filename, so we need to 
-	 * look through the whole directory. */
+/* The stupid Mac OSX filesystem is case-insensitive, so simply doing 
+* a stat() won't tell us if a file with that (case-sensitive) name 
+* really exists.  stat() doesn't give us the filename, so we need to 
+* look through the whole directory. */
 
-	/* Open up the directory. */
-	char* nameStr;
-	char* dirPathStr = CString_(Field_(path));
-	DIR* directory = opendir(dirPathStr);
-	if (directory == nil)
-		return nil;
+/* Open up the directory. */
+char* nameStr;
+char* dirPathStr = CString_(Field_(path));
+DIR* directory = opendir(dirPathStr);
+if (directory == nil)
+return nil;
 
-	/* Search. */
-	nameStr = CString_(name);
-	int found = 0;
-	while (1) {
-		struct dirent* entry = readdir(directory);
-		if (entry == nil)
-			break;
-		if (strcmp(nameStr, entry->d_name) == 0) {
-			found = 1;
-			break;
-			}
-		}
+/* Search. */
+nameStr = CString_(name);
+int found = 0;
+while (1) {
+struct dirent* entry = readdir(directory);
+if (entry == nil)
+break;
+if (strcmp(nameStr, entry->d_name) == 0) {
+found = 1;
+break;
+}
+}
 
-	closedir(directory);
-	return Bool_(found);
-	
+closedir(directory);
+return Bool_(found);
+
 #endif 	/* MAC_OSX */
-
 }
 
 
@@ -133,14 +133,13 @@ DIR* directory = opendir(pathStr);
 
 int numEntries = 0;
 while (1) {
-	if (readdir(directory) == nil)
-		break;
-	numEntries += 1;
-	}
+if (readdir(directory) == nil)
+break;
+numEntries += 1;
+}
 
 closedir(directory);
 return BuildInt_(numEntries);
-
 }
 
 
@@ -152,8 +151,6 @@ char* entryPathStr = CString_(entryPath);
 
 /* Make the directory. */
 mkdir(entryPathStr, 0777);
-
-
 }
 
 
@@ -164,8 +161,6 @@ obj_ create_co___FileDirectory__Standard(obj_ this_, obj_ path)
 
 		{
 		t0_ = Call_(path_co_, this_, path);
-		
-		
 		}
 	return nil;
 }
@@ -183,46 +178,45 @@ int result = stat(entryPathStr, &statBuf);
 
 #ifndef MAC_OSX
 
-	return Bool_(result != -1 && S_ISDIR(statBuf.st_mode));
+return Bool_(result != -1 && S_ISDIR(statBuf.st_mode));
 
 #else 	/* MAC_OSX */
 
-	if (result == -1 || !S_ISDIR(statBuf.st_mode))
-		return nil;
+if (result == -1 || !S_ISDIR(statBuf.st_mode))
+return nil;
 
-	/* The stupid Mac OSX filesystem is case-insensitive, so simply doing a
-	 * stat() won't tell us if a directory with that (case-sensitive) name
-	 * really exists.  At this point we know that the entry is a file, but
-	 * not if it really has that (case-sensitive) name.  stat() doesn't give
-	 * us the filename, so we need to look through the whole directory. */
+/* The stupid Mac OSX filesystem is case-insensitive, so simply doing a
+* stat() won't tell us if a directory with that (case-sensitive) name
+* really exists.  At this point we know that the entry is a file, but
+* not if it really has that (case-sensitive) name.  stat() doesn't give
+* us the filename, so we need to look through the whole directory. */
 
-	{
-	/* Open up the directory. */
-	char* nameStr;
-	char* dirPathStr = CString_(Field_(path));
-	DIR* directory = opendir(dirPathStr);
-	if (directory == nil)
-		return nil;
+{
+/* Open up the directory. */
+char* nameStr;
+char* dirPathStr = CString_(Field_(path));
+DIR* directory = opendir(dirPathStr);
+if (directory == nil)
+return nil;
 
-	/* Search. */
-	nameStr = CString_(name);
-	int found = 0;
-	while (1) {
-		struct dirent* entry = readdir(directory);
-		if (entry == nil)
-			break;
-		if (strcmp(nameStr, entry->d_name) == 0) {
-			found = 1;
-			break;
-			}
-		}
+/* Search. */
+nameStr = CString_(name);
+int found = 0;
+while (1) {
+struct dirent* entry = readdir(directory);
+if (entry == nil)
+break;
+if (strcmp(nameStr, entry->d_name) == 0) {
+found = 1;
+break;
+}
+}
 
-	closedir(directory);
-	return Bool_(found);
-	}
+closedir(directory);
+return Bool_(found);
+}
 
 #endif 	/* MAC_OSX */
-
 }
 
 
@@ -235,13 +229,11 @@ obj_ iterator__FileDirectory__Standard(obj_ this_)
 	UsingClass_(Iterator__FileDirectory__Standard)
 
 		{
-		/* Currently returns the names, not the entries themselves.  This may be  */
-		/* changed in the future, so use "names" instead. */
+		/*  Currently returns the names, not the entries themselves.  This may be  */
+		/*  changed in the future, so use "names" instead. */
 		t0_ = Call_(path, this_);
 		t1_ = new_co___Iterator__FileDirectory__Standard(Proto_(Iterator__FileDirectory__Standard), t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -259,8 +251,6 @@ obj_ names__FileDirectory__Standard(obj_ this_)
 		t0_ = Call_(path, this_);
 		t1_ = new_co___Iterator__FileDirectory__Standard(Proto_(Iterator__FileDirectory__Standard), t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -291,22 +281,8 @@ obj_ num_items__FileDirectory__Standard(obj_ this_)
 
 		{
 		t0_ = Call_(count, this_);
-		
 		}
 	return nil;
-}
-
-
-obj_ path__FileDirectory__Standard(obj_ this_)
-{
-	return Field_(path);
-}
-
-
-obj_ path_co___FileDirectory__Standard(obj_ this_, obj_ value)
-{
-	Field_(path) = value;
-	return value;
 }
 
 

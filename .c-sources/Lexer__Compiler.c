@@ -4,11 +4,11 @@ UsingSym_(Lexer)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Lexer__Compiler)
 struct ClassInfo Lexer__Compiler__classInfo_ = 
-	{ 62, 5, Proto_(Lexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Lexer) ,nil };
+	{ StdClassRef_(Class__CImplementation), 64, 5, Proto_(Lexer__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Lexer), nil, nil };
 struct object Lexer__Compiler = 
 	{ &Lexer__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
-	DefineInt_(0, 0)
+	UsingInt_(0)
 
 #define p__fld_	(0)
 #define indent_stack__fld_	(1)
@@ -16,20 +16,7 @@ struct object Lexer__Compiler =
 #define unindents_pending__fld_	(3)
 #define unindent_to__fld_	(4)
 
-DeclareSharedField_(eof_char, Lexer__Compiler, Int_(0))
-
-obj_ at_line_start__Lexer__Compiler(obj_ this_)
-{
-	return Field_(at_line_start);
-}
-
-
-obj_ at_line_start_co___Lexer__Compiler(obj_ this_, obj_ value)
-{
-	Field_(at_line_start) = value;
-	return value;
-}
-
+DeclareSharedField_(eof_char, Lexer__Compiler, SmallInt_(0))
 
 obj_ character_constant_value_co___Lexer__Compiler(obj_ this_, obj_ text)
 {
@@ -37,7 +24,7 @@ obj_ character_constant_value_co___Lexer__Compiler(obj_ this_, obj_ text)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 92)
+	UsingInt_(92)
 	UsingMethod_(_eq__eq_) UsingMethod_(bytes) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(parse_character_escape_co_)
 
 		{
@@ -45,12 +32,12 @@ obj_ character_constant_value_co___Lexer__Compiler(obj_ this_, obj_ text)
 		t1_ = Call_(p_co_, this_, t0_);
 		t0_ = Call_(p, this_);
 		t1_ = Call_(current_item, t0_);
-		t2_ = Call_(_eq__eq_, t1_, Int_(0));
+		t2_ = Call_(_eq__eq_, t1_, Int_(92));
 		if (t2_)
 			{
 			t0_ = Call_(p, this_);
 			t1_ = Call_(go_forward, t0_);
-			 	/* Skip `\`. */
+			 	/*  Skip `\`. */
 			t0_ = Call_(p, this_);
 			t1_ = Call_(parse_character_escape_co_, this_, t0_);
 			return t1_;
@@ -58,8 +45,6 @@ obj_ character_constant_value_co___Lexer__Compiler(obj_ this_, obj_ text)
 		t2_ = Call_(p, this_);
 		t3_ = Call_(current_item, t2_);
 		return t3_;
-		
-		
 		}
 	return nil;
 }
@@ -70,24 +55,22 @@ obj_ create_co___Lexer__Compiler(obj_ this_, obj_ text)
 	extern obj_ new__IntStack__Compiler(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 0)
+	UsingInt_(0)
+	UsingInt_(0)
 	UsingMethod_(at_line_start_co_) UsingMethod_(bytes) UsingMethod_(char_) UsingMethod_(eof_char_co_) UsingMethod_(indent_stack) UsingMethod_(indent_stack_co_) UsingMethod_(p_co_) UsingMethod_(push_co_) UsingMethod_(unindents_pending_co_)
 	UsingClass_(IntStack__Compiler)
 
 		{
-		t0_ = Call_(char_, Int_(0));
+		t0_ = Call_(char_, SmallInt_(0));
 		t1_ = Call_(eof_char_co_, this_, t0_);
 		t0_ = Call_(bytes, text);
 		t1_ = Call_(p_co_, this_, t0_);
 		t0_ = new__IntStack__Compiler(Proto_(IntStack__Compiler));
 		t1_ = Call_(indent_stack_co_, this_, t0_);
 		t0_ = Call_(indent_stack, this_);
-		t1_ = Call_(push_co_, t0_, Int_(1));
+		t1_ = Call_(push_co_, t0_, SmallInt_(0));
 		t0_ = Call_(at_line_start_co_, this_, true_);
 		t0_ = Call_(unindents_pending_co_, this_, nil);
-		
-		
 		}
 	return nil;
 }
@@ -113,8 +96,6 @@ obj_ cur_char__Lexer__Compiler(obj_ this_)
 			t1_ = Call_(p, this_);
 			t2_ = Call_(current_item, t1_);
 			return t2_;
-			
-			
 			}
 		}
 	return nil;
@@ -141,14 +122,14 @@ obj_ first_subblock_line__Lexer__Compiler(obj_ this_)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 10)
-	DefineInt_(1, 13)
+	UsingInt_(10)
+	UsingInt_(13)
 	UsingMethod_(_nt__eq_) UsingMethod_(at_line_start_co_) UsingMethod_(cur_char) UsingMethod_(eof_char) UsingMethod_(go_forward) UsingMethod_(p) UsingMethod_(start)
 	UsingClass_(String__Standard)
 
 		{
 		obj_ c, line_start;
-		/* We've already got the indentation, just get the rest of the line. */
+		/*  We've already got the indentation, just get the rest of the line. */
 		t0_ = Call_(p, this_);
 		t1_ = Call_(start, t0_);
 		line_start = t1_;
@@ -159,11 +140,11 @@ obj_ first_subblock_line__Lexer__Compiler(obj_ this_)
 			t0_ = Call_(eof_char, this_);
 			t1_ = Call_(_nt__eq_, c, t0_);
 			if (t1_) {
-				t2_ = Call_(_nt__eq_, c, Int_(0));
+				t2_ = Call_(_nt__eq_, c, Int_(10));
 				t1_ = t2_;
 				}
 			if (t1_) {
-				t3_ = Call_(_nt__eq_, c, Int_(1));
+				t3_ = Call_(_nt__eq_, c, Int_(13));
 				t1_ = t3_;
 				}
 			if (!(t1_))
@@ -177,29 +158,14 @@ obj_ first_subblock_line__Lexer__Compiler(obj_ this_)
 			}
 		t0_ = Call_(p, this_);
 		t1_ = Call_(go_forward, t0_);
-		 	/* Consume the eol. */
+		 	/*  Consume the eol. */
 		t0_ = Call_(at_line_start_co_, this_, true_);
 		t0_ = Call_(p, this_);
 		t1_ = Call_(start, t0_);
 		t2_ = new_co_to_co___String__Standard(Proto_(String__Standard), line_start, t1_);
 		return t2_;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ indent_stack__Lexer__Compiler(obj_ this_)
-{
-	return Field_(indent_stack);
-}
-
-
-obj_ indent_stack_co___Lexer__Compiler(obj_ this_, obj_ value)
-{
-	Field_(indent_stack) = value;
-	return value;
 }
 
 
@@ -319,113 +285,113 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 	obj_ t6_;
 	obj_ t7_;
 	obj_ t8_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 9)
-	DefineInt_(2, 2)
-	DefineInt_(3, 32)
-	DefineInt_(4, 1)
-	DefineInt_(5, 10)
-	DefineInt_(6, 13)
-	DefineInt_(7, 10)
-	DefineInt_(8, 13)
-	DefineInt_(9, 32)
-	DefineInt_(10, 9)
-	DefineInt_(11, 45)
-	DefineInt_(12, 45)
-	DefineInt_(13, 10)
-	DefineInt_(14, 13)
-	DefineInt_(15, 32)
-	DefineInt_(16, 9)
-	DefineInt_(17, 61)
-	DefineInt_(18, 62)
-	DefineInt_(19, 48)
-	DefineInt_(20, 57)
-	DefineInt_(21, 48)
-	DefineInt_(22, 57)
-	DefineInt_(23, 46)
-	DefineInt_(24, 35)
-	DefineInt_(25, 9)
-	DefineInt_(26, 32)
-	DefineInt_(27, 10)
-	DefineInt_(28, 13)
-	DefineInt_(29, 34)
-	DefineInt_(30, 10)
-	DefineInt_(31, 13)
-	DefineInt_(32, 92)
-	DefineInt_(33, 34)
-	DefineInt_(34, 39)
-	DefineInt_(35, 92)
-	DefineInt_(36, 39)
-	DefineInt_(37, 96)
-	DefineInt_(38, 92)
-	DefineInt_(39, 96)
-	DefineInt_(40, 40)
-	DefineInt_(41, 41)
-	DefineInt_(42, 123)
-	DefineInt_(43, 125)
-	DefineInt_(44, 91)
-	DefineInt_(45, 93)
-	DefineInt_(46, 44)
-	DefineInt_(47, 59)
-	DefineInt_(48, 126)
-	DefineInt_(49, 43)
-	DefineInt_(50, 61)
-	DefineInt_(51, 42)
-	DefineInt_(52, 47)
-	DefineInt_(53, 37)
-	DefineInt_(54, 94)
-	DefineInt_(55, 33)
-	DefineInt_(56, 58)
-	DefineInt_(57, 60)
-	DefineInt_(58, 61)
-	DefineInt_(59, 61)
-	DefineInt_(60, 62)
-	DefineInt_(61, 61)
-	DefineInt_(62, 61)
-	DefineInt_(63, 38)
-	DefineInt_(64, 38)
-	DefineInt_(65, 61)
-	DefineInt_(66, 124)
-	DefineInt_(67, 124)
-	DefineInt_(68, 61)
-	DefineInt_(69, 97)
-	DefineInt_(70, 122)
-	DefineInt_(71, 65)
-	DefineInt_(72, 90)
-	DefineInt_(73, 95)
-	DefineInt_(74, 46)
-	DefineInt_(75, 240)
-	DefineInt_(76, 192)
-	DefineInt_(77, 240)
-	DefineInt_(78, 192)
-	DefineInt_(79, 224)
-	DefineInt_(80, 240)
-	DefineInt_(81, 95)
-	DefineInt_(82, 45)
-	DefineInt_(83, 46)
-	DefineInt_(84, 97)
-	DefineInt_(85, 122)
-	DefineInt_(86, 65)
-	DefineInt_(87, 90)
-	DefineInt_(88, 48)
-	DefineInt_(89, 57)
-	DefineInt_(90, 240)
-	DefineInt_(91, 192)
-	DefineInt_(92, 224)
-	DefineInt_(93, 240)
-	DefineInt_(94, 58)
-	DefineInt_(95, 48)
-	DefineInt_(96, 57)
-	DefineInt_(97, 48)
-	DefineInt_(98, 120)
-	DefineInt_(99, 88)
-	DefineInt_(100, 48)
-	DefineInt_(101, 57)
-	DefineInt_(102, 97)
-	DefineInt_(103, 102)
-	DefineInt_(104, 65)
-	DefineInt_(105, 70)
-	DefineInt_(106, 46)
+	UsingInt_(0)
+	UsingInt_(9)
+	UsingInt_(2)
+	UsingInt_(32)
+	UsingInt_(1)
+	UsingInt_(10)
+	UsingInt_(13)
+	UsingInt_(10)
+	UsingInt_(13)
+	UsingInt_(32)
+	UsingInt_(9)
+	UsingInt_(45)
+	UsingInt_(45)
+	UsingInt_(10)
+	UsingInt_(13)
+	UsingInt_(32)
+	UsingInt_(9)
+	UsingInt_(61)
+	UsingInt_(62)
+	UsingInt_(48)
+	UsingInt_(57)
+	UsingInt_(48)
+	UsingInt_(57)
+	UsingInt_(46)
+	UsingInt_(35)
+	UsingInt_(9)
+	UsingInt_(32)
+	UsingInt_(10)
+	UsingInt_(13)
+	UsingInt_(34)
+	UsingInt_(10)
+	UsingInt_(13)
+	UsingInt_(92)
+	UsingInt_(34)
+	UsingInt_(39)
+	UsingInt_(92)
+	UsingInt_(39)
+	UsingInt_(96)
+	UsingInt_(92)
+	UsingInt_(96)
+	UsingInt_(40)
+	UsingInt_(41)
+	UsingInt_(123)
+	UsingInt_(125)
+	UsingInt_(91)
+	UsingInt_(93)
+	UsingInt_(44)
+	UsingInt_(59)
+	UsingInt_(126)
+	UsingInt_(43)
+	UsingInt_(61)
+	UsingInt_(42)
+	UsingInt_(47)
+	UsingInt_(37)
+	UsingInt_(94)
+	UsingInt_(33)
+	UsingInt_(58)
+	UsingInt_(60)
+	UsingInt_(61)
+	UsingInt_(61)
+	UsingInt_(62)
+	UsingInt_(61)
+	UsingInt_(61)
+	UsingInt_(38)
+	UsingInt_(38)
+	UsingInt_(61)
+	UsingInt_(124)
+	UsingInt_(124)
+	UsingInt_(61)
+	UsingInt_(97)
+	UsingInt_(122)
+	UsingInt_(65)
+	UsingInt_(90)
+	UsingInt_(95)
+	UsingInt_(46)
+	UsingInt_(240)
+	UsingInt_(192)
+	UsingInt_(240)
+	UsingInt_(192)
+	UsingInt_(224)
+	UsingInt_(240)
+	UsingInt_(95)
+	UsingInt_(45)
+	UsingInt_(46)
+	UsingInt_(97)
+	UsingInt_(122)
+	UsingInt_(65)
+	UsingInt_(90)
+	UsingInt_(48)
+	UsingInt_(57)
+	UsingInt_(240)
+	UsingInt_(192)
+	UsingInt_(224)
+	UsingInt_(240)
+	UsingInt_(58)
+	UsingInt_(48)
+	UsingInt_(57)
+	UsingInt_(48)
+	UsingInt_(120)
+	UsingInt_(88)
+	UsingInt_(48)
+	UsingInt_(57)
+	UsingInt_(97)
+	UsingInt_(102)
+	UsingInt_(65)
+	UsingInt_(70)
+	UsingInt_(46)
 	DefineString_(0, "Indentation error!")
 	DefineString_(1, "Unterminated string constant.")
 	DefineString_(2, "Unterminated symbol.")
@@ -457,49 +423,49 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 			t4_ = Call_(_eq__eq_, t1_, t3_);
 			if (t4_)
 				{
-				/* We're done unindenting. */
+				/*  We're done unindenting. */
 				t0_ = Call_(unindents_pending_co_, this_, nil);
 				}
 			else
 				{
-				/* Unindent one more level. */
+				/*  Unindent one more level. */
 				t0_ = Call_(indent_stack, this_);
 				t1_ = Call_(pop, t0_);
 				t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(unindent));
 				return t0_;
-				
 				}
 			}
+		
 		while (1) {
 			ContinuePoint_(0)
 			{
 			obj_ token_start;
-			/* If at line start, figure out the indentation. */
+			/*  If at line start, figure out the indentation. */
 			t1_ = Call_(at_line_start, this_);
 			if (t1_)
 				{
 				obj_ indentation;
 				t0_ = Call_(at_line_start_co_, this_, nil);
 				
-				/* Get the indentation. */
-				indentation = Int_(0);
+				/*  Get the indentation. */
+				indentation = SmallInt_(0);
 				while (1) {
 					ContinuePoint_(1)
 					{
 					t0_ = Call_(cur_char, this_);
 					c = t0_;
-					t0_ = Call_(_eq__eq_, c, Int_(1));
+					t0_ = Call_(_eq__eq_, c, Int_(9));
 					if (t0_)
 						{
-						t0_ = Call_(_pl_, indentation, Int_(2));
+						t0_ = Call_(_pl_, indentation, SmallInt_(2));
 						indentation = t0_;
 						}
 					else
 						{
-						t0_ = Call_(_eq__eq_, c, Int_(3));
+						t0_ = Call_(_eq__eq_, c, Int_(32));
 						if (t0_)
 							{
-							t0_ = Call_(_pl_, indentation, Int_(4));
+							t0_ = Call_(_pl_, indentation, SmallInt_(1));
 							indentation = t0_;
 							}
 						else
@@ -509,13 +475,13 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 						}
 					t0_ = Call_(p, this_);
 					t1_ = Call_(go_forward, t0_);
-					
 					}
 				}
-				/* If it's just an empty line, emit an EOL. */
-				t0_ = Call_(_eq__eq_, c, Int_(5));
+				
+				/*  If it's just an empty line, emit an EOL. */
+				t0_ = Call_(_eq__eq_, c, Int_(10));
 				if ((t0_) == nil) {
-					t1_ = Call_(_eq__eq_, c, Int_(6));
+					t1_ = Call_(_eq__eq_, c, Int_(13));
 					t0_ = t1_;
 					}
 				if (t0_)
@@ -525,9 +491,9 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 					t0_ = Call_(at_line_start_co_, this_, true_);
 					t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(eol));
 					return t0_;
-					
 					}
-				/* Figure out the indentation change. */
+				
+				/*  Figure out the indentation change. */
 				t1_ = Call_(indent_stack, this_);
 				t2_ = Call_(top, t1_);
 				t3_ = Call_(_gt_, indentation, t2_);
@@ -551,11 +517,11 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 						t1_ = Call_(pop, t0_);
 						t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(unindent));
 						return t0_;
-						
 						}
 					}
 				}
-			/* Get the next character. */
+			
+			/*  Get the next character. */
 			t1_ = Call_(p, this_);
 			t2_ = Call_(start, t1_);
 			token_start = t2_;
@@ -569,14 +535,12 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 				{
 				t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(eof));
 				return t0_;
-				
 				}
-			/* Line break. */
 			else
 				{
-				t1_ = Call_(_eq__eq_, c, Int_(7));
+				t1_ = Call_(_eq__eq_, c, Int_(10));
 				if ((t1_) == nil) {
-					t2_ = Call_(_eq__eq_, c, Int_(8));
+					t2_ = Call_(_eq__eq_, c, Int_(13));
 					t1_ = t2_;
 					}
 				if (t1_)
@@ -584,39 +548,39 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 					t0_ = Call_(at_line_start_co_, this_, true_);
 					t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(eol));
 					return t0_;
-					
 					}
-				/* Whitespace. */
 				}
-			t1_ = Call_(_eq__eq_, c, Int_(9));
+			
+			/*  Line break. */
+			
+			/*  Whitespace. */
+			t1_ = Call_(_eq__eq_, c, Int_(32));
 			if ((t1_) == nil) {
-				t2_ = Call_(_eq__eq_, c, Int_(10));
+				t2_ = Call_(_eq__eq_, c, Int_(9));
 				t1_ = t2_;
 				}
 			if (t1_)
 				{
-				/* Skip whitespace. */
+				/*  Skip whitespace. */
 				t0_ = Call_(p, this_);
 				t1_ = Call_(start, t0_);
 				token_start = t1_;
 				Continue_(0)
-				
 				}
-			/* -, --, -= */
 			else
 				{
-				t0_ = Call_(_eq__eq_, c, Int_(11));
+				t0_ = Call_(_eq__eq_, c, Int_(45));
 				if (t0_)
 					{
 					t0_ = Call_(cur_char, this_);
 					next_char = t0_;
-					t0_ = Call_(_eq__eq_, next_char, Int_(12));
+					t0_ = Call_(_eq__eq_, next_char, Int_(45));
 					if (t0_)
 						{
-						/* Line continuation. */
+						/*  Line continuation. */
 						t0_ = Call_(p, this_);
 						t1_ = Call_(go_forward, t0_);
-						/* Skip to next line. */
+						/*  Skip to next line. */
 						while (1) {
 							ContinuePoint_(2)
 							{
@@ -624,9 +588,9 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 							c = t0_;
 							t0_ = Call_(p, this_);
 							t1_ = Call_(go_forward, t0_);
-							t0_ = Call_(_eq__eq_, c, Int_(13));
+							t0_ = Call_(_eq__eq_, c, Int_(10));
 							if ((t0_) == nil) {
-								t1_ = Call_(_eq__eq_, c, Int_(14));
+								t1_ = Call_(_eq__eq_, c, Int_(13));
 								t0_ = t1_;
 								}
 							if (t0_)
@@ -635,15 +599,15 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 								}
 							}
 						}
-						/* Skip whitespace. */
+						/*  Skip whitespace. */
 						while (1) {
 							ContinuePoint_(3)
 							{
 							t0_ = Call_(cur_char, this_);
 							c = t0_;
-							t0_ = Call_(_eq__eq_, c, Int_(15));
+							t0_ = Call_(_eq__eq_, c, Int_(32));
 							if ((t0_) == nil) {
-								t1_ = Call_(_eq__eq_, c, Int_(16));
+								t1_ = Call_(_eq__eq_, c, Int_(9));
 								t0_ = t1_;
 								}
 							if ((t0_) == nil) {
@@ -657,43 +621,40 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 								}
 							t0_ = Call_(p, this_);
 							t1_ = Call_(go_forward, t0_);
-							
 							}
 						}
 						}
 					else
 						{
-						t0_ = Call_(_eq__eq_, next_char, Int_(17));
+						t0_ = Call_(_eq__eq_, next_char, Int_(61));
 						if (t0_)
 							{
 							t0_ = Call_(p, this_);
 							t1_ = Call_(go_forward, t0_);
 							t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(__eq_));
 							return t0_;
-							
 							}
 						else
 							{
-							t1_ = Call_(_eq__eq_, next_char, Int_(18));
+							t1_ = Call_(_eq__eq_, next_char, Int_(62));
 							if (t1_)
 								{
 								t0_ = Call_(p, this_);
 								t1_ = Call_(go_forward, t0_);
 								t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(__gt_));
 								return t0_;
-								
 								}
 							else
 								{
-								t1_ = Call_(_gt__eq_, next_char, Int_(19));
+								t1_ = Call_(_gt__eq_, next_char, Int_(48));
 								if (t1_) {
-									t2_ = Call_(_lt__eq_, next_char, Int_(20));
+									t2_ = Call_(_lt__eq_, next_char, Int_(57));
 									t1_ = t2_;
 									}
 								if (t1_)
 									{
 									obj_ is_float;
-									/* Number. */
+									/*  Number. */
 									t0_ = Call_(p, this_);
 									t1_ = Call_(go_forward, t0_);
 									is_float = nil;
@@ -702,9 +663,9 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 										{
 										t0_ = Call_(cur_char, this_);
 										c = t0_;
-										t0_ = Call_(_gt__eq_, c, Int_(21));
+										t0_ = Call_(_gt__eq_, c, Int_(48));
 										if (t0_) {
-											t1_ = Call_(_lt__eq_, c, Int_(22));
+											t1_ = Call_(_lt__eq_, c, Int_(57));
 											t0_ = t1_;
 											}
 										if (t0_)
@@ -714,7 +675,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 											}
 										else
 											{
-											t0_ = Call_(_eq__eq_, c, Int_(23));
+											t0_ = Call_(_eq__eq_, c, Int_(46));
 											if (t0_)
 												{
 												is_float = true_;
@@ -737,7 +698,6 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 												t1_ = Call_(start, t0_);
 												t2_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), type, token_start, t1_);
 												return t2_;
-												
 												}
 											}
 										}
@@ -747,27 +707,29 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 									{
 									t3_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_));
 									return t3_;
-									
 									}
 								}
 							}
 						}
+					
+					
+					
+					
 					}
-				/* Comment. */
 				else
 					{
-					t4_ = Call_(_eq__eq_, c, Int_(24));
+					t4_ = Call_(_eq__eq_, c, Int_(35));
 					if (t4_)
 						{
-						/* Skip initial whitespace. */
+						/*  Skip initial whitespace. */
 						while (1) {
 							ContinuePoint_(5)
 							{
 							t0_ = Call_(cur_char, this_);
 							c = t0_;
-							t0_ = Call_(_nt__eq_, c, Int_(25));
+							t0_ = Call_(_nt__eq_, c, Int_(9));
 							if (t0_) {
-								t1_ = Call_(_nt__eq_, c, Int_(26));
+								t1_ = Call_(_nt__eq_, c, Int_(32));
 								t0_ = t1_;
 								}
 							if (t0_)
@@ -776,10 +738,10 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 								}
 							t0_ = Call_(p, this_);
 							t1_ = Call_(go_forward, t0_);
-							
 							}
 						}
-						/* Get the comment. */
+						
+						/*  Get the comment. */
 						t0_ = Call_(p, this_);
 						t1_ = Call_(start, t0_);
 						token_start = t1_;
@@ -788,9 +750,9 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 							{
 							t0_ = Call_(cur_char, this_);
 							c = t0_;
-							t0_ = Call_(_eq__eq_, c, Int_(27));
+							t0_ = Call_(_eq__eq_, c, Int_(10));
 							if ((t0_) == nil) {
-								t1_ = Call_(_eq__eq_, c, Int_(28));
+								t1_ = Call_(_eq__eq_, c, Int_(13));
 								t0_ = t1_;
 								}
 							if ((t0_) == nil) {
@@ -810,12 +772,10 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 						t1_ = Call_(start, t0_);
 						t2_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), Sym_(comment), token_start, t1_);
 						return t2_;
-						
 						}
-					/* String literal. */
 					else
 						{
-						t3_ = Call_(_eq__eq_, c, Int_(29));
+						t3_ = Call_(_eq__eq_, c, Int_(34));
 						if (t3_)
 							{
 							obj_ token_end;
@@ -833,9 +793,9 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 								t0_ = Call_(p, this_);
 								t1_ = Call_(start, t0_);
 								token_end = t1_;
-								t0_ = Call_(_eq__eq_, c, Int_(30));
+								t0_ = Call_(_eq__eq_, c, Int_(10));
 								if ((t0_) == nil) {
-									t1_ = Call_(_eq__eq_, c, Int_(31));
+									t1_ = Call_(_eq__eq_, c, Int_(13));
 									t0_ = t1_;
 									}
 								if ((t0_) == nil) {
@@ -859,7 +819,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 									}
 								else
 									{
-									t1_ = Call_(_eq__eq_, c, Int_(32));
+									t1_ = Call_(_eq__eq_, c, Int_(92));
 									if (t1_)
 										{
 										t0_ = Call_(p, this_);
@@ -867,7 +827,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 										}
 									else
 										{
-										t0_ = Call_(_eq__eq_, c, Int_(33));
+										t0_ = Call_(_eq__eq_, c, Int_(34));
 										if (t0_)
 											{
 											Break_(7)
@@ -878,12 +838,10 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 							}
 							t0_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), Sym_(string_literal), token_start, token_end);
 							return t0_;
-							
 							}
-						/* Symbol literal. */
 						else
 							{
-							t1_ = Call_(_eq__eq_, c, Int_(34));
+							t1_ = Call_(_eq__eq_, c, Int_(39));
 							if (t1_)
 								{
 								obj_ token_end;
@@ -912,7 +870,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 										}
 									else
 										{
-										t1_ = Call_(_eq__eq_, c, Int_(35));
+										t1_ = Call_(_eq__eq_, c, Int_(92));
 										if (t1_)
 											{
 											t0_ = Call_(p, this_);
@@ -920,7 +878,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 											}
 										else
 											{
-											t0_ = Call_(_eq__eq_, c, Int_(36));
+											t0_ = Call_(_eq__eq_, c, Int_(39));
 											if (t0_)
 												{
 												Break_(8)
@@ -931,12 +889,10 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 								}
 								t0_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), Sym_(symbol_literal), token_start, token_end);
 								return t0_;
-								
 								}
-							/* Character literal. */
 							else
 								{
-								t1_ = Call_(_eq__eq_, c, Int_(37));
+								t1_ = Call_(_eq__eq_, c, Int_(96));
 								if (t1_)
 									{
 									obj_ token_end;
@@ -965,7 +921,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 											}
 										else
 											{
-											t1_ = Call_(_eq__eq_, c, Int_(38));
+											t1_ = Call_(_eq__eq_, c, Int_(92));
 											if (t1_)
 												{
 												t0_ = Call_(p, this_);
@@ -973,7 +929,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 												}
 											else
 												{
-												t0_ = Call_(_eq__eq_, c, Int_(39));
+												t0_ = Call_(_eq__eq_, c, Int_(96));
 												if (t0_)
 													{
 													Break_(9)
@@ -984,9 +940,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 									}
 									t0_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), Sym_(character_literal), token_start, token_end);
 									return t0_;
-									
 									}
-								/* Single-character tokens. */
 								else
 									{
 									t1_ = Call_(_eq__eq_, c, Int_(40));
@@ -1005,7 +959,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 											}
 										else
 											{
-											t1_ = Call_(_eq__eq_, c, Int_(42));
+											t1_ = Call_(_eq__eq_, c, Int_(123));
 											if (t1_)
 												{
 												t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_123_));
@@ -1013,7 +967,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 												}
 											else
 												{
-												t1_ = Call_(_eq__eq_, c, Int_(43));
+												t1_ = Call_(_eq__eq_, c, Int_(125));
 												if (t1_)
 													{
 													t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_125_));
@@ -1021,7 +975,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 													}
 												else
 													{
-													t1_ = Call_(_eq__eq_, c, Int_(44));
+													t1_ = Call_(_eq__eq_, c, Int_(91));
 													if (t1_)
 														{
 														t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_in_));
@@ -1029,7 +983,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 														}
 													else
 														{
-														t1_ = Call_(_eq__eq_, c, Int_(45));
+														t1_ = Call_(_eq__eq_, c, Int_(93));
 														if (t1_)
 															{
 															t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_dx_));
@@ -1037,7 +991,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 															}
 														else
 															{
-															t1_ = Call_(_eq__eq_, c, Int_(46));
+															t1_ = Call_(_eq__eq_, c, Int_(44));
 															if (t1_)
 																{
 																t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_44_));
@@ -1045,7 +999,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																}
 															else
 																{
-																t1_ = Call_(_eq__eq_, c, Int_(47));
+																t1_ = Call_(_eq__eq_, c, Int_(59));
 																if (t1_)
 																	{
 																	t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_59_));
@@ -1053,17 +1007,15 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																	}
 																else
 																	{
-																	t1_ = Call_(_eq__eq_, c, Int_(48));
+																	t1_ = Call_(_eq__eq_, c, Int_(126));
 																	if (t1_)
 																		{
 																		t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(_tw_));
 																		return t0_;
-																		
 																		}
-																	/* Could be followed by =. */
 																	else
 																		{
-																		t1_ = Call_(_eq__eq_, c, Int_(49));
+																		t1_ = Call_(_eq__eq_, c, Int_(43));
 																		if (t1_)
 																			{
 																			t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_pl_), Sym_(_pl__eq_));
@@ -1071,7 +1023,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																			}
 																		else
 																			{
-																			t1_ = Call_(_eq__eq_, c, Int_(50));
+																			t1_ = Call_(_eq__eq_, c, Int_(61));
 																			if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_eq_), Sym_(_eq__eq_));
@@ -1079,7 +1031,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																			else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(51));
+																				t1_ = Call_(_eq__eq_, c, Int_(42));
 																				if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_st_), Sym_(_st__eq_));
@@ -1087,7 +1039,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(52));
+																				t1_ = Call_(_eq__eq_, c, Int_(47));
 																				if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_dv_), Sym_(_dv__eq_));
@@ -1095,7 +1047,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(53));
+																				t1_ = Call_(_eq__eq_, c, Int_(37));
 																				if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_pc_), Sym_(_pc__eq_));
@@ -1103,7 +1055,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(54));
+																				t1_ = Call_(_eq__eq_, c, Int_(94));
 																				if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_xr_), Sym_(_xr__eq_));
@@ -1111,7 +1063,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(55));
+																				t1_ = Call_(_eq__eq_, c, Int_(33));
 																				if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_nt_), Sym_(_nt__eq_));
@@ -1119,17 +1071,15 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(56));
+																				t1_ = Call_(_eq__eq_, c, Int_(58));
 																				if (t1_)
 																				{
 																				t0_ = Call_(possibly_equals_token_co_or_co_, this_, Sym_(_co_), Sym_(_co__eq_));
 																				return t0_;
-																				
 																				}
-																				/* Could be doubled, then followed by =. */
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(57));
+																				t1_ = Call_(_eq__eq_, c, Int_(60));
 																				if (t1_)
 																				{
 																				obj_ type;
@@ -1139,11 +1089,11 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				t0_ = Call_(_eq__eq_, next_char, c);
 																				if (t0_)
 																				{
-																				/* Doubled. */
+																				/*  Doubled. */
 																				t0_ = Call_(p, this_);
 																				t1_ = Call_(go_forward, t0_);
 																				t0_ = Call_(cur_char, this_);
-																				t1_ = Call_(_eq__eq_, t0_, Int_(58));
+																				t1_ = Call_(_eq__eq_, t0_, Int_(61));
 																				if (t1_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1157,7 +1107,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t0_ = Call_(_eq__eq_, next_char, Int_(59));
+																				t0_ = Call_(_eq__eq_, next_char, Int_(61));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1170,7 +1120,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(60));
+																				t1_ = Call_(_eq__eq_, c, Int_(62));
 																				if (t1_)
 																				{
 																				obj_ type;
@@ -1180,7 +1130,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				t0_ = Call_(_eq__eq_, next_char, c);
 																				if (t0_)
 																				{
-																				/* Doubled. */
+																				/*  Doubled. */
 																				t0_ = Call_(p, this_);
 																				t1_ = Call_(go_forward, t0_);
 																				t0_ = Call_(cur_char, this_);
@@ -1198,7 +1148,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t0_ = Call_(_eq__eq_, next_char, Int_(62));
+																				t0_ = Call_(_eq__eq_, next_char, Int_(61));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1208,19 +1158,17 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), type);
 																				return t0_;
-																				
 																				}
-																				/* Could be doubled, or followed by '='. */
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(63));
+																				t1_ = Call_(_eq__eq_, c, Int_(38));
 																				if (t1_)
 																				{
 																				obj_ type;
 																				type = Sym_(_an_);
 																				t0_ = Call_(cur_char, this_);
 																				next_char = t0_;
-																				t0_ = Call_(_eq__eq_, next_char, Int_(64));
+																				t0_ = Call_(_eq__eq_, next_char, Int_(38));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1229,7 +1177,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t0_ = Call_(_eq__eq_, next_char, Int_(65));
+																				t0_ = Call_(_eq__eq_, next_char, Int_(61));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1242,14 +1190,14 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t1_ = Call_(_eq__eq_, c, Int_(66));
+																				t1_ = Call_(_eq__eq_, c, Int_(124));
 																				if (t1_)
 																				{
 																				obj_ type;
 																				type = Sym_(_or_);
 																				t0_ = Call_(cur_char, this_);
 																				next_char = t0_;
-																				t0_ = Call_(_eq__eq_, next_char, Int_(67));
+																				t0_ = Call_(_eq__eq_, next_char, Int_(124));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1258,7 +1206,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t0_ = Call_(_eq__eq_, next_char, Int_(68));
+																				t0_ = Call_(_eq__eq_, next_char, Int_(61));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1268,54 +1216,52 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				t0_ = new_co___Token__Compiler(Proto_(Token__Compiler), type);
 																				return t0_;
-																				
 																				}
-																				/* Name. */
 																				else
 																				{
-																				t1_ = Call_(_gt__eq_, c, Int_(69));
+																				t1_ = Call_(_gt__eq_, c, Int_(97));
 																				if (t1_) {
-																				t2_ = Call_(_lt__eq_, c, Int_(70));
+																				t2_ = Call_(_lt__eq_, c, Int_(122));
 																				t1_ = t2_;
 																				}
 																				if ((t1_) == nil) {
-																				t3_ = Call_(_gt__eq_, c, Int_(71));
+																				t3_ = Call_(_gt__eq_, c, Int_(65));
 																				if (t3_) {
-																				t4_ = Call_(_lt__eq_, c, Int_(72));
+																				t4_ = Call_(_lt__eq_, c, Int_(90));
 																				t3_ = t4_;
 																				}
 																				t1_ = t3_;
 																				}
 																				if ((t1_) == nil) {
-																				t5_ = Call_(_eq__eq_, c, Int_(73));
+																				t5_ = Call_(_eq__eq_, c, Int_(95));
 																				t1_ = t5_;
 																				}
 																				if ((t1_) == nil) {
-																				t6_ = Call_(_eq__eq_, c, Int_(74));
+																				t6_ = Call_(_eq__eq_, c, Int_(46));
 																				t1_ = t6_;
 																				}
 																				if ((t1_) == nil) {
-																				t7_ = Call_(_an_, c, Int_(75));
-																				t8_ = Call_(_gt__eq_, t7_, Int_(76));
+																				t7_ = Call_(_an_, c, SmallInt_(240));
+																				t8_ = Call_(_gt__eq_, t7_, SmallInt_(192));
 																				t1_ = t8_;
 																				}
 																				if (t1_)
 																				{
 																				obj_ hi_nybble, type;
-																				/* The first character might be a UTF-8 character, so handle that. */
-																				t0_ = Call_(_an_, c, Int_(77));
+																				/*  The first character might be a UTF-8 character, so handle that. */
+																				t0_ = Call_(_an_, c, SmallInt_(240));
 																				hi_nybble = t0_;
-																				t0_ = Call_(_gt__eq_, hi_nybble, Int_(78));
+																				t0_ = Call_(_gt__eq_, hi_nybble, SmallInt_(192));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
 																				t1_ = Call_(go_forward, t0_);
-																				t0_ = Call_(_gt__eq_, hi_nybble, Int_(79));
+																				t0_ = Call_(_gt__eq_, hi_nybble, SmallInt_(224));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
 																				t1_ = Call_(go_forward, t0_);
-																				t0_ = Call_(_eq__eq_, hi_nybble, Int_(80));
+																				t0_ = Call_(_eq__eq_, hi_nybble, SmallInt_(240));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1323,42 +1269,42 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				}
 																				}
-																				/* Read the rest of the characters. */
+																				/*  Read the rest of the characters. */
 																				while (1) {
 																					ContinuePoint_(10)
 																				{
 																				obj_ is_id_char;
 																				t0_ = Call_(cur_char, this_);
 																				c = t0_;
-																				t0_ = Call_(_eq__eq_, c, Int_(81));
+																				t0_ = Call_(_eq__eq_, c, Int_(95));
 																				if ((t0_) == nil) {
-																				t1_ = Call_(_eq__eq_, c, Int_(82));
+																				t1_ = Call_(_eq__eq_, c, Int_(45));
 																				t0_ = t1_;
 																				}
 																				if ((t0_) == nil) {
-																				t2_ = Call_(_eq__eq_, c, Int_(83));
+																				t2_ = Call_(_eq__eq_, c, Int_(46));
 																				t0_ = t2_;
 																				}
 																				if ((t0_) == nil) {
-																				t3_ = Call_(_gt__eq_, c, Int_(84));
+																				t3_ = Call_(_gt__eq_, c, Int_(97));
 																				if (t3_) {
-																				t4_ = Call_(_lt__eq_, c, Int_(85));
+																				t4_ = Call_(_lt__eq_, c, Int_(122));
 																				t3_ = t4_;
 																				}
 																				t0_ = t3_;
 																				}
 																				if ((t0_) == nil) {
-																				t5_ = Call_(_gt__eq_, c, Int_(86));
+																				t5_ = Call_(_gt__eq_, c, Int_(65));
 																				if (t5_) {
-																				t6_ = Call_(_lt__eq_, c, Int_(87));
+																				t6_ = Call_(_lt__eq_, c, Int_(90));
 																				t5_ = t6_;
 																				}
 																				t0_ = t5_;
 																				}
 																				if ((t0_) == nil) {
-																				t7_ = Call_(_gt__eq_, c, Int_(88));
+																				t7_ = Call_(_gt__eq_, c, Int_(48));
 																				if (t7_) {
-																				t8_ = Call_(_lt__eq_, c, Int_(89));
+																				t8_ = Call_(_lt__eq_, c, Int_(57));
 																				t7_ = t8_;
 																				}
 																				t0_ = t7_;
@@ -1367,20 +1313,20 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				t0_ = Not_(is_id_char);
 																				if (t0_)
 																				{
-																				/* It still might be the first byte of a UTF-8 character. */
-																				t0_ = Call_(_an_, c, Int_(90));
+																				/*  It still might be the first byte of a UTF-8 character. */
+																				t0_ = Call_(_an_, c, SmallInt_(240));
 																				hi_nybble = t0_;
-																				t0_ = Call_(_gt__eq_, hi_nybble, Int_(91));
+																				t0_ = Call_(_gt__eq_, hi_nybble, SmallInt_(192));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
 																				t1_ = Call_(go_forward, t0_);
-																				t0_ = Call_(_gt__eq_, hi_nybble, Int_(92));
+																				t0_ = Call_(_gt__eq_, hi_nybble, SmallInt_(224));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
 																				t1_ = Call_(go_forward, t0_);
-																				t0_ = Call_(_eq__eq_, hi_nybble, Int_(93));
+																				t0_ = Call_(_eq__eq_, hi_nybble, SmallInt_(240));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1398,9 +1344,9 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				}
 																				type = Sym_(name);
-																				/* Could be a keyword. */
+																				/*  Could be a keyword. */
 																				t0_ = Call_(cur_char, this_);
-																				t1_ = Call_(_eq__eq_, t0_, Int_(94));
+																				t1_ = Call_(_eq__eq_, t0_, Int_(58));
 																				if (t1_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1411,29 +1357,27 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				t1_ = Call_(start, t0_);
 																				t2_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), type, token_start, t1_);
 																				return t2_;
-																				
 																				}
-																				/* Number. */
 																				else
 																				{
-																				t3_ = Call_(_gt__eq_, c, Int_(95));
+																				t3_ = Call_(_gt__eq_, c, Int_(48));
 																				if (t3_) {
-																				t4_ = Call_(_lt__eq_, c, Int_(96));
+																				t4_ = Call_(_lt__eq_, c, Int_(57));
 																				t3_ = t4_;
 																				}
 																				if (t3_)
 																				{
 																				obj_ is_hex, type;
-																				/* Is it hex? */
+																				/*  Is it hex? */
 																				is_hex = nil;
-																				t0_ = Call_(_eq__eq_, c, Int_(97));
+																				t0_ = Call_(_eq__eq_, c, Int_(48));
 																				if (t0_)
 																				{
 																				t0_ = Call_(cur_char, this_);
 																				c = t0_;
-																				t0_ = Call_(_eq__eq_, c, Int_(98));
+																				t0_ = Call_(_eq__eq_, c, Int_(120));
 																				if ((t0_) == nil) {
-																				t1_ = Call_(_eq__eq_, c, Int_(99));
+																				t1_ = Call_(_eq__eq_, c, Int_(88));
 																				t0_ = t1_;
 																				}
 																				if (t0_)
@@ -1443,16 +1387,16 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				is_hex = true_;
 																				}
 																				}
-																				/* Read the rest of the number. */
+																				/*  Read the rest of the number. */
 																				type = Sym_(int_literal);
 																				while (1) {
 																					ContinuePoint_(11)
 																				{
 																				t0_ = Call_(cur_char, this_);
 																				c = t0_;
-																				t0_ = Call_(_gt__eq_, c, Int_(100));
+																				t0_ = Call_(_gt__eq_, c, Int_(48));
 																				if (t0_) {
-																				t1_ = Call_(_lt__eq_, c, Int_(101));
+																				t1_ = Call_(_lt__eq_, c, Int_(57));
 																				t0_ = t1_;
 																				}
 																				if (t0_)
@@ -1464,15 +1408,15 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				{
 																				t0_ = is_hex;
 																				if (t0_) {
-																				t1_ = Call_(_gt__eq_, c, Int_(102));
+																				t1_ = Call_(_gt__eq_, c, Int_(97));
 																				if (t1_) {
-																				t2_ = Call_(_lt__eq_, c, Int_(103));
+																				t2_ = Call_(_lt__eq_, c, Int_(102));
 																				t1_ = t2_;
 																				}
 																				if ((t1_) == nil) {
-																				t3_ = Call_(_gt__eq_, c, Int_(104));
+																				t3_ = Call_(_gt__eq_, c, Int_(65));
 																				if (t3_) {
-																				t4_ = Call_(_lt__eq_, c, Int_(105));
+																				t4_ = Call_(_lt__eq_, c, Int_(70));
 																				t3_ = t4_;
 																				}
 																				t1_ = t3_;
@@ -1486,7 +1430,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				}
 																				else
 																				{
-																				t0_ = Call_(_eq__eq_, c, Int_(106));
+																				t0_ = Call_(_eq__eq_, c, Int_(46));
 																				if (t0_)
 																				{
 																				t0_ = Call_(p, this_);
@@ -1505,9 +1449,7 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				t1_ = Call_(start, t0_);
 																				t2_ = new_co_from_co_to_co___Token__Compiler(Proto_(Token__Compiler), type, token_start, t1_);
 																				return t2_;
-																				
 																				}
-																				/* Unknown character. */
 																				else
 																				{
 																				t3_ = Call_(string, c);
@@ -1515,7 +1457,6 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 																				t5_ = Call_(_pl_, t4_, Str_(5));
 																				t6_ = new_co___MessageException__Standard(Proto_(MessageException__Standard), t5_);
 																				Throw_(t6_);
-																				
 																				}
 																				}
 																				}
@@ -1545,28 +1486,38 @@ obj_ next_token__Lexer__Compiler(obj_ this_)
 						}
 					}
 				}
+			
+			/*  -, --, -= */
+			
+			/*  Comment. */
+			
+			/*  String literal. */
+			
+			/*  Symbol literal. */
+			
+			/*  Character literal. */
+			
+			/*  Single-character tokens. */
+			
+			/*  Could be followed by =. */
+			
+			/*  Could be doubled, then followed by =. */
+			
+			/*  Could be doubled, or followed by '='. */
+			
+			/*  Name. */
+			
+			/*  Number. */
+			
+			/*  Unknown character. */
 			}
 		}
-		/* Never actually get here. */
+		
+		/*  Never actually get here. */
 		t7_ = new_co___Token__Compiler(Proto_(Token__Compiler), Sym_(eof));
 		return t7_;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ p__Lexer__Compiler(obj_ this_)
-{
-	return Field_(p);
-}
-
-
-obj_ p_co___Lexer__Compiler(obj_ this_, obj_ value)
-{
-	Field_(p) = value;
-	return value;
 }
 
 
@@ -1575,116 +1526,116 @@ obj_ parse_character_escape_co___Lexer__Compiler(obj_ this_, obj_ p)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 110)
-	DefineInt_(1, 10)
-	DefineInt_(2, 114)
-	DefineInt_(3, 13)
-	DefineInt_(4, 116)
-	DefineInt_(5, 9)
-	DefineInt_(6, 98)
-	DefineInt_(7, 8)
-	DefineInt_(8, 118)
-	DefineInt_(9, 11)
-	DefineInt_(10, 102)
-	DefineInt_(11, 12)
-	DefineInt_(12, 97)
-	DefineInt_(13, 7)
-	DefineInt_(14, 101)
-	DefineInt_(15, 27)
-	DefineInt_(16, 120)
-	DefineInt_(17, 0)
-	DefineInt_(18, 0)
-	DefineInt_(19, 2)
-	DefineInt_(20, 48)
-	DefineInt_(21, 57)
-	DefineInt_(22, 48)
-	DefineInt_(23, 65)
-	DefineInt_(24, 70)
-	DefineInt_(25, 10)
-	DefineInt_(26, 65)
-	DefineInt_(27, 97)
-	DefineInt_(28, 102)
-	DefineInt_(29, 10)
-	DefineInt_(30, 97)
-	DefineInt_(31, 16)
-	DefineInt_(32, 1)
+	UsingInt_(110)
+	UsingInt_(10)
+	UsingInt_(114)
+	UsingInt_(13)
+	UsingInt_(116)
+	UsingInt_(9)
+	UsingInt_(98)
+	UsingInt_(8)
+	UsingInt_(118)
+	UsingInt_(11)
+	UsingInt_(102)
+	UsingInt_(12)
+	UsingInt_(97)
+	UsingInt_(7)
+	UsingInt_(101)
+	UsingInt_(27)
+	UsingInt_(120)
+	UsingInt_(0)
+	UsingInt_(0)
+	UsingInt_(2)
+	UsingInt_(48)
+	UsingInt_(57)
+	UsingInt_(48)
+	UsingInt_(65)
+	UsingInt_(70)
+	UsingInt_(10)
+	UsingInt_(65)
+	UsingInt_(97)
+	UsingInt_(102)
+	UsingInt_(10)
+	UsingInt_(97)
+	UsingInt_(16)
+	UsingInt_(1)
 	UsingMethod_(_st_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_lt_) UsingMethod_(_lt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(_gt__eq_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done)
 
 		{
 		obj_ c;
-		/* The `\` will already be taken. */
+		/*  The `\` will already be taken. */
 		
 		t0_ = Call_(current_item, p);
 		c = t0_;
 		t0_ = Call_(go_forward, p);
-		t0_ = Call_(_eq__eq_, c, Int_(0));
+		t0_ = Call_(_eq__eq_, c, Int_(110));
 		if (t0_)
 			{
-			return Int_(1);
+			return Int_(10);
 			}
 		else
 			{
-			t0_ = Call_(_eq__eq_, c, Int_(2));
+			t0_ = Call_(_eq__eq_, c, Int_(114));
 			if (t0_)
 				{
-				return Int_(3);
+				return Int_(13);
 				}
 			else
 				{
-				t0_ = Call_(_eq__eq_, c, Int_(4));
+				t0_ = Call_(_eq__eq_, c, Int_(116));
 				if (t0_)
 					{
-					return Int_(5);
+					return Int_(9);
 					}
 				else
 					{
-					t0_ = Call_(_eq__eq_, c, Int_(6));
+					t0_ = Call_(_eq__eq_, c, Int_(98));
 					if (t0_)
 						{
-						return Int_(7);
+						return Int_(8);
 						}
 					else
 						{
-						t0_ = Call_(_eq__eq_, c, Int_(8));
+						t0_ = Call_(_eq__eq_, c, Int_(118));
 						if (t0_)
 							{
-							return Int_(9);
+							return Int_(11);
 							}
 						else
 							{
-							t0_ = Call_(_eq__eq_, c, Int_(10));
+							t0_ = Call_(_eq__eq_, c, Int_(102));
 							if (t0_)
 								{
-								return Int_(11);
+								return Int_(12);
 								}
 							else
 								{
-								t0_ = Call_(_eq__eq_, c, Int_(12));
+								t0_ = Call_(_eq__eq_, c, Int_(97));
 								if (t0_)
 									{
-									return Int_(13);
+									return Int_(7);
 									}
 								else
 									{
-									t0_ = Call_(_eq__eq_, c, Int_(14));
+									t0_ = Call_(_eq__eq_, c, Int_(101));
 									if (t0_)
 										{
-										return Int_(15);
+										return Int_(27);
 										}
 									else
 										{
-										t0_ = Call_(_eq__eq_, c, Int_(16));
+										t0_ = Call_(_eq__eq_, c, Int_(120));
 										if (t0_)
 											{
 											obj_ num_digits, value;
-											value = Int_(17);
-											num_digits = Int_(18);
+											value = SmallInt_(0);
+											num_digits = SmallInt_(0);
 											while (1) {
 												ContinuePoint_(0)
 												t0_ = Call_(is_done, p);
 												t1_ = Not_(t0_);
 												if (t1_) {
-													t2_ = Call_(_lt_, num_digits, Int_(19));
+													t2_ = Call_(_lt_, num_digits, SmallInt_(2));
 													t1_ = t2_;
 													}
 												if (!(t1_))
@@ -1693,40 +1644,40 @@ obj_ parse_character_escape_co___Lexer__Compiler(obj_ this_, obj_ p)
 												obj_ digit;
 												t0_ = Call_(current_item, p);
 												digit = t0_;
-												t0_ = Call_(_gt__eq_, digit, Int_(20));
+												t0_ = Call_(_gt__eq_, digit, Int_(48));
 												if (t0_) {
-													t1_ = Call_(_lt__eq_, digit, Int_(21));
+													t1_ = Call_(_lt__eq_, digit, Int_(57));
 													t0_ = t1_;
 													}
 												if (t0_)
 													{
-													t0_ = Call_(_, digit, Int_(22));
+													t0_ = Call_(_, digit, Int_(48));
 													digit = t0_;
 													}
 												else
 													{
-													t0_ = Call_(_gt__eq_, digit, Int_(23));
+													t0_ = Call_(_gt__eq_, digit, Int_(65));
 													if (t0_) {
-														t1_ = Call_(_lt__eq_, digit, Int_(24));
+														t1_ = Call_(_lt__eq_, digit, Int_(70));
 														t0_ = t1_;
 														}
 													if (t0_)
 														{
-														t0_ = Call_(_, digit, Int_(26));
-														t1_ = Call_(_pl_, Int_(25), t0_);
+														t0_ = Call_(_, digit, Int_(65));
+														t1_ = Call_(_pl_, SmallInt_(10), t0_);
 														digit = t1_;
 														}
 													else
 														{
-														t0_ = Call_(_gt__eq_, digit, Int_(27));
+														t0_ = Call_(_gt__eq_, digit, Int_(97));
 														if (t0_) {
-															t1_ = Call_(_lt__eq_, digit, Int_(28));
+															t1_ = Call_(_lt__eq_, digit, Int_(102));
 															t0_ = t1_;
 															}
 														if (t0_)
 															{
-															t0_ = Call_(_, digit, Int_(30));
-															t1_ = Call_(_pl_, Int_(29), t0_);
+															t0_ = Call_(_, digit, Int_(97));
+															t1_ = Call_(_pl_, SmallInt_(10), t0_);
 															digit = t1_;
 															}
 														else
@@ -1735,19 +1686,17 @@ obj_ parse_character_escape_co___Lexer__Compiler(obj_ this_, obj_ p)
 															}
 														}
 													}
-												t0_ = Call_(_st_, value, Int_(31));
+												t0_ = Call_(_st_, value, SmallInt_(16));
 												value = t0_;
 												t0_ = Call_(_pl_, value, digit);
 												value = t0_;
 												t0_ = Call_(go_forward, p);
-												t0_ = Call_(_pl_, num_digits, Int_(32));
+												t0_ = Call_(_pl_, num_digits, SmallInt_(1));
 												num_digits = t0_;
 												}
 												}
 											return value;
-											
 											}
-										/* Default: just use whatever was after the `\`. */
 										}
 									}
 								}
@@ -1756,9 +1705,9 @@ obj_ parse_character_escape_co___Lexer__Compiler(obj_ this_, obj_ p)
 					}
 				}
 			}
+		
+		/*  Default: just use whatever was after the `\`. */
 		return c;
-		
-		
 		}
 	return nil;
 }
@@ -1770,13 +1719,13 @@ obj_ possibly_equals_token_co_or_co___Lexer__Compiler(obj_ this_, obj_ without_e
 	extern obj_ new_co___Token__Compiler(obj_ this_, obj_ type);
 	obj_ t0_;
 	obj_ t1_;
-	DefineInt_(0, 61)
+	UsingInt_(61)
 	UsingMethod_(_eq__eq_) UsingMethod_(cur_char) UsingMethod_(go_forward) UsingMethod_(p)
 	UsingClass_(Token__Compiler)
 
 		{
 		t0_ = Call_(cur_char, this_);
-		t1_ = Call_(_eq__eq_, t0_, Int_(0));
+		t1_ = Call_(_eq__eq_, t0_, Int_(61));
 		if (t1_)
 			{
 			t0_ = Call_(p, this_);
@@ -1788,8 +1737,6 @@ obj_ possibly_equals_token_co_or_co___Lexer__Compiler(obj_ this_, obj_ without_e
 			{
 			t1_ = new_co___Token__Compiler(Proto_(Token__Compiler), without_equals);
 			return t1_;
-			
-			
 			}
 		}
 	return nil;
@@ -1807,10 +1754,6 @@ obj_ report_co___Lexer__Compiler(obj_ this_, obj_ message)
 		{
 		t0_ = status_reporter__Main(Proto_(Main));
 		t1_ = Call_(report_co_, t0_, message);
-		
-		
-		
-		
 		}
 	return nil;
 }
@@ -1821,20 +1764,20 @@ obj_ subblock_line__Lexer__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 9)
-	DefineInt_(2, 2)
-	DefineInt_(3, 32)
-	DefineInt_(4, 1)
-	DefineInt_(5, 10)
-	DefineInt_(6, 13)
+	UsingInt_(0)
+	UsingInt_(9)
+	UsingInt_(2)
+	UsingInt_(32)
+	UsingInt_(1)
+	UsingInt_(10)
+	UsingInt_(13)
 	DefineString_(0, "\n")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_eq__eq_) UsingMethod_(at_line_start_co_) UsingMethod_(cur_char) UsingMethod_(first_subblock_line) UsingMethod_(go_forward) UsingMethod_(indent_stack) UsingMethod_(p) UsingMethod_(pop) UsingMethod_(top) UsingMethod_(unindent_to_co_) UsingMethod_(unindents_pending_co_)
 
 		{
 		obj_ c, indentation;
-		/* Get the indentation. */
-		indentation = Int_(0);
+		/*  Get the indentation. */
+		indentation = SmallInt_(0);
 		c = nil;
 		while (1) {
 			ContinuePoint_(0)
@@ -1846,18 +1789,18 @@ obj_ subblock_line__Lexer__Compiler(obj_ this_)
 			{
 			t0_ = Call_(cur_char, this_);
 			c = t0_;
-			t0_ = Call_(_eq__eq_, c, Int_(1));
+			t0_ = Call_(_eq__eq_, c, Int_(9));
 			if (t0_)
 				{
-				t0_ = Call_(_pl_, indentation, Int_(2));
+				t0_ = Call_(_pl_, indentation, SmallInt_(2));
 				indentation = t0_;
 				}
 			else
 				{
-				t0_ = Call_(_eq__eq_, c, Int_(3));
+				t0_ = Call_(_eq__eq_, c, Int_(32));
 				if (t0_)
 					{
-					t0_ = Call_(_pl_, indentation, Int_(4));
+					t0_ = Call_(_pl_, indentation, SmallInt_(1));
 					indentation = t0_;
 					}
 				else
@@ -1867,13 +1810,13 @@ obj_ subblock_line__Lexer__Compiler(obj_ this_)
 				}
 			t0_ = Call_(p, this_);
 			t1_ = Call_(go_forward, t0_);
-			
 			}
 			}
-		/* If it's just an empty line, emit an EOL. */
-		t0_ = Call_(_eq__eq_, c, Int_(5));
+		
+		/*  If it's just an empty line, emit an EOL. */
+		t0_ = Call_(_eq__eq_, c, Int_(10));
 		if ((t0_) == nil) {
-			t1_ = Call_(_eq__eq_, c, Int_(6));
+			t1_ = Call_(_eq__eq_, c, Int_(13));
 			t0_ = t1_;
 			}
 		if (t0_)
@@ -1882,18 +1825,18 @@ obj_ subblock_line__Lexer__Compiler(obj_ this_)
 			t1_ = Call_(go_forward, t0_);
 			t0_ = Call_(at_line_start_co_, this_, true_);
 			return Str_(0);
-			
 			}
-		/* Check for unindent. */
+		
+		/*  Check for unindent. */
 		t0_ = Call_(indent_stack, this_);
 		t1_ = Call_(top, t0_);
 		t2_ = Call_(_lt_, indentation, t1_);
 		if (t2_)
 			{
-			/* First, get rid of the block's indentation. */
+			/*  First, get rid of the block's indentation. */
 			t0_ = Call_(indent_stack, this_);
 			t1_ = Call_(pop, t0_);
-			/* Then, deal with any further indentation. */
+			/*  Then, deal with any further indentation. */
 			t0_ = Call_(indent_stack, this_);
 			t1_ = Call_(top, t0_);
 			t2_ = Call_(_lt_, indentation, t1_);
@@ -1904,14 +1847,12 @@ obj_ subblock_line__Lexer__Compiler(obj_ this_)
 				}
 			t0_ = Call_(at_line_start_co_, this_, nil);
 			return nil;
-			
 			}
-		/* Get the rest of the line. */
-		/* This is just like first-subblock-line, so just call that. */
+		
+		/*  Get the rest of the line. */
+		/*  This is just like first-subblock-line, so just call that. */
 		t0_ = Call_(first_subblock_line, this_);
 		return t0_;
-		
-		
 		}
 	return nil;
 }
@@ -1925,7 +1866,7 @@ obj_ unescape_string_co___Lexer__Compiler(obj_ this_, obj_ string)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 92)
+	UsingInt_(92)
 	UsingMethod_(_pl_) UsingMethod_(_eq__eq_) UsingMethod_(bytes) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(p) UsingMethod_(p_co_) UsingMethod_(parse_character_escape_co_) UsingMethod_(start) UsingMethod_(string)
 	UsingClass_(String__Standard)
 
@@ -1946,11 +1887,11 @@ obj_ unescape_string_co___Lexer__Compiler(obj_ this_, obj_ string)
 			{
 			t0_ = Call_(p, this_);
 			t1_ = Call_(current_item, t0_);
-			t2_ = Call_(_eq__eq_, t1_, Int_(0));
+			t2_ = Call_(_eq__eq_, t1_, Int_(92));
 			if (t2_)
 				{
 				obj_ section;
-				/* Finish the section preceding the `\`. */
+				/*  Finish the section preceding the `\`. */
 				t0_ = Call_(p, this_);
 				t1_ = Call_(start, t0_);
 				t2_ = new_co_to_co___String__Standard(Proto_(String__Standard), section_start, t1_);
@@ -1966,14 +1907,14 @@ obj_ unescape_string_co___Lexer__Compiler(obj_ this_, obj_ string)
 					}
 				t0_ = Call_(p, this_);
 				t1_ = Call_(go_forward, t0_);
-				 	/* Skip `\`. */
-				/* Add the escaped character. */
+				 	/*  Skip `\`. */
+				/*  Add the escaped character. */
 				t0_ = Call_(p, this_);
 				t1_ = Call_(parse_character_escape_co_, this_, t0_);
 				t2_ = Call_(string, t1_);
 				t3_ = Call_(_pl_, result, t2_);
 				result = t3_;
-				/* Start the next section. */
+				/*  Start the next section. */
 				t0_ = Call_(p, this_);
 				t1_ = Call_(start, t0_);
 				section_start = t1_;
@@ -1985,7 +1926,7 @@ obj_ unescape_string_co___Lexer__Compiler(obj_ this_, obj_ string)
 				}
 			}
 			}
-		/* Finish the last section */
+		/*  Finish the last section */
 		t0_ = Call_(p, this_);
 		t1_ = Call_(start, t0_);
 		t2_ = new_co_to_co___String__Standard(Proto_(String__Standard), section_start, t1_);
@@ -2000,36 +1941,8 @@ obj_ unescape_string_co___Lexer__Compiler(obj_ this_, obj_ string)
 			result = section;
 			}
 		return result;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ unindent_to__Lexer__Compiler(obj_ this_)
-{
-	return Field_(unindent_to);
-}
-
-
-obj_ unindent_to_co___Lexer__Compiler(obj_ this_, obj_ value)
-{
-	Field_(unindent_to) = value;
-	return value;
-}
-
-
-obj_ unindents_pending__Lexer__Compiler(obj_ this_)
-{
-	return Field_(unindents_pending);
-}
-
-
-obj_ unindents_pending_co___Lexer__Compiler(obj_ this_, obj_ value)
-{
-	Field_(unindents_pending) = value;
-	return value;
 }
 
 

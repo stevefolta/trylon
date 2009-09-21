@@ -1,0 +1,20 @@
+#include "Trylon_.h"
+
+DefineFieldAccessors_(0)
+DefineFieldAccessors_(1)
+DefineFieldAccessors_(2)
+DefineFieldAccessors_(3)
+DefineFieldAccessors_(4)
+DefineFieldAccessors_(5)
+DefineFieldAccessors_(6)
+DefineFieldAccessors_(7)
+DefineFieldAccessors_(8)
+DefineFieldAccessors_(9)
+DefineFieldAccessors_(10)
+DefineFieldAccessors_(11)
+DefineFieldAccessors_(12)
+DefineFieldAccessors_(13)
+DefineFieldAccessors_(14)
+DefineFieldAccessors_(15)
+DefineFieldAccessors_(16)
+

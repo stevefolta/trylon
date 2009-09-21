@@ -4,26 +4,13 @@ UsingSym_(Iterator)UsingClass_(List__Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(Iterator__List__Standard)
 struct ClassInfo Iterator__List__Standard__classInfo_ = 
-	{ 13, 1, Proto_(Iterator__List__Standard), Proto_(List__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 41, 1, Proto_(Iterator__List__Standard), Proto_(List__Standard), Proto_(Iterator__Standard), nil, Sym_(Iterator), nil, nil };
 struct object Iterator__List__Standard = 
 	{ &Iterator__List__Standard__classInfo_, {nil} };
 
 
 
 #define cell__fld_	(0)
-
-
-obj_ cell__Iterator__List__Standard(obj_ this_)
-{
-	return Field_(cell);
-}
-
-
-obj_ cell_co___Iterator__List__Standard(obj_ this_, obj_ value)
-{
-	Field_(cell) = value;
-	return value;
-}
 
 
 obj_ create_co___Iterator__List__Standard(obj_ this_, obj_ cell)
@@ -64,9 +51,6 @@ obj_ go_forward__Iterator__List__Standard(obj_ this_)
 		t0_ = Call_(cell, this_);
 		t1_ = Call_(next, t0_);
 		t2_ = Call_(cell_co_, this_, t1_);
-		
-		
-		
 		}
 	return nil;
 }

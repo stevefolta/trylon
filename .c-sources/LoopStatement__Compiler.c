@@ -4,7 +4,7 @@ UsingSym_(LoopStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(LoopStatement__Compiler)
 struct ClassInfo LoopStatement__Compiler__classInfo_ = 
-	{ 134, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement) ,nil };
+	{ StdClassRef_(Class__CImplementation), 168, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement), nil, nil };
 struct object LoopStatement__Compiler = 
 	{ &LoopStatement__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -15,16 +15,16 @@ struct object LoopStatement__Compiler =
 #define index__fld_	(2)
 
 
-obj_ body__LoopStatement__Compiler(obj_ this_)
+obj_ compile_co___LoopStatement__Compiler(obj_ this_, obj_ builder)
 {
-	return Field_(body);
-}
+	obj_ t0_;
+	UsingMethod_(compile_loop_co_)
 
-
-obj_ body_co___LoopStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(body) = value;
-	return value;
+		{
+		t0_ = Call_(compile_loop_co_, builder, this_);
+		return t0_;
+		}
+	return nil;
 }
 
 
@@ -36,8 +36,6 @@ obj_ create_co_comment_co___LoopStatement__Compiler(obj_ this_, obj_ body, obj_ 
 		{
 		t0_ = Call_(body_co_, this_, body);
 		t0_ = Call_(comment_co_, this_, comment);
-		
-		
 		}
 	return nil;
 }
@@ -69,23 +67,8 @@ obj_ emit_code_co___LoopStatement__Compiler(obj_ this_, obj_ builder)
 		t1_ = Call_(emit_code_co_, t0_, builder);
 		t0_ = Call_(add_line_co_, builder, Str_(3));
 		t0_ = Call_(end_loop, builder);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ index__LoopStatement__Compiler(obj_ this_)
-{
-	return Field_(index);
-}
-
-
-obj_ index_co___LoopStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(index) = value;
-	return value;
 }
 
 
@@ -126,59 +109,9 @@ obj_ interpreted__LoopStatement__Compiler(obj_ this_)
 			if (t0_)
 				{
 				Throw_(exception);
-				
 				}
 			}
 		EndTry_
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__LoopStatement__Compiler(obj_ this_)
-{
-	extern obj_ new_co___Expression(obj_ this_, obj_ num_items);
-	UsingSym_(while)
-	UsingSym_(true)
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	DefineInt_(0, 3)
-	DefineInt_(1, 1)
-	DefineInt_(2, 0)
-	DefineInt_(3, 1)
-	DefineInt_(4, 2)
-	DefineInt_(5, 3)
-	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(body) UsingMethod_(comment) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		obj_ expression, expression_size;
-		expression_size = Int_(0);
-		t0_ = Call_(comment, this_);
-		if (t0_)
-			{
-			t0_ = Call_(_pl_, expression_size, Int_(1));
-			expression_size = t0_;
-			}
-		t0_ = new_co___Expression(Proto_(Expression), expression_size);
-		expression = t0_;
-		t0_ = Call_(at_co_put_co_, expression, Int_(2), Sym_(while));
-		t0_ = Call_(at_co_put_co_, expression, Int_(3), Sym_(true));
-		t0_ = Call_(body, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = Call_(at_co_put_co_, expression, Int_(4), t1_);
-		t0_ = Call_(comment, this_);
-		if (t0_)
-			{
-			t0_ = Call_(comment, this_);
-			t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(comment), t0_);
-			t2_ = Call_(at_co_put_co_, expression, Int_(5), t1_);
-			}
-		return expression;
-		
 		}
 	return nil;
 }
@@ -193,43 +126,15 @@ obj_ new_co_comment_co___LoopStatement__Compiler(obj_ this_, obj_ body, obj_ com
 }
 
 
-obj_ prepare_to_emit__LoopStatement__Compiler(obj_ this_)
+obj_ resolve__LoopStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
-		
-		
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ translate_co___LoopStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(while)
-	UsingSym_(true)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ expr;
-		t0_ = Call_(body, this_);
-		t1_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(while), Sym_(true), t0_);
-		expr = t1_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		
-		
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

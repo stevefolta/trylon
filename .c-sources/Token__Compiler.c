@@ -4,7 +4,7 @@ UsingSym_(Token)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Token__Compiler)
 struct ClassInfo Token__Compiler__classInfo_ = 
-	{ 72, 2, Proto_(Token__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Token) ,nil };
+	{ StdClassRef_(Class__CImplementation), 84, 2, Proto_(Token__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Token), nil, nil };
 struct object Token__Compiler = 
 	{ &Token__Compiler__classInfo_, {nil, nil} };
 
@@ -23,8 +23,6 @@ obj_ _nt__eq___Token__Compiler(obj_ this_, obj_ symbol)
 		t0_ = Call_(type, this_);
 		t1_ = Call_(_nt__eq_, t0_, symbol);
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -52,7 +50,6 @@ obj_ create_co___Token__Compiler(obj_ this_, obj_ type)
 
 		{
 		t0_ = Call_(type_co_, this_, type);
-		
 		}
 	return nil;
 }
@@ -70,8 +67,6 @@ obj_ create_co_from_co_to_co___Token__Compiler(obj_ this_, obj_ type, obj_ start
 		t0_ = Call_(type_co_, this_, type);
 		t0_ = new_co_to_co___String__Standard(Proto_(String__Standard), start, end);
 		t1_ = Call_(text_co_, this_, t0_);
-		
-		
 		}
 	return nil;
 }
@@ -85,7 +80,6 @@ obj_ create_co_text_co___Token__Compiler(obj_ this_, obj_ type, obj_ text)
 		{
 		t0_ = Call_(type_co_, this_, type);
 		t0_ = Call_(text_co_, this_, text);
-		
 		}
 	return nil;
 }
@@ -144,37 +138,8 @@ obj_ string__Token__Compiler(obj_ this_)
 		t1_ = Call_(type, this_);
 		t2_ = Call_(string, t1_);
 		return t2_;
-		
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ text__Token__Compiler(obj_ this_)
-{
-	return Field_(text);
-}
-
-
-obj_ text_co___Token__Compiler(obj_ this_, obj_ value)
-{
-	Field_(text) = value;
-	return value;
-}
-
-
-obj_ type__Token__Compiler(obj_ this_)
-{
-	return Field_(type);
-}
-
-
-obj_ type_co___Token__Compiler(obj_ this_, obj_ value)
-{
-	Field_(type) = value;
-	return value;
 }
 
 

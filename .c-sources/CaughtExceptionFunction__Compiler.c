@@ -4,7 +4,7 @@ UsingSym_(CaughtExceptionFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(CaughtExceptionFunction__Compiler)
 struct ClassInfo CaughtExceptionFunction__Compiler__classInfo_ = 
-	{ 123, 0, Proto_(CaughtExceptionFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CaughtExceptionFunction) ,nil };
+	{ StdClassRef_(Class__CImplementation), 135, 0, Proto_(CaughtExceptionFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CaughtExceptionFunction), nil, nil };
 struct object CaughtExceptionFunction__Compiler = 
 	{ &CaughtExceptionFunction__Compiler__classInfo_, {} };
 
@@ -12,11 +12,21 @@ struct object CaughtExceptionFunction__Compiler =
 
 
 
-obj_ create__CaughtExceptionFunction__Compiler(obj_ this_)
+obj_ compile_call_co_with_co___CaughtExceptionFunction__Compiler(obj_ this_, obj_ builder, obj_ arguments)
 {
+	obj_ t0_;
+	UsingMethod_(compile_caught_exception_call_co_)
 
 		{
+		t0_ = Call_(compile_caught_exception_call_co_, builder, this_);
+		return t0_;
 		}
+	return nil;
+}
+
+
+obj_ create__CaughtExceptionFunction__Compiler(obj_ this_)
+{
 	return nil;
 }
 
@@ -31,23 +41,6 @@ obj_ emit_c_call_co_builder_co___CaughtExceptionFunction__Compiler(obj_ this_, o
 		{
 		t0_ = new_co___NameResult__CCompiler(Proto_(NameResult__CCompiler), Str_(0));
 		return t0_;
-		
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ emit_call_co___CaughtExceptionFunction__Compiler(obj_ this_, obj_ arguments)
-{
-	UsingSym_(exception)
-
-		{
-		return Sym_(exception);
-		
-		
-		
 		}
 	return nil;
 }
@@ -59,7 +52,6 @@ obj_ interpret_call_with_co___CaughtExceptionFunction__Compiler(obj_ this_, obj_
 
 		{
 		return SharedField_(cur_interpreted_exception, TryStatement__Compiler);
-		
 		}
 	return nil;
 }

@@ -4,7 +4,7 @@ UsingSym_(StringBuilder)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(StringBuilder__Standard)
 struct ClassInfo StringBuilder__Standard__classInfo_ = 
-	{ 153, 2, Proto_(StringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(StringBuilder) ,nil };
+	{ StdClassRef_(Class__CImplementation), 58, 2, Proto_(StringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(StringBuilder), nil, nil };
 struct object StringBuilder__Standard = 
 	{ &StringBuilder__Standard__classInfo_, {nil, nil} };
 
@@ -29,7 +29,6 @@ obj_ _pl___StringBuilder__Standard(obj_ this_, obj_ string)
 		t2_ = Call_(_pl_, t0_, t1_);
 		t3_ = Call_(length_co_, this_, t2_);
 		return this_;
-		
 		}
 	return nil;
 }
@@ -43,8 +42,6 @@ obj_ add_co___StringBuilder__Standard(obj_ this_, obj_ string)
 		{
 		t0_ = Call_(_pl_, this_, string);
 		return t0_;
-		
-		
 		}
 	return nil;
 }
@@ -55,16 +52,14 @@ obj_ create__StringBuilder__Standard(obj_ this_)
 	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(length_co_) UsingMethod_(substrings_co_)
 	UsingClass_(List__Standard)
 
 		{
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(substrings_co_, this_, t0_);
-		t0_ = Call_(length_co_, this_, Int_(0));
-		
-		
+		t0_ = Call_(length_co_, this_, SmallInt_(0));
 		}
 	return nil;
 }
@@ -80,25 +75,8 @@ obj_ is_empty__StringBuilder__Standard(obj_ this_)
 		t0_ = Call_(substrings, this_);
 		t1_ = Call_(is_empty, t0_);
 		return t1_;
-		
-		
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ length__StringBuilder__Standard(obj_ this_)
-{
-	return Field_(length);
-}
-
-
-obj_ length_co___StringBuilder__Standard(obj_ this_, obj_ value)
-{
-	Field_(length) = value;
-	return value;
 }
 
 
@@ -126,8 +104,6 @@ obj_ prepend_co___StringBuilder__Standard(obj_ this_, obj_ string)
 		t1_ = Call_(length, string);
 		t2_ = Call_(_pl_, t0_, t1_);
 		t3_ = Call_(length_co_, this_, t2_);
-		
-		
 		}
 	return nil;
 }
@@ -147,7 +123,7 @@ obj_ string__StringBuilder__Standard(obj_ this_)
 
 		{
 		obj_ bytes, ptr, string;
-		/* Build the consolidated string. */
+		/*  Build the consolidated string. */
 		t0_ = Call_(length, this_);
 		t1_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t0_);
 		bytes = t1_;
@@ -167,30 +143,15 @@ obj_ string__StringBuilder__Standard(obj_ this_)
 		t0_ = new_co_to_co___String__Standard(Proto_(String__Standard), bytes, ptr);
 		string = t0_;
 		
-		/* Install it here, in case more strings are added later. */
+		/*  Install it here, in case more strings are added later. */
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(substrings_co_, this_, t0_);
 		t0_ = Call_(substrings, this_);
 		t1_ = Call_(append_co_, t0_, string);
 		
 		return string;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ substrings__StringBuilder__Standard(obj_ this_)
-{
-	return Field_(substrings);
-}
-
-
-obj_ substrings_co___StringBuilder__Standard(obj_ this_, obj_ value)
-{
-	Field_(substrings) = value;
-	return value;
 }
 
 

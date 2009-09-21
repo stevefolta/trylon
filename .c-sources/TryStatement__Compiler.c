@@ -4,7 +4,7 @@ UsingSym_(TryStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(TryStatement__Compiler)
 struct ClassInfo TryStatement__Compiler__classInfo_ = 
-	{ 139, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement) ,nil };
+	{ StdClassRef_(Class__CImplementation), 173, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
 struct object TryStatement__Compiler = 
 	{ &TryStatement__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -23,7 +23,7 @@ obj_ attach_else_co_line_co___TryStatement__Compiler(obj_ this_, obj_ statement,
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	UsingMethod_(body) UsingMethod_(body_co_) UsingMethod_(else_clause) UsingMethod_(else_clause_co_) UsingMethod_(parent) UsingMethod_(parent_co_)
+	UsingMethod_(block) UsingMethod_(body) UsingMethod_(body_co_) UsingMethod_(else_clause) UsingMethod_(else_clause_co_) UsingMethod_(parent) UsingMethod_(parent_co_)
 	UsingClass_(CatchClause__Compiler)
 
 		{
@@ -31,27 +31,27 @@ obj_ attach_else_co_line_co___TryStatement__Compiler(obj_ this_, obj_ statement,
 		t1_ = Call_(parent, t0_);
 		t2_ = new_co_comment_co___CatchClause__Compiler(Proto_(CatchClause__Compiler), t1_, nil);
 		t3_ = Call_(else_clause_co_, this_, t2_);
-		t0_ = Call_(parent_co_, statement, this_);
-		 	/* "statement" will be a Block. */
+		t0_ = Call_(block, statement);
+		t1_ = Call_(else_clause, this_);
+		t2_ = Call_(parent_co_, t0_, t1_);
+		 	/*  "statement" will be a BlockStatement. */
 		t0_ = Call_(else_clause, this_);
 		t1_ = Call_(body_co_, t0_, statement);
-		
-		
 		}
 	return nil;
 }
 
 
-obj_ body__TryStatement__Compiler(obj_ this_)
+obj_ compile_co___TryStatement__Compiler(obj_ this_, obj_ builder)
 {
-	return Field_(body);
-}
+	obj_ t0_;
+	UsingMethod_(compile_try_co_)
 
-
-obj_ body_co___TryStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(body) = value;
-	return value;
+		{
+		t0_ = Call_(compile_try_co_, builder, this_);
+		return t0_;
+		}
+	return nil;
 }
 
 
@@ -63,8 +63,6 @@ obj_ create_co_comment_co___TryStatement__Compiler(obj_ this_, obj_ body, obj_ c
 		{
 		t0_ = Call_(body_co_, this_, body);
 		t0_ = Call_(comment_co_, this_, comment);
-		
-		
 		}
 	return nil;
 }
@@ -83,19 +81,6 @@ obj_ cur_interpreted_exception_co___TryStatement__Compiler(obj_ this_, obj_ valu
 }
 
 
-obj_ else_clause__TryStatement__Compiler(obj_ this_)
-{
-	return Field_(else_clause);
-}
-
-
-obj_ else_clause_co___TryStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(else_clause) = value;
-	return value;
-}
-
-
 obj_ emit_code_co___TryStatement__Compiler(obj_ this_, obj_ builder)
 {
 	obj_ t0_;
@@ -110,15 +95,14 @@ obj_ emit_code_co___TryStatement__Compiler(obj_ this_, obj_ builder)
 		t1_ = Call_(add_line_co_, builder, t0_);
 		t0_ = Call_(body, this_);
 		t1_ = Call_(emit_code_co_, t0_, builder);
+		t0_ = Call_(add_line_co_, builder, Str_(1));
 		t0_ = Call_(else_clause, this_);
 		if (t0_)
 			{
-			t0_ = Call_(add_line_co_, builder, Str_(1));
 			t0_ = Call_(else_clause, this_);
 			t1_ = Call_(emit_code_co_, t0_, builder);
 			}
 		t0_ = Call_(add_line_co_, builder, Str_(2));
-		
 		}
 	return nil;
 }
@@ -144,45 +128,9 @@ obj_ interpreted__TryStatement__Compiler(obj_ this_)
 				t0_ = Call_(cur_interpreted_exception_co_, this_, exception);
 				t0_ = Call_(else_clause, this_);
 				t1_ = Call_(interpreted, t0_);
-				
 				}
 			}
 		EndTry_
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__TryStatement__Compiler(obj_ this_)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(catch)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		obj_ else_expr;
-		else_expr = nil;
-		t0_ = Call_(else_clause, this_);
-		if (t0_)
-			{
-			t0_ = Call_(else_clause, this_);
-			t1_ = Call_(jolt_expression, t0_);
-			else_expr = t1_;
-			}
-		else
-			{
-			else_expr = Sym_(nil);
-			}
-		t0_ = Call_(body, this_);
-		t1_ = Call_(jolt_expression, t0_);
-		t2_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(catch), t1_, else_expr);
-		return t2_;
-		
 		}
 	return nil;
 }
@@ -197,60 +145,21 @@ obj_ new_co_comment_co___TryStatement__Compiler(obj_ this_, obj_ body, obj_ comm
 }
 
 
-obj_ prepare_to_emit__TryStatement__Compiler(obj_ this_)
+obj_ resolve__TryStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(prepare_to_emit)
+	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(body, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
+		t1_ = Call_(resolve, t0_);
 		t0_ = Call_(else_clause, this_);
 		if (t0_)
 			{
 			t0_ = Call_(else_clause, this_);
-			t1_ = Call_(prepare_to_emit, t0_);
-			
-			
-			
-			
+			t1_ = Call_(resolve, t0_);
 			}
-		}
-	return nil;
-}
-
-
-obj_ translate_co___TryStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	UsingSym_(nil)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(catch)
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(body) UsingMethod_(else_clause) UsingMethod_(translateExpression_co_)
-	UsingClass_(Expression)
-
-		{
-		obj_ else_expr, expr;
-		else_expr = nil;
-		t0_ = Call_(else_clause, this_);
-		if (t0_)
-			{
-			t0_ = Call_(else_clause, this_);
-			else_expr = t0_;
-			}
-		else
-			{
-			else_expr = Sym_(nil);
-			}
-		t0_ = Call_(body, this_);
-		t1_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(catch), t0_, else_expr);
-		expr = t1_;
-		t0_ = Call_(translateExpression_co_, compiler, expr);
-		return t0_;
-		
-		
 		}
 	return nil;
 }

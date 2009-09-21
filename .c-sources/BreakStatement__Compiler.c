@@ -4,13 +4,26 @@ UsingSym_(BreakStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BreakStatement__Compiler)
 struct ClassInfo BreakStatement__Compiler__classInfo_ = 
-	{ 137, 1, Proto_(BreakStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BreakStatement) ,nil };
+	{ StdClassRef_(Class__CImplementation), 171, 1, Proto_(BreakStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BreakStatement), nil, nil };
 struct object BreakStatement__Compiler = 
 	{ &BreakStatement__Compiler__classInfo_, {nil} };
 
 
 #define comment__fld_	(0)
 
+
+
+obj_ compile_co___BreakStatement__Compiler(obj_ this_, obj_ builder)
+{
+	obj_ t0_;
+	UsingMethod_(compile_break_co_)
+
+		{
+		t0_ = Call_(compile_break_co_, builder, this_);
+		return t0_;
+		}
+	return nil;
+}
 
 
 obj_ create_co___BreakStatement__Compiler(obj_ this_, obj_ comment)
@@ -20,9 +33,6 @@ obj_ create_co___BreakStatement__Compiler(obj_ this_, obj_ comment)
 
 		{
 		t0_ = Call_(comment_co_, this_, comment);
-		
-		
-		
 		}
 	return nil;
 }
@@ -45,7 +55,6 @@ obj_ emit_code_co___BreakStatement__Compiler(obj_ this_, obj_ builder)
 		t2_ = Call_(_pl_, Str_(0), t1_);
 		t3_ = Call_(_pl_, t2_, Str_(1));
 		t4_ = Call_(add_line_co_, builder, t3_);
-		
 		}
 	return nil;
 }
@@ -57,24 +66,6 @@ obj_ interpreted__BreakStatement__Compiler(obj_ this_)
 
 		{
 		Throw_(Proto_(Break__Statements__Interpreter));
-		
-		}
-	return nil;
-}
-
-
-obj_ jolt_expression__BreakStatement__Compiler(obj_ this_)
-{
-	extern obj_ with_co___Expression(obj_ this_, obj_ value);
-	UsingSym_(fixed_break)
-	obj_ t0_;
-	UsingClass_(Expression)
-
-		{
-		t0_ = with_co___Expression(Proto_(Expression), Sym_(fixed_break));
-		return t0_;
-		
-		
 		}
 	return nil;
 }

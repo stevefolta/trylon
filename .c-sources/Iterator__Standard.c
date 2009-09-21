@@ -4,7 +4,7 @@ UsingSym_(Iterator)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Iterator__Standard)
 struct ClassInfo Iterator__Standard__classInfo_ = 
-	{ 18, 0, Proto_(Iterator__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Iterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 49, 0, Proto_(Iterator__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Iterator), nil, nil };
 struct object Iterator__Standard = 
 	{ &Iterator__Standard__classInfo_, {} };
 
@@ -32,8 +32,6 @@ obj_ go_forward__Iterator__Standard(obj_ this_)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
-		
 		}
 	return nil;
 }
@@ -63,8 +61,6 @@ obj_ next__Iterator__Standard(obj_ this_)
 		result = t0_;
 		t0_ = Call_(go_forward, this_);
 		return result;
-		
-		
 		}
 	return nil;
 }

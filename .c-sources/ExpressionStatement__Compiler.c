@@ -4,7 +4,7 @@ UsingSym_(ExpressionStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ExpressionStatement__Compiler)
 struct ClassInfo ExpressionStatement__Compiler__classInfo_ = 
-	{ 127, 2, Proto_(ExpressionStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ExpressionStatement) ,nil };
+	{ StdClassRef_(Class__CImplementation), 161, 2, Proto_(ExpressionStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ExpressionStatement), nil, nil };
 struct object ExpressionStatement__Compiler = 
 	{ &ExpressionStatement__Compiler__classInfo_, {nil, nil} };
 
@@ -12,6 +12,31 @@ struct object ExpressionStatement__Compiler =
 #define comment__fld_	(0)
 
 #define expression__fld_	(1)
+
+
+obj_ compile_co___ExpressionStatement__Compiler(obj_ this_, obj_ builder)
+{
+	obj_ t0_;
+	UsingMethod_(compile_expression_statement_co_)
+
+		{
+		t0_ = Call_(compile_expression_statement_co_, builder, this_);
+		return t0_;
+		}
+	return nil;
+}
+
+
+obj_ create_co___ExpressionStatement__Compiler(obj_ this_, obj_ expression)
+{
+	obj_ t0_;
+	UsingMethod_(expression_co_)
+
+		{
+		t0_ = Call_(expression_co_, this_, expression);
+		}
+	return nil;
+}
 
 
 obj_ create_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expression, obj_ comment)
@@ -22,8 +47,6 @@ obj_ create_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expre
 		{
 		t0_ = Call_(expression_co_, this_, expression);
 		t0_ = Call_(comment_co_, this_, comment);
-		
-		
 		}
 	return nil;
 }
@@ -45,24 +68,9 @@ obj_ emit_code_co___ExpressionStatement__Compiler(obj_ this_, obj_ builder)
 			{
 			t0_ = Call_(add_comment_co_, this_, Str_(0));
 			t1_ = Call_(add_line_co_, builder, t0_);
-			
-			
 			}
 		}
 	return nil;
-}
-
-
-obj_ expression__ExpressionStatement__Compiler(obj_ this_)
-{
-	return Field_(expression);
-}
-
-
-obj_ expression_co___ExpressionStatement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(expression) = value;
-	return value;
 }
 
 
@@ -76,48 +84,17 @@ obj_ interpreted__ExpressionStatement__Compiler(obj_ this_)
 		t0_ = Call_(expression, this_);
 		t1_ = Call_(interpreted, t0_);
 		return t1_;
-		
 		}
 	return nil;
 }
 
 
-obj_ jolt_expression__ExpressionStatement__Compiler(obj_ this_)
+obj_ new_co___ExpressionStatement__Compiler(obj_ this_, obj_ expression)
 {
-	extern obj_ with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2);
-	UsingSym_(comment)
-	extern obj_ with_co_with_co_with_co___Expression(obj_ this_, obj_ value_1, obj_ value_2, obj_ value_3);
-	UsingSym_(begin)
-	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	UsingMethod_(comment) UsingMethod_(expression) UsingMethod_(jolt_expression)
-	UsingClass_(Expression)
-
-		{
-		t0_ = Call_(comment, this_);
-		if (t0_)
-			{
-			obj_ comment_expression;
-			t0_ = Call_(comment, this_);
-			t1_ = with_co_with_co___Expression(Proto_(Expression), Sym_(comment), t0_);
-			comment_expression = t1_;
-			t0_ = Call_(expression, this_);
-			t1_ = Call_(jolt_expression, t0_);
-			t2_ = with_co_with_co_with_co___Expression(Proto_(Expression), Sym_(begin), t1_, comment_expression);
-			return t2_;
-			}
-		else
-			{
-			t3_ = Call_(expression, this_);
-			t4_ = Call_(jolt_expression, t3_);
-			return t4_;
-			
-			}
-		}
-	return nil;
+	UsingClass_(ExpressionStatement__Compiler)
+	obj_ obj = AllocObj_(ExpressionStatement__Compiler);
+	create_co___ExpressionStatement__Compiler(obj, expression);
+	return obj;
 }
 
 
@@ -130,36 +107,15 @@ obj_ new_co_comment_co___ExpressionStatement__Compiler(obj_ this_, obj_ expressi
 }
 
 
-obj_ prepare_to_emit__ExpressionStatement__Compiler(obj_ this_)
+obj_ resolve__ExpressionStatement__Compiler(obj_ this_)
 {
 	obj_ t0_;
 	obj_ t1_;
-	UsingMethod_(expression) UsingMethod_(prepare_to_emit)
+	UsingMethod_(expression) UsingMethod_(resolve)
 
 		{
 		t0_ = Call_(expression, this_);
-		t1_ = Call_(prepare_to_emit, t0_);
-		
-		
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ translate_co___ExpressionStatement__Compiler(obj_ this_, obj_ compiler)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(expression) UsingMethod_(translate_co_)
-
-		{
-		t0_ = Call_(expression, this_);
-		t1_ = Call_(translate_co_, t0_, compiler);
-		return t1_;
-		
-		
+		t1_ = Call_(resolve, t0_);
 		}
 	return nil;
 }

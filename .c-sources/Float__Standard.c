@@ -4,7 +4,7 @@ UsingSym_(Float)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Float__Standard)
 struct ClassInfo Float__Standard__classInfo_ = 
-	{ 10, 0, Proto_(Float__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Float) ,nil };
+	{ StdClassRef_(Class__CImplementation), 33, 0, Proto_(Float__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Float), nil, nil };
 struct object Float__Standard = 
 	{ &Float__Standard__classInfo_, {} };
 
@@ -13,7 +13,6 @@ struct object Float__Standard =
 
 #include <math.h>
 #include <stdio.h>
-
 obj_ _nt__eq___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) != FloatValue_(arg));
@@ -71,7 +70,6 @@ return Bool_(FloatValue_(this_) > FloatValue_(arg));
 obj_ _gt__eq___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) >= FloatValue_(arg));
-
 }
 
 
@@ -89,8 +87,6 @@ obj_ debug_write__Float__Standard(obj_ this_)
 		t0_ = Call_(string, this_);
 		t1_ = Call_(_pl_, Str_(0), t0_);
 		t2_ = print_line_co___Standard(Proto_(Standard), t1_);
-		
-		
 		}
 	return nil;
 }
@@ -99,8 +95,6 @@ obj_ debug_write__Float__Standard(obj_ this_)
 obj_ int___Float__Standard(obj_ this_)
 {
 return BuildInt_(FloatValue_(this_));
-
-
 }
 
 
@@ -113,7 +107,6 @@ return BuildFloat_(pow(FloatValue_(this_), FloatValue_(power)));
 obj_ sqrt__Float__Standard(obj_ this_)
 {
 return BuildFloat_(sqrt(FloatValue_(this_)));
-
 }
 
 
@@ -122,14 +115,12 @@ obj_ string__Float__Standard(obj_ this_)
 char str[64];
 sprintf(str, "%f", FloatValue_(this_));
 return BuildString_(str);
-
 }
 
 
 obj_ unary_minus__Float__Standard(obj_ this_)
 {
 return BuildFloat_(-FloatValue_(this_));
-
 }
 
 

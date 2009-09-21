@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Cell__IntStack__Compiler) 
+static obj_ tu0_[];
 UsingSym_(IntStack)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(IntStack__Compiler)
 struct ClassInfo IntStack__Compiler__classInfo_ = 
-	{ 70, 1, Proto_(IntStack__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(IntStack) ,nil };
+	{ StdClassRef_(Class__CImplementation), 82, 1, Proto_(IntStack__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(IntStack), nil, ((obj_) tu0_) };
 struct object IntStack__Compiler = 
 	{ &IntStack__Compiler__classInfo_, {nil} };
 
+	UsingInt_(1)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Cell__IntStack__Compiler) };
 
 #define top_cell__fld_	(0)
 
@@ -26,7 +30,6 @@ obj_ create__IntStack__Compiler(obj_ this_)
 
 		{
 		t0_ = Call_(top_cell_co_, this_, nil);
-		
 		}
 	return nil;
 }
@@ -42,7 +45,6 @@ obj_ is_empty__IntStack__Compiler(obj_ this_)
 		t0_ = Call_(top_cell, this_);
 		t1_ = Not_(t0_);
 		return t1_;
-		
 		}
 	return nil;
 }
@@ -73,7 +75,6 @@ obj_ pop__IntStack__Compiler(obj_ this_)
 		t1_ = Call_(next, t0_);
 		t2_ = Call_(top_cell_co_, this_, t1_);
 		return value;
-		
 		}
 	return nil;
 }
@@ -92,7 +93,6 @@ obj_ push_co___IntStack__Compiler(obj_ this_, obj_ value)
 		t0_ = Call_(top_cell, this_);
 		t1_ = new_co_next_co___Cell__IntStack__Compiler(Proto_(Cell__IntStack__Compiler), value, t0_);
 		t2_ = Call_(top_cell_co_, this_, t1_);
-		
 		}
 	return nil;
 }
@@ -108,23 +108,8 @@ obj_ top__IntStack__Compiler(obj_ this_)
 		t0_ = Call_(top_cell, this_);
 		t1_ = Call_(value, t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ top_cell__IntStack__Compiler(obj_ this_)
-{
-	return Field_(top_cell);
-}
-
-
-obj_ top_cell_co___IntStack__Compiler(obj_ this_, obj_ value)
-{
-	Field_(top_cell) = value;
-	return value;
 }
 
 

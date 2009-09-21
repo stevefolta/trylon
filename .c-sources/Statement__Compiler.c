@@ -4,7 +4,7 @@ UsingSym_(Statement)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Statement__Compiler)
 struct ClassInfo Statement__Compiler__classInfo_ = 
-	{ 143, 1, Proto_(Statement__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Statement) ,nil };
+	{ StdClassRef_(Class__CImplementation), 176, 1, Proto_(Statement__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Statement), nil, nil };
 struct object Statement__Compiler = 
 	{ &Statement__Compiler__classInfo_, {nil} };
 
@@ -33,7 +33,6 @@ obj_ add_comment_co___Statement__Compiler(obj_ this_, obj_ line)
 			line = t3_;
 			}
 		return line;
-		
 		}
 	return nil;
 }
@@ -57,8 +56,6 @@ obj_ add_comment_co_comment_co___Statement__Compiler(obj_ this_, obj_ line, obj_
 			line = t2_;
 			}
 		return line;
-		
-		
 		}
 	return nil;
 }
@@ -74,24 +71,21 @@ obj_ attach_else_co_line_co___Statement__Compiler(obj_ this_, obj_ statement, ob
 		{
 		t0_ = new_co_in_co___ParseException__Compiler(Proto_(ParseException__Compiler), Str_(0), line);
 		Throw_(t0_);
-		
-		
-		
 		}
 	return nil;
 }
 
 
-obj_ comment__Statement__Compiler(obj_ this_)
+obj_ compile_co___Statement__Compiler(obj_ this_, obj_ builder)
 {
-	return Field_(comment);
-}
+	extern obj_ virtual__Standard(obj_ this_);
+	obj_ t0_;
+	UsingClass_(Standard)
 
-
-obj_ comment_co___Statement__Compiler(obj_ this_, obj_ value)
-{
-	Field_(comment) = value;
-	return value;
+		{
+		t0_ = virtual__Standard(Proto_(Standard));
+		}
+	return nil;
 }
 
 
@@ -103,7 +97,6 @@ obj_ emit_code_co___Statement__Compiler(obj_ this_, obj_ builder)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
 		}
 	return nil;
 }
@@ -114,7 +107,6 @@ obj_ ignored_for_else__Statement__Compiler(obj_ this_)
 
 		{
 		return nil;
-		
 		}
 	return nil;
 }
@@ -128,51 +120,26 @@ obj_ interpreted__Statement__Compiler(obj_ this_)
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
 		}
 	return nil;
 }
 
 
-obj_ jolt_expression__Statement__Compiler(obj_ this_)
+obj_ is_self_blocking__Statement__Compiler(obj_ this_)
 {
-	extern obj_ virtual__Standard(obj_ this_);
-	obj_ t0_;
-	UsingClass_(Standard)
 
 		{
-		t0_ = virtual__Standard(Proto_(Standard));
-		
+		return nil;
 		}
 	return nil;
 }
 
 
-obj_ prepare_to_emit__Statement__Compiler(obj_ this_)
+obj_ resolve__Statement__Compiler(obj_ this_)
 {
 
 		{
-		/* Default: nothing to do. */
-		
-		
-		}
-	return nil;
-}
-
-
-obj_ translate_co___Statement__Compiler(obj_ this_, obj_ compiler)
-{
-	obj_ t0_;
-	obj_ t1_;
-	UsingMethod_(jolt_expression) UsingMethod_(translate_co_)
-
-		{
-		/* Default: use jolt-expression. */
-		t0_ = Call_(jolt_expression, this_);
-		t1_ = Call_(translate_co_, t0_, compiler);
-		return t1_;
-		
-		
+		/*  Default: nothing to do. */
 		}
 	return nil;
 }
@@ -194,8 +161,6 @@ obj_ uninterpretable_co___Statement__Compiler(obj_ this_, obj_ name)
 		t1_ = Call_(_pl_, t0_, Str_(1));
 		t2_ = new_co___MessageException__Standard(Proto_(MessageException__Standard), t1_);
 		Throw_(t2_);
-		
-		
 		}
 	return nil;
 }

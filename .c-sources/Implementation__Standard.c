@@ -4,7 +4,7 @@ UsingSym_(Implementation)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Implementation__Standard)
 struct ClassInfo Implementation__Standard__classInfo_ = 
-	{ 51, 0, Proto_(Implementation__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Implementation) ,nil };
+	{ StdClassRef_(Class__CImplementation), 35, 0, Proto_(Implementation__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Implementation), nil, nil };
 struct object Implementation__Standard = 
 	{ &Implementation__Standard__classInfo_, {} };
 
@@ -17,9 +17,6 @@ obj_ _dt_target_language__Implementation__Standard(obj_ this_)
 
 		{
 		return Str_(0);
-		
-		
-		
 		}
 	return nil;
 }
@@ -28,7 +25,6 @@ obj_ _dt_target_language__Implementation__Standard(obj_ this_)
 obj_ allocate_bytes_non_ptr_co___Implementation__Standard(obj_ this_, obj_ num_bytes)
 {
 return BuildBytePtr_(AllocNonPtr_(IntValue_(num_bytes)));
-
 }
 
 
@@ -47,7 +43,6 @@ return CloneObjExtra_(proto, IntValue_(num_extra_slots));
 obj_ ptr_size__Implementation__Standard(obj_ this_)
 {
 return BuildInt_(sizeof(obj_));
-
 }
 
 

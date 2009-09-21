@@ -4,7 +4,7 @@ UsingSym_(DispatchRow)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(DispatchRow__CCompiler)
 struct ClassInfo DispatchRow__CCompiler__classInfo_ = 
-	{ 149, 4, Proto_(DispatchRow__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(DispatchRow) ,nil };
+	{ StdClassRef_(Class__CImplementation), 182, 4, Proto_(DispatchRow__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(DispatchRow), nil, nil };
 struct object DispatchRow__CCompiler = 
 	{ &DispatchRow__CCompiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -21,7 +21,7 @@ obj_ append_co_function_co___DispatchRow__CCompiler(obj_ this_, obj_ class_num, 
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(entries) UsingMethod_(num_entries) UsingMethod_(num_entries_co_)
 	UsingClass_(DispatchRowEntry__CCompiler)
 
@@ -30,10 +30,8 @@ obj_ append_co_function_co___DispatchRow__CCompiler(obj_ this_, obj_ class_num, 
 		t1_ = new_co_function_co___DispatchRowEntry__CCompiler(Proto_(DispatchRowEntry__CCompiler), class_num, function);
 		t2_ = Call_(append_co_, t0_, t1_);
 		t0_ = Call_(num_entries, this_);
-		t1_ = Call_(_pl_, t0_, Int_(0));
+		t1_ = Call_(_pl_, t0_, SmallInt_(1));
 		t2_ = Call_(num_entries_co_, this_, t1_);
-		
-		
 		}
 	return nil;
 }
@@ -44,7 +42,7 @@ obj_ create_co___DispatchRow__CCompiler(obj_ this_, obj_ symbol_info)
 	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(entries_co_) UsingMethod_(num_entries_co_) UsingMethod_(symbol_info_co_)
 	UsingClass_(List__Standard)
 
@@ -52,24 +50,9 @@ obj_ create_co___DispatchRow__CCompiler(obj_ this_, obj_ symbol_info)
 		t0_ = Call_(symbol_info_co_, this_, symbol_info);
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(entries_co_, this_, t0_);
-		t0_ = Call_(num_entries_co_, this_, Int_(0));
-		
-		
+		t0_ = Call_(num_entries_co_, this_, SmallInt_(0));
 		}
 	return nil;
-}
-
-
-obj_ entries__DispatchRow__CCompiler(obj_ this_)
-{
-	return Field_(entries);
-}
-
-
-obj_ entries_co___DispatchRow__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(entries) = value;
-	return value;
 }
 
 
@@ -81,16 +64,16 @@ obj_ fit_into_co_used_offsets_co___DispatchRow__CCompiler(obj_ this_, obj_ dispa
 	obj_ t2_;
 	obj_ t3_;
 	obj_ t4_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 1)
+	UsingInt_(0)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(class_num) UsingMethod_(current_item) UsingMethod_(entries) UsingMethod_(function) UsingMethod_(go_forward) UsingMethod_(index_co_) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(next_clear_from_co_) UsingMethod_(selector_co_) UsingMethod_(symbol_info)
 	UsingClass_(DispatchTableEntry__CCompiler)
 
 		{
 		obj_ offset;
-		/* Find the offset. */
-		/* Very slow method. */
-		offset = Int_(0);
+		/*  Find the offset. */
+		/*  Very slow method. */
+		offset = SmallInt_(0);
 		while (1) {
 			ContinuePoint_(0)
 			{
@@ -116,14 +99,14 @@ obj_ fit_into_co_used_offsets_co___DispatchRow__CCompiler(obj_ this_, obj_ dispa
 			if (fits_here)
 				{
 				Break_(0)
-				
 				}
-			t0_ = Call_(_pl_, offset, Int_(1));
-			offset = t0_;
 			
+			t0_ = Call_(_pl_, offset, SmallInt_(1));
+			offset = t0_;
 			}
 		}
-		/* Install the entries. */
+		
+		/*  Install the entries. */
 		t0_ = Call_(selector_co_, this_, offset);
 		t0_ = Call_(entries, this_);
 		ForStart_(2, t0_, entry)
@@ -138,10 +121,6 @@ obj_ fit_into_co_used_offsets_co___DispatchRow__CCompiler(obj_ this_, obj_ dispa
 		t0_ = Call_(at_co_put_co_, used_offsets, offset, true_);
 		t0_ = Call_(symbol_info, this_);
 		t1_ = Call_(index_co_, t0_, offset);
-		
-		
-		
-		
 		}
 	return nil;
 }
@@ -157,8 +136,6 @@ obj_ name__DispatchRow__CCompiler(obj_ this_)
 		t0_ = Call_(symbol_info, this_);
 		t1_ = Call_(name, t0_);
 		return t1_;
-		
-		
 		}
 	return nil;
 }
@@ -170,45 +147,6 @@ obj_ new_co___DispatchRow__CCompiler(obj_ this_, obj_ symbol_info)
 	obj_ obj = AllocObj_(DispatchRow__CCompiler);
 	create_co___DispatchRow__CCompiler(obj, symbol_info);
 	return obj;
-}
-
-
-obj_ num_entries__DispatchRow__CCompiler(obj_ this_)
-{
-	return Field_(num_entries);
-}
-
-
-obj_ num_entries_co___DispatchRow__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(num_entries) = value;
-	return value;
-}
-
-
-obj_ selector__DispatchRow__CCompiler(obj_ this_)
-{
-	return Field_(selector);
-}
-
-
-obj_ selector_co___DispatchRow__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(selector) = value;
-	return value;
-}
-
-
-obj_ symbol_info__DispatchRow__CCompiler(obj_ this_)
-{
-	return Field_(symbol_info);
-}
-
-
-obj_ symbol_info_co___DispatchRow__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(symbol_info) = value;
-	return value;
 }
 
 

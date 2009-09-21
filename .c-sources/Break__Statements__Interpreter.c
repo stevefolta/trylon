@@ -4,7 +4,7 @@ UsingSym_(Break)UsingClass_(Statements__Interpreter)
 UsingClass_(Exception__Standard)
 UsingClass_(Break__Statements__Interpreter)
 struct ClassInfo Break__Statements__Interpreter__classInfo_ = 
-	{ 6, 0, Proto_(Break__Statements__Interpreter), Proto_(Statements__Interpreter), Proto_(Exception__Standard), nil, Sym_(Break) ,nil };
+	{ StdClassRef_(Class__CImplementation), 26, 0, Proto_(Break__Statements__Interpreter), Proto_(Statements__Interpreter), Proto_(Exception__Standard), nil, Sym_(Break), nil, nil };
 struct object Break__Statements__Interpreter = 
 	{ &Break__Statements__Interpreter__classInfo_, {} };
 

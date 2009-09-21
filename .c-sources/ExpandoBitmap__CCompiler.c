@@ -4,7 +4,7 @@ UsingSym_(ExpandoBitmap)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpandoBitmap__CCompiler)
 struct ClassInfo ExpandoBitmap__CCompiler__classInfo_ = 
-	{ 152, 3, Proto_(ExpandoBitmap__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoBitmap) ,nil };
+	{ StdClassRef_(Class__CImplementation), 185, 3, Proto_(ExpandoBitmap__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoBitmap), nil, nil };
 struct object ExpandoBitmap__CCompiler = 
 	{ &ExpandoBitmap__CCompiler__classInfo_, {nil, nil, nil} };
 
@@ -22,32 +22,30 @@ obj_ at_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ index)
 	obj_ t3_;
 	obj_ t4_;
 	obj_ t5_;
-	DefineInt_(0, 8)
-	DefineInt_(1, 1)
-	DefineInt_(2, 8)
-	DefineInt_(3, 0)
+	UsingInt_(8)
+	UsingInt_(1)
+	UsingInt_(8)
+	UsingInt_(0)
 	UsingMethod_(_nt__eq_) UsingMethod_(_pc_) UsingMethod_(_an_) UsingMethod_(_dv_) UsingMethod_(_lt__lt_) UsingMethod_(_gt_) UsingMethod_(bitmap) UsingMethod_(byte_at_co_) UsingMethod_(num_bytes)
 
 		{
 		obj_ which_byte;
-		t0_ = Call_(_dv_, index, Int_(0));
+		t0_ = Call_(_dv_, index, SmallInt_(8));
 		which_byte = t0_;
 		t0_ = Call_(num_bytes, this_);
 		t1_ = Call_(_gt_, which_byte, t0_);
 		if (t1_)
 			{
 			return nil;
-			
 			}
+		
 		t0_ = Call_(bitmap, this_);
 		t1_ = Call_(byte_at_co_, t0_, which_byte);
-		t2_ = Call_(_pc_, index, Int_(2));
-		t3_ = Call_(_lt__lt_, Int_(1), t2_);
+		t2_ = Call_(_pc_, index, SmallInt_(8));
+		t3_ = Call_(_lt__lt_, SmallInt_(1), t2_);
 		t4_ = Call_(_an_, t1_, t3_);
-		t5_ = Call_(_nt__eq_, t4_, Int_(3));
+		t5_ = Call_(_nt__eq_, t4_, SmallInt_(0));
 		return t5_;
-		
-		
 		}
 	return nil;
 }
@@ -61,26 +59,26 @@ obj_ at_co_put_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ index, obj_ value)
 	obj_ t3_;
 	obj_ t4_;
 	obj_ t5_;
-	DefineInt_(0, 8)
-	DefineInt_(1, 1)
-	DefineInt_(2, 1)
-	DefineInt_(3, 8)
+	UsingInt_(8)
+	UsingInt_(1)
+	UsingInt_(1)
+	UsingInt_(8)
 	UsingMethod_(_pc_) UsingMethod_(_an_) UsingMethod_(_pl_) UsingMethod_(_dv_) UsingMethod_(_lt__lt_) UsingMethod_(_gt_) UsingMethod_(bitmap) UsingMethod_(byte_at_co_) UsingMethod_(byte_at_co_put_co_) UsingMethod_(expand_co_) UsingMethod_(num_bytes) UsingMethod_(_or_) UsingMethod_(_tw_)
 
 		{
 		obj_ mask, which_byte;
-		t0_ = Call_(_dv_, index, Int_(0));
+		t0_ = Call_(_dv_, index, SmallInt_(8));
 		which_byte = t0_;
 		t0_ = Call_(num_bytes, this_);
 		t1_ = Call_(_gt_, which_byte, t0_);
 		if (t1_)
 			{
-			t0_ = Call_(_pl_, which_byte, Int_(1));
+			t0_ = Call_(_pl_, which_byte, SmallInt_(1));
 			t1_ = Call_(expand_co_, this_, t0_);
-			
 			}
-		t0_ = Call_(_pc_, index, Int_(3));
-		t1_ = Call_(_lt__lt_, Int_(2), t0_);
+		
+		t0_ = Call_(_pc_, index, SmallInt_(8));
+		t1_ = Call_(_lt__lt_, SmallInt_(1), t0_);
 		mask = t1_;
 		if (value)
 			{
@@ -98,7 +96,6 @@ obj_ at_co_put_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ index, obj_ value)
 			t3_ = Call_(_tw_, mask);
 			t4_ = Call_(_an_, t2_, t3_);
 			t5_ = Call_(byte_at_co_put_co_, t0_, which_byte, t4_);
-			
 			}
 		}
 	return nil;
@@ -112,23 +109,8 @@ obj_ at_co_set_to_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ index, obj_ val
 
 		{
 		t0_ = Call_(at_co_put_co_, this_, index, value);
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ bitmap__ExpandoBitmap__CCompiler(obj_ this_)
-{
-	return Field_(bitmap);
-}
-
-
-obj_ bitmap_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(bitmap) = value;
-	return value;
 }
 
 
@@ -138,19 +120,17 @@ obj_ create__ExpandoBitmap__CCompiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 64)
+	UsingInt_(64)
 	UsingMethod_(bitmap_co_) UsingMethod_(growth_increment) UsingMethod_(growth_increment_co_) UsingMethod_(num_bytes) UsingMethod_(num_bytes_co_)
 	UsingClass_(BytePtr__Standard)
 
 		{
-		t0_ = Call_(growth_increment_co_, this_, Int_(0));
+		t0_ = Call_(growth_increment_co_, this_, SmallInt_(64));
 		t0_ = Call_(growth_increment, this_);
 		t1_ = Call_(num_bytes_co_, this_, t0_);
 		t0_ = Call_(num_bytes, this_);
 		t1_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), t0_);
 		t2_ = Call_(bitmap_co_, this_, t1_);
-		
-		
 		}
 	return nil;
 }
@@ -180,9 +160,9 @@ obj_ expand_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ needed_num_bytes)
 			t0_ = Call_(growth_increment, this_);
 			t1_ = Call_(_pl_, new_num_bytes, t0_);
 			new_num_bytes = t1_;
-			
 			}
 			}
+		
 		t0_ = new_co___BytePtr__Standard(Proto_(BytePtr__Standard), new_num_bytes);
 		new_bitmap = t0_;
 		t0_ = Call_(bitmap, this_);
@@ -191,25 +171,8 @@ obj_ expand_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ needed_num_bytes)
 		
 		t0_ = Call_(bitmap_co_, this_, new_bitmap);
 		t0_ = Call_(num_bytes_co_, this_, new_num_bytes);
-		
-		
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ growth_increment__ExpandoBitmap__CCompiler(obj_ this_)
-{
-	return Field_(growth_increment);
-}
-
-
-obj_ growth_increment_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(growth_increment) = value;
-	return value;
 }
 
 
@@ -234,50 +197,36 @@ unsigned int mask;
 // Check the rest of the word containing "index".
 unsigned int word = bitmap[whichInt];
 if (word != 0xFFFFFFFF) {
-	mask = 1 << (index % 32);
-	while (mask != 0) {
-		if ((word & mask) == 0)
-			return BuildInt_(index);
-		index += 1;
-		mask <<= 1;
-		}
-	}
+mask = 1 << (index % 32);
+while (mask != 0) {
+if ((word & mask) == 0)
+return BuildInt_(index);
+index += 1;
+mask <<= 1;
+}
+}
 else
-	index += 32 - (index % 32);
+index += 32 - (index % 32);
 
 // Check the rest of the words.
 whichInt += 1;
 while (whichInt < numInts) {
-	word = bitmap[whichInt];
-	if (word != 0xFFFFFFFF) {
-		mask = 1;
-		while (mask != 0) {
-			if ((word & mask) == 0)
-				return BuildInt_(index);
-			index += 1;
-			mask <<= 1;
-			}
-		}
-	index += 32;
-	whichInt += 1;
-	}
+word = bitmap[whichInt];
+if (word != 0xFFFFFFFF) {
+mask = 1;
+while (mask != 0) {
+if ((word & mask) == 0)
+return BuildInt_(index);
+index += 1;
+mask <<= 1;
+}
+}
+index += 32;
+whichInt += 1;
+}
 
 // Not in the allocated area.
 return BuildInt_(index);
-
-}
-
-
-obj_ num_bytes__ExpandoBitmap__CCompiler(obj_ this_)
-{
-	return Field_(num_bytes);
-}
-
-
-obj_ num_bytes_co___ExpandoBitmap__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(num_bytes) = value;
-	return value;
 }
 
 

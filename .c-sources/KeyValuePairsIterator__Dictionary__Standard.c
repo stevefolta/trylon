@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Pair__KeyValuePairsIterator__Dictionary__Standard) 
+static obj_ tu0_[];
 UsingSym_(KeyValuePairsIterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 UsingClass_(KeyValuePairsIterator__Dictionary__Standard)
 struct ClassInfo KeyValuePairsIterator__Dictionary__Standard__classInfo_ = 
-	{ 41, 1, Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeyValuePairsIterator) ,nil };
+	{ StdClassRef_(Class__CImplementation), 75, 1, Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeyValuePairsIterator), nil, ((obj_) tu0_) };
 struct object KeyValuePairsIterator__Dictionary__Standard = 
 	{ &KeyValuePairsIterator__Dictionary__Standard__classInfo_, {nil} };
 
+	UsingInt_(1)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Pair__KeyValuePairsIterator__Dictionary__Standard) };
 
 #define stack_top__fld_	(0)
 
@@ -27,7 +31,6 @@ obj_ create_co___KeyValuePairsIterator__Dictionary__Standard(obj_ this_, obj_ ro
 
 		{
 		t0_ = create_co___Iterator__Dictionary__Standard(this_, root);
-		
 		}
 	return nil;
 }
@@ -54,7 +57,6 @@ obj_ current_item__KeyValuePairsIterator__Dictionary__Standard(obj_ this_)
 		node = t1_;
 		t0_ = new_co___Pair__KeyValuePairsIterator__Dictionary__Standard(Proto_(Pair__KeyValuePairsIterator__Dictionary__Standard), node);
 		return t0_;
-		
 		}
 	return nil;
 }

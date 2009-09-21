@@ -1,13 +1,17 @@
 #include "Trylon_.h"
 
+UsingClass_(Iterator__Tuple__Standard) 
+static obj_ tu0_[];
 UsingSym_(Tuple)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Tuple__Standard)
 struct ClassInfo Tuple__Standard__classInfo_ = 
-	{ 23, 1, Proto_(Tuple__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Tuple) ,nil };
+	{ StdClassRef_(Class__CImplementation), 61, 1, Proto_(Tuple__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Tuple), nil, ((obj_) tu0_) };
 struct object Tuple__Standard = 
 	{ &Tuple__Standard__classInfo_, {nil} };
 
+	UsingInt_(1)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(1), Proto_(Iterator__Tuple__Standard) };
 
 #define num_items__fld_	(0)
 
@@ -26,14 +30,14 @@ obj_ at_co___Tuple__Standard(obj_ this_, obj_ index)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 2)
+	UsingInt_(0)
+	UsingInt_(2)
 	DefineString_(0, "Bad tuple index.")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt__eq_) UsingMethod_(num_items) UsingMethod_(object_at_co_) UsingMethod_(object_ptr)
 	UsingClass_(MessageException__Standard)
 
 		{
-		t0_ = Call_(_lt_, index, Int_(0));
+		t0_ = Call_(_lt_, index, SmallInt_(0));
 		if ((t0_) == nil) {
 			t1_ = Call_(num_items, this_);
 			t2_ = Call_(_gt__eq_, index, t1_);
@@ -46,10 +50,9 @@ obj_ at_co___Tuple__Standard(obj_ this_, obj_ index)
 			}
 			{
 			t1_ = Call_(object_ptr, this_);
-			t2_ = Call_(_pl_, index, Int_(1));
+			t2_ = Call_(_pl_, index, SmallInt_(2));
 			t3_ = Call_(object_at_co_, t1_, t2_);
 			return t3_;
-			
 			}
 		}
 	return nil;
@@ -63,14 +66,14 @@ obj_ at_co_put_co___Tuple__Standard(obj_ this_, obj_ index, obj_ value)
 	obj_ t1_;
 	obj_ t2_;
 	obj_ t3_;
-	DefineInt_(0, 0)
-	DefineInt_(1, 2)
+	UsingInt_(0)
+	UsingInt_(2)
 	DefineString_(0, "Bad tuple index.")
 	UsingMethod_(_pl_) UsingMethod_(_lt_) UsingMethod_(_gt__eq_) UsingMethod_(num_items) UsingMethod_(object_at_co_put_co_) UsingMethod_(object_ptr)
 	UsingClass_(MessageException__Standard)
 
 		{
-		t0_ = Call_(_lt_, index, Int_(0));
+		t0_ = Call_(_lt_, index, SmallInt_(0));
 		if ((t0_) == nil) {
 			t1_ = Call_(num_items, this_);
 			t2_ = Call_(_gt__eq_, index, t1_);
@@ -83,9 +86,8 @@ obj_ at_co_put_co___Tuple__Standard(obj_ this_, obj_ index, obj_ value)
 			}
 			{
 			t1_ = Call_(object_ptr, this_);
-			t2_ = Call_(_pl_, index, Int_(1));
+			t2_ = Call_(_pl_, index, SmallInt_(2));
 			t3_ = Call_(object_at_co_put_co_, t1_, t2_, value);
-			
 			}
 		}
 	return nil;
@@ -99,7 +101,6 @@ obj_ at_co_set_to_co___Tuple__Standard(obj_ this_, obj_ index, obj_ value)
 
 		{
 		t0_ = Call_(at_co_put_co_, this_, index, value);
-		
 		}
 	return nil;
 }
@@ -113,7 +114,6 @@ obj_ count__Tuple__Standard(obj_ this_)
 		{
 		t0_ = Call_(num_items, this_);
 		return t0_;
-		
 		}
 	return nil;
 }
@@ -122,11 +122,11 @@ obj_ count__Tuple__Standard(obj_ this_)
 obj_ first__Tuple__Standard(obj_ this_)
 {
 	obj_ t0_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(at_co_)
 
 		{
-		t0_ = Call_(at_co_, this_, Int_(0));
+		t0_ = Call_(at_co_, this_, SmallInt_(0));
 		return t0_;
 		}
 	return nil;
@@ -142,7 +142,6 @@ obj_ iterator__Tuple__Standard(obj_ this_)
 		{
 		t0_ = new_co___Iterator__Tuple__Standard(Proto_(Iterator__Tuple__Standard), this_);
 		return t0_;
-		
 		}
 	return nil;
 }
@@ -162,33 +161,19 @@ obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items)
 		tuple = t0_;
 		t0_ = Call_(num_items_co_, tuple, num_items);
 		return tuple;
-		
 		}
 	return nil;
-}
-
-
-obj_ num_items__Tuple__Standard(obj_ this_)
-{
-	return Field_(num_items);
-}
-
-
-obj_ num_items_co___Tuple__Standard(obj_ this_, obj_ value)
-{
-	Field_(num_items) = value;
-	return value;
 }
 
 
 obj_ second__Tuple__Standard(obj_ this_)
 {
 	obj_ t0_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(at_co_)
 
 		{
-		t0_ = Call_(at_co_, this_, Int_(0));
+		t0_ = Call_(at_co_, this_, SmallInt_(1));
 		return t0_;
 		}
 	return nil;
@@ -236,7 +221,6 @@ obj_ string__Tuple__Standard(obj_ this_)
 		t0_ = Call_(_pl_, result, Str_(3));
 		result = t0_;
 		return result;
-		
 		}
 	return nil;
 }
@@ -245,13 +229,32 @@ obj_ string__Tuple__Standard(obj_ this_)
 obj_ third__Tuple__Standard(obj_ this_)
 {
 	obj_ t0_;
-	DefineInt_(0, 2)
+	UsingInt_(2)
 	UsingMethod_(at_co_)
 
 		{
-		t0_ = Call_(at_co_, this_, Int_(0));
+		t0_ = Call_(at_co_, this_, SmallInt_(2));
 		return t0_;
-		
+		}
+	return nil;
+}
+
+
+obj_ with_co___Tuple__Standard(obj_ this_, obj_ item)
+{
+	extern obj_ new_co___Tuple__Standard(obj_ this_, obj_ num_items);
+	obj_ t0_;
+	UsingInt_(1)
+	UsingInt_(0)
+	UsingMethod_(at_co_put_co_)
+	UsingClass_(Tuple__Standard)
+
+		{
+		obj_ tuple;
+		t0_ = new_co___Tuple__Standard(Proto_(Tuple__Standard), SmallInt_(1));
+		tuple = t0_;
+		t0_ = Call_(at_co_put_co_, tuple, SmallInt_(0), item);
+		return tuple;
 		}
 	return nil;
 }

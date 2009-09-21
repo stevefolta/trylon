@@ -4,7 +4,7 @@ UsingSym_(IndexedResources)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(IndexedResources__CCompiler)
 struct ClassInfo IndexedResources__CCompiler__classInfo_ = 
-	{ 176, 2, Proto_(IndexedResources__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(IndexedResources) ,nil };
+	{ StdClassRef_(Class__CImplementation), 212, 2, Proto_(IndexedResources__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(IndexedResources), nil, nil };
 struct object IndexedResources__CCompiler = 
 	{ &IndexedResources__CCompiler__classInfo_, {nil, nil} };
 
@@ -18,18 +18,17 @@ obj_ add_co___IndexedResources__CCompiler(obj_ this_, obj_ resource)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
-	DefineInt_(0, 1)
+	UsingInt_(1)
 	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(index_co_) UsingMethod_(next_index) UsingMethod_(next_index_co_) UsingMethod_(resources)
 
 		{
 		t0_ = Call_(next_index, this_);
 		t1_ = Call_(index_co_, resource, t0_);
 		t0_ = Call_(next_index, this_);
-		t1_ = Call_(_pl_, t0_, Int_(0));
+		t1_ = Call_(_pl_, t0_, SmallInt_(1));
 		t2_ = Call_(next_index_co_, this_, t1_);
 		t0_ = Call_(resources, this_);
 		t1_ = Call_(append_co_, t0_, resource);
-		
 		}
 	return nil;
 }
@@ -40,15 +39,14 @@ obj_ create__IndexedResources__CCompiler(obj_ this_)
 	extern obj_ new__List__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
-	DefineInt_(0, 0)
+	UsingInt_(0)
 	UsingMethod_(next_index_co_) UsingMethod_(resources_co_)
 	UsingClass_(List__Standard)
 
 		{
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(resources_co_, this_, t0_);
-		t0_ = Call_(next_index_co_, this_, Int_(0));
-		
+		t0_ = Call_(next_index_co_, this_, SmallInt_(0));
 		}
 	return nil;
 }
@@ -64,8 +62,6 @@ obj_ emit_declarations_on_co___IndexedResources__CCompiler(obj_ this_, obj_ stre
 		ForStart_(0, t0_, resource)
 			{
 			t0_ = Call_(emit_declaration_co_, resource, stream);
-			
-			
 			}
 		ForEnd_(0)
 		}
@@ -79,32 +75,6 @@ obj_ new__IndexedResources__CCompiler(obj_ this_)
 	obj_ obj = AllocObj_(IndexedResources__CCompiler);
 	create__IndexedResources__CCompiler(obj);
 	return obj;
-}
-
-
-obj_ next_index__IndexedResources__CCompiler(obj_ this_)
-{
-	return Field_(next_index);
-}
-
-
-obj_ next_index_co___IndexedResources__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(next_index) = value;
-	return value;
-}
-
-
-obj_ resources__IndexedResources__CCompiler(obj_ this_)
-{
-	return Field_(resources);
-}
-
-
-obj_ resources_co___IndexedResources__CCompiler(obj_ this_, obj_ value)
-{
-	Field_(resources) = value;
-	return value;
 }
 
 

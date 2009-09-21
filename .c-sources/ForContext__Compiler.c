@@ -4,7 +4,7 @@ UsingSym_(ForContext)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(ForContext__Compiler)
 struct ClassInfo ForContext__Compiler__classInfo_ = 
-	{ 81, 2, Proto_(ForContext__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(ForContext) ,nil };
+	{ StdClassRef_(Class__CImplementation), 97, 2, Proto_(ForContext__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(ForContext), nil, nil };
 struct object ForContext__Compiler = 
 	{ &ForContext__Compiler__classInfo_, {nil, nil} };
 
@@ -22,8 +22,6 @@ obj_ create_co_parent_co___ForContext__Compiler(obj_ this_, obj_ local, obj_ par
 		{
 		t0_ = Call_(local_co_, this_, local);
 		t0_ = Call_(parent_co_, this_, parent);
-		
-		
 		}
 	return nil;
 }
@@ -39,25 +37,8 @@ obj_ enclosing_method_context__ForContext__Compiler(obj_ this_)
 		t0_ = Call_(parent, this_);
 		t1_ = Call_(enclosing_method_context, t0_);
 		return t1_;
-		
-		
-		
-		
 		}
 	return nil;
-}
-
-
-obj_ local__ForContext__Compiler(obj_ this_)
-{
-	return Field_(local);
-}
-
-
-obj_ local_co___ForContext__Compiler(obj_ this_, obj_ value)
-{
-	Field_(local) = value;
-	return value;
 }
 
 
@@ -97,14 +78,12 @@ obj_ lookup_function_co___ForContext__Compiler(obj_ this_, obj_ name)
 				t0_ = Call_(local, this_);
 				t1_ = new_co___LocalSetter__Compiler(Proto_(LocalSetter__Compiler), t0_);
 				return t1_;
-				
 				}
 			}
+		
 		t2_ = Call_(parent, this_);
 		t3_ = Call_(lookup_function_co_, t2_, name);
 		return t3_;
-		
-		
 		}
 	return nil;
 }
@@ -116,19 +95,6 @@ obj_ new_co_parent_co___ForContext__Compiler(obj_ this_, obj_ local, obj_ parent
 	obj_ obj = AllocObj_(ForContext__Compiler);
 	create_co_parent_co___ForContext__Compiler(obj, local, parent);
 	return obj;
-}
-
-
-obj_ parent__ForContext__Compiler(obj_ this_)
-{
-	return Field_(parent);
-}
-
-
-obj_ parent_co___ForContext__Compiler(obj_ this_, obj_ value)
-{
-	Field_(parent) = value;
-	return value;
 }
 
 

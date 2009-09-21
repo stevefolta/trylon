@@ -4,7 +4,7 @@ UsingSym_(OutputStream)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(OutputStream__Standard)
 struct ClassInfo OutputStream__Standard__classInfo_ = 
-	{ 57, 0, Proto_(OutputStream__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(OutputStream) ,nil };
+	{ StdClassRef_(Class__CImplementation), 55, 0, Proto_(OutputStream__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(OutputStream), nil, nil };
 struct object OutputStream__Standard = 
 	{ &OutputStream__Standard__classInfo_, {} };
 
@@ -19,9 +19,6 @@ obj_ end_message__OutputStream__Standard(obj_ this_)
 
 		{
 		t0_ = Call_(write_co_, this_, Str_(0));
-		
-		
-		
 		}
 	return nil;
 }
@@ -38,7 +35,6 @@ obj_ send_chunk_co___OutputStream__Standard(obj_ this_, obj_ message_chunk)
 			{
 			t0_ = Call_(string, item);
 			t1_ = Call_(write_co_, this_, t0_);
-			
 			}
 		ForEnd_(0)
 		}
@@ -54,7 +50,6 @@ obj_ send_co___OutputStream__Standard(obj_ this_, obj_ message)
 		{
 		t0_ = Call_(send_chunk_co_, this_, message);
 		t0_ = Call_(end_message, this_);
-		
 		}
 	return nil;
 }
@@ -71,8 +66,6 @@ obj_ write_all_co___OutputStream__Standard(obj_ this_, obj_ collection)
 			{
 			t0_ = Call_(string, item);
 			t1_ = Call_(write_co_, this_, t0_);
-			
-			
 			}
 		ForEnd_(0)
 		}
@@ -88,7 +81,6 @@ obj_ write_buffer_co_length_co___OutputStream__Standard(obj_ this_, obj_ buffer,
 
 		{
 		t0_ = virtual__Standard(Proto_(Standard));
-		
 		}
 	return nil;
 }
@@ -102,7 +94,6 @@ obj_ write_line__OutputStream__Standard(obj_ this_)
 
 		{
 		t0_ = Call_(write_co_, this_, Str_(0));
-		
 		}
 	return nil;
 }
@@ -117,7 +108,6 @@ obj_ write_line_co___OutputStream__Standard(obj_ this_, obj_ line)
 		{
 		t0_ = Call_(write_co_, this_, line);
 		t0_ = Call_(write_co_, this_, Str_(0));
-		
 		}
 	return nil;
 }
@@ -134,7 +124,6 @@ obj_ write_co___OutputStream__Standard(obj_ this_, obj_ string)
 		t0_ = Call_(start, string);
 		t1_ = Call_(length, string);
 		t2_ = Call_(write_buffer_co_length_co_, this_, t0_, t1_);
-		
 		}
 	return nil;
 }
