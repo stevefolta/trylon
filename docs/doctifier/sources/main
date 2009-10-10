@@ -71,7 +71,7 @@ parse-source: source
 		if line is-empty
 			break
 		colon-index = line index-of: `:`
-		if colon-index > 0
+		if colon-index
 			header-name = line substr: 0 length: colon-index
 			header-value = (line substr: colon-index + 1) trimmed
 			if header-name == "title" || header-name == "Title"
