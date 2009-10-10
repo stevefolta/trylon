@@ -55,7 +55,11 @@ div.titleless-entry-date {
 	color: gray;
 }
 
-div.code {
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div.plain-code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
 	font-size: smaller;
@@ -90,9 +94,7 @@ span.trylon-comment {
 	color: gray;
 }
 
-
 </style>
-
 </head>
 
 
@@ -112,9 +114,7 @@ Words are separated by whitespace, and can contain most non-whitespace character
 The following characters are not allowed in names:
 </p>
 
-<div class="trylon-code">
-<div class="trylon-line"><span class="trylon-comment"># " ' ` ( ) [ ] { } ; ~ = + * / % ^ &lt; &gt; &amp; | ,</span></div>
-</div>
+<div class="plain-code"># " ' ` ( ) [ ] { } ; ~ = + * / % ^ < > & | ,</div>
 
 </div>
 
@@ -128,12 +128,10 @@ Like Python, Trylon code is organized by lines and indented blocks.  An indented
 If a line is too long to fit on the screen, it can be continued with "--" at the end of the line.  Then the following line (minus its indentation, which is ignored) will be considered part of that line.
 </p>
 
-<div class="trylon-code">
-<div class="trylon-line"><span class="trylon-reserved-word">if</span> some-value == <span class="trylon-constant">"this"</span> || some-value == <span class="trylon-constant">"that"</span> || some-value == <span class="trylon-constant">"the-other"</span> || some-value == <span class="trylon-constant">"yet-something-else"</span></div>
-<div class="trylon-block">
-<div class="trylon-line">do-something</div>
-</div>
-</div>
+<div class="plain-code">if some-value == "this" || some-value == "that" ||   --
+   some-value == "the-other" ||   --
+   some-value == "yet-something-else"
+  do-something</div>
 
 <p>
 The meaning of a line will depend on the current syntax, but might be changed by the first word on the line:

@@ -129,17 +129,23 @@ parse-source: source
 		# Did the "is-code" status change?
 		line-is-code = line starts-with: "\t"
 		status-changed = (line-is-code && !in-code) || (!line-is-code && in-code)
+		add-line = true
 		if status-changed && paragraph
 			section add-paragraph: paragraph
 			paragraph = nil
 		if paragraph == nil
 			if line-is-code
-				paragraph = Code new
+				if line trimmed == "[plain-code]"
+					paragraph = PlainCode new
+					add-line = false
+				else
+					paragraph = Code new
 			else
 				paragraph = Paragraph new
 			in-code = line-is-code
 
-		paragraph add-line: line
+		if add-line
+			paragraph add-line: line
 
 	# Finish up.
 	if paragraph
