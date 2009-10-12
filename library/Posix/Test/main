@@ -1,0 +1,33 @@
+trylon test-posix
+
+
+main: args
+	try
+		Standard Test name: "fork()/wait()" check: test-fork
+	else
+		send: exception message
+		return 1
+
+
+test-fork
+	exit-status = 33
+	child = Posix fork
+	if child == 0
+		# We *are* the child.
+		System sleep-ms: 250
+		send: "From the child."
+
+		# Exit directly, skipping the test result.
+		Posix exit: exit-status
+	else
+		# We're the parent.
+		send: ("From the parent (child = ", child, ").")
+		wait-result = Posix wait-pid: child
+		# OR: wait-result = Posix wait
+		if !wait-result is-valid || !wait-result exited
+			return false
+		if wait-result exit-status != exit-status
+			return false
+
+	return true
+

@@ -35,6 +35,94 @@ stdout-fd = 1
 stderr-fd = 2
 
 
+# Processes.
+
+c-fn fork
+	return BuildInt_(fork());
+
+class WaitResult
+	fields child status
+
+	create: child status: status
+		this child = child
+		this status = status
+	
+	is-valid
+		return child != -1
+
+	c-fn exited
+		return Bool_(WIFEXITED(IntValue_(Field_(status))));
+
+	c-fn exit-status
+		return BuildInt_(WEXITSTATUS(IntValue_(Field_(status))));
+	
+	c-fn signaled
+		return Bool_(WIFSIGNALED(IntValue_(Field_(status))));
+	
+	c-fn termination-signal
+		return BuildInt_(WTERMSIG(IntValue_(Field_(status))));
+	
+	c-fn stopped
+		return Bool_(WIFSTOPPED(IntValue_(Field_(status))));
+	
+	c-fn stop-signal
+		return BuildInt_(WSTOPSIG(IntValue_(Field_(status))));
+	
+	c-preamble
+		#include <sys/types.h>
+		#include <sys/wait.h>
+
+c-fn wait-pid: pid options: options
+	UsingSym_(no_hang) UsingSym_(untraced)
+	UsingSym_(WNOHANG) UsingSym_(WUNTRACED)
+	UsingClass_(WaitResult__Posix)
+	UsingMethod_(new_co_status_co_)
+	int optionsInt = 0;
+	pid_t child;
+	int status;
+	obj_ result;
+	static const EnumDictEntry_ optionDict[] = {
+		{ Sym_(WNOHANG), WNOHANG },
+		{ Sym_(WUNTRACED), WUNTRACED },
+		{ Sym_(no_hang), WNOHANG },
+		{ Sym_(untraced), WUNTRACED },
+		};
+
+	/* Gather the options. */
+	ForStart_(1, options, option)
+		optionsInt |=
+			SymToEnum_(
+				option, optionDict, sizeof(optionDict) / sizeof(EnumDictEntry_), 0);
+		ForEnd_(1)
+	
+	/* Call waitpid(). */
+	child = waitpid(IntValue_(pid), &status, optionsInt);
+
+	/* Build the result. */
+	result = Call_(new_co_status_co_, Proto_(WaitResult__Posix), BuildInt_(child), BuildInt_(status));
+	return result;
+
+wait-pid: pid
+	return wait-pid: pid options: nil
+
+c-fn wait
+	UsingClass_(WaitResult__Posix)
+	UsingMethod_(new_co_status_co_)
+	pid_t child;
+	int status;
+	obj_ result;
+	
+	/* Call wait(). */
+	child = wait(&status);
+
+	/* Build the result. */
+	result = Call_(new_co_status_co_, Proto_(WaitResult__Posix), BuildInt_(child), BuildInt_(status));
+	return result;
+
+c-fn exit: status
+	_exit(IntValue_(status));
+
+
 
 # Private.
 
@@ -45,6 +133,7 @@ c-preamble
 	#include <fcntl.h>
 	#include <errno.h>
 	#include <string.h>
+	#include <sys/wait.h>
 
 c-fn value-for-flag: flag
 	UsingSym_(O_ul_RDONLY)
@@ -115,4 +204,9 @@ references
 	'O_NDELAY'
 	'O_SYNC'
 	'O_TRUNC'
+
+	'no-hang'
+	'untraced'
+	'WNOHANG'
+	'WUNTRACED'
 
