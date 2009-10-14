@@ -328,7 +328,7 @@ parse-postfix-expression
 				if words peek == ")"
 					words next
 					break
-				tuple-member = parse-assignment-expression
+				tuple-member = parse-inclusive-or-expression
 				if tuple-member == nil
 					parse-error: "Missing expression in tuple."
 				tuple add-member: tuple-member
