@@ -93,12 +93,12 @@ Precedence
 
 Precedence is as follows:
 
-	,
 	=, +=, etc.
 	||
 	&&
 	!
 	keyword: send
+	,
 	|
 	^
 	&
