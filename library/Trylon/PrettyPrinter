@@ -80,7 +80,7 @@ pretty-print-line: line to: stream
 
 		line = result-line string
 
-	stream send: ("<div class=\"trylon-line\">", line, "</div>")
+	stream send: "<div class=\"trylon-line\">", line, "</div>"
 
 
 tag-for-word-type: word-type

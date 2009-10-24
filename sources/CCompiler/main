@@ -462,7 +462,7 @@ emit-ints
 			name = "m" + (-value) string
 		else
 			name = value string
-		stream send: ("DefineInt_(", name, ", ", value, ")")
+		stream send: "DefineInt_(", name, ", ", value, ")"
 	stream write-line
 
 	is-changed = stream is-changed
@@ -478,7 +478,7 @@ emit-field-accessors: max-num-fields
 	stream write-line
 
 	for index in Interval new: max-num-fields
-		stream send: ("DefineFieldAccessors_(", index, ")")
+		stream send: "DefineFieldAccessors_(", index, ")"
 	stream write-line
 
 	is-changed = stream is-changed

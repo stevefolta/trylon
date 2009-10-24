@@ -101,9 +101,9 @@ extend Compiler IntLiteral
 
 	emit-declaration: stream
 		if build-settings shared-ints
-			stream send: ("\tUsingInt_(", value-name, ")")
+			stream send: "\tUsingInt_(", value-name, ")"
 		else
-			stream send: ("\tDefineInt_(", index string, ", ", value string, ")")
+			stream send: "\tDefineInt_(", index string, ", ", value string, ")"
 	
 	access
 		if build-settings["tagged-ints"]
@@ -216,9 +216,9 @@ extend Compiler CharacterLiteral
 		iff trylon-2
 			char-string = char string
 		if build-settings shared-ints
-			stream send: ("\tUsingInt_(", char-string, ")")
+			stream send: "\tUsingInt_(", char-string, ")"
 		else
-			stream send: ("\tDefineInt_(", index string, ", ", char-string, ")")
+			stream send: "\tDefineInt_(", index string, ", ", char-string, ")"
 	
 	access
 		if build-settings shared-ints
