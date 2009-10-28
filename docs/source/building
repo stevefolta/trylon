@@ -107,10 +107,10 @@ Your program's directory may also contain a "build-settings" file.  Here's an ex
 	# used by "iff" (conditional compilation) statements in
 	# the code, or they can be used in "if" statements here in
 	# the build-settings file.
-	use-tcc = true
-	if use-tcc
-		c-compiler = "tcc"
-		linker = "tcc"
+	use-clang = true
+	if use-clang
+		c-compiler = "clang"
+		linker = "clang"
 
 The settings can also be modified by a "build-settings.local" file.  "build-settings" would be distributed with the program (checked into the Git repository, included in the tarball, etc.), but "build-settings.local" would allow local (possibly temporary) changes like enabling debugging.
 
