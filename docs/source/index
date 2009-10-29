@@ -39,15 +39,26 @@ A more object-oriented "Hello World":
 
 What is Trylon 3?
 
-Trylon 3 is really grab-bag of incremental improvements, compared to Trylon 2.  A re-written compiler has facilitated some small improvements to the syntax.  The runtime has some improvements, such as class objects and tagged integers.  And an in-process x86 compiler (like a JIT) allows scripting, at compiled speeds (albeit not optimized).
+Trylon 1 combined Python and Smalltalk; Trylon 2 unified classes and prototypes.  Trylon 3 has a rewritten parser (for a more polyglot future), can be used as a scripting language (x86-32 only), and has a more regular and performant object system.
+
 
 ======
 
 Getting Trylon
 
-Trylon 2 is available as a <a href="trylon.tgz">tarball</a> which should compile on Unixy systems (but you'll need to have the Boehm-Demers-Weiser garbage collector package installed).  Alternately, you can get it with Git: "git clone git://github.com/stevefolta/trylon.git".  Then checkout the 'with-c-sources' branch and "make".
+Dependencies: The "boehm" garbage collector and a C compiler (GCC and Clang are known to work, TCC doesn't).
 
-Trylon 3 is currently on the 'trylon-3' branch at "git://github.com/stevefolta/trylon.git"; to build it, use the 'trylon-3-with-c-sources' branch.
+Getting the latest version of Trylon 3:
+
+	git clone git://github.com/stevefolta/trylon.git
+	cd trylon
+	git checkout with-c-sources
+	make
+
+Switch back to the "master" branch for the latest development.
+
+Trylon 3 is still in development and hasn't been released as a tarball yet.  There is a <a href="http://somefancy.com/trylon/trylon.tgz">Trylon 2 tarball</a>.
+
 
 
 ======
