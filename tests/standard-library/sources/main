@@ -1,0 +1,8 @@
+trylon test-standard-library
+
+main: args
+	try
+		Test name: "StreamLinesReader" check: StreamLinesReaderTest test
+	else
+		send: exception message
+

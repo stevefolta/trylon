@@ -1,0 +1,136 @@
+trylon StreamLinesReader
+
+fields stream buffer-size
+fields pending-buffer remainder skip-initial-newline
+
+default-buffer-size = 1024
+
+
+create: stream
+	this stream = stream
+	this buffer-size = default-buffer-size
+
+create: stream buffer-size: buffer-size
+	this stream = stream
+	this buffer-size = buffer-size
+
+
+next
+	# If there's a already a pending-buffer, see if it's got a line.
+	if pending-buffer && !remainder is-empty
+		if skip-initial-newline
+			if remainder first-character == `\n`
+				remainder = remainder substr: 1
+			skip-initial-newline = false
+
+		line-end = find-line-end-in: remainder
+		if line-end
+			result = remainder substr: 0 length: line-end index
+			remainder = remainder substr: line-end index + 1
+			skip-initial-newline = line-end was-return
+			return result
+
+	# Read buffers until we find the end of the line.
+	buffers = List new
+	last-buffer = nil
+	contents = nil
+	line-end = nil
+	loop
+		last-buffer = ReceivedBuffer new: buffer-size
+		last-buffer read-from: stream
+		contents = last-buffer string
+
+		if skip-initial-newline && !contents is-empty
+			skip-initial-newline = false
+			if contents first-character == `\n`
+				contents = contents substr: 1
+				if contents is-empty
+					continue
+
+		line-end = find-line-end-in: contents
+		if line-end
+			break
+		else if last-buffer is-empty
+			# Reached the end with no EOL.
+			if pending-buffer == nil && buffers is-empty
+				# We've returned the last line.
+				return nil
+			break
+
+		buffers append: last-buffer
+	
+	# Assemble the result.
+	result = nil
+	if pending-buffer || !buffers is-empty
+		result = StringBuilder new
+		if pending-buffer
+			result += remainder
+		for buffer in buffers
+			result += buffer string
+		if line-end
+			result += contents substr: 0 length: line-end index
+		result = result string
+	else
+		result = contents substr: 0 length: line-end index
+	
+	# Get ready for next time.
+	if line-end == nil
+		remainder = contents
+		skip-initial-newline = false
+	else
+		remainder = contents substr: line-end index + 1
+		skip-initial-newline = line-end was-return
+	if remainder is-empty
+		pending-buffer = nil
+	else
+		pending-buffer = last-buffer
+
+	return result
+
+
+#####  Implementation  #####
+
+
+class ReceivedBuffer
+	fields buffer capacity size
+
+	create: capacity
+		buffer = BytePtr new: capacity
+		this capacity = capacity
+		size = 0
+
+	read-from: stream
+		size = stream read-buffer: buffer length: capacity
+
+	is-empty
+		return size == 0
+	start
+		return buffer
+	stopper
+		return buffer + size
+	string
+		return String from: buffer to: buffer + size
+
+
+class LineEnd
+	fields index was-return
+
+	create: index was-return: was-return
+		this index = index
+		this was-return = was-return
+
+find-line-end-in: string
+	start = string start
+	char-ptr = start
+	stopper = string stopper
+	while char-ptr < stopper
+		c = char-ptr deref-char
+		if c == `\r`
+			return LineEnd new: char-ptr - start was-return: true
+		else if c == `\n`
+			return LineEnd new: char-ptr - start was-return: false
+		char-ptr += 1
+	return nil
+	
+
+

@@ -1,0 +1,45 @@
+#!/usr/bin/env trylon
+trylon StreamLinesReaderTest
+
+test
+	buffers = 	--
+		("1\r", "2\r\n", "3\n", "4\r", "\n", "5\r\r", "6")
+	lines = 	--
+		("1", "2", "3", "4", "5", "", "6")
+	
+	stream = BufferStream new: buffers
+	lines-list = List new
+	for line in lines
+		lines-list append: line
+	
+	reader = StreamLinesReader new: stream
+	loop
+		line = reader next
+		if line == nil
+			return lines-list is-empty
+		expected-line = lines-list pop-front
+		if expected-line == nil || line != expected-line
+			return false
+	
+	return false
+
+
+class BufferStream
+	superclass InputStream
+	fields buffers
+
+	create: buffers
+		this buffers = List new
+		for buffer in buffers
+			this buffers append: buffer
+
+	read-buffer: out-buffer length: length
+		buffer = buffers pop-front
+		if buffer == nil
+			return 0
+		# We're assuming "buffer length < length".
+		length = buffer length
+		out-buffer copy-from: buffer start length: length
+		return length
+
+

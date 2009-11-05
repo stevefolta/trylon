@@ -31,10 +31,13 @@ clean:
 	rm -rf \
 		.c-sources .objects .jolt-sources .jolt-sources-self .c-sources-2 .objects-2
 
-tests: syntax-test fixed-bugs-test x86-compiler-test
+tests: syntax-test standard-library-test fixed-bugs-test x86-compiler-test
 
 syntax-test:
 	cd tests/syntax && rm -f syntax-test && make && trylon main
+
+standard-library-test:
+	cd tests/standard-library && rm -f test-standard-library .objects/* && make
 
 fixed-bugs-test:
 	cd tests/fixed-bugs && rm -f test-fixed-bugs .objects/* && make
