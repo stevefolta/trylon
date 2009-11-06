@@ -88,6 +88,10 @@ next
 	return result
 
 
+iterator
+	return Iterator new: this
+
+
 #####  Implementation  #####
 
 
@@ -133,4 +137,15 @@ find-line-end-in: string
 	return nil
 	
 
+class Iterator
+	superclass Standard Iterator
+	fields reader current-item
+
+	create: reader
+		this reader = reader
+		current-item = reader next
+	is-done
+		return current-item == nil
+	go-forward
+		current-item = reader next
 

@@ -12,16 +12,12 @@ test
 	for line in lines
 		lines-list append: line
 	
-	reader = StreamLinesReader new: stream
-	loop
-		line = reader next
-		if line == nil
-			return lines-list is-empty
+	for line in StreamLinesReader new: stream
 		expected-line = lines-list pop-front
 		if expected-line == nil || line != expected-line
 			return false
 	
-	return false
+	return lines-list is-empty
 
 
 class BufferStream
