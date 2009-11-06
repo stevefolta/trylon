@@ -13,6 +13,14 @@ with: item
 	tuple[0] = item
 	return tuple
 
+from: collection
+	tuple = tuple new: collection num-items
+	index = 0
+	for item in collection
+		tuple[index] = item
+		index += 1
+	return tuple
+
 
 at: index
 	if index < 0 || index >= num-items

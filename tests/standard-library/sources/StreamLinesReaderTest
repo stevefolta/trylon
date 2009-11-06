@@ -8,9 +8,7 @@ test
 		("1", "2", "3", "4", "5", "", "6")
 	
 	stream = BufferStream new: buffers
-	lines-list = List new
-	for line in lines
-		lines-list append: line
+	lines-list = List from: lines
 	
 	for line in StreamLinesReader new: stream
 		expected-line = lines-list pop-front
