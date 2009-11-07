@@ -34,6 +34,18 @@ stdin-fd = 0
 stdout-fd = 1
 stderr-fd = 2
 
+c-fn dup: old-fd
+	int result = dup(IntValue_(old_fd));
+	if (result < 0)
+		throw_errno();
+	return BuildInt_(result);
+
+c-fn dup-from: old-fd to: new-fd
+	int result = dup2(IntValue_(old_fd), IntValue_(new_fd));
+	if (result < 0)
+		throw_errno();
+	return BuildInt_(result);
+
 
 # Processes.
 
