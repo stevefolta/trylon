@@ -27,6 +27,8 @@ next
 		if line-end
 			result = remainder substr: 0 length: line-end index
 			remainder = remainder substr: line-end index + 1
+			if remainder is-empty
+				pending-buffer = nil
 			skip-initial-newline = line-end was-return
 			return result
 
@@ -105,6 +107,8 @@ class ReceivedBuffer
 
 	read-from: stream
 		size = stream read-buffer: buffer length: capacity
+		if size < 0
+			size = 0
 
 	is-empty
 		return size == 0
