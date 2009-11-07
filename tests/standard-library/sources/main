@@ -3,6 +3,25 @@ trylon test-standard-library
 main: args
 	try
 		Test name: "StreamLinesReader" check: StreamLinesReaderTest test
+		Test name: "SubProcess" check: subprocess-test
 	else
 		send: exception message
+
+
+subprocess-test-values = "foo", "bar", "baz"
+
+class SubprocessTest
+	value
+		for value in subprocess-test-values
+			send: value
+
+subprocess-test
+	process = SubProcess new: SubprocessTest
+	lines = process lines
+	for value in subprocess-test-values
+		if lines next != value
+			return false
+	if process result != 0
+		return false
+	return true
 

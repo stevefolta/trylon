@@ -1,0 +1,64 @@
+trylon SubProcess
+
+fields pid stdin-stream stdout-stream stderr-stream
+
+
+create: callable
+	# Make the pipes.
+	stdin-pipe = Posix pipe
+	stdout-pipe = Posix pipe
+	stderr-pipe = Posix pipe
+
+	pid = Posix fork
+
+	# Child process.
+	if pid == 0
+		# Set up stdin/stdout/stderr.
+		Posix close-fd: stdin-pipe write
+		Posix close-fd: stdout-pipe read
+		Posix close-fd: stderr-pipe read
+		Posix close-fd: Posix stdin-fd
+		Posix close-fd: Posix stdout-fd
+		Posix close-fd: Posix stderr-fd
+		Posix dup-from: stdin-pipe read to: Posix stdin-fd
+		Posix dup-from: stdout-pipe write to: Posix stdout-fd
+		Posix dup-from: stderr-pipe write to: Posix stderr-fd
+
+		# Call the function.
+		result = 1 	# Until we determine otherwise.
+		try
+			result = callable value
+		if result == nil || !result is-a: Int
+			result = 0
+		Posix exit: result
+	
+	# Parent process.
+	else
+		# Set up the pipes.
+		Posix close-fd: stdin-pipe read
+		Posix close-fd: stdout-pipe write
+		Posix close-fd: stderr-pipe write
+		stdin-stream = Posix FDOutputStream new: stdin-pipe write
+		stdout-stream = Posix FDInputStream new: stdout-pipe read
+		stderr-stream = Posix FDInputStream new: stderr-pipe read
+
+
+result
+	return (Posix wait-pid: pid) exit-status
+
+
+# Communication.
+# (This can all be done with direct access to the streams, but these are
+# slightly handier.)
+
+lines
+	return stdout-stream lines
+
+send: message
+	stdout-stream send: message
+send-chunk: message-chunk
+	stdout-stream send-chunk: message-chunk
+end-message
+	stdout-stream end-message
+
+
