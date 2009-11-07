@@ -4,6 +4,7 @@ trylon test-posix
 main: args
 	try
 		Standard Test name: "fork()/wait()" check: test-fork
+		Standard Test name: "pipe()" check: test-pipe
 	else
 		send: exception message
 		return 1
@@ -30,4 +31,34 @@ test-fork
 			return false
 
 	return true
+
+
+test-pipe
+	values = "foo", "bar", "baz"
+	pipe-fds = Posix pipe
+	child = Posix fork
+	if child == 0
+		# This is the child.
+		Posix close-fd: pipe-fds read
+		out-stream = Posix FDOutputStream new: pipe-fds write
+		for value in values
+			out-stream send: value
+		out-stream close
+		Posix exit: 0
+	else
+		# This is the parent.
+		Posix close-fd: pipe-fds write
+		in-stream = Posix FDInputStream new: pipe-fds read
+		lines = StreamLinesReader new: in-stream
+		ok = true
+		for value in values
+			received-value = lines next
+			if received-value != value
+				ok = false
+				break
+		if lines next != nil
+			ok = false
+		in-stream close
+		return ok
+
 

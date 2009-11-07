@@ -123,6 +123,29 @@ c-fn exit: status
 	_exit(IntValue_(status));
 
 
+# Pipes.
+
+class PipeFDs
+	fields read write
+
+	create-read: read write: write
+		this read = read
+		this write = write
+
+c-fn pipe
+	int pipefds[2];
+	int result;
+	extern obj_ new_read_co_write_co___PipeFDs__Posix(obj_, obj_, obj_);
+	UsingClass_(PipeFDs__Posix)
+
+	result = pipe(pipefds);
+	if (result < 0)
+		throw_errno();
+
+	return
+		new_read_co_write_co___PipeFDs__Posix(
+			Proto_(PipeFDs__Posix), BuildInt_(pipefds[0]), BuildInt_(pipefds[1]));
+
 
 # Private.
 
@@ -134,6 +157,13 @@ c-preamble
 	#include <errno.h>
 	#include <string.h>
 	#include <sys/wait.h>
+
+	static void throw_errno()
+	{
+		extern obj_ new__ErrnoException__Posix();
+		Throw_(new__ErrnoException__Posix());
+	}
+
 
 c-fn value-for-flag: flag
 	UsingSym_(O_ul_RDONLY)
@@ -184,6 +214,16 @@ c-fn value-for-flag: flag
 	int intFlag =
 		SymToEnum_(flag, flagsDict, sizeof(flagsDict) / sizeof(EnumDictEntry_), 0);
 	return BuildInt_(intFlag);
+
+
+class ErrnoException
+	field errno
+
+	create
+		this errno = Posix errno
+	
+	message
+		return strerror: errno
 
 
 references
