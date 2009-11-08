@@ -59,9 +59,10 @@ pretty-print-line: line to: stream
 			binds-forward = binds-backward = false
 			if word-type == 'normal' 	# Optimization.
 				switch word
-					"(", "!"
+					"(", "[", "!"
 						binds-forward = true
-					")", ","
+				switch word
+					")", "[", "]", ","
 						binds-backward = true
 
 			# Add the word to the line.
