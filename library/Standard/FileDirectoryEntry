@@ -1,6 +1,10 @@
 trylon FileDirectoryEntry
 
 
+is-directory
+	# Default: no.
+	return false
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 
