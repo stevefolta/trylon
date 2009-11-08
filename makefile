@@ -34,13 +34,13 @@ clean:
 tests: syntax-test standard-library-test fixed-bugs-test x86-compiler-test
 
 syntax-test:
-	cd tests/syntax && rm -f syntax-test && make && trylon main
+	cd tests/syntax && rm -f syntax-test && make && trylon main && echo
 
 standard-library-test:
-	cd tests/standard-library && rm -f test-standard-library .objects/* && make
+	cd tests/standard-library && rm -f test-standard-library .objects/* && make && echo
 
 fixed-bugs-test:
-	cd tests/fixed-bugs && rm -f test-fixed-bugs .objects/* && make
+	cd tests/fixed-bugs && rm -f test-fixed-bugs .objects/* && make && echo
 
 x86-compiler-test:
 	cd sources/X86Compiler/test && make
