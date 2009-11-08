@@ -11,6 +11,7 @@ test
 	lines-list = List from: lines
 	
 	for line in StreamLinesReader new: stream
+		log: "Received: ", line
 		expected-line = lines-list pop-front
 		if expected-line == nil || line != expected-line
 			return false
