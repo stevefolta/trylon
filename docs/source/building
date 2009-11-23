@@ -100,8 +100,7 @@ Your program's directory may also contain a "build-settings" file.  Here's an ex
 	# in the ".c-sources" directory?  Change where they're
 	# put.
 	c-sources-dir = "C-sources"
-	# "objects-dir" and "jolt-sources-dir" can be similarly
-	# specified.
+	# "objects-dir" can be similarly specified.
 
 	# You can also define your own settings.  These can be
 	# used by "iff" (conditional compilation) statements in

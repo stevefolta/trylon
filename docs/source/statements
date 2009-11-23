@@ -160,6 +160,6 @@ A few symbols are defined automatically in the build-settings.  Most notably, th
 		# Mac OSX calls itself Darwin, for the purposes of "uname".
 		display = CarbonDisplay new
 
-Also defined are "trylon-2" (to distinguish from Trylon 1), "targeting-c" or "targeting-jolt", depending on which backend you're using, and "in-jolt" if the compiler itself is actually running within Jolt.
+Also defined are "trylon-2" (to distinguish from Trylon 1; Trylon 3 also defines it), and "targeting-c" to distinguish the C backend from the other backends (like the now-deleted Jolt backend, or any future backends).
 
 

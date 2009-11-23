@@ -15,18 +15,3 @@ support-new-methods = true
 time-compilation = true
 
 
-# Archaic stuff.
-
-iff !trylon-2
-	# Trylon 1 boilerplate.
-	c-flags += "-g"
-	link-flags += "-lgc" "-ldl" "-lm"
-
-	if Darwin
-		c-flags += "-DMAC_OSX" "-DOSX_FINK" "-I/sw/include"
-		link-flags += "-L/sw/lib"
-
-
-iff in-jolt
-	jolt-sources-dir = ".jolt-sources-self"
-

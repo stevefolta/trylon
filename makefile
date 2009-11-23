@@ -15,10 +15,7 @@ all: trylon
 trylon:
 	$(CC) -o trylon .c-sources/*.c -lgc -lm $(PLATFORM_FLAGS)
 
-.PHONY: jolt-backend install clean tests syntax-test fix-bugs-test x86-compiler-test
-
-jolt-backend:
-	(cd library/IdPosix && make)
+.PHONY: install clean tests syntax-test fix-bugs-test x86-compiler-test
 
 install:
 	install -d $(PREFIX)/bin
@@ -29,7 +26,7 @@ install:
 
 clean:
 	rm -rf \
-		.c-sources .objects .jolt-sources .jolt-sources-self .c-sources-2 .objects-2
+		.c-sources .objects .c-sources-2 .objects-2
 
 tests: syntax-test standard-library-test fixed-bugs-test x86-compiler-test
 
