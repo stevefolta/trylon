@@ -51,7 +51,7 @@ parse-line: line
 			parse-uses
 		"iff"
 			parse-iff
-		"trylon", "trylid"
+		"trylon"
 			words next
 			# Likely followed by the name; grab that if possible.
 			if !(words is-empty) && (is-name: words peek)
@@ -257,10 +257,7 @@ parse-type-spec
 	type = parse-class-spec
 
 	# Make sure we got a class.
-	okay = type is-a: CompiledClass
-	iff in-jolt
-		if !okay
-			okay = type is-a: ExistingClass
+	okay = type is-a: Compiler Class
 	if !okay
 		parse-error: "A type specifier was given, but is not a class." 	--
 			token: type name
@@ -314,5 +311,5 @@ is-name: name
 	return ExpressionParser is-name: name
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

@@ -53,8 +53,6 @@ compile-program: compile-symbols
 				build-settings is-verbose = true
 			"target-c", "targeting-c"
 				build-settings target = 'C'
-			"target-jolt", "targeting-jolt"
-				build-settings target = 'Jolt'
 	build-settings load
 
 	# Create the status reporter.
@@ -74,8 +72,6 @@ compile-program: compile-symbols
 			"Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY."
 	library-directory = FileDirectory new: library-path
 	main-name = "Main"
-	if compiler build-settings targeting-jolt
-		main-name = "Trylon"
 	status-reporter report: "Loading " + main-name + "..."
 	status-reporter indent
 	main-proto = CompiledClass new: main-name parent: nil
@@ -96,9 +92,6 @@ compile-program: compile-symbols
 	object-class is-root-object = true
 
 	# Emit
-	iff support-jolt
-		if build-settings targeting-jolt
-			JoltCompiler emit-jolt: this
 	if build-settings targeting-c
 		CCompiler emit-c: this
 
@@ -165,5 +158,5 @@ get-standard-class: name
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 
