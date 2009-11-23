@@ -1,0 +1,181 @@
+trylon Regex
+
+fields max-matches
+fields regex-ptr
+
+default-max-matches = 32
+
+
+create: regex
+	create: regex flags: nil
+
+create: regex flags: flags
+
+matches: string
+	# Returns nil if there are no matches; otherwise returns a collection of the
+	# matches.  (If the 'no-substrings' flag was specified when creating the
+	# Regex, that collection will be empty.)
+	return matches: string flags: nil
+
+matches: string flags: flags
+
+class Match
+	fields start-offset end-offset
+
+	create: start-offset to: end-offset
+		this start-offset = start-offset
+		this end-offset = end-offset
+	
+	in: string
+		return string substr: start-offset length: end-offset - start-offset
+
+
+# Implementation.
+
+c-fn create: regex flags: flags
+	int result;
+	char* regexStr = CString_(regex);
+	regex_t* regexBuffer = (regex_t*) Allocate_(sizeof(regex_t));
+	int cflags = 0;
+	if (flags) {
+		ForStart_(1, flags, flag)
+			cflags |=
+				SymToEnum_(
+					flag, flagsValues, sizeof(flagsValues) / sizeof(EnumDictEntry_), 0);
+			ForEnd_(1)
+		}
+
+	result = regcomp(regexBuffer, regexStr, cflags);
+	check_regex_error(result, this_);
+	Field_(regex_ptr) = BuildBytePtr_(regexBuffer);
+	Field_(max_matches) = SharedField_(default_max_matches, Regex__Posix);
+
+
+c-fn destroy
+	if (Field_(regex_ptr)) {
+		regfree((regex_t*) BytePtrValue_(Field_(regex_ptr)));
+		Field_(regex_ptr) = nil;
+		}
+
+
+c-fn matches: string flags: flags
+	int result, numMatches, i;
+	int eflags = 0;
+	int maxMatches = IntValue_(Field_(max_matches));
+	regmatch_t* rawMatches;
+	regmatch_t* rawMatch;
+	obj_ matches;
+	UsingClass_(Match__Regex__Posix)
+	extern obj_ new_co_to_co___Match__Regex__Posix(obj_, obj_, obj_);
+
+	if (flags) {
+		ForStart_(1, flags, flag)
+			eflags |=
+				SymToEnum_(
+					flag, flagsValues, sizeof(flagsValues) / sizeof(EnumDictEntry_), 0);
+			ForEnd_(1)
+		}
+
+	rawMatches = (regmatch_t*) Allocate_(maxMatches * sizeof(regmatch_t));
+	result =
+		regexec(
+			(regex_t*) BytePtrValue_(Field_(regex_ptr)),
+			CString_(string),
+			maxMatches, rawMatches,
+			eflags);
+	if (result == REG_NOMATCH)
+		return nil;
+	check_regex_error(result, this_);
+
+	// Count the matches.
+	numMatches = 0;
+	for (i = 0; i < maxMatches; ++i) {
+		if (rawMatches[i].rm_so < 0)
+			break;
+		numMatches += 1;
+		}
+	
+	// Build the result.
+	matches = NewTuple_(numMatches);
+	rawMatch = rawMatches;
+	for (i = 0; i < maxMatches; ++i, ++rawMatch) {
+		obj_ match;
+		if (rawMatch->rm_so < 0)
+			break;
+		match =
+			new_co_to_co___Match__Regex__Posix(
+				Proto_(Match__Regex__Posix), 
+				BuildInt_(rawMatch->rm_so), BuildInt_(rawMatch->rm_eo));
+		TuplePut_(matches, i, match);
+		}
+	
+	return matches;
+
+
+
+
+c-preamble
+	#include <sys/types.h>
+	#include <regex.h>
+
+	UsingSym_(extended)
+	UsingSym_(icase)
+	UsingSym_(case_insensitive)
+	UsingSym_(nosub)
+	UsingSym_(no_substrings)
+	UsingSym_(newline)
+	UsingSym_(dont_match_newline)
+	UsingSym_(not_bol)
+	UsingSym_(not_eol)
+
+	static EnumDictEntry_ flagsValues[] = {
+		{ Sym_(case_insensitive), REG_ICASE },
+		{ Sym_(dont_match_newline), REG_NEWLINE },
+		{ Sym_(extended), REG_EXTENDED },
+		{ Sym_(icase), REG_ICASE },
+		{ Sym_(newline), REG_NEWLINE },
+		{ Sym_(no_substrings), REG_NOSUB },
+		{ Sym_(nosub), REG_NOSUB },
+		{ Sym_(not_bol), REG_NOTBOL },
+		{ Sym_(not_eol), REG_NOTEOL },
+		};
+
+	static void check_regex_error(int result, obj_ regex)
+	{
+		extern obj_ new_co_regex_co___Exception__Regex__Posix(obj_, obj_, obj_);
+		UsingClass_(Exception__Regex__Posix)
+
+		if (result == 0)
+			return;
+
+		Throw_(
+			new_co_regex_co___Exception__Regex__Posix(
+				Proto_(Exception__Regex__Posix), BuildInt_(result), regex));
+	}
+
+
+class Exception
+	superclass Standard Exception
+	fields code regex
+
+	create: code regex: regex
+		this code = code
+		this regex = regex
+	
+	message
+		return regex error: code
+
+
+references
+	'extended'
+	'icase'
+	'case-insensitive'
+	'nosub'
+	'no-substrings'
+	'newline'
+	'dont-match-newline'
+
+	'not-bol'
+	'not-eol'
+
+
