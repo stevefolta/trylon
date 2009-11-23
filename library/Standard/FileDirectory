@@ -17,6 +17,8 @@ create-subdirectory: name
 
 num-items
 	count
+is-directory
+	return true
 
 iterator
 	# Currently returns the names, not the entries themselves.  This may be 

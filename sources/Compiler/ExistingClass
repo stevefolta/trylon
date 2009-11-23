@@ -9,10 +9,7 @@ create: name proto: proto
 	this proto = proto
 	new-functions = Dictionary new
 	directories = List new
-	iff targeting-jolt
-		is-main = (proto == Trylon)
-	iff !targeting-jolt
-		is-main = (proto == Main)
+	is-main = (proto == Main)
 	if is-main
 		setup-main
 
@@ -272,5 +269,5 @@ newly-defined-functions
 	return new-functions pairs
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

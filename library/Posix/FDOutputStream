@@ -1,0 +1,18 @@
+trylon FDOutputStream
+superclass Standard OutputStream
+
+fields fd
+
+
+create: fd
+	this fd = fd
+
+
+
+write-buffer: buffer length: length
+	return write-fd: fd from: buffer size: length
+
+close
+	close-fd: fd
+
+

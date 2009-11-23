@@ -35,32 +35,6 @@ find-library-path
 	return nil
 
 
-iff targeting-jolt
-	compile-file: file as: name into: parent-proto
-		if !(parent-proto is-a: ExistingClass)
-			parent-proto = ExistingClass new: parent-proto
-		compiler = Compiler new
-		program = compiler compile-file: file as: name into: parent-proto
-		program _eval
-	
-	compile-dir: dir as: name into: parent-proto
-		if !(parent-proto is-a: ExistingClass)
-			parent-proto = ExistingClass new: parent-proto
-		compiler = Compiler new
-		program = compiler compile-dir: dir as: name into: parent-proto
-		program _eval
-		compiler = nil
-	
-	parse-file: file as: name into: parent-proto
-		if !(parent-proto is-a: ExistingClass)
-			parent-proto = ExistingClass new: parent-proto
-		if !(file is-a: File)
-			file = File new: file
-		compiler = Compiler new
-		program = compiler compile-file: file as: name into: parent-proto
-		return program
 
-
-
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

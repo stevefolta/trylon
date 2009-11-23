@@ -6,6 +6,7 @@ Words are separated by whitespace, and can contain most non-whitespace character
 
 The following characters are not allowed in names:
 
+	[plain-code]
 	# " ' ` ( ) [ ] { } ; ~ = + * / % ^ < > & | ,
 
 
@@ -17,6 +18,7 @@ Like Python, Trylon code is organized by lines and indented blocks.  An indented
 
 If a line is too long to fit on the screen, it can be continued with "--" at the end of the line.  Then the following line (minus its indentation, which is ignored) will be considered part of that line.
 
+	[plain-code]
 	if some-value == "this" || some-value == "that" ||   --
 	   some-value == "the-other" ||   --
 	   some-value == "yet-something-else"

@@ -1,0 +1,18 @@
+trylon FDInputStream
+superclass Standard InputStream
+
+fields fd
+
+
+create: fd
+	this fd = fd
+
+
+read-buffer: buffer length: length
+	return read-fd: fd to: buffer size: length
+
+close
+	close-fd: fd
+
+
+

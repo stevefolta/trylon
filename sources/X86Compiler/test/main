@@ -7,20 +7,20 @@ say-it
 please-say-it
 	result = say-it
 	if result
-		send: ("Returned:  ", result)
+		send: "Returned:  ", result
 
 
 test: value against: expected-value name: name
 	if value == expected-value
-		send: (name, ":  succeeded.")
+		send: name, ":  succeeded."
 	else
-		send: (name, ":  FAILED.")
+		send: name, ":  FAILED."
 
 check: ok name: name
 	if ok
-		send: (name, ":  succeeded.")
+		send: name, ":  succeeded."
 	else
-		send: (name, ":  FAILED.")
+		send: name, ":  FAILED."
 
 true-returner
 	return true
@@ -49,10 +49,10 @@ time-nfibs
 	# Report the results.
 	sends-per-second = num-sends float / (time float / 1000.0)
 	if sends-per-second > 1000000.0
-		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
+		send: sends-per-second / 1000000.0, " MILLION sends per second."
 	else
-		send: (sends-per-second, " sends per second.")
-	send: ("(level ", level, ", ", num-sends, " sends, ", time, " ms, ", num-gcs, " GCs.)")
+		send: sends-per-second, " sends per second."
+	send: "(level ", level, ", ", num-sends, " sends, ", time, " ms, ", num-gcs, " GCs.)"
 
 
 class BenchObject

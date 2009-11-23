@@ -206,7 +206,7 @@ parse-proto-file: proto
 
 
 parse-member-proto
-	# "class" (or "proto" for compatibility with Trylid).
+	# "class" (or "proto").
 	if (!at-name: "class") && (!at-name: "proto")
 		parse-error: "Expecting \"class\"."
 	consume-token
@@ -294,7 +294,7 @@ parse-proto-contents: the-proto
 						parse-error: "Unindent required at end of proto."
 					consume-token
 
-		else if name == "trylon" || name == "trylon-class" || name == "trylid"
+		else if name == "trylon" || name == "trylon-class"
 			consume-token
 			# Likely followed by the name; grab that if possible.
 			if current-token == 'name'
@@ -512,10 +512,7 @@ parse-type-spec
 	type = parse-proto-spec
 
 	# Make sure we got a proto.
-	okay = type is-a: CompiledClass
-	iff targeting-jolt
-		if !okay
-			okay = type is-a: ExistingClass
+	okay = type is-a: Compiler Class
 	if !okay
 		throw 	--
 			ParseException 	--
@@ -646,8 +643,6 @@ parse-statement
 			return parse-try-statement
 		else if name == "throw"
 			return parse-throw-statement
-		else if name == "coke"
-			return parse-coke-statement
 
 		# Is it a declaration?
 		if next-token == ':=' || next-token == '[' || next-token == '('
@@ -914,11 +909,6 @@ parse-throw-statement
 	comment = require-eol
 
 	return ThrowStatement new: expr comment: comment
-
-
-parse-coke-statement
-	consume-token 	# "coke"
-	return CokeStatement new: get-subblock substrings
 
 
 parse-declaration
@@ -1506,5 +1496,5 @@ unindent
 # FunctionCall is not on an object; it has a context.  Send is on
 # an object.
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

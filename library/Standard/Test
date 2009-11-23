@@ -7,7 +7,7 @@ name: name check: value against: expected-value
 
 name: name check: ok
 	if ok
-		send: (name, ": succeeded.")
+		send: name, ": succeeded."
 	else
-		error: (name, ": FAILED.")
+		error: name, ": FAILED."
 

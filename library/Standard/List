@@ -25,6 +25,13 @@ with: value-1 and: value-2 and: value-3
 	list append: value-3
 	return list
 
+from: collection
+	list = List new
+	for item in collection
+		list append: item
+	return list
+
+
 append: object
 	cell = Cell new: object
 	if last-cell != nil

@@ -20,11 +20,6 @@ create: name parent: parent
 	is-root-object = false
 	has-destroy = false
 
-	# Will be added by Jolt code:
-	if build-settings targeting-jolt
-		add-function: (PrimitiveFunction new: ".proto" on-proto: this)
-		add-function: (PrimitiveFunction new: ".superclass" on-proto: this)
-
 
 in: directory for: name parent: parent
 	new-proto = nil
@@ -243,28 +238,6 @@ setup-main: main-directory library-directory: library-directory
 
 	standard-proto = get-subproto: "Standard"
 
-	# Targeting Jolt.
-	iff support-jolt
-		if build-settings targeting-jolt
-			standard-proto get-subproto: "JoltImplementation"
-
-			# Set up Posix.
-			posix-directory = library-directory at: "IdPosix"
-			posix-proto = 	--
-				JoltCompiler PosixProto 	--
-					new: "Posix" parent: this directory: posix-directory
-			proto-function = ProtoFunction new: posix-proto
-			functions at: "Posix" put: proto-function
-			compiler adding-class: posix-proto
-
-			# Set up Standard Pepsi.
-			standard-directory = library-directory at: "Standard"
-			pepsi-proto = PepsiProto new: "Pepsi" parent: standard-proto
-			proto-function = ProtoFunction new: pepsi-proto
-			standard-proto functions at: "Pepsi" put: proto-function
-			load-class-file: standard-directory["Pepsi"] into: pepsi-proto
-			compiler adding-class: pepsi-proto
-	
 	# Targeting C.
 	if compiler build-settings targeting-c
 		standard-proto get-subproto: "CImplementation"
@@ -302,5 +275,5 @@ newly-defined-functions
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

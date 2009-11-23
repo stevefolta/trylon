@@ -1,14 +1,11 @@
 trylon Interpreter
 
+
 interpret: code
 	compiler = this
 
 	# Get the Main context to interpret it in.
-	main-context = nil
-	iff !targeting-jolt
-		main-context = Main
-	iff targeting-jolt
-		main-context = Trylon
+	main-context = Main
 	context = Compiler ExistingClass new: main-context
 	lines = (Trylon LinesLexer new: code) lex
 

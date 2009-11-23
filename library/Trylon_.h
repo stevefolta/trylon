@@ -288,6 +288,12 @@ UsingClass_(Class__CImplementation__Standard)
 			} 	\
 		}
 
+/* Declare these, so every method that uses them doesn't have to. */
+UsingSym_(iterator)
+UsingSym_(is_done)
+UsingSym_(current_item)
+UsingSym_(go_forward)
+
 
 #include <setjmp.h>
 

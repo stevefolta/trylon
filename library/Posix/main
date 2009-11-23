@@ -34,6 +34,129 @@ stdin-fd = 0
 stdout-fd = 1
 stderr-fd = 2
 
+c-fn dup: old-fd
+	int result = dup(IntValue_(old_fd));
+	if (result < 0)
+		throw_errno();
+	return BuildInt_(result);
+
+c-fn dup-from: old-fd to: new-fd
+	int result = dup2(IntValue_(old_fd), IntValue_(new_fd));
+	if (result < 0)
+		throw_errno();
+	return BuildInt_(result);
+
+
+# Processes.
+
+c-fn fork
+	return BuildInt_(fork());
+
+class WaitResult
+	fields child status
+
+	create: child status: status
+		this child = child
+		this status = status
+	
+	is-valid
+		return child != -1
+
+	c-fn exited
+		return Bool_(WIFEXITED(IntValue_(Field_(status))));
+
+	c-fn exit-status
+		return BuildInt_(WEXITSTATUS(IntValue_(Field_(status))));
+	
+	c-fn signaled
+		return Bool_(WIFSIGNALED(IntValue_(Field_(status))));
+	
+	c-fn termination-signal
+		return BuildInt_(WTERMSIG(IntValue_(Field_(status))));
+	
+	c-fn stopped
+		return Bool_(WIFSTOPPED(IntValue_(Field_(status))));
+	
+	c-fn stop-signal
+		return BuildInt_(WSTOPSIG(IntValue_(Field_(status))));
+	
+	c-preamble
+		#include <sys/types.h>
+		#include <sys/wait.h>
+
+c-fn wait-pid: pid options: options
+	UsingSym_(no_hang) UsingSym_(untraced)
+	UsingSym_(WNOHANG) UsingSym_(WUNTRACED)
+	UsingClass_(WaitResult__Posix)
+	UsingMethod_(new_co_status_co_)
+	int optionsInt = 0;
+	pid_t child;
+	int status;
+	obj_ result;
+	static const EnumDictEntry_ optionDict[] = {
+		{ Sym_(WNOHANG), WNOHANG },
+		{ Sym_(WUNTRACED), WUNTRACED },
+		{ Sym_(no_hang), WNOHANG },
+		{ Sym_(untraced), WUNTRACED },
+		};
+
+	/* Gather the options. */
+	ForStart_(1, options, option)
+		optionsInt |=
+			SymToEnum_(
+				option, optionDict, sizeof(optionDict) / sizeof(EnumDictEntry_), 0);
+		ForEnd_(1)
+	
+	/* Call waitpid(). */
+	child = waitpid(IntValue_(pid), &status, optionsInt);
+
+	/* Build the result. */
+	result = Call_(new_co_status_co_, Proto_(WaitResult__Posix), BuildInt_(child), BuildInt_(status));
+	return result;
+
+wait-pid: pid
+	return wait-pid: pid options: nil
+
+c-fn wait
+	UsingClass_(WaitResult__Posix)
+	UsingMethod_(new_co_status_co_)
+	pid_t child;
+	int status;
+	obj_ result;
+	
+	/* Call wait(). */
+	child = wait(&status);
+
+	/* Build the result. */
+	result = Call_(new_co_status_co_, Proto_(WaitResult__Posix), BuildInt_(child), BuildInt_(status));
+	return result;
+
+c-fn exit: status
+	_exit(IntValue_(status));
+
+
+# Pipes.
+
+class PipeFDs
+	fields read write
+
+	create-read: read write: write
+		this read = read
+		this write = write
+
+c-fn pipe
+	int pipefds[2];
+	int result;
+	extern obj_ new_read_co_write_co___PipeFDs__Posix(obj_, obj_, obj_);
+	UsingClass_(PipeFDs__Posix)
+
+	result = pipe(pipefds);
+	if (result < 0)
+		throw_errno();
+
+	return
+		new_read_co_write_co___PipeFDs__Posix(
+			Proto_(PipeFDs__Posix), BuildInt_(pipefds[0]), BuildInt_(pipefds[1]));
 
 
 # Private.
@@ -45,6 +168,14 @@ c-preamble
 	#include <fcntl.h>
 	#include <errno.h>
 	#include <string.h>
+	#include <sys/wait.h>
+
+	static void throw_errno()
+	{
+		extern obj_ new__ErrnoException__Posix();
+		Throw_(new__ErrnoException__Posix());
+	}
+
 
 c-fn value-for-flag: flag
 	UsingSym_(O_ul_RDONLY)
@@ -97,6 +228,16 @@ c-fn value-for-flag: flag
 	return BuildInt_(intFlag);
 
 
+class ErrnoException
+	field errno
+
+	create
+		this errno = Posix errno
+	
+	message
+		return strerror: errno
+
+
 references
 	'O_RDONLY'
 	'O_WRONLY'
@@ -115,4 +256,9 @@ references
 	'O_NDELAY'
 	'O_SYNC'
 	'O_TRUNC'
+
+	'no-hang'
+	'untraced'
+	'WNOHANG'
+	'WUNTRACED'
 

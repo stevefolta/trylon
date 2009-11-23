@@ -1,0 +1,54 @@
+trylon test-standard-library
+
+field verbose testing-started
+
+main: args
+	for arg in args
+		switch arg
+			"verbose", "-v", "--verbose"
+				verbose = true
+
+	try
+		test: StreamLinesReaderTest name: "StreamLinesReader"
+		test: SubprocessTest name: "SubProcess"
+	else
+		send: exception message
+
+
+test: test name: name
+	if testing-started
+		log: ""
+	else
+		testing-started = true
+	log: "--- ", name, " ---"
+
+	Test name: name check: test test
+
+
+log: message
+	if verbose
+		send: message
+
+
+
+class SubprocessTest
+	test-values = "foo", "bar", "baz"
+
+	value
+		# This is the child process.  Its output goes to the parent process.
+		for value in test-values
+			send: value
+
+	test
+		process = SubProcess new: SubprocessTest
+		lines = process lines
+		for value in test-values
+			received = lines next
+			log: "Received: ", received
+			if received != value
+				return false
+		if process result != 0
+			return false
+		return true
+
+

@@ -21,7 +21,7 @@ all: $(DOCTIFIER) $(HTML_PAGES)
 html/%.html: %
 	$(DOCTIFIER) template: source/template $< > $@
 
-doctifier/doctifier:
+doctifier/doctifier: doctifier/sources/*
 	(cd doctifier && trylon)
 
 

@@ -29,13 +29,13 @@ main: args
 	time = System milliseconds - start-time
 
 	# Report the results.
-	send: ("nfibs: ", level, " => ", num-sends, " sends.")
-	send: (time, " milliseconds.")
+	send: "nfibs: ", level, " => ", num-sends, " sends."
+	send: time, " milliseconds."
 	sends-per-second = num-sends float / (time float / 1000.0)
 	if sends-per-second > 1000000.0
-		send: (sends-per-second / 1000000.0, " MILLION sends per second.")
+		send: sends-per-second / 1000000.0, " MILLION sends per second."
 	else
-		send: (sends-per-second, " sends per second.")
+		send: sends-per-second, " sends per second."
 	return 0
 
 

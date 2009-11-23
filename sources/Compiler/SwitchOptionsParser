@@ -35,7 +35,7 @@ parse-into: switch-statement
 					break
 
 				# Get a value.
-				expr = parser parse-assignment-expression
+				expr = parser parse-postfix-expression
 				if expr == nil
 					break
 				values append: expr

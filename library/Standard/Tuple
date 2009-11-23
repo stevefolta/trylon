@@ -13,22 +13,24 @@ with: item
 	tuple[0] = item
 	return tuple
 
+from: collection
+	tuple = tuple new: collection num-items
+	index = 0
+	for item in collection
+		tuple[index] = item
+		index += 1
+	return tuple
+
 
 at: index
 	if index < 0 || index >= num-items
 		throw MessageException new: "Bad tuple index."
-	iff targeting-jolt
-		return this object-ptr object-at: index + 1
-	iff targeting-c
-		return this object-ptr object-at: index + 2
+	return this object-ptr object-at: index + 2
 
 at: index put: value
 	if index < 0 || index >= num-items
 		throw MessageException new: "Bad tuple index."
-	iff targeting-jolt
-		this object-ptr object-at: index + 1 put: value
-	iff targeting-c
-		this object-ptr object-at: index + 2 put: value
+	this object-ptr object-at: index + 2 put: value
 
 at: index set-to: value
 	at: index put: value
@@ -76,5 +78,5 @@ proto Iterator
 
 
 
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

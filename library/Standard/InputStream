@@ -5,6 +5,10 @@ read-buffer: buffer length: length
 	virtual
 
 
+lines
+	return StreamLinesReader new: this
 
-# Copyright 2007 Steve Folta.  See the License file.
+
+
+# Copyright 2007-2009 Steve Folta.  See the License file.
 

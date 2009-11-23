@@ -55,7 +55,11 @@ div.titleless-entry-date {
 	color: gray;
 }
 
-div.code {
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div.plain-code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
 	font-size: smaller;
@@ -90,9 +94,7 @@ span.trylon-comment {
 	color: gray;
 }
 
-
 </style>
-
 </head>
 
 
@@ -259,11 +261,11 @@ Your program's directory may also contain a "build-settings" file.  Here's an ex
 <div class="trylon-line"><span class="trylon-comment"># used by "iff" (conditional compilation) statements in</span></div>
 <div class="trylon-line"><span class="trylon-comment"># the code, or they can be used in "if" statements here in</span></div>
 <div class="trylon-line"><span class="trylon-comment"># the build-settings file.</span></div>
-<div class="trylon-line">use-tcc = true</div>
-<div class="trylon-line"><span class="trylon-reserved-word">if</span> use-tcc</div>
+<div class="trylon-line">use-clang = true</div>
+<div class="trylon-line"><span class="trylon-reserved-word">if</span> use-clang</div>
 <div class="trylon-block">
-<div class="trylon-line">c-compiler = <span class="trylon-constant">"tcc"</span></div>
-<div class="trylon-line">linker = <span class="trylon-constant">"tcc"</span></div>
+<div class="trylon-line">c-compiler = <span class="trylon-constant">"clang"</span></div>
+<div class="trylon-line">linker = <span class="trylon-constant">"clang"</span></div>
 </div>
 </div>
 

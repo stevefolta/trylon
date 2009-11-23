@@ -12,16 +12,12 @@ create
 	dictionary at: "linker" put: "gcc"
 	dictionary at: "c-sources-dir" put: ".c-sources"
 	dictionary at: "objects-dir" put: ".objects"
-	dictionary at: "jolt-sources-dir" put: ".jolt-sources"
 	target: 'C'
 
 	sysname = System sysname
 	if !sysname is-empty
 		dictionary at: sysname put: sysname
-	(dictionary at: "in-trylid") = "true"
 	(dictionary at: "trylon-2") = "true"
-	if Implementation .target-language == "Coke"
-		(dictionary at: "in-jolt") = "true"
 
 
 has-symbol: name
@@ -40,8 +36,6 @@ linker
 	return dictionary at: "linker"
 library-dirs
 	return dictionary at: "library-dirs"
-jolt-sources-dir
-	return dictionary at: "jolt-sources-dir"
 c-sources-dir
 	return dictionary at: "c-sources-dir"
 objects-dir
@@ -52,8 +46,6 @@ is-verbose: new-value
 	dictionary at: "is-verbose" put: new-value
 targeting-c
 	return dictionary at: "targeting-c"
-targeting-jolt
-	return dictionary at: "targeting-jolt"
 debugger
 	return dictionary at: "debugger"
 include-selector-symbols
@@ -74,10 +66,6 @@ target: target
 	switch target
 		'C'
 			dictionary at: "targeting-c" put: "true"
-			dictionary at: "targeting-jolt" put: nil
-		'Jolt'
-			dictionary at: "targeting-jolt" put: "true"
-			dictionary at: "targeting-c" put: nil
 
 
 load
@@ -206,12 +194,10 @@ load-line: line
 				value = List with: old-value and: value
 			dictionary at: name put: value
 
-		# Special-case 'targeting-c' and 'targeting-jolt', which are mutually
-		# exclusive.
+		# Special-case 'targeting-c' and any other target (formerly
+		# 'targeting-jolt' was available), which are mutually exclusive.
 		if name == "targeting-c" && dictionary at: name
 			target = 'C'
-		else if name == "targeting-jolt" && dictionary at: name
-			target = 'Jolt'
 
 
 resolve-value: value

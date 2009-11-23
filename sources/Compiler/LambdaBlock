@@ -34,15 +34,6 @@ lookup-function: name
 	return super lookup-function: name
 
 
-jolt-expression
-	args = Expression new: arguments count
-	index = 0
-	for arg in arguments
-		args at: index put: arg name intern
-	return Expression with: 'lambda' with: args with: super jolt-expression
 
-
-
-
-# Copyright 2007 Steve Folta.  See the License file.
+# Copyright 2007-2009 Steve Folta.  See the License file.
 
