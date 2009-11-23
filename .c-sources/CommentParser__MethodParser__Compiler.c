@@ -4,7 +4,7 @@ UsingSym_(CommentParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CommentParser__MethodParser__Compiler)
 struct ClassInfo CommentParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 107, 0, Proto_(CommentParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(CommentParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 109, 0, Proto_(CommentParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(CommentParser), nil, nil };
 struct object CommentParser__MethodParser__Compiler = 
 	{ &CommentParser__MethodParser__Compiler__classInfo_, {} };
 

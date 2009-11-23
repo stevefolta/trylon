@@ -6,7 +6,7 @@ UsingSym_(Interpreter)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(Interpreter)
 struct ClassInfo Interpreter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 66, 1, Proto_(Interpreter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Interpreter), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 65, 1, Proto_(Interpreter), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Interpreter), nil, ((obj_) tu0_) };
 struct object Interpreter = 
 	{ &Interpreter__classInfo_, {nil} };
 
@@ -329,10 +329,7 @@ obj_ interpret_co___Interpreter(obj_ this_, obj_ code)
 		SetSharedField_(compiler, Main, this_);
 		
 		/*  Get the Main context to interpret it in. */
-		main_context = nil;
-			{
-			main_context = Proto_(Main);
-			}
+		main_context = Proto_(Main);
 		t0_ = new_co___ExistingClass__Compiler(Proto_(ExistingClass__Compiler), main_context);
 		context = t0_;
 		t0_ = new_co___LinesLexer__Trylon(Proto_(LinesLexer__Trylon), code);

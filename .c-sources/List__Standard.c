@@ -169,6 +169,28 @@ obj_ first_item__List__Standard(obj_ this_)
 }
 
 
+obj_ from_co___List__Standard(obj_ this_, obj_ collection)
+{
+	extern obj_ new__List__Standard(obj_ this_);
+	obj_ t0_;
+	UsingMethod_(append_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator)
+	UsingClass_(List__Standard)
+
+		{
+		obj_ list;
+		t0_ = new__List__Standard(Proto_(List__Standard));
+		list = t0_;
+		ForStart_(0, collection, item)
+			{
+			t0_ = Call_(append_co_, list, item);
+			}
+		ForEnd_(0)
+		return list;
+		}
+	return nil;
+}
+
+
 obj_ head__List__Standard(obj_ this_)
 {
 	obj_ t0_;

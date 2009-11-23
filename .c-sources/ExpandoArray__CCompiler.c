@@ -6,7 +6,7 @@ UsingSym_(ExpandoArray)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpandoArray__CCompiler)
 struct ClassInfo ExpandoArray__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 183, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 185, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray), nil, ((obj_) tu0_) };
 struct object ExpandoArray__CCompiler = 
 	{ &ExpandoArray__CCompiler__classInfo_, {nil, nil, nil, nil} };
 
@@ -35,6 +35,7 @@ if (which_block >= IntValue_(Field_(num_blocks)))
 return nil;
 return
 ((obj_**) BytePtrValue_(Field_(blocks)))[which_block][index % block_size];
+return nil;
 }
 
 
@@ -52,6 +53,7 @@ object;
 
 if (index >= IntValue_(Field_(num_items)))
 Field_(num_items) = BuildInt_(index + 1);
+return nil;
 }
 
 

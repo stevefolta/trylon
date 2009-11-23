@@ -622,6 +622,7 @@ obj_ first_character__String__Standard(obj_ this_)
 obj_ float___String__Standard(obj_ this_)
 {
 return BuildFloat_(strtod(CString_(this_), nil));
+return nil;
 }
 
 
@@ -718,6 +719,7 @@ obj_ index_of_co___String__Standard(obj_ this_, obj_ char_)
 obj_ int___String__Standard(obj_ this_)
 {
 return BuildInt_(strtoul(CString_(this_), nil, 0));
+return nil;
 }
 
 

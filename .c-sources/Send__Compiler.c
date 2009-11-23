@@ -4,7 +4,7 @@ UsingSym_(Send)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(Send__Compiler)
 struct ClassInfo Send__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 139, 4, Proto_(Send__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(Send), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 141, 4, Proto_(Send__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(Send), nil, nil };
 struct object Send__Compiler = 
 	{ &Send__Compiler__classInfo_, {nil, nil, nil, nil} };
 

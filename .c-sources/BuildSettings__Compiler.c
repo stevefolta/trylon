@@ -4,7 +4,7 @@ UsingSym_(BuildSettings)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(BuildSettings__Compiler)
 struct ClassInfo BuildSettings__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 85, 1, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 87, 1, Proto_(BuildSettings__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(BuildSettings), nil, nil };
 struct object BuildSettings__Compiler = 
 	{ &BuildSettings__Compiler__classInfo_, {nil} };
 
@@ -83,7 +83,6 @@ obj_ create__BuildSettings__Compiler(obj_ this_)
 	extern obj_ new__List__Standard(obj_ this_);
 	UsingSym_(C)
 	extern obj_ sysname__System__Standard(obj_ this_);
-	extern obj_ _dt_target_language__Implementation__Standard(obj_ this_);
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -98,18 +97,10 @@ obj_ create__BuildSettings__Compiler(obj_ this_)
 	DefineString_(8, ".c-sources")
 	DefineString_(9, "objects-dir")
 	DefineString_(10, ".objects")
-	DefineString_(11, "jolt-sources-dir")
-	DefineString_(12, ".jolt-sources")
-	DefineString_(13, "in-trylid")
-	DefineString_(14, "true")
-	DefineString_(15, "trylon-2")
-	DefineString_(16, "true")
-	DefineString_(17, "Coke")
-	DefineString_(18, "in-jolt")
-	DefineString_(19, "true")
-	UsingMethod_(_eq__eq_) UsingMethod_(at_co_put_co_) UsingMethod_(dictionary) UsingMethod_(dictionary_co_) UsingMethod_(is_empty) UsingMethod_(target_co_)
+	DefineString_(11, "trylon-2")
+	DefineString_(12, "true")
+	UsingMethod_(at_co_put_co_) UsingMethod_(dictionary) UsingMethod_(dictionary_co_) UsingMethod_(is_empty) UsingMethod_(target_co_)
 	UsingClass_(Dictionary__Standard)
-	UsingClass_(Implementation__Standard)
 	UsingClass_(List__Standard)
 	UsingClass_(System__Standard)
 
@@ -134,8 +125,6 @@ obj_ create__BuildSettings__Compiler(obj_ this_)
 		t1_ = Call_(at_co_put_co_, t0_, Str_(7), Str_(8));
 		t0_ = Call_(dictionary, this_);
 		t1_ = Call_(at_co_put_co_, t0_, Str_(9), Str_(10));
-		t0_ = Call_(dictionary, this_);
-		t1_ = Call_(at_co_put_co_, t0_, Str_(11), Str_(12));
 		t0_ = Call_(target_co_, this_, Sym_(C));
 		
 		t0_ = sysname__System__Standard(Proto_(System__Standard));
@@ -148,16 +137,7 @@ obj_ create__BuildSettings__Compiler(obj_ this_)
 			t1_ = Call_(at_co_put_co_, t0_, sysname, sysname);
 			}
 		t0_ = Call_(dictionary, this_);
-		t1_ = Call_(at_co_put_co_, t0_, Str_(13), Str_(14));
-		t0_ = Call_(dictionary, this_);
-		t1_ = Call_(at_co_put_co_, t0_, Str_(15), Str_(16));
-		t0_ = _dt_target_language__Implementation__Standard(Proto_(Implementation__Standard));
-		t1_ = Call_(_eq__eq_, t0_, Str_(17));
-		if (t1_)
-			{
-			t0_ = Call_(dictionary, this_);
-			t1_ = Call_(at_co_put_co_, t0_, Str_(18), Str_(19));
-			}
+		t1_ = Call_(at_co_put_co_, t0_, Str_(11), Str_(12));
 		}
 	return nil;
 }
@@ -252,22 +232,6 @@ obj_ is_verbose_co___BuildSettings__Compiler(obj_ this_, obj_ new_value)
 		{
 		t0_ = Call_(dictionary, this_);
 		t1_ = Call_(at_co_put_co_, t0_, Str_(0), new_value);
-		}
-	return nil;
-}
-
-
-obj_ jolt_sources_dir__BuildSettings__Compiler(obj_ this_)
-{
-	obj_ t0_;
-	obj_ t1_;
-	DefineString_(0, "jolt-sources-dir")
-	UsingMethod_(at_co_) UsingMethod_(dictionary)
-
-		{
-		t0_ = Call_(dictionary, this_);
-		t1_ = Call_(at_co_, t0_, Str_(0));
-		return t1_;
 		}
 	return nil;
 }
@@ -434,7 +398,6 @@ obj_ load_line_co___BuildSettings__Compiler(obj_ this_, obj_ line)
 	extern obj_ with_co_and_co___List__Standard(obj_ this_, obj_ value_1, obj_ value_2);
 	extern obj_ with_co_and_co___List__Standard(obj_ this_, obj_ value_1, obj_ value_2);
 	UsingSym_(C)
-	UsingSym_(Jolt)
 	obj_ t0_;
 	obj_ t1_;
 	obj_ t2_;
@@ -457,7 +420,6 @@ obj_ load_line_co___BuildSettings__Compiler(obj_ this_, obj_ line)
 	DefineString_(13, "value expected")
 	DefineString_(14, "#")
 	DefineString_(15, "targeting-c")
-	DefineString_(16, "targeting-jolt")
 	UsingMethod_(_nt__eq_) UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(at_co_put_co_) UsingMethod_(block) UsingMethod_(dictionary) UsingMethod_(ends_with_co_) UsingMethod_(error_co_in_co_) UsingMethod_(is_a_co_) UsingMethod_(is_empty) UsingMethod_(length) UsingMethod_(load_lines_co_) UsingMethod_(next) UsingMethod_(require_eol) UsingMethod_(resolve_value_co_) UsingMethod_(starts_with_co_) UsingMethod_(substr_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(target_co_) UsingMethod_(words)
 	UsingClass_(List__Standard)
 
@@ -679,8 +641,8 @@ obj_ load_line_co___BuildSettings__Compiler(obj_ this_, obj_ line)
 					}
 				}
 				
-				/*  Special-case 'targeting-c' and 'targeting-jolt', which are mutually */
-				/*  exclusive. */
+				/*  Special-case 'targeting-c' and any other target (formerly */
+				/*  'targeting-jolt' was available), which are mutually exclusive. */
 				t0_ = Call_(_eq__eq_, name, Str_(15));
 				if (t0_) {
 					t1_ = Call_(dictionary, this_);
@@ -690,19 +652,6 @@ obj_ load_line_co___BuildSettings__Compiler(obj_ this_, obj_ line)
 				if (t0_)
 					{
 					t0_ = Call_(target_co_, this_, Sym_(C));
-					}
-				else
-					{
-					t0_ = Call_(_eq__eq_, name, Str_(16));
-					if (t0_) {
-						t1_ = Call_(dictionary, this_);
-						t2_ = Call_(at_co_, t1_, name);
-						t0_ = t2_;
-						}
-					if (t0_)
-						{
-						t0_ = Call_(target_co_, this_, Sym_(Jolt));
-						}
 					}
 				}
 			}
@@ -872,15 +821,10 @@ obj_ support_perform__BuildSettings__Compiler(obj_ this_)
 obj_ target_co___BuildSettings__Compiler(obj_ this_, obj_ target)
 {
 	UsingSym_(C)
-	UsingSym_(Jolt)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "targeting-c")
 	DefineString_(1, "true")
-	DefineString_(2, "targeting-jolt")
-	DefineString_(3, "targeting-jolt")
-	DefineString_(4, "true")
-	DefineString_(5, "targeting-c")
 	UsingMethod_(at_co_put_co_) UsingMethod_(dictionary)
 
 		{
@@ -889,15 +833,6 @@ obj_ target_co___BuildSettings__Compiler(obj_ this_, obj_ target)
 			{
 			t0_ = Call_(dictionary, this_);
 			t1_ = Call_(at_co_put_co_, t0_, Str_(0), Str_(1));
-			t0_ = Call_(dictionary, this_);
-			t1_ = Call_(at_co_put_co_, t0_, Str_(2), nil);
-			}
-		else if (SwitchMatches_(Sym_(Jolt)))
-			{
-			t0_ = Call_(dictionary, this_);
-			t1_ = Call_(at_co_put_co_, t0_, Str_(3), Str_(4));
-			t0_ = Call_(dictionary, this_);
-			t1_ = Call_(at_co_put_co_, t0_, Str_(5), nil);
 			}
 		EndSwitch_
 		}
@@ -910,22 +845,6 @@ obj_ targeting_c__BuildSettings__Compiler(obj_ this_)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "targeting-c")
-	UsingMethod_(at_co_) UsingMethod_(dictionary)
-
-		{
-		t0_ = Call_(dictionary, this_);
-		t1_ = Call_(at_co_, t0_, Str_(0));
-		return t1_;
-		}
-	return nil;
-}
-
-
-obj_ targeting_jolt__BuildSettings__Compiler(obj_ this_)
-{
-	obj_ t0_;
-	obj_ t1_;
-	DefineString_(0, "targeting-jolt")
 	UsingMethod_(at_co_) UsingMethod_(dictionary)
 
 		{

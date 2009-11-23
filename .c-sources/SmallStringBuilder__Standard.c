@@ -4,7 +4,7 @@ UsingSym_(SmallStringBuilder)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(SmallStringBuilder__Standard)
 struct ClassInfo SmallStringBuilder__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 194, 3, Proto_(SmallStringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(SmallStringBuilder), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 196, 3, Proto_(SmallStringBuilder__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(SmallStringBuilder), nil, nil };
 struct object SmallStringBuilder__Standard = 
 	{ &SmallStringBuilder__Standard__classInfo_, {nil, nil, nil} };
 

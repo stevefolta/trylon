@@ -4,7 +4,7 @@ UsingSym_(StringUTF8Iterator)UsingClass_(Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(StringUTF8Iterator__Standard)
 struct ClassInfo StringUTF8Iterator__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 46, 4, Proto_(StringUTF8Iterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(StringUTF8Iterator), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 45, 4, Proto_(StringUTF8Iterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(StringUTF8Iterator), nil, nil };
 struct object StringUTF8Iterator__Standard = 
 	{ &StringUTF8Iterator__Standard__classInfo_, {nil, nil, nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(WhileStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(WhileStatement__Compiler)
 struct ClassInfo WhileStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 169, 4, Proto_(WhileStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(WhileStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 171, 4, Proto_(WhileStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(WhileStatement), nil, nil };
 struct object WhileStatement__Compiler = 
 	{ &WhileStatement__Compiler__classInfo_, {nil, nil, nil, nil} };
 

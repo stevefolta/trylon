@@ -4,7 +4,7 @@ UsingSym_(FileOpenException)UsingClass_(File__Standard)
 UsingClass_(Exception__Standard)
 UsingClass_(FileOpenException__File__Standard)
 struct ClassInfo FileOpenException__File__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 25, 1, Proto_(FileOpenException__File__Standard), Proto_(File__Standard), Proto_(Exception__Standard), nil, Sym_(FileOpenException), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 24, 1, Proto_(FileOpenException__File__Standard), Proto_(File__Standard), Proto_(Exception__Standard), nil, Sym_(FileOpenException), nil, nil };
 struct object FileOpenException__File__Standard = 
 	{ &FileOpenException__File__Standard__classInfo_, {nil} };
 

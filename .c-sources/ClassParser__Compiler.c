@@ -4,7 +4,7 @@ UsingSym_(ClassParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ClassParser__Compiler)
 struct ClassInfo ClassParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 99, 5, Proto_(ClassParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ClassParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 101, 5, Proto_(ClassParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ClassParser), nil, nil };
 struct object ClassParser__Compiler = 
 	{ &ClassParser__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 
@@ -661,15 +661,14 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 	DefineString_(9, "uses")
 	DefineString_(10, "iff")
 	DefineString_(11, "trylon")
-	DefineString_(12, "trylid")
-	DefineString_(13, "c-preamble")
-	DefineString_(14, "primitive-fn")
-	DefineString_(15, "c-fn")
+	DefineString_(12, "c-preamble")
+	DefineString_(13, "primitive-fn")
+	DefineString_(14, "c-fn")
+	DefineString_(15, "#")
 	DefineString_(16, "#")
-	DefineString_(17, "#")
-	DefineString_(18, "c-preamble not allowed when not targeting C.")
-	DefineString_(19, "#")
-	DefineString_(20, "=")
+	DefineString_(17, "c-preamble not allowed when not targeting C.")
+	DefineString_(18, "#")
+	DefineString_(19, "=")
 	UsingMethod_(_eq__eq_) UsingMethod_(add_field_co_) UsingMethod_(add_function_co_) UsingMethod_(add_shared_field_co_) UsingMethod_(c_preamble_co_) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(flattened_block_text) UsingMethod_(go_forward) UsingMethod_(initial_value_co_) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(is_name_co_) UsingMethod_(iterator) UsingMethod_(line_co_) UsingMethod_(make_subclass_of_co_) UsingMethod_(next) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_extension) UsingMethod_(parse_function) UsingMethod_(parse_function_co_) UsingMethod_(parse_function_co_is_primitive_co_) UsingMethod_(parse_iff) UsingMethod_(parse_member_class) UsingMethod_(parse_type_spec) UsingMethod_(parse_uses) UsingMethod_(peek) UsingMethod_(proto) UsingMethod_(require_eol) UsingMethod_(source_name_co_) UsingMethod_(starts_with_co_) UsingMethod_(targeting_c) UsingMethod_(words) UsingMethod_(words_co_)
 	UsingClass_(CompiledField__Compiler)
 	UsingClass_(ExpressionParser__Compiler)
@@ -710,7 +709,7 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 			ForStart_(0, t0_, field_name)
 				{
 				obj_ field;
-				t0_ = Call_(starts_with_co_, field_name, Str_(17));
+				t0_ = Call_(starts_with_co_, field_name, Str_(16));
 				if (t0_)
 					{
 					Break_(0)
@@ -748,7 +747,7 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 			{
 			t0_ = Call_(parse_iff, this_);
 			}
-		else if (SwitchMatches_(Str_(11)) || SwitchMatches_(Str_(12)))
+		else if (SwitchMatches_(Str_(11)))
 			{
 			t0_ = Call_(words, this_);
 			t1_ = Call_(next, t0_);
@@ -771,14 +770,14 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 				}
 			/*  Ignore the rest of the line. */
 			}
-		else if (SwitchMatches_(Str_(13)))
+		else if (SwitchMatches_(Str_(12)))
 			{
 			t0_ = build_settings__Main(Proto_(Main));
 			t1_ = Call_(targeting_c, t0_);
 			t2_ = Not_(t1_);
 			if (t2_)
 				{
-				t0_ = Call_(parse_error_co_, this_, Str_(18));
+				t0_ = Call_(parse_error_co_, this_, Str_(17));
 				}
 			t0_ = Call_(words, this_);
 			t1_ = Call_(next, t0_);
@@ -788,7 +787,7 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 			t1_ = Call_(flattened_block_text, line);
 			t2_ = Call_(c_preamble_co_, t0_, t1_);
 			}
-		else if (SwitchMatches_(Str_(14)) || SwitchMatches_(Str_(15)))
+		else if (SwitchMatches_(Str_(13)) || SwitchMatches_(Str_(14)))
 			{
 			obj_ function;
 			t0_ = Call_(words, this_);
@@ -800,7 +799,7 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 			t0_ = Call_(proto, this_);
 			t1_ = Call_(add_function_co_, t0_, function);
 			}
-		else if (SwitchMatches_(Str_(16)))
+		else if (SwitchMatches_(Str_(15)))
 			{
 			/*  A comment, just skip it. */
 			}
@@ -810,7 +809,7 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 			t0_ = Call_(words, this_);
 			t1_ = Call_(next, t0_);
 			name = t1_;
-			t0_ = Call_(starts_with_co_, name, Str_(19));
+			t0_ = Call_(starts_with_co_, name, Str_(18));
 			if (t0_)
 				{
 				/*  A comment, skip it. */
@@ -822,7 +821,7 @@ obj_ parse_line_co___ClassParser__Compiler(obj_ this_, obj_ line)
 			if (t2_) {
 				t3_ = Call_(words, this_);
 				t4_ = Call_(peek, t3_);
-				t5_ = Call_(_eq__eq_, t4_, Str_(20));
+				t5_ = Call_(_eq__eq_, t4_, Str_(19));
 				t2_ = t5_;
 				}
 			if (t2_)
@@ -919,7 +918,7 @@ obj_ parse_type_spec__ClassParser__Compiler(obj_ this_)
 	obj_ t1_;
 	DefineString_(0, "A type specifier was given, but is not a class.")
 	UsingMethod_(is_a_co_) UsingMethod_(name) UsingMethod_(parse_class_spec) UsingMethod_(parse_error_co_token_co_)
-	UsingClass_(CompiledClass__Compiler)
+	UsingClass_(Class__Compiler)
 
 		{
 		obj_ okay, type;
@@ -927,7 +926,7 @@ obj_ parse_type_spec__ClassParser__Compiler(obj_ this_)
 		type = t0_;
 		
 		/*  Make sure we got a class. */
-		t0_ = Call_(is_a_co_, type, Proto_(CompiledClass__Compiler));
+		t0_ = Call_(is_a_co_, type, Proto_(Class__Compiler));
 		okay = t0_;
 		t0_ = Not_(okay);
 		if (t0_)

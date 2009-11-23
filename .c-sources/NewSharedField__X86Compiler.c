@@ -4,7 +4,7 @@ UsingSym_(NewSharedField)UsingClass_(X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(NewSharedField__X86Compiler)
 struct ClassInfo NewSharedField__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 205, 2, Proto_(NewSharedField__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(NewSharedField), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 207, 2, Proto_(NewSharedField__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(NewSharedField), nil, nil };
 struct object NewSharedField__X86Compiler = 
 	{ &NewSharedField__X86Compiler__classInfo_, {nil, nil} };
 
@@ -37,6 +37,7 @@ obj_ new_co___NewSharedField__X86Compiler(obj_ this_, obj_ name)
 obj_ value_ptr__NewSharedField__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&Field_(value));
+return nil;
 }
 
 

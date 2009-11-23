@@ -6,7 +6,7 @@ UsingSym_(FileDirectory)UsingClass_(Standard)
 UsingClass_(FileDirectoryEntry__Standard)
 UsingClass_(FileDirectory__Standard)
 struct ClassInfo FileDirectory__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 31, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 30, 1, Proto_(FileDirectory__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(FileDirectory), nil, ((obj_) tu0_) };
 struct object FileDirectory__Standard = 
 	{ &FileDirectory__Standard__classInfo_, {nil} };
 
@@ -122,6 +122,7 @@ closedir(directory);
 return Bool_(found);
 
 #endif 	/* MAC_OSX */
+return nil;
 }
 
 
@@ -140,6 +141,7 @@ numEntries += 1;
 
 closedir(directory);
 return BuildInt_(numEntries);
+return nil;
 }
 
 
@@ -151,6 +153,7 @@ char* entryPathStr = CString_(entryPath);
 
 /* Make the directory. */
 mkdir(entryPathStr, 0777);
+return nil;
 }
 
 
@@ -217,6 +220,17 @@ return Bool_(found);
 }
 
 #endif 	/* MAC_OSX */
+return nil;
+}
+
+
+obj_ is_directory__FileDirectory__Standard(obj_ this_)
+{
+
+		{
+		return true_;
+		}
+	return nil;
 }
 
 

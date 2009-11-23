@@ -4,7 +4,7 @@ UsingSym_(LoopStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(LoopStatement__Compiler)
 struct ClassInfo LoopStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 168, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 170, 3, Proto_(LoopStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(LoopStatement), nil, nil };
 struct object LoopStatement__Compiler = 
 	{ &LoopStatement__Compiler__classInfo_, {nil, nil, nil} };
 

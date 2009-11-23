@@ -4,7 +4,7 @@ UsingSym_(Compiler)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Compiler__Compiler)
 struct ClassInfo Compiler__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 81, 7, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 83, 7, Proto_(Compiler__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(Compiler), nil, nil };
 struct object Compiler__Compiler = 
 	{ &Compiler__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -116,7 +116,6 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 {
 	extern obj_ milliseconds__System__Standard(obj_ this_);
 	UsingSym_(C)
-	UsingSym_(Jolt)
 	extern obj_ new__StdoutStatusReporter(obj_ this_);
 	extern obj_ new__VT100StatusReporter(obj_ this_);
 	extern obj_ new_co___FileDirectory__Standard(obj_ this_, obj_ path);
@@ -134,21 +133,17 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 	DefineString_(0, "verbose")
 	DefineString_(1, "target-c")
 	DefineString_(2, "targeting-c")
-	DefineString_(3, "target-jolt")
-	DefineString_(4, "targeting-jolt")
-	DefineString_(5, ".")
-	DefineString_(6, "sources")
-	DefineString_(7, "sources")
-	DefineString_(8, "Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY.")
-	DefineString_(9, "Main")
-	DefineString_(10, "Trylon")
-	DefineString_(11, "Loading ")
-	DefineString_(12, "...")
-	DefineString_(13, "Preparing to emit...")
-	DefineString_(14, "Compiled in ")
-	DefineString_(15, "ms.")
-	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_root_object_co_) UsingMethod_(is_verbose) UsingMethod_(is_verbose_co_) UsingMethod_(iterator) UsingMethod_(load) UsingMethod_(main_proto) UsingMethod_(main_proto_co_) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(resolve) UsingMethod_(root_proto_co_) UsingMethod_(setup_main_co_library_directory_co_) UsingMethod_(show_warnings) UsingMethod_(status_reporter) UsingMethod_(status_reporter_co_) UsingMethod_(string) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(targeting_jolt) UsingMethod_(unindent)
-	UsingSharedField_(compiler, Main) 
+	DefineString_(3, ".")
+	DefineString_(4, "sources")
+	DefineString_(5, "sources")
+	DefineString_(6, "Couldn't find the Trylon library.  You may need to set $TRYLON_LIBRARY.")
+	DefineString_(7, "Main")
+	DefineString_(8, "Loading ")
+	DefineString_(9, "...")
+	DefineString_(10, "Preparing to emit...")
+	DefineString_(11, "Compiled in ")
+	DefineString_(12, "ms.")
+	UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(append_co_) UsingMethod_(at_co_) UsingMethod_(build_settings) UsingMethod_(current_item) UsingMethod_(entry_is_directory_co_) UsingMethod_(go_forward) UsingMethod_(indent) UsingMethod_(is_done) UsingMethod_(is_root_object_co_) UsingMethod_(is_verbose) UsingMethod_(is_verbose_co_) UsingMethod_(iterator) UsingMethod_(load) UsingMethod_(main_proto) UsingMethod_(main_proto_co_) UsingMethod_(proto_queue) UsingMethod_(report_co_) UsingMethod_(resolve) UsingMethod_(root_proto_co_) UsingMethod_(setup_main_co_library_directory_co_) UsingMethod_(show_warnings) UsingMethod_(status_reporter) UsingMethod_(status_reporter_co_) UsingMethod_(string) UsingMethod_(target_co_) UsingMethod_(targeting_c) UsingMethod_(unindent)
 	UsingClass_(CCompiler)
 	UsingClass_(CompiledClass__Compiler)
 	UsingClass_(Compiler)
@@ -177,11 +172,6 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 				t0_ = Call_(build_settings, this_);
 				t1_ = Call_(target_co_, t0_, Sym_(C));
 				}
-			else if (SwitchMatches_(Str_(3)) || SwitchMatches_(Str_(4)))
-				{
-				t0_ = Call_(build_settings, this_);
-				t1_ = Call_(target_co_, t0_, Sym_(Jolt));
-				}
 			EndSwitch_
 			}
 		ForEnd_(0)
@@ -208,12 +198,12 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 			}
 		
 		/*  Load. */
-		t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), Str_(5));
+		t0_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), Str_(3));
 		main_directory = t0_;
-		t0_ = Call_(entry_is_directory_co_, main_directory, Str_(6));
+		t0_ = Call_(entry_is_directory_co_, main_directory, Str_(4));
 		if (t0_)
 			{
-			t0_ = Call_(at_co_, main_directory, Str_(7));
+			t0_ = Call_(at_co_, main_directory, Str_(5));
 			main_directory = t0_;
 			}
 		t0_ = find_library_path__Compiler(Proto_(Compiler));
@@ -221,21 +211,15 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 		t0_ = Not_(library_path);
 		if (t0_)
 			{
-			t0_ = new_co___MessageException__Standard(Proto_(MessageException__Standard), Str_(8));
+			t0_ = new_co___MessageException__Standard(Proto_(MessageException__Standard), Str_(6));
 			Throw_(t0_);
 			}
 		t1_ = new_co___FileDirectory__Standard(Proto_(FileDirectory__Standard), library_path);
 		library_directory = t1_;
-		main_name = Str_(9);
-		t0_ = Call_(build_settings, SharedField_(compiler, Main));
-		t1_ = Call_(targeting_jolt, t0_);
-		if (t1_)
-			{
-			main_name = Str_(10);
-			}
+		main_name = Str_(7);
 		t0_ = Call_(status_reporter, this_);
-		t1_ = Call_(_pl_, Str_(11), main_name);
-		t2_ = Call_(_pl_, t1_, Str_(12));
+		t1_ = Call_(_pl_, Str_(8), main_name);
+		t2_ = Call_(_pl_, t1_, Str_(9));
 		t3_ = Call_(report_co_, t0_, t2_);
 		t0_ = Call_(status_reporter, this_);
 		t1_ = Call_(indent, t0_);
@@ -251,7 +235,7 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 		
 		/*  Get ready to emit (mainly this makes sure all used classes are loaded). */
 		t0_ = Call_(status_reporter, this_);
-		t1_ = Call_(report_co_, t0_, Str_(13));
+		t1_ = Call_(report_co_, t0_, Str_(10));
 		t0_ = Call_(status_reporter, this_);
 		t1_ = Call_(indent, t0_);
 		t0_ = Call_(proto_queue, this_);
@@ -285,8 +269,8 @@ obj_ compile_program_co___Compiler__Compiler(obj_ this_, obj_ compile_symbols)
 			elapsed_time = t1_;
 			t0_ = Call_(status_reporter, this_);
 			t1_ = Call_(string, elapsed_time);
-			t2_ = Call_(_pl_, Str_(14), t1_);
-			t3_ = Call_(_pl_, t2_, Str_(15));
+			t2_ = Call_(_pl_, Str_(11), t1_);
+			t3_ = Call_(_pl_, t2_, Str_(12));
 			t4_ = Call_(report_co_, t0_, t3_);
 			}
 		t0_ = Call_(status_reporter, this_);

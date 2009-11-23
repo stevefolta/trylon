@@ -6,7 +6,7 @@ UsingSym_(nil)UsingClass_(Standard)
 UsingClass_(Collection__Standard)
 UsingClass_(nil__Standard)
 struct ClassInfo nil__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 20, 0, Proto_(nil__Standard), Proto_(Standard), Proto_(Collection__Standard), nil, Sym_(nil), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 19, 0, Proto_(nil__Standard), Proto_(Standard), Proto_(Collection__Standard), nil, Sym_(nil), nil, ((obj_) tu0_) };
 struct object nil__Standard = 
 	{ &nil__Standard__classInfo_, {} };
 

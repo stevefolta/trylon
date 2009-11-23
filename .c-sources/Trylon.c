@@ -6,7 +6,7 @@ UsingSym_(Trylon)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(Trylon)
 struct ClassInfo Trylon__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 69, 0, Proto_(Trylon), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Trylon), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 68, 0, Proto_(Trylon), Proto_(Main), Proto_(Object__Standard), nil, Sym_(Trylon), nil, ((obj_) tu0_) };
 struct object Trylon = 
 	{ &Trylon__classInfo_, {} };
 

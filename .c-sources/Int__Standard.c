@@ -4,7 +4,7 @@ UsingSym_(Int)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Int__Standard)
 struct ClassInfo Int__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 39, 0, Proto_(Int__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Int), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 38, 0, Proto_(Int__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Int), nil, nil };
 struct object Int__Standard = 
 	{ &Int__Standard__classInfo_, {} };
 
@@ -16,90 +16,105 @@ struct object Int__Standard =
 obj_ _nt__eq___Int__Standard(obj_ this_, obj_ other)
 {
 return Bool_(Val != IntValue_(other));
+return nil;
 }
 
 
 obj_ _pc___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val % IntValue_(other));
+return nil;
 }
 
 
 obj_ _an___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val & IntValue_(other));
+return nil;
 }
 
 
 obj_ _st___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val * IntValue_(other));
+return nil;
 }
 
 
 obj_ _pl___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val + IntValue_(other));
+return nil;
 }
 
 
 obj_ ___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val - IntValue_(other));
+return nil;
 }
 
 
 obj_ _dv___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val / IntValue_(other));
+return nil;
 }
 
 
 obj_ _lt___Int__Standard(obj_ this_, obj_ other)
 {
 return Bool_(Val < IntValue_(other));
+return nil;
 }
 
 
 obj_ _lt__lt___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val << IntValue_(other));
+return nil;
 }
 
 
 obj_ _lt__eq___Int__Standard(obj_ this_, obj_ other)
 {
 return Bool_(Val <= IntValue_(other));
+return nil;
 }
 
 
 obj_ _eq__eq___Int__Standard(obj_ this_, obj_ other)
 {
 return Bool_(Val == IntValue_(other));
+return nil;
 }
 
 
 obj_ _gt___Int__Standard(obj_ this_, obj_ other)
 {
 return Bool_(Val > IntValue_(other));
+return nil;
 }
 
 
 obj_ _gt__eq___Int__Standard(obj_ this_, obj_ other)
 {
 return Bool_(Val >= IntValue_(other));
+return nil;
 }
 
 
 obj_ _gt__gt___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val >> IntValue_(other));
+return nil;
 }
 
 
 obj_ _xr___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val ^ IntValue_(other));
+return nil;
 }
 
 
@@ -137,6 +152,7 @@ else if (c < 0x00110000) {
 }
 *p++ = 0;
 return BuildString_(str);
+return nil;
 }
 
 
@@ -162,6 +178,7 @@ obj_ debug_write__Int__Standard(obj_ this_)
 obj_ float___Int__Standard(obj_ this_)
 {
 return BuildFloat_(Val);
+return nil;
 }
 
 
@@ -179,6 +196,7 @@ obj_ is_digit__Int__Standard(obj_ this_)
 {
 int val = Val;
 return Bool_(val >= '0' && val <= '9');
+return nil;
 }
 
 
@@ -186,12 +204,14 @@ obj_ is_whitespace__Int__Standard(obj_ this_)
 {
 int val = Val;
 return Bool_(val == ' ' || val == '\t' || val == '\n' || val == '\r');
+return nil;
 }
 
 
 obj_ new__Int__Standard(obj_ this_)
 {
 return CloneObjExtra_(Proto_(Int__Standard), 1);
+return nil;
 }
 
 
@@ -200,24 +220,28 @@ obj_ string__Int__Standard(obj_ this_)
 char str[64];
 sprintf(str, "%d", Val);
 return BuildString_(str);
+return nil;
 }
 
 
 obj_ unary_minus__Int__Standard(obj_ this_)
 {
 return BuildInt_(-Val);
+return nil;
 }
 
 
 obj_ _or___Int__Standard(obj_ this_, obj_ other)
 {
 return BuildInt_(Val | IntValue_(other));
+return nil;
 }
 
 
 obj_ _tw___Int__Standard(obj_ this_)
 {
 return BuildInt_(~Val);
+return nil;
 }
 
 

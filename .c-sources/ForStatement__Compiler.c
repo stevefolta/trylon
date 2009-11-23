@@ -4,7 +4,7 @@ UsingSym_(ForStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ForStatement__Compiler)
 struct ClassInfo ForStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 170, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 172, 5, Proto_(ForStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ForStatement), nil, nil };
 struct object ForStatement__Compiler = 
 	{ &ForStatement__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

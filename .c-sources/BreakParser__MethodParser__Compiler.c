@@ -4,7 +4,7 @@ UsingSym_(BreakParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(BreakParser__MethodParser__Compiler)
 struct ClassInfo BreakParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 105, 0, Proto_(BreakParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(BreakParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 107, 0, Proto_(BreakParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(BreakParser), nil, nil };
 struct object BreakParser__MethodParser__Compiler = 
 	{ &BreakParser__MethodParser__Compiler__classInfo_, {} };
 

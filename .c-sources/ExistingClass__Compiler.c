@@ -4,7 +4,7 @@ UsingSym_(ExistingClass)UsingClass_(Compiler)
 UsingClass_(Class__Compiler)
 UsingClass_(ExistingClass__Compiler)
 struct ClassInfo ExistingClass__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 91, 6, Proto_(ExistingClass__Compiler), Proto_(Compiler), Proto_(Class__Compiler), nil, Sym_(ExistingClass), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 93, 6, Proto_(ExistingClass__Compiler), Proto_(Compiler), Proto_(Class__Compiler), nil, Sym_(ExistingClass), nil, nil };
 struct object ExistingClass__Compiler = 
 	{ &ExistingClass__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil} };
 
@@ -371,10 +371,8 @@ obj_ create_co_proto_co___ExistingClass__Compiler(obj_ this_, obj_ name, obj_ pr
 		t1_ = Call_(new_functions_co_, this_, t0_);
 		t0_ = new__List__Standard(Proto_(List__Standard));
 		t1_ = Call_(directories_co_, this_, t0_);
-			{
-			t0_ = Call_(_eq__eq_, proto, Proto_(Main));
-			t1_ = Call_(is_main_co_, this_, t0_);
-			}
+		t0_ = Call_(_eq__eq_, proto, Proto_(Main));
+		t1_ = Call_(is_main_co_, this_, t0_);
 		t0_ = Call_(is_main, this_);
 		if (t0_)
 			{

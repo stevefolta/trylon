@@ -4,7 +4,7 @@ UsingSym_(PrimitiveObject)UsingClass_(Interpreter)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(PrimitiveObject__Interpreter)
 struct ClassInfo PrimitiveObject__Interpreter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 156, 1, Proto_(PrimitiveObject__Interpreter), Proto_(Interpreter), Proto_(TrylonExpression__Compiler), nil, Sym_(PrimitiveObject), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 158, 1, Proto_(PrimitiveObject__Interpreter), Proto_(Interpreter), Proto_(TrylonExpression__Compiler), nil, Sym_(PrimitiveObject), nil, nil };
 struct object PrimitiveObject__Interpreter = 
 	{ &PrimitiveObject__Interpreter__classInfo_, {nil} };
 

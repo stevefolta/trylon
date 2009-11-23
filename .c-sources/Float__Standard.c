@@ -4,7 +4,7 @@ UsingSym_(Float)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Float__Standard)
 struct ClassInfo Float__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 33, 0, Proto_(Float__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Float), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 32, 0, Proto_(Float__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Float), nil, nil };
 struct object Float__Standard = 
 	{ &Float__Standard__classInfo_, {} };
 
@@ -16,60 +16,70 @@ struct object Float__Standard =
 obj_ _nt__eq___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) != FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _st___Float__Standard(obj_ this_, obj_ arg)
 {
 return BuildFloat_(FloatValue_(this_) * FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _pl___Float__Standard(obj_ this_, obj_ arg)
 {
 return BuildFloat_(FloatValue_(this_) + FloatValue_(arg));
+return nil;
 }
 
 
 obj_ ___Float__Standard(obj_ this_, obj_ arg)
 {
 return BuildFloat_(FloatValue_(this_) - FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _dv___Float__Standard(obj_ this_, obj_ arg)
 {
 return BuildFloat_(FloatValue_(this_) / FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _lt___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) < FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _lt__eq___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) <= FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _eq__eq___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) == FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _gt___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) > FloatValue_(arg));
+return nil;
 }
 
 
 obj_ _gt__eq___Float__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(FloatValue_(this_) >= FloatValue_(arg));
+return nil;
 }
 
 
@@ -95,18 +105,21 @@ obj_ debug_write__Float__Standard(obj_ this_)
 obj_ int___Float__Standard(obj_ this_)
 {
 return BuildInt_(FloatValue_(this_));
+return nil;
 }
 
 
 obj_ pow_co___Float__Standard(obj_ this_, obj_ power)
 {
 return BuildFloat_(pow(FloatValue_(this_), FloatValue_(power)));
+return nil;
 }
 
 
 obj_ sqrt__Float__Standard(obj_ this_)
 {
 return BuildFloat_(sqrt(FloatValue_(this_)));
+return nil;
 }
 
 
@@ -115,12 +128,14 @@ obj_ string__Float__Standard(obj_ this_)
 char str[64];
 sprintf(str, "%f", FloatValue_(this_));
 return BuildString_(str);
+return nil;
 }
 
 
 obj_ unary_minus__Float__Standard(obj_ this_)
 {
 return BuildFloat_(-FloatValue_(this_));
+return nil;
 }
 
 

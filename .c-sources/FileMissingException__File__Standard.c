@@ -4,7 +4,7 @@ UsingSym_(FileMissingException)UsingClass_(File__Standard)
 UsingClass_(Exception__Standard)
 UsingClass_(FileMissingException__File__Standard)
 struct ClassInfo FileMissingException__File__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 24, 1, Proto_(FileMissingException__File__Standard), Proto_(File__Standard), Proto_(Exception__Standard), nil, Sym_(FileMissingException), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 23, 1, Proto_(FileMissingException__File__Standard), Proto_(File__Standard), Proto_(Exception__Standard), nil, Sym_(FileMissingException), nil, nil };
 struct object FileMissingException__File__Standard = 
 	{ &FileMissingException__File__Standard__classInfo_, {nil} };
 

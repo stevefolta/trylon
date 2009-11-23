@@ -31,6 +31,7 @@ obj_ current_directory_path__System__Standard(obj_ this_)
 char workingDirName[2048];
 getcwd(workingDirName, 2048);
 return BuildString_(workingDirName);
+return nil;
 }
 
 
@@ -54,12 +55,14 @@ Throw_(exception);
 }
 
 return NULL;
+return nil;
 }
 
 
 obj_ debugger__System__Standard(obj_ this_)
 {
 kill(getpid(), SIGTRAP);
+return nil;
 }
 
 
@@ -71,6 +74,7 @@ printf("  free bytes:               %d.\n", GC_get_free_bytes());
 printf("  allocated since last GC:  %d.\n", GC_get_bytes_since_gc());
 printf("  total bytes:              %d.\n", GC_get_total_bytes());
 return NULL;
+return nil;
 }
 
 
@@ -85,6 +89,7 @@ result = BuildString_(value);
 else
 result = BuildString_("");
 return result;
+return nil;
 }
 
 
@@ -97,12 +102,14 @@ long long now;
 gettimeofday(&timeVal, &timeZone);
 now = ((long long) timeVal.tv_sec) * 1000000LL + timeVal.tv_usec;
 return BuildInt_(now / 1000);
+return nil;
 }
 
 
 obj_ num_garbage_collections__System__Standard(obj_ this_)
 {
 return BuildInt_(GC_gc_no);
+return nil;
 }
 
 
@@ -146,6 +153,7 @@ return BuildInt_(WEXITSTATUS(status));
 }
 
 return NULL;
+return nil;
 }
 
 
@@ -156,6 +164,7 @@ struct timespec timeSpec;
 timeSpec.tv_sec = ms / 1000;
 timeSpec.tv_nsec = (ms % 1000) * 1000 * 1000;
 nanosleep(&timeSpec, NULL);
+return nil;
 }
 
 
@@ -168,6 +177,7 @@ char resultStr[128];
 size_t numChars = 
 strftime(resultStr, sizeof(resultStr) - 1, formatStr, timeStruct);
 return BuildStringOfLength_(resultStr, numChars);
+return nil;
 }
 
 
@@ -178,6 +188,7 @@ int result = uname(&names);
 if (result == -1)
 names.sysname[0] = 0;
 return BuildString_(names.sysname);
+return nil;
 }
 
 

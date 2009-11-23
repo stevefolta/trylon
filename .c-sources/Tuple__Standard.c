@@ -48,12 +48,10 @@ obj_ at_co___Tuple__Standard(obj_ this_, obj_ index)
 			t0_ = new_co___MessageException__Standard(Proto_(MessageException__Standard), Str_(0));
 			Throw_(t0_);
 			}
-			{
-			t1_ = Call_(object_ptr, this_);
-			t2_ = Call_(_pl_, index, SmallInt_(2));
-			t3_ = Call_(object_at_co_, t1_, t2_);
-			return t3_;
-			}
+		t1_ = Call_(object_ptr, this_);
+		t2_ = Call_(_pl_, index, SmallInt_(2));
+		t3_ = Call_(object_at_co_, t1_, t2_);
+		return t3_;
 		}
 	return nil;
 }
@@ -84,11 +82,9 @@ obj_ at_co_put_co___Tuple__Standard(obj_ this_, obj_ index, obj_ value)
 			t0_ = new_co___MessageException__Standard(Proto_(MessageException__Standard), Str_(0));
 			Throw_(t0_);
 			}
-			{
-			t1_ = Call_(object_ptr, this_);
-			t2_ = Call_(_pl_, index, SmallInt_(2));
-			t3_ = Call_(object_at_co_put_co_, t1_, t2_, value);
-			}
+		t1_ = Call_(object_ptr, this_);
+		t2_ = Call_(_pl_, index, SmallInt_(2));
+		t3_ = Call_(object_at_co_put_co_, t1_, t2_, value);
 		}
 	return nil;
 }
@@ -128,6 +124,33 @@ obj_ first__Tuple__Standard(obj_ this_)
 		{
 		t0_ = Call_(at_co_, this_, SmallInt_(0));
 		return t0_;
+		}
+	return nil;
+}
+
+
+obj_ from_co___Tuple__Standard(obj_ this_, obj_ collection)
+{
+	obj_ t0_;
+	obj_ t1_;
+	UsingInt_(0)
+	UsingInt_(1)
+	UsingMethod_(_pl_) UsingMethod_(at_co_put_co_) UsingMethod_(current_item) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(iterator) UsingMethod_(new_co_) UsingMethod_(num_items)
+
+		{
+		obj_ index, tuple;
+		t0_ = Call_(num_items, collection);
+		t1_ = Call_(new_co_, tuple, t0_);
+		tuple = t1_;
+		index = SmallInt_(0);
+		ForStart_(0, collection, item)
+			{
+			t0_ = Call_(at_co_put_co_, tuple, index, item);
+			t0_ = Call_(_pl_, index, SmallInt_(1));
+			index = t0_;
+			}
+		ForEnd_(0)
+		return tuple;
 		}
 	return nil;
 }

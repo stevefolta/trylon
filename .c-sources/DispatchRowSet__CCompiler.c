@@ -6,7 +6,7 @@ UsingSym_(DispatchRowSet)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(DispatchRowSet__CCompiler)
 struct ClassInfo DispatchRowSet__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 179, 1, Proto_(DispatchRowSet__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(DispatchRowSet), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 181, 1, Proto_(DispatchRowSet__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(DispatchRowSet), nil, ((obj_) tu0_) };
 struct object DispatchRowSet__CCompiler = 
 	{ &DispatchRowSet__CCompiler__classInfo_, {nil} };
 

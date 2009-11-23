@@ -4,7 +4,7 @@ UsingSym_(Loop)UsingClass_(MethodBuilder__X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Loop__MethodBuilder__X86Compiler)
 struct ClassInfo Loop__MethodBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 90, 2, Proto_(Loop__MethodBuilder__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(Object__Standard), nil, Sym_(Loop), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 92, 2, Proto_(Loop__MethodBuilder__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(Object__Standard), nil, Sym_(Loop), nil, nil };
 struct object Loop__MethodBuilder__X86Compiler = 
 	{ &Loop__MethodBuilder__X86Compiler__classInfo_, {nil, nil} };
 

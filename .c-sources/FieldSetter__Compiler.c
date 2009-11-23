@@ -4,7 +4,7 @@ UsingSym_(FieldSetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(FieldSetter__Compiler)
 struct ClassInfo FieldSetter__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 121, 2, Proto_(FieldSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(FieldSetter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 123, 2, Proto_(FieldSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(FieldSetter), nil, nil };
 struct object FieldSetter__Compiler = 
 	{ &FieldSetter__Compiler__classInfo_, {nil, nil} };
 

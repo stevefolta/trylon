@@ -4,7 +4,7 @@ UsingSym_(SwitchOptionsParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SwitchOptionsParser__Compiler)
 struct ClassInfo SwitchOptionsParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 206, 2, Proto_(SwitchOptionsParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchOptionsParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 208, 2, Proto_(SwitchOptionsParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchOptionsParser), nil, nil };
 struct object SwitchOptionsParser__Compiler = 
 	{ &SwitchOptionsParser__Compiler__classInfo_, {nil, nil} };
 
@@ -52,7 +52,7 @@ obj_ parse_into_co___SwitchOptionsParser__Compiler(obj_ this_, obj_ switch_state
 	DefineString_(2, "#")
 	DefineString_(3, ",")
 	DefineString_(4, "Extra words at end of line.")
-	UsingMethod_(_eq__eq_) UsingMethod_(add_clause_co_) UsingMethod_(append_co_) UsingMethod_(block) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(else_clause_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(next) UsingMethod_(parse) UsingMethod_(parse_assignment_expression) UsingMethod_(peek) UsingMethod_(remainder) UsingMethod_(require_eol) UsingMethod_(starts_with_co_) UsingMethod_(words)
+	UsingMethod_(_eq__eq_) UsingMethod_(add_clause_co_) UsingMethod_(append_co_) UsingMethod_(block) UsingMethod_(context) UsingMethod_(current_item) UsingMethod_(else_clause_co_) UsingMethod_(go_forward) UsingMethod_(is_done) UsingMethod_(is_empty) UsingMethod_(iterator) UsingMethod_(lines) UsingMethod_(next) UsingMethod_(parse) UsingMethod_(parse_postfix_expression) UsingMethod_(peek) UsingMethod_(remainder) UsingMethod_(require_eol) UsingMethod_(starts_with_co_) UsingMethod_(words)
 	UsingClass_(ExpressionParser__Compiler)
 	UsingClass_(List__Standard)
 	UsingClass_(MethodParser__Compiler)
@@ -118,7 +118,7 @@ obj_ parse_into_co___SwitchOptionsParser__Compiler(obj_ this_, obj_ switch_state
 						}
 					
 					/*  Get a value. */
-					t0_ = Call_(parse_assignment_expression, parser);
+					t0_ = Call_(parse_postfix_expression, parser);
 					expr = t0_;
 					t0_ = Not_(expr);
 					if (t0_)

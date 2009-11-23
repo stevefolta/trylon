@@ -4,7 +4,7 @@ UsingSym_(IffParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(IffParser__MethodParser__Compiler)
 struct ClassInfo IffParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 112, 0, Proto_(IffParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(IffParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 114, 0, Proto_(IffParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(IffParser), nil, nil };
 struct object IffParser__MethodParser__Compiler = 
 	{ &IffParser__MethodParser__Compiler__classInfo_, {} };
 

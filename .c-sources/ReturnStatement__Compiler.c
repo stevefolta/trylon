@@ -4,7 +4,7 @@ UsingSym_(ReturnStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ReturnStatement__Compiler)
 struct ClassInfo ReturnStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 166, 2, Proto_(ReturnStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ReturnStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 168, 2, Proto_(ReturnStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ReturnStatement), nil, nil };
 struct object ReturnStatement__Compiler = 
 	{ &ReturnStatement__Compiler__classInfo_, {nil, nil} };
 

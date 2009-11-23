@@ -4,7 +4,7 @@ UsingSym_(CompiledClass)UsingClass_(Compiler)
 UsingClass_(Class__Compiler)
 UsingClass_(CompiledClass__Compiler)
 struct ClassInfo CompiledClass__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 92, 17, Proto_(CompiledClass__Compiler), Proto_(Compiler), Proto_(Class__Compiler), nil, Sym_(CompiledClass), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 94, 17, Proto_(CompiledClass__Compiler), Proto_(Compiler), Proto_(Class__Compiler), nil, Sym_(CompiledClass), nil, nil };
 struct object CompiledClass__Compiler = 
 	{ &CompiledClass__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -402,18 +402,11 @@ obj_ create_co_parent_co___CompiledClass__Compiler(obj_ this_, obj_ name, obj_ p
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
 	extern obj_ new__List__Standard(obj_ this_);
-	extern obj_ build_settings__Main(obj_ this_);
-	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
-	extern obj_ new_co_on_proto_co___PrimitiveFunction__Compiler(obj_ this_, obj_ name, obj_ on_proto);
 	obj_ t0_;
 	obj_ t1_;
-	DefineString_(0, ".proto")
-	DefineString_(1, ".superclass")
-	UsingMethod_(add_function_co_) UsingMethod_(directories_co_) UsingMethod_(fields_co_) UsingMethod_(functions_co_) UsingMethod_(has_destroy_co_) UsingMethod_(is_main_co_) UsingMethod_(is_root_object_co_) UsingMethod_(name_co_) UsingMethod_(parent_co_) UsingMethod_(shared_fields_co_) UsingMethod_(subclasses_co_) UsingMethod_(targeting_jolt) UsingMethod_(uses_protos_co_)
+	UsingMethod_(directories_co_) UsingMethod_(fields_co_) UsingMethod_(functions_co_) UsingMethod_(has_destroy_co_) UsingMethod_(is_main_co_) UsingMethod_(is_root_object_co_) UsingMethod_(name_co_) UsingMethod_(parent_co_) UsingMethod_(shared_fields_co_) UsingMethod_(subclasses_co_) UsingMethod_(uses_protos_co_)
 	UsingClass_(Dictionary__Standard)
 	UsingClass_(List__Standard)
-	UsingClass_(Main)
-	UsingClass_(PrimitiveFunction__Compiler)
 
 		{
 		t0_ = Call_(name_co_, this_, name);
@@ -433,17 +426,6 @@ obj_ create_co_parent_co___CompiledClass__Compiler(obj_ this_, obj_ name, obj_ p
 		t0_ = Call_(is_main_co_, this_, nil);
 		t0_ = Call_(is_root_object_co_, this_, nil);
 		t0_ = Call_(has_destroy_co_, this_, nil);
-		
-		/*  Will be added by Jolt code: */
-		t0_ = build_settings__Main(Proto_(Main));
-		t1_ = Call_(targeting_jolt, t0_);
-		if (t1_)
-			{
-			t0_ = new_co_on_proto_co___PrimitiveFunction__Compiler(Proto_(PrimitiveFunction__Compiler), Str_(0), this_);
-			t1_ = Call_(add_function_co_, this_, t0_);
-			t0_ = new_co_on_proto_co___PrimitiveFunction__Compiler(Proto_(PrimitiveFunction__Compiler), Str_(1), this_);
-			t1_ = Call_(add_function_co_, this_, t0_);
-			}
 		}
 	return nil;
 }
@@ -1088,8 +1070,6 @@ obj_ setup_main_co_library_directory_co___CompiledClass__Compiler(obj_ this_, ob
 		
 		t0_ = Call_(get_subproto_co_, this_, Str_(0));
 		standard_proto = t0_;
-		
-		/*  Targeting Jolt. */
 		
 		/*  Targeting C. */
 		t0_ = Call_(build_settings, SharedField_(compiler, Main));

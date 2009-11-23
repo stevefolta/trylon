@@ -4,7 +4,7 @@ UsingSym_(LinesLexer)UsingClass_(Trylon)
 UsingClass_(Object__Standard)
 UsingClass_(LinesLexer__Trylon)
 struct ClassInfo LinesLexer__Trylon__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 70, 8, Proto_(LinesLexer__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(LinesLexer), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 69, 8, Proto_(LinesLexer__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(LinesLexer), nil, nil };
 struct object LinesLexer__Trylon = 
 	{ &LinesLexer__Trylon__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil} };
 

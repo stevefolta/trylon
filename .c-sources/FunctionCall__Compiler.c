@@ -4,7 +4,7 @@ UsingSym_(FunctionCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(FunctionCall__Compiler)
 struct ClassInfo FunctionCall__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 140, 4, Proto_(FunctionCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FunctionCall), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 142, 4, Proto_(FunctionCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(FunctionCall), nil, nil };
 struct object FunctionCall__Compiler = 
 	{ &FunctionCall__Compiler__classInfo_, {nil, nil, nil, nil} };
 

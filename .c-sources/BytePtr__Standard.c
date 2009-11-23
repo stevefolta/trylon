@@ -4,7 +4,7 @@ UsingSym_(BytePtr)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(BytePtr__Standard)
 struct ClassInfo BytePtr__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 5, 0, Proto_(BytePtr__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(BytePtr), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 4, 0, Proto_(BytePtr__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(BytePtr), nil, nil };
 struct object BytePtr__Standard = 
 	{ &BytePtr__Standard__classInfo_, {} };
 
@@ -16,12 +16,14 @@ struct object BytePtr__Standard =
 obj_ _nt__eq___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(BytePtrValue_(this_) != BytePtrValue_(arg));
+return nil;
 }
 
 
 obj_ _pl___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return BuildBytePtr_(BytePtrValue_(this_) + IntValue_(arg));
+return nil;
 }
 
 
@@ -35,72 +37,84 @@ if (arg->class_ == StdClassRef_(BytePtr))
 return BuildInt_(BytePtrValue_(this_) - BytePtrValue_(arg));
 else
 return BuildBytePtr_(BytePtrValue_(this_) - IntValue_(arg));
+return nil;
 }
 
 
 obj_ _lt___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(BytePtrValue_(this_) < BytePtrValue_(arg));
+return nil;
 }
 
 
 obj_ _lt__eq___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(BytePtrValue_(this_) <= BytePtrValue_(arg));
+return nil;
 }
 
 
 obj_ _eq__eq___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(BytePtrValue_(this_) == BytePtrValue_(arg));
+return nil;
 }
 
 
 obj_ _gt___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(BytePtrValue_(this_) > BytePtrValue_(arg));
+return nil;
 }
 
 
 obj_ _gt__eq___BytePtr__Standard(obj_ this_, obj_ arg)
 {
 return Bool_(BytePtrValue_(this_) >= BytePtrValue_(arg));
+return nil;
 }
 
 
 obj_ as_object__BytePtr__Standard(obj_ this_)
 {
 return (obj_) BytePtrValue_(this_);
+return nil;
 }
 
 
 obj_ byte_at_co___BytePtr__Standard(obj_ this_, obj_ index)
 {
 return BuildInt_(BytePtrValue_(this_)[IntValue_(index)]);
+return nil;
 }
 
 
 obj_ byte_at_co_put_co___BytePtr__Standard(obj_ this_, obj_ index, obj_ value)
 {
 BytePtrValue_(this_)[IntValue_(index)] = IntValue_(value);
+return nil;
 }
 
 
 obj_ char_at_co___BytePtr__Standard(obj_ this_, obj_ index)
 {
 return BuildInt_(BytePtrValue_(this_)[IntValue_(index)]);
+return nil;
 }
 
 
 obj_ char_at_co_put_co___BytePtr__Standard(obj_ this_, obj_ index, obj_ value)
 {
 BytePtrValue_(this_)[IntValue_(index)] = IntValue_(value);
+return nil;
 }
 
 
 obj_ copy_from_co_length_co___BytePtr__Standard(obj_ this_, obj_ source, obj_ length)
 {
 memcpy(BytePtrValue_(this_), BytePtrValue_(source), IntValue_(length));
+return nil;
 }
 
 
@@ -126,6 +140,7 @@ obj_ debug_write__BytePtr__Standard(obj_ this_)
 obj_ deref_char__BytePtr__Standard(obj_ this_)
 {
 return BuildInt_(*(char*) BytePtrValue_(this_));
+return nil;
 }
 
 
@@ -133,12 +148,14 @@ obj_ deref_char_co___BytePtr__Standard(obj_ this_, obj_ new_value)
 {
 *BytePtrValue_(this_) = IntValue_(new_value);
 return new_value;
+return nil;
 }
 
 
 obj_ deref_int__BytePtr__Standard(obj_ this_)
 {
 return BuildInt_(*(int*) BytePtrValue_(this_));
+return nil;
 }
 
 
@@ -146,12 +163,14 @@ obj_ deref_int_co___BytePtr__Standard(obj_ this_, obj_ new_value)
 {
 *((int*) BytePtrValue_(this_)) = IntValue_(new_value);
 return new_value;
+return nil;
 }
 
 
 obj_ deref_ptr__BytePtr__Standard(obj_ this_)
 {
 return BuildBytePtr_(*(byte_ptr_*) BytePtrValue_(this_));
+return nil;
 }
 
 
@@ -159,18 +178,21 @@ obj_ deref_ptr_co___BytePtr__Standard(obj_ this_, obj_ new_value)
 {
 *((byte_ptr_*) BytePtrValue_(this_)) = BytePtrValue_(new_value);
 return new_value;
+return nil;
 }
 
 
 obj_ int_at_co___BytePtr__Standard(obj_ this_, obj_ index)
 {
 return BuildInt_(((int*) BytePtrValue_(this_))[IntValue_(index)]);
+return nil;
 }
 
 
 obj_ int_at_co_put_co___BytePtr__Standard(obj_ this_, obj_ index, obj_ value)
 {
 ((int*) BytePtrValue_(this_))[IntValue_(index)] = IntValue_(value);
+return nil;
 }
 
 
@@ -205,24 +227,28 @@ obj_ new_co___BytePtr__Standard(obj_ this_, obj_ size)
 obj_ object_at_co___BytePtr__Standard(obj_ this_, obj_ index)
 {
 return ((obj_*) BytePtrValue_(this_))[IntValue_(index)];
+return nil;
 }
 
 
 obj_ object_at_co_put_co___BytePtr__Standard(obj_ this_, obj_ index, obj_ value)
 {
 ((obj_*) BytePtrValue_(this_))[IntValue_(index)] = value;
+return nil;
 }
 
 
 obj_ ptr_at_co___BytePtr__Standard(obj_ this_, obj_ index)
 {
 return BuildBytePtr_(((byte_ptr_*) BytePtrValue_(this_))[IntValue_(index)]);
+return nil;
 }
 
 
 obj_ ptr_at_co_put_co___BytePtr__Standard(obj_ this_, obj_ index, obj_ value)
 {
 ((byte_ptr_*) BytePtrValue_(this_))[IntValue_(index)] = BytePtrValue_(value);
+return nil;
 }
 
 
@@ -231,6 +257,7 @@ obj_ string__BytePtr__Standard(obj_ this_)
 char str[64];
 sprintf(str, "0x%08X", BytePtrValue_(this_));
 return BuildString_(str);
+return nil;
 }
 
 

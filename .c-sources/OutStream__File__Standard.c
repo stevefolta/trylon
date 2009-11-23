@@ -20,6 +20,7 @@ if (Field_(_dt_file)) {
 fclose((FILE*) Field_(_dt_file));
 Field_(_dt_file) = nil;
 }
+return nil;
 }
 
 
@@ -35,6 +36,7 @@ Proto_(FileOpenException__File__Standard), path);
 Throw_(exception);
 }
 Field_(_dt_file) = (obj_) result;
+return nil;
 }
 
 
@@ -67,6 +69,7 @@ BuildInt_(
 fwrite(
 BytePtrValue_(buffer), 1, IntValue_(length),
 (FILE*) Field_(_dt_file)));
+return nil;
 }
 
 

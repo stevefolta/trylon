@@ -6,7 +6,7 @@ UsingSym_(CCompiler)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(CCompiler)
 struct ClassInfo CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 67, 0, Proto_(CCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(CCompiler), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 66, 0, Proto_(CCompiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(CCompiler), nil, ((obj_) tu0_) };
 struct object CCompiler = 
 	{ &CCompiler__classInfo_, {} };
 

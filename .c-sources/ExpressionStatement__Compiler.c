@@ -4,7 +4,7 @@ UsingSym_(ExpressionStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(ExpressionStatement__Compiler)
 struct ClassInfo ExpressionStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 161, 2, Proto_(ExpressionStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ExpressionStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 163, 2, Proto_(ExpressionStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(ExpressionStatement), nil, nil };
 struct object ExpressionStatement__Compiler = 
 	{ &ExpressionStatement__Compiler__classInfo_, {nil, nil} };
 

@@ -6,7 +6,7 @@ UsingSym_(X86Compiler)UsingClass_(Main)
 UsingClass_(Object__Standard)
 UsingClass_(X86Compiler)
 struct ClassInfo X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 65, 2, Proto_(X86Compiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(X86Compiler), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 64, 2, Proto_(X86Compiler), Proto_(Main), Proto_(Object__Standard), nil, Sym_(X86Compiler), nil, ((obj_) tu0_) };
 struct object X86Compiler = 
 	{ &X86Compiler__classInfo_, {nil, nil} };
 
@@ -377,6 +377,7 @@ UsingMethod_(method_replacement_error_co_)
 Call_(method_replacement_error_co_, this_, symbol);
 }
 *method_ptr = (fn_ptr_) BytePtrValue_(fn_ptr);
+return nil;
 return nil;
 }
 

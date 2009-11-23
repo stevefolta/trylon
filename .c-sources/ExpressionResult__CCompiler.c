@@ -4,7 +4,7 @@ UsingSym_(ExpressionResult)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpressionResult__CCompiler)
 struct ClassInfo ExpressionResult__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 210, 0, Proto_(ExpressionResult__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpressionResult), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 212, 0, Proto_(ExpressionResult__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpressionResult), nil, nil };
 struct object ExpressionResult__CCompiler = 
 	{ &ExpressionResult__CCompiler__classInfo_, {} };
 

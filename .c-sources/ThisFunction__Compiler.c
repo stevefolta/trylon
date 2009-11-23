@@ -4,7 +4,7 @@ UsingSym_(ThisFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(ThisFunction__Compiler)
 struct ClassInfo ThisFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 129, 0, Proto_(ThisFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ThisFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 131, 0, Proto_(ThisFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(ThisFunction), nil, nil };
 struct object ThisFunction__Compiler = 
 	{ &ThisFunction__Compiler__classInfo_, {} };
 

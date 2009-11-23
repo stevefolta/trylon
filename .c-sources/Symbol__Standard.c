@@ -69,6 +69,7 @@ obj_ create_co_to_co___Symbol__Standard(obj_ this_, obj_ start, obj_ stopper)
 extern obj_ create_co_to_co___String__Standard(obj_, obj_, obj_);
 create_co_to_co___String__Standard(this_, start, stopper);
 Field_(_dt__ul_selector) = (obj_) -1;
+return nil;
 }
 
 
@@ -201,6 +202,7 @@ obj_ print_string__Symbol__Standard(obj_ this_)
 obj_ selector__Symbol__Standard(obj_ this_)
 {
 return BuildInt_((int) Field_(_dt__ul_selector));
+return nil;
 }
 
 

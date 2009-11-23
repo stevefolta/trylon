@@ -4,7 +4,7 @@ UsingSym_(VT100StatusReporter)UsingClass_(Main)
 UsingClass_(StatusReporter)
 UsingClass_(VT100StatusReporter)
 struct ClassInfo VT100StatusReporter__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 195, 4, Proto_(VT100StatusReporter), Proto_(Main), Proto_(StatusReporter), nil, Sym_(VT100StatusReporter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 197, 4, Proto_(VT100StatusReporter), Proto_(Main), Proto_(StatusReporter), nil, Sym_(VT100StatusReporter), nil, nil };
 struct object VT100StatusReporter = 
 	{ &VT100StatusReporter__classInfo_, {nil, nil, nil, nil} };
 

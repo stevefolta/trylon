@@ -4,7 +4,7 @@ UsingSym_(ContinueParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ContinueParser__MethodParser__Compiler)
 struct ClassInfo ContinueParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 108, 0, Proto_(ContinueParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ContinueParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 110, 0, Proto_(ContinueParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ContinueParser), nil, nil };
 struct object ContinueParser__MethodParser__Compiler = 
 	{ &ContinueParser__MethodParser__Compiler__classInfo_, {} };
 

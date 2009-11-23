@@ -4,7 +4,7 @@ UsingSym_(WordsLexer)UsingClass_(Trylon)
 UsingClass_(Object__Standard)
 UsingClass_(WordsLexer__Trylon)
 struct ClassInfo WordsLexer__Trylon__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 71, 3, Proto_(WordsLexer__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(WordsLexer), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 70, 3, Proto_(WordsLexer__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(WordsLexer), nil, nil };
 struct object WordsLexer__Trylon = 
 	{ &WordsLexer__Trylon__classInfo_, {nil, nil, nil} };
 

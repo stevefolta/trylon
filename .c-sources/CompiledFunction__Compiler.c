@@ -4,7 +4,7 @@ UsingSym_(CompiledFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(CompiledFunction__Compiler)
 struct ClassInfo CompiledFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 119, 7, Proto_(CompiledFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CompiledFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 121, 7, Proto_(CompiledFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CompiledFunction), nil, nil };
 struct object CompiledFunction__Compiler = 
 	{ &CompiledFunction__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 
@@ -131,8 +131,9 @@ obj_ emit_c_function_on_co___CompiledFunction__Compiler(obj_ this_, obj_ stream)
 	obj_ t0_;
 	obj_ t1_;
 	DefineString_(0, "{")
-	DefineString_(1, "}")
-	DefineString_(2, "{\n\treturn nil;\n}\n")
+	DefineString_(1, "return nil;")
+	DefineString_(2, "}")
+	DefineString_(3, "{\n\treturn nil;\n}\n")
 	UsingMethod_(body) UsingMethod_(c_signature) UsingMethod_(emit_code_co_) UsingMethod_(emit_co_) UsingMethod_(is_primitive) UsingMethod_(write_line) UsingMethod_(write_line_co_) UsingMethod_(write_co_)
 	UsingClass_(MethodBuilder__CCompiler)
 
@@ -149,6 +150,7 @@ obj_ emit_c_function_on_co___CompiledFunction__Compiler(obj_ this_, obj_ stream)
 				t0_ = Call_(body, this_);
 				t1_ = Call_(write_co_, stream, t0_);
 				t0_ = Call_(write_line_co_, stream, Str_(1));
+				t0_ = Call_(write_line_co_, stream, Str_(2));
 				}
 			else
 				{
@@ -162,7 +164,7 @@ obj_ emit_c_function_on_co___CompiledFunction__Compiler(obj_ this_, obj_ stream)
 			}
 		else
 			{
-			t0_ = Call_(write_co_, stream, Str_(2));
+			t0_ = Call_(write_co_, stream, Str_(3));
 			}
 		t0_ = Call_(write_line, stream);
 		t0_ = Call_(write_line, stream);

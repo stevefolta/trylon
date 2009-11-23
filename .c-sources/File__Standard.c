@@ -6,7 +6,7 @@ UsingSym_(File)UsingClass_(Standard)
 UsingClass_(FileDirectoryEntry__Standard)
 UsingClass_(File__Standard)
 struct ClassInfo File__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 30, 1, Proto_(File__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(File), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 29, 1, Proto_(File__Standard), Proto_(Standard), Proto_(FileDirectoryEntry__Standard), nil, Sym_(File), nil, ((obj_) tu0_) };
 struct object File__Standard = 
 	{ &File__Standard__classInfo_, {nil} };
 
@@ -107,6 +107,7 @@ obj_ exists__File__Standard(obj_ this_)
 {
 struct stat	buf;
 return Bool_(stat(CString_(Field_(path)), &buf) == 0);
+return nil;
 }
 
 
@@ -139,6 +140,7 @@ obj_ output_stream__File__Standard(obj_ this_)
 obj_ remove__File__Standard(obj_ this_)
 {
 unlink(CString_(Field_(path)));
+return nil;
 }
 
 
@@ -149,6 +151,7 @@ int error = stat(CString_(Field_(path)), &buf);
 if (error != 0)
 return BuildInt_(0);
 return BuildInt_(buf.st_size);
+return nil;
 }
 
 

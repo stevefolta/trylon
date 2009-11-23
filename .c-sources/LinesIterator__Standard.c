@@ -4,7 +4,7 @@ UsingSym_(LinesIterator)UsingClass_(Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(LinesIterator__Standard)
 struct ClassInfo LinesIterator__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 47, 3, Proto_(LinesIterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(LinesIterator), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 46, 3, Proto_(LinesIterator__Standard), Proto_(Standard), Proto_(Iterator__Standard), nil, Sym_(LinesIterator), nil, nil };
 struct object LinesIterator__Standard = 
 	{ &LinesIterator__Standard__classInfo_, {nil, nil, nil} };
 

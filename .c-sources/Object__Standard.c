@@ -3,7 +3,7 @@
 UsingSym_(Object)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 struct ClassInfo Object__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 217, 0, Proto_(Object__Standard), Proto_(Standard), nil, nil, Sym_(Object), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 219, 0, Proto_(Object__Standard), Proto_(Standard), nil, nil, Sym_(Object), nil, nil };
 struct object Object__Standard = 
 	{ &Object__Standard__classInfo_, {} };
 
@@ -29,54 +29,63 @@ obj_ _nt__eq___Object__Standard(obj_ this_, obj_ other)
 obj_ _dt_added_fields__Object__Standard(obj_ this_)
 {
 return this_->class_->addedFields;
+return nil;
 }
 
 
 obj_ _dt_class__Object__Standard(obj_ this_)
 {
 return (obj_) this_->class_;
+return nil;
 }
 
 
 obj_ _dt_object_size__Object__Standard(obj_ this_)
 {
 return BuildInt_(sizeof(classref_) + this_->class_->numSlots * sizeof(obj_));
+return nil;
 }
 
 
 obj_ _dt_parent_context__Object__Standard(obj_ this_)
 {
 return this_->class_->parentContext;
+return nil;
 }
 
 
 obj_ _dt_proto__Object__Standard(obj_ this_)
 {
 return this_->class_->proto;
+return nil;
 }
 
 
 obj_ _dt_proto_name__Object__Standard(obj_ this_)
 {
 return this_->class_->name;
+return nil;
 }
 
 
 obj_ _dt_subprotos__Object__Standard(obj_ this_)
 {
 return this_->class_->subprotos;
+return nil;
 }
 
 
 obj_ _dt_superclass__Object__Standard(obj_ this_)
 {
 return this_->class_->superclass;
+return nil;
 }
 
 
 obj_ _dt_used_contexts__Object__Standard(obj_ this_)
 {
 return this_->class_->usedContexts;
+return nil;
 }
 
 
@@ -237,6 +246,7 @@ obj_ message_not_understood__Object__Standard(obj_ this_)
 {
 fprintf(stderr, "Message not understood.\n");
 exit(1);
+return nil;
 }
 
 
@@ -272,6 +282,7 @@ obj_ message_not_understood_co_arguments_co___Object__Standard(obj_ this_, obj_ 
 obj_ object_ptr__Object__Standard(obj_ this_)
 {
 return BuildBytePtr_((byte_ptr_) this_);
+return nil;
 }
 
 
@@ -286,6 +297,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_);
+return nil;
 }
 
 
@@ -300,6 +312,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1);
+return nil;
 }
 
 
@@ -314,6 +327,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2);
+return nil;
 }
 
 
@@ -328,6 +342,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2, arg_3);
+return nil;
 }
 
 
@@ -342,6 +357,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4);
+return nil;
 }
 
 
@@ -356,6 +372,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4, arg_5);
+return nil;
 }
 
 
@@ -370,6 +387,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6);
+return nil;
 }
 
 
@@ -384,6 +402,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
+return nil;
 }
 
 
@@ -398,6 +417,7 @@ return
 (*Dispatch_(symbol->selector, this_))
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7, arg_8);
+return nil;
 }
 
 
@@ -413,6 +433,7 @@ return
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6,
 arg_7, arg_8, arg_9);
+return nil;
 }
 
 
@@ -428,6 +449,7 @@ return
 #endif
 (this_, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6,
 arg_7, arg_8, arg_9, arg_10);
+return nil;
 }
 
 
@@ -447,6 +469,7 @@ obj_ print_string__Object__Standard(obj_ this_)
 obj_ raw_new__Object__Standard(obj_ this_)
 {
 return CloneObj_(this_);
+return nil;
 }
 
 
@@ -459,12 +482,14 @@ return RespondsTo_(this_, selector);
 #else
 return RespondsTo_(this_, symbol->selector);
 #endif
+return nil;
 }
 
 
 obj_ same_as_co___Object__Standard(obj_ this_, obj_ other)
 {
 return Bool_(this_ == other);
+return nil;
 }
 
 

@@ -6,7 +6,7 @@ UsingSym_(KeyValuePairsIterator)UsingClass_(Dictionary__Standard)
 UsingClass_(Iterator__Dictionary__Standard)
 UsingClass_(KeyValuePairsIterator__Dictionary__Standard)
 struct ClassInfo KeyValuePairsIterator__Dictionary__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 75, 1, Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeyValuePairsIterator), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 74, 1, Proto_(KeyValuePairsIterator__Dictionary__Standard), Proto_(Dictionary__Standard), Proto_(Iterator__Dictionary__Standard), nil, Sym_(KeyValuePairsIterator), nil, ((obj_) tu0_) };
 struct object KeyValuePairsIterator__Dictionary__Standard = 
 	{ &KeyValuePairsIterator__Dictionary__Standard__classInfo_, {nil} };
 

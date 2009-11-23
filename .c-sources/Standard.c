@@ -1,6 +1,6 @@
 #include "Trylon_.h"
 
-UsingClass_(BytePtr__Standard) UsingClass_(CImplementation__Standard) UsingClass_(Collection__Standard) UsingClass_(Dictionary__Standard) UsingClass_(Exception__Standard) UsingClass_(ExistingFileStream__Standard) UsingClass_(File__Standard) UsingClass_(FileDirectory__Standard) UsingClass_(FileDirectoryEntry__Standard) UsingClass_(Float__Standard) UsingClass_(GarbageCollector__Standard) UsingClass_(Implementation__Standard) UsingClass_(InputStream__Standard) UsingClass_(Int__Standard) UsingClass_(Interval__Standard) UsingClass_(Iterator__Standard) UsingClass_(LinesIterator__Standard) UsingClass_(List__Standard) UsingClass_(MessageException__Standard) UsingClass_(Object__Standard) UsingClass_(ObjectMap__Standard) UsingClass_(OutputStream__Standard) UsingClass_(SingleObjectIterator__Standard) UsingClass_(SmallStringBuilder__Standard) UsingClass_(Stdout__Standard) UsingClass_(String__Standard) UsingClass_(StringBuilder__Standard) UsingClass_(StringBytesIterator__Standard) UsingClass_(StringUTF8Iterator__Standard) UsingClass_(Symbol__Standard) UsingClass_(System__Standard) UsingClass_(Test__Standard) UsingClass_(True__Standard) UsingClass_(Tuple__Standard) UsingClass_(empty__Standard) UsingClass_(nil__Standard) 
+UsingClass_(BytePtr__Standard) UsingClass_(CImplementation__Standard) UsingClass_(Collection__Standard) UsingClass_(Dictionary__Standard) UsingClass_(Exception__Standard) UsingClass_(ExistingFileStream__Standard) UsingClass_(File__Standard) UsingClass_(FileDirectory__Standard) UsingClass_(FileDirectoryEntry__Standard) UsingClass_(Float__Standard) UsingClass_(GarbageCollector__Standard) UsingClass_(Implementation__Standard) UsingClass_(InputStream__Standard) UsingClass_(Int__Standard) UsingClass_(Interval__Standard) UsingClass_(Iterator__Standard) UsingClass_(LinesIterator__Standard) UsingClass_(List__Standard) UsingClass_(MessageException__Standard) UsingClass_(Object__Standard) UsingClass_(ObjectMap__Standard) UsingClass_(OutputStream__Standard) UsingClass_(SingleObjectIterator__Standard) UsingClass_(SmallStringBuilder__Standard) UsingClass_(Stdout__Standard) UsingClass_(StreamLinesReader__Standard) UsingClass_(String__Standard) UsingClass_(StringBuilder__Standard) UsingClass_(StringBytesIterator__Standard) UsingClass_(StringUTF8Iterator__Standard) UsingClass_(Symbol__Standard) UsingClass_(System__Standard) UsingClass_(Test__Standard) UsingClass_(True__Standard) UsingClass_(Tuple__Standard) UsingClass_(empty__Standard) UsingClass_(nil__Standard) 
 static obj_ tu0_[];
 UsingSym_(Standard)UsingClass_(Main)
 UsingClass_(Object__Standard)
@@ -10,8 +10,8 @@ struct ClassInfo Standard__classInfo_ =
 struct object Standard = 
 	{ &Standard__classInfo_, {} };
 
-	UsingInt_(36)
-static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(36), Proto_(BytePtr__Standard), Proto_(CImplementation__Standard), Proto_(Collection__Standard), Proto_(Dictionary__Standard), Proto_(Exception__Standard), Proto_(ExistingFileStream__Standard), Proto_(File__Standard), Proto_(FileDirectory__Standard), Proto_(FileDirectoryEntry__Standard), Proto_(Float__Standard), Proto_(GarbageCollector__Standard), Proto_(Implementation__Standard), Proto_(InputStream__Standard), Proto_(Int__Standard), Proto_(Interval__Standard), Proto_(Iterator__Standard), Proto_(LinesIterator__Standard), Proto_(List__Standard), Proto_(MessageException__Standard), Proto_(Object__Standard), Proto_(ObjectMap__Standard), Proto_(OutputStream__Standard), Proto_(SingleObjectIterator__Standard), Proto_(SmallStringBuilder__Standard), Proto_(Stdout__Standard), Proto_(String__Standard), Proto_(StringBuilder__Standard), Proto_(StringBytesIterator__Standard), Proto_(StringUTF8Iterator__Standard), Proto_(Symbol__Standard), Proto_(System__Standard), Proto_(Test__Standard), Proto_(True__Standard), Proto_(Tuple__Standard), Proto_(empty__Standard), Proto_(nil__Standard) };
+	UsingInt_(37)
+static obj_ tu0_[] = { (obj_) StdClassRef_(Tuple), SmallInt_(37), Proto_(BytePtr__Standard), Proto_(CImplementation__Standard), Proto_(Collection__Standard), Proto_(Dictionary__Standard), Proto_(Exception__Standard), Proto_(ExistingFileStream__Standard), Proto_(File__Standard), Proto_(FileDirectory__Standard), Proto_(FileDirectoryEntry__Standard), Proto_(Float__Standard), Proto_(GarbageCollector__Standard), Proto_(Implementation__Standard), Proto_(InputStream__Standard), Proto_(Int__Standard), Proto_(Interval__Standard), Proto_(Iterator__Standard), Proto_(LinesIterator__Standard), Proto_(List__Standard), Proto_(MessageException__Standard), Proto_(Object__Standard), Proto_(ObjectMap__Standard), Proto_(OutputStream__Standard), Proto_(SingleObjectIterator__Standard), Proto_(SmallStringBuilder__Standard), Proto_(Stdout__Standard), Proto_(StreamLinesReader__Standard), Proto_(String__Standard), Proto_(StringBuilder__Standard), Proto_(StringBytesIterator__Standard), Proto_(StringUTF8Iterator__Standard), Proto_(Symbol__Standard), Proto_(System__Standard), Proto_(Test__Standard), Proto_(True__Standard), Proto_(Tuple__Standard), Proto_(empty__Standard), Proto_(nil__Standard) };
 
 
 
@@ -204,6 +204,13 @@ obj_ Stdout__Standard__accessor_(obj_ this_)
 }
 
 
+obj_ StreamLinesReader__Standard__accessor_(obj_ this_)
+{
+	UsingClass_(StreamLinesReader__Standard)
+	return Proto_(StreamLinesReader__Standard);
+}
+
+
 obj_ String__Standard__accessor_(obj_ this_)
 {
 	UsingClass_(String__Standard)
@@ -370,6 +377,7 @@ strObj = Call_(string, strObj);
 start = StringStart_(strObj);
 stopper = StringStopper_(strObj);
 fwrite(start, stopper - start, 1, stdout);
+return nil;
 }
 
 

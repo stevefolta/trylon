@@ -4,7 +4,7 @@ UsingSym_(MethodBuilder)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(MethodBuilder__CCompiler)
 struct ClassInfo MethodBuilder__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 207, 16, Proto_(MethodBuilder__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 209, 16, Proto_(MethodBuilder__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, nil };
 struct object MethodBuilder__CCompiler = 
 	{ &MethodBuilder__CCompiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 

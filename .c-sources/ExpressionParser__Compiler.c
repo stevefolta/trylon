@@ -4,7 +4,7 @@ UsingSym_(ExpressionParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpressionParser__Compiler)
 struct ClassInfo ExpressionParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 204, 3, Proto_(ExpressionParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ExpressionParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 206, 3, Proto_(ExpressionParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ExpressionParser), nil, nil };
 struct object ExpressionParser__Compiler = 
 	{ &ExpressionParser__Compiler__classInfo_, {nil, nil, nil} };
 
@@ -497,6 +497,82 @@ obj_ parse_assignment_expression__ExpressionParser__Compiler(obj_ this_)
 }
 
 
+obj_ parse_comma_expression__ExpressionParser__Compiler(obj_ this_)
+{
+	extern obj_ new__TupleExpression__Compiler(obj_ this_);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	obj_ t4_;
+	obj_ t5_;
+	DefineString_(0, ",")
+	DefineString_(1, ",")
+	DefineString_(2, "Missing expression in tuple.")
+	UsingMethod_(_eq__eq_) UsingMethod_(add_member_co_) UsingMethod_(is_done) UsingMethod_(next) UsingMethod_(parse_error_co_) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(peek) UsingMethod_(words)
+	UsingClass_(TupleExpression__Compiler)
+
+		{
+		obj_ expr;
+		t0_ = Call_(parse_inclusive_or_expression, this_);
+		expr = t0_;
+		t0_ = Not_(expr);
+		if (t0_)
+			{
+			return nil;
+			}
+		
+		t0_ = Call_(words, this_);
+		t1_ = Call_(is_done, t0_);
+		t2_ = Not_(t1_);
+		if (t2_) {
+			t3_ = Call_(words, this_);
+			t4_ = Call_(peek, t3_);
+			t5_ = Call_(_eq__eq_, t4_, Str_(0));
+			t2_ = t5_;
+			}
+		if (t2_)
+			{
+			obj_ tuple;
+			t0_ = new__TupleExpression__Compiler(Proto_(TupleExpression__Compiler));
+			tuple = t0_;
+			t0_ = Call_(add_member_co_, tuple, expr);
+			while (1) {
+				ContinuePoint_(0)
+				t0_ = Call_(words, this_);
+				t1_ = Call_(is_done, t0_);
+				t2_ = Not_(t1_);
+				if (t2_) {
+					t3_ = Call_(words, this_);
+					t4_ = Call_(peek, t3_);
+					t5_ = Call_(_eq__eq_, t4_, Str_(1));
+					t2_ = t5_;
+					}
+				if (!(t2_))
+					Break_(0)
+				{
+				obj_ member;
+				t0_ = Call_(words, this_);
+				t1_ = Call_(next, t0_);
+				t0_ = Call_(parse_inclusive_or_expression, this_);
+				member = t0_;
+				t0_ = Not_(member);
+				if (t0_)
+					{
+					t0_ = Call_(parse_error_co_, this_, Str_(2));
+					}
+				t0_ = Call_(add_member_co_, tuple, member);
+				}
+				}
+			expr = tuple;
+			}
+		
+		return expr;
+		}
+	return nil;
+}
+
+
 obj_ parse_declaration_co___ExpressionParser__Compiler(obj_ this_, obj_ lhs)
 {
 	extern obj_ new_co___MessageException__Standard(obj_ this_, obj_ message);
@@ -743,75 +819,12 @@ obj_ parse_exclusive_or_expression__ExpressionParser__Compiler(obj_ this_)
 
 obj_ parse_expression__ExpressionParser__Compiler(obj_ this_)
 {
-	extern obj_ new__TupleExpression__Compiler(obj_ this_);
 	obj_ t0_;
-	obj_ t1_;
-	obj_ t2_;
-	obj_ t3_;
-	obj_ t4_;
-	obj_ t5_;
-	DefineString_(0, ",")
-	DefineString_(1, ",")
-	DefineString_(2, "Missing expression in tuple.")
-	UsingMethod_(_eq__eq_) UsingMethod_(add_member_co_) UsingMethod_(is_done) UsingMethod_(next) UsingMethod_(parse_assignment_expression) UsingMethod_(parse_error_co_) UsingMethod_(peek) UsingMethod_(words)
-	UsingClass_(TupleExpression__Compiler)
+	UsingMethod_(parse_assignment_expression)
 
 		{
-		obj_ expr;
 		t0_ = Call_(parse_assignment_expression, this_);
-		expr = t0_;
-		t0_ = Not_(expr);
-		if (t0_)
-			{
-			return nil;
-			}
-		
-		t0_ = Call_(words, this_);
-		t1_ = Call_(is_done, t0_);
-		t2_ = Not_(t1_);
-		if (t2_) {
-			t3_ = Call_(words, this_);
-			t4_ = Call_(peek, t3_);
-			t5_ = Call_(_eq__eq_, t4_, Str_(0));
-			t2_ = t5_;
-			}
-		if (t2_)
-			{
-			obj_ tuple;
-			t0_ = new__TupleExpression__Compiler(Proto_(TupleExpression__Compiler));
-			tuple = t0_;
-			t0_ = Call_(add_member_co_, tuple, expr);
-			while (1) {
-				ContinuePoint_(0)
-				t0_ = Call_(words, this_);
-				t1_ = Call_(is_done, t0_);
-				t2_ = Not_(t1_);
-				if (t2_) {
-					t3_ = Call_(words, this_);
-					t4_ = Call_(peek, t3_);
-					t5_ = Call_(_eq__eq_, t4_, Str_(1));
-					t2_ = t5_;
-					}
-				if (!(t2_))
-					Break_(0)
-				{
-				obj_ member;
-				t0_ = Call_(words, this_);
-				t1_ = Call_(next, t0_);
-				t0_ = Call_(parse_assignment_expression, this_);
-				member = t0_;
-				t0_ = Not_(member);
-				if (t0_)
-					{
-					t0_ = Call_(parse_error_co_, this_, Str_(2));
-					}
-				t0_ = Call_(add_member_co_, tuple, member);
-				}
-				}
-			expr = tuple;
-			}
-		
-		return expr;
+		return t0_;
 		}
 	return nil;
 }
@@ -890,13 +903,13 @@ obj_ parse_keyword_expression__ExpressionParser__Compiler(obj_ this_)
 	DefineString_(2, ":")
 	DefineString_(3, "Missing argument (\"")
 	DefineString_(4, "\").")
-	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(ends_with_co_) UsingMethod_(is_done) UsingMethod_(next) UsingMethod_(parse_error_co_) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(peek) UsingMethod_(words)
+	UsingMethod_(_pl_) UsingMethod_(append_co_) UsingMethod_(ends_with_co_) UsingMethod_(is_done) UsingMethod_(next) UsingMethod_(parse_comma_expression) UsingMethod_(parse_error_co_) UsingMethod_(peek) UsingMethod_(words)
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 
 		{
 		obj_ expr;
-		t0_ = Call_(parse_inclusive_or_expression, this_);
+		t0_ = Call_(parse_comma_expression, this_);
 		expr = t0_;
 		t0_ = Not_(expr);
 		if (t0_)
@@ -938,7 +951,7 @@ obj_ parse_keyword_expression__ExpressionParser__Compiler(obj_ this_)
 				t1_ = Call_(next, t0_);
 				t2_ = Call_(_pl_, name, t1_);
 				name = t2_;
-				t0_ = Call_(parse_inclusive_or_expression, this_);
+				t0_ = Call_(parse_comma_expression, this_);
 				arg = t0_;
 				if (arg)
 					{
@@ -1226,7 +1239,7 @@ obj_ parse_postfix_expression__ExpressionParser__Compiler(obj_ this_)
 	DefineString_(10, "]")
 	DefineString_(11, "Missing closing \"]\".")
 	DefineString_(12, "at:")
-	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_member_co_) UsingMethod_(append_co_) UsingMethod_(is_done) UsingMethod_(is_name_co_) UsingMethod_(next) UsingMethod_(parse_assignment_expression) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_primary_expression) UsingMethod_(peek) UsingMethod_(words)
+	UsingMethod_(_nt__eq_) UsingMethod_(_eq__eq_) UsingMethod_(add_member_co_) UsingMethod_(append_co_) UsingMethod_(is_done) UsingMethod_(is_name_co_) UsingMethod_(next) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(parse_primary_expression) UsingMethod_(peek) UsingMethod_(words)
 	UsingClass_(List__Standard)
 	UsingClass_(Send__Compiler)
 	UsingClass_(TupleExpression__Compiler)
@@ -1296,7 +1309,7 @@ obj_ parse_postfix_expression__ExpressionParser__Compiler(obj_ this_)
 							t1_ = Call_(next, t0_);
 							Break_(1)
 							}
-						t0_ = Call_(parse_assignment_expression, this_);
+						t0_ = Call_(parse_inclusive_or_expression, this_);
 						tuple_member = t0_;
 						t0_ = Not_(tuple_member);
 						if (t0_)
@@ -1426,7 +1439,7 @@ obj_ parse_primary_expression__ExpressionParser__Compiler(obj_ this_)
 	DefineString_(15, "true")
 	DefineString_(16, "false")
 	DefineString_(17, "\xC2\xB6")
-	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(block_as_text) UsingMethod_(block_co_) UsingMethod_(contains_co_) UsingMethod_(context) UsingMethod_(ends_with_co_) UsingMethod_(expression_expected_after_co_) UsingMethod_(first_character) UsingMethod_(is_done) UsingMethod_(is_number_co_) UsingMethod_(length) UsingMethod_(line) UsingMethod_(next) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_inclusive_or_expression) UsingMethod_(parse_super_call) UsingMethod_(peek) UsingMethod_(starts_with_co_) UsingMethod_(substr_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(words)
+	UsingMethod_(_nt__eq_) UsingMethod_(_pl_) UsingMethod_(_) UsingMethod_(_eq__eq_) UsingMethod_(append_co_) UsingMethod_(block_as_text) UsingMethod_(block_co_) UsingMethod_(contains_co_) UsingMethod_(context) UsingMethod_(ends_with_co_) UsingMethod_(expression_expected_after_co_) UsingMethod_(first_character) UsingMethod_(is_done) UsingMethod_(is_number_co_) UsingMethod_(length) UsingMethod_(line) UsingMethod_(next) UsingMethod_(parse_comma_expression) UsingMethod_(parse_error_co_) UsingMethod_(parse_expression) UsingMethod_(parse_super_call) UsingMethod_(peek) UsingMethod_(starts_with_co_) UsingMethod_(substr_co_) UsingMethod_(substr_co_length_co_) UsingMethod_(words)
 	UsingClass_(BoolLiteral__Compiler)
 	UsingClass_(CharacterLiteral__Compiler)
 	UsingClass_(FloatLiteral__Compiler)
@@ -1484,7 +1497,7 @@ obj_ parse_primary_expression__ExpressionParser__Compiler(obj_ this_)
 					t1_ = Call_(next, t0_);
 					t2_ = Call_(_pl_, name, t1_);
 					name = t2_;
-					t0_ = Call_(parse_inclusive_or_expression, this_);
+					t0_ = Call_(parse_comma_expression, this_);
 					arg = t0_;
 					t0_ = Not_(arg);
 					if (t0_)

@@ -16,6 +16,7 @@ struct object Stdout__Standard =
 obj_ write_buffer_co_length_co___Stdout__Standard(obj_ this_, obj_ buffer, obj_ length)
 {
 fwrite(BytePtrValue_(buffer), IntValue_(length), 1, stdout);
+return nil;
 }
 
 

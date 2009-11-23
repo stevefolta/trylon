@@ -6,7 +6,7 @@ UsingSym_(MethodBuilder)UsingClass_(X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(MethodBuilder__X86Compiler)
 struct ClassInfo MethodBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 86, 14, Proto_(MethodBuilder__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 88, 14, Proto_(MethodBuilder__X86Compiler), Proto_(X86Compiler), Proto_(Object__Standard), nil, Sym_(MethodBuilder), nil, ((obj_) tu0_) };
 struct object MethodBuilder__X86Compiler = 
 	{ &MethodBuilder__X86Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 
@@ -65,6 +65,7 @@ obj_ Loop__MethodBuilder__X86Compiler__accessor_(obj_ this_)
 obj_ alloc_obj_from_class_info_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&AllocObjFromClassInfo_);
+return nil;
 }
 
 
@@ -1763,12 +1764,14 @@ obj_ create_co_code_co___MethodBuilder__X86Compiler(obj_ this_, obj_ function, o
 obj_ current_exception_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&currentException_);
+return nil;
 }
 
 
 obj_ dispatch_fn_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&Dispatch_);
+return nil;
 }
 
 
@@ -2610,6 +2613,7 @@ obj_ end_loop__MethodBuilder__X86Compiler(obj_ this_)
 obj_ exception_catcher_size__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildInt_(sizeof(ExceptionCatcher_));
+return nil;
 }
 
 
@@ -2778,6 +2782,7 @@ obj_ new_co_code_co___MethodBuilder__X86Compiler(obj_ this_, obj_ function, obj_
 obj_ pop_exception_fn_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&PopException_);
+return nil;
 }
 
 
@@ -2813,12 +2818,14 @@ obj_ push_args_co___MethodBuilder__X86Compiler(obj_ this_, obj_ args)
 obj_ push_exception_fn_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&PushException_);
+return nil;
 }
 
 
 obj_ setjmp_fn_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(setjmp);
+return nil;
 }
 
 
@@ -2870,6 +2877,7 @@ obj_ stash_co___MethodBuilder__X86Compiler(obj_ this_, obj_ result)
 obj_ throw_fn_addr__MethodBuilder__X86Compiler(obj_ this_)
 {
 return BuildBytePtr_(&Throw_);
+return nil;
 }
 
 

@@ -4,7 +4,7 @@ UsingSym_(Label)UsingClass_(MethodBuilder__X86Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(Label__MethodBuilder__X86Compiler)
 struct ClassInfo Label__MethodBuilder__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 88, 1, Proto_(Label__MethodBuilder__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(Object__Standard), nil, Sym_(Label), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 90, 1, Proto_(Label__MethodBuilder__X86Compiler), Proto_(MethodBuilder__X86Compiler), Proto_(Object__Standard), nil, Sym_(Label), nil, nil };
 struct object Label__MethodBuilder__X86Compiler = 
 	{ &Label__MethodBuilder__X86Compiler__classInfo_, {nil} };
 

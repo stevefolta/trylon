@@ -4,7 +4,7 @@ UsingSym_(iterator)UsingClass_(nil__Standard)
 UsingClass_(Iterator__Standard)
 UsingClass_(iterator__nil__Standard)
 struct ClassInfo iterator__nil__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 42, 0, Proto_(iterator__nil__Standard), Proto_(nil__Standard), Proto_(Iterator__Standard), nil, Sym_(iterator), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 41, 0, Proto_(iterator__nil__Standard), Proto_(nil__Standard), Proto_(Iterator__Standard), nil, Sym_(iterator), nil, nil };
 struct object iterator__nil__Standard = 
 	{ &iterator__nil__Standard__classInfo_, {} };
 

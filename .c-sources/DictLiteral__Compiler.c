@@ -6,7 +6,7 @@ UsingSym_(DictLiteral)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(DictLiteral__Compiler)
 struct ClassInfo DictLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 149, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 151, 4, Proto_(DictLiteral__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(DictLiteral), nil, ((obj_) tu0_) };
 struct object DictLiteral__Compiler = 
 	{ &DictLiteral__Compiler__classInfo_, {nil, nil, nil, nil} };
 

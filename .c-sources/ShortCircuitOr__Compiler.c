@@ -4,7 +4,7 @@ UsingSym_(ShortCircuitOr)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(ShortCircuitOr__Compiler)
 struct ClassInfo ShortCircuitOr__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 151, 2, Proto_(ShortCircuitOr__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitOr), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 153, 2, Proto_(ShortCircuitOr__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(ShortCircuitOr), nil, nil };
 struct object ShortCircuitOr__Compiler = 
 	{ &ShortCircuitOr__Compiler__classInfo_, {nil, nil} };
 

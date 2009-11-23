@@ -4,7 +4,7 @@ UsingSym_(SwitchParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SwitchParser__MethodParser__Compiler)
 struct ClassInfo SwitchParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 115, 0, Proto_(SwitchParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(SwitchParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 117, 0, Proto_(SwitchParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(SwitchParser), nil, nil };
 struct object SwitchParser__MethodParser__Compiler = 
 	{ &SwitchParser__MethodParser__Compiler__classInfo_, {} };
 
