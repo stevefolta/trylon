@@ -41,8 +41,9 @@ main: args
 		send: ""
 
 		# Processes: fork, pipe.
-		Test name: "fork()/wait()" check: test-fork
-		Test name: "pipe()" check: test-pipe
+		Test name: "fork/wait" check: test-fork
+		Test name: "pipe" check: test-pipe
+		Test name: "exec" check: test-exec
 
 		# Regex.
 		Test name: "Regex" check: regex-test
@@ -106,6 +107,27 @@ test-pipe
 				break
 		if lines next != nil
 			ok = false
+		in-stream close
+		return ok
+
+
+test-exec
+	pipe-fds = Posix pipe
+	child = Posix fork
+	if child == 0
+		# This is the child.
+		try
+			Posix close-fd: pipe-fds read
+			Posix dup-from: pipe-fds write to: Posix stdout-fd
+			Posix execp: "echo" arguments: "echo", "foo"
+		Posix exit: 1
+	else
+		# This is the parent.
+		Posix close-fd: pipe-fds write
+		in-stream = Posix FDInputStream new: pipe-fds read
+		lines = StreamLinesReader new: in-stream
+		line = lines next
+		ok = (line && line == "foo")
 		in-stream close
 		return ok
 

@@ -135,6 +135,23 @@ c-fn exit: status
 	_exit(IntValue_(status));
 
 
+# "exec" family.
+
+c-fn exec: filename arguments: arguments environment: environment
+	char** args = build_args_list(arguments);
+	char** env = build_args_list(environment);
+	execve(CString_(filename), args, env);
+	throw_errno();
+
+c-fn exec: path arguments: arguments
+	execv(CString_(path), build_args_list(arguments));
+	throw_errno();
+
+c-fn execp: file arguments: arguments
+	execvp(CString_(file), build_args_list(arguments));
+	throw_errno();
+
+
 # Pipes.
 
 class PipeFDs
@@ -174,6 +191,20 @@ c-preamble
 	{
 		extern obj_ new__ErrnoException__Posix();
 		Throw_(new__ErrnoException__Posix());
+	}
+
+	static char** build_args_list(obj_ arguments)
+	{
+		UsingMethod_(num_items)
+		int numArgs = IntValue_(Call_(num_items, arguments));
+		char** args = (char**) Allocate_((numArgs + 1) * sizeof(char*));
+		int argNum = 0;
+		ForStart_(1, arguments, arg)
+			args[argNum] = CString_(arg);
+			argNum += 1;
+			ForEnd_(1)
+		args[argNum] = NULL;
+		return args;
 	}
 
 
