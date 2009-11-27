@@ -47,6 +47,9 @@ main: args
 
 		# Regex.
 		Test name: "Regex" check: regex-test
+
+		# Directories.
+		Test name: "directories" check: directory-test
 	
 	else
 		send: exception message
@@ -151,5 +154,25 @@ regex-test
 		return false
 
 	return true
+
+
+directory-test
+	ok = true
+	dir-name = "test-mkdir"
+	try
+		start-wd = Posix getcwd
+		Posix mkdir: dir-name mode: 511
+		try
+			Posix chdir: dir-name
+			Posix chdir: start-wd
+			Posix rmdir: dir-name
+		else
+			ok = false
+			Posix chdir: start-wd
+			Posix rmdir: dir-name
+			throw exception
+	else
+		ok = false
+	return ok
 
 

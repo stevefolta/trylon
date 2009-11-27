@@ -59,30 +59,13 @@ extend Standard System
 			result = BuildString_("");
 		return result;
 
-	c-fn current-directory-path
-		char workingDirName[2048];
-		getcwd(workingDirName, 2048);
-		return BuildString_(workingDirName);
 
-	c-fn current-directory-path: new-path
-		UsingMethod_(_pl_)
-		UsingClass_(MessageException__Standard)
-		extern obj_ new_co___MessageException__Standard(obj_, obj_);
+	current-directory-path
+		return Posix getcwd
 
-		char* dirPath = CString_(new_path);
-		int result = chdir(dirPath);
-		if (result != 0) {
-			DefineString_(0, "Couldn't change to directory \"")
-			DefineString_(1, "\".")
-			obj_ message = Call_(_pl_, Str_(0), new_path);
-			message = Call_(_pl_, message, Str_(1));
-			obj_ exception =
-				new_co___MessageException__Standard(
-					Proto_(MessageException__Standard), message);
-			Throw_(exception);
-			}
+	current-directory-path: new-path
+		Posix chdir: new-path
 
-		return NULL;
 
 	run-program: name arguments: arguments
 		# Prepend the name to the arguments list.

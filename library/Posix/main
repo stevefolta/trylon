@@ -172,6 +172,33 @@ c-fn pipe
 			Proto_(PipeFDs__Posix), BuildInt_(pipefds[0]), BuildInt_(pipefds[1]));
 
 
+# Directories.
+
+c-fn getcwd
+	char* path = AllocNonPtr_(2048);
+	char* result = getcwd(path, 2048);
+	if (result == NULL)
+		throw_errno();
+	return BuildString_(path);
+
+c-fn chdir: path
+	if (chdir(CString_(path)) < 0)
+		throw_errno();
+
+c-fn fchdir: path
+	if (fchdir(IntValue_(path)) < 0)
+		throw_errno();
+
+
+c-fn mkdir: path mode: mode
+	if (mkdir(CString_(path), IntValue_(mode)) < 0)
+		throw_errno();
+
+c-fn rmdir: path
+	if (rmdir(CString_(path)) < 0)
+		throw_errno();
+
+
 # Private.
 
 c-preamble
