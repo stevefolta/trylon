@@ -508,7 +508,16 @@ int main(int argc, char* argv[])
 		Call_(append_co_, args, BuildString_(argv[whichArg]));
 
 	// Call the main function.
-	result = main_co___Main(Proto_(Main), args);
+	Try_ {
+		result = main_co___Main(Proto_(Main), args);
+		}
+	TryElse_ {
+		UsingMethod_(send_co_) UsingMethod_(message)
+		obj_ message = Call_(message, exception);
+		Call_(send_co_, Proto_(Main), message);
+		result = BuildInt_(1);
+		}
+	EndTry_
 
 	// Return the result.
 	if (result == nil)
