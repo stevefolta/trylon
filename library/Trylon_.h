@@ -378,7 +378,9 @@ typedef struct EnumDictEntry_ {
 } EnumDictEntry_;
 extern int SymToEnum_(
 	obj_ symbol, const EnumDictEntry_* dict, int dictSize, int notFoundValue);
+extern int BitFlagsFromSyms_(obj_ symbols, const EnumDictEntry_* dict, int dictSize);
 extern obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize);
+#define NumEnumsIn_(array)	(sizeof(array) / sizeof(EnumDictEntry_))
 
 
 

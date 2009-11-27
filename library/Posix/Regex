@@ -36,14 +36,7 @@ c-fn create: regex flags: flags
 	int result;
 	char* regexStr = CString_(regex);
 	regex_t* regexBuffer = (regex_t*) Allocate_(sizeof(regex_t));
-	int cflags = 0;
-	if (flags) {
-		ForStart_(1, flags, flag)
-			cflags |=
-				SymToEnum_(
-					flag, flagsValues, sizeof(flagsValues) / sizeof(EnumDictEntry_), 0);
-			ForEnd_(1)
-		}
+	int cflags = BitFlagsFromSyms_(flags, flagsValues, NumEnumsIn_(flagsValues));
 
 	result = regcomp(regexBuffer, regexStr, cflags);
 	check_regex_error(result, this_);
@@ -60,21 +53,13 @@ c-fn destroy
 
 c-fn matches: string flags: flags
 	int result, numMatches, i;
-	int eflags = 0;
+	int eflags = BitFlagsFromSyms_(flags, flagsValues, NumEnumsIn_(flagsValues));
 	int maxMatches = IntValue_(Field_(max_matches));
 	regmatch_t* rawMatches;
 	regmatch_t* rawMatch;
 	obj_ matches;
 	UsingClass_(Match__Regex__Posix)
 	extern obj_ new_co_to_co___Match__Regex__Posix(obj_, obj_, obj_);
-
-	if (flags) {
-		ForStart_(1, flags, flag)
-			eflags |=
-				SymToEnum_(
-					flag, flagsValues, sizeof(flagsValues) / sizeof(EnumDictEntry_), 0);
-			ForEnd_(1)
-		}
 
 	rawMatches = (regmatch_t*) Allocate_(maxMatches * sizeof(regmatch_t));
 	result =

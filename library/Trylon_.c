@@ -465,6 +465,18 @@ int SymToEnum_(
 }
 
 
+int BitFlagsFromSyms_(obj_ symbols, const EnumDictEntry_* dict, int dictSize)
+{
+	int flags = 0;
+	if (symbols) {
+		ForStart_(1, symbols, symbol)
+			flags |= SymToEnum_(symbol, dict, dictSize, 0);
+			ForEnd_(1)
+		}
+	return flags;
+}
+
+
 obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize)
 {
 	/* Linear search. */

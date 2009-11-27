@@ -101,11 +101,7 @@ c-fn wait-pid: pid options: options
 		};
 
 	/* Gather the options. */
-	ForStart_(1, options, option)
-		optionsInt |=
-			SymToEnum_(
-				option, optionDict, sizeof(optionDict) / sizeof(EnumDictEntry_), 0);
-		ForEnd_(1)
+	optionsInt = BitFlagsFromSyms_(options, optionDict, NumEnumsIn_(optionDict));
 	
 	/* Call waitpid(). */
 	child = waitpid(IntValue_(pid), &status, optionsInt);
