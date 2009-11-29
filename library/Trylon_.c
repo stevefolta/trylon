@@ -514,7 +514,7 @@ int main(int argc, char* argv[])
 	TryElse_ {
 		UsingMethod_(send_co_) UsingMethod_(message)
 		obj_ message = Call_(message, exception);
-		Call_(send_co_, Proto_(Main), message);
+		Call_(send_co_, Proto_(Standard), message);
 		result = BuildInt_(1);
 		}
 	EndTry_

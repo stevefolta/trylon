@@ -177,6 +177,7 @@ UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
 UsingClass_(True__Standard)
+UsingClass_(Standard)
 #ifdef NIL_OBJECT_
 UsingClass_(nil__Standard)
 #endif
