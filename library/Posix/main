@@ -199,6 +199,16 @@ c-fn rmdir: path
 		throw_errno();
 
 
+# Random.
+
+c-fn rand
+	return BuildInt_(rand());
+
+c-fn srand: seed
+	srand(IntValue_(seed));
+
+
+
 # Private.
 
 c-preamble
