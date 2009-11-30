@@ -30,6 +30,22 @@ open: path flags: flags
 c-fn close-fd: fd
 	return BuildInt_(close(IntValue_(fd)));
 
+c-fn lseek-fd: fd offset: offset whence: whence
+	UsingSym_(SEEK_ul_CUR) UsingSym_(SEEK_ul_END) UsingSym_(SEEK_ul_SET)
+	UsingSym_(current) UsingSym_(eof) UsingSym_(set)
+	static const EnumDictEntry_ whenceDict[] = {
+		{ Sym_(SEEK_ul_CUR), SEEK_CUR },
+		{ Sym_(SEEK_ul_END), SEEK_END },
+		{ Sym_(SEEK_ul_SET), SEEK_SET },
+		{ Sym_(current), SEEK_CUR },
+		{ Sym_(eof), SEEK_END },
+		{ Sym_(set), SEEK_SET },
+		};
+	int whenceInt =
+		SymToEnum_(whence, whenceDict, NumEnumsIn_(whenceDict), SEEK_SET);
+	off_t result = lseek(IntValue_(fd), IntValue_(offset), whenceInt);
+	return BuildInt_(result);
+
 stdin-fd = 0
 stdout-fd = 1
 stderr-fd = 2
@@ -325,4 +341,11 @@ references
 	'untraced'
 	'WNOHANG'
 	'WUNTRACED'
+
+	'set'
+	'current'
+	'eof'
+	'SEEK_SET'
+	'SEEK_CUR'
+	'SEEK_END'
 
