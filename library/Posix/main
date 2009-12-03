@@ -79,22 +79,28 @@ class WaitResult
 		return child != -1
 
 	c-fn exited
-		return Bool_(WIFEXITED(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return Bool_(WIFEXITED(status));
 
 	c-fn exit-status
-		return BuildInt_(WEXITSTATUS(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return BuildInt_(WEXITSTATUS(status));
 	
 	c-fn signaled
-		return Bool_(WIFSIGNALED(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return Bool_(WIFSIGNALED(status));
 	
 	c-fn termination-signal
-		return BuildInt_(WTERMSIG(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return BuildInt_(WTERMSIG(status));
 	
 	c-fn stopped
-		return Bool_(WIFSTOPPED(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return Bool_(WIFSTOPPED(status));
 	
 	c-fn stop-signal
-		return BuildInt_(WSTOPSIG(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return BuildInt_(WSTOPSIG(status));
 	
 	c-preamble
 		#include <sys/types.h>
