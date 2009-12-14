@@ -63,6 +63,8 @@ c-fn lseek-fd: fd offset: offset whence: whence
 	int whenceInt =
 		SymToEnum_(whence, whenceDict, NumEnumsIn_(whenceDict), SEEK_SET);
 	off_t result = lseek(IntValue_(fd), IntValue_(offset), whenceInt);
+	if (result == (off_t) -1)
+		throw_errno();
 	return BuildInt_(result);
 
 stdin-fd = 0
