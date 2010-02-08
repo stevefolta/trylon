@@ -47,13 +47,10 @@ x86-compiler-test:
 
 TARBALL_FILES := sources makefile ReadMe License tarball-date version
 TARBALL_FILES += library/Trylon_.h library/Trylon_.c library/build-settings
-TARBALL_FILES += library/Standard library/Cairo library/Xlib library/Xft
-TARBALL_FILES += library/trylon.k
-TARBALL_FILES += library/IdPosix/*.st library/IdPosix/makefile
-TARBALL_FILES += library/IdPosix/*.h
+TARBALL_FILES += library/Standard library/Posix
+TARBALL_FILES += library/Cairo library/Xlib library/Xft library/Readline
 TARBALL_FILES += docs/source docs/html docs/makefile
 TARBALL_FILES += docs/doctifier/build-settings docs/doctifier/sources
-TARBALL_FILES += start.k start-self.k command-line.k
 TARBALL_FILES += tests
 TARBALL_FILES += build-settings .c-sources
 TARBALL_FILES += trylon-interpreter

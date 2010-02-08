@@ -59,70 +59,34 @@ extend Standard System
 			result = BuildString_("");
 		return result;
 
-	c-fn current-directory-path
-		char workingDirName[2048];
-		getcwd(workingDirName, 2048);
-		return BuildString_(workingDirName);
 
-	c-fn current-directory-path: new-path
-		UsingMethod_(_pl_)
-		UsingClass_(MessageException__Standard)
-		extern obj_ new_co___MessageException__Standard(obj_, obj_);
+	current-directory-path
+		return Posix getcwd
 
-		char* dirPath = CString_(new_path);
-		int result = chdir(dirPath);
-		if (result != 0) {
-			DefineString_(0, "Couldn't change to directory \"")
-			DefineString_(1, "\".")
-			obj_ message = Call_(_pl_, Str_(0), new_path);
-			message = Call_(_pl_, message, Str_(1));
-			obj_ exception =
-				new_co___MessageException__Standard(
-					Proto_(MessageException__Standard), message);
-			Throw_(exception);
-			}
+	current-directory-path: new-path
+		Posix chdir: new-path
 
-		return NULL;
 
-	c-fn run-program: name arguments: arguments
-		UsingMethod_(iterator) UsingMethod_(is_done) UsingMethod_(current_item)
-		UsingMethod_(go_forward) UsingMethod_(num_items)
+	run-program: name arguments: arguments
+		# Prepend the name to the arguments list.
+		args = List from: arguments
+		args prepend: name
 
-		/* Build the argv[] array. */
-		int numArgs = IntValue_(Call_(num_items, arguments));
-		char** args = (char**) Allocate_((numArgs + 2) * sizeof(char*));
-		args[0] = CString_(name);
-		int argNum = 1;
-		obj_ iterator = Call_(iterator, arguments);
-		while (1) {
-			if (Call_(is_done, iterator))
-				break;
+		# Run it.
+		pid = Posix fork
+		if pid == 0
+			# This is the child.
+			Posix execp: name arguments: args
+			Posix exit: 1
+		else if pid == -1
+			throw Posix ErrnoException
+		else
+			# This is the parent.
+			result = Posix wait-pid: pid
+			if !result is-valid || !result exited
+				error: "Child process didn't exit properly."
+			return result exit-status
 
-			obj_ arg = Call_(current_item, iterator);
-			args[argNum] = CString_(arg);
-
-			Call_(go_forward, iterator);
-			argNum += 1;
-			}
-		args[argNum] = NULL;
-
-		// run it
-		pid_t childPID = fork();
-		if (childPID == 0) {
-			// this is the child
-			execvp(args[0], args);
-			return BuildInt_(0);
-			}
-		else if (childPID != -1) {
-			// this is the parent; wait for the child
-			int status;
-			int result = waitpid(childPID, &status, 0);
-			if (result == -1 || !WIFEXITED(status))
-				return BuildInt_(-1);
-			return BuildInt_(WEXITSTATUS(status));
-			}
-
-		return NULL;
 
 	c-fn sysname
 		struct utsname names;

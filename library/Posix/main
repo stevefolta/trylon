@@ -13,22 +13,59 @@ c-fn strerror: errnum
 # Files.
 
 c-fn read-fd: fd to: buffer size: size
-	return BuildInt_(read(IntValue_(fd), BytePtrValue_(buffer), IntValue_(size)));
+	int result = read(IntValue_(fd), BytePtrValue_(buffer), IntValue_(size));
+	if (result < 0)
+		throw_errno();
+	return BuildInt_(result);
 
 c-fn write-fd: fd from: buffer size: size
-	return BuildInt_(write(IntValue_(fd), BytePtrValue_(buffer), IntValue_(size)));
+	int result = write(IntValue_(fd), BytePtrValue_(buffer), IntValue_(size));
+	if (result < 0)
+		throw_errno();
+	return BuildInt_(result);
 
-c-fn open: path int-flags: flags
-	return BuildInt_(open(CString_(path), IntValue_(flags)));
+c-fn open: path flags: flags
+	int result;
+	int intFlags = BitFlagsFromSyms_(flags, openFlags, NumEnumsIn_(openFlags));
+	if ((intFlags & O_CREAT) != 0) {
+		UsingClass_(NoOpenModeException__Posix);
+		extern obj_ new_co___NoOpenModeException__Posix(obj_, obj_);
+		Throw_(
+			new_co___NoOpenModeException__Posix(
+				Proto_(NoOpenModeException__Posix), path));
+		}
+	result = open(CString_(path), intFlags);
+	if (result < 1)
+		throw_errno();
+	return BuildInt_(result);
 
-open: path flags: flags
-	int-flags = 0
-	for flag in flags
-		int-flags |= value-for-flag: flag
-	return open: path int-flags: int-flags
+c-fn open: path flags: flags mode: mode
+	int intFlags = BitFlagsFromSyms_(flags, openFlags, NumEnumsIn_(openFlags));
+	int result = open(CString_(path), intFlags, IntValue_(mode));
+	if (result < 1)
+		throw_errno();
+	return BuildInt_(result);
 
 c-fn close-fd: fd
 	return BuildInt_(close(IntValue_(fd)));
+
+c-fn lseek-fd: fd offset: offset whence: whence
+	UsingSym_(SEEK_ul_CUR) UsingSym_(SEEK_ul_END) UsingSym_(SEEK_ul_SET)
+	UsingSym_(current) UsingSym_(eof) UsingSym_(set)
+	static const EnumDictEntry_ whenceDict[] = {
+		{ Sym_(SEEK_ul_CUR), SEEK_CUR },
+		{ Sym_(SEEK_ul_END), SEEK_END },
+		{ Sym_(SEEK_ul_SET), SEEK_SET },
+		{ Sym_(current), SEEK_CUR },
+		{ Sym_(eof), SEEK_END },
+		{ Sym_(set), SEEK_SET },
+		};
+	int whenceInt =
+		SymToEnum_(whence, whenceDict, NumEnumsIn_(whenceDict), SEEK_SET);
+	off_t result = lseek(IntValue_(fd), IntValue_(offset), whenceInt);
+	if (result == (off_t) -1)
+		throw_errno();
+	return BuildInt_(result);
 
 stdin-fd = 0
 stdout-fd = 1
@@ -63,22 +100,28 @@ class WaitResult
 		return child != -1
 
 	c-fn exited
-		return Bool_(WIFEXITED(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return Bool_(WIFEXITED(status));
 
 	c-fn exit-status
-		return BuildInt_(WEXITSTATUS(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return BuildInt_(WEXITSTATUS(status));
 	
 	c-fn signaled
-		return Bool_(WIFSIGNALED(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return Bool_(WIFSIGNALED(status));
 	
 	c-fn termination-signal
-		return BuildInt_(WTERMSIG(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return BuildInt_(WTERMSIG(status));
 	
 	c-fn stopped
-		return Bool_(WIFSTOPPED(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return Bool_(WIFSTOPPED(status));
 	
 	c-fn stop-signal
-		return BuildInt_(WSTOPSIG(IntValue_(Field_(status))));
+		int status = IntValue_(Field_(status));
+		return BuildInt_(WSTOPSIG(status));
 	
 	c-preamble
 		#include <sys/types.h>
@@ -101,11 +144,7 @@ c-fn wait-pid: pid options: options
 		};
 
 	/* Gather the options. */
-	ForStart_(1, options, option)
-		optionsInt |=
-			SymToEnum_(
-				option, optionDict, sizeof(optionDict) / sizeof(EnumDictEntry_), 0);
-		ForEnd_(1)
+	optionsInt = BitFlagsFromSyms_(options, optionDict, NumEnumsIn_(optionDict));
 	
 	/* Call waitpid(). */
 	child = waitpid(IntValue_(pid), &status, optionsInt);
@@ -135,6 +174,23 @@ c-fn exit: status
 	_exit(IntValue_(status));
 
 
+# "exec" family.
+
+c-fn exec: filename arguments: arguments environment: environment
+	char** args = build_args_list(arguments);
+	char** env = build_args_list(environment);
+	execve(CString_(filename), args, env);
+	throw_errno();
+
+c-fn exec: path arguments: arguments
+	execv(CString_(path), build_args_list(arguments));
+	throw_errno();
+
+c-fn execp: file arguments: arguments
+	execvp(CString_(file), build_args_list(arguments));
+	throw_errno();
+
+
 # Pipes.
 
 class PipeFDs
@@ -159,6 +215,43 @@ c-fn pipe
 			Proto_(PipeFDs__Posix), BuildInt_(pipefds[0]), BuildInt_(pipefds[1]));
 
 
+# Directories.
+
+c-fn getcwd
+	char* path = AllocNonPtr_(2048);
+	char* result = getcwd(path, 2048);
+	if (result == NULL)
+		throw_errno();
+	return BuildString_(path);
+
+c-fn chdir: path
+	if (chdir(CString_(path)) < 0)
+		throw_errno();
+
+c-fn fchdir: path
+	if (fchdir(IntValue_(path)) < 0)
+		throw_errno();
+
+
+c-fn mkdir: path mode: mode
+	if (mkdir(CString_(path), IntValue_(mode)) < 0)
+		throw_errno();
+
+c-fn rmdir: path
+	if (rmdir(CString_(path)) < 0)
+		throw_errno();
+
+
+# Random.
+
+c-fn rand
+	return BuildInt_(rand());
+
+c-fn srand: seed
+	srand(IntValue_(seed));
+
+
+
 # Private.
 
 c-preamble
@@ -172,31 +265,39 @@ c-preamble
 
 	static void throw_errno()
 	{
-		extern obj_ new__ErrnoException__Posix();
-		Throw_(new__ErrnoException__Posix());
+		extern obj_ new__ErrnoException__Posix(obj_);
+		UsingClass_(ErrnoException__Posix);
+		Throw_(new__ErrnoException__Posix(Proto_(ErrnoException__Posix)));
 	}
 
+	static char** build_args_list(obj_ arguments)
+	{
+		UsingMethod_(num_items)
+		int numArgs = IntValue_(Call_(num_items, arguments));
+		char** args = (char**) Allocate_((numArgs + 1) * sizeof(char*));
+		int argNum = 0;
+		ForStart_(1, arguments, arg)
+			args[argNum] = CString_(arg);
+			argNum += 1;
+			ForEnd_(1)
+		args[argNum] = NULL;
+		return args;
+	}
 
-c-fn value-for-flag: flag
-	UsingSym_(O_ul_RDONLY)
-	UsingSym_(O_ul_WRONLY)
-	UsingSym_(O_ul_RDWR)
-	UsingSym_(O_ul_APPEND)
-	UsingSym_(O_ul_ASYNC)
-	UsingSym_(O_ul_CREAT)
-	UsingSym_(O_ul_DIRECT)
-	UsingSym_(O_ul_DIRECTORY)
-	UsingSym_(O_ul_EXCL)
-	UsingSym_(O_ul_LARGEFILE)
-	UsingSym_(O_ul_NOATIME)
-	UsingSym_(O_ul_NOCTTY)
-	UsingSym_(O_ul_NOFOLLOW)
-	UsingSym_(O_ul_NONBLOCK)
-	UsingSym_(O_ul_NDELAY)
-	UsingSym_(O_ul_SYNC)
-	UsingSym_(O_ul_TRUNC)
+	UsingSym_(O_ul_RDONLY) UsingSym_(O_ul_WRONLY) UsingSym_(O_ul_RDWR)
+	UsingSym_(O_ul_APPEND) UsingSym_(O_ul_ASYNC) UsingSym_(O_ul_CREAT)
+	UsingSym_(O_ul_DIRECT) UsingSym_(O_ul_DIRECTORY)
+	UsingSym_(O_ul_EXCL) UsingSym_(O_ul_LARGEFILE)
+	UsingSym_(O_ul_NOATIME) UsingSym_(O_ul_NOCTTY) UsingSym_(O_ul_NOFOLLOW)
+	UsingSym_(O_ul_NONBLOCK) UsingSym_(O_ul_NDELAY)
+	UsingSym_(O_ul_SYNC) UsingSym_(O_ul_TRUNC)
+	UsingSym_(append) UsingSym_(async) UsingSym_(create) UsingSym_(direct) UsingSym_(directory)
+	UsingSym_(exclusive) UsingSym_(large_file)
+	UsingSym_(no_atime) UsingSym_(no_atime) UsingSym_(no_ctty) UsingSym_(no_follow)
+	UsingSym_(non_block) UsingSym_(ndelay) UsingSym_(sync) UsingSym_(trunc) UsingSym_(truncate)
+	UsingSym_(read_only) UsingSym_(read_write) UsingSym_(write_only)
 
-	static const EnumDictEntry_ flagsDict[] = {
+	static const EnumDictEntry_ openFlags[] = {
 		{ Sym_(O_ul_APPEND), O_APPEND },
 		{ Sym_(O_ul_ASYNC), O_ASYNC },
 		{ Sym_(O_ul_CREAT), O_CREAT },
@@ -221,11 +322,35 @@ c-fn value-for-flag: flag
 		{ Sym_(O_ul_RDWR), O_RDWR },
 		{ Sym_(O_ul_SYNC), O_SYNC },
 		{ Sym_(O_ul_TRUNC), O_TRUNC },
-		{ Sym_(O_ul_WRONLY), O_WRONLY }
+		{ Sym_(O_ul_WRONLY), O_WRONLY },
+		{ Sym_(append), O_APPEND },
+		{ Sym_(async), O_ASYNC },
+		{ Sym_(create), O_CREAT },
+		#ifdef __USE_GNU
+			{ Sym_(direct), O_DIRECT },
+			{ Sym_(directory), O_DIRECTORY },
+		#endif
+		{ Sym_(exclusive), O_EXCL },
+		#ifdef __USE_LARGEFILE64
+			{ Sym_(large_file), O_LARGEFILE },
+		#endif
+		#ifdef __USE_GNU
+			{ Sym_(no_atime), O_NOATIME },
+		#endif
+		{ Sym_(no_ctty), O_NOCTTY },
+		#ifdef __USE_GNU
+			{ Sym_(no_follow), O_NOFOLLOW },
+		#endif
+		{ Sym_(non_block), O_NONBLOCK },
+		{ Sym_(ndelay), O_NDELAY },
+		{ Sym_(read_only), O_RDONLY },
+		{ Sym_(read_write), O_RDWR },
+		{ Sym_(sync), O_SYNC },
+		{ Sym_(trunc), O_TRUNC },
+		{ Sym_(truncate), O_TRUNC },
+		{ Sym_(write_only), O_WRONLY },
 		};
-	int intFlag =
-		SymToEnum_(flag, flagsDict, sizeof(flagsDict) / sizeof(EnumDictEntry_), 0);
-	return BuildInt_(intFlag);
+
 
 
 class ErrnoException
@@ -236,6 +361,16 @@ class ErrnoException
 	
 	message
 		return strerror: errno
+
+
+class NoOpenModeException
+	field path
+
+	create: path
+		this path = path
+	
+	message
+		return "Attempt to create \"" + path + "\" without a mode."
 
 
 references
@@ -256,9 +391,35 @@ references
 	'O_NDELAY'
 	'O_SYNC'
 	'O_TRUNC'
+	'read-only'
+	'read-write'
+	'write-only'
+	'append'
+	'async'
+	'close-on-exec'
+	'create'
+	'direct'
+	'directory'
+	'exclusive'
+	'large-file'
+	'no-atime'
+	'no-ctty'
+	'no-follow'
+	'non-block'
+	'ndelay'
+	'sync'
+	'trunc'
+	'truncate'
 
 	'no-hang'
 	'untraced'
 	'WNOHANG'
 	'WUNTRACED'
+
+	'set'
+	'current'
+	'eof'
+	'SEEK_SET'
+	'SEEK_CUR'
+	'SEEK_END'
 

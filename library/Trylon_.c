@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #ifdef SYMBOL_DISPATCH_
 	#include <stdarg.h>
 #endif
@@ -11,6 +12,14 @@
 	#include "gc.h"
 #else
 	#include "gc/gc.h"
+#endif
+
+#if PTRDIFF_MAX < INT_MAX
+	#define TAGGED_INT_MAX	(PTRDIFF_MAX >> 1)
+	#define TAGGED_INT_MIN	(PTRDIFF_MIN >> 1)
+#else
+	#define TAGGED_INT_MAX	(INT_MAX >> 1)
+	#define TAGGED_INT_MIN	(INT_MIN >> 1)
 #endif
 
 
@@ -284,7 +293,7 @@ int IntValue_(obj_ obj)
 obj_ BuildInt_(int value)
 {
 #ifdef TAGGED_INTS_
-	if (value <= PTRDIFF_MAX >> 1 && value >= PTRDIFF_MIN >> 1)
+	if (value <= TAGGED_INT_MAX && value >= TAGGED_INT_MIN)
 		return SmallInt_(value);
 #endif
 
@@ -465,6 +474,18 @@ int SymToEnum_(
 }
 
 
+int BitFlagsFromSyms_(obj_ symbols, const EnumDictEntry_* dict, int dictSize)
+{
+	int flags = 0;
+	if (symbols) {
+		ForStart_(1, symbols, symbol)
+			flags |= SymToEnum_(symbol, dict, dictSize, 0);
+			ForEnd_(1)
+		}
+	return flags;
+}
+
+
 obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize)
 {
 	/* Linear search. */
@@ -496,7 +517,16 @@ int main(int argc, char* argv[])
 		Call_(append_co_, args, BuildString_(argv[whichArg]));
 
 	// Call the main function.
-	result = main_co___Main(Proto_(Main), args);
+	Try_ {
+		result = main_co___Main(Proto_(Main), args);
+		}
+	TryElse_ {
+		UsingMethod_(send_co_) UsingMethod_(message)
+		obj_ message = Call_(message, exception);
+		Call_(send_co_, Proto_(Standard), message);
+		result = BuildInt_(1);
+		}
+	EndTry_
 
 	// Return the result.
 	if (result == nil)

@@ -42,7 +42,7 @@ current-item
 			else if c < 0xF0
 				extension-bytes = 2
 				cached-char = c & 0x0F
-			else if c > 0xF0
+			else if c >= 0xF0
 				extension-bytes = 3
 				cached-char = c & 0x03
 			while extension-bytes > 0
