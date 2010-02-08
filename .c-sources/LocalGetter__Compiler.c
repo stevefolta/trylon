@@ -4,7 +4,7 @@ UsingSym_(LocalGetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(LocalGetter__Compiler)
 struct ClassInfo LocalGetter__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 134, 1, Proto_(LocalGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(LocalGetter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 139, 1, Proto_(LocalGetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(LocalGetter), nil, nil };
 struct object LocalGetter__Compiler = 
 	{ &LocalGetter__Compiler__classInfo_, {nil} };
 

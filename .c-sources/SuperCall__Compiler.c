@@ -4,7 +4,7 @@ UsingSym_(SuperCall)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(SuperCall__Compiler)
 struct ClassInfo SuperCall__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 143, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 148, 2, Proto_(SuperCall__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(SuperCall), nil, nil };
 struct object SuperCall__Compiler = 
 	{ &SuperCall__Compiler__classInfo_, {nil, nil} };
 

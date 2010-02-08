@@ -4,7 +4,7 @@ UsingSym_(LiteralResult)UsingClass_(X86Compiler)
 UsingClass_(Result__X86Compiler)
 UsingClass_(LiteralResult__X86Compiler)
 struct ClassInfo LiteralResult__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 203, 1, Proto_(LiteralResult__X86Compiler), Proto_(X86Compiler), Proto_(Result__X86Compiler), nil, Sym_(LiteralResult), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 208, 1, Proto_(LiteralResult__X86Compiler), Proto_(X86Compiler), Proto_(Result__X86Compiler), nil, Sym_(LiteralResult), nil, nil };
 struct object LiteralResult__X86Compiler = 
 	{ &LiteralResult__X86Compiler__classInfo_, {nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(LoopParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(LoopParser__MethodParser__Compiler)
 struct ClassInfo LoopParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 115, 0, Proto_(LoopParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(LoopParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 120, 0, Proto_(LoopParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(LoopParser), nil, nil };
 struct object LoopParser__MethodParser__Compiler = 
 	{ &LoopParser__MethodParser__Compiler__classInfo_, {} };
 

@@ -4,7 +4,7 @@ UsingSym_(BlankLine)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(BlankLine__Compiler)
 struct ClassInfo BlankLine__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 165, 1, Proto_(BlankLine__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlankLine), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 170, 1, Proto_(BlankLine__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(BlankLine), nil, nil };
 struct object BlankLine__Compiler = 
 	{ &BlankLine__Compiler__classInfo_, {nil} };
 

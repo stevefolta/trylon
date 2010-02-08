@@ -4,7 +4,7 @@ UsingSym_(CatchParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(CatchParser__MethodParser__Compiler)
 struct ClassInfo CatchParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 108, 0, Proto_(CatchParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(CatchParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 113, 0, Proto_(CatchParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(CatchParser), nil, nil };
 struct object CatchParser__MethodParser__Compiler = 
 	{ &CatchParser__MethodParser__Compiler__classInfo_, {} };
 

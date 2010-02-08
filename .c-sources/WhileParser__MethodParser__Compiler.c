@@ -4,7 +4,7 @@ UsingSym_(WhileParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(WhileParser__MethodParser__Compiler)
 struct ClassInfo WhileParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 120, 0, Proto_(WhileParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(WhileParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 125, 0, Proto_(WhileParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(WhileParser), nil, nil };
 struct object WhileParser__MethodParser__Compiler = 
 	{ &WhileParser__MethodParser__Compiler__classInfo_, {} };
 

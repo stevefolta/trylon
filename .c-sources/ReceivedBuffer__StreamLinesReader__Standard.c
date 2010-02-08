@@ -4,7 +4,7 @@ UsingSym_(ReceivedBuffer)UsingClass_(StreamLinesReader__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(ReceivedBuffer__StreamLinesReader__Standard)
 struct ClassInfo ReceivedBuffer__StreamLinesReader__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 82, 3, Proto_(ReceivedBuffer__StreamLinesReader__Standard), Proto_(StreamLinesReader__Standard), Proto_(Object__Standard), nil, Sym_(ReceivedBuffer), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 87, 3, Proto_(ReceivedBuffer__StreamLinesReader__Standard), Proto_(StreamLinesReader__Standard), Proto_(Object__Standard), nil, Sym_(ReceivedBuffer), nil, nil };
 struct object ReceivedBuffer__StreamLinesReader__Standard = 
 	{ &ReceivedBuffer__StreamLinesReader__Standard__classInfo_, {nil, nil, nil} };
 

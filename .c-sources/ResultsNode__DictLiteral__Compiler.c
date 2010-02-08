@@ -4,7 +4,7 @@ UsingSym_(ResultsNode)UsingClass_(DictLiteral__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ResultsNode__DictLiteral__Compiler)
 struct ClassInfo ResultsNode__DictLiteral__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 190, 7, Proto_(ResultsNode__DictLiteral__Compiler), Proto_(DictLiteral__Compiler), Proto_(Object__Standard), nil, Sym_(ResultsNode), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 195, 7, Proto_(ResultsNode__DictLiteral__Compiler), Proto_(DictLiteral__Compiler), Proto_(Object__Standard), nil, Sym_(ResultsNode), nil, nil };
 struct object ResultsNode__DictLiteral__Compiler = 
 	{ &ResultsNode__DictLiteral__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil} };
 

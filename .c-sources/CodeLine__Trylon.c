@@ -4,7 +4,7 @@ UsingSym_(CodeLine)UsingClass_(Trylon)
 UsingClass_(Object__Standard)
 UsingClass_(CodeLine__Trylon)
 struct ClassInfo CodeLine__Trylon__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 195, 2, Proto_(CodeLine__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(CodeLine), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 200, 2, Proto_(CodeLine__Trylon), Proto_(Trylon), Proto_(Object__Standard), nil, Sym_(CodeLine), nil, nil };
 struct object CodeLine__Trylon = 
 	{ &CodeLine__Trylon__classInfo_, {nil, nil} };
 

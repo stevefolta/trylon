@@ -4,7 +4,7 @@ UsingSym_(SymbolInfo)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SymbolInfo__Compiler)
 struct ClassInfo SymbolInfo__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 200, 5, Proto_(SymbolInfo__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SymbolInfo), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 205, 5, Proto_(SymbolInfo__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SymbolInfo), nil, nil };
 struct object SymbolInfo__Compiler = 
 	{ &SymbolInfo__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

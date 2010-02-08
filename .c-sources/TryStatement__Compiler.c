@@ -4,7 +4,7 @@ UsingSym_(TryStatement)UsingClass_(Compiler)
 UsingClass_(Statement__Compiler)
 UsingClass_(TryStatement__Compiler)
 struct ClassInfo TryStatement__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 175, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 180, 3, Proto_(TryStatement__Compiler), Proto_(Compiler), Proto_(Statement__Compiler), nil, Sym_(TryStatement), nil, nil };
 struct object TryStatement__Compiler = 
 	{ &TryStatement__Compiler__classInfo_, {nil, nil, nil} };
 

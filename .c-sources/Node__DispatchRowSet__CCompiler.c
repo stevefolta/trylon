@@ -4,7 +4,7 @@ UsingSym_(Node)UsingClass_(DispatchRowSet__CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(Node__DispatchRowSet__CCompiler)
 struct ClassInfo Node__DispatchRowSet__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 183, 4, Proto_(Node__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Node), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 188, 4, Proto_(Node__DispatchRowSet__CCompiler), Proto_(DispatchRowSet__CCompiler), Proto_(Object__Standard), nil, Sym_(Node), nil, nil };
 struct object Node__DispatchRowSet__CCompiler = 
 	{ &Node__DispatchRowSet__CCompiler__classInfo_, {nil, nil, nil, nil} };
 

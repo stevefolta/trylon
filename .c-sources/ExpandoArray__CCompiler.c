@@ -6,7 +6,7 @@ UsingSym_(ExpandoArray)UsingClass_(CCompiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpandoArray__CCompiler)
 struct ClassInfo ExpandoArray__CCompiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 185, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 190, 4, Proto_(ExpandoArray__CCompiler), Proto_(CCompiler), Proto_(Object__Standard), nil, Sym_(ExpandoArray), nil, ((obj_) tu0_) };
 struct object ExpandoArray__CCompiler = 
 	{ &ExpandoArray__CCompiler__classInfo_, {nil, nil, nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(Block)UsingClass_(Compiler)
 UsingClass_(Context__Compiler)
 UsingClass_(Block__Compiler)
 struct ClassInfo Block__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 97, 3, Proto_(Block__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(Block), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 102, 3, Proto_(Block__Compiler), Proto_(Compiler), Proto_(Context__Compiler), nil, Sym_(Block), nil, nil };
 struct object Block__Compiler = 
 	{ &Block__Compiler__classInfo_, {nil, nil, nil} };
 

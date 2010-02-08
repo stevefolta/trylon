@@ -4,7 +4,7 @@ UsingSym_(ElseParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ElseParser__MethodParser__Compiler)
 struct ClassInfo ElseParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 111, 0, Proto_(ElseParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ElseParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 116, 0, Proto_(ElseParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ElseParser), nil, nil };
 struct object ElseParser__MethodParser__Compiler = 
 	{ &ElseParser__MethodParser__Compiler__classInfo_, {} };
 

@@ -4,7 +4,7 @@ UsingSym_(ThrowParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ThrowParser__MethodParser__Compiler)
 struct ClassInfo ThrowParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 118, 0, Proto_(ThrowParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ThrowParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 123, 0, Proto_(ThrowParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ThrowParser), nil, nil };
 struct object ThrowParser__MethodParser__Compiler = 
 	{ &ThrowParser__MethodParser__Compiler__classInfo_, {} };
 

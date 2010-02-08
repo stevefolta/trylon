@@ -4,7 +4,7 @@ UsingSym_(TupleExpression)UsingClass_(Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(TupleExpression__Compiler)
 struct ClassInfo TupleExpression__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 156, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 161, 4, Proto_(TupleExpression__Compiler), Proto_(Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(TupleExpression), nil, nil };
 struct object TupleExpression__Compiler = 
 	{ &TupleExpression__Compiler__classInfo_, {nil, nil, nil, nil} };
 

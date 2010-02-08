@@ -4,7 +4,7 @@ UsingSym_(LiteralExpression)UsingClass_(X86Compiler)
 UsingClass_(TrylonExpression__Compiler)
 UsingClass_(LiteralExpression__X86Compiler)
 struct ClassInfo LiteralExpression__X86Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 157, 1, Proto_(LiteralExpression__X86Compiler), Proto_(X86Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LiteralExpression), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 162, 1, Proto_(LiteralExpression__X86Compiler), Proto_(X86Compiler), Proto_(TrylonExpression__Compiler), nil, Sym_(LiteralExpression), nil, nil };
 struct object LiteralExpression__X86Compiler = 
 	{ &LiteralExpression__X86Compiler__classInfo_, {nil} };
 

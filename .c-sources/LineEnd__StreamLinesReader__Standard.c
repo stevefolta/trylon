@@ -4,7 +4,7 @@ UsingSym_(LineEnd)UsingClass_(StreamLinesReader__Standard)
 UsingClass_(Object__Standard)
 UsingClass_(LineEnd__StreamLinesReader__Standard)
 struct ClassInfo LineEnd__StreamLinesReader__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 81, 2, Proto_(LineEnd__StreamLinesReader__Standard), Proto_(StreamLinesReader__Standard), Proto_(Object__Standard), nil, Sym_(LineEnd), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 86, 2, Proto_(LineEnd__StreamLinesReader__Standard), Proto_(StreamLinesReader__Standard), Proto_(Object__Standard), nil, Sym_(LineEnd), nil, nil };
 struct object LineEnd__StreamLinesReader__Standard = 
 	{ &LineEnd__StreamLinesReader__Standard__classInfo_, {nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(SharedFieldSetter)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(SharedFieldSetter__Compiler)
 struct ClassInfo SharedFieldSetter__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 125, 2, Proto_(SharedFieldSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldSetter), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 130, 2, Proto_(SharedFieldSetter__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(SharedFieldSetter), nil, nil };
 struct object SharedFieldSetter__Compiler = 
 	{ &SharedFieldSetter__Compiler__classInfo_, {nil, nil} };
 

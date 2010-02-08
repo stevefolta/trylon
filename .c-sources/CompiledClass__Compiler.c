@@ -4,7 +4,7 @@ UsingSym_(CompiledClass)UsingClass_(Compiler)
 UsingClass_(Class__Compiler)
 UsingClass_(CompiledClass__Compiler)
 struct ClassInfo CompiledClass__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 94, 17, Proto_(CompiledClass__Compiler), Proto_(Compiler), Proto_(Class__Compiler), nil, Sym_(CompiledClass), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 99, 17, Proto_(CompiledClass__Compiler), Proto_(Compiler), Proto_(Class__Compiler), nil, Sym_(CompiledClass), nil, nil };
 struct object CompiledClass__Compiler = 
 	{ &CompiledClass__Compiler__classInfo_, {nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil} };
 

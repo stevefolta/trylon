@@ -28,34 +28,28 @@ struct object System__Standard =
 #endif
 obj_ current_directory_path__System__Standard(obj_ this_)
 {
-char workingDirName[2048];
-getcwd(workingDirName, 2048);
-return BuildString_(workingDirName);
-return nil;
+	extern obj_ getcwd__Posix(obj_ this_);
+	obj_ t0_;
+	UsingClass_(Posix)
+
+		{
+		t0_ = getcwd__Posix(Proto_(Posix));
+		return t0_;
+		}
+	return nil;
 }
 
 
 obj_ current_directory_path_co___System__Standard(obj_ this_, obj_ new_path)
 {
-UsingMethod_(_pl_)
-UsingClass_(MessageException__Standard)
-extern obj_ new_co___MessageException__Standard(obj_, obj_);
+	extern obj_ chdir_co___Posix(obj_ this_, obj_ path);
+	obj_ t0_;
+	UsingClass_(Posix)
 
-char* dirPath = CString_(new_path);
-int result = chdir(dirPath);
-if (result != 0) {
-DefineString_(0, "Couldn't change to directory \"")
-DefineString_(1, "\".")
-obj_ message = Call_(_pl_, Str_(0), new_path);
-message = Call_(_pl_, message, Str_(1));
-obj_ exception =
-new_co___MessageException__Standard(
-Proto_(MessageException__Standard), message);
-Throw_(exception);
-}
-
-return NULL;
-return nil;
+		{
+		t0_ = chdir_co___Posix(Proto_(Posix), new_path);
+		}
+	return nil;
 }
 
 
@@ -115,45 +109,74 @@ return nil;
 
 obj_ run_program_co_arguments_co___System__Standard(obj_ this_, obj_ name, obj_ arguments)
 {
-UsingMethod_(iterator) UsingMethod_(is_done) UsingMethod_(current_item)
-UsingMethod_(go_forward) UsingMethod_(num_items)
+	extern obj_ from_co___List__Standard(obj_ this_, obj_ collection);
+	extern obj_ fork__Posix(obj_ this_);
+	extern obj_ execp_co_arguments_co___Posix(obj_ this_, obj_ file, obj_ arguments);
+	extern obj_ exit_co___Posix(obj_ this_, obj_ status);
+	extern obj_ wait_pid_co___Posix(obj_ this_, obj_ pid);
+	extern obj_ error_co___Standard(obj_ this_, obj_ message);
+	obj_ t0_;
+	obj_ t1_;
+	obj_ t2_;
+	obj_ t3_;
+	UsingInt_(0)
+	UsingInt_(1)
+	UsingInt_(1)
+	DefineString_(0, "Child process didn't exit properly.")
+	UsingMethod_(_eq__eq_) UsingMethod_(exit_status) UsingMethod_(exited) UsingMethod_(is_valid) UsingMethod_(prepend_co_) UsingMethod_(unary_minus)
+	UsingClass_(ErrnoException__Posix)
+	UsingClass_(List__Standard)
+	UsingClass_(Posix)
+	UsingClass_(Standard)
 
-/* Build the argv[] array. */
-int numArgs = IntValue_(Call_(num_items, arguments));
-char** args = (char**) Allocate_((numArgs + 2) * sizeof(char*));
-args[0] = CString_(name);
-int argNum = 1;
-obj_ iterator = Call_(iterator, arguments);
-while (1) {
-if (Call_(is_done, iterator))
-break;
-
-obj_ arg = Call_(current_item, iterator);
-args[argNum] = CString_(arg);
-
-Call_(go_forward, iterator);
-argNum += 1;
-}
-args[argNum] = NULL;
-
-// run it
-pid_t childPID = fork();
-if (childPID == 0) {
-// this is the child
-execvp(args[0], args);
-return BuildInt_(0);
-}
-else if (childPID != -1) {
-// this is the parent; wait for the child
-int status;
-int result = waitpid(childPID, &status, 0);
-if (result == -1 || !WIFEXITED(status))
-return BuildInt_(-1);
-return BuildInt_(WEXITSTATUS(status));
-}
-
-return NULL;
-return nil;
+		{
+		obj_ args, pid;
+		/*  Prepend the name to the arguments list. */
+		t0_ = from_co___List__Standard(Proto_(List__Standard), arguments);
+		args = t0_;
+		t0_ = Call_(prepend_co_, args, name);
+		
+		/*  Run it. */
+		t0_ = fork__Posix(Proto_(Posix));
+		pid = t0_;
+		t0_ = Call_(_eq__eq_, pid, SmallInt_(0));
+		if (t0_)
+			{
+			/*  This is the child. */
+			t0_ = execp_co_arguments_co___Posix(Proto_(Posix), name, args);
+			t0_ = exit_co___Posix(Proto_(Posix), SmallInt_(1));
+			}
+		else
+			{
+			t0_ = Call_(unary_minus, SmallInt_(1));
+			t1_ = Call_(_eq__eq_, pid, t0_);
+			if (t1_)
+				{
+				Throw_(Proto_(ErrnoException__Posix));
+				}
+			else
+				{
+				obj_ result;
+				/*  This is the parent. */
+				t0_ = wait_pid_co___Posix(Proto_(Posix), pid);
+				result = t0_;
+				t0_ = Call_(is_valid, result);
+				t1_ = Not_(t0_);
+				if ((t1_) == nil) {
+					t2_ = Call_(exited, result);
+					t3_ = Not_(t2_);
+					t1_ = t3_;
+					}
+				if (t1_)
+					{
+					t0_ = error_co___Standard(Proto_(Standard), Str_(0));
+					}
+				t0_ = Call_(exit_status, result);
+				return t0_;
+				}
+			}
+		}
+	return nil;
 }
 
 

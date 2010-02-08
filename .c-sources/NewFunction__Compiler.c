@@ -4,7 +4,7 @@ UsingSym_(NewFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(NewFunction__Compiler)
 struct ClassInfo NewFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 127, 3, Proto_(NewFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NewFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 132, 3, Proto_(NewFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(NewFunction), nil, nil };
 struct object NewFunction__Compiler = 
 	{ &NewFunction__Compiler__classInfo_, {nil, nil, nil} };
 

@@ -4,7 +4,7 @@ UsingSym_(ClassParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ClassParser__Compiler)
 struct ClassInfo ClassParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 101, 5, Proto_(ClassParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ClassParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 106, 5, Proto_(ClassParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ClassParser), nil, nil };
 struct object ClassParser__Compiler = 
 	{ &ClassParser__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

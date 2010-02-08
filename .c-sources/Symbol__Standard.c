@@ -4,15 +4,14 @@ UsingSym_(Symbol)UsingClass_(Standard)
 UsingClass_(String__Standard)
 UsingClass_(Symbol__Standard)
 struct ClassInfo Symbol__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 56, 3, Proto_(Symbol__Standard), Proto_(Standard), Proto_(String__Standard), nil, Sym_(Symbol), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 56, 2, Proto_(Symbol__Standard), Proto_(Standard), Proto_(String__Standard), nil, Sym_(Symbol), nil, nil };
 struct object Symbol__Standard = 
-	{ &Symbol__Standard__classInfo_, {nil, nil, nil} };
+	{ &Symbol__Standard__classInfo_, {nil, nil} };
 
 
 #define start__fld_	(0)
 #define stopper__fld_	(1)
 
-#define _dt__ul_selector__fld_	(2)
 
 DeclareSharedField_(built_in_table, Symbol__Standard, nil)
 DeclareSharedField_(dynamic_table, Symbol__Standard, nil)
@@ -68,7 +67,7 @@ obj_ create_co_to_co___Symbol__Standard(obj_ this_, obj_ start, obj_ stopper)
 {
 extern obj_ create_co_to_co___String__Standard(obj_, obj_, obj_);
 create_co_to_co___String__Standard(this_, start, stopper);
-Field_(_dt__ul_selector) = (obj_) -1;
+((struct Standard__Symbol__internal*) this_)->selector = -1;
 return nil;
 }
 
@@ -201,7 +200,8 @@ obj_ print_string__Symbol__Standard(obj_ this_)
 
 obj_ selector__Symbol__Standard(obj_ this_)
 {
-return BuildInt_((int) Field_(_dt__ul_selector));
+int selector = ((struct Standard__Symbol__internal*) this_)->selector;
+return BuildInt_(selector);
 return nil;
 }
 

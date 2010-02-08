@@ -4,7 +4,7 @@ UsingSym_(SwitchOptionsParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(SwitchOptionsParser__Compiler)
 struct ClassInfo SwitchOptionsParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 208, 2, Proto_(SwitchOptionsParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchOptionsParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 213, 2, Proto_(SwitchOptionsParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(SwitchOptionsParser), nil, nil };
 struct object SwitchOptionsParser__Compiler = 
 	{ &SwitchOptionsParser__Compiler__classInfo_, {nil, nil} };
 

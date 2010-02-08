@@ -4,7 +4,7 @@ UsingSym_(ReturnParser)UsingClass_(MethodParser__Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ReturnParser__MethodParser__Compiler)
 struct ClassInfo ReturnParser__MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 116, 0, Proto_(ReturnParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ReturnParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 121, 0, Proto_(ReturnParser__MethodParser__Compiler), Proto_(MethodParser__Compiler), Proto_(Object__Standard), nil, Sym_(ReturnParser), nil, nil };
 struct object ReturnParser__MethodParser__Compiler = 
 	{ &ReturnParser__MethodParser__Compiler__classInfo_, {} };
 

@@ -6,7 +6,7 @@ UsingSym_(StreamLinesReader)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(StreamLinesReader__Standard)
 struct ClassInfo StreamLinesReader__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 80, 5, Proto_(StreamLinesReader__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(StreamLinesReader), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 85, 5, Proto_(StreamLinesReader__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(StreamLinesReader), nil, ((obj_) tu0_) };
 struct object StreamLinesReader__Standard = 
 	{ &StreamLinesReader__Standard__classInfo_, {nil, nil, nil, nil, nil} };
 

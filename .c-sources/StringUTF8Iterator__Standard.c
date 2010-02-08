@@ -226,7 +226,7 @@ obj_ current_item__StringUTF8Iterator__Standard(obj_ this_)
 							}
 						else
 							{
-							t0_ = Call_(_gt_, c, SmallInt_(240));
+							t0_ = Call_(_gt__eq_, c, SmallInt_(240));
 							if (t0_)
 								{
 								extension_bytes = SmallInt_(3);

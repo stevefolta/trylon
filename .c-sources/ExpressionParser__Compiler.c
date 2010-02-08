@@ -4,7 +4,7 @@ UsingSym_(ExpressionParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(ExpressionParser__Compiler)
 struct ClassInfo ExpressionParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 206, 3, Proto_(ExpressionParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ExpressionParser), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 211, 3, Proto_(ExpressionParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(ExpressionParser), nil, nil };
 struct object ExpressionParser__Compiler = 
 	{ &ExpressionParser__Compiler__classInfo_, {nil, nil, nil} };
 

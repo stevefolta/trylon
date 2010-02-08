@@ -177,6 +177,7 @@ UsingClass_(Tuple__Standard)
 UsingClass_(Dictionary__Standard)
 UsingClass_(Node__Dictionary__Standard)
 UsingClass_(True__Standard)
+UsingClass_(Standard)
 #ifdef NIL_OBJECT_
 UsingClass_(nil__Standard)
 #endif
@@ -341,7 +342,7 @@ extern obj_ currentException_;
 
 #ifdef TAGGED_INTS_
 	extern int IntValue_(obj_ obj);
-	#define SmallInt_(value)	((obj_) ((value << 1) | 0x01))
+	#define SmallInt_(value)	((obj_) (ptrdiff_t) ((value << 1) | 0x01))
 	#define IsTaggedInt_(obj)	(((ptrdiff_t) obj) & 0x01 != 0)
 #else
 	#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
@@ -378,7 +379,9 @@ typedef struct EnumDictEntry_ {
 } EnumDictEntry_;
 extern int SymToEnum_(
 	obj_ symbol, const EnumDictEntry_* dict, int dictSize, int notFoundValue);
+extern int BitFlagsFromSyms_(obj_ symbols, const EnumDictEntry_* dict, int dictSize);
 extern obj_ EnumToSym_(int value, const EnumDictEntry_* dict, int dictSize);
+#define NumEnumsIn_(array)	(sizeof(array) / sizeof(EnumDictEntry_))
 
 
 

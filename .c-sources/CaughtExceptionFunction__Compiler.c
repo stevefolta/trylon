@@ -4,7 +4,7 @@ UsingSym_(CaughtExceptionFunction)UsingClass_(Compiler)
 UsingClass_(TrylonFunction__Compiler)
 UsingClass_(CaughtExceptionFunction__Compiler)
 struct ClassInfo CaughtExceptionFunction__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 137, 0, Proto_(CaughtExceptionFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CaughtExceptionFunction), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 142, 0, Proto_(CaughtExceptionFunction__Compiler), Proto_(Compiler), Proto_(TrylonFunction__Compiler), nil, Sym_(CaughtExceptionFunction), nil, nil };
 struct object CaughtExceptionFunction__Compiler = 
 	{ &CaughtExceptionFunction__Compiler__classInfo_, {} };
 

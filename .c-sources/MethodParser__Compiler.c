@@ -6,7 +6,7 @@ UsingSym_(MethodParser)UsingClass_(Compiler)
 UsingClass_(Object__Standard)
 UsingClass_(MethodParser__Compiler)
 struct ClassInfo MethodParser__Compiler__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 106, 5, Proto_(MethodParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(MethodParser), nil, ((obj_) tu0_) };
+	{ StdClassRef_(Class__CImplementation), 111, 5, Proto_(MethodParser__Compiler), Proto_(Compiler), Proto_(Object__Standard), nil, Sym_(MethodParser), nil, ((obj_) tu0_) };
 struct object MethodParser__Compiler = 
 	{ &MethodParser__Compiler__classInfo_, {nil, nil, nil, nil, nil} };
 

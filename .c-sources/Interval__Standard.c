@@ -4,7 +4,7 @@ UsingSym_(Interval)UsingClass_(Standard)
 UsingClass_(Object__Standard)
 UsingClass_(Interval__Standard)
 struct ClassInfo Interval__Standard__classInfo_ = 
-	{ StdClassRef_(Class__CImplementation), 188, 3, Proto_(Interval__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Interval), nil, nil };
+	{ StdClassRef_(Class__CImplementation), 193, 3, Proto_(Interval__Standard), Proto_(Standard), Proto_(Object__Standard), nil, Sym_(Interval), nil, nil };
 struct object Interval__Standard = 
 	{ &Interval__Standard__classInfo_, {nil, nil, nil} };
 
