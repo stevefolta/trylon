@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #ifdef SYMBOL_DISPATCH_
 	#include <stdarg.h>
 #endif
@@ -11,6 +12,14 @@
 	#include "gc.h"
 #else
 	#include "gc/gc.h"
+#endif
+
+#if PTRDIFF_MAX < INT_MAX
+	#define TAGGED_INT_MAX	(PTRDIFF_MAX >> 1)
+	#define TAGGED_INT_MIN	(PTRDIFF_MIN >> 1)
+#else
+	#define TAGGED_INT_MAX	(INT_MAX >> 1)
+	#define TAGGED_INT_MIN	(INT_MIN >> 1)
 #endif
 
 
@@ -284,7 +293,7 @@ int IntValue_(obj_ obj)
 obj_ BuildInt_(int value)
 {
 #ifdef TAGGED_INTS_
-	if (value <= PTRDIFF_MAX >> 1 && value >= PTRDIFF_MIN >> 1)
+	if (value <= TAGGED_INT_MAX && value >= TAGGED_INT_MIN)
 		return SmallInt_(value);
 #endif
 

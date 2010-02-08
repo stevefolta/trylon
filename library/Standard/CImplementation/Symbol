@@ -2,15 +2,14 @@ trylon Symbol
 
 extend Standard Symbol
 	iff support-perform
-		field ._selector
-
 		c-fn create: start to: stopper
 			extern obj_ create_co_to_co___String__Standard(obj_, obj_, obj_);
 			create_co_to_co___String__Standard(this_, start, stopper);
-			Field_(_dt__ul_selector) = (obj_) -1;
+			((struct Standard__Symbol__internal*) this_)->selector = -1;
 
 		c-fn selector
-			return BuildInt_((int) Field_(_dt__ul_selector));
+			int selector = ((struct Standard__Symbol__internal*) this_)->selector;
+			return BuildInt_(selector);
 
 	# Dynamic lookup.
 

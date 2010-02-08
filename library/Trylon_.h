@@ -342,7 +342,7 @@ extern obj_ currentException_;
 
 #ifdef TAGGED_INTS_
 	extern int IntValue_(obj_ obj);
-	#define SmallInt_(value)	((obj_) ((value << 1) | 0x01))
+	#define SmallInt_(value)	((obj_) (ptrdiff_t) ((value << 1) | 0x01))
 	#define IsTaggedInt_(obj)	(((ptrdiff_t) obj) & 0x01 != 0)
 #else
 	#define IntValue_(obj) 	(((struct Standard__Int__internal*) obj)->value)
