@@ -11,7 +11,7 @@ endif
 set iskeyword+=-
 
 " Keywords
-syn keyword Keyword	trylon trylid class superclass field fields extend
+syn keyword Keyword	trylon trylid class superclass field fields extend uses
 syn keyword Keyword fn class-fn primitive-fn c-fn
 syn keyword Keyword c-preamble coke
 syn keyword Conditional	if else switch iff
