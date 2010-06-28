@@ -13,10 +13,17 @@ environment-variable-named: name
 
 current-directory-path
 current-directory-path: new-path
-run-program: name arguments: arguments
+
 sysname
 strftime: time-int format: format
 
+run-program: name arguments: arguments
+run-program: name with: arguments
+	run-program: name arguments: arguments
+run: program with: arguments
+	run-program: program arguments: arguments
+run: program
+	run-program: program arguments: nil
 
 
 # Copyright 2007 Steve Folta.  See the License file.
