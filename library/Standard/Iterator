@@ -9,6 +9,8 @@ go-forward
 
 
 next
+	if is-done
+		return nil
 	result = current-item
 	go-forward
 	return result
