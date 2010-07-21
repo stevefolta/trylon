@@ -55,7 +55,11 @@ div.titleless-entry-date {
 	color: gray;
 }
 
-div.code {
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div.plain-code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
 	font-size: smaller;
@@ -90,9 +94,7 @@ span.trylon-comment {
 	color: gray;
 }
 
-
 </style>
-
 </head>
 
 
@@ -367,7 +369,7 @@ A few symbols are defined automatically in the build-settings.  Most notably, th
 </div>
 
 <p>
-Also defined are "trylon-2" (to distinguish from Trylon 1), "targeting-c" or "targeting-jolt", depending on which backend you're using, and "in-jolt" if the compiler itself is actually running within Jolt.
+Also defined are "trylon-2" (to distinguish from Trylon 1; Trylon 3 also defines it), and "targeting-c" to distinguish the C backend from the other backends (like the now-deleted Jolt backend, or any future backends).
 </p>
 
 </div>

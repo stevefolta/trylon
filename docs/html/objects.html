@@ -55,7 +55,11 @@ div.titleless-entry-date {
 	color: gray;
 }
 
-div.code {
+div.page-link {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div.plain-code {
 	margin-bottom: 1em;
 	font-family: Courier, monospace;
 	font-size: smaller;
@@ -90,9 +94,7 @@ span.trylon-comment {
 	color: gray;
 }
 
-
 </style>
-
 </head>
 
 
@@ -176,10 +178,6 @@ In Trylon, classes also can act as namespaces (a.k.a. packages).  One class may 
 
 <p>
 There is a top-level namespace called "Main", which acts as a global namespace for all Trylon objects.  There is a namespace called "Standard" which contains some common classes.  One of these is "Object", from which all prototypes descend.  You can access the members of "Standard" without having to specify it explicitly.
-</p>
-
-<p>
-If you're using the Fonc/Jolt/Id backend, there are a few differences from the above.  The main namespace is called "Trylon" instead of "Main".  Also, a namespace called "Pepsi" (actually "Standard Pepsi") allows access to Pepsi's namespace.  And a namespace called "Posix" contains some prototypes that access types from the Posix C API.
 </p>
 
 </div>
