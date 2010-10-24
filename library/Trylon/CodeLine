@@ -1,6 +1,7 @@
 trylon CodeLine
 
 fields text block
+fields indentation-level
 
 create: text block: block
 	this text = text
@@ -9,6 +10,10 @@ create: text block: block
 create: text
 	this text = text
 	this block = nil
+
+create: text indentation-level: indentation-level
+	this text = text
+	this indentation-level = indentation-level
 
 
 words

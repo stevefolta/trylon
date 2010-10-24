@@ -115,7 +115,7 @@ lex
 			text += continuation-line
 
 		# Add the line.
-		cur-lines append: (CodeLine new: text)
+		cur-lines append: (CodeLine new: text indentation-level: cur-indentation)
 
 	return lines
 
