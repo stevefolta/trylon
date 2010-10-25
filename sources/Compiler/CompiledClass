@@ -218,8 +218,13 @@ add-directory: directory
 
 
 load-class-file: file into: class
+	prev-file = compiler cur-file
+	compiler cur-file = file
 	lines = (Trylon LinesLexer new: file contents) lex
 	ClassParser parse-class-contents: lines into: class
+	if compiler tags
+		compiler tags add-class-tag: class name file: file
+	compiler cur-file = prev-file
 
 
 setup-main: main-directory library-directory: library-directory

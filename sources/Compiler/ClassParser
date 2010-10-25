@@ -101,12 +101,16 @@ parse-member-class
 	report: "Parsing " + name + "..."
 	indent
 
+	# Add the tag.  Do this before "line" changes.
+	if compiler tags
+		compiler tags add-class-tag: name line: line
+	
 	# Create (or get) the class.
 	member-class = context add-proto: name
 
 	# Read the contents (if any).
 	parse-class-contents: line block into: member-class
-	
+
 	unindent
 
 
@@ -181,6 +185,10 @@ parse-function: initial-name is-primitive: is-primitive
 	words require-eol
 
 	report: "Parsing " + name + "..."
+
+	# Tags.  Do this before "line" changes".
+	if compiler tags
+		compiler tags add-function-tag: name line: line
 
 	# Parse the body.
 	body = nil
