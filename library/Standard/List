@@ -1,4 +1,5 @@
 trylon List
+superclass Collection
 
 fields first-cell last-cell
 
