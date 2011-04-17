@@ -1,0 +1,93 @@
+trylon TM
+
+fields tm-ptr
+
+
+now
+	return TM new-now
+now-gmt
+	return TM new-now-gmt
+now-utc
+	return TM new-now-gmt
+
+c-fn create-now
+	struct tm* tm = (struct tm*) AllocNonPtr_(sizeof(struct tm));
+	time_t cur_time = time(NULL);
+	localtime_r(&cur_time, tm);
+	Field_(tm_ptr) = BuildBytePtr_(tm);
+
+c-fn create-now-gmt
+	struct tm* tm = (struct tm*) AllocNonPtr_(sizeof(struct tm));
+	time_t cur_time = time(NULL);
+	gmtime_r(&cur_time, tm);
+	Field_(tm_ptr) = BuildBytePtr_(tm);
+
+
+c-fn seconds
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_sec);
+c-fn seconds: new-seconds
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_sec = IntValue_(new_seconds);
+
+c-fn minutes
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_min);
+c-fn minutes: new-minutes
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_min = IntValue_(new_minutes);
+
+c-fn hours
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_hour);
+c-fn hours: new-hours
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_hour = IntValue_(new_hours);
+
+c-fn mday
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_mday);
+c-fn mday: new-mday
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_mday = IntValue_(new_mday);
+
+# NOTE: TM month is zero-based!
+c-fn month
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_mon);
+c-fn month: new-month
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_mon = IntValue_(new_month);
+
+c-fn year
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_year);
+c-fn year: new-year
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_year = IntValue_(new_year);
+
+c-fn weekday
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_wday);
+c-fn weekday: new-weekday
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_wday = IntValue_(new_weekday);
+
+c-fn day-of-year
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return BuildInt_(tm->tm_yday);
+c-fn day-of-year: new-day-of-year
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_yday = IntValue_(new_day_of_year);
+
+c-fn is-dst
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	return Bool_(tm->tm_isdst > 0);
+c-fn is-dst: new-is-dst
+	struct tm* tm = (struct tm*) BytePtrValue_(Field_(tm_ptr));
+	tm->tm_isdst = (new_is_dst ? 1 : 0);
+
+
+c-preamble
+	#include <time.h>
+
