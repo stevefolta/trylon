@@ -39,6 +39,11 @@ extend Standard Float
 		sprintf(str, "%f", FloatValue_(this_));
 		return BuildString_(str);
 
+	c-fn string: precision
+		char str[64];
+		sprintf(str, "%.*f", IntValue_(precision), FloatValue_(this_));
+		return BuildString_(str);
+
 	c-fn int
 		return BuildInt_(FloatValue_(this_));
 
