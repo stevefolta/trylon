@@ -928,7 +928,7 @@ compile-int-literal: literal
 	return compile-literal: literal value
 
 compile-char-literal: literal
-	return compile-literal: literal value
+	return compile-literal: literal char
 
 compile-bool-literal: literal
 	# Don't need to keep these on the list.
