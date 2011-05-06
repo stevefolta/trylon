@@ -2,6 +2,7 @@ trylon X86Compiler
 fields class-queue
 
 word-size = 4
+tags = nil
 
 
 reload: proto from: file-path
