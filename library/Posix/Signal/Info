@@ -1,0 +1,52 @@
+trylon Info
+
+fields info
+
+create: info
+	this info = info
+
+c-fn signo
+	return BuildInt_(info_->si_signo);
+c-fn errno
+	return BuildInt_(info_->si_errno);
+c-fn code
+	return BuildInt_(info_->si_code);
+
+c-fn pid
+	return BuildInt_(info_->si_pid);
+c-fn uid
+	return BuildInt_(info_->si_uid);
+c-fn status
+	return BuildInt_(info_->si_status);
+c-fn utime
+	return BuildInt_(info_->si_utime);
+c-fn stime
+	return BuildInt_(info_->si_stime);
+
+c-fn timerid
+	return BuildInt_(info_->si_timerid);
+c-fn overrun
+	return BuildInt_(info_->si_overrun);
+
+c-fn value-int
+	return BuildInt_(info_->si_int);
+c-fn value-ptr
+	return BuildBytePtr_(info_->si_ptr);
+
+c-fn addr
+	return BuildBytePtr_(info_->si_addr);
+
+c-fn band
+	return BuildInt_(info_->si_band);
+c-fn fd
+	return BuildInt_(info_->si_fd);
+
+
+# Internal.
+
+c-preamble
+	#include <signal.h>
+
+	#define info_ ((siginfo_t*) BytePtrValue_(Field_(info)))
+
+

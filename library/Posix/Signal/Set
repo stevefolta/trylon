@@ -1,0 +1,32 @@
+trylon Set
+
+fields set
+
+c-fn create
+	Field_(set) = BuildBytePtr_(AllocNonPtr_(sizeof(sigset_t)));
+
+c-fn empty
+	sigemptyset(set_);
+clear
+	empty
+c-fn fill
+	sigfillset(set_);
+
+c-fn add: signal
+	sigaddset(set_, signal_name_to_int__Signal__Posix(signal));
+
+c-fn del: signal
+	sigdelset(set_, signal_name_to_int__Signal__Posix(signal));
+remove: signal
+	del: signal
+
+c-fn is-member: signal
+	return Bool_(sigismember(set_, signal_name_to_int__Signal__Posix(signal)));
+
+c-preamble
+	#include <signal.h>
+
+	#define set_ ((sigset_t*) BytePtrValue_(Field_(set)))
+
+	extern int signal_name_to_int__Signal__Posix(obj_ name);
+

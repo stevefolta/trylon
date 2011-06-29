@@ -1,0 +1,11 @@
+trylon Handler
+
+
+handle-signal: signal info: info context: context
+	# Default: don't care about context.
+	handle-signal: signal info: info
+
+handle-signal: signal info: info
+	# Default: do nothing.
+
+

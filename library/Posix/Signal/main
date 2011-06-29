@@ -1,0 +1,169 @@
+trylon Signal
+
+
+handle: signal with: handler mask: mask flags: flags
+	mask-set = mask
+	if mask == nil || !mask is-a: Set
+		mask-set = Set new
+		mask-set empty
+		for signal in mask
+			mask-set add: signal
+	raw-handle: signal with: handler mask: mask-set flags: flags
+
+handle: signal with: handler
+	handle: signal with: handler mask: nil flags: nil
+handle: signal with: handler mask: mask
+	handle: signal with: handler mask: mask flags: nil
+handle: signal with: handler flags: flags
+	handle: signal with: handler mask: nil flags: flags
+
+c-fn raw-handle: signal with: handler mask: mask flags: flags
+	UsingSym_(SIG_ul_IGN) UsingSym_(SIG_ul_DFL)
+	UsingSym_(ignore) UsingSym_(default)
+	UsingMethod_(bad_signal_name) UsingMethod_(set)
+
+	int signo = signal_name_to_int__Signal__Posix(signal);
+	int numPossibleSignals = SIGRTMAX + 1;
+	if (signo < 0 || signo >= numPossibleSignals)
+		Call_(bad_signal_name, this_);
+
+	if (handlers == NULL) {
+		handlers = Allocate_(numPossibleSignals * sizeof(obj_));
+		}
+	handlers[signo] = handler;
+
+	struct sigaction action;
+	action.sa_mask = *(sigset_t*) BytePtrValue_(Call_(set, mask));
+	action.sa_flags = 0;
+	ForStart_(1, flags, flag)
+		action.sa_flags |= SymToEnum_(flag, flagNames, NumEnumsIn_(flagNames), 0);
+		ForEnd_(1)
+	if (handler == NULL || handler == Sym_(SIG_ul_IGN) || handler == Sym_(ignore))
+		action.sa_handler = SIG_IGN;
+	else if (handler == Sym_(SIG_ul_DFL) || handler == Sym_(default))
+		action.sa_handler = SIG_DFL;
+	else {
+		action.sa_flags |= SA_SIGINFO;
+		action.sa_sigaction = handle_signal;
+		}
+	int result = sigaction(signo, &action, NULL);
+	if (result < 0) {
+		extern obj_ new__ErrnoException__Posix(obj_);
+		UsingClass_(ErrnoException__Posix);
+		Throw_(new__ErrnoException__Posix(Proto_(ErrnoException__Posix)));
+		}
+
+
+# Internal.
+
+c-preamble
+	#include <signal.h>
+
+	UsingSym_(SIGHUP) UsingSym_(SIGINT) UsingSym_(SIGQUIT) UsingSym_(SIGILL)
+	UsingSym_(SIGABRT) UsingSym_(SIGFPE) UsingSym_(SIGKILL) UsingSym_(SIGSEGV)
+	UsingSym_(SIGPIPE) UsingSym_(SIGALRM) UsingSym_(SIGTERM) UsingSym_(SIGUSR1)
+	UsingSym_(SIGUSR2) UsingSym_(SIGCHLD) UsingSym_(SIGCONT) UsingSym_(SIGSTOP)
+	UsingSym_(SIGTSTP) UsingSym_(SIGTTIN) UsingSym_(SIGTTOU) 
+
+	UsingSym_(SA_ul_NOCLDSTOP) UsingSym_(SA_ul_ONSTACK)
+	UsingSym_(SA_ul_RESETHAND) UsingSym_(SA_ul_RESTART)
+	UsingSym_(SA_ul_NOCLDWAIT) UsingSym_(SA_ul_NODEFER)
+
+	static const EnumDictEntry_ signalNames[] = {
+		{ Sym_(SIGABRT), SIGABRT },
+		{ Sym_(SIGALRM), SIGALRM },
+		{ Sym_(SIGCHLD), SIGCHLD },
+		{ Sym_(SIGCONT), SIGCONT },
+		{ Sym_(SIGFPE), SIGFPE },
+		{ Sym_(SIGHUP), SIGHUP },
+		{ Sym_(SIGILL), SIGILL },
+		{ Sym_(SIGINT), SIGINT },
+		{ Sym_(SIGKILL), SIGKILL },
+		{ Sym_(SIGPIPE), SIGPIPE },
+		{ Sym_(SIGQUIT), SIGQUIT },
+		{ Sym_(SIGSEGV), SIGSEGV },
+		{ Sym_(SIGSTOP), SIGSTOP },
+		{ Sym_(SIGTERM), SIGTERM },
+		{ Sym_(SIGTSTP), SIGTSTP },
+		{ Sym_(SIGTTIN), SIGTTIN },
+		{ Sym_(SIGTTOU), SIGTTOU },
+		{ Sym_(SIGUSR1), SIGUSR1 },
+		{ Sym_(SIGUSR2), SIGUSR2 },
+		};
+
+	int signal_name_to_int__Signal__Posix(obj_ name) {
+		return SymToEnum_(name, signalNames, NumEnumsIn_(signalNames), -1);
+		}
+
+	static const EnumDictEntry_ flagNames[] = {
+		{ Sym_(SA_ul_NOCLDSTOP), SA_NOCLDSTOP },
+		{ Sym_(SA_ul_NOCLDWAIT), SA_NOCLDWAIT },
+		{ Sym_(SA_ul_NODEFER), SA_NODEFER },
+		{ Sym_(SA_ul_ONSTACK), SA_ONSTACK },
+		{ Sym_(SA_ul_RESETHAND), SA_RESETHAND },
+		{ Sym_(SA_ul_RESTART), SA_RESTART },
+		};
+	
+	static obj_* handlers = NULL;
+
+	static void handle_signal(int signo, siginfo_t* info, void* context) {
+		UsingMethod_(handle_signal_co_info_co_context_co_);
+		UsingClass_(Info__Signal__Posix);
+		extern obj_ new_co___Info__Signal__Posix(obj_, obj_);
+
+		if (handlers == NULL)
+			return;
+		obj_ handler = handlers[signo];
+		if (handler == NULL)
+			return;
+		obj_ infoObj =
+			new_co___Info__Signal__Posix(
+				Proto_(Info__Signal__Posix), BuildBytePtr_(info));
+		Call_(
+			handle_signal_co_info_co_context_co_, handler,
+			EnumToSym_(signo, signalNames, NumEnumsIn_(signalNames)),
+			infoObj,
+			BuildBytePtr_(context));
+		}
+
+
+bad-signal-name
+	throw: "Invalid signal name."
+
+
+references
+	Handler
+
+	'SIGHUP'
+	'SIGINT'
+	'SIGQUIT'
+	'SIGILL'
+	'SIGABRT'
+	'SIGFPE'
+	'SIGKILL'
+	'SIGSEGV'
+	'SIGPIPE'
+	'SIGALRM'
+	'SIGTERM'
+	'SIGUSR1'
+	'SIGUSR2'
+	'SIGCHLD'
+	'SIGCONT'
+	'SIGSTOP'
+	'SIGTSTP'
+	'SIGTTIN'
+	'SIGTTOU'
+
+	'SIG_IGN'
+	'SIG_DFL'
+	'ignore'
+	'default'
+
+	'SA_NOCLDSTOP'
+	'SA_ONSTACK'
+	'SA_RESETHAND'
+	'SA_RESTART'
+	'SA_NOCLDWAIT'
+	'SA_NODEFER'
+
+
