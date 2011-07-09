@@ -132,6 +132,7 @@ bad-signal-name
 
 
 references
+	Info
 	Handler
 
 	'SIGHUP'
