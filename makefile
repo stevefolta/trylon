@@ -4,7 +4,9 @@ endif
 
 ifeq "$(shell uname)" "Darwin"
 	PLATFORM_FLAGS = -DMAC_OSX
-	# Assume the MacPorts version of the Boehm GC is installed.
+	# Try "homebrew" first when finding the Boehm GC...
+	PLATFORM_FLAGS += -I /usr/local/include -L/usr/local/lib
+	# Otherwise try Fink...
 	PLATFORM_FLAGS += -I/opt/local/include -L/opt/local/lib
 	# Use this if you're using Fink:
 	# PLATFORM_FLAGS += -DOSX_FINK -I/sw/include -L/sw/lib

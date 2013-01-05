@@ -54,7 +54,10 @@ link-flags += "-lgc" "-ldl" "-lm"
 
 if Darwin
 	c-flags += "-DMAC_OSX"
-	# Prefer the MacPorts version of the Boehm GC, if available.
+	# Prefer the Homebrew version of the Boehm GC, if available.
+	c-flags += "-I/usr/local/include"
+	link-flags += "-L/usr/local/lib"
+	# Otherwise, try the MacPorts version of the Boehm GC, if available.
 	c-flags += "-I/opt/local/include"
 	link-flags += "-L/opt/local/lib"
 	# Otherwise, try the Fink version.
