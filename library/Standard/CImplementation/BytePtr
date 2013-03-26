@@ -75,7 +75,11 @@ extend Standard BytePtr
 
 	c-fn string
 		char str[64];
-		sprintf(str, "0x%08X", BytePtrValue_(this_));
+		#ifdef MAC_OSX
+			sprintf(str, "%p", BytePtrValue_(this_));
+		#else
+			sprintf(str, "0x%08X", BytePtrValue_(this_));
+		#endif
 		return BuildString_(str);
 
 
