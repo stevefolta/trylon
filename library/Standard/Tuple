@@ -14,7 +14,7 @@ with: item
 	return tuple
 
 from: collection
-	tuple = tuple new: collection num-items
+	tuple = Tuple new: collection num-items
 	index = 0
 	for item in collection
 		tuple[index] = item
