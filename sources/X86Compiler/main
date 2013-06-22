@@ -144,3 +144,10 @@ status-reporter
 	return SilentStatusReporter
 
 
+references
+	# Drag these in so scripts can have access to them.
+	Posix FDInputStream
+	Posix FDOutputStream
+	Posix Regex
+	Posix Termios
+
