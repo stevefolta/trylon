@@ -1,0 +1,162 @@
+trylon Termios
+
+fields termios
+
+from: fd
+	result = Termios new
+	result get-from: fd
+	return result
+
+clone
+	result = Termios new
+	result termios copy-from: termios length: struct-size
+	return result
+
+c-fn create
+	UsingMethod_(new_non_pointer_co_)
+	Field_(termios) =
+		Call_(
+			new_non_pointer_co_, Proto_(BytePtr__Standard),
+			BuildInt_(sizeof(struct termios)));
+
+c-fn get-from: fd
+	tcgetattr(IntValue_(fd), (struct termios*) BytePtrValue_(Field_(termios)));
+
+c-fn apply-to: fd
+	tcsetattr(
+		IntValue_(fd), TCSANOW,
+		(struct termios*) BytePtrValue_(Field_(termios)));
+
+c-fn make-raw
+	cfmakeraw((struct termios*) BytePtrValue_(Field_(termios)));
+
+c-fn set-iflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_iflag |= BitFlagsFromSyms_(flags, iflagDict, NumEnumsIn_(iflagDict));
+
+c-fn clear-iflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_iflag &= ~BitFlagsFromSyms_(flags, iflagDict, NumEnumsIn_(iflagDict));
+
+c-fn set-oflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_oflag |= BitFlagsFromSyms_(flags, oflagDict, NumEnumsIn_(oflagDict));
+
+c-fn clear-oflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_oflag &= ~BitFlagsFromSyms_(flags, oflagDict, NumEnumsIn_(oflagDict));
+
+c-fn set-cflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_cflag |= BitFlagsFromSyms_(flags, cflagDict, NumEnumsIn_(cflagDict));
+
+c-fn clear-cflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_cflag &= ~BitFlagsFromSyms_(flags, cflagDict, NumEnumsIn_(cflagDict));
+
+c-fn set-lflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_lflag |= BitFlagsFromSyms_(flags, lflagDict, NumEnumsIn_(lflagDict));
+
+c-fn clear-lflags: flags
+	struct termios* tio = (struct termios*) BytePtrValue_(Field_(termios));
+	tio->c_lflag &= ~BitFlagsFromSyms_(flags, lflagDict, NumEnumsIn_(lflagDict));
+
+
+c-preamble
+	#include <termios.h>
+	#include <unistd.h>
+
+	UsingSym_(IGNBRK) UsingSym_(BRKINT) UsingSym_(IGNPAR)
+	UsingSym_(PARMRK) UsingSym_(INPCK) UsingSym_(ISTRIP)
+	UsingSym_(INLCR) UsingSym_(IGNCR) UsingSym_(ICRNL)
+	UsingSym_(IXON) UsingSym_(IXOFF)
+	UsingSym_(OPOST) UsingSym_(OCRNL) UsingSym_(ONOCR)
+	UsingSym_(ONLRET) UsingSym_(OFILL) UsingSym_(CSTOPB)
+	UsingSym_(CREAD) UsingSym_(PARENB) UsingSym_(PARODD)
+	UsingSym_(HUPCL) UsingSym_(CLOCAL)
+	UsingSym_(ISIG) UsingSym_(ICANON) UsingSym_(ECHO)
+	UsingSym_(ECHOE) UsingSym_(ECHOK) UsingSym_(ECHONL)
+	UsingSym_(NOFLSH) UsingSym_(TOSTOP) UsingSym_(IEXTEN)
+	static const EnumDictEntry_ iflagDict[] = {
+		{ Sym_(BRKINT), BRKINT },
+		{ Sym_(ICRNL), ICRNL },
+		{ Sym_(IGNBRK), IGNBRK },
+		{ Sym_(IGNCR), IGNCR },
+		{ Sym_(IGNPAR), IGNPAR },
+		{ Sym_(INLCR), INLCR },
+		{ Sym_(INPCK), INPCK },
+		{ Sym_(ISTRIP), ISTRIP },
+		{ Sym_(IXOFF), IXOFF },
+		{ Sym_(IXON), IXON },
+		{ Sym_(PARMRK), PARMRK },
+		};
+	static const EnumDictEntry_ oflagDict[] = {
+		{ Sym_(OCRNL), OCRNL },
+		{ Sym_(OFILL), OFILL },
+		{ Sym_(ONLRET), ONLRET },
+		{ Sym_(ONOCR), ONOCR },
+		{ Sym_(OPOST), OPOST },
+		};
+	static const EnumDictEntry_ cflagDict[] = {
+		{ Sym_(CLOCAL), CLOCAL },
+		{ Sym_(CREAD), CREAD },
+		{ Sym_(CSTOPB), CSTOPB },
+		{ Sym_(HUPCL), HUPCL },
+		{ Sym_(PARENB), PARENB },
+		{ Sym_(PARODD), PARODD },
+		};
+	static const EnumDictEntry_ lflagDict[] = {
+		{ Sym_(ECHO), ECHO },
+		{ Sym_(ECHOE), ECHOE },
+		{ Sym_(ECHOK), ECHOK },
+		{ Sym_(ECHONL), ECHONL },
+		{ Sym_(ICANON), ICANON },
+		{ Sym_(IEXTEN), IEXTEN },
+		{ Sym_(ISIG), ISIG },
+		{ Sym_(NOFLSH), NOFLSH },
+		{ Sym_(TOSTOP), TOSTOP },
+		};
+
+
+c-fn struct-size
+	return BuildInt_(sizeof(struct termios));
+
+
+references
+	'IGNBRK'
+	'BRKINT'
+	'IGNPAR'
+	'PARMRK'
+	'INPCK'
+	'ISTRIP'
+	'INLCR'
+	'IGNCR'
+	'ICRNL'
+	'IXON'
+	'IXOFF'
+
+	'OPOST'
+	'OCRNL'
+	'ONOCR'
+	'ONLRET'
+	'OFILL'
+
+	'CSTOPB'
+	'CREAD'
+	'PARENB'
+	'PARODD'
+	'HUPCL'
+	'CLOCAL'
+
+	'ISIG'
+	'ICANON'
+	'ECHO'
+	'ECHOE'
+	'ECHOK'
+	'ECHONL'
+	'NOFLSH'
+	'TOSTOP'
+	'IEXTEN'
+
+
